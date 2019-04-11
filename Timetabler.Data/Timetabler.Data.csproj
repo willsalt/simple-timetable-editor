@@ -77,6 +77,7 @@
     <Compile Include="Display\TrainLocationTimeEntryType.cs" />
     <Compile Include="Display\TrainLocationTimeModel.cs" />
     <Compile Include="Display\TrainSegmentModel.cs" />
+    <Compile Include="Display\VertexInformation.cs" />
     <Compile Include="Distance.cs" />
     <Compile Include="DistanceComparer.cs" />
     <Compile Include="DocumentExportOptions.cs" />

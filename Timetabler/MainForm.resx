@@ -508,7 +508,7 @@
     <value>trainGraph</value>
   </data>
   <data name="&gt;&gt;trainGraph.Type" xml:space="preserve">
-    <value>Timetabler.Controls.TrainGraph, Timetabler, Version=1.2.7040.16102, Culture=neutral, PublicKeyToken=null</value>
+    <value>Timetabler.Controls.TrainGraph, Timetabler, Version=1.2.6341.35456, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;trainGraph.Parent" xml:space="preserve">
     <value>tabGraph</value>

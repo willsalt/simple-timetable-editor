@@ -13,6 +13,7 @@ using System;
 using Timetabler.Data.Display;
 using Timetabler.Extensions;
 using Timetabler.CoreData.Helpers;
+using NLog;
 
 namespace Timetabler.Controls
 {
@@ -21,6 +22,8 @@ namespace Timetabler.Controls
     /// </summary>
     public partial class TrainGraph : UserControl
     {
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The distance from the left edge of the graph to the left edge of the control, as a proportion of control width.
         /// </summary>
@@ -56,6 +59,12 @@ namespace Timetabler.Controls
         /// </summary>
         [DefaultValue(false)]
         public bool ShowVerticalGridLines { get; set; }
+
+        /// <summary>
+        /// Whether or not a tooltip should be displayed when the mouse cursor is close to a vertex.
+        /// </summary>
+        [DefaultValue(true)]
+        public bool ShowTooltip { get; set; }
 
         /// <summary>
         /// The font to use for the location (Y) axis labels.
@@ -103,6 +112,24 @@ namespace Timetabler.Controls
         }
 
         /// <summary>
+        /// Size of control handles.
+        /// </summary>
+        [DefaultValue(10f)]
+        public float ControlHandleSize { get; set; }
+
+        private Dictionary<string, TrainGraphYAxisTickModel> _locationYTicks { get; set; }
+
+        private SortedDictionary<int, SortedDictionary<int, VertexInformation>> _trainCoordinates { get; set; }
+
+        private VertexInformation _nearestVertex = null;
+
+        private Train _selectedTrain = null;
+
+        private ToolTip _tooltip;
+
+        private bool InDragMode { get; set; }
+
+        /// <summary>
         /// Default constructor; sets properties to their default values.
         /// </summary>
         public TrainGraph()
@@ -111,10 +138,14 @@ namespace Timetabler.Controls
             RightMarginPercent = 0.05f;
             TopMarginPercent = 0.1f;
             BottomMarginPercent = 0.1f;
+            ControlHandleSize = 10f;
             LocationAxisFont = new Font("Cambria", 8);
             TimeAxisFont = new Font("Cambria", 8);
             TrainLabelFont = new Font("Cambria", 8);
             GraphBackColour = Color.White;
+            _trainCoordinates = new SortedDictionary<int, SortedDictionary<int, VertexInformation>>();
+            ShowTooltip = true;
+            _tooltip = new ToolTip();
             InitializeComponent();
         }
 
@@ -137,6 +168,48 @@ namespace Timetabler.Controls
             float topLimit = Size.Height * TopMarginPercent;
             float bottomLimit = Size.Height * (1 - BottomMarginPercent);
 
+            _trainCoordinates.Clear();
+
+            // Work out horizontal resolution
+            int baseTime = 86400;
+            int maxTime = 0;
+            foreach (Train train in Model.TrainList)
+            {
+                var firstTime = train.TrainTimes.FirstOrDefault();
+                if (firstTime == null)
+                {
+                    continue;
+                }
+                if (firstTime.ArrivalTime?.Time != null)
+                {
+                    if (firstTime.ArrivalTime.Time.AbsoluteSeconds < baseTime)
+                    {
+                        baseTime = firstTime.ArrivalTime.Time.AbsoluteSeconds;
+                    }
+                }
+                else if (firstTime.DepartureTime?.Time != null)
+                {
+                    if (firstTime.DepartureTime.Time.AbsoluteSeconds < baseTime)
+                    {
+                        baseTime = firstTime.DepartureTime.Time.AbsoluteSeconds;
+                    }
+                }
+                var lastTime = train.TrainTimes.LastOrDefault();
+                if (lastTime.DepartureTime?.Time != null)
+                {
+                    if (lastTime.DepartureTime.Time.AbsoluteSeconds > maxTime)
+                    {
+                        maxTime = lastTime.DepartureTime.Time.AbsoluteSeconds;
+                    }
+                }
+                else if (lastTime.ArrivalTime?.Time != null)
+                {
+                    if (lastTime.ArrivalTime.Time.AbsoluteSeconds > maxTime)
+                    {
+                        maxTime = lastTime.ArrivalTime.Time.AbsoluteSeconds;
+                    }
+                }
+            }
             List<TrainGraphAxisTickInfo> timeAxisInfo = Model.GetTimeAxisInformation().Select(i => { i.PopulateSize(e.Graphics, TimeAxisFont); return i; }).ToList();
             bottomLimit -= timeAxisInfo.Max(i => (float)i.Height.Value) + 5;
             Pen axisPen = new Pen(Color.Black, 1f);
@@ -171,18 +244,17 @@ namespace Timetabler.Controls
                 Pen trainPen = new Pen(info.Properties.Colour, info.Properties.Width) { DashStyle = info.Properties.DashStyle };
                 foreach (LineCoordinates lineData in info.LineVertexes)
                 {
-                    e.Graphics.DrawLine(trainPen, CoordinateHelper.Stretch(leftLimit, rightLimit, lineData.X1), CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Y1),
-                        CoordinateHelper.Stretch(leftLimit, rightLimit, lineData.X2), CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Y2));
+                    DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, rightLimit, topLimit, bottomLimit);
                 }
 
                 if (Model.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
                     SizeF headcodeDimensions = e.Graphics.MeasureString(info.Headcode.Trim(), TrainLabelFont);
                     LineCoordinates longestLine = info.LineVertexes[LineCoordinates.GetIndexOfLongestLine(info.LineVertexes)];
-                    float llX1 = CoordinateHelper.Stretch(leftLimit, rightLimit, longestLine.X1);
-                    float llX2 = CoordinateHelper.Stretch(leftLimit, rightLimit, longestLine.X2);
-                    float llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Y1);
-                    float llY2 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Y2);
+                    float llX1 = CoordinateHelper.Stretch(leftLimit, rightLimit, longestLine.Vertex1.X);
+                    float llX2 = CoordinateHelper.Stretch(leftLimit, rightLimit, longestLine.Vertex2.X);
+                    float llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex1.Y);
+                    float llY2 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex2.Y);
                     PointF longestLineMidpoint = new PointF((llX1 + llX2) / 2, (llY1 + llY2) / 2);
                     e.Graphics.TranslateTransform(longestLineMidpoint.X, longestLineMidpoint.Y);
                     e.Graphics.RotateTransform((float)(Math.Atan2(llY1 - llY2, llX1 - llX2) * (180.0 / Math.PI) + 180.0));
@@ -191,6 +263,173 @@ namespace Timetabler.Controls
                     e.Graphics.ResetTransform();
                 }
             }
+        }
+
+        private int GetIndexOfLongestLine(IList<Tuple<PointF, PointF>> coordinates)
+        {
+            double max = 0;
+            int idx = 0;
+            for (int i = 0; i < coordinates.Count; ++i)
+            {
+                double len = Math.Sqrt(Math.Pow(coordinates[i].Item1.X - coordinates[i].Item2.X, 2) + Math.Pow(coordinates[i].Item1.Y - coordinates[i].Item2.Y, 2));
+                if (len > max)
+                {
+                    max = len;
+                    idx = i;
+                }
+            }
+
+            return idx;
+        }
+
+        private void DrawLine(Graphics graphics, Pen trainPen, VertexInformation v0, VertexInformation v1, float leftLimit, float rightLimit, float topLimit, float bottomLimit)
+        {
+            float xc0 = CoordinateHelper.Stretch(leftLimit, rightLimit, v0.X);
+            float yc0 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - v0.Y);
+            float xc1 = CoordinateHelper.Stretch(leftLimit, rightLimit, v1.X);
+            float yc1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - v1.Y);
+            AddCoordinate(v0, xc0, yc0);
+            AddCoordinate(v1, xc1, yc1);
+            graphics.DrawLine(trainPen, new PointF(xc0, yc0), new PointF(xc1, yc1));
+            float handleOffset = ControlHandleSize / 2f;
+            if (v0.Train == _selectedTrain)
+            {
+                graphics.FillEllipse(Brushes.White, xc0 - handleOffset, yc0 - handleOffset, ControlHandleSize, ControlHandleSize);
+                graphics.DrawEllipse(Pens.Black, xc0 - handleOffset, yc0 - handleOffset, ControlHandleSize, ControlHandleSize);
+                graphics.FillEllipse(Brushes.White, xc1 - handleOffset, yc1 - handleOffset, ControlHandleSize, ControlHandleSize);
+                graphics.DrawEllipse(Pens.Black, xc1 - handleOffset, yc1 - handleOffset, ControlHandleSize, ControlHandleSize);
+            }
+        }
+
+        private void AddCoordinate(VertexInformation vertex, float xCoord, float yCoord)
+        {
+            int xc = (int)xCoord;
+            int yc = (int)yCoord;
+
+            if (!_trainCoordinates.ContainsKey(xc))
+            {
+                _trainCoordinates.Add(xc, new SortedDictionary<int, VertexInformation>());
+            }
+            if (!_trainCoordinates[xc].ContainsKey(yc))
+            {
+                _trainCoordinates[xc].Add(yc, vertex);
+            }
+        }
+
+        private void TrainGraph_MouseMove(object sender, MouseEventArgs e)
+        {
+            _log.Trace("Mouse moved to {0}, {1} (buttons {2} InDragMode {3})", e.X, e.Y, e.Button, InDragMode);
+            if (InDragMode)
+            {
+                _tooltip.Show("Dragging", this);
+                Invalidate();
+                return;
+            }
+
+            _nearestVertex = FindVertexFromCoordinates(e.Location);
+            if (_nearestVertex != null)
+            {
+                if (_nearestVertex.Train == _selectedTrain)
+                {
+                    Cursor.Current = Cursors.SizeWE;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.Cross;
+                }
+                if (ShowTooltip)
+                {
+                    _tooltip.Show(_nearestVertex.Time.ToString(), this);
+                }
+            }
+            else
+            {
+                Cursor.Current = Cursors.Default;
+                _tooltip.Hide(this);
+            }
+        }
+
+        private VertexInformation FindVertexFromCoordinates(Point location)
+        {
+            var nearestX = FindFuzzyItemInList(location.X, _trainCoordinates.Keys.ToList());
+            if (!nearestX.HasValue)
+            {
+                return null;
+            }
+            var nearestY = FindFuzzyItemInList(location.Y, _trainCoordinates[nearestX.Value].Keys.ToList());
+            if (!nearestY.HasValue)
+            {
+                return null;
+            }
+            return _trainCoordinates[nearestX.Value][nearestY.Value];
+        }
+
+        private int? FindFuzzyItemInList(int val, List<int> keys)
+        {
+            int limit = (int)ControlHandleSize;
+
+            int min = 0;
+            int max = keys.Count - 1;
+            while (min <= max)
+            {
+                int mid = (min + max) / 2;
+                if (val == keys[mid])
+                {
+                    return val;
+                }
+                if (val < keys[mid])
+                {
+                    max = mid - 1;
+                }
+                else
+                {
+                    min = mid + 1;
+                }
+            }
+
+            int diffMin = min >= 0 && min < keys.Count ? Math.Abs(keys[min] - val) : int.MaxValue;
+            int diffMax = max >= 0 && max < keys.Count ? Math.Abs(keys[max] - val) : int.MaxValue;
+            if (diffMin <= limit || diffMax <= limit)
+            {
+                if (diffMin < diffMax)
+                {
+                    return keys[min];
+                }
+                return keys[max];
+            }
+            return null;
+        }
+
+        private void TrainGraph_MouseClick(object sender, MouseEventArgs e)
+        {
+            _selectedTrain = _nearestVertex?.Train;
+            Invalidate();
+        }
+
+        private void TrainGraph_MouseDown(object sender, MouseEventArgs e)
+        {
+            _log.Trace("TrainGraph_MouseDown()");
+            if (_nearestVertex != null)
+            {
+                _log.Trace("InDragMode true");
+                InDragMode = true;
+            }
+        }
+
+        private void TrainGraph_MouseUp(object sender, MouseEventArgs e)
+        {
+            _log.Trace("TrainGraph_MouseUp(): InDragMode false");
+            InDragMode = false;
+        }
+
+        private void TrainGraph_MouseLeave(object sender, EventArgs e)
+        {
+            _log.Trace("TrainGraph_MouseLeave()");
+            //if (sender == this)
+            //{
+            //    _log.Trace("InDragMode false");
+            //    InDragMode = false;
+            //}
         }
     }
 }

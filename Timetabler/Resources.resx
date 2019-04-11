@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="HumanReadableEnum_AddSubtract_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="HumanReadableEnum_AddSubtract_Subtract" xml:space="preserve">
+    <value>Subtract</value>
+  </data>
+  <data name="HumanReadableEnum_ArrivalDeparture_Arrival" xml:space="preserve">
+    <value>Arrival</value>
+  </data>
+  <data name="HumanReadableEnum_ArrivalDeparture_Departure" xml:space="preserve">
+    <value>Departure</value>
+  </data>
+  <data name="HumanReadableEnum_ClockType_12Hour" xml:space="preserve">
+    <value>12-Hour Clock</value>
+  </data>
+  <data name="HumanReadableEnum_ClockType_24Hour" xml:space="preserve">
+    <value>24-Hour Clock</value>
+  </data>
+  <data name="HumanReadableEnum_DashStyle_Dash" xml:space="preserve">
+    <value>Dashed</value>
+  </data>
+  <data name="HumanReadableEnum_DashStyle_DashDot" xml:space="preserve">
+    <value>Dash-Dot</value>
+  </data>
+  <data name="HumanReadableEnum_DashStyle_DashDotDot" xml:space="preserve">
+    <value>Dash-Dot-Dot</value>
+  </data>
+  <data name="HumanReadableEnum_DashStyle_Dot" xml:space="preserve">
+    <value>Dotted</value>
+  </data>
+  <data name="HumanReadableEnum_DashStyle_Solid" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="HumanReadableEnum_HalfOfDay_AM" xml:space="preserve">
+    <value>a.m.</value>
+  </data>
+  <data name="HumanReadableEnum_HalfOfDay_PM" xml:space="preserve">
+    <value>p.m.</value>
+  </data>
+  <data name="HumanReadableEnum_LocationFontType_Condensed" xml:space="preserve">
+    <value>Condensed</value>
+  </data>
+  <data name="HumanReadableEnum_LocationFontType_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="LocationEditForm_Chainage_ValidationFailureNaN" xml:space="preserve">
+    <value>The chainage must be a number.</value>
+  </data>
+  <data name="LocationEditForm_Chainage_ValidationFailureOutOfRange" xml:space="preserve">
+    <value>The chainage must be a number between 0 and 80.</value>
+  </data>
+  <data name="LocationEditForm_Mileage_ValidationFailureNaN" xml:space="preserve">
+    <value>The mileage must be a number.</value>
+  </data>
+  <data name="MainForm_Export_Completed" xml:space="preserve">
+    <value>Export completed.</value>
+  </data>
+  <data name="MainForm_FileExport_Failure" xml:space="preserve">
+    <value>An error occurred exporting to PDF file {0}.
+
+Error type: {1}
+Detail message: {2}</value>
+  </data>
+  <data name="MainForm_FileExport_SharingViolation" xml:space="preserve">
+    <value>The file {0} could not be saved because it is open in another program.</value>
+  </data>
+  <data name="MainForm_FileExport_SharingViolationTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainForm_FileNew_UnsavedChanges" xml:space="preserve">
+    <value>There are unsaved changes.  Do you really want to start a new document?</value>
+  </data>
+  <data name="MainForm_FileOpen_Failure" xml:space="preserve">
+    <value>An error occurred opening the file {2}.
+
+Error type: {0}
+Detail message: {1}</value>
+  </data>
+  <data name="MainForm_FileOpen_UnsavedChanges" xml:space="preserve">
+    <value>There are unsaved changes.  Do you really want to open a different file?</value>
+  </data>
+  <data name="MainForm_FileSave_Failure" xml:space="preserve">
+    <value>An error occurred saving the file {2}.
+
+Error type: {0}
+Detail message: {1}</value>
+  </data>
+  <data name="MainForm_FileSave_SharingViolation" xml:space="preserve">
+    <value>The file {0} could not be saved because it is open in another program.</value>
+  </data>
+  <data name="MainForm_FileSave_SharingViolationTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainForm_FormClosing_UnsavedChanges" xml:space="preserve">
+    <value>There are unsaved changes.  Do you really want to exit?</value>
+  </data>
+  <data name="MainForm_FormClosing_UnsavedChangesTitle" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="MainForm_LocationsTemplateFileLoad_Exception" xml:space="preserve">
+    <value>An error occurred opening the file {0}.
+
+Error type: {1}
+Detail message: {2}</value>
+  </data>
+  <data name="MainForm_LocationsTemplateFileLoad_NullObject" xml:space="preserve">
+    <value>Error: the template file could not be loaded.</value>
+  </data>
+  <data name="MainForm_LocationsTemplateFileLoad_NullObjectTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainForm_LocationsTemplateFileLoad_Warning" xml:space="preserve">
+    <value>This action will replace all of the location data in the current file with location data from the selected template.
+
+If trains in the current document refer to locations that are not present in the new template,
+those trains may no longer be editable.
+
+Do you want to proceed?</value>
+  </data>
+  <data name="MainForm_LocationsTemplateFileLoad_WarningTitle" xml:space="preserve">
+    <value>Overwrite Current Locations</value>
+  </data>
+  <data name="MainForm_LocationsTemplateFileSave_Success" xml:space="preserve">
+    <value>The current locations list has been saved as a template.</value>
+  </data>
+  <data name="MainForm_LocationsTemplateFileSave_Title" xml:space="preserve">
+    <value>Locations Saved</value>
+  </data>
+  <data name="MainForm_TemplateFileLoad_Exception" xml:space="preserve">
+    <value>An error occurred opening the file {0}.</value>
+  </data>
+  <data name="MainForm_TemplateFileLoad_NullObject" xml:space="preserve">
+    <value>Error: the template file could not be loaded.</value>
+  </data>
+  <data name="MainForm_TemplateFileLoad_NullObjectTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainForm_TemplateFileSave_SharingViolation" xml:space="preserve">
+    <value>The file {0} could not be saved because it is open in another program.</value>
+  </data>
+  <data name="MainForm_TemplateFileSave_SharingViolationTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainForm_TimetableGridView_LocoToWorkRowName" xml:space="preserve">
+    <value>LOCO TO WORK</value>
+  </data>
+  <data name="MainForm_TimetableGridView_SetToWorkRowName" xml:space="preserve">
+    <value>SET TO WORK</value>
+  </data>
+  <data name="MainForm_TimetableGridView_ToWorkRowName" xml:space="preserve">
+    <value>TO WORK</value>
+  </data>
+  <data name="SignalboxHoursEditForm_Signalbox_Name_Unknown" xml:space="preserve">
+    <value>(unknown)</value>
+  </data>
+  <data name="SignalboxHoursEditForm_ValidateTimes_Error" xml:space="preserve">
+    <value>Turn start and end time data, if provided, must consist of numbers only.</value>
+  </data>
+  <data name="TrainAdjustTimesForm_Offset_ValidationFailure" xml:space="preserve">
+    <value>The offset must be a positive whole number.</value>
+  </data>
+  <data name="TrainEditForm_NoTimingPoints_Warning" xml:space="preserve">
+    <value>The train you are editing has no timing points.  Trains must have timing points to appear in the timetable.
+
+If you press "OK" your edit will be discarded.  If you press "Cancel" you can continue editing the train.</value>
+  </data>
+  <data name="TrainEditForm_NoTimingPoints_WarningTitle" xml:space="preserve">
+    <value>No Timing Points</value>
+  </data>
+  <data name="TrainLocationTimeEditForm_ValidateTimes_Error" xml:space="preserve">
+    <value>Timing data, if provided, must consist of numbers only.</value>
+  </data>
+</root>

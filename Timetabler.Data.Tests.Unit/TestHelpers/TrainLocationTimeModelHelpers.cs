@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using Tests.Utility;
+using Tests.Utility.Extensions;
+using Timetabler.CoreData.Helpers;
+using Timetabler.Data.Display;
+
+namespace Timetabler.Data.Tests.Unit.TestHelpers
+{
+    public static class TrainLocationTimeModelHelpers
+    {
+        private static Random _random = new Random();
+
+        public static TrainLocationTimeModel GetTrainLocationTimeModel(IEnumerable<MinimalUniqueItem> existingItems)
+        {
+            string locId = GeneralHelper.GetNewId(existingItems);
+            return new TrainLocationTimeModel
+            {
+                ActualTime = _random.NextTimeOfDay(),
+                DisplayedText = _random.NextString(_random.Next(2, 6)),
+                EntryType = TrainLocationTimeEntryType.Time,
+                IsPassingTime = _random.NextBoolean(),
+                LocationId = locId,
+                LocationKey = locId,
+            };
+        }
+
+        public static List<ILocationEntry> GetTrainLocationTimeModelList(int min, int max)
+        {
+            int count = _random.Next(min, max);
+            List<ILocationEntry> items = new List<ILocationEntry>(count);
+            List<MinimalUniqueItem> ids = new List<MinimalUniqueItem>(count);
+            for (int i = 0; i < count; ++i)
+            {
+                TrainLocationTimeModel item = GetTrainLocationTimeModel(ids);
+                items.Add(item);
+                ids.Add(new MinimalUniqueItem { Id = item.LocationKey });
+            }
+            return items;
+        }
+    }
+}

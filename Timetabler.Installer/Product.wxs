@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="Simple Timetable Editor" Language="1033" Version="1.0.0.0" Manufacturer="Will Salt" UpgradeCode="a7d1840d-444d-4c42-9bfb-12ebeadbdc5f">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Feature Id="ProductFeature" Title="Timetabler.Installer" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ProductFonts" />
+      <ComponentGroupRef Id="ProductResourcesDe" />
+    </Feature>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.Timetabler.ProjectDir)Licence.rtf"/>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Simple Timetable Editor">
+          <Directory Id="ContentFolder" Name="Content">
+            <Directory Id="LocalFontsFolder" Name="Fonts" />
+          </Directory>
+          <Directory Id="deFolder" Name="de" />
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Simple Timetable Editor" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="NLog.dll.comp" Guid="72E5E541-11EE-440B-B028-DFA0CF13F50A">
+        <File Id="NLog.dll.file" Name="NLog.dll" Source="$(var.Timetabler.TargetDir)NLog.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="PdfSharp.dll.comp" Guid="5D8072CA-2568-445D-A966-8818A522A031">
+        <File Id="PdfSharp.dll.file" Name="PdfSharp.dll" Source="$(var.Timetabler.TargetDir)PdfSharp.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Timetabler.CoreData.dll.comp" Guid="B5559EF3-23AB-493B-932A-FAF173FFAFC0">
+        <File Id="Timetabler.CoreData.dll.file" Name="Timetabler.CoreData.dll" Source="$(var.Timetabler.TargetDir)Timetabler.CoreData.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Timetabler.Data.dll.comp" Guid="7E824DE0-FA38-4C62-BC91-AA4C37AED7FD">
+        <File Id="Timetabler.Data.dll.file" Name="Timetabler.Data.dll" Source="$(var.Timetabler.TargetDir)Timetabler.Data.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Timetabler.DataLoader.dll.comp" Guid="A1CFCD3E-42F4-4BB9-9991-243C40B1F73F">
+        <File Id="Timetabler.DataLoader.dll.file" Name="Timetabler.DataLoader.dll" Source="$(var.Timetabler.TargetDir)Timetabler.DataLoader.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Timetabler.exe.comp" Guid="007B9BD1-4A3C-45F7-AE8D-41434C2276A1">
+        <File Id="Timetabler.exe.file" Name="Timetabler.exe" Source="$(var.Timetabler.TargetDir)Timetabler.exe" KeyPath="yes">
+          <Shortcut Id="Timetabler.exe.link" Directory="ApplicationProgramsFolder" WorkingDirectory="INSTALLFOLDER" Name="Simple Timetable Editor" Advertise="yes" />
+        </File>
+        <RemoveFolder Id="ApplicationProgramsFolder.rem" Directory="ApplicationProgramsFolder" On="uninstall" />
+      </Component>
+      <Component Id="Timetabler.exe.config.comp" Guid="8ECF9975-74E5-47EC-AF6E-3CEF96F17E1B">
+        <File Id="Timetabler.exe.config.file" Name="Timetabler.exe.config" Source="$(var.Timetabler.TargetDir)Timetabler.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="Timetabler.PdfExport.dll.comp" Guid="5EF8AD12-C1C9-4EE4-9FA5-7A56CBF39F79">
+        <File Id="Timetabler.PdfExport.dll.file" Name="Timetabler.PdfExport.dll" Source="$(var.Timetabler.TargetDir)Timetabler.PdfExport.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Timetabler.XmlData.dll.comp" Guid="8D6348DD-F0B4-4EED-B110-C409F50945D8">
+        <File Id="Timetabler.XmlData.dll.file" Name="Timetabler.XmlData.dll" Source="$(var.Timetabler.TargetDir)Timetabler.XmlData.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Unicorn.dll.comp" Guid="B982066E-7F6A-4FEE-842D-8D4592179099">
+        <File Id="Unicorn.dll.file" Name="Unicorn.dll" Source="$(var.Timetabler.TargetDir)Unicorn.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Unicorn.Impl.PdfSharp.dll.comp" Guid="B25CBCD4-3FA3-4DD4-9563-FBAAE04A54A6">
+        <File Id="Unicorn.Impl.PdfSharp.dll.file" Name="Unicorn.Impl.PdfSharp.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Impl.PdfSharp.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Unicorn.Interfaces.dll.comp" Guid="980D7B21-20E1-472B-BE00-E78794876977">
+        <File Id="Unicorn.Interfaces.dll.file" Name="Unicorn.Interfaces.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Interfaces.dll" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="ProductFonts" Directory="LocalFontsFolder">
+      <Component Id="CharisSIL_B.ttf.comp" Guid="124C01FE-9623-4297-A057-E21C13D2D528">
+        <File Id="CharisSIL_B.ttf.file" Name="CharisSIL-B.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\CharisSIL-B.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="CharisSIL_BI.ttf.comp" Guid="012A48EC-6140-417C-A274-9F4294C9DD4E">
+        <File Id="CharisSIL_BI.ttf.file" Name="CharisSIL-BI.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\CharisSIL-BI.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="CharisSIL_I.ttf.comp" Guid="C4A8BB76-D7AB-4D4D-8A4F-E594EBCC6C2F">
+        <File Id="CharisSIL_I.ttf.file" Name="CharisSIL-I.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\CharisSIL-I.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="CharisSIL_R.ttf.comp" Guid="A9B14500-5331-4F97-8405-C8FDAA106B97">
+        <File Id="CharisSIL_R.ttf.file" Name="CharisSIL-R.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\CharisSIL-R.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="cmunbi.ttf.comp" Guid="8C400D3B-6E14-412B-A1C0-78A7F4BFC668">
+        <File Id="cmunbi.ttf.file" Name="cmunbi.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\cmunbi.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="cmunbx.ttf.comp" Guid="07D50BF8-CA9C-4580-AD70-71943C832BD0">
+        <File Id="cmunbx.ttf.file" Name="cmunbx.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\cmunbx.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="cmunrm.ttf.comp" Guid="AFA580E1-50D1-4174-B823-DB5E7067A52A">
+        <File Id="cmunrm.ttf.file" Name="cmunrm.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\cmunrm.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="cmunti.ttf.comp" Guid="E61191A5-BB01-4418-89FF-46BAA618F28C">
+        <File Id="cmunti.ttf.file" Name="cmunti.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\cmunti.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="Heebo_Bold.ttf.comp" Guid="C2BC8290-CBAB-40B9-978A-31A67AC76BEC">
+        <File Id="Heebo_Bold.ttf.file" Name="Heebo-Bold.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\Heebo-Bold.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+      <Component Id="Heebo_Regular.ttf.comp" Guid="64322C72-20E3-4C30-BA43-F38F5EDE31F5">
+        <File Id="Heebo_Regular.ttf.file" Name="Heebo-Regular.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\Heebo-Regular.ttf" KeyPath="yes" TrueType="no" />
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="ProductResourcesDe" Directory="deFolder">
+      <Component Id="de.PdfSharp.Resources.dll.comp" Guid="9200A694-F939-45C5-BECE-4DA48DCABD22">
+        <File Id="de.PdfSharp.Resources.dll.file" Name="PdfSharp.Resources.dll" Source="$(var.Timetabler.TargetDir)de\PdfSharp.Resources.dll" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

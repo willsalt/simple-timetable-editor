@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DE74D701-B7BF-4054-9DD9-D964395F6AFE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Timetabler</RootNamespace>
+    <AssemblyName>Timetabler</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DocumentationFile>bin\Debug\Timetabler.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DocumentationFile>bin\Release\Timetabler.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Adapters\GridLayoutMode.cs" />
+    <Compile Include="Adapters\TimetableSectionModelDataAdapter.cs" />
+    <Compile Include="Controls\TrainGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TrainGraph.Designer.cs">
+      <DependentUpon>TrainGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentExportOptionsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentExportOptionsEditForm.Designer.cs">
+      <DependentUpon>DocumentExportOptionsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentOptionsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentOptionsEditForm.Designer.cs">
+      <DependentUpon>DocumentOptionsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\TrainGraphAxisTickInfoExtensions.cs" />
+    <Compile Include="Helpers\ClockTypeHelper.cs" />
+    <Compile Include="Helpers\DataGridViewExtensions.cs" />
+    <Compile Include="Helpers\FileDialogExtensions.cs" />
+    <Compile Include="Helpers\HumanReadableEnum.cs" />
+    <Compile Include="Helpers\LogHelper.cs" />
+    <Compile Include="Helpers\TimeHelpers.cs" />
+    <Compile Include="Helpers\TimeOfDayExtensions.cs" />
+    <Compile Include="Helpers\XCoordinateHelper.cs" />
+    <Compile Include="LocationEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocationEditForm.Designer.cs">
+      <DependentUpon>LocationEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LocationListEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocationListEditForm.Designer.cs">
+      <DependentUpon>LocationListEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AddSubtract.cs" />
+    <Compile Include="Models\SignalboxHoursEditFormModel.cs" />
+    <Compile Include="Models\SignalboxHoursSetEditFormModel.cs" />
+    <Compile Include="Models\TrainAdjustTimesFormModel.cs" />
+    <Compile Include="Models\TrainEditFormModel.cs" />
+    <Compile Include="Models\TrainGraphYAxisTickModel.cs" />
+    <Compile Include="Models\TrainLocationTimeEditFormModel.cs" />
+    <Compile Include="NoteEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NoteEditForm.Designer.cs">
+      <DependentUpon>NoteEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NoteListEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NoteListEditForm.Designer.cs">
+      <DependentUpon>NoteListEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SignalboxEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignalboxEditForm.Designer.cs">
+      <DependentUpon>SignalboxEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignalboxHoursEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignalboxHoursEditForm.Designer.cs">
+      <DependentUpon>SignalboxHoursEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignalboxHoursSetEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignalboxHoursSetEditForm.Designer.cs">
+      <DependentUpon>SignalboxHoursSetEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignalboxListEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignalboxListEditForm.Designer.cs">
+      <DependentUpon>SignalboxListEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupportForm.Designer.cs">
+      <DependentUpon>SupportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainAdjustTimesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainAdjustTimesForm.Designer.cs">
+      <DependentUpon>TrainAdjustTimesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainClassEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainClassEditForm.Designer.cs">
+      <DependentUpon>TrainClassEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainClassListEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainClassListEditForm.Designer.cs">
+      <DependentUpon>TrainClassListEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainEditForm.Designer.cs">
+      <DependentUpon>TrainEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainLocationTimeEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainLocationTimeEditForm.Designer.cs">
+      <DependentUpon>TrainLocationTimeEditForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DocumentExportOptionsEditForm.resx">
+      <DependentUpon>DocumentExportOptionsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DocumentOptionsEditForm.resx">
+      <DependentUpon>DocumentOptionsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocationEditForm.resx">
+      <DependentUpon>LocationEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocationListEditForm.resx">
+      <DependentUpon>LocationListEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoteEditForm.resx">
+      <DependentUpon>NoteEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoteListEditForm.resx">
+      <DependentUpon>NoteListEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignalboxEditForm.resx">
+      <DependentUpon>SignalboxEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignalboxHoursEditForm.resx">
+      <DependentUpon>SignalboxHoursEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignalboxHoursSetEditForm.resx">
+      <DependentUpon>SignalboxHoursSetEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignalboxListEditForm.resx">
+      <DependentUpon>SignalboxListEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupportForm.resx">
+      <DependentUpon>SupportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainAdjustTimesForm.resx">
+      <DependentUpon>TrainAdjustTimesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainClassEditForm.resx">
+      <DependentUpon>TrainClassEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainClassListEditForm.resx">
+      <DependentUpon>TrainClassListEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainEditForm.resx">
+      <DependentUpon>TrainEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainLocationTimeEditForm.resx">
+      <DependentUpon>TrainLocationTimeEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Licence.rtf" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
+      <Project>{80ffe281-9a15-4da3-9e52-61fac2979c2c}</Project>
+      <Name>Timetabler.CoreData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.DataLoader\Timetabler.DataLoader.csproj">
+      <Project>{e6ff8e04-a41d-446b-9f8a-ccfaf4b08ad2}</Project>
+      <Name>Timetabler.DataLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
+      <Project>{9a7e2940-50b8-4f3a-a535-ab6220e6ce3a}</Project>
+      <Name>Timetabler.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.PdfExport\Timetabler.PdfExport.csproj">
+      <Project>{68035ddb-1c24-407c-b6b3-32cec1d964e5}</Project>
+      <Name>Timetabler.PdfExport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.XmlData\Timetabler.XmlData.csproj">
+      <Project>{81b88cba-1ac7-4061-ab0b-fcfa1be22332}</Project>
+      <Name>Timetabler.XmlData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

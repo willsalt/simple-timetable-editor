@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetabler", "Timetabler\Timetabler.csproj", "{DE74D701-B7BF-4054-9DD9-D964395F6AFE}"
 EndProject
@@ -38,6 +38,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.Interfaces", "Unicorn.Interfaces\Unicorn.Interfaces.csproj", "{61E758D9-A9AE-4F1E-AD46-ABFFDFE67259}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.Impl.PdfSharp", "Unicorn.Impl.PdfSharp\Unicorn.Impl.PdfSharp.csproj", "{4D101015-CE74-4648-B07B-5AC806531E95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.Interfaces.Tests.Unit", "Unicorn.Interfaces.Tests.Unit\Unicorn.Interfaces.Tests.Unit.csproj", "{98AD8B4A-13E3-482B-A001-65CA51F2604F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -167,6 +169,14 @@ Global
 		{4D101015-CE74-4648-B07B-5AC806531E95}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D101015-CE74-4648-B07B-5AC806531E95}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D101015-CE74-4648-B07B-5AC806531E95}.Release|x86.Build.0 = Release|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Debug|x86.Build.0 = Debug|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Release|x86.ActiveCfg = Release|Any CPU
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,5 +189,9 @@ Global
 		{56ABE9BB-1373-43D3-B1C5-1526E443AD73} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 		{CB8E5E7E-5605-4FAB-BC0C-9A25D1FE5CB2} = {974423C7-5EB9-481E-ACB5-826498AEE42D}
 		{3BBC6D57-3B20-4C15-8292-8C6F8860F5AB} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
+		{98AD8B4A-13E3-482B-A001-65CA51F2604F} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EA1C6B0-D8A1-4000-A5F0-FFC1B39482AC}
 	EndGlobalSection
 EndGlobal

@@ -77,6 +77,17 @@ namespace Timetabler.PdfExport
             _currentPage = doc.AppendPage(orientation);
         }
 
+        private int ComputeColumnsForSection(TimetableSectionModel entireSection, int startingColumn, SectionMetrics sectionMetrics)
+        {
+            double availableWidth = _currentPage.PageAvailableWidth - sectionMetrics.MainSectionMetrics.TotalSize.Width;
+            int colsCounted = 0;
+            while (availableWidth > 0 && startingColumn + colsCounted < entireSection.TrainSegments.Count)
+            {
+                availableWidth -= MeasureSegmentWidth(entireSection.TrainSegments[startingColumn + colsCounted++], sectionMetrics);
+            }
+            return availableWidth > 0 ? colsCounted : colsCounted - 1;
+        }
+
         public void Export(TimetableDocument document, Stream outputStream)
         {
             DocumentDescriptor doc = new DocumentDescriptor(PhysicalPageSize.A4, PageOrientation.Landscape, _defaultHorizontalMarginProportion, _defaultVerticalMarginProportion);
@@ -92,9 +103,10 @@ namespace Timetabler.PdfExport
                 SectionMetrics sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle();
                 SectionMetrics sectionMetrics = sectionMetricsWithTitle;
 
-                int columnsPerPage = ComputeColumnsPerPage(sectionMetrics.MainSectionMetrics.TotalSize.Width, sectionMetrics.ColumnWidth);
+                int columnsPerPage;
                 for (int i = 0; i < document.DownTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
                 {
+                    columnsPerPage = ComputeColumnsForSection(document.DownTrainsDisplay, i, sectionMetrics);
                     Area footnotesForSection = LayOutFootnotesForSection(document.DownTrainsDisplay, i, columnsPerPage);
                     if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                     {
@@ -118,9 +130,9 @@ namespace Timetabler.PdfExport
                 sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle();
                 sectionMetrics = firstOnPage ? sectionMetricsWithTitle : sectionMetricsWithNoTitle;
                 
-                columnsPerPage = ComputeColumnsPerPage(sectionMetrics.MainSectionMetrics.TotalSize.Width, sectionMetrics.ColumnWidth);
                 for (int i = 0; i < document.UpTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
                 {
+                    columnsPerPage = ComputeColumnsForSection(document.UpTrainsDisplay, i, sectionMetrics);
                     Area footnotesForSection = LayOutFootnotesForSection(document.UpTrainsDisplay, i, columnsPerPage);
                     if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                     {
@@ -281,11 +293,6 @@ namespace Timetabler.PdfExport
             }
         }
 
-        private int ComputeColumnsPerPage(double locationWidth, double columnWidth)
-        {
-            return (int)((_currentPage.PageAvailableWidth - locationWidth) / columnWidth);
-        }
-
         private SectionMetrics MeasureSectionMetrics(TimetableSectionModel section, DocumentExportOptions options, string title, string subtitle, string dateDescription)
         {
             var shm = new SectionMetrics();
@@ -393,9 +400,9 @@ namespace Timetabler.PdfExport
         private void DrawTitleAndSubtitle(string title, string subtitle, string dateDescription, double x, double subtitleXOffset, double y, double pageWidth, double titleHeight, 
             double subtitleHeight, bool drawSeparator, double separatorLineGap, double separatorY)
         {
-            title = title != null ? title : string.Empty;
-            subtitle = subtitle != null ? subtitle : string.Empty;
-            dateDescription = dateDescription != null ? dateDescription : string.Empty;
+            title = title ?? string.Empty;
+            subtitle = subtitle ?? string.Empty;
+            dateDescription = dateDescription ?? string.Empty;
             WritingWrapper(title, _titleFont, new UniRectangle(x, y, pageWidth, titleHeight), HorizontalAlignment.Centred, VerticalAlignment.Top);
             WritingWrapper(subtitle, _subtitleFont, new UniRectangle(x + subtitleXOffset, y + titleHeight, pageWidth, subtitleHeight), HorizontalAlignment.Left, VerticalAlignment.Top);
             WritingWrapper(dateDescription, _subtitleFont, new UniRectangle(x, y + titleHeight, pageWidth - subtitleXOffset, subtitleHeight), HorizontalAlignment.Right, VerticalAlignment.Top);
@@ -405,17 +412,34 @@ namespace Timetabler.PdfExport
             }
         }
 
+        private double MeasureSegmentWidth(TrainSegmentModel segment, SectionMetrics sectionMetrics)
+        {
+            if (string.IsNullOrWhiteSpace(segment.InlineNote))
+            {
+                return sectionMetrics.ColumnWidth;
+            }
+
+            UniRange largestEmptyBlock = FindLargestEmptyBlock(segment, sectionMetrics.MainSectionMetrics);
+            Paragraph para = new Paragraph(largestEmptyBlock.Size, sectionMetrics.ColumnWidth, Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(2));
+            para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
+            if (!para.OverspillHeight)
+            {
+                return sectionMetrics.ColumnWidth;
+            }
+
+            para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(0.75));
+            para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
+            return sectionMetrics.ColumnWidth + para.ComputedHeight;
+        }
+
         private double DrawSegment(TimetableSectionModel section, TrainSegmentModel segment, DocumentExportOptions options, SectionMetrics sectionMetrics, bool reverseLocationOrder, double xCoord, 
             double yCoord)
         {
             UniSize currentDims;
             LocationCollection locationMap = section.LocationMap;
             LocationBoxDimensions locationDims = sectionMetrics.MainSectionMetrics;
-            double currentYCoord = yCoord;
+            double currentYCoord = yCoord + sectionMetrics.HeaderHeight;
             double segmentWidth = sectionMetrics.ColumnWidth;
-
-           
-            currentYCoord = yCoord + sectionMetrics.HeaderHeight;
 
             // Write timing points
             foreach (var timingPoint in segment.Timings)
@@ -442,61 +466,24 @@ namespace Timetabler.PdfExport
                     currentYCoord + locationDims.LocationOffsets[timingPoint.LocationKey].Baseline);
             }
 
-            double startLargestEmptyBlock = 0;
-            double endLargestEmptyBlock = 0;
-            double largestBlockSize = 0;
-            bool inEmptyBlock = false;
-            
             // If there is an inline note to display, work out the position of the largest empty block...
+            UniRange largestEmptyBlock = new UniRange(0, 0);
             if (!string.IsNullOrWhiteSpace(segment.InlineNote))
             {
-                double startCurrentEmptyBlock = 0;
-                double endCurrentEmptyBlock = 0;
-                foreach (KeyValuePair<string, TextVerticalLocation> item in locationDims.LocationOffsets.OrderBy(d => d.Value.Top))
-                {
-                    if (segment.Timings.Any(t => t.LocationKey == item.Key))
-                    {
-                        if (inEmptyBlock)
-                        {
-                            if (endCurrentEmptyBlock - startCurrentEmptyBlock > largestBlockSize)
-                            {
-                                startLargestEmptyBlock = startCurrentEmptyBlock;
-                                endLargestEmptyBlock = endCurrentEmptyBlock;
-                                largestBlockSize = endLargestEmptyBlock - startLargestEmptyBlock;
-                            }
-                            inEmptyBlock = false;
-                        }
-                    }
-                    else
-                    {
-                        if (!inEmptyBlock)
-                        {
-                            startCurrentEmptyBlock = item.Value.Top;
-                            inEmptyBlock = true;
-                        }
-                        endCurrentEmptyBlock = item.Value.Bottom;
-                    }
-                }
-                if (inEmptyBlock && endCurrentEmptyBlock - startCurrentEmptyBlock > largestBlockSize)
-                {
-                    startLargestEmptyBlock = startCurrentEmptyBlock;
-                    endLargestEmptyBlock = endCurrentEmptyBlock;
-                    largestBlockSize = endLargestEmptyBlock - startLargestEmptyBlock;
-                }
+                largestEmptyBlock = FindLargestEmptyBlock(segment, locationDims);                
 
                 // Write the inline note into the largest empty block.
-                Paragraph para = new Paragraph(largestBlockSize, sectionMetrics.ColumnWidth, Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred,
+                Paragraph para = new Paragraph(largestEmptyBlock.Size, sectionMetrics.ColumnWidth, Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred,
                     new MarginSet(2));
                 para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
                 // If the paragraph fits within the empty block, draw it.  If not, widen the column and draw the note to the right of the train data.
                 if (!para.OverspillHeight)
                 {
-                    para.DrawAt(_currentPage.PageGraphics, xCoord, currentYCoord + startLargestEmptyBlock);
+                    para.DrawAt(_currentPage.PageGraphics, xCoord, currentYCoord + largestEmptyBlock.Start);
                     // Recompute start and end of "empty block", reducing it to just the size of the note.
-                    double blockMidpoint = startLargestEmptyBlock + (largestBlockSize / 2);
+                    double blockMidpoint = largestEmptyBlock.Start + (largestEmptyBlock.Size / 2);
                     double halfNewBlockWidth = para.ContentWidth / 2;
-                    startLargestEmptyBlock = blockMidpoint - halfNewBlockWidth;
-                    endLargestEmptyBlock = blockMidpoint + halfNewBlockWidth;
+                    largestEmptyBlock = new UniRange(blockMidpoint - halfNewBlockWidth, blockMidpoint + halfNewBlockWidth);
                 }
                 else
                 {
@@ -506,8 +493,7 @@ namespace Timetabler.PdfExport
                     para.DrawAt(_currentPage.PageGraphics, xCoord + sectionMetrics.ColumnWidth, currentYCoord);
                     segmentWidth += para.ComputedHeight;
                     // Ensure filler dots are written everywhere required.
-                    startLargestEmptyBlock = 0;
-                    endLargestEmptyBlock = 0;
+                    largestEmptyBlock = new UniRange(0, 0);
                 }
             }
 
@@ -539,8 +525,8 @@ namespace Timetabler.PdfExport
 
                 Log.Trace("Location {0} is not a routing code row.", loc.LocationKey);
                 if (string.IsNullOrWhiteSpace(segment.InlineNote) ||
-                    locationDims.LocationOffsets[loc.LocationKey].Bottom < startLargestEmptyBlock ||
-                    locationDims.LocationOffsets[loc.LocationKey].Top >= endLargestEmptyBlock)
+                    locationDims.LocationOffsets[loc.LocationKey].Bottom < largestEmptyBlock.Start ||
+                    locationDims.LocationOffsets[loc.LocationKey].Top >= largestEmptyBlock.End)
                 {
                     if (i < firstIndex || i > lastIndex)
                     {
@@ -562,7 +548,7 @@ namespace Timetabler.PdfExport
 
             foreach (double separatorOffset in locationDims.LocationSeparatorOffsets)
             {
-                if (string.IsNullOrWhiteSpace(segment.InlineNote) || separatorOffset <= startLargestEmptyBlock || separatorOffset >= endLargestEmptyBlock)
+                if (string.IsNullOrWhiteSpace(segment.InlineNote) || separatorOffset <= largestEmptyBlock.Start || separatorOffset >= largestEmptyBlock.End)
                 {
                     LineDrawingWrapper("location separator", xCoord + lineGapSize, currentYCoord + separatorOffset, (xCoord + sectionMetrics.ColumnWidth) - lineGapSize, currentYCoord + separatorOffset, MainLineWidth);
                 }
@@ -659,6 +645,49 @@ namespace Timetabler.PdfExport
             }
 
             return segmentWidth;
+        }
+
+        private UniRange FindLargestEmptyBlock(TrainSegmentModel segment, LocationBoxDimensions locationDims)
+        {
+            double startLargestEmptyBlock = 0;
+            double endLargestEmptyBlock = 0;
+            double startCurrentEmptyBlock = 0;
+            double endCurrentEmptyBlock = 0;
+            double largestBlockSize = 0;
+            bool inEmptyBlock = false;
+            foreach (KeyValuePair<string, TextVerticalLocation> item in locationDims.LocationOffsets.OrderBy(d => d.Value.Top))
+            {
+                if (segment.Timings.Any(t => t.LocationKey == item.Key))
+                {
+                    if (inEmptyBlock)
+                    {
+                        if (endCurrentEmptyBlock - startCurrentEmptyBlock > largestBlockSize)
+                        {
+                            startLargestEmptyBlock = startCurrentEmptyBlock;
+                            endLargestEmptyBlock = endCurrentEmptyBlock;
+                            largestBlockSize = endLargestEmptyBlock - startLargestEmptyBlock;
+                        }
+                        inEmptyBlock = false;
+                    }
+                }
+                else
+                {
+                    if (!inEmptyBlock)
+                    {
+                        startCurrentEmptyBlock = item.Value.Top;
+                        inEmptyBlock = true;
+                    }
+                    endCurrentEmptyBlock = item.Value.Bottom;
+                }
+            }
+            if (inEmptyBlock && endCurrentEmptyBlock - startCurrentEmptyBlock > largestBlockSize)
+            {
+                startLargestEmptyBlock = startCurrentEmptyBlock;
+                endLargestEmptyBlock = endCurrentEmptyBlock;
+                largestBlockSize = endLargestEmptyBlock - startLargestEmptyBlock;
+            }
+
+            return new UniRange(startLargestEmptyBlock, endLargestEmptyBlock);
         }
 
         private Line MakeLineForTimingPoint(TrainLocationTimeModel timingPoint)

@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UniDashStyle.cs" />
     <Compile Include="UniPoint.cs" />
+    <Compile Include="UniRange.cs" />
     <Compile Include="UniRectangle.cs" />
     <Compile Include="UniSize.cs" />
     <Compile Include="VerticalAlignment.cs" />

@@ -67,6 +67,17 @@ namespace Timetabler
                 return;
             }
             string id = dgvNotes[0, dgvNotes.SelectedCells[0].RowIndex].Value as string;
+            ShowNoteEditForm(id);
+        }
+
+        private void dgvNotes_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string id = dgvNotes[0, e.RowIndex].Value as string;           
+            ShowNoteEditForm(id);
+        }
+
+        private void ShowNoteEditForm(string id)
+        {
             if (!_model.ContainsKey(id))
             {
                 return;
@@ -100,6 +111,6 @@ namespace Timetabler
             bool flag = !(dgvNotes.SelectedCells.Count == 0);
             btnEdit.Enabled = flag;
             btnRemove.Enabled = flag;
-        }
+        }        
     }
 }

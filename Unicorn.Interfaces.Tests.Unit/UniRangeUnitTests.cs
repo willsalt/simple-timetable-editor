@@ -50,7 +50,7 @@ namespace Unicorn.Interfaces.Tests.Unit
 
             double testOutput = testObject.Size;
 
-            Assert.AreEqual(testValue, testOutput);
+            Assert.IsTrue(Math.Abs(testValue - testOutput) < 0.00000001);
         }
     }
 }

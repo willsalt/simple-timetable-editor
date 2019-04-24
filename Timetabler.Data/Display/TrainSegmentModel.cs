@@ -2,6 +2,7 @@
 using System.Linq;
 using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
+using Timetabler.Data.Display.Interfaces;
 
 namespace Timetabler.Data.Display
 {

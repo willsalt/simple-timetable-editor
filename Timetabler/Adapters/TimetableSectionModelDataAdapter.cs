@@ -202,7 +202,8 @@ namespace Timetabler.Adapters
             {
                 if (segment.TimingsIndex.ContainsKey(Model.Locations[i].LocationKey))
                 {
-                    View[idx, _locationRowIdxBase + i].Value = segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayedText;
+                    segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, _locationRowIdxBase + i] };
+                    //View[idx, _locationRowIdxBase + i].Value = segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayedText;
                     TrainLocationTimeModel tltm = segment.TimingsIndex[Model.Locations[i].LocationKey] as TrainLocationTimeModel;
                     if (tltm != null &&  !tltm.IsPassingTime)
                     {

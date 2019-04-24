@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Timetabler.Data.Display
+﻿namespace Timetabler.Data.Display
 {
     /// <summary>
     /// An item of data that appears on a timetable.

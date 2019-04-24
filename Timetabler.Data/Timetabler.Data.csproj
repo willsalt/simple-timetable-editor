@@ -70,7 +70,8 @@
     <Compile Include="Display\FootnoteDisplayModel.cs" />
     <Compile Include="Display\GenericEntryModel.cs" />
     <Compile Include="Display\GenericTimeModel.cs" />
-    <Compile Include="Display\ILocationEntry.cs" />
+    <Compile Include="Display\Interfaces\ILocationEntry.cs" />
+    <Compile Include="Display\Interfaces\ILocationEntryDisplayAdapter.cs" />
     <Compile Include="Display\LineCoordinates.cs" />
     <Compile Include="Display\LocationDisplayModel.cs" />
     <Compile Include="Display\LocationEntryModel.cs" />

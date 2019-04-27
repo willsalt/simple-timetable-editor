@@ -63,7 +63,7 @@ namespace Timetabler.DataLoader.Load.Legacy.V2
             {
                 foreach (XmlData.Legacy.V2.TrainModel trn in file.TrainList)
                 {
-                    document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap));
+                    document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap, document.Options));
                 }
             }
 

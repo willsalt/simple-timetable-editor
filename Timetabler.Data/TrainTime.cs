@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 
 namespace Timetabler.Data
 {
@@ -18,6 +17,17 @@ namespace Timetabler.Data
         /// The footnotes that apply to this timing point.
         /// </summary>
         public List<Note> Footnotes { get; set; }
+
+        /// <summary>
+        /// The symbols of all the footnotes that apply to this timing point, concatenated into a single string, or a space if this timing point has no footnotes.
+        /// </summary>
+        public string FootnoteSymbols
+        {
+            get
+            {
+                return (Footnotes != null && Footnotes.Any()) ? string.Join(string.Empty, Footnotes.Select(n => n?.Symbol ?? "")) : "  ";
+            }
+        }
         
         /// <summary>
         /// Default constructor.

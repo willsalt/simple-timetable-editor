@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using Timetabler.CoreData;
+using Timetabler.Data.Display;
 
 namespace Timetabler.Data
 {
@@ -44,6 +43,54 @@ namespace Timetabler.Data
         /// The location this timing point is applicable to.
         /// </summary>
         public Location Location { get; set; }
+
+        public TimeDisplayFormattingStrings FormattingStrings { get; set; }
+
+        private TrainLocationTimeModel _arrivalTimeModel;
+
+        private TrainLocationTimeModel _departureTimeModel;
+
+        public TrainLocationTimeModel ArrivalTimeModel
+        {
+            get
+            {
+                return UpdateTrainLocationTimeModel(ref _arrivalTimeModel, ArrivalTime, LocationIdSuffixes.Departure);
+            }
+        }
+
+        public TrainLocationTimeModel DepartureTimeModel
+        {
+            get
+            {
+                return UpdateTrainLocationTimeModel(ref _departureTimeModel, DepartureTime, LocationIdSuffixes.Departure);
+            }
+        }
+
+        private TrainLocationTimeModel UpdateTrainLocationTimeModel(ref TrainLocationTimeModel model, TrainTime time, string idSuffix)
+        {
+            if (time == null || FormattingStrings == null || Location == null)
+            {
+                return null;
+            }
+            if (model == null)
+            {
+                model = new TrainLocationTimeModel
+                {
+                    LocationId = Location.Id,
+                    LocationKey = Location.Id + idSuffix,
+                    EntryType = TrainLocationTimeEntryType.Time,
+                };
+            }
+            model.IsPassingTime = Pass;
+            model.Populate(time, FormattingStrings);
+            return model;
+        }
+
+        public void RefreshTimeModels()
+        {
+            UpdateTrainLocationTimeModel(ref _arrivalTimeModel, ArrivalTime, LocationIdSuffixes.Arrival);
+            UpdateTrainLocationTimeModel(ref _departureTimeModel, DepartureTime, LocationIdSuffixes.Departure);
+        }
         
         /// <summary>
         /// Default constructor.
@@ -103,6 +150,7 @@ namespace Timetabler.Data
                 Path = Path,
                 Platform = Platform,
                 Line = Line,
+                FormattingStrings = FormattingStrings,
             };
             return tlt;
         }

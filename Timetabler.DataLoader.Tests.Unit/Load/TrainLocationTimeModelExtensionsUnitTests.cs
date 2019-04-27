@@ -19,7 +19,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         {
             TrainLocationTimeModel testObject = new TrainLocationTimeModel();
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>());
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), new DocumentOptions());
 
             Assert.IsNotNull(testResult);
         }
@@ -29,7 +29,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         {
             TrainLocationTimeModel testObject = null;
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>());
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), new DocumentOptions());
 
             Assert.IsNull(testResult);
         }
@@ -41,7 +41,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Dictionary<string, Note> noteMap = GetRandomNotes();
             TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap);
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, new DocumentOptions());
 
             Assert.AreSame(locationMap[testObject.LocationId], testResult.Location);
         }
@@ -57,7 +57,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
                 testObject.LocationId = _random.NextHexString(8);
             } while (locationMap.ContainsKey(testObject.LocationId));
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap);
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, new DocumentOptions());
 
             Assert.IsNull(testResult.Location);
         }
@@ -70,7 +70,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
             testObject.LocationId = null;
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap);
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, new DocumentOptions());
 
             Assert.IsNull(testResult.Location);
         }
@@ -82,7 +82,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Dictionary<string, Note> noteMap = GetRandomNotes();
             TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap);
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, new DocumentOptions());
 
             Assert.AreEqual(testObject.Pass, testResult.Pass);
         }
@@ -94,7 +94,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Dictionary<string, Note> noteMap = GetRandomNotes();
             TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap);
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, new DocumentOptions());
 
             Assert.AreEqual(testObject.Path, testResult.Path);
         }
@@ -106,7 +106,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Dictionary<string, Note> noteMap = GetRandomNotes();
             TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap);
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, new DocumentOptions());
 
             Assert.AreEqual(testObject.Platform, testResult.Platform);
         }
@@ -118,7 +118,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Dictionary<string, Note> noteMap = GetRandomNotes();
             TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
 
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap);
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, new DocumentOptions());
 
             Assert.AreEqual(testObject.Line, testResult.Line);
         }

@@ -37,6 +37,8 @@ namespace Timetabler.Models
         /// <summary>
         /// Whether to handle times in 12-hour or 24-hour format.
         /// </summary>
-        public ClockType TimeInputMode { get; set; }
+        //public ClockType TimeInputMode { get; set; }
+
+        public DocumentOptions DocumentOptions { get; set; }
     }
 }

@@ -224,7 +224,7 @@ namespace Timetabler
                 ValidClasses = Model.TrainClassList,
                 ValidTrainNotes = Model.NoteDefinitions.Where(n => n.AppliesToTrains).ToList(),
                 ValidTimingPointNotes = Model.NoteDefinitions.Where(n => n.AppliesToTimings).ToList(),
-                TimeInputMode = Model.Options.ClockType,
+                DocumentOptions = Model.Options,
             };
         }
 
@@ -624,10 +624,10 @@ namespace Timetabler
             {
                 return;
             }
-            Model.Options = doef.Model;
-            trainGraph.Model.DisplayTrainLabels = doef.Model.DisplayTrainLabelsOnGraphs;
+            doef.Model.CopyTo(Model.Options);
+            trainGraph.Model.DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs;
             trainGraph.Invalidate();
-            Model.UpdateTrainDisplays();
+            Model.RefreshTrainDisplayFormatting();
         }
 
         private void EditExportOptions()

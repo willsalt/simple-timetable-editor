@@ -16,7 +16,7 @@ namespace Timetabler.DataLoader.Load
         /// <param name="locations">Location map.</param>
         /// <param name="notes">Timetable footnotes.</param>
         /// <returns>A converted <see cref="TrainLocationTime"/> instance.</returns>
-        public static TrainLocationTime ToTrainLocationTime(this TrainLocationTimeModel model, Dictionary<string, Location> locations, Dictionary<string, Note> notes)
+        public static TrainLocationTime ToTrainLocationTime(this TrainLocationTimeModel model, Dictionary<string, Location> locations, Dictionary<string, Note> notes, DocumentOptions options)
         {
             if (model == null)
             {
@@ -31,6 +31,7 @@ namespace Timetabler.DataLoader.Load
                 Path = model.Path,
                 Platform = model.Platform,
                 Line = model.Line,
+                FormattingStrings = options.FormattingStrings,
             };
 
             if (model.LocationId != null && locations != null && locations.ContainsKey(model.LocationId))

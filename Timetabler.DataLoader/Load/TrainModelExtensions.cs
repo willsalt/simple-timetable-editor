@@ -17,7 +17,7 @@ namespace Timetabler.DataLoader.Load
         /// <param name="trainClasses">Dictionary of train classes occurring in the timetable.</param>
         /// <param name="notes">Dictionary of footnotes occurring in the timetable.</param>
         /// <returns>A <see cref="Train"/> instance.</returns>
-        public static Train ToTrain(this TrainModel model, Dictionary<string, Location> locations, Dictionary<string, TrainClass> trainClasses, Dictionary<string, Note> notes)
+        public static Train ToTrain(this TrainModel model, Dictionary<string, Location> locations, Dictionary<string, TrainClass> trainClasses, Dictionary<string, Note> notes, DocumentOptions options)
         {
             Train trn = new Train
             {
@@ -36,7 +36,7 @@ namespace Timetabler.DataLoader.Load
 
             foreach (TrainLocationTimeModel timingPoint in model.TrainTimes)
             {
-                trn.TrainTimes.Add(timingPoint.ToTrainLocationTime(locations, notes));
+                trn.TrainTimes.Add(timingPoint.ToTrainLocationTime(locations, notes, options));
             }
 
             foreach (string noteId in model.FootnoteIds)

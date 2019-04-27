@@ -51,7 +51,7 @@ namespace Timetabler.DataLoader.Load.Legacy.V1
             Dictionary<string, Note> noteMap = document.NoteDefinitions.ToDictionary(n => n.Id);
             foreach (XmlData.Legacy.V1.TrainModel trn in file.TrainList)
             {
-                document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap));
+                document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap, document.Options));
             }
 
             return document;

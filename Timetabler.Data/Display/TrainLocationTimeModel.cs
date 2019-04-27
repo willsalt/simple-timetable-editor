@@ -61,5 +61,24 @@ namespace Timetabler.Data.Display
         {
             return Copy();
         }
+
+        /// <summary>
+        /// Update the displayed text fields to match a given train time and format.
+        /// </summary>
+        /// <param name="trainTime">The time to use as the source data</param>
+        /// <param name="formats">The set of format strings to use to convert the time fields into text.</param>
+        public void Populate(TrainTime trainTime, TimeDisplayFormattingStrings formats)
+        {
+            if (trainTime?.Time == null || formats == null)
+            {
+                return;
+            }
+            ActualTime = trainTime.Time;
+            EntryType = TrainLocationTimeEntryType.Time;
+            DisplayedText = string.Format(trainTime.Time.ToString(formats.Complete), trainTime.FootnoteSymbols);
+            DisplayedTextHours = trainTime.Time.ToString(formats.Hours);
+            DisplayedTextFootnote = trainTime.FootnoteSymbols;
+            DisplayedTextMinutes = trainTime.Time.ToString(formats.Minutes);
+        }
     }
 }

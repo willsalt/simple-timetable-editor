@@ -45,7 +45,7 @@ namespace Timetabler.Data.Display
         {
             return new TrainLocationTimeModel
             {
-                ActualTime = ActualTime != null ? ActualTime.Copy() : null,
+                ActualTime = ActualTime?.Copy(),
                 DisplayedText = DisplayedText,
                 DisplayedTextFootnote = DisplayedTextFootnote,
                 DisplayedTextHours = DisplayedTextHours,

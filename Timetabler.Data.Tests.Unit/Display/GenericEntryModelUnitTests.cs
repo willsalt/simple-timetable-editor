@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
@@ -53,7 +49,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void GenericEntryModelClassDisplayAdapterPropertDisplayChangedMethodIsCalledWithCorrectParameterWHenDisplayedTextPropertySetMethodIsCalled()
+        public void GenericEntryModelClassDisplayAdapterPropertyDisplayChangedMethodIsCalledWithCorrectParameterWHenDisplayedTextPropertySetMethodIsCalled()
         {
             Mock<ILocationEntryDisplayAdapter> mockDisplayAdapter = new Mock<ILocationEntryDisplayAdapter>();
             string testValue = _rnd.NextString(_rnd.Next(20) + 1);

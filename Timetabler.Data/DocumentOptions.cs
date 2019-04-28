@@ -63,7 +63,7 @@
         /// </summary>
         private void UpdateFormattingStrings()
         {
-            string formatPlaceholder = "{0}";
+            const string formatPlaceholder = "{0}";
             switch (_clockType)
             {
                 case ClockType.TwelveHourClock:

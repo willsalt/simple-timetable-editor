@@ -69,6 +69,8 @@
     <Compile Include="Collections\TrainSegmentModelCollectionUnitTests.cs" />
     <Compile Include="Comparers\LocationDisplayModelComparerUnitTests.cs" />
     <Compile Include="Display\GenericEntryModelUnitTests.cs" />
+    <Compile Include="Display\TrainLocationTimeModelUnitTests.cs" />
+    <Compile Include="DocumentOptionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalboxUnitTests.cs" />
     <Compile Include="TestHelpers\DistanceHelpers.cs" />

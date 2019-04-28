@@ -481,37 +481,6 @@ namespace Timetabler.Data
             }
         }
 
-        private TrainLocationTimeModel GetModelForTimingPoint(TrainLocationTime timingPoint, ArrivalDepartureOptions arriveOrDepart, TimeDisplayFormattingStrings timeDisplayFormats)
-        {
-            TrainTime timingInstance;
-            string locationIdSuffix;
-            switch (arriveOrDepart)
-            {
-                case ArrivalDepartureOptions.Arrival:
-                    timingInstance = timingPoint.ArrivalTime;
-                    locationIdSuffix = LocationIdSuffixes.Arrival;
-                    break;
-                case ArrivalDepartureOptions.Departure:
-                default:
-                    timingInstance = timingPoint.DepartureTime;
-                    locationIdSuffix = LocationIdSuffixes.Departure;
-                    break;
-            }
-            string footnotes = timingInstance.FootnoteSymbols;
-            return new TrainLocationTimeModel
-            {
-                LocationKey = timingPoint.Location.Id + locationIdSuffix,
-                LocationId = timingPoint.Location.Id,
-                ActualTime = timingInstance.Time,
-                EntryType = TrainLocationTimeEntryType.Time,
-                DisplayedText = string.Format(timingInstance.Time.ToString(timeDisplayFormats.Complete), footnotes),
-                DisplayedTextHours = timingInstance.Time.ToString(timeDisplayFormats.Hours),
-                DisplayedTextFootnote = footnotes,
-                DisplayedTextMinutes = timingInstance.Time.ToString(timeDisplayFormats.Minutes),
-                IsPassingTime = timingPoint.Pass,
-            };
-        }
-
         private IEnumerable<FootnoteDisplayModel> GetPageFootnotesForTimingPoint(TrainLocationTime timingPoint)
         {
             List<FootnoteDisplayModel> footnotes = new List<FootnoteDisplayModel>();

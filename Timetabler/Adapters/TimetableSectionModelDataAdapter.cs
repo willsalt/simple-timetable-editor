@@ -188,14 +188,19 @@ namespace Timetabler.Adapters
             View[idx, _trainAmPmRowIdx].Value = segment.HalfOfDay;
             View[idx, _trainClassRowIdx].Value = segment.TrainClass;
             View[idx, _trainFootnotesRowIdx].Value = segment.Footnotes;
-            View[idx, View.Rows.Count + _trainToWorkRowIdx].Value = segment.ToWorkCell?.DisplayedText ?? string.Empty;
+            if (segment.ToWorkCell != null)
+            {
+                segment.ToWorkCell.DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, View.Rows.Count + _trainToWorkRowIdx] };
+            }
+            //View[idx, View.Rows.Count + _trainToWorkRowIdx].Value = segment.ToWorkCell?.DisplayedText ?? string.Empty;
             if (_trainLocoDiagramRowIdx.HasValue)
             {
                 View[idx, _trainLocoDiagramRowIdx.Value].Value = segment.LocoDiagram;
             }
-            if (_trainLocoToWorkRowIdx.HasValue)
+            if (_trainLocoToWorkRowIdx.HasValue && segment.LocoToWorkCell != null)
             {
-                View[idx, View.Rows.Count + _trainLocoToWorkRowIdx.Value].Value = segment.LocoToWorkCell?.DisplayedText ?? string.Empty;
+                segment.LocoToWorkCell.DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, View.Rows.Count + _trainLocoToWorkRowIdx.Value] };
+                //View[idx, View.Rows.Count + _trainLocoToWorkRowIdx.Value].Value = segment.LocoToWorkCell?.DisplayedText ?? string.Empty;
             }
 
             for (int i = 0; i < Model.Locations.Count; ++i)

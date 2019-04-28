@@ -15,6 +15,7 @@ namespace Timetabler.DataLoader.Load
         /// <param name="model">The model instance to convert.</param>
         /// <param name="locations">Location map.</param>
         /// <param name="notes">Timetable footnotes.</param>
+        /// <param name="options">Timetable document options object.</param>
         /// <returns>A converted <see cref="TrainLocationTime"/> instance.</returns>
         public static TrainLocationTime ToTrainLocationTime(this TrainLocationTimeModel model, Dictionary<string, Location> locations, Dictionary<string, Note> notes, DocumentOptions options)
         {
@@ -26,8 +27,8 @@ namespace Timetabler.DataLoader.Load
             TrainLocationTime output = new TrainLocationTime
             {
                 Pass = model.Pass,
-                ArrivalTime = model.ArrivalTime != null ? model.ArrivalTime.ToTrainTime(notes) : null,
-                DepartureTime = model.DepartureTime != null ? model.DepartureTime.ToTrainTime(notes) : null,
+                ArrivalTime = model.ArrivalTime?.ToTrainTime(notes),
+                DepartureTime = model.DepartureTime?.ToTrainTime(notes),
                 Path = model.Path,
                 Platform = model.Platform,
                 Line = model.Line,

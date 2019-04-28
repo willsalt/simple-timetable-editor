@@ -44,12 +44,18 @@ namespace Timetabler.Data
         /// </summary>
         public Location Location { get; set; }
 
+        /// <summary>
+        /// The format strings to use for converting the time components of this timing point into strings.
+        /// </summary>
         public TimeDisplayFormattingStrings FormattingStrings { get; set; }
 
         private TrainLocationTimeModel _arrivalTimeModel;
 
         private TrainLocationTimeModel _departureTimeModel;
 
+        /// <summary>
+        /// The model used to display the arrival time of this timing point.
+        /// </summary>
         public TrainLocationTimeModel ArrivalTimeModel
         {
             get
@@ -58,6 +64,9 @@ namespace Timetabler.Data
             }
         }
 
+        /// <summary>
+        /// The model used to display the departure time of this timing point.
+        /// </summary>
         public TrainLocationTimeModel DepartureTimeModel
         {
             get
@@ -86,6 +95,11 @@ namespace Timetabler.Data
             return model;
         }
 
+        /// <summary>
+        /// Ensure any changes to the times of the timing point are reflected in the display model data.  This method is provided for clarity, because this is also done as a side-effect of the
+        /// display models' get methods, but there are are situations in which calling code might need to ensure that the display models have been updated but does not need to get a reference to
+        /// the model objects themselves.  Calling the get methods purely to activate the side-effect but throwing away the result does not lead to readable code.
+        /// </summary>
         public void RefreshTimeModels()
         {
             UpdateTrainLocationTimeModel(ref _arrivalTimeModel, ArrivalTime, LocationIdSuffixes.Arrival);

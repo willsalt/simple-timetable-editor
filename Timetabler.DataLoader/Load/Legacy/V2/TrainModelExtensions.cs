@@ -16,6 +16,7 @@ namespace Timetabler.DataLoader.Load.Legacy.V2
         /// <param name="locations">Dictionary of locations occurring in the timetable.</param>
         /// <param name="trainClasses">Dictionary of train classes occurring in the timetable.</param>
         /// <param name="notes">Dictionary of footnotes occurring in the timetable.</param>
+        /// <param name="options">Timetable document options object.</param>
         /// <returns>A <see cref="Train"/> instance.</returns>
         public static Train ToTrain(
             this XmlData.Legacy.V2.TrainModel model, 

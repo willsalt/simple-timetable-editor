@@ -536,15 +536,15 @@ namespace Timetabler.Data
             return time.Footnotes.Where(f => f.DefinedOnPages).Select(f => f.ToFootnoteDisplayModel());
         }
 
-        private void SetToWorkCellValue(GenericTimeModel toWork)
+        private void SetToWorkCellValue(GenericTimeModel toWorkModel)
         {
-            if (toWork == null)
+            if (toWorkModel == null)
             {
                 return;
             }
-            if (toWork.ActualTime != null)
+            if (toWorkModel.ActualTime != null)
             {
-                toWork.DisplayedText = toWork.ActualTime.ToString(GetTimeDisplayFormat(TimeDisplayFormatType.Plain).Complete);
+                toWorkModel.DisplayedText = toWorkModel.ActualTime.ToString(Options.FormattingStrings.TimeWithoutFootnotes);
             }
         }
 
@@ -705,6 +705,11 @@ namespace Timetabler.Data
             Plain
         }
 
+        /// <summary>
+        /// Refresh the displayed values of all train segments, without doing a full reload of the grid contents.  This should be called if anything has happened which changes what should
+        /// be displayed on-screen for a large number of trains, but that does not affect what train segments are displayed in the grid or their ordering - for example, if the document
+        /// clock type is changed.
+        /// </summary>
         public void RefreshTrainDisplayFormatting()
         {
             foreach (var train in TrainList)
@@ -714,33 +719,16 @@ namespace Timetabler.Data
                     timingPoint.RefreshTimeModels();
                 }
             }
-        }
-
-        private TimeDisplayFormattingStrings GetTimeDisplayFormat(TimeDisplayFormatType t)
-        {
-            TimeDisplayFormattingStrings output = new TimeDisplayFormattingStrings();
-            ClockType ct = ClockType.TwelveHourClock;
-            string formatPlaceholder = (t == TimeDisplayFormatType.WithFootnoteSpace) ? "{0}" : "  ";
-            if (Options != null)
+            foreach (var trainSegment in DownTrainsDisplay.TrainSegments)
             {
-                ct = Options.ClockType;
+                SetToWorkCellValue(trainSegment.LocoToWorkCell);
+                SetToWorkCellValue(trainSegment.ToWorkCell);
             }
-            switch (ct)
+            foreach (var trainSegment in UpTrainsDisplay.TrainSegments)
             {
-                case ClockType.TwelveHourClock:
-                default:
-                    output.Complete = "h" + formatPlaceholder + "mmf";
-                    output.Hours = "h";
-                    output.Minutes = "mmf";
-                    break;
-                case ClockType.TwentyFourHourClock:
-                    output.Complete = "HH" + formatPlaceholder + "mmf";
-                    output.Hours = "HH";
-                    output.Minutes = "mmf";
-                    break;
+                SetToWorkCellValue(trainSegment.LocoToWorkCell);
+                SetToWorkCellValue(trainSegment.ToWorkCell);
             }
-
-            return output;
         }
 
         /// <summary>

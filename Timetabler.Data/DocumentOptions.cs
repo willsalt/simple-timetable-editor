@@ -28,12 +28,12 @@
         /// </summary>
         public bool DisplayTrainLabelsOnGraphs { get; set; }
 
-        private TimeDisplayFormattingStrings _formattingStrings = new TimeDisplayFormattingStrings();
-
-        public TimeDisplayFormattingStrings FormattingStrings
-        {
-            get { return _formattingStrings; }
-        }
+        /// <summary>
+        /// The correct formatting strings to use for time output, given the current value of the <see cref="ClockType" /> property.  Note that subsequent calls to the get method of this property
+        /// may return the same object.  That object's properties are tied to the this object's <see cref="ClockType" /> property and will change if the <see cref="ClockType" /> property 
+        /// of this object is changed.
+        /// </summary>
+        public TimeDisplayFormattingStrings FormattingStrings { get; } = new TimeDisplayFormattingStrings();
 
         /// <summary>
         /// Produce a shallow copy of this instance
@@ -44,6 +44,10 @@
             return new DocumentOptions { ClockType = ClockType, DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs };
         }
 
+        /// <summary>
+        /// Copies the properties of this object into another <see cref="DocumentOptions" /> object.  This is a shallow copy.
+        /// </summary>
+        /// <param name="options">The object whose properties will be overwritten with the values of this object's properties.</param>
         public void CopyTo(DocumentOptions options)
         {
             if (options == null)
@@ -54,6 +58,9 @@
             options.DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs;
         }
 
+        /// <summary>
+        /// Update the <see cref="FormattingStrings" /> object's properties when the value of the <see cref="ClockType" /> property has changed.
+        /// </summary>
         private void UpdateFormattingStrings()
         {
             string formatPlaceholder = "{0}";
@@ -61,14 +68,16 @@
             {
                 case ClockType.TwelveHourClock:
                 default:
-                    _formattingStrings.Complete = "h" + formatPlaceholder + "mmf";
-                    _formattingStrings.Hours = "h";
-                    _formattingStrings.Minutes = "mmf";
+                    FormattingStrings.Complete = "h" + formatPlaceholder + "mmf";
+                    FormattingStrings.TimeWithoutFootnotes = "h mmf";
+                    FormattingStrings.Hours = "h";
+                    FormattingStrings.Minutes = "mmf";
                     break;
                 case ClockType.TwentyFourHourClock:
-                    _formattingStrings.Complete = "HH" + formatPlaceholder + "mmf";
-                    _formattingStrings.Hours = "HH";
-                    _formattingStrings.Minutes = "mmf";
+                    FormattingStrings.Complete = "HH" + formatPlaceholder + "mmf";
+                    FormattingStrings.TimeWithoutFootnotes = "HH mmf";
+                    FormattingStrings.Hours = "HH";
+                    FormattingStrings.Minutes = "mmf";
                     break;
             }
         }

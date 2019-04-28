@@ -118,15 +118,8 @@ namespace Timetabler.Data.Display
                 return null;
             }
 
-            GenericTimeModel output = new GenericTimeModel { DisplayedText = toWork.Text };
-            if (toWork.AtTime != null && string.IsNullOrWhiteSpace(toWork.Text))
-            {
-                output.ActualTime = toWork.AtTime.Copy();
-            }
-            else
-            {
-                output.ActualTime = null;
-            }
+            GenericTimeModel output = new GenericTimeModel();
+            toWork.UpdateModel(output, null);
 
             return output;
         }

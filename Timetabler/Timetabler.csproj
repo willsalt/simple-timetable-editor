@@ -113,6 +113,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AddSubtract.cs" />
+    <Compile Include="Models\NoteListEditFormModel.cs" />
     <Compile Include="Models\SignalboxHoursEditFormModel.cs" />
     <Compile Include="Models\SignalboxHoursSetEditFormModel.cs" />
     <Compile Include="Models\TrainAdjustTimesFormModel.cs" />

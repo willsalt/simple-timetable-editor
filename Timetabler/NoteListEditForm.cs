@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data;
+using Timetabler.Models;
 
 namespace Timetabler
 {
@@ -13,12 +14,12 @@ namespace Timetabler
     /// </summary>
     public partial class NoteListEditForm : Form
     {
-        private Dictionary<string, Note> _model = new Dictionary<string, Note>();
+        private NoteListEditFormModel _model = new NoteListEditFormModel();
 
         /// <summary>
         /// The data to be edited in this form.
         /// </summary>
-        public Dictionary<string, Note> Model
+        public NoteListEditFormModel Model
         {
             get
             {
@@ -42,7 +43,7 @@ namespace Timetabler
         private void UpdateViewFromModel()
         {
             dgvNotes.Rows.Clear();
-            foreach (Note note in _model.Values.OrderBy(n => n.Symbol))
+            foreach (Note note in _model.Data.Values.OrderBy(n => n.Symbol))
             {
                 dgvNotes.Rows.Add(note.Id, note.Symbol, note.Definition);
             }
@@ -51,12 +52,12 @@ namespace Timetabler
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var nef = new NoteEditForm { Model = new Note { Id = GeneralHelper.GetNewId(_model.Values) } };
+            var nef = new NoteEditForm { Model = new Note { Id = GeneralHelper.GetNewId(_model.Data.Values) } };
             if (nef.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
-            _model.Add(nef.Model.Id, nef.Model);
+            _model.Data.Add(nef.Model.Id, nef.Model);
             UpdateViewFromModel();
         }
 
@@ -78,16 +79,17 @@ namespace Timetabler
 
         private void ShowNoteEditForm(string id)
         {
-            if (!_model.ContainsKey(id))
+            if (!_model.Data.ContainsKey(id))
             {
                 return;
             }
-            var nef = new NoteEditForm { Model = _model[id].Copy() };
+            var nef = new NoteEditForm { Model = _model.Data[id].Copy() };
             if (nef.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
-            nef.Model.CopyTo(_model[id]);
+            nef.Model.CopyTo(_model.Data[id]);
+            Model.ExistingNoteChanged = true;
             UpdateViewFromModel();
         }
 
@@ -98,11 +100,11 @@ namespace Timetabler
                 return;
             }
             string id = dgvNotes[0, dgvNotes.SelectedCells[0].RowIndex].Value as string;
-            if (!_model.ContainsKey(id))
+            if (!_model.Data.ContainsKey(id))
             {
                 return;
             }
-            _model.Remove(id);
+            _model.Data.Remove(id);
             UpdateViewFromModel();
         }
 

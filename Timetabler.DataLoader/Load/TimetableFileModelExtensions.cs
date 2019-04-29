@@ -123,7 +123,7 @@ namespace Timetabler.DataLoader.Load
                 Log.Trace("There are {0} trains to load", file.TrainList.Count);
                 foreach (TrainModel trn in file.TrainList)
                 {
-                    document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap));
+                    document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap, document.Options));
                 }
                 Log.Trace("Loaded {0} trains", document.TrainList.Count);
             }

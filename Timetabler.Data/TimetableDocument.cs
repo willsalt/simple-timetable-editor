@@ -481,37 +481,6 @@ namespace Timetabler.Data
             }
         }
 
-        private TrainLocationTimeModel GetModelForTimingPoint(TrainLocationTime timingPoint, ArrivalDepartureOptions arriveOrDepart, TimeDisplayFormattingStrings timeDisplayFormats)
-        {
-            TrainTime timingInstance;
-            string locationIdSuffix;
-            switch (arriveOrDepart)
-            {
-                case ArrivalDepartureOptions.Arrival:
-                    timingInstance = timingPoint.ArrivalTime;
-                    locationIdSuffix = LocationIdSuffixes.Arrival;
-                    break;
-                case ArrivalDepartureOptions.Departure:
-                default:
-                    timingInstance = timingPoint.DepartureTime;
-                    locationIdSuffix = LocationIdSuffixes.Departure;
-                    break;
-            }
-            string footnotes = timingInstance.Footnotes.Any() ? string.Join(string.Empty, timingInstance.Footnotes.Select(n => n.Symbol)) : "  ";
-            return new TrainLocationTimeModel
-            {
-                LocationKey = timingPoint.Location.Id + locationIdSuffix,
-                LocationId = timingPoint.Location.Id,
-                ActualTime = timingInstance.Time,
-                EntryType = TrainLocationTimeEntryType.Time,
-                DisplayedText = string.Format(timingInstance.Time.ToString(timeDisplayFormats.Complete), footnotes),
-                DisplayedTextHours = timingInstance.Time.ToString(timeDisplayFormats.Hours),
-                DisplayedTextFootnote = footnotes,
-                DisplayedTextMinutes = timingInstance.Time.ToString(timeDisplayFormats.Minutes),
-                IsPassingTime = timingPoint.Pass,
-            };
-        }
-
         private IEnumerable<FootnoteDisplayModel> GetPageFootnotesForTimingPoint(TrainLocationTime timingPoint)
         {
             List<FootnoteDisplayModel> footnotes = new List<FootnoteDisplayModel>();
@@ -536,15 +505,15 @@ namespace Timetabler.Data
             return time.Footnotes.Where(f => f.DefinedOnPages).Select(f => f.ToFootnoteDisplayModel());
         }
 
-        private void SetToWorkCellValue(GenericTimeModel toWork)
+        private void SetToWorkCellValue(GenericTimeModel toWorkModel)
         {
-            if (toWork == null)
+            if (toWorkModel == null)
             {
                 return;
             }
-            if (toWork.ActualTime != null)
+            if (toWorkModel.ActualTime != null)
             {
-                toWork.DisplayedText = toWork.ActualTime.ToString(GetTimeDisplayFormat(TimeDisplayFormatType.Plain).Complete);
+                toWorkModel.DisplayedText = toWorkModel.ActualTime.ToString(Options.FormattingStrings.TimeWithoutFootnotes);
             }
         }
 
@@ -557,7 +526,6 @@ namespace Timetabler.Data
             SetToWorkCellValue(currentSegment.LocoToWorkCell);
 
             Direction? currentDirection = null;
-            TimeDisplayFormattingStrings timeDisplayFormats = GetTimeDisplayFormat(TimeDisplayFormatType.WithFootnoteSpace);
             currentSegment.PageFootnotes.AddRange(GetPageFootnotesForTimingPoint(train.TrainTimes[0]));
             if (!string.IsNullOrWhiteSpace(train.TrainTimes[0].Path))
             {
@@ -574,7 +542,7 @@ namespace Timetabler.Data
             if (train.TrainTimes[0].ArrivalTime?.Time != null)
             {
                 currentSegment.HalfOfDay = train.TrainTimes[0].ArrivalTime.Time.HalfOfDay.ToNameString();
-                var timeModel = GetModelForTimingPoint(train.TrainTimes[0], ArrivalDepartureOptions.Arrival, timeDisplayFormats);
+                var timeModel = train.TrainTimes[0].ArrivalTimeModel;
                 currentSegment.Timings.Add(timeModel);
                 currentSegment.TimingsIndex.Add(train.TrainTimes[0].Location.Id + LocationIdSuffixes.Arrival, timeModel);
             }
@@ -596,7 +564,7 @@ namespace Timetabler.Data
                 {
                     currentSegment.HalfOfDay = train.TrainTimes[0].DepartureTime.Time.HalfOfDay.ToNameString();
                 }
-                var timeModel = GetModelForTimingPoint(train.TrainTimes[0], ArrivalDepartureOptions.Departure, timeDisplayFormats);
+                var timeModel = train.TrainTimes[0].DepartureTimeModel;
                 currentSegment.Timings.Add(timeModel);
                 currentSegment.TimingsIndex.Add(train.TrainTimes[0].Location.Id + LocationIdSuffixes.Departure, timeModel);
             }
@@ -651,7 +619,7 @@ namespace Timetabler.Data
                     {
                         currentSegment.HalfOfDay = train.TrainTimes[i].ArrivalTime.Time.HalfOfDay.ToNameString();
                     }
-                    var timeModel = GetModelForTimingPoint(train.TrainTimes[i], ArrivalDepartureOptions.Arrival, timeDisplayFormats);
+                    var timeModel = train.TrainTimes[i].ArrivalTimeModel;
                     currentSegment.Timings.Add(timeModel);
                     currentSegment.TimingsIndex.Add(train.TrainTimes[i].Location.Id + LocationIdSuffixes.Arrival, timeModel);
                 }
@@ -673,7 +641,7 @@ namespace Timetabler.Data
                     {
                         currentSegment.HalfOfDay = train.TrainTimes[i].DepartureTime.Time.HalfOfDay.ToNameString();
                     }
-                    var timeModel = GetModelForTimingPoint(train.TrainTimes[i], ArrivalDepartureOptions.Departure, timeDisplayFormats);
+                    var timeModel = train.TrainTimes[i].DepartureTimeModel;
                     currentSegment.Timings.Add(timeModel);
                     currentSegment.TimingsIndex.Add(train.TrainTimes[i].Location.Id + LocationIdSuffixes.Departure, timeModel);
                 }
@@ -706,31 +674,30 @@ namespace Timetabler.Data
             Plain
         }
 
-        private TimeDisplayFormattingStrings GetTimeDisplayFormat(TimeDisplayFormatType t)
+        /// <summary>
+        /// Refresh the displayed values of all train segments, without doing a full reload of the grid contents.  This should be called if anything has happened which changes what should
+        /// be displayed on-screen for a large number of trains, but that does not affect what train segments are displayed in the grid or their ordering - for example, if the document
+        /// clock type is changed.
+        /// </summary>
+        public void RefreshTrainDisplayFormatting()
         {
-            TimeDisplayFormattingStrings output = new TimeDisplayFormattingStrings();
-            ClockType ct = ClockType.TwelveHourClock;
-            string formatPlaceholder = (t == TimeDisplayFormatType.WithFootnoteSpace) ? "{0}" : "  ";
-            if (Options != null)
+            foreach (var train in TrainList)
             {
-                ct = Options.ClockType;
+                foreach (var timingPoint in train.TrainTimes)
+                {
+                    timingPoint.RefreshTimeModels();
+                }
             }
-            switch (ct)
+            foreach (var trainSegment in DownTrainsDisplay.TrainSegments)
             {
-                case ClockType.TwelveHourClock:
-                default:
-                    output.Complete = "h" + formatPlaceholder + "mmf";
-                    output.Hours = "h";
-                    output.Minutes = "mmf";
-                    break;
-                case ClockType.TwentyFourHourClock:
-                    output.Complete = "HH" + formatPlaceholder + "mmf";
-                    output.Hours = "HH";
-                    output.Minutes = "mmf";
-                    break;
+                SetToWorkCellValue(trainSegment.LocoToWorkCell);
+                SetToWorkCellValue(trainSegment.ToWorkCell);
             }
-
-            return output;
+            foreach (var trainSegment in UpTrainsDisplay.TrainSegments)
+            {
+                SetToWorkCellValue(trainSegment.LocoToWorkCell);
+                SetToWorkCellValue(trainSegment.ToWorkCell);
+            }
         }
 
         /// <summary>

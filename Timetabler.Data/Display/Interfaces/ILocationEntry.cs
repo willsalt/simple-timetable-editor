@@ -1,4 +1,4 @@
-﻿namespace Timetabler.Data.Display
+﻿namespace Timetabler.Data.Display.Interfaces
 {
     /// <summary>
     /// An entry in a timetable that relates to a row that is specific to a location.
@@ -19,6 +19,11 @@
         /// The text to display in the row.
         /// </summary>
         string DisplayedText { get; set; }
+
+        /// <summary>
+        /// A class which may be responsible for publishing changes to the displayed appearance of this location entry.
+        /// </summary>
+        ILocationEntryDisplayAdapter DisplayAdapter { get; set; }
 
         /// <summary>
         /// The type of entry this is (ie time, routing code, footnote, arrow etc)

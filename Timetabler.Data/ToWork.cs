@@ -1,5 +1,6 @@
 ﻿using System;
 using Timetabler.CoreData.Interfaces;
+using Timetabler.Data.Display;
 
 namespace Timetabler.Data
 {
@@ -40,6 +41,44 @@ namespace Timetabler.Data
 
             target.AtTime = AtTime?.Copy();
             target.Text = Text;
+        }
+
+        /// <summary>
+        /// Change a <see cref="GenericTimeModel" /> object so that its displayed text represents the properties of this object.
+        /// </summary>
+        /// <param name="model">The object to be updated.</param>
+        /// <param name="formats">The format strings to use for displaying times, or null if not available.</param>
+        public void UpdateModel(GenericTimeModel model, TimeDisplayFormattingStrings formats)
+        {
+            if (model == null)
+            {
+                return;
+            }
+
+            // Use the Text property if this has been set.
+            if (!string.IsNullOrWhiteSpace(Text))
+            {
+                model.ActualTime = null;
+                model.DisplayedText = Text;
+            }
+            // If the Text property has not been set, use the time.  Format the time using the supplied parameter if available.
+            else if (AtTime != null)
+            {
+                model.ActualTime = AtTime.Copy();
+                if (formats == null)
+                {
+                    model.DisplayedText = AtTime.ToString(); // This will be updated later with the correct formatting string.
+                }
+                else
+                {
+                    model.DisplayedText = AtTime.ToString(formats.TimeWithoutFootnotes);
+                }
+            }
+            else
+            {
+                model.ActualTime = null;
+                model.DisplayedText = "";
+            }
         }
     }
 }

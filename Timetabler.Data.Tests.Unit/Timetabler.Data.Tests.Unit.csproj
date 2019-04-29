@@ -79,6 +79,8 @@
     <Compile Include="TestHelpers\TrainLocationTimeModelHelpers.cs" />
     <Compile Include="TestHelpers\TrainSegmentModelHelpers.cs" />
     <Compile Include="ToWorkUnitTests.cs" />
+    <Compile Include="TrainLocationTimeUnitTests.cs" />
+    <Compile Include="TrainTimeUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">

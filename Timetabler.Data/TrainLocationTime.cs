@@ -60,7 +60,7 @@ namespace Timetabler.Data
         {
             get
             {
-                return UpdateTrainLocationTimeModel(ref _arrivalTimeModel, ArrivalTime, LocationIdSuffixes.Departure);
+                return UpdateTrainLocationTimeModel(ref _arrivalTimeModel, ArrivalTime, LocationIdSuffixes.Arrival);
             }
         }
 

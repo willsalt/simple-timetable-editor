@@ -35,10 +35,8 @@ namespace Timetabler.Models
         public List<Note> ValidTimingPointNotes { get; set; }
 
         /// <summary>
-        /// Whether to handle times in 12-hour or 24-hour format.
+        /// Document Options - so that we know what time input mode to use.
         /// </summary>
-        //public ClockType TimeInputMode { get; set; }
-
         public DocumentOptions DocumentOptions { get; set; }
     }
 }

@@ -192,7 +192,6 @@ namespace Timetabler.Adapters
             {
                 segment.ToWorkCell.DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, View.Rows.Count + _trainToWorkRowIdx] };
             }
-            //View[idx, View.Rows.Count + _trainToWorkRowIdx].Value = segment.ToWorkCell?.DisplayedText ?? string.Empty;
             if (_trainLocoDiagramRowIdx.HasValue)
             {
                 View[idx, _trainLocoDiagramRowIdx.Value].Value = segment.LocoDiagram;
@@ -200,7 +199,6 @@ namespace Timetabler.Adapters
             if (_trainLocoToWorkRowIdx.HasValue && segment.LocoToWorkCell != null)
             {
                 segment.LocoToWorkCell.DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, View.Rows.Count + _trainLocoToWorkRowIdx.Value] };
-                //View[idx, View.Rows.Count + _trainLocoToWorkRowIdx.Value].Value = segment.LocoToWorkCell?.DisplayedText ?? string.Empty;
             }
 
             for (int i = 0; i < Model.Locations.Count; ++i)
@@ -208,7 +206,6 @@ namespace Timetabler.Adapters
                 if (segment.TimingsIndex.ContainsKey(Model.Locations[i].LocationKey))
                 {
                     segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, _locationRowIdxBase + i] };
-                    //View[idx, _locationRowIdxBase + i].Value = segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayedText;
                     TrainLocationTimeModel tltm = segment.TimingsIndex[Model.Locations[i].LocationKey] as TrainLocationTimeModel;
                     if (tltm != null &&  !tltm.IsPassingTime)
                     {

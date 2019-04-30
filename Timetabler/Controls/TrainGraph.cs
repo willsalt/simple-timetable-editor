@@ -312,14 +312,6 @@ namespace Timetabler.Controls
                 controlHandleCoordinates.Add(new Tuple<float, float>(xc0, yc0));
                 controlHandleCoordinates.Add(new Tuple<float, float>(xc1, yc1));
             }
-            //float handleOffset = ControlHandleSize / 2f;
-            //if (v0.Train == _selectedTrain)
-            //{
-            //    graphics.FillEllipse(Brushes.White, xc0 - handleOffset, yc0 - handleOffset, ControlHandleSize, ControlHandleSize);
-            //    graphics.DrawEllipse(Pens.Black, xc0 - handleOffset, yc0 - handleOffset, ControlHandleSize, ControlHandleSize);
-            //    graphics.FillEllipse(Brushes.White, xc1 - handleOffset, yc1 - handleOffset, ControlHandleSize, ControlHandleSize);
-            //    graphics.DrawEllipse(Pens.Black, xc1 - handleOffset, yc1 - handleOffset, ControlHandleSize, ControlHandleSize);
-            //}
         }
 
         private void AddCoordinate(VertexInformation vertex, float xCoord, float yCoord)

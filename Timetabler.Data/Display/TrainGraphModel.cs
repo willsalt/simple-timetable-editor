@@ -32,6 +32,8 @@ namespace Timetabler.Data.Display
         /// </summary>
         public bool DisplayTrainLabels { get; set; }
 
+        public string TooltipFormattingString { get; set; }
+
         private TrainCollection _trainList;
 
         private int? _baseTimeSeconds;

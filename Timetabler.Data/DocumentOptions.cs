@@ -72,12 +72,14 @@
                     FormattingStrings.TimeWithoutFootnotes = "h mmf";
                     FormattingStrings.Hours = "h";
                     FormattingStrings.Minutes = "mmf";
+                    FormattingStrings.Tooltip = "h:mmftt";
                     break;
                 case ClockType.TwentyFourHourClock:
                     FormattingStrings.Complete = "HH" + formatPlaceholder + "mmf";
                     FormattingStrings.TimeWithoutFootnotes = "HH mmf";
                     FormattingStrings.Hours = "HH";
                     FormattingStrings.Minutes = "mmf";
+                    FormattingStrings.Tooltip = "HH:mmf";
                     break;
             }
         }

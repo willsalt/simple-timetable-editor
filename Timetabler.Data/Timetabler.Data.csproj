@@ -35,12 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\NLog.4.6.2\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,7 +70,8 @@
     <Compile Include="Display\FootnoteDisplayModel.cs" />
     <Compile Include="Display\GenericEntryModel.cs" />
     <Compile Include="Display\GenericTimeModel.cs" />
-    <Compile Include="Display\ILocationEntry.cs" />
+    <Compile Include="Display\Interfaces\ILocationEntry.cs" />
+    <Compile Include="Display\Interfaces\ILocationEntryDisplayAdapter.cs" />
     <Compile Include="Display\LineCoordinates.cs" />
     <Compile Include="Display\LocationDisplayModel.cs" />
     <Compile Include="Display\LocationEntryModel.cs" />

@@ -92,14 +92,14 @@ namespace Timetabler
             ckSeparatorAbove.Checked = _model.Data.IncludeSeparatorAbove;
             ckSeparatorBelow.Checked = _model.Data.IncludeSeparatorBelow;
             tbInlineNote.Text = _model.Data.InlineNote ?? string.Empty;
-            _model.TimeInputMode.SetControlsVisibleIn12HourMode(new[] { cbToWorkHalfOfDay, cbLocoToWorkHalfOfDay });
+            _model.DocumentOptions.ClockType.SetControlsVisibleIn12HourMode(new[] { cbToWorkHalfOfDay, cbLocoToWorkHalfOfDay });
             if (_model.Data.ToWork?.AtTime != null)
             {
-                _model.Data.ToWork.AtTime.SetTime(tbToWorkHour, tbToWorkMinute, cbToWorkHalfOfDay, _model.TimeInputMode);
+                _model.Data.ToWork.AtTime.SetTime(tbToWorkHour, tbToWorkMinute, cbToWorkHalfOfDay, _model.DocumentOptions.ClockType);
             }
             if (_model.Data.LocoToWork?.AtTime != null)
             {
-                _model.Data.LocoToWork.AtTime.SetTime(tbLocoToWorkHour, tbLocoToWorkMinute, cbLocoToWorkHalfOfDay, _model.TimeInputMode);
+                _model.Data.LocoToWork.AtTime.SetTime(tbLocoToWorkHour, tbLocoToWorkMinute, cbLocoToWorkHalfOfDay, _model.DocumentOptions.ClockType);
             }
             tbToWorkText.Text = _model.Data.ToWork?.Text ?? string.Empty;
             tbLocoToWorkText.Text = _model.Data.LocoToWork?.Text ?? string.Empty;
@@ -125,7 +125,7 @@ namespace Timetabler
 
         private string FormatTimeSpan(TimeOfDay time)
         {
-            return time.ToString(Model.TimeInputMode == ClockType.TwentyFourHourClock ? "HH:mmf" : "h:mmf tt");
+            return time.ToString(Model.DocumentOptions.ClockType == ClockType.TwentyFourHourClock ? "HH:mmf" : "h:mmf tt");
         }
 
         /// <summary>
@@ -146,10 +146,10 @@ namespace Timetabler
             {
                 Model = new TrainLocationTimeEditFormModel
                 {
-                    Data = new TrainLocationTime(),
+                    Data = new TrainLocationTime { FormattingStrings = _model.DocumentOptions.FormattingStrings },
                     ValidLocations = (_model != null && _model.ValidLocations != null) ? _model.ValidLocations : new LocationCollection(),
                     ValidNotes = _model?.ValidTimingPointNotes != null ? _model.ValidTimingPointNotes : new List<Note>(),
-                    InputMode = _model.TimeInputMode,
+                    InputMode = _model.DocumentOptions.ClockType,
                 }
             };
 
@@ -222,7 +222,7 @@ namespace Timetabler
                     Data = Model.Data.TrainTimes[rowIndex].Copy(),
                     ValidLocations = Model.ValidLocations,
                     ValidNotes = Model.ValidTimingPointNotes != null ? Model.ValidTimingPointNotes : new List<Note>(),
-                    InputMode = Model.TimeInputMode,
+                    InputMode = Model.DocumentOptions.ClockType,
                 }
             };
 
@@ -459,7 +459,7 @@ namespace Timetabler
             }
 
             TimeHelpers.SetTimeProperty(_model.Data.ToWork, _model.Data.ToWork.GetType().GetProperty(nameof(_model.Data.ToWork.AtTime)), tbToWorkHour, tbToWorkMinute, 
-                _model.TimeInputMode == ClockType.TwelveHourClock ? cbToWorkHalfOfDay : null, _model.Data.ToWork.AtTime != null ? _model.Data.ToWork.AtTime.Seconds : 0);
+                _model.DocumentOptions.ClockType == ClockType.TwelveHourClock ? cbToWorkHalfOfDay : null, _model.Data.ToWork.AtTime != null ? _model.Data.ToWork.AtTime.Seconds : 0);
         }
 
         private void tbToWorkText_TextChanged(object sender, EventArgs e)
@@ -493,7 +493,7 @@ namespace Timetabler
             }
 
             TimeHelpers.SetTimeProperty(_model.Data.LocoToWork, _model.Data.LocoToWork.GetType().GetProperty(nameof(_model.Data.LocoToWork.AtTime)), tbLocoToWorkHour, tbLocoToWorkMinute,
-                _model.TimeInputMode == ClockType.TwelveHourClock ? cbLocoToWorkHalfOfDay : null, _model.Data.LocoToWork.AtTime != null ? _model.Data.LocoToWork.AtTime.Seconds : 0);
+                _model.DocumentOptions.ClockType == ClockType.TwelveHourClock ? cbLocoToWorkHalfOfDay : null, _model.Data.LocoToWork.AtTime != null ? _model.Data.LocoToWork.AtTime.Seconds : 0);
         }
 
         private void StoreLocoToWorkText()

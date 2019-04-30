@@ -1,4 +1,6 @@
-﻿namespace Timetabler.Data.Display
+﻿using Timetabler.Data.Display.Interfaces;
+
+namespace Timetabler.Data.Display
 {
     /// <summary>
     /// This class represents a cell displayed on a timetable, in a location row.
@@ -43,7 +45,7 @@
         {
             return new TrainLocationTimeModel
             {
-                ActualTime = ActualTime != null ? ActualTime.Copy() : null,
+                ActualTime = ActualTime?.Copy(),
                 DisplayedText = DisplayedText,
                 DisplayedTextFootnote = DisplayedTextFootnote,
                 DisplayedTextHours = DisplayedTextHours,
@@ -58,6 +60,25 @@
         ILocationEntry ILocationEntry.Copy()
         {
             return Copy();
+        }
+
+        /// <summary>
+        /// Update the displayed text fields to match a given train time and format.
+        /// </summary>
+        /// <param name="trainTime">The time to use as the source data</param>
+        /// <param name="formats">The set of format strings to use to convert the time fields into text.</param>
+        public void Populate(TrainTime trainTime, TimeDisplayFormattingStrings formats)
+        {
+            if (trainTime?.Time == null || formats == null)
+            {
+                return;
+            }
+            ActualTime = trainTime.Time;
+            EntryType = TrainLocationTimeEntryType.Time;
+            DisplayedText = string.Format(trainTime.Time.ToString(formats.Complete), trainTime.FootnoteSymbols);
+            DisplayedTextHours = trainTime.Time.ToString(formats.Hours);
+            DisplayedTextFootnote = trainTime.FootnoteSymbols;
+            DisplayedTextMinutes = trainTime.Time.ToString(formats.Minutes);
         }
     }
 }

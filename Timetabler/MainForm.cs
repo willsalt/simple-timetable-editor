@@ -224,7 +224,7 @@ namespace Timetabler
                 ValidClasses = Model.TrainClassList,
                 ValidTrainNotes = Model.NoteDefinitions.Where(n => n.AppliesToTrains).ToList(),
                 ValidTimingPointNotes = Model.NoteDefinitions.Where(n => n.AppliesToTimings).ToList(),
-                TimeInputMode = Model.Options.ClockType,
+                DocumentOptions = Model.Options,
             };
         }
 
@@ -624,10 +624,10 @@ namespace Timetabler
             {
                 return;
             }
-            Model.Options = doef.Model;
-            trainGraph.Model.DisplayTrainLabels = doef.Model.DisplayTrainLabelsOnGraphs;
+            doef.Model.CopyTo(Model.Options);
+            trainGraph.Model.DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs;
             trainGraph.Invalidate();
-            Model.UpdateTrainDisplays();
+            Model.RefreshTrainDisplayFormatting();
         }
 
         private void EditExportOptions()
@@ -690,15 +690,18 @@ namespace Timetabler
         private void editFootnotesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Footnotes");
-            NoteListEditForm nef = new NoteListEditForm { Model = Model.NoteDefinitions.ToDictionary(n => n.Id, n => n) };
+            NoteListEditForm nef = new NoteListEditForm { Model = new NoteListEditFormModel { Data = Model.NoteDefinitions.ToDictionary(n => n.Id, n => n) } };
             DialogResult result = nef.ShowDialog();
             Log.Trace("NoteListEditForm.ShowDialog() returned {0}", result);
             if (result != DialogResult.OK)
             {
                 return;
             }
-            Model.NoteDefinitions.CopyFrom(nef.Model);
-            //Model.ResolveAll();
+            Model.NoteDefinitions.CopyFrom(nef.Model.Data);
+            if (nef.Model.ExistingNoteChanged)
+            {
+                Model.RefreshTrainDisplayFormatting();
+            }
         }
         
         private void tbTitle_TextChanged(object sender, EventArgs e)

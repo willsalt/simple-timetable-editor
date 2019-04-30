@@ -10,7 +10,6 @@
         /// </summary>
         public MarginSet()
         {
-
         }
 
         /// <summary>
@@ -26,6 +25,14 @@
             Right = right;
             Bottom = bottom;
             Left = left;
+        }
+
+        /// <summary>
+        /// Constructor which sets all four margins to the same width.
+        /// </summary>
+        /// <param name="margin">The width of the margin on all four sides.</param>
+        public MarginSet(double margin) : this(margin, margin, margin, margin)
+        {
         }
 
         /// <summary>

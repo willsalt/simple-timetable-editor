@@ -1,4 +1,6 @@
-﻿namespace Timetabler.Data.Display
+﻿using Timetabler.Data.Display.Interfaces;
+
+namespace Timetabler.Data.Display
 {
     /// <summary>
     /// A timetable entry that relates to a location and contains generic text.

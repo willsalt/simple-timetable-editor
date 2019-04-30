@@ -54,6 +54,7 @@
             this.colDescription});
             this.dgvNotes.Name = "dgvNotes";
             this.dgvNotes.RowHeadersVisible = false;
+            this.dgvNotes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvNotes_CellContentDoubleClick);
             this.dgvNotes.SelectionChanged += new System.EventHandler(this.dgvNotes_SelectionChanged);
             // 
             // colId

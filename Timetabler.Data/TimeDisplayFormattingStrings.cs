@@ -11,6 +11,11 @@
         public string Complete { get; set; }
 
         /// <summary>
+        /// The formatting string to display the complete time, without any footnotes.
+        /// </summary>
+        public string TimeWithoutFootnotes { get; set; }
+
+        /// <summary>
         /// The formatting string to display the hours part of the time.
         /// </summary>
         public string Hours { get; set; }

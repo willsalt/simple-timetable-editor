@@ -4,6 +4,7 @@ using Tests.Utility;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data.Display;
+using Timetabler.Data.Display.Interfaces;
 
 namespace Timetabler.Data.Tests.Unit.TestHelpers
 {

@@ -38,11 +38,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\NLog.4.6.2\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,6 +65,7 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Adapters\GridLayoutMode.cs" />
+    <Compile Include="Adapters\LocationEntryDisplayAdapter.cs" />
     <Compile Include="Adapters\TimetableSectionModelDataAdapter.cs" />
     <Compile Include="Controls\TrainGraph.cs">
       <SubType>UserControl</SubType>
@@ -108,6 +113,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AddSubtract.cs" />
+    <Compile Include="Models\NoteListEditFormModel.cs" />
     <Compile Include="Models\SignalboxHoursEditFormModel.cs" />
     <Compile Include="Models\SignalboxHoursSetEditFormModel.cs" />
     <Compile Include="Models\TrainAdjustTimesFormModel.cs" />

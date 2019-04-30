@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using Timetabler.Models;
 using System.Drawing.Drawing2D;
-using Timetabler.Helpers;
 using Timetabler.Data;
 using Timetabler.Data.Events;
 using System;
@@ -339,7 +338,7 @@ namespace Timetabler.Controls
                 }
                 if (ShowTooltip)
                 {
-                    _tooltip.Show(_nearestVertex.Time.ToString(), this);
+                    _tooltip.Show(_nearestVertex.Time.ToString(Model.TooltipFormattingString), this);
                 }
             }
             else

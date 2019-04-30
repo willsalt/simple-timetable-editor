@@ -236,14 +236,16 @@ namespace Timetabler.Controls
                 e.Graphics.DrawLine(axisPen, x, yTop, x, bottomLimit + 5);
                 e.Graphics.DrawString(tick.Label, TimeAxisFont, new SolidBrush(Color.Black), (float)(x - tick.Width.Value / 2), bottomLimit + 5);
             }
-            
+
             // Draw trains
-            foreach (TrainDrawingInfo info in Model.GetTrainDrawingInformation())
+            List<TrainDrawingInfo> trainDrawingInfo = Model.GetTrainDrawingInformation().ToList();
+            List<Tuple<float, float>> selectedTrainCoordinates = new List<Tuple<float, float>>();
+            foreach (TrainDrawingInfo info in trainDrawingInfo)
             {
                 Pen trainPen = new Pen(info.Properties.Colour, info.Properties.Width) { DashStyle = info.Properties.DashStyle };
                 foreach (LineCoordinates lineData in info.LineVertexes)
                 {
-                    DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, rightLimit, topLimit, bottomLimit);
+                    DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, rightLimit, topLimit, bottomLimit, selectedTrainCoordinates);
                 }
 
                 if (Model.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
@@ -261,6 +263,12 @@ namespace Timetabler.Controls
                     e.Graphics.DrawString(info.Headcode.Trim(), TrainLabelFont, Brushes.Black, new PointF(0, 0));
                     e.Graphics.ResetTransform();
                 }
+            }
+            float handleOffset = ControlHandleSize / 2f;
+            foreach (Tuple<float, float> controlHandleCoordinate in selectedTrainCoordinates)
+            {
+                e.Graphics.FillEllipse(Brushes.White, controlHandleCoordinate.Item1 - handleOffset, controlHandleCoordinate.Item2 - handleOffset, ControlHandleSize, ControlHandleSize);
+                e.Graphics.DrawEllipse(Pens.Black, controlHandleCoordinate.Item1 - handleOffset, controlHandleCoordinate.Item2 - handleOffset, ControlHandleSize, ControlHandleSize);
             }
         }
 
@@ -281,7 +289,16 @@ namespace Timetabler.Controls
             return idx;
         }
 
-        private void DrawLine(Graphics graphics, Pen trainPen, VertexInformation v0, VertexInformation v1, float leftLimit, float rightLimit, float topLimit, float bottomLimit)
+        private void DrawLine(
+            Graphics graphics, 
+            Pen trainPen, 
+            VertexInformation v0, 
+            VertexInformation v1, 
+            float leftLimit, 
+            float rightLimit, 
+            float topLimit, 
+            float bottomLimit, 
+            List<Tuple<float, float>> controlHandleCoordinates)
         {
             float xc0 = CoordinateHelper.Stretch(leftLimit, rightLimit, v0.X);
             float yc0 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - v0.Y);
@@ -290,13 +307,10 @@ namespace Timetabler.Controls
             AddCoordinate(v0, xc0, yc0);
             AddCoordinate(v1, xc1, yc1);
             graphics.DrawLine(trainPen, new PointF(xc0, yc0), new PointF(xc1, yc1));
-            float handleOffset = ControlHandleSize / 2f;
-            if (v0.Train == _selectedTrain)
+            if (controlHandleCoordinates != null && v0.Train == _selectedTrain)
             {
-                graphics.FillEllipse(Brushes.White, xc0 - handleOffset, yc0 - handleOffset, ControlHandleSize, ControlHandleSize);
-                graphics.DrawEllipse(Pens.Black, xc0 - handleOffset, yc0 - handleOffset, ControlHandleSize, ControlHandleSize);
-                graphics.FillEllipse(Brushes.White, xc1 - handleOffset, yc1 - handleOffset, ControlHandleSize, ControlHandleSize);
-                graphics.DrawEllipse(Pens.Black, xc1 - handleOffset, yc1 - handleOffset, ControlHandleSize, ControlHandleSize);
+                controlHandleCoordinates.Add(new Tuple<float, float>(xc0, yc0));
+                controlHandleCoordinates.Add(new Tuple<float, float>(xc1, yc1));
             }
         }
 

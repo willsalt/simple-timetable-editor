@@ -16,7 +16,7 @@ Arguably the current state of the app achieves all of those aims apart from the 
 The program is currently a Windows Desktop app written using .NET Framework 4.5.2 and Windows Forms.
 
 It depends on the following external libs:
-* [NLog](https://nlog-project.org/) - currently still on v4.4
+* [NLog](https://nlog-project.org/) - v4.6
 * [PDFSharp](http://www.pdfsharp.net/) - v1.50
 
 ## Current state of the project
@@ -34,7 +34,7 @@ The program is partially unit-tested, but test coverage is not fantastic and sho
 ## Short-to-medium-term aims
 
 * Fix various small bugs
-* Update dependent libs to latest versions
+* Update PDFSharp to latest version
 * See what can be done to improve performance
 * Consider converting to .NET Core when v3 is released
 * Consider swapping from NLog to Serilog

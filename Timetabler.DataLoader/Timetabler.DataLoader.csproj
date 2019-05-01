@@ -56,12 +56,6 @@
     <Compile Include="Load\DocumentOptionsModelExtensions.cs" />
     <Compile Include="Load\ExportOptionsModelExtensions.cs" />
     <Compile Include="Load\GraphTrainPropertiesModelExtensions.cs" />
-    <Compile Include="Load\Legacy\V1\TimetableFileModelExtensions.cs" />
-    <Compile Include="Load\Legacy\V1\TrainModelExtensions.cs" />
-    <Compile Include="Load\Legacy\V2\ExportOptionsModelExtensions.cs" />
-    <Compile Include="Load\Legacy\V2\LocationModelExtensions.cs" />
-    <Compile Include="Load\Legacy\V2\TimetableFileModelExtensions.cs" />
-    <Compile Include="Load\Legacy\V2\TrainModelExtensions.cs" />
     <Compile Include="Load\Legacy\V3\TimetableFileModelExtensions.cs" />
     <Compile Include="Load\LocationModelExtensions.cs" />
     <Compile Include="Load\NoteModelExtensions.cs" />

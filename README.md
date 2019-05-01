@@ -34,7 +34,6 @@ The program is partially unit-tested, but test coverage is not fantastic and sho
 ## Short-to-medium-term aims
 
 * Fix various small bugs
-* Update PDFSharp to latest version
 * See what can be done to improve performance
 * Consider converting to .NET Core when v3 is released
 * Consider swapping from NLog to Serilog

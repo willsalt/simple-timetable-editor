@@ -7,8 +7,6 @@ using Timetabler.CoreData.Exceptions;
 using Timetabler.Data;
 using Timetabler.Data.Collections;
 using Timetabler.DataLoader.Load;
-using Timetabler.DataLoader.Load.Legacy.V1;
-using Timetabler.DataLoader.Load.Legacy.V2;
 using Timetabler.DataLoader.Load.Legacy.V3;
 using Timetabler.XmlData;
 
@@ -57,14 +55,6 @@ namespace Timetabler.DataLoader
 
             try
             {
-                if (version < 2)
-                {
-                    return LoadVersion0(reader);
-                }
-                if (version < 3)
-                {
-                    return LoadVersion2(reader);
-                }
                 if (version < 4)
                 {
                     return LoadVersion3(reader);
@@ -76,18 +66,6 @@ namespace Timetabler.DataLoader
             {
                 throw new TimetableLoaderException("Unexpected exception occurred in loader.", ex);
             }
-        }
-
-        private static TimetableDocument LoadVersion0(XmlReader reader)
-        {
-            XmlSerializer deserializer = new XmlSerializer(typeof(XmlData.Legacy.V1.TimetableFileModel));
-            return ((XmlData.Legacy.V1.TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
-        }
-
-        private static TimetableDocument LoadVersion2(XmlReader reader)
-        {
-            XmlSerializer deserializer = new XmlSerializer(typeof(XmlData.Legacy.V2.TimetableFileModel));
-            return ((XmlData.Legacy.V2.TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
         }
 
         private static TimetableDocument LoadVersion3(XmlReader reader)

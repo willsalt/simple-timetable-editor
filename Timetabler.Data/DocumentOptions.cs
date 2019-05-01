@@ -54,7 +54,12 @@
             {
                 return;
             }
-            options.ClockType = ClockType;
+
+            // This test avoids changing all the formatting strings if we don't actually have to.
+            if (options.ClockType != ClockType)
+            {
+                options.ClockType = ClockType;
+            }
             options.DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs;
         }
 

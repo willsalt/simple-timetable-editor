@@ -681,7 +681,7 @@ namespace Timetabler
                 newDocument.Signalboxes = template.Signalboxes;
             }
             Model = newDocument;
-            trainGraph.Model = new TrainGraphModel { LocationList = Model.LocationList, TrainList = Model.TrainList };            
+            trainGraph.Model = new TrainGraphModel { LocationList = Model.LocationList, TrainList = Model.TrainList, DisplayTrainLabels = template.DocumentOptions.DisplayTrainLabelsOnGraphs };            
             UpdateFields();
             Model.UpdateTrainDisplays();
             _documentChanged = false;

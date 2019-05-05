@@ -152,5 +152,51 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
 
             Assert.IsTrue(Math.Abs(prop - (result - min) / (max - min)) < 0.0000001d);
         }
+
+        [TestMethod]
+        public void CoordinateHelperClassUnstretchMethodWithDoubleParamtersReturns0IfMinAndMaxAreEqual()
+        {
+            double minMax = rnd.NextDouble() * int.MaxValue / 2;
+            double amt = rnd.NextDouble() * int.MaxValue / 2;
+
+            double result = CoordinateHelper.Unstretch(minMax, minMax, amt);
+
+            Assert.AreEqual(0.0, result);
+        }
+
+        [TestMethod]
+        public void CoordinateHelperClassUnstretchMethodWithDoubleParametersReturns0IfAmtParameterEqualsMinParameter()
+        {
+            double min = rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+
+            double result = CoordinateHelper.Unstretch(min, max, min);
+
+            Assert.AreEqual(0.0, result);
+        }
+
+        [TestMethod]
+        public void CoordinateHelperClassUnstretchMethodWithDoubleParametersReturns1IfAmtParameterEqualsMaxParameter()
+        {
+            double min = rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+
+            double result = CoordinateHelper.Unstretch(min, max, max);
+
+            Assert.AreEqual(1.0, result);
+        }
+
+        [TestMethod]
+        public void CoordinateHelperClassUnstretchMethodWithDoubleParametersReturnsCorrectResultForReasonableInput()
+        {
+            double min = rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+            double testValue = rnd.NextDouble();
+            double amt = (max - min) * testValue + min;
+
+            double result = CoordinateHelper.Unstretch(min, max, amt);
+
+            Assert.IsTrue(Math.Abs(testValue - result) < 0.0000001d);
+        }
     }
 }

@@ -9,7 +9,7 @@
         /// Transforms a value between 0 and 1 into a value between a minimum and maximum.
         /// </summary>
         /// <param name="min">The value to return if the <see cref="P:prop"/> parameter is 0.</param>
-        /// <param name="max">The value to return if the <see cref="P:Prop"/> parameter is 1.</param>
+        /// <param name="max">The value to return if the <see cref="P:prop"/> parameter is 1.</param>
         /// <param name="prop">The proportional position between minimum and maximum.</param>
         /// <returns>The calculated absolute position.</returns>
         public static double Stretch(double min, double max, double prop)
@@ -21,12 +21,28 @@
         /// Transforms a value between 0 and 1 into a value between a minimum and maximum.
         /// </summary>
         /// <param name="min">The value to return if the <see cref="P:prop"/> parameter is 0.</param>
-        /// <param name="max">The value to return if the <see cref="P:Prop"/> parameter is 1.</param>
+        /// <param name="max">The value to return if the <see cref="P:prop"/> parameter is 1.</param>
         /// <param name="prop">The proportional position between minimum and maximum.</param>
         /// <returns>The calculated absolute position.</returns>
         public static float Stretch(float min, float max, double prop)
         {
-            return (float)Stretch((double)min, (double)max, prop);
+            return (float)Stretch((double)min, max, prop);
+        }
+
+        /// <summary>
+        /// Transforms a value between a minimum and a maximum into a value between 0 and 1.
+        /// </summary>
+        /// <param name="min">The minimum value, scaling to 0.</param>
+        /// <param name="max">The maximum value, scaling to 1.</param>
+        /// <param name="amt">The value to be scaled.</param>
+        /// <returns>A value representing the position of the <see cref="P:amt" /> parameter relative to the <see cref="P:min" /> and <see cref="P:max" /> parameters.</returns>
+        public static double Unstretch(double min, double max, double amt)
+        {
+            if (min == max)
+            {
+                return 0.0;
+            }
+            return (amt - min) / (max - min);
         }
     }
 }

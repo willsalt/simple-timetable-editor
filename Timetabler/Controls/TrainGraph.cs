@@ -128,6 +128,8 @@ namespace Timetabler.Controls
 
         private bool InDragMode { get; set; }
 
+        private float LocationAxisXCoordinate { get; set; }
+
         /// <summary>
         /// Default constructor; sets properties to their default values.
         /// </summary>
@@ -170,45 +172,6 @@ namespace Timetabler.Controls
             _trainCoordinates.Clear();
 
             // Work out horizontal resolution
-            int baseTime = 86400;
-            int maxTime = 0;
-            foreach (Train train in Model.TrainList)
-            {
-                var firstTime = train.TrainTimes.FirstOrDefault();
-                if (firstTime == null)
-                {
-                    continue;
-                }
-                if (firstTime.ArrivalTime?.Time != null)
-                {
-                    if (firstTime.ArrivalTime.Time.AbsoluteSeconds < baseTime)
-                    {
-                        baseTime = firstTime.ArrivalTime.Time.AbsoluteSeconds;
-                    }
-                }
-                else if (firstTime.DepartureTime?.Time != null)
-                {
-                    if (firstTime.DepartureTime.Time.AbsoluteSeconds < baseTime)
-                    {
-                        baseTime = firstTime.DepartureTime.Time.AbsoluteSeconds;
-                    }
-                }
-                var lastTime = train.TrainTimes.LastOrDefault();
-                if (lastTime.DepartureTime?.Time != null)
-                {
-                    if (lastTime.DepartureTime.Time.AbsoluteSeconds > maxTime)
-                    {
-                        maxTime = lastTime.DepartureTime.Time.AbsoluteSeconds;
-                    }
-                }
-                else if (lastTime.ArrivalTime?.Time != null)
-                {
-                    if (lastTime.ArrivalTime.Time.AbsoluteSeconds > maxTime)
-                    {
-                        maxTime = lastTime.ArrivalTime.Time.AbsoluteSeconds;
-                    }
-                }
-            }
             List<TrainGraphAxisTickInfo> timeAxisInfo = Model.GetTimeAxisInformation().Select(i => { i.PopulateSize(e.Graphics, TimeAxisFont); return i; }).ToList();
             bottomLimit -= timeAxisInfo.Max(i => (float)i.Height.Value) + 5;
             Pen axisPen = new Pen(Color.Black, 1f);
@@ -216,7 +179,7 @@ namespace Timetabler.Controls
             // Draw Y axis
             List<TrainGraphAxisTickInfo> locationAxisInfo = Model.GetDistanceAxisInformation().Select(i => { i.PopulateSize(e.Graphics, LocationAxisFont); return i; }).ToList();
             topLimit += (float)locationAxisInfo.Last().Height.Value / 2;
-            leftLimit += locationAxisInfo.Max(i => (float)i.Width) + 5;
+            LocationAxisXCoordinate = leftLimit += locationAxisInfo.Max(i => (float)i.Width) + 5;
 
             e.Graphics.FillRectangle(new SolidBrush(GraphBackColour), leftLimit, topLimit, rightLimit - leftLimit, bottomLimit - topLimit);
             e.Graphics.DrawLine(axisPen, leftLimit, bottomLimit, leftLimit, topLimit);
@@ -334,7 +297,15 @@ namespace Timetabler.Controls
             _log.Trace("Mouse moved to {0}, {1} (buttons {2} InDragMode {3})", e.X, e.Y, e.Button, InDragMode);
             if (InDragMode)
             {
-                _tooltip.Show("Dragging", this);
+                if (e.X > Size.Width || e.Y > Size.Height || e.X < 0 || e.Y < 0)
+                {
+                    InDragMode = false;
+                    _tooltip.Hide(this);
+                    return;
+                }
+                float rightLimit = Size.Width * (1 - RightMarginPercent);
+                TimeOfDay coordinateTime = Model.GetTimeOfDayFromXPosition(CoordinateHelper.Unstretch(LocationAxisXCoordinate, rightLimit, e.X));
+                _tooltip.Show($"Dragging {coordinateTime.ToString(Model.TooltipFormattingString)}", this);
                 Invalidate();
                 return;
             }
@@ -433,16 +404,6 @@ namespace Timetabler.Controls
         {
             _log.Trace("TrainGraph_MouseUp(): InDragMode false");
             InDragMode = false;
-        }
-
-        private void TrainGraph_MouseLeave(object sender, EventArgs e)
-        {
-            _log.Trace("TrainGraph_MouseLeave()");
-            //if (sender == this)
-            //{
-            //    _log.Trace("InDragMode false");
-            //    InDragMode = false;
-            //}
         }
     }
 }

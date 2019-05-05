@@ -71,6 +71,15 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// Construct from the number of seconds since midnight, rounding to the nearest whole second.
+        /// </summary>
+        /// <param name="seconds">Number of seconds since midnight.</param>
+        public TimeOfDay(double seconds)
+        {
+            AbsoluteSeconds = (int)Math.Round(seconds);
+        }
+
+        /// <summary>
         /// The number of seconds since midnight.  This property is not serialised, but is the primary property when the object is in memory.  Other properties are derived from this one.
         /// </summary>
         public int AbsoluteSeconds { get; set; }

@@ -32,6 +32,9 @@ namespace Timetabler.Data.Display
         /// </summary>
         public bool DisplayTrainLabels { get; set; }
 
+        /// <summary>
+        /// The format string to use when converting times to strings to display in tooltips.
+        /// </summary>
         public string TooltipFormattingString { get; set; }
 
         private TrainCollection _trainList;
@@ -215,6 +218,21 @@ namespace Timetabler.Data.Display
             }
 
             return (double)(t.AbsoluteSeconds - _baseTimeSeconds) / (double)(_maxTimeSeconds - _baseTimeSeconds);
+        }
+
+        /// <summary>
+        /// Convert an x-position on the graph (a fractional value from 0 to 1) to a time of day
+        /// </summary>
+        /// <param name="x">The proportional position on the graph</param>
+        /// <returns>The <see cref="TimeOfDay" /> represented by the proportional x-position on the graph.</returns>
+        public TimeOfDay GetTimeOfDayFromXPosition(double x)
+        {
+            if (!_baseTimeSeconds.HasValue || !_maxTimeSeconds.HasValue)
+            {
+                return new TimeOfDay();
+            }
+            double offsetSeconds = x * (double)(_maxTimeSeconds - _baseTimeSeconds);
+            return new TimeOfDay(_baseTimeSeconds.Value + offsetSeconds);
         }
     }
 }

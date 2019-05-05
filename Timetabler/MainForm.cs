@@ -628,6 +628,7 @@ namespace Timetabler
             trainGraph.Model.DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs;
             trainGraph.Invalidate();
             Model.RefreshTrainDisplayFormatting();
+            UpdateSignalboxHours();
         }
 
         private void EditExportOptions()

@@ -1,5 +1,5 @@
 ﻿using PdfSharp.Drawing;
-using System;
+using Unicorn.Impl.PdfSharp.Extensions;
 using Unicorn.Interfaces;
 
 namespace Unicorn.Impl.PdfSharp
@@ -9,57 +9,46 @@ namespace Unicorn.Impl.PdfSharp
     /// </summary>
     public class FontDescriptor : IFontDescriptor
     {
-        XFont _font;
-        double _ascent;
-        double _descent;
+        /// <summary>
+        /// Construct a <see cref="FontDescriptor" /> for a font with a given family name, style and point size.
+        /// </summary>
+        /// <param name="name">The font family name</param>
+        /// <param name="style">The font style</param>
+        /// <param name="size">The font size in em-units</param>
+        public FontDescriptor(string name, UniFontStyle style, double size)
+        {
+            Font = new XFont(name, size, style.ToXFontStyle());
+            if (Font != null)
+            {
+                Ascent = (Font.Metrics.Ascent / (Font.Metrics.Ascent + (double)Font.Metrics.Descent)) * Font.Height;
+                Descent = (Font.Metrics.Descent / (Font.Metrics.Ascent + (double)Font.Metrics.Descent)) * Font.Height;
+            }
+        }
 
         /// <summary>
-        /// Construct a <see cref="FontDescriptor"/> for a given <see cref="XFont"/>.
+        /// Construct a <see cref="FontDescriptor" /> for a regular roman-face font with a given family name and point size.
         /// </summary>
-        /// <param name="font">The font to create a descriptor for.</param>
-        public FontDescriptor(XFont font)
+        /// <param name="name">The font family name</param>
+        /// <param name="size">The font size in em-units</param>
+        public FontDescriptor(string name, double size) : this(name, UniFontStyle.Regular, size)
         {
-            if (font == null)
-            {
-                throw new ArgumentNullException("font");
-            }
-            _font = font;
-            _ascent = (_font.Metrics.Ascent / (_font.Metrics.Ascent + (double)_font.Metrics.Descent)) * _font.Height;
-            _descent = (_font.Metrics.Descent / (_font.Metrics.Ascent + (double)_font.Metrics.Descent)) * _font.Height;
+
         }
 
         /// <summary>
         /// The underlying font.
         /// </summary>
-        public XFont Font
-        {
-            get
-            {
-                return _font;
-            }
-        }
+        public XFont Font { get; }
 
         /// <summary>
         /// The ascent value of this font - the distance from the baseline to the top of character cells.
         /// </summary>
-        public double Ascent
-        {
-            get
-            {
-                return _ascent;
-            }
-        }
+        public double Ascent { get; }
 
         /// <summary>
         /// The descent value of this font - the distance from the baseline to the bottom of character cells.
         /// </summary>
-        public double Descent
-        {
-            get
-            {
-                return _descent;
-            }
-        }
+        public double Descent { get; }
 
         /// <summary>
         /// Returns the width of a single space character in this font, with the given context.

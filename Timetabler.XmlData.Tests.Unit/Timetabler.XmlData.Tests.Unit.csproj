@@ -56,13 +56,6 @@
     <Compile Include="DocumentOptionsModelUnitTests.cs" />
     <Compile Include="ExportOptionsModelUnitTests.cs" />
     <Compile Include="GraphTrainPropertiesModelUnitTests.cs" />
-    <Compile Include="Legacy\V1\LocationTemplateModelUnitTests.cs" />
-    <Compile Include="Legacy\V1\TimetableFileModelUnitTests.cs" />
-    <Compile Include="Legacy\V1\TrainModelUnitTests.cs" />
-    <Compile Include="Legacy\V2\ExportOptionsModelUnitTests.cs" />
-    <Compile Include="Legacy\V2\LocationModelUnitTests.cs" />
-    <Compile Include="Legacy\V2\TimetableFileModelUnitTests.cs" />
-    <Compile Include="Legacy\V2\TrainModelUnitTests.cs" />
     <Compile Include="Legacy\V3\TimetableFileModelUnitTests.cs" />
     <Compile Include="LocationModelUnitTests.cs" />
     <Compile Include="LocationTemplateModelUnitTests.cs" />

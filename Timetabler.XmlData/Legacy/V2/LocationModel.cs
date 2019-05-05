@@ -40,13 +40,6 @@ namespace Timetabler.XmlData.Legacy.V2
         public string Tiploc { get; set; }
 
         /// <summary>
-        /// Whether or not this location should have arrival and/or departure rows present by default in the timetable whether or not any trains call.
-        /// </summary>
-        [XmlElement]
-        [Obsolete("Do not use - retained for compatibility with file version 1.")]
-        public ArrivalDepartureOptions DefaultArrivalDepartureOptions { get; set; }
-
-        /// <summary>
         /// Whether or not this location should always have arrival and/or departure rows displayed on Up pages of the timetable.
         /// </summary>
         [XmlElement]
@@ -70,7 +63,6 @@ namespace Timetabler.XmlData.Legacy.V2
         public LocationModel()
         {
             Mileage = new DistanceModel();
-            DefaultArrivalDepartureOptions = ArrivalDepartureOptions.Arrival | ArrivalDepartureOptions.Departure;
         }
     }
 }

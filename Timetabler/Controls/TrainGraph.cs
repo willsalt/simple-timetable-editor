@@ -156,7 +156,7 @@ namespace Timetabler.Controls
         {
             base.OnPaint(e);
 
-            if (Model == null || Model.LocationList == null || Model.LocationList.Count == 0)
+            if (Model == null || Model.LocationList == null || Model.LocationList.Count == 0 || Model.TrainList == null || Model.TrainList.Count == 0)
             {
                 return;
             }

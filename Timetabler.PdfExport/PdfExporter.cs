@@ -1,6 +1,4 @@
-﻿using PdfSharp.Drawing;
-using PdfSharp.Fonts;
-using System.IO;
+﻿using System.IO;
 using Timetabler.Data;
 using Timetabler.Data.Interfaces;
 using Timetabler.Data.Display;
@@ -29,7 +27,15 @@ namespace Timetabler.PdfExport
         private const double graphTickLength = 5.0;
         private const double distanceTickLabelMargin = 2.0;
 
-        private static PrivateFontResolver FontResolver = new PrivateFontResolver();
+        private static readonly FontConfigurator FontConfigurator = new FontConfigurator(new[]
+        {
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace) },
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace) },
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace) },
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Bold | UniFontStyle.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldItalicFace) },
+            new FontConfigurationData { Name = "Sans", Style = UniFontStyle.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace) },
+            new FontConfigurationData { Name = "Sans", Style = UniFontStyle.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace) },
+        });
 
         private static ILogger Log = LogManager.GetCurrentClassLogger();
 
@@ -49,14 +55,12 @@ namespace Timetabler.PdfExport
 
         public PdfExporter()
         {
-            GlobalFontSettings.FontResolver = FontResolver;
-
-            _titleFont = new FontDescriptor(new XFont("Serif", 16, XFontStyle.Bold));
-            _subtitleFont = new FontDescriptor(new XFont("Serif", 14, XFontStyle.Bold));
-            _plainBodyFont = new FontDescriptor(new XFont("Serif", 7.5));
-            _italicBodyFont = new FontDescriptor(new XFont("Serif", 7.5, XFontStyle.Italic));
-            _boldBodyFont = new FontDescriptor(new XFont("Serif", 7.5, XFontStyle.Bold));
-            _alternativeLocationFont = new FontDescriptor(new XFont("Sans", 7.5, XFontStyle.Bold));
+            _titleFont = new FontDescriptor("Serif", UniFontStyle.Bold, 16);
+            _subtitleFont = new FontDescriptor("Serif", UniFontStyle.Bold, 14);
+            _plainBodyFont = new FontDescriptor("Serif", 7.5);
+            _italicBodyFont = new FontDescriptor("Serif", UniFontStyle.Italic, 7.5);
+            _boldBodyFont = new FontDescriptor("Serif", UniFontStyle.Bold, 7.5);
+            _alternativeLocationFont = new FontDescriptor("Sans", UniFontStyle.Bold, 7.5);
 
             Log.Info("Loaded fonts.");
             Log.Trace("Plain body offset is {0}", _plainBodyFont.Ascent);
@@ -710,7 +714,7 @@ namespace Timetabler.PdfExport
 
         private void DrawLocationList(TimetableSectionModel timetableSection, LocationBoxDimensions locationDims, double xCoord, double yCoord)
         {
-            Log.Trace("Drawing location list.  Font height is {0}.  Font ascent is {1}.", _plainBodyFont.Font.Height, _plainBodyFont.Ascent);
+            Log.Trace("Drawing location list.  Font ascent is {1}.", _plainBodyFont.Ascent);
             foreach (double separatorOffset in locationDims.LocationSeparatorOffsets)
             {
                 LineDrawingWrapper("location separator", xCoord + lineGapSize, yCoord + separatorOffset, xCoord + locationDims.TotalSize.Width - lineGapSize, yCoord + separatorOffset, MainLineWidth);

@@ -233,6 +233,16 @@ namespace Timetabler.Controls
                 e.Graphics.FillEllipse(Brushes.White, controlHandleCoordinate.Item1 - handleOffset, controlHandleCoordinate.Item2 - handleOffset, ControlHandleSize, ControlHandleSize);
                 e.Graphics.DrawEllipse(Pens.Black, controlHandleCoordinate.Item1 - handleOffset, controlHandleCoordinate.Item2 - handleOffset, ControlHandleSize, ControlHandleSize);
             }
+
+            // Draw vertex/train being dragged (if appropriate)
+            if (InDragMode)
+            {
+                float x = CoordinateHelper.Stretch(leftLimit, rightLimit, _nearestVertex.X + _nearestVertex.DragOffset) - handleOffset;
+                float y = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - _nearestVertex.Y) - handleOffset;
+                //_log.Trace("Drawing drag handle at {0}, {1}", x, y);
+                e.Graphics.FillEllipse(Brushes.LightGray, x, y, ControlHandleSize, ControlHandleSize);
+                e.Graphics.DrawEllipse(Pens.Black, x, y, ControlHandleSize, ControlHandleSize);
+            }
         }
 
         private int GetIndexOfLongestLine(IList<Tuple<PointF, PointF>> coordinates)
@@ -294,7 +304,7 @@ namespace Timetabler.Controls
 
         private void TrainGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            _log.Trace("Mouse moved to {0}, {1} (buttons {2} InDragMode {3})", e.X, e.Y, e.Button, InDragMode);
+            //_log.Trace("Mouse moved to {0}, {1} (buttons {2} InDragMode {3})", e.X, e.Y, e.Button, InDragMode);
             if (InDragMode)
             {
                 if (e.X > Size.Width || e.Y > Size.Height || e.X < 0 || e.Y < 0)
@@ -304,7 +314,9 @@ namespace Timetabler.Controls
                     return;
                 }
                 float rightLimit = Size.Width * (1 - RightMarginPercent);
-                TimeOfDay coordinateTime = Model.GetTimeOfDayFromXPosition(CoordinateHelper.Unstretch(LocationAxisXCoordinate, rightLimit, e.X));
+                double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, rightLimit, e.X);
+                _nearestVertex.DragOffset = relativeX - _nearestVertex.X;            
+                TimeOfDay coordinateTime = Model.GetTimeOfDayFromXPosition(relativeX);
                 _tooltip.Show($"Dragging {coordinateTime.ToString(Model.TooltipFormattingString)}", this);
                 Invalidate();
                 return;
@@ -402,6 +414,13 @@ namespace Timetabler.Controls
 
         private void TrainGraph_MouseUp(object sender, MouseEventArgs e)
         {
+            if (InDragMode)
+            {
+                float rightLimit = Size.Width * (1 - RightMarginPercent);
+                double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, rightLimit, e.X);
+                _nearestVertex.X = relativeX;
+                Model.GetTimeOfDayFromXPosition(relativeX).CopyTo(_nearestVertex.Time);
+            }
             _log.Trace("TrainGraph_MouseUp(): InDragMode false");
             InDragMode = false;
         }

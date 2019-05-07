@@ -21,6 +21,11 @@
         public double X { get; set; }
 
         /// <summary>
+        /// When dragging, the X offset by which the vertex has been dragged
+        /// </summary>
+        public double DragOffset { get; set; }
+
+        /// <summary>
         /// The Y-position.
         /// </summary>
         public double Y { get; set; }

@@ -8,6 +8,11 @@ namespace Timetabler.Data.Display
     public class TrainDrawingInfo
     {
         /// <summary>
+        /// The train itself.
+        /// </summary>
+        public Train Train { get; set; }
+
+        /// <summary>
         /// Drawing properties, such as line width and style.
         /// </summary>
         public GraphTrainProperties Properties { get; set; }

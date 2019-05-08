@@ -202,6 +202,9 @@
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TrainGraph.resx">
+      <DependentUpon>TrainGraph.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DocumentExportOptionsEditForm.resx">
       <DependentUpon>DocumentExportOptionsEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -267,7 +270,9 @@
       <DependentUpon>TrainLocationTimeEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Licence.rtf" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

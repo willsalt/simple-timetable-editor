@@ -24,5 +24,10 @@
         /// The formatting string to display the minutes part of the time.
         /// </summary>
         public string Minutes { get; set; }
+
+        /// <summary>
+        /// The formatting string to display a time as a tooltip
+        /// </summary>
+        public string Tooltip { get; set; }
     }
 }

@@ -72,7 +72,7 @@ namespace Timetabler
             InitializeComponent();
 
             Model = new TimetableDocument();
-            trainGraph.Model = new TrainGraphModel { LocationList = Model.LocationList, TrainList = Model.TrainList, DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs };
+            UpdateTrainGraphLocationModel();
 
             ofdDocument.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             sfdDocument.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -140,7 +140,13 @@ namespace Timetabler
 
         private void UpdateTrainGraphLocationModel()
         {
-            trainGraph.Model = new TrainGraphModel { LocationList = Model.LocationList, TrainList = Model.TrainList, DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs };
+            trainGraph.Model = new TrainGraphModel
+            {
+                LocationList = Model.LocationList,
+                TrainList = Model.TrainList,
+                DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs,
+                TooltipFormattingString = Model.Options.FormattingStrings.Tooltip,
+            };
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -626,6 +632,7 @@ namespace Timetabler
             }
             doef.Model.CopyTo(Model.Options);
             trainGraph.Model.DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs;
+            trainGraph.Model.TooltipFormattingString = Model.Options.FormattingStrings.Tooltip;
             trainGraph.Invalidate();
             Model.RefreshTrainDisplayFormatting();
             UpdateSignalboxHours();

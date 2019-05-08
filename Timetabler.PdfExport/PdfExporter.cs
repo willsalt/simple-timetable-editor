@@ -274,19 +274,19 @@ namespace Timetabler.PdfExport
             {
                 foreach (LineCoordinates lineData in info.LineVertexes)
                 {
-                    _currentPage.PageGraphics.DrawLine(CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.X1),
-                        CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Y1), CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.X2),
-                        CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Y2), info.Properties.Width, info.Properties.DashStyle.ToUniDashStyle());
+                    _currentPage.PageGraphics.DrawLine(CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.Vertex1.X),
+                        CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Vertex1.Y), CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.Vertex2.X),
+                        CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Vertex2.Y), info.Properties.Width, info.Properties.DashStyle.ToUniDashStyle());
                 }
 
                 if (trainGraphModel.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
                     UniSize headcodeDimensions = _currentPage.PageGraphics.MeasureString(info.Headcode.Trim(), _plainBodyFont);
                     LineCoordinates longestLine = info.LineVertexes[LineCoordinates.GetIndexOfLongestLine(info.LineVertexes)];
-                    double llX1 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.X1);
-                    double llX2 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.X2);
-                    double llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Y1);
-                    double llY2 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Y2);
+                    double llX1 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex1.X);
+                    double llX2 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex2.X);
+                    double llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex1.Y);
+                    double llY2 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex2.Y);
                     UniPoint longestLineMidpoint = new UniPoint((llX1 + llX2) / 2, (llY1 + llY2) / 2);
                     IGraphicsState state = _currentPage.PageGraphics.Save();
                     _currentPage.PageGraphics.RotateAt(Math.Atan2(llY1 - llY2, llX1 - llX2) * (180.0 / Math.PI) + 180.0, longestLineMidpoint.X, longestLineMidpoint.Y);

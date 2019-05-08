@@ -20,6 +20,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual("h mmf", testOutput.TimeWithoutFootnotes);
             Assert.AreEqual("h", testOutput.Hours);
             Assert.AreEqual("mmf", testOutput.Minutes);
+            Assert.AreEqual("h:mmftt", testOutput.Tooltip);
         }
 
         [TestMethod]
@@ -33,6 +34,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual("HH mmf", testOutput.TimeWithoutFootnotes);
             Assert.AreEqual("HH", testOutput.Hours);
             Assert.AreEqual("mmf", testOutput.Minutes);
+            Assert.AreEqual("HH:mmf", testOutput.Tooltip);
         }
 
         [TestMethod]
@@ -47,6 +49,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual("HH mmf", testOutput.TimeWithoutFootnotes);
             Assert.AreEqual("HH", testOutput.Hours);
             Assert.AreEqual("mmf", testOutput.Minutes);
+            Assert.AreEqual("HH:mmf", testOutput.Tooltip);
         }
 
         [TestMethod]
@@ -61,6 +64,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual("h mmf", testOutput.TimeWithoutFootnotes);
             Assert.AreEqual("h", testOutput.Hours);
             Assert.AreEqual("mmf", testOutput.Minutes);
+            Assert.AreEqual("h:mmftt", testOutput.Tooltip);
         }
 
         [TestMethod]
@@ -120,6 +124,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual("h mmf", testOutput.TimeWithoutFootnotes);
             Assert.AreEqual("h", testOutput.Hours);
             Assert.AreEqual("mmf", testOutput.Minutes);
+            Assert.AreEqual("h:mmftt", testOutput.Tooltip);
         }
 
         [TestMethod]
@@ -137,6 +142,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual("HH mmf", testOutput.TimeWithoutFootnotes);
             Assert.AreEqual("HH", testOutput.Hours);
             Assert.AreEqual("mmf", testOutput.Minutes);
+            Assert.AreEqual("HH:mmf", testOutput.Tooltip);
         }
     }
 }

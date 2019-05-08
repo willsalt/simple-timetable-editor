@@ -9,46 +9,24 @@ namespace Timetabler.Data.Display
     public class LineCoordinates
     {
         /// <summary>
-        /// The X-coordinate of the first vertex.
+        /// The vertex that marks the start of the line.
         /// </summary>
-        public double X1 { get; set; }
+        public VertexInformation Vertex1 { get; set; }
 
         /// <summary>
-        /// The Y-coordinate of the first vertex.
+        /// The vertex that marks the end of the line.
         /// </summary>
-        public double Y1 { get; set; }
+        public VertexInformation Vertex2 { get; set; }
 
         /// <summary>
-        /// The X-coordinate of the second vertex.
+        /// Constructor which sets the vertex properties.
         /// </summary>
-        public double X2 { get; set; }
-
-        /// <summary>
-        /// The Y-coordinate of the second vertex.
-        /// </summary>
-        public double Y2 { get; set; }
-
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public LineCoordinates()
+        /// <param name="v1">The first vertex.</param>
+        /// <param name="v2">The second vertex.</param>
+        public LineCoordinates(VertexInformation v1, VertexInformation v2)
         {
-
-        }
-
-        /// <summary>
-        /// Constructor which sets the vertex coordinate properties.
-        /// </summary>
-        /// <param name="x1">The X-coordinate of the first vertex.</param>
-        /// <param name="y1">The Y-coordinate of the first vertex.</param>
-        /// <param name="x2">The X-coordinate of the second vertex.</param>
-        /// <param name="y2">The Y-coordinate of the second vertex.</param>
-        public LineCoordinates(double x1, double y1, double x2, double y2)
-        {
-            X1 = x1;
-            Y1 = y1;
-            X2 = x2;
-            Y2 = y2;
+            Vertex1 = v1;
+            Vertex2 = v2;
         }
 
         /// <summary>
@@ -58,12 +36,21 @@ namespace Timetabler.Data.Display
         /// <returns>The index of the longest line in the list.</returns>
         public static int GetIndexOfLongestLine(IList<LineCoordinates> coordinates)
         {
+            if (coordinates == null)
+            {
+                return -1;
+            }
+
             double max = 0;
-            int idx = 0;
+            int idx = -1;
             for (int i = 0; i < coordinates.Count; ++i)
             {
-                double len = Math.Sqrt(Math.Pow(coordinates[i].X1 - coordinates[i].X2, 2) + Math.Pow(coordinates[i].Y1 - coordinates[i].Y2, 2));
-                if (len > max)
+                if (coordinates[i] == null || coordinates[i].Vertex1 == null || coordinates[i].Vertex2 == null)
+                {
+                    continue;
+                }
+                double len = Math.Sqrt(Math.Pow(coordinates[i].Vertex1.X - coordinates[i].Vertex2.X, 2) + Math.Pow(coordinates[i].Vertex1.Y - coordinates[i].Vertex2.Y, 2));
+                if (len >= max)
                 {
                     max = len;
                     idx = i;

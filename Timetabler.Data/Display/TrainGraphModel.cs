@@ -32,6 +32,11 @@ namespace Timetabler.Data.Display
         /// </summary>
         public bool DisplayTrainLabels { get; set; }
 
+        /// <summary>
+        /// The format string to use when converting times to strings to display in tooltips.
+        /// </summary>
+        public string TooltipFormattingString { get; set; }
+
         private TrainCollection _trainList;
 
         private int? _baseTimeSeconds;
@@ -173,27 +178,30 @@ namespace Timetabler.Data.Display
 
             foreach (Train train in TrainList.Where(t => t.TrainTimes?.Count > 0))
             {
-                TrainDrawingInfo tdi = new TrainDrawingInfo { Properties = train.GraphProperties, Headcode = train.Headcode };
+                TrainDrawingInfo tdi = new TrainDrawingInfo { Properties = train.GraphProperties, Headcode = train.Headcode, Train = train };
                 for (int i = 0; i < train.TrainTimes.Count; ++i)
                 {
                     if (train.TrainTimes[i]?.ArrivalTime?.Time != null && train.TrainTimes[i]?.DepartureTime?.Time != null)
                     {
                         double locationCoordinate = _locationCoordinates[train.TrainTimes[i].Location.Id];
-                        tdi.LineVertexes.Add(new LineCoordinates(GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), locationCoordinate,
-                            GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), locationCoordinate));
+                        tdi.LineVertexes.Add(new LineCoordinates(new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), 
+                            locationCoordinate), new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), 
+                            locationCoordinate)));
                     }
                     if (i > 0 && train.TrainTimes[i - 1]?.DepartureTime?.Time != null)
                     {
-                        double startX = GetXPositionFromTime(train.TrainTimes[i - 1].DepartureTime.Time);
-                        double startY = _locationCoordinates[train.TrainTimes[i - 1].Location.Id];
+                        VertexInformation startVertex = new VertexInformation(train, train.TrainTimes[i - 1].DepartureTime.Time, GetXPositionFromTime(train.TrainTimes[i - 1].DepartureTime.Time),
+                            _locationCoordinates[train.TrainTimes[i - 1].Location.Id]);
                         double endY = _locationCoordinates[train.TrainTimes[i].Location.Id];
                         if (train.TrainTimes[i]?.ArrivalTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startX, startY, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), endY));
+                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, 
+                                GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), endY)));
                         }
                         else if (train.TrainTimes[i]?.DepartureTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startX, startY, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), endY));
+                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, 
+                                GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), endY)));
                         }
                     }
                 }
@@ -210,6 +218,21 @@ namespace Timetabler.Data.Display
             }
 
             return (double)(t.AbsoluteSeconds - _baseTimeSeconds) / (double)(_maxTimeSeconds - _baseTimeSeconds);
+        }
+
+        /// <summary>
+        /// Convert an x-position on the graph (a fractional value from 0 to 1) to a time of day
+        /// </summary>
+        /// <param name="x">The proportional position on the graph</param>
+        /// <returns>The <see cref="TimeOfDay" /> represented by the proportional x-position on the graph.</returns>
+        public TimeOfDay GetTimeOfDayFromXPosition(double x)
+        {
+            if (!_baseTimeSeconds.HasValue || !_maxTimeSeconds.HasValue)
+            {
+                return new TimeOfDay();
+            }
+            double offsetSeconds = x * (double)(_maxTimeSeconds - _baseTimeSeconds);
+            return new TimeOfDay(_baseTimeSeconds.Value + offsetSeconds);
         }
     }
 }

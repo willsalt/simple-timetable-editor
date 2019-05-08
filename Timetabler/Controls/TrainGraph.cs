@@ -245,23 +245,6 @@ namespace Timetabler.Controls
             }
         }
 
-        private int GetIndexOfLongestLine(IList<Tuple<PointF, PointF>> coordinates)
-        {
-            double max = 0;
-            int idx = 0;
-            for (int i = 0; i < coordinates.Count; ++i)
-            {
-                double len = Math.Sqrt(Math.Pow(coordinates[i].Item1.X - coordinates[i].Item2.X, 2) + Math.Pow(coordinates[i].Item1.Y - coordinates[i].Item2.Y, 2));
-                if (len > max)
-                {
-                    max = len;
-                    idx = i;
-                }
-            }
-
-            return idx;
-        }
-
         private void DrawLine(
             Graphics graphics, 
             Pen trainPen, 
@@ -304,7 +287,6 @@ namespace Timetabler.Controls
 
         private void TrainGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            //_log.Trace("Mouse moved to {0}, {1} (buttons {2} InDragMode {3})", e.X, e.Y, e.Button, InDragMode);
             if (InDragMode)
             {
                 if (e.X > Size.Width || e.Y > Size.Height || e.X < 0 || e.Y < 0)
@@ -404,10 +386,8 @@ namespace Timetabler.Controls
 
         private void TrainGraph_MouseDown(object sender, MouseEventArgs e)
         {
-            _log.Trace("TrainGraph_MouseDown()");
             if (_nearestVertex != null)
             {
-                _log.Trace("InDragMode true");
                 InDragMode = true;
             }
         }
@@ -421,7 +401,6 @@ namespace Timetabler.Controls
                 _nearestVertex.X = relativeX;
                 Model.GetTimeOfDayFromXPosition(relativeX).CopyTo(_nearestVertex.Time);
             }
-            _log.Trace("TrainGraph_MouseUp(): InDragMode false");
             InDragMode = false;
         }
     }

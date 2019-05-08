@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="MinimalUniqueItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

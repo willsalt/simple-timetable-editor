@@ -69,6 +69,7 @@
     <Compile Include="Collections\TrainSegmentModelCollectionUnitTests.cs" />
     <Compile Include="Comparers\LocationDisplayModelComparerUnitTests.cs" />
     <Compile Include="Display\GenericEntryModelUnitTests.cs" />
+    <Compile Include="Display\LineCoordinatesUnitTests.cs" />
     <Compile Include="Display\TrainLocationTimeModelUnitTests.cs" />
     <Compile Include="Display\VertexInformationUnitTests.cs" />
     <Compile Include="DocumentOptionsUnitTests.cs" />

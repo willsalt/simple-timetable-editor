@@ -36,8 +36,13 @@ namespace Timetabler.Data.Display
         /// <returns>The index of the longest line in the list.</returns>
         public static int GetIndexOfLongestLine(IList<LineCoordinates> coordinates)
         {
+            if (coordinates == null)
+            {
+                return -1;
+            }
+
             double max = 0;
-            int idx = 0;
+            int idx = -1;
             for (int i = 0; i < coordinates.Count; ++i)
             {
                 if (coordinates[i] == null || coordinates[i].Vertex1 == null || coordinates[i].Vertex2 == null)
@@ -45,7 +50,7 @@ namespace Timetabler.Data.Display
                     continue;
                 }
                 double len = Math.Sqrt(Math.Pow(coordinates[i].Vertex1.X - coordinates[i].Vertex2.X, 2) + Math.Pow(coordinates[i].Vertex1.Y - coordinates[i].Vertex2.Y, 2));
-                if (len > max)
+                if (len >= max)
                 {
                     max = len;
                     idx = i;

@@ -128,7 +128,24 @@ namespace Timetabler.Controls
 
         private bool InDragMode { get; set; }
 
+        /// <summary>
+        /// When dragging, the real X-axis distance between the mouse pointer and the control point.
+        /// </summary>
+        private float DragPointerOffset { get; set; }
+
         private float LocationAxisXCoordinate { get; set; }
+
+        private float MaximumXCoordinate
+        {
+            get
+            {
+                if (RightMarginPercent == 1f)
+                {
+                    return 0f;
+                }
+                return Size.Width * (1f - RightMarginPercent);
+            }
+        }
 
         /// <summary>
         /// Default constructor; sets properties to their default values.
@@ -165,7 +182,6 @@ namespace Timetabler.Controls
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             float leftLimit = Size.Width * LeftMarginPercent;
-            float rightLimit = Size.Width * (1 - RightMarginPercent);
             float topLimit = Size.Height * TopMarginPercent;
             float bottomLimit = Size.Height * (1 - BottomMarginPercent);
 
@@ -181,20 +197,20 @@ namespace Timetabler.Controls
             topLimit += (float)locationAxisInfo.Last().Height.Value / 2;
             LocationAxisXCoordinate = leftLimit += locationAxisInfo.Max(i => (float)i.Width) + 5;
 
-            e.Graphics.FillRectangle(new SolidBrush(GraphBackColour), leftLimit, topLimit, rightLimit - leftLimit, bottomLimit - topLimit);
+            e.Graphics.FillRectangle(new SolidBrush(GraphBackColour), leftLimit, topLimit, MaximumXCoordinate - leftLimit, bottomLimit - topLimit);
             e.Graphics.DrawLine(axisPen, leftLimit, bottomLimit, leftLimit, topLimit);
-            e.Graphics.DrawLine(axisPen, rightLimit, bottomLimit, rightLimit, topLimit);
+            e.Graphics.DrawLine(axisPen, MaximumXCoordinate, bottomLimit, MaximumXCoordinate, topLimit);
             foreach (TrainGraphAxisTickInfo tick in locationAxisInfo)
             {
                 float y = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - tick.Coordinate);
-                e.Graphics.DrawLine(axisPen, rightLimit, y, leftLimit - 5, y);
+                e.Graphics.DrawLine(axisPen, MaximumXCoordinate, y, leftLimit - 5, y);
                 e.Graphics.DrawString(tick.Label, LocationAxisFont, new SolidBrush(Color.Black), (float)(leftLimit - (tick.Width.Value + 5)), (float)(y - tick.Height.Value / 2));
             }
 
             // Draw X axis ticks / gridlines.
             foreach (TrainGraphAxisTickInfo tick in timeAxisInfo)
             {
-                float x = CoordinateHelper.Stretch(leftLimit, rightLimit, tick.Coordinate);
+                float x = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, tick.Coordinate);
                 float yTop = ShowVerticalGridLines ? topLimit : bottomLimit;
                 e.Graphics.DrawLine(axisPen, x, yTop, x, bottomLimit + 5);
                 e.Graphics.DrawString(tick.Label, TimeAxisFont, new SolidBrush(Color.Black), (float)(x - tick.Width.Value / 2), bottomLimit + 5);
@@ -208,15 +224,15 @@ namespace Timetabler.Controls
                 Pen trainPen = new Pen(info.Properties.Colour, info.Properties.Width) { DashStyle = info.Properties.DashStyle };
                 foreach (LineCoordinates lineData in info.LineVertexes)
                 {
-                    DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, rightLimit, topLimit, bottomLimit, selectedTrainCoordinates);
+                    DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, MaximumXCoordinate, topLimit, bottomLimit, selectedTrainCoordinates);
                 }
 
                 if (Model.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
                     SizeF headcodeDimensions = e.Graphics.MeasureString(info.Headcode.Trim(), TrainLabelFont);
                     LineCoordinates longestLine = info.LineVertexes[LineCoordinates.GetIndexOfLongestLine(info.LineVertexes)];
-                    float llX1 = CoordinateHelper.Stretch(leftLimit, rightLimit, longestLine.Vertex1.X);
-                    float llX2 = CoordinateHelper.Stretch(leftLimit, rightLimit, longestLine.Vertex2.X);
+                    float llX1 = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, longestLine.Vertex1.X);
+                    float llX2 = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, longestLine.Vertex2.X);
                     float llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex1.Y);
                     float llY2 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex2.Y);
                     PointF longestLineMidpoint = new PointF((llX1 + llX2) / 2, (llY1 + llY2) / 2);
@@ -237,7 +253,7 @@ namespace Timetabler.Controls
             // Draw vertex/train being dragged (if appropriate)
             if (InDragMode)
             {
-                float x = CoordinateHelper.Stretch(leftLimit, rightLimit, _nearestVertex.X + _nearestVertex.DragOffset) - handleOffset;
+                float x = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, _nearestVertex.X + _nearestVertex.DragOffset) - handleOffset;
                 float y = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - _nearestVertex.Y) - handleOffset;
                 //_log.Trace("Drawing drag handle at {0}, {1}", x, y);
                 e.Graphics.FillEllipse(Brushes.LightGray, x, y, ControlHandleSize, ControlHandleSize);
@@ -295,8 +311,7 @@ namespace Timetabler.Controls
                     _tooltip.Hide(this);
                     return;
                 }
-                float rightLimit = Size.Width * (1 - RightMarginPercent);
-                double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, rightLimit, e.X);
+                double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, MaximumXCoordinate, e.X - DragPointerOffset);
                 _nearestVertex.DragOffset = relativeX - _nearestVertex.X;            
                 TimeOfDay coordinateTime = Model.GetTimeOfDayFromXPosition(relativeX);
                 _tooltip.Show($"Dragging {coordinateTime.ToString(Model.TooltipFormattingString)}", this);
@@ -388,6 +403,7 @@ namespace Timetabler.Controls
         {
             if (_nearestVertex != null)
             {
+                DragPointerOffset = e.X - CoordinateHelper.Stretch(LocationAxisXCoordinate, MaximumXCoordinate, _nearestVertex.X);
                 InDragMode = true;
             }
         }
@@ -396,8 +412,7 @@ namespace Timetabler.Controls
         {
             if (InDragMode)
             {
-                float rightLimit = Size.Width * (1 - RightMarginPercent);
-                double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, rightLimit, e.X);
+                double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, MaximumXCoordinate, e.X - DragPointerOffset);
                 _nearestVertex.X = relativeX;
                 Model.GetTimeOfDayFromXPosition(relativeX).CopyTo(_nearestVertex.Time);
             }

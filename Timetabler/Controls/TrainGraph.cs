@@ -410,11 +410,12 @@ namespace Timetabler.Controls
 
         private void TrainGraph_MouseUp(object sender, MouseEventArgs e)
         {
-            if (InDragMode)
+            if (InDragMode && _nearestVertex != null)
             {
                 double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, MaximumXCoordinate, e.X - DragPointerOffset);
                 _nearestVertex.X = relativeX;
                 Model.GetTimeOfDayFromXPosition(relativeX).CopyTo(_nearestVertex.Time);
+                _nearestVertex.Train.RefreshTimingPointModels();
             }
             InDragMode = false;
         }

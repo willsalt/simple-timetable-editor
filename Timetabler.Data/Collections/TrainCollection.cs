@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Timetabler.Data.Events;
+﻿using Timetabler.Data.Events;
 
 namespace Timetabler.Data.Collections
 {

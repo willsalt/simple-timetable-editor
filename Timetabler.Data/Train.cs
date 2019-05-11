@@ -149,6 +149,17 @@ namespace Timetabler.Data
             return t;
         }
 
+        /// <summary>
+        /// Ensure that the user-visible version of all of the data for this train is up-to-date with the raw data.
+        /// </summary>
+        public void RefreshTimingPointModels()
+        {
+            foreach (var timingPoint in TrainTimes)
+            {
+                timingPoint.RefreshTimeModels();
+            }
+        }
+
         internal void ResolveTrainClass(Dictionary<string, TrainClass> trainClasses)
         {
             if (TrainClass == null)

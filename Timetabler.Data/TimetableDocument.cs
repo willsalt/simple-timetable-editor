@@ -683,10 +683,7 @@ namespace Timetabler.Data
         {
             foreach (var train in TrainList)
             {
-                foreach (var timingPoint in train.TrainTimes)
-                {
-                    timingPoint.RefreshTimeModels();
-                }
+                train.RefreshTimingPointModels();
             }
             foreach (var trainSegment in DownTrainsDisplay.TrainSegments)
             {

@@ -314,7 +314,7 @@ namespace Timetabler.Controls
                 double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, MaximumXCoordinate, e.X - DragPointerOffset);
                 _nearestVertex.DragOffset = relativeX - _nearestVertex.X;            
                 TimeOfDay coordinateTime = Model.GetTimeOfDayFromXPosition(relativeX);
-                _tooltip.Show($"Dragging {coordinateTime.ToString(Model.TooltipFormattingString)}", this);
+                _tooltip.Show(coordinateTime.ToString(Model.TooltipFormattingString), this);
                 Invalidate();
                 return;
             }

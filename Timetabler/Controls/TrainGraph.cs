@@ -400,6 +400,7 @@ namespace Timetabler.Controls
                 _selectedTrain = _nearestVertex.Train;
                 DragPointerOffset = e.X - CoordinateHelper.Stretch(LocationAxisXCoordinate, MaximumXCoordinate, _nearestVertex.X);
                 InDragMode = true;
+                Cursor.Current = Cursors.SizeWE;
                 Invalidate();
             }
             else if (_selectedTrain != null)
@@ -417,6 +418,7 @@ namespace Timetabler.Controls
                 _nearestVertex.X = relativeX;
                 Model.GetTimeOfDayFromXPosition(relativeX).CopyTo(_nearestVertex.Time);
                 _nearestVertex.Train.RefreshTimingPointModels();
+                Invalidate();
             }
             InDragMode = false;
         }

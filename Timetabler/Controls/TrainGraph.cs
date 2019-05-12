@@ -393,18 +393,19 @@ namespace Timetabler.Controls
             return null;
         }
 
-        private void TrainGraph_MouseClick(object sender, MouseEventArgs e)
-        {
-            _selectedTrain = _nearestVertex?.Train;
-            Invalidate();
-        }
-
         private void TrainGraph_MouseDown(object sender, MouseEventArgs e)
         {
             if (_nearestVertex != null)
             {
+                _selectedTrain = _nearestVertex.Train;
                 DragPointerOffset = e.X - CoordinateHelper.Stretch(LocationAxisXCoordinate, MaximumXCoordinate, _nearestVertex.X);
                 InDragMode = true;
+                Invalidate();
+            }
+            else if (_selectedTrain != null)
+            {
+                _selectedTrain = null;
+                Invalidate();
             }
         }
 

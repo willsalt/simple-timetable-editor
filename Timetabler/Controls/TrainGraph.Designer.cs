@@ -36,7 +36,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.DoubleBuffered = true;
             this.Name = "TrainGraph";
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrainGraph_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TrainGraph_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrainGraph_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TrainGraph_MouseUp);

@@ -320,7 +320,12 @@ namespace Timetabler.PdfExport
 
         private Area LayOutFootnotesForSection(TimetableSectionModel section, int startingColumn, int columnCount)
         {
-            List<FootnoteDisplayModel> relevantFootnotes = section.TrainSegments.Skip(startingColumn).Take(columnCount).SelectMany(s => s.PageFootnotes).Distinct().ToList();
+            List<FootnoteDisplayModel> relevantFootnotes = section.TrainSegments
+                .Skip(startingColumn)
+                .Take(columnCount)
+                .SelectMany(s => s.PageFootnotes.Where(f => f.DisplayOnPage))
+                .Distinct()
+                .ToList();
             if (relevantFootnotes.Count == 0)
             {
                 return new Area();

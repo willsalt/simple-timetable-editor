@@ -73,15 +73,7 @@ namespace Timetabler.Data
         /// <summary>
         /// Footnotes that apply to this train.
         /// </summary>
-        public List<Note> Footnotes
-        {
-            get
-            {
-                return _footnotes;
-            }
-        }
-
-        private List<Note> _footnotes;
+        public List<Note> Footnotes { get; }
 
         /// <summary>
         /// Event to be raised when this object is modified.  Not yet implemented.
@@ -95,7 +87,7 @@ namespace Timetabler.Data
         {
             TrainTimes = new List<TrainLocationTime>();
             GraphProperties = new GraphTrainProperties();
-            _footnotes = new List<Note>();
+            Footnotes = new List<Note>();
 
             // These default to true to avoid User Error - me thinking that there is a bug when in reality the fields just weren't set
             IncludeSeparatorAbove = true;

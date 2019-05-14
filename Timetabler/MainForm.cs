@@ -698,7 +698,7 @@ namespace Timetabler
         private void editFootnotesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Footnotes");
-            NoteListEditForm nef = new NoteListEditForm { Model = new NoteListEditFormModel { Data = Model.NoteDefinitions.ToDictionary(n => n.Id, n => n) } };
+            NoteListEditForm nef = new NoteListEditForm { Model = new NoteListEditFormModel { Data = Model.NoteDefinitions.ToDictionary(n => n.Id, n => n.Copy()) } };
             DialogResult result = nef.ShowDialog();
             Log.Trace("NoteListEditForm.ShowDialog() returned {0}", result);
             if (result != DialogResult.OK)

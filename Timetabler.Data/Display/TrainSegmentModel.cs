@@ -117,6 +117,10 @@ namespace Timetabler.Data.Display
         /// <param name="notes"></param>
         public void UpdatePageFootnotes(ICollection<Note> notes)
         {
+            if (notes == null || notes.Count == 0)
+            {
+                return;
+            }
             for (int i = 0; i < PageFootnotes.Count; ++i)
             {
                 Note note = notes.FirstOrDefault(n => n.Id == PageFootnotes[i].NoteId);

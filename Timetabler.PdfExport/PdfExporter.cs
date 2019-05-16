@@ -320,7 +320,12 @@ namespace Timetabler.PdfExport
 
         private Area LayOutFootnotesForSection(TimetableSectionModel section, int startingColumn, int columnCount)
         {
-            List<FootnoteDisplayModel> relevantFootnotes = section.TrainSegments.Skip(startingColumn).Take(columnCount).SelectMany(s => s.PageFootnotes).Distinct().ToList();
+            List<FootnoteDisplayModel> relevantFootnotes = section.TrainSegments
+                .Skip(startingColumn)
+                .Take(columnCount)
+                .SelectMany(s => s.PageFootnotes.Where(f => f.DisplayOnPage))
+                .Distinct()
+                .ToList();
             if (relevantFootnotes.Count == 0)
             {
                 return new Area();
@@ -1006,7 +1011,7 @@ namespace Timetabler.PdfExport
             double titleHeight = _currentPage.PageGraphics.MeasureString(Resources.GlossaryTitle, _subtitleFont).Height;
             WritingWrapper(Resources.GlossaryTitle, _subtitleFont, new UniRectangle(_currentPage.LeftMarginPosition, _currentPage.TopMarginPosition, _currentPage.PageAvailableWidth, titleHeight),
                 HorizontalAlignment.Centred, VerticalAlignment.Centred);
-            List<Note> glossaryNotes = noteDefinitions.Where(n => n.DefinedInGlossary).OrderBy(n => n.Symbol).ToList();
+            List<Note> glossaryNotes = noteDefinitions.Where(n => n.DefinedInGlossary && !string.IsNullOrEmpty(n.Symbol) && !string.IsNullOrEmpty(n.Definition)).OrderBy(n => n.Symbol).ToList();
             Table footnotesTable = new Table { RuleStyle = TableRuleStyle.None };
             MarginSet footnotesTableCellMargins = new MarginSet(0, 3, 0, 3);
             foreach (Note n in glossaryNotes) { 

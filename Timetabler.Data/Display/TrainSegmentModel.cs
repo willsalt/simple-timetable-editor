@@ -111,6 +111,26 @@ namespace Timetabler.Data.Display
             LocoToWorkCell = CreateToWorkCell(train.LocoToWork); 
         }
 
+        /// <summary>
+        /// Update page footnote data models to match the passed-in footnote data.
+        /// </summary>
+        /// <param name="notes"></param>
+        public void UpdatePageFootnotes(ICollection<Note> notes)
+        {
+            if (notes == null || notes.Count == 0)
+            {
+                return;
+            }
+            for (int i = 0; i < PageFootnotes.Count; ++i)
+            {
+                Note note = notes.FirstOrDefault(n => n.Id == PageFootnotes[i].NoteId);
+                if (note != null)
+                {
+                    PageFootnotes[i] = note.ToFootnoteDisplayModel();
+                }
+            }
+        }
+
         private GenericTimeModel CreateToWorkCell(ToWork toWork)
         {
             if (toWork == null)

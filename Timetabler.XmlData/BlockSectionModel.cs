@@ -30,6 +30,12 @@ namespace Timetabler.XmlData
         /// </summary>
         [XmlElement]
         public int Capacity { get; set; }
+
+        /// <summary>
+        /// Minimum time for a train to travel throug this section.
+        /// </summary>
+        [XmlElement]
+        public int MinimumSectionTime { get; set; }
     }
 }
 

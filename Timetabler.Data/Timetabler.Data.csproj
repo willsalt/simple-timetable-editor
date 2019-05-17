@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockSection.cs" />
     <Compile Include="ClockType.cs" />
     <Compile Include="Collections\BaseCollection.cs" />
     <Compile Include="Collections\BaseEnumerator.cs" />

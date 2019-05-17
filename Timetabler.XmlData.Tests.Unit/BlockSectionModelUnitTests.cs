@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Timetabler.XmlData.Tests.Unit
@@ -88,6 +85,22 @@ namespace Timetabler.XmlData.Tests.Unit
         public void BlockSectionsModelClassCapacityPropertyIsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(BlockSectionModel).GetProperty("Capacity").GetCustomAttributes<XmlElementAttribute>(false).First());
+        }
+
+        [TestMethod]
+        public void BlockSectionModelClassHasPublicMinimumSectionTimePropertyOfTypeInt()
+        {
+            PropertyInfo pInfo = typeof(BlockSectionModel).GetProperty("MinimumSectionTime");
+            Assert.IsNotNull(pInfo);
+            Assert.AreEqual(typeof(int), pInfo.PropertyType);
+            Assert.IsTrue(pInfo.GetMethod.IsPublic);
+            Assert.IsTrue(pInfo.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void BlockSectionModelClassMinimumSectionTimePropertyIsDecoratedWithXmlElementAttribute()
+        {
+            Assert.IsNotNull(typeof(BlockSectionModel).GetProperty("MinimumSectionTime").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
     }
 }

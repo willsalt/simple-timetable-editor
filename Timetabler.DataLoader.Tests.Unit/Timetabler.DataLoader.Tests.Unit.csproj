@@ -60,6 +60,7 @@
     <Compile Include="Load\TimetableFileModelExtensionsUnitTests.cs" />
     <Compile Include="Load\TrainLocationTimeModelExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Save\BlockSectionExtensionsUnitTests.cs" />
     <Compile Include="Save\DocumentExportOptionsExtensionsUnitTests.cs" />
     <Compile Include="Save\LocationExtensionsUnitTests.cs" />
     <Compile Include="Save\TimetableDocumentExtensionsUnitTests.cs" />

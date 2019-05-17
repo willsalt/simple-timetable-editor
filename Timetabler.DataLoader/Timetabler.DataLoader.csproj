@@ -72,6 +72,7 @@
     <Compile Include="Load\TrainTimeModelExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saver.cs" />
+    <Compile Include="Save\BlockSectionExtensions.cs" />
     <Compile Include="Save\DistanceExtensions.cs" />
     <Compile Include="Save\DocumentExportOptionsExtensions.cs" />
     <Compile Include="Save\DocumentOptionsExtensions.cs" />

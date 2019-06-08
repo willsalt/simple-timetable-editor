@@ -19,7 +19,7 @@ namespace Timetabler {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -156,6 +156,24 @@ namespace Timetabler {
         internal static string HumanReadableEnum_DashStyle_Solid {
             get {
                 return ResourceManager.GetString("HumanReadableEnum_DashStyle_Solid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free edit.
+        /// </summary>
+        internal static string HumanReadableEnum_GraphEditStyle_Free {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_GraphEditStyle_Free", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not alter section times when editing.
+        /// </summary>
+        internal static string HumanReadableEnum_GraphEditStyle_PreserveSectionTimes {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_GraphEditStyle_PreserveSectionTimes", resourceCulture);
             }
         }
         

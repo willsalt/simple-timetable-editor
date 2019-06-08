@@ -101,6 +101,7 @@
     <Compile Include="Events\TrainClassEventArgs.cs" />
     <Compile Include="Events\TrainSegmentModelEventArgs.cs" />
     <Compile Include="Events\TrainSegmentModelEventHandler.cs" />
+    <Compile Include="GraphEditStyle.cs" />
     <Compile Include="GraphTrainProperties.cs" />
     <Compile Include="HalfOfDay.cs" />
     <Compile Include="Interfaces\IExporter.cs" />

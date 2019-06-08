@@ -150,6 +150,12 @@
   <data name="HumanReadableEnum_DashStyle_Solid" xml:space="preserve">
     <value>Solid</value>
   </data>
+  <data name="HumanReadableEnum_GraphEditStyle_Free" xml:space="preserve">
+    <value>Free edit</value>
+  </data>
+  <data name="HumanReadableEnum_GraphEditStyle_PreserveSectionTimes" xml:space="preserve">
+    <value>Do not alter section times when editing</value>
+  </data>
   <data name="HumanReadableEnum_HalfOfDay_AM" xml:space="preserve">
     <value>a.m.</value>
   </data>

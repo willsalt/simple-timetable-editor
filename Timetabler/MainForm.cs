@@ -631,8 +631,7 @@ namespace Timetabler
                 return;
             }
             doef.Model.CopyTo(Model.Options);
-            trainGraph.Model.DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs;
-            trainGraph.Model.TooltipFormattingString = Model.Options.FormattingStrings.Tooltip;
+            trainGraph.Model.SetPropertiesFromDocumentOptions(Model.Options);
             trainGraph.Invalidate();
             Model.RefreshTrainDisplayFormatting();
             UpdateSignalboxHours();
@@ -689,7 +688,13 @@ namespace Timetabler
                 newDocument.Signalboxes = template.Signalboxes;
             }
             Model = newDocument;
-            trainGraph.Model = new TrainGraphModel { LocationList = Model.LocationList, TrainList = Model.TrainList, DisplayTrainLabels = template.DocumentOptions.DisplayTrainLabelsOnGraphs };            
+            trainGraph.Model = new TrainGraphModel
+            {
+                LocationList = Model.LocationList,
+                TrainList = Model.TrainList,
+                DisplayTrainLabels = template.DocumentOptions.DisplayTrainLabelsOnGraphs,
+                GraphEditStyle = Model.Options.GraphEditStyle,
+            };            
             UpdateFields();
             Model.UpdateTrainDisplays();
             _documentChanged = false;

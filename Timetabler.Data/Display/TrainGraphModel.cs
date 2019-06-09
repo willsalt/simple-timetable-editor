@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Events;
@@ -28,9 +29,29 @@ namespace Timetabler.Data.Display
         public LocationCollection LocationList { get; set; }
 
         /// <summary>
+        /// Copy the values of relevant properties from a <see cref="DocumentOptions" /> instance.
+        /// </summary>
+        /// <param name="source">The object to copy the properties from.</param>
+        public void SetPropertiesFromDocumentOptions(DocumentOptions source)
+        {
+            if (source == null)
+            {
+                return;
+            }
+            DisplayTrainLabels = source.DisplayTrainLabelsOnGraphs;
+            GraphEditStyle = source.GraphEditStyle;
+            TooltipFormattingString = source.FormattingStrings.Tooltip;
+        }
+
+        /// <summary>
         /// Whether or not to display train labels on the train graph.
         /// </summary>
         public bool DisplayTrainLabels { get; set; }
+
+        /// <summary>
+        /// How to behave when dragging timing points
+        /// </summary>
+        public GraphEditStyle GraphEditStyle { get; set; }
 
         /// <summary>
         /// The format string to use when converting times to strings to display in tooltips.

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Tests.Utility.Extensions;
+using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Tests.Unit.Display
@@ -14,8 +15,8 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void LineCoordinatesClassConstructorSetsVertex1PropertyToValueOfFirstParameter()
         {
-            VertexInformation testParam0 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble());
-            VertexInformation testParam1 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble());
+            VertexInformation testParam0 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
+            VertexInformation testParam1 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
 
             LineCoordinates testOutput = new LineCoordinates(testParam0, testParam1);
 
@@ -25,8 +26,8 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void LineCoordinatesClassConstructorSetsVertex2PropertyToValueOfSecondParameter()
         {
-            VertexInformation testParam0 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble());
-            VertexInformation testParam1 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble());
+            VertexInformation testParam0 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
+            VertexInformation testParam1 = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
 
             LineCoordinates testOutput = new LineCoordinates(testParam0, testParam1);
 
@@ -69,8 +70,8 @@ namespace Timetabler.Data.Tests.Unit.Display
         {
             List<LineCoordinates> testInput = new List<LineCoordinates>
             {
-                new LineCoordinates(new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble()),
-                    new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble()))
+                new LineCoordinates(new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble()),
+                    new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble()))
             };
 
             int testOutput = LineCoordinates.GetIndexOfLongestLine(testInput);
@@ -82,8 +83,9 @@ namespace Timetabler.Data.Tests.Unit.Display
         public void LineCoordinatesClassGetIndexOfLongestLineMethodReturnsIndexOfNonNullItemIfParameterOnlyContainsOneNonNullItem()
         {
             List<LineCoordinates> testInput = new List<LineCoordinates>();
-            LineCoordinates testItem = new LineCoordinates(new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble()),
-                new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble(), _rnd.NextDouble()));
+            LineCoordinates testItem = new LineCoordinates(new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                    _rnd.NextDouble()),
+                new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble()));
             int count = _rnd.Next(20) + 1;
             int pos = _rnd.Next(count);
             for (int i = 0; i < count; ++i)
@@ -109,10 +111,11 @@ namespace Timetabler.Data.Tests.Unit.Display
             List<LineCoordinates> testInput = new List<LineCoordinates>(count);
             for (int i = 0; i < count; ++i)
             {
-                VertexInformation startVertex = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), _rnd.NextDouble() * 200, _rnd.NextDouble() * 200);
+                VertexInformation startVertex = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble() * 200, 
+                    _rnd.NextDouble() * 200);
                 double theta = _rnd.NextDouble() * Math.PI * 2;
-                VertexInformation endVertex = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), startVertex.X + lengths[i] * Math.Cos(theta), 
-                    startVertex.Y + lengths[i] * Math.Sin(theta));
+                VertexInformation endVertex = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), 
+                    startVertex.X + lengths[i] * Math.Cos(theta), startVertex.Y + lengths[i] * Math.Sin(theta));
                 testInput.Add(new LineCoordinates(startVertex, endVertex));
             }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timetabler.CoreData;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Events;
 
@@ -205,23 +206,26 @@ namespace Timetabler.Data.Display
                     if (train.TrainTimes[i]?.ArrivalTime?.Time != null && train.TrainTimes[i]?.DepartureTime?.Time != null)
                     {
                         double locationCoordinate = _locationCoordinates[train.TrainTimes[i].Location.Id];
-                        tdi.LineVertexes.Add(new LineCoordinates(new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), 
-                            locationCoordinate), new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), 
-                            locationCoordinate)));
+                        tdi.LineVertexes.Add(new LineCoordinates(
+                            new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), 
+                                locationCoordinate), 
+                            new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), 
+                                locationCoordinate)));
                     }
                     if (i > 0 && train.TrainTimes[i - 1]?.DepartureTime?.Time != null)
                     {
-                        VertexInformation startVertex = new VertexInformation(train, train.TrainTimes[i - 1].DepartureTime.Time, GetXPositionFromTime(train.TrainTimes[i - 1].DepartureTime.Time),
-                            _locationCoordinates[train.TrainTimes[i - 1].Location.Id]);
+                        VertexInformation startVertex = 
+                            new VertexInformation(train, train.TrainTimes[i - 1].DepartureTime.Time, ArrivalDepartureOptions.Departure, 
+                                GetXPositionFromTime(train.TrainTimes[i - 1].DepartureTime.Time), _locationCoordinates[train.TrainTimes[i - 1].Location.Id]);
                         double endY = _locationCoordinates[train.TrainTimes[i].Location.Id];
                         if (train.TrainTimes[i]?.ArrivalTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, 
+                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival,
                                 GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), endY)));
                         }
                         else if (train.TrainTimes[i]?.DepartureTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, 
+                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure,
                                 GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), endY)));
                         }
                     }

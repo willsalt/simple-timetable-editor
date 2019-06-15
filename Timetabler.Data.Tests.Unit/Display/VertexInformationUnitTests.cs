@@ -11,9 +11,9 @@ namespace Timetabler.Data.Tests.Unit.Display
         private static Random _rnd = new Random();
 
         [TestMethod]
-        public void VertexInformationClassConstructorSetsTrainPropertyToValueOfFirstParameter()
+        public void VertexInformationClassConstructorSetsTrainDrawingInfoPropertyToValueOfFirstParameter()
         {
-            Train testParam0 = new Train();
+            TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
             ArrivalDepartureOptions testParam2 = (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
             double testParam3 = _rnd.NextDouble();
@@ -21,13 +21,27 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             VertexInformation testOutput = new VertexInformation(testParam0, testParam1, testParam2, testParam3, testParam4);
 
-            Assert.AreSame(testParam0, testOutput.Train);
+            Assert.AreSame(testParam0, testOutput.TrainDrawingInfo);
+        }
+
+        [TestMethod]
+        public void VertexInformationClassConstructorSetsTrainPropertyToValueOfTrainPropertyOfFirstParameter()
+        {
+            TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
+            TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
+            ArrivalDepartureOptions testParam2 = (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
+            double testParam3 = _rnd.NextDouble();
+            double testParam4 = _rnd.NextDouble();
+
+            VertexInformation testOutput = new VertexInformation(testParam0, testParam1, testParam2, testParam3, testParam4);
+
+            Assert.AreSame(testParam0.Train, testOutput.Train);
         }
 
         [TestMethod]
         public void VertexInformationClassConstructorSetsTimePropertyToValueOfSecondParameter()
         {
-            Train testParam0 = new Train();
+            TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
             ArrivalDepartureOptions testParam2 = (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
             double testParam3 = _rnd.NextDouble();
@@ -41,7 +55,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void VertexInformationClassConstructorSetsArrivalDeparturePropertyToValueOfThirdParameter()
         {
-            Train testParam0 = new Train();
+            TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
             ArrivalDepartureOptions testParam2 = (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
             double testParam3 = _rnd.NextDouble();
@@ -55,7 +69,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void VertexInformationClassConstructorSetsXPropertyToValueOfFourthParameter()
         {
-            Train testParam0 = new Train();
+            TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
             ArrivalDepartureOptions testParam2 = (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
             double testParam3 = _rnd.NextDouble();
@@ -67,7 +81,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void VertexInformationClassConstructorSetsYPropertyToValueOfFifthParameter()
         {
-            Train testParam0 = new Train();
+            TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
             ArrivalDepartureOptions testParam2 = (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
             double testParam3 = _rnd.NextDouble();

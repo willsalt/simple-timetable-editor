@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Timetabler.CoreData.Helpers;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Extensions
@@ -39,6 +40,17 @@ namespace Timetabler.Data.Extensions
                 return items;
             }
             return items.Where(i => i.Time != null && cut.Time >= i.Time);
+        }
+
+        /// <summary>
+        /// This method takes an <see cref="IEnumerable{VertexInformation}" /> parameter and projects the elements to return an enumeration of the Time property of each element.
+        /// Duplicates are removed from the enumeration, as the <see cref="VertexInformation" /> objects may well maintain references to the same underlying <see cref="TimeOfDay" /> objects
+        /// </summary>
+        /// <param name="items">An enumeration of <see cref="VertexInformation" /> instances.</param>
+        /// <returns>An enumeration of <see cref="TimeOfDay" /> objects referred to by the instances from the parameter.</returns>
+        public static IEnumerable<TimeOfDay> Times(this IEnumerable<VertexInformation> items)
+        {
+            return items.Select(v => v.Time).Distinct(ReferenceEqualityComparer.Default).Cast<TimeOfDay>();
         }
     }
 }

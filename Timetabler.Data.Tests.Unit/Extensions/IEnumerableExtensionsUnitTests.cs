@@ -24,7 +24,8 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                    _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
             }
@@ -45,7 +46,8 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                    _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
             }
@@ -71,7 +73,8 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                    _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
             }
@@ -92,7 +95,8 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new Train(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), _rnd.NextDouble());
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                    _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
             }

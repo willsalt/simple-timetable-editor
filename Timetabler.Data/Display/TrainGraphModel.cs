@@ -206,26 +206,26 @@ namespace Timetabler.Data.Display
                     if (train.TrainTimes[i]?.ArrivalTime?.Time != null && train.TrainTimes[i]?.DepartureTime?.Time != null)
                     {
                         double locationCoordinate = _locationCoordinates[train.TrainTimes[i].Location.Id];
-                        tdi.LineVertexes.Add(new LineCoordinates(
-                            new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), 
+                        tdi.Lines.Add(new LineCoordinates(
+                            new VertexInformation(tdi, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), 
                                 locationCoordinate), 
-                            new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), 
+                            new VertexInformation(tdi, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), 
                                 locationCoordinate)));
                     }
                     if (i > 0 && train.TrainTimes[i - 1]?.DepartureTime?.Time != null)
                     {
                         VertexInformation startVertex = 
-                            new VertexInformation(train, train.TrainTimes[i - 1].DepartureTime.Time, ArrivalDepartureOptions.Departure, 
+                            new VertexInformation(tdi, train.TrainTimes[i - 1].DepartureTime.Time, ArrivalDepartureOptions.Departure, 
                                 GetXPositionFromTime(train.TrainTimes[i - 1].DepartureTime.Time), _locationCoordinates[train.TrainTimes[i - 1].Location.Id]);
                         double endY = _locationCoordinates[train.TrainTimes[i].Location.Id];
                         if (train.TrainTimes[i]?.ArrivalTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival,
+                            tdi.Lines.Add(new LineCoordinates(startVertex, new VertexInformation(tdi, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival,
                                 GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), endY)));
                         }
                         else if (train.TrainTimes[i]?.DepartureTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure,
+                            tdi.Lines.Add(new LineCoordinates(startVertex, new VertexInformation(tdi, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure,
                                 GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), endY)));
                         }
                     }
@@ -235,7 +235,13 @@ namespace Timetabler.Data.Display
             }
         }
 
-        private double GetXPositionFromTime(TimeOfDay t)
+        /// <summary>
+        /// Convert a time of day to a relative X-position on the graph.  A position within the current bounds of the graph will be between 0 and 1; times of day outside the current
+        /// bounds of the graph may be less than 0 or greater than 1.
+        /// </summary>
+        /// <param name="t">The time of day to convert.</param>
+        /// <returns>The graph coordinate equivalent to the time of day.</returns>
+        public double GetXPositionFromTime(TimeOfDay t)
         {
             if (!_baseTimeSeconds.HasValue || !_maxTimeSeconds.HasValue)
             {

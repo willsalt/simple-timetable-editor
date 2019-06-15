@@ -135,6 +135,7 @@ namespace Timetabler
             Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
             Model.UpTrainsDisplay.CheckCompulsaryLocationsAreVisible();
             UpdateTrainGraphLocationModel();
+            trainGraph.Model.SetPropertiesFromDocumentOptions(Model.Options);
             _documentChanged = false;
         }
 

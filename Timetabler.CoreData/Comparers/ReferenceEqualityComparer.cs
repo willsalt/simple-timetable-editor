@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Timetabler.CoreData.Helpers
+namespace Timetabler.CoreData.Comparers
 {
     /// <summary>
     /// An <see cref="IEqualityComparer" /> implementation which always compares strictly by reference equality even for types that implement their own Equals() method.

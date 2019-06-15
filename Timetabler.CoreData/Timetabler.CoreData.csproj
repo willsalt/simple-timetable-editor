@@ -48,7 +48,7 @@
     <Compile Include="Exceptions\TimetableLoaderException.cs" />
     <Compile Include="Helpers\CoordinateHelper.cs" />
     <Compile Include="Helpers\GeneralHelper.cs" />
-    <Compile Include="Helpers\ReferenceEqualityComparer.cs" />
+    <Compile Include="Comparers\ReferenceEqualityComparer.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Interfaces\ICopyableItem.cs" />
     <Compile Include="Interfaces\IUniqueItem.cs" />

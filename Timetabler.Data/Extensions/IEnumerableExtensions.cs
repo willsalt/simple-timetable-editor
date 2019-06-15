@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Timetabler.CoreData.Helpers;
+using Timetabler.CoreData.Comparers;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Extensions

@@ -55,6 +55,17 @@ namespace Tests.Utility.Extensions
             return new TimeOfDay(random.Next(86400));
         }
 
+        public static TimeOfDay NextTimeOfDayBefore(this Random random, TimeOfDay t)
+        {
+            return new TimeOfDay(random.Next(t.AbsoluteSeconds));
+        }
+
+        public static TimeOfDay NextTimeOfDayAfter(this Random random, TimeOfDay t)
+        {
+            int lim = 86400 - t.AbsoluteSeconds;
+            return new TimeOfDay(random.Next(lim) + t.AbsoluteSeconds);
+        }
+
         public static ArrivalDepartureOptions NextArrivalDepartureOptions(this Random random)
         {
             ArrivalDepartureOptions[] allValues = new ArrivalDepartureOptions[]

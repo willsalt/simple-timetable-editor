@@ -17,7 +17,7 @@ namespace Timetabler.Data.Display.Comparers
         {
             if (x?.Time == null)
             {
-                return y == null ? 0 : -1;
+                return y?.Time == null ? 0 : -1;
             }
             if (y?.Time == null)
             {

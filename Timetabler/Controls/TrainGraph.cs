@@ -433,47 +433,37 @@ namespace Timetabler.Controls
             else if (Model.GraphEditStyle == GraphEditStyle.PreserveSectionTimes)
             {
                 TimeSpan timeOffset = Model.GetTimeOfDayFromXPosition(relativeX) - _nearestVertex.Time;
-
+                IList<VertexInformation> vertexes;
                 // Departure moved later
                 if ((_nearestVertex.ArrivalDeparture & ArrivalDepartureOptions.Departure) != 0 && timeOffset.TotalSeconds > 0)
                 {
-                    IEnumerable<VertexInformation> vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.LaterThan(_nearestVertex).ToList();
-                    foreach (TimeOfDay time in vertexes.Times())
-                    {
-                        (time + timeOffset).CopyTo(time);
-                    }
-                    foreach (VertexInformation vertex in vertexes)
-                    {
-                        vertex.X = Model.GetXPositionFromTime(vertex.Time);
-                    }
+                    vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.LaterThan(_nearestVertex).ToList();
                 }
                 // Arrival moved earlier
                 else if ((_nearestVertex.ArrivalDeparture & ArrivalDepartureOptions.Arrival) != 0 && timeOffset.TotalSeconds < 0)
                 {
-                    IEnumerable<VertexInformation> vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.EarlierThan(_nearestVertex).ToList();
-                    foreach (TimeOfDay time in vertexes.Times())
-                    {
-                        (time + timeOffset).CopyTo(time);
-                    }
-                    foreach (VertexInformation vertex in vertexes)
-                    {
-                        vertex.X = Model.GetXPositionFromTime(vertex.Time);
-                    }
+                    vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.EarlierThan(_nearestVertex).ToList();
                 }
                 // Departure moved earlier or arrival moved later
                 else
                 {
-                    foreach (TimeOfDay time in _nearestVertex.TrainDrawingInfo.LineVertexes.Times())
-                    {
-                        (time + timeOffset).CopyTo(time);
-                    }
-                    foreach (VertexInformation vertex in _nearestVertex.TrainDrawingInfo.LineVertexes)
-                    {
-                        vertex.X = Model.GetXPositionFromTime(vertex.Time);
-                    }
+                    vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.ToList();
                 }
+                ShiftVertexes(vertexes, timeOffset);
             }
             _nearestVertex.Train.RefreshTimingPointModels();    
+        }
+
+        private void ShiftVertexes(IList<VertexInformation> vertexes, TimeSpan timeOffset)
+        {
+            foreach (TimeOfDay time in vertexes.Times())
+            {
+                (time + timeOffset).CopyTo(time);
+            }
+            foreach (VertexInformation vertex in vertexes)
+            {
+                vertex.X = Model.GetXPositionFromTime(vertex.Time);
+            }
         }
     }
 }

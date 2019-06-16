@@ -112,5 +112,18 @@ namespace Timetabler.Helpers
                 new HumanReadableEnum<HalfOfDay> { Name = Resources.HumanReadableEnum_HalfOfDay_PM, Value = HalfOfDay.PM },
             };
         }
+
+        /// <summary>
+        /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="GraphEditStyle" /> enumeration.
+        /// </summary>
+        /// <returns>An array of <see cref="HumanReadableEnum{TEnum}" /> instances.</returns>
+        public static HumanReadableEnum<GraphEditStyle>[] GetGraphEditStyle()
+        {
+            return new[]
+            {
+                new HumanReadableEnum<GraphEditStyle> { Name = Resources.HumanReadableEnum_GraphEditStyle_Free, Value = GraphEditStyle.Free },
+                new HumanReadableEnum<GraphEditStyle> { Name = Resources.HumanReadableEnum_GraphEditStyle_PreserveSectionTimes, Value = GraphEditStyle.PreserveSectionTimes }
+            };
+        }
     }
 }

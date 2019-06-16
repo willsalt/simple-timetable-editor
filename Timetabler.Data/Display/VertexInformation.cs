@@ -1,4 +1,6 @@
-﻿namespace Timetabler.Data.Display
+﻿using Timetabler.CoreData;
+
+namespace Timetabler.Data.Display
 {
     /// <summary>
     /// Represents a vertex on a train graph.
@@ -6,14 +8,30 @@
     public class VertexInformation
     {
         /// <summary>
-        /// The train to which this applies.
+        /// The drawing info for the train to which this vertex applies.
         /// </summary>
-        public Train Train { get; set; }
+        public TrainDrawingInfo TrainDrawingInfo { get; set; }
+
+        /// <summary>
+        /// The train to which this vertex applies.
+        /// </summary>
+        public Train Train
+        {
+            get
+            {
+                return TrainDrawingInfo?.Train;
+            }
+        }
 
         /// <summary>
         /// The time of the vertex.
         /// </summary>
         public TimeOfDay Time { get; set; }
+
+        /// <summary>
+        /// Whether this vertex applies to arrivals, departures, or both.
+        /// </summary>
+        public ArrivalDepartureOptions ArrivalDeparture { get; set; }
 
         /// <summary>
         /// The X-position
@@ -33,14 +51,16 @@
         /// <summary>
         /// Constructor which sets properties.
         /// </summary>
-        /// <param name="t">The train to which this vertex belongs.</param>
+        /// <param name="tdi">The train drawing info to which this vertex belongs.</param>
         /// <param name="time">The time of day that the vertex represents.</param>
+        /// <param name="arrivalDeparture">Whether the vertex represents an arrival time, a departure time, or both.</param>
         /// <param name="x">The X-coordinate of the vertex.</param>
         /// <param name="y">The Y-coordinate of the vertex.</param>
-        public VertexInformation(Train t, TimeOfDay time, double x, double y)
+        public VertexInformation(TrainDrawingInfo tdi, TimeOfDay time, ArrivalDepartureOptions arrivalDeparture, double x, double y)
         {
-            Train = t;
+            TrainDrawingInfo = tdi;
             Time = time;
+            ArrivalDeparture = arrivalDeparture;
             X = x;
             Y = y;
         }

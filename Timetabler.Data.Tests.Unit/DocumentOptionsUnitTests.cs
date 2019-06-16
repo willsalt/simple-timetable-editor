@@ -1,18 +1,35 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 
 namespace Timetabler.Data.Tests.Unit
 {
     [TestClass]
     public class DocumentOptionsUnitTests
     {
-        private static Random _rnd = new Random();
+        private static Random _rnd = RandomProvider.Default;
+
+        private DocumentOptions GetDocumentOptions()
+        {
+            return GetDocumentOptions(_rnd.NextBoolean() ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock);
+        }
+
+        private DocumentOptions GetDocumentOptions(ClockType clockType)
+        {
+            return new DocumentOptions
+            {
+                ClockType = clockType,
+                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean(),
+                GraphEditStyle = _rnd.NextBoolean() ? GraphEditStyle.Free : GraphEditStyle.PreserveSectionTimes,
+            };
+        }
+
 
         [TestMethod]
         public void DocumentOptionsClassFormattingStringsPropertyReturnsCorrectValuesIfClockTypeIsTwelveHourClock()
         {
-            DocumentOptions testObject = new DocumentOptions { ClockType = ClockType.TwelveHourClock, DisplayTrainLabelsOnGraphs = _rnd.NextBoolean() };
+            DocumentOptions testObject = GetDocumentOptions(ClockType.TwelveHourClock);
 
             TimeDisplayFormattingStrings testOutput = testObject.FormattingStrings;
 
@@ -26,7 +43,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassFormattingStringsPropertyReturnsCorrectValuesIfClockTypeIsTwentyFourHourClock()
         {
-            DocumentOptions testObject = new DocumentOptions { ClockType = ClockType.TwentyFourHourClock, DisplayTrainLabelsOnGraphs = _rnd.NextBoolean() };
+            DocumentOptions testObject = GetDocumentOptions(ClockType.TwentyFourHourClock);
 
             TimeDisplayFormattingStrings testOutput = testObject.FormattingStrings;
 
@@ -40,7 +57,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassClockTypePropertySetMethodUpdatesPropertiesOfFormattingStringsObjectIfClockTypeIsSetToTwentyFourHourClock()
         {
-            DocumentOptions testObject = new DocumentOptions { ClockType = ClockType.TwelveHourClock, DisplayTrainLabelsOnGraphs = _rnd.NextBoolean() };
+            DocumentOptions testObject = GetDocumentOptions(ClockType.TwelveHourClock);
 
             TimeDisplayFormattingStrings testOutput = testObject.FormattingStrings;
             testObject.ClockType = ClockType.TwentyFourHourClock;
@@ -55,7 +72,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassClockTypePropertySetMethodUpdatesPropertiesOfFormattingStringsObjectIfClockTypeIsSetToTwelverHourClock()
         {
-            DocumentOptions testObject = new DocumentOptions { ClockType = ClockType.TwentyFourHourClock, DisplayTrainLabelsOnGraphs = _rnd.NextBoolean() };
+            DocumentOptions testObject = GetDocumentOptions(ClockType.TwentyFourHourClock);
 
             TimeDisplayFormattingStrings testOutput = testObject.FormattingStrings;
             testObject.ClockType = ClockType.TwelveHourClock;
@@ -70,11 +87,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassCopyMethodReturnsNewObject()
         {
-            DocumentOptions testObject = new DocumentOptions
-            {
-                ClockType = _rnd.NextBoolean() ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock,
-                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean()
-            };
+            DocumentOptions testObject = GetDocumentOptions();
 
             DocumentOptions testOutput = testObject.Copy();
 
@@ -84,11 +97,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectClockTypeProperty()
         {
-            DocumentOptions testObject = new DocumentOptions
-            {
-                ClockType = _rnd.NextBoolean() ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock,
-                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean()
-            };
+            DocumentOptions testObject = GetDocumentOptions();
 
             DocumentOptions testOutput = testObject.Copy();
 
@@ -98,11 +107,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectDisplayTrainLabelsOnGraphsProperty()
         {
-            DocumentOptions testObject = new DocumentOptions
-            {
-                ClockType = _rnd.NextBoolean() ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock,
-                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean()
-            };
+            DocumentOptions testObject = GetDocumentOptions();
 
             DocumentOptions testOutput = testObject.Copy();
 
@@ -112,11 +117,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectFormattingStringsPropertiesIfClockTypeIsTwelveHourClock()
         {
-            DocumentOptions testObject = new DocumentOptions
-            {
-                ClockType = ClockType.TwelveHourClock,
-                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean()
-            };
+            DocumentOptions testObject = GetDocumentOptions(ClockType.TwelveHourClock);
 
             TimeDisplayFormattingStrings testOutput = testObject.Copy().FormattingStrings;
 
@@ -130,11 +131,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectFormattingStringsPropertiesIfClockTypeIsTwentyFourHourClock()
         {
-            DocumentOptions testObject = new DocumentOptions
-            {
-                ClockType = ClockType.TwentyFourHourClock,
-                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean()
-            };
+            DocumentOptions testObject = GetDocumentOptions(ClockType.TwentyFourHourClock);
 
             TimeDisplayFormattingStrings testOutput = testObject.Copy().FormattingStrings;
 
@@ -143,6 +140,27 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual("HH", testOutput.Hours);
             Assert.AreEqual("mmf", testOutput.Minutes);
             Assert.AreEqual("HH:mmf", testOutput.Tooltip);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectGraphEditStyleProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+
+            DocumentOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.GraphEditStyle, testOutput.GraphEditStyle);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClassCopyToMethodOverwritesGraphEditStyleProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+            DocumentOptions target = GetDocumentOptions();
+
+            testObject.CopyTo(target);
+
+            Assert.AreEqual(testObject.GraphEditStyle, target.GraphEditStyle);
         }
     }
 }

@@ -493,6 +493,61 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// Returns a <see cref="TimeSpan" /> representing the time elapsed between the two parameters.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A <see cref="TimeSpan" /> struct.</returns>
+        public static TimeSpan operator -(TimeOfDay t1, TimeOfDay t2)
+        {
+            return TimeSpan.FromSeconds(t1.AbsoluteSeconds - t2.AbsoluteSeconds);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="TimeSpan" /> representing the time elapsed between the two parameters.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A <see cref="TimeSpan" /> struct.</returns>
+        public static TimeSpan operator -(TimeOfDay t1, TimeSpan t2)
+        {
+            return TimeSpan.FromSeconds(t1.AbsoluteSeconds - t2.TotalSeconds);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="TimeSpan" /> representing the time elapsed between the two parameters.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A <see cref="TimeSpan" /> struct.</returns>
+        public static TimeSpan operator -(TimeSpan t1, TimeOfDay t2)
+        {
+            return TimeSpan.FromSeconds(t1.TotalSeconds - t2.AbsoluteSeconds);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="TimeOfDay" /> object representing the time of day of the first parameter, plus the span of time of the second parameter.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A new <see cref="TimeOfDay" /> instance.</returns>
+        public static TimeOfDay operator +(TimeOfDay t1, TimeSpan t2)
+        {
+            return new TimeOfDay(t1.AbsoluteSeconds + t2.TotalSeconds);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="TimeOfDay" /> object representing the time of day of the second parameter, plus the span of time of the first parameter.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A new <see cref="TimeOfDay" /> instance.</returns>
+        public static TimeOfDay operator +(TimeSpan t1, TimeOfDay t2)
+        {
+            return new TimeOfDay(t1.TotalSeconds + t2.AbsoluteSeconds);
+        }
+
+        /// <summary>
         /// Offsets a <see cref="TimeOfDay"/> by a given number of minutes.
         /// </summary>
         /// <param name="minutes">The number of minutes (positive or negative) to add to the current time.</param>

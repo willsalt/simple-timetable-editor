@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
@@ -8,7 +9,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class VertexInformationUnitTests
     {
-        private static Random _rnd = new Random();
+        private static Random _rnd = RandomProvider.Default;
 
         [TestMethod]
         public void VertexInformationClassConstructorSetsTrainDrawingInfoPropertyToValueOfFirstParameter()

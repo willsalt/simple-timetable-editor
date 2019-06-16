@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Tests.Unit.Display
@@ -12,7 +9,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class TrainGraphModelUnitTests
     {
-        private static Random _rnd = new Random();
+        private static Random _rnd = RandomProvider.Default;
 
         private TrainGraphModel GetTrainGraphModel()
         {

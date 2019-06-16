@@ -70,7 +70,6 @@ namespace Tests.Utility.Extensions
         {
             ArrivalDepartureOptions[] allValues = new ArrivalDepartureOptions[]
             {
-                0,
                 ArrivalDepartureOptions.Arrival,
                 ArrivalDepartureOptions.Departure,
                 ArrivalDepartureOptions.Arrival | ArrivalDepartureOptions.Departure

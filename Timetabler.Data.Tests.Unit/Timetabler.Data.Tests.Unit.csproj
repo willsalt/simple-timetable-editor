@@ -72,6 +72,7 @@
     <Compile Include="Display\FootnoteDisplayModelUnitTests.cs" />
     <Compile Include="Display\GenericEntryModelUnitTests.cs" />
     <Compile Include="Display\LineCoordinatesUnitTests.cs" />
+    <Compile Include="Display\TrainDrawingInfoUnitTests.cs" />
     <Compile Include="Display\TrainGraphModelUnitTests.cs" />
     <Compile Include="Display\TrainLocationTimeModelUnitTests.cs" />
     <Compile Include="Display\TrainSegmentModelUnitTests.cs" />

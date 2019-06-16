@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Comparers;
@@ -14,7 +13,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
     [TestClass]
     public class IEnumerableExtensionsUnitTests
     {
-        private static Random _rnd = new Random();
+        private static Random _rnd = RandomProvider.Default;
 
         [TestMethod]
         public void IEnumerableExtensionsClassLaterThanMethodReturnsCorrectNumberOfItems()

@@ -170,8 +170,33 @@ namespace Timetabler.Data.Display
                 TrainId = TrainId,
                 PageFootnotes = PageFootnotes.Select(f => f.Copy()).ToList(),
             };
-            tsm.TimingsIndex = tsm.Timings.ToDictionary(t => t.LocationKey, t => t);
+            tsm.UpdateTimingsIndex();
             return tsm;
+        }
+
+        /// <summary>
+        /// When called with a parameter that is greater than zero and less than the index of the final timing point, this method will split the instance into two.  The instance called
+        /// has its timing points after the index truncated in-place; the method returns a second instance which starts with the timing point at the given index.
+        /// </summary>
+        /// <param name="idx">The index of the common timing point which will be retained by both segments after the split</param>
+        /// <returns>A <see cref="TrainSegmentModel" /> consisting of the second part of the current segment.</returns>
+        public TrainSegmentModel SplitAtIndex(int idx)
+        {
+            if (idx <= 0 || idx >= Timings.Count - 1)
+            {
+                return null;
+            }
+            TrainSegmentModel secondPortion = Copy();
+            Timings.RemoveRange(idx + 1, Timings.Count - (idx + 1));
+            secondPortion.Timings.RemoveRange(0, idx);
+            UpdateTimingsIndex();
+            secondPortion.UpdateTimingsIndex();
+            return secondPortion;
+        }
+
+        private void UpdateTimingsIndex()
+        {
+            TimingsIndex = Timings.ToDictionary(t => t.LocationId, t => t);
         }
     }
 }

@@ -26,12 +26,17 @@ namespace Timetabler.Data.Display
         public string Definition { get; set; }
 
         /// <summary>
+        /// Whether or not this footnote should be displayed as a footnote on timetable pages.
+        /// </summary>
+        public bool DisplayOnPage { get; set; }
+
+        /// <summary>
         /// Create a copy of this footnote with the same properties.  As the properties are all strings, there is no deep/shallow distinction to worry about.
         /// </summary>
         /// <returns>A <see cref="FootnoteDisplayModel" /> object which is a copy of this one.</returns>
         public FootnoteDisplayModel Copy()
         {
-            return new FootnoteDisplayModel { NoteId = NoteId, Symbol = Symbol, Definition = Definition };
+            return new FootnoteDisplayModel { NoteId = NoteId, Symbol = Symbol, Definition = Definition, DisplayOnPage = DisplayOnPage };
         }
 
         /// <summary>
@@ -48,6 +53,7 @@ namespace Timetabler.Data.Display
             target.NoteId = NoteId;
             target.Symbol = Symbol;
             target.Definition = Definition;
+            target.DisplayOnPage = DisplayOnPage;
         }
 
         /// <summary>

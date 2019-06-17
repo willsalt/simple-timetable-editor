@@ -67,6 +67,7 @@
     <Compile Include="Comparers\LocationDisplayModelComparer.cs" />
     <Compile Include="Comparers\TrainSegmentModelComparer.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="Display\Comparers\VertexInformationTimeBasedComparer.cs" />
     <Compile Include="Display\FootnoteDisplayModel.cs" />
     <Compile Include="Display\GenericEntryModel.cs" />
     <Compile Include="Display\GenericTimeModel.cs" />
@@ -101,6 +102,8 @@
     <Compile Include="Events\TrainClassEventArgs.cs" />
     <Compile Include="Events\TrainSegmentModelEventArgs.cs" />
     <Compile Include="Events\TrainSegmentModelEventHandler.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="GraphEditStyle.cs" />
     <Compile Include="GraphTrainProperties.cs" />
     <Compile Include="HalfOfDay.cs" />
     <Compile Include="Interfaces\IExporter.cs" />

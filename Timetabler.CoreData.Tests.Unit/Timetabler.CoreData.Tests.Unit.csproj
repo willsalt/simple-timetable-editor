@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Comparers\ReferenceEqualityComparerUnitTests.cs" />
     <Compile Include="Exceptions\TimetableLoaderExceptionUnitTests.cs" />
     <Compile Include="Helpers\CoordinateHelperUnitTests.cs" />
     <Compile Include="Helpers\GeneralHelperUnitTests.cs" />
@@ -65,6 +66,10 @@
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
       <Project>{80FFE281-9A15-4DA3-9E52-61FAC2979C2C}</Project>
       <Name>Timetabler.CoreData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
+      <Project>{9A7E2940-50B8-4F3A-A535-AB6220E6CE3A}</Project>
+      <Name>Timetabler.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

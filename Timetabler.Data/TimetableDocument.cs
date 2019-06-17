@@ -481,28 +481,28 @@ namespace Timetabler.Data
             }
         }
 
-        private IEnumerable<FootnoteDisplayModel> GetPageFootnotesForTimingPoint(TrainLocationTime timingPoint)
+        private IEnumerable<FootnoteDisplayModel> GetFootnotesForTimingPoint(TrainLocationTime timingPoint)
         {
             List<FootnoteDisplayModel> footnotes = new List<FootnoteDisplayModel>();
             if (timingPoint.ArrivalTime != null)
             {
-                footnotes.AddRange(GetPageFootnotesForTrainTime(timingPoint.ArrivalTime));
+                footnotes.AddRange(GetFootnotesForTrainTime(timingPoint.ArrivalTime));
             }
             if (timingPoint.DepartureTime != null)
             {
-                footnotes.AddRange(GetPageFootnotesForTrainTime(timingPoint.DepartureTime));
+                footnotes.AddRange(GetFootnotesForTrainTime(timingPoint.DepartureTime));
             }
 
             return footnotes;
         }
 
-        private IEnumerable<FootnoteDisplayModel> GetPageFootnotesForTrainTime(TrainTime time)
+        private IEnumerable<FootnoteDisplayModel> GetFootnotesForTrainTime(TrainTime time)
         {
             if (time.Footnotes == null)
             {
                 return new FootnoteDisplayModel[0];
             }
-            return time.Footnotes.Where(f => f.DefinedOnPages).Select(f => f.ToFootnoteDisplayModel());
+            return time.Footnotes.Select(f => f.ToFootnoteDisplayModel());
         }
 
         private void SetToWorkCellValue(GenericTimeModel toWorkModel)
@@ -526,7 +526,7 @@ namespace Timetabler.Data
             SetToWorkCellValue(currentSegment.LocoToWorkCell);
 
             Direction? currentDirection = null;
-            currentSegment.PageFootnotes.AddRange(GetPageFootnotesForTimingPoint(train.TrainTimes[0]));
+            currentSegment.PageFootnotes.AddRange(GetFootnotesForTimingPoint(train.TrainTimes[0]));
             if (!string.IsNullOrWhiteSpace(train.TrainTimes[0].Path))
             {
                 LocationEntryModel lem = new LocationEntryModel
@@ -600,7 +600,7 @@ namespace Timetabler.Data
                     currentSegment = new TrainSegmentModel(train);
                     currentDirection = newDirection;
                 }
-                currentSegment.PageFootnotes.AddRange(GetPageFootnotesForTimingPoint(train.TrainTimes[i]));
+                currentSegment.PageFootnotes.AddRange(GetFootnotesForTimingPoint(train.TrainTimes[i]));
                 if (!string.IsNullOrWhiteSpace(train.TrainTimes[i].Path))
                 {
                     LocationEntryModel lem = new LocationEntryModel
@@ -681,17 +681,21 @@ namespace Timetabler.Data
         /// </summary>
         public void RefreshTrainDisplayFormatting()
         {
+            Dictionary<string, Train> trainIndex = new Dictionary<string, Train>(TrainList.Count);
             foreach (var train in TrainList)
             {
+                trainIndex.Add(train.Id, train);
                 train.RefreshTimingPointModels();
             }
             foreach (var trainSegment in DownTrainsDisplay.TrainSegments)
             {
+                trainSegment.UpdatePageFootnotes(NoteDefinitions);
                 SetToWorkCellValue(trainSegment.LocoToWorkCell);
                 SetToWorkCellValue(trainSegment.ToWorkCell);
             }
             foreach (var trainSegment in UpTrainsDisplay.TrainSegments)
             {
+                trainSegment.UpdatePageFootnotes(NoteDefinitions);
                 SetToWorkCellValue(trainSegment.LocoToWorkCell);
                 SetToWorkCellValue(trainSegment.ToWorkCell);
             }

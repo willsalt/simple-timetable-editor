@@ -272,7 +272,7 @@ namespace Timetabler.PdfExport
 
             foreach (TrainDrawingInfo info in trainGraphModel.GetTrainDrawingInformation())
             {
-                foreach (LineCoordinates lineData in info.LineVertexes)
+                foreach (LineCoordinates lineData in info.Lines)
                 {
                     _currentPage.PageGraphics.DrawLine(CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.Vertex1.X),
                         CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Vertex1.Y), CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.Vertex2.X),
@@ -282,7 +282,7 @@ namespace Timetabler.PdfExport
                 if (trainGraphModel.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
                     UniSize headcodeDimensions = _currentPage.PageGraphics.MeasureString(info.Headcode.Trim(), _plainBodyFont);
-                    LineCoordinates longestLine = info.LineVertexes[LineCoordinates.GetIndexOfLongestLine(info.LineVertexes)];
+                    LineCoordinates longestLine = info.Lines[LineCoordinates.GetIndexOfLongestLine(info.Lines)];
                     double llX1 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex1.X);
                     double llX2 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex2.X);
                     double llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex1.Y);
@@ -320,7 +320,12 @@ namespace Timetabler.PdfExport
 
         private Area LayOutFootnotesForSection(TimetableSectionModel section, int startingColumn, int columnCount)
         {
-            List<FootnoteDisplayModel> relevantFootnotes = section.TrainSegments.Skip(startingColumn).Take(columnCount).SelectMany(s => s.PageFootnotes).Distinct().ToList();
+            List<FootnoteDisplayModel> relevantFootnotes = section.TrainSegments
+                .Skip(startingColumn)
+                .Take(columnCount)
+                .SelectMany(s => s.PageFootnotes.Where(f => f.DisplayOnPage))
+                .Distinct()
+                .ToList();
             if (relevantFootnotes.Count == 0)
             {
                 return new Area();
@@ -1006,7 +1011,7 @@ namespace Timetabler.PdfExport
             double titleHeight = _currentPage.PageGraphics.MeasureString(Resources.GlossaryTitle, _subtitleFont).Height;
             WritingWrapper(Resources.GlossaryTitle, _subtitleFont, new UniRectangle(_currentPage.LeftMarginPosition, _currentPage.TopMarginPosition, _currentPage.PageAvailableWidth, titleHeight),
                 HorizontalAlignment.Centred, VerticalAlignment.Centred);
-            List<Note> glossaryNotes = noteDefinitions.Where(n => n.DefinedInGlossary).OrderBy(n => n.Symbol).ToList();
+            List<Note> glossaryNotes = noteDefinitions.Where(n => n.DefinedInGlossary && !string.IsNullOrEmpty(n.Symbol) && !string.IsNullOrEmpty(n.Definition)).OrderBy(n => n.Symbol).ToList();
             Table footnotesTable = new Table { RuleStyle = TableRuleStyle.None };
             MarginSet footnotesTableCellMargins = new MarginSet(0, 3, 0, 3);
             foreach (Note n in glossaryNotes) { 

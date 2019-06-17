@@ -9,8 +9,8 @@ namespace Timetabler.Data.Comparers
     /// </summary>
     public class LocationDisplayModelComparer : IComparer<LocationDisplayModel>
     {
-        private int xBeforeY = -1;
-        private int yBeforeX = 1;
+        private int xBeforeY;
+        private int yBeforeX;
         private Direction _direction;
 
         /// <summary>

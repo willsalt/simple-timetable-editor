@@ -29,6 +29,11 @@
         public bool DisplayTrainLabelsOnGraphs { get; set; }
 
         /// <summary>
+        /// How the train graph control should behave.
+        /// </summary>
+        public GraphEditStyle GraphEditStyle { get; set; }
+
+        /// <summary>
         /// The correct formatting strings to use for time output, given the current value of the <see cref="ClockType" /> property.  Note that subsequent calls to the get method of this property
         /// may return the same object.  That object's properties are tied to the this object's <see cref="ClockType" /> property and will change if the <see cref="ClockType" /> property 
         /// of this object is changed.
@@ -36,12 +41,20 @@
         public TimeDisplayFormattingStrings FormattingStrings { get; } = new TimeDisplayFormattingStrings();
 
         /// <summary>
+        /// Default constructor.  Sets <see cref="GraphEditStyle" /> property to <see cref="GraphEditStyle.PreserveSectionTimes" />.
+        /// </summary>
+        public DocumentOptions()
+        {
+            GraphEditStyle = GraphEditStyle.PreserveSectionTimes;
+        }
+
+        /// <summary>
         /// Produce a shallow copy of this instance
         /// </summary>
         /// <returns>A copy of this instance.</returns>
         public DocumentOptions Copy()
         {
-            return new DocumentOptions { ClockType = ClockType, DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs };
+            return new DocumentOptions { ClockType = ClockType, DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs, GraphEditStyle = GraphEditStyle };
         }
 
         /// <summary>
@@ -61,6 +74,7 @@
                 options.ClockType = ClockType;
             }
             options.DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs;
+            options.GraphEditStyle = GraphEditStyle;
         }
 
         /// <summary>

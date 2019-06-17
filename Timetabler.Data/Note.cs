@@ -1,5 +1,4 @@
-﻿using System;
-using Timetabler.CoreData.Events;
+﻿using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
 using Timetabler.Data.Display;
 
@@ -204,7 +203,7 @@ namespace Timetabler.Data
         /// <returns>A <see cref="FootnoteDisplayModel" /> instance which can be used to display this note to a user.</returns>
         public FootnoteDisplayModel ToFootnoteDisplayModel()
         {
-            FootnoteDisplayModel fdm = new FootnoteDisplayModel { NoteId = Id, Definition = Definition, Symbol = Symbol };
+            FootnoteDisplayModel fdm = new FootnoteDisplayModel { NoteId = Id, Definition = Definition, Symbol = Symbol, DisplayOnPage = DefinedOnPages };
             Modified += fdm.ParentModified;
             return fdm;
         }

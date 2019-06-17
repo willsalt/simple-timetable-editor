@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Timetabler.Data.Display
 {
@@ -25,14 +26,25 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// List of lines to draw to display this train.
         /// </summary>
-        public List<LineCoordinates> LineVertexes { get; set; }
+        public List<LineCoordinates> Lines { get; set; }
+
+        /// <summary>
+        /// An enumeration of all of the vertexes associated with the <see cref="Lines" /> property.
+        /// </summary>
+        public IEnumerable<VertexInformation> LineVertexes
+        {
+            get
+            {
+                return Lines.Select(i => i.Vertex1).Union(Lines.Select(i => i.Vertex2)).Distinct();
+            }
+        }
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         public TrainDrawingInfo()
         {
-            LineVertexes = new List<LineCoordinates>();
+            Lines = new List<LineCoordinates>();
         }
     }
 }

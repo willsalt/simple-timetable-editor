@@ -1,4 +1,5 @@
 ﻿using System;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.XmlData;
 
@@ -20,6 +21,7 @@ namespace Timetabler.DataLoader.Save
             {
                 ClockTypeName = Enum.GetName(typeof(ClockType), options.ClockType),
                 DisplayTrainLabelsOnGraphs = options.DisplayTrainLabelsOnGraphs,
+                GraphEditStyle = Enum.GetName(typeof(GraphEditStyle), options.GraphEditStyle),
             };
         }
     }

@@ -50,23 +50,23 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         }
 
         [TestMethod]
-        public void DocumentOptionsModelExtensionsClassToDocumentOptionsMethodReturnsDocumentOptionsObjectWithGraphEditStylePropertyEqualToFreeIfArgumentGraphEditStylePropertyIsNull()
+        public void DocumentOptionsModelExtensionsClassToDocumentOptionsMethodReturnsDocumentOptionsObjectWithGraphEditStylePropertyEqualToPreserveSectionTimesIfArgumentGraphEditStylePropertyIsNull()
         {
             DocumentOptionsModel testObject = new DocumentOptionsModel { GraphEditStyle = null };
 
             DocumentOptions resultObject = testObject.ToDocumentOptions();
 
-            Assert.AreEqual(GraphEditStyle.Free, resultObject.GraphEditStyle);
+            Assert.AreEqual(GraphEditStyle.PreserveSectionTimes, resultObject.GraphEditStyle);
         }
 
         [TestMethod]
-        public void DocumentOptionsModelExtensionsClassToDocumentOptionsMethodReturnsDocumentOptionsObjectWithGraphEditStylePropertyEqualToFreeIfArgumentGraphEditStylePropertyIsEmptyString()
+        public void DocumentOptionsModelExtensionsClassToDocumentOptionsMethodReturnsDocumentOptionsObjectWithGraphEditStylePropertyEqualToPreserveSectionTimesIfArgumentGraphEditStylePropertyIsEmptyString()
         {
             DocumentOptionsModel testObject = new DocumentOptionsModel { GraphEditStyle = "" };
 
             DocumentOptions resultObject = testObject.ToDocumentOptions();
 
-            Assert.AreEqual(GraphEditStyle.Free, resultObject.GraphEditStyle);
+            Assert.AreEqual(GraphEditStyle.PreserveSectionTimes, resultObject.GraphEditStyle);
         }
     }
 }

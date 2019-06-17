@@ -41,6 +41,14 @@
         public TimeDisplayFormattingStrings FormattingStrings { get; } = new TimeDisplayFormattingStrings();
 
         /// <summary>
+        /// Default constructor.  Sets <see cref="GraphEditStyle" /> property to <see cref="GraphEditStyle.PreserveSectionTimes" />.
+        /// </summary>
+        public DocumentOptions()
+        {
+            GraphEditStyle = GraphEditStyle.PreserveSectionTimes;
+        }
+
+        /// <summary>
         /// Produce a shallow copy of this instance
         /// </summary>
         /// <returns>A copy of this instance.</returns>

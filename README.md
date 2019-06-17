@@ -38,6 +38,6 @@ The program is partially unit-tested, but test coverage is not fantastic and sho
 * Consider converting to .NET Core when v3 is released
 * Consider swapping from NLog to Serilog
 * Make data input easier
-* Improve "editable train graph" functionality, for example make it impossible to make trains go back in time
+* Improve "editable train graph" functionality
 * Properly handle the display of trains that overtake other trains
 * Improve test coverage rate

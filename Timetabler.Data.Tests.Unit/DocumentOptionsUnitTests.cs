@@ -25,6 +25,13 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
+        [TestMethod]
+        public void DocumentOptionsClassConstructorSetsGraphEditStylePropertyToPreserveSectionTimes()
+        {
+            DocumentOptions testObject = new DocumentOptions();
+
+            Assert.AreEqual(GraphEditStyle.PreserveSectionTimes, testObject.GraphEditStyle);
+        }
 
         [TestMethod]
         public void DocumentOptionsClassFormattingStringsPropertyReturnsCorrectValuesIfClockTypeIsTwelveHourClock()

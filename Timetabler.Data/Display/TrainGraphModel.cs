@@ -59,6 +59,11 @@ namespace Timetabler.Data.Display
         /// </summary>
         public string TooltipFormattingString { get; set; }
 
+        /// <summary>
+        /// A method to be called when a train on the graph is double-clicked.
+        /// </summary>
+        public Action<string> EditTrainMethod { get; set; }
+
         private TrainCollection _trainList;
 
         private int? _baseTimeSeconds;

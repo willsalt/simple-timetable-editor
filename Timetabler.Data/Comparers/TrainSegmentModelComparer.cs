@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data.Display;
+using Timetabler.Data.Display.Interfaces;
 
 namespace Timetabler.Data.Comparers
 {
@@ -108,24 +109,52 @@ namespace Timetabler.Data.Comparers
             // Check first common time
             int dir;
             var xFirstCommon = x.Timings.First(t => t is TrainLocationTimeModel && y.TimingsIndex.ContainsKey(t.LocationKey)) as TrainLocationTimeModel;
-            var yTime = (y.TimingsIndex[xFirstCommon.LocationKey] as TrainLocationTimeModel).ActualTime;
-            if (xFirstCommon.ActualTime < yTime)
+            var XCommonTimes = x.Timings
+                .Select((t, i) => new IndexedTrainLocationTimeModel { Entry = t, Index = i })
+                .Where(t => t.Model != null && y.TimingsIndex.ContainsKey(t.Model.LocationKey))
+                .ToList();
+            List<int> timeComparisons = new List<int>(XCommonTimes.Count);
+            List<IndexedTrainLocationTimeModel> YCommonTimes = new List<IndexedTrainLocationTimeModel>();
+            foreach (IndexedTrainLocationTimeModel entry in XCommonTimes)
             {
-                dir = -1;
+                ILocationEntry yEntry = y.TimingsIndex[entry.Entry.LocationKey];
+                var yModel = new IndexedTrainLocationTimeModel { Entry = yEntry, Index = y.Timings.IndexOf(yEntry) };
+                YCommonTimes.Add(yModel);
+                timeComparisons.Add(TrainLocationTimeModelComparer.Default.Compare(entry.Model, yModel.Model));
             }
-            else if (xFirstCommon.ActualTime > yTime)
+
+            if (timeComparisons.All(t => t == 0))
             {
-                dir = 1;
+                return new Tuple<int, TrainSegmentModel>(0, null);
+            }
+
+            List<int> differentTimeComparisons = timeComparisons.Where(t => t != 0).ToList();
+            int firstDifference = differentTimeComparisons[0];
+            if (differentTimeComparisons.Skip(1).All(t => t == firstDifference))
+            {
+                return new Tuple<int, TrainSegmentModel>(firstDifference, null);
+            }
+
+            int switchIdx = 0;
+            foreach (int tc in timeComparisons.Skip(1))
+            {
+                if (tc != firstDifference && tc != 0)
+                {
+                    break;
+                }
+                switchIdx++;
+            }
+
+            TrainSegmentModel splitSegment;
+            if (firstDifference < 0)
+            {
+                splitSegment = x.SplitAtIndex(XCommonTimes[switchIdx].Index);
             }
             else
             {
-                dir = 0;
+                splitSegment = y.SplitAtIndex(YCommonTimes[switchIdx].Index);
             }
-
-            // FIXME to do this properly we then need to iterate through the full list of common times and check that the ordering remains consistent throughout.
-            // If it's not consistent, we need to split the lower of the two segments into two, modifying the first chunk in-place and returning the second chunk for reinsertion.
-            // However *for now* we will assume that trains do not pass each other.
-            return new Tuple<int, TrainSegmentModel>(dir, null);
+            return new Tuple<int, TrainSegmentModel>(firstDifference, splitSegment);
         }
 
         private int? CompareNullChecks(TrainSegmentModel x, TrainSegmentModel y)

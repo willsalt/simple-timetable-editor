@@ -196,7 +196,7 @@ namespace Timetabler.Data.Display
 
         private void UpdateTimingsIndex()
         {
-            TimingsIndex = Timings.ToDictionary(t => t.LocationId, t => t);
+            TimingsIndex = Timings.ToDictionary(t => t.LocationKey, t => t);
         }
     }
 }

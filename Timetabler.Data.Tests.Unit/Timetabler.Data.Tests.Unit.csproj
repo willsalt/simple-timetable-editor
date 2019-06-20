@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Collections\SignalboxCollectionUnitTests.cs" />
     <Compile Include="Collections\TrainSegmentModelCollectionUnitTests.cs" />
+    <Compile Include="Comparers\GenericTimeModelComparerUnitTests.cs" />
     <Compile Include="Comparers\LocationDisplayModelComparerUnitTests.cs" />
     <Compile Include="Comparers\VertexInformationTimeBasedComparerUnitTests.cs" />
     <Compile Include="Display\FootnoteDisplayModelUnitTests.cs" />

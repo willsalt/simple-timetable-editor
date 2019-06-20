@@ -120,7 +120,7 @@ namespace Timetabler.Data.Comparers
                 ILocationEntry yEntry = y.TimingsIndex[entry.Entry.LocationKey];
                 var yModel = new IndexedTrainLocationTimeModel { Entry = yEntry, Index = y.Timings.IndexOf(yEntry) };
                 YCommonTimes.Add(yModel);
-                timeComparisons.Add(TrainLocationTimeModelComparer.Default.Compare(entry.Model, yModel.Model));
+                timeComparisons.Add(GenericTimeModelComparer.Default.Compare(entry.Model, yModel.Model));
             }
 
             if (timeComparisons.All(t => t == 0))

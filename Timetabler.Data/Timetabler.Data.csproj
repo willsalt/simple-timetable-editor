@@ -65,7 +65,7 @@
     <Compile Include="Collections\TrainClassCollection.cs" />
     <Compile Include="Collections\TrainSegmentModelCollection.cs" />
     <Compile Include="Comparers\LocationDisplayModelComparer.cs" />
-    <Compile Include="Comparers\TrainLocationTimeModelComparer.cs" />
+    <Compile Include="Comparers\GenericTimeModelComparer.cs" />
     <Compile Include="Comparers\TrainSegmentModelComparer.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Display\Comparers\VertexInformationTimeBasedComparer.cs" />

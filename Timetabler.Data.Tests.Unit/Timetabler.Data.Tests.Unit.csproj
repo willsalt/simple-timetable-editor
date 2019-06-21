@@ -69,6 +69,7 @@
     <Compile Include="Collections\TrainSegmentModelCollectionUnitTests.cs" />
     <Compile Include="Comparers\GenericTimeModelComparerUnitTests.cs" />
     <Compile Include="Comparers\LocationDisplayModelComparerUnitTests.cs" />
+    <Compile Include="Comparers\TrainSegmentModelComparerUnitTests.cs" />
     <Compile Include="Comparers\VertexInformationTimeBasedComparerUnitTests.cs" />
     <Compile Include="Display\FootnoteDisplayModelUnitTests.cs" />
     <Compile Include="Display\GenericEntryModelUnitTests.cs" />

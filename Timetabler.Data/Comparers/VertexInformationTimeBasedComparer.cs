@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Timetabler.Data.Display;
 
-namespace Timetabler.Data.Display.Comparers
+namespace Timetabler.Data.Comparers
 {
     /// <summary>
     /// An <see cref="IComparer{VertexInformation}" /> implementation which compares based on the <see cref="VertexInformation.Time" /> property of each object.

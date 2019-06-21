@@ -3,8 +3,8 @@ using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
+using Timetabler.Data.Comparers;
 using Timetabler.Data.Display;
-using Timetabler.Data.Display.Comparers;
 
 namespace Timetabler.Data.Tests.Unit.Comparers
 {

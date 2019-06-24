@@ -81,6 +81,10 @@ namespace Timetabler.Data.Display
         /// </summary>
         public GenericTimeModel LocoToWorkCell { get; set; }
 
+        public bool ContinuationFromEarlier { get; set; }
+
+        public bool ContinuesLater { get; set; }
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -169,6 +173,8 @@ namespace Timetabler.Data.Display
                 TrainClass = TrainClass,
                 TrainId = TrainId,
                 PageFootnotes = PageFootnotes.Select(f => f.Copy()).ToList(),
+                ContinuationFromEarlier = ContinuationFromEarlier,
+                ContinuesLater = ContinuesLater,
             };
             tsm.UpdateTimingsIndex();
             return tsm;
@@ -178,19 +184,26 @@ namespace Timetabler.Data.Display
         /// When called with a parameter that is greater than zero and less than the index of the final timing point, this method will split the instance into two.  The instance called
         /// has its timing points after the index truncated in-place; the method returns a second instance which starts with the timing point at the given index.
         /// </summary>
-        /// <param name="idx">The index of the common timing point which will be retained by both segments after the split</param>
-        /// <returns>A <see cref="TrainSegmentModel" /> consisting of the second part of the current segment.</returns>
-        public TrainSegmentModel SplitAtIndex(int idx)
+        /// <param name="idx">The index of the timing point which will become the first timing point of the new segment after the split</param>
+        /// <param name="overlap">The number of timing points that should overlap, and be retained by both segments.</param>
+        /// <returns>A <see cref="TrainSegmentModel" /> consisting of the second part of the newly-split segment.</returns>
+        public TrainSegmentModel SplitAtIndex(int idx, int overlap)
         {
             if (idx <= 0 || idx >= Timings.Count - 1)
             {
                 return null;
             }
             TrainSegmentModel secondPortion = Copy();
-            Timings.RemoveRange(idx + 1, Timings.Count - (idx + 1));
+            int firstStop = idx + overlap;
+            if (firstStop < Timings.Count - 1)
+            {
+                Timings.RemoveRange(firstStop, Timings.Count - firstStop);
+            }
             secondPortion.Timings.RemoveRange(0, idx);
             UpdateTimingsIndex();
             secondPortion.UpdateTimingsIndex();
+            ContinuesLater = true;
+            secondPortion.ContinuationFromEarlier = true;
             return secondPortion;
         }
 

@@ -13,13 +13,26 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static Random _rnd = new Random();
 
-        private TrainSegmentModel GetTestObject()
+        private TrainSegmentModel GetTestObject(int? timings)
         {
             int pageFootnoteCount = _rnd.Next(10) + 1;
             TrainSegmentModel tsm = new TrainSegmentModel();
             for (int i = 0; i < pageFootnoteCount; ++i)
             {
                 tsm.PageFootnotes.Add(FootnoteDisplayModelHelpers.GetFootnoteDisplayModel());
+            }
+            int timingsCount;
+            if (timings.HasValue)
+            {
+                timingsCount = timings.Value;
+            }
+            else
+            {
+                timingsCount = _rnd.Next(20) + 3;
+            }
+            for (int i = 0; i < timingsCount; ++i)
+            {
+                tsm.Timings.Add(new TrainLocationTimeModel { LocationKey = i.ToString() });
             }
 
             return tsm;
@@ -40,7 +53,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void TrainSegmentModelClassUpdatePageFootnotesMethodDoesNotChangePageFootnotesPropertyIfParameterIsNull()
         {
-            TrainSegmentModel testObject = GetTestObject();
+            TrainSegmentModel testObject = GetTestObject(null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
             var pageFootnotesCopy = testObject.PageFootnotes.ToList();
 
@@ -56,7 +69,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void TrainSegmentModelClassUpdatePageFootnotesMethodDoesNotChangePageFootnotesPropertyIfParameterIsEmpty()
         {
-            TrainSegmentModel testObject = GetTestObject();
+            TrainSegmentModel testObject = GetTestObject(null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
             List<FootnoteDisplayModel> pageFootnotesCopy = testObject.PageFootnotes.ToList();
 
@@ -72,7 +85,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void TrainSegmentModelClassUpdatePageFootnotesMethodChangesPageFootnotesElementsWithIdsThatAppearInParameter()
         {
-            TrainSegmentModel testObject = GetTestObject();
+            TrainSegmentModel testObject = GetTestObject(null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
             List<FootnoteDisplayModel> pageFootnotesCopy = testObject.PageFootnotes.ToList();
             List<string> idsToChange = new List<string>();
@@ -104,7 +117,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void TrainSegmentModelClassUpdatePageFootnotesMethodSetsPageFootnotesElementsDefinitionPropertiesIfIdAppearsInParameter()
         {
-            TrainSegmentModel testObject = GetTestObject();
+            TrainSegmentModel testObject = GetTestObject(null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
             List<string> idsToChange = new List<string>();
             foreach (FootnoteDisplayModel fdm in testObject.PageFootnotes)
@@ -131,7 +144,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void TrainSegmentModelClassUpdatePageFootnotesMethodSetsPageFootnotesElementsSymbolPropertiesIfIdAppearsInParameter()
         {
-            TrainSegmentModel testObject = GetTestObject();
+            TrainSegmentModel testObject = GetTestObject(null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
             List<string> idsToChange = new List<string>();
             foreach (FootnoteDisplayModel fdm in testObject.PageFootnotes)
@@ -158,7 +171,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void TrainSegmentModelClassUpdatePageFootnotesMethodSetsPageFootnotesElementsDisplayOnPagePropertiesIfIdAppearsInParameter()
         {
-            TrainSegmentModel testObject = GetTestObject();
+            TrainSegmentModel testObject = GetTestObject(null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
             List<string> idsToChange = new List<string>();
             foreach (FootnoteDisplayModel fdm in testObject.PageFootnotes)
@@ -180,6 +193,96 @@ namespace Timetabler.Data.Tests.Unit.Display
                     Assert.AreEqual(testParameter.First(n => n.Id == testObject.PageFootnotes[i].NoteId).DefinedOnPages, testObject.PageFootnotes[i].DisplayOnPage);
                 }
             }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsLessThanZero()
+        {
+            int testParam0 = _rnd.Next(int.MaxValue - 1) * -1 - 1;
+            int testParam1 = _rnd.Next();
+            TrainSegmentModel testObject = GetTestObject(null);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsZero()
+        {
+            TrainSegmentModel testObject = GetTestObject(null);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(0, _rnd.Next());
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsSameAsIndexOfLastTimingEntry()
+        {
+            TrainSegmentModel testObject = GetTestObject(null);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testObject.Timings.Count - 1, _rnd.Next());
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsEqualToTimingsPropertyCountProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testObject.Timings.Count, _rnd.Next());
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsEqualToOrGreaterThanTimingsPropertyCountProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null);
+            int testParam0 = _rnd.Next(int.MaxValue - testObject.Timings.Count) + testObject.Timings.Count;
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, _rnd.Next());
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNonNullResultIfParameterIsGreaterThanZeroAndLessThanFinalIndexOfTimingsProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, _rnd.Next());
+
+            Assert.IsNotNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodDoesNotReduceNumberOfTimingsInOriginalSegmentIfOverlapIsEqualToNumberOfTimingsBetweenSplitPointAndEnd()
+        {
+            TrainSegmentModel testObject = GetTestObject(null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = testObject.Timings.Count - testParam0;
+            int timingCount = testObject.Timings.Count;
+
+            TrainSegmentModel train = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(timingCount, testObject.Timings.Count);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodDoesNotReduceNumberOfTimingsInOriginalSegmentIfOverlapIsGreaterThanNumberOfTimingsBetweenSplitPointAndEnd()
+        {
+            TrainSegmentModel testObject = GetTestObject(null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(int.MaxValue - testObject.Timings.Count) + testObject.Timings.Count - testParam0;
+            int timingCount = testObject.Timings.Count;
+
+            TrainSegmentModel train = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(timingCount, testObject.Timings.Count);
         }
     }
 }

@@ -107,7 +107,6 @@ namespace Timetabler.Data.Comparers
         private Tuple<int, TrainSegmentModel> CompareWithSharedTimes(TrainSegmentModel x, TrainSegmentModel y)
         {
             // Check first common time
-            int dir;
             var xFirstCommon = x.Timings.First(t => t is TrainLocationTimeModel && y.TimingsIndex.ContainsKey(t.LocationKey)) as TrainLocationTimeModel;
             var XCommonTimes = x.Timings
                 .Select((t, i) => new IndexedTrainLocationTimeModel { Entry = t, Index = i })
@@ -120,7 +119,11 @@ namespace Timetabler.Data.Comparers
                 ILocationEntry yEntry = y.TimingsIndex[entry.Entry.LocationKey];
                 var yModel = new IndexedTrainLocationTimeModel { Entry = yEntry, Index = y.Timings.IndexOf(yEntry) };
                 YCommonTimes.Add(yModel);
-                timeComparisons.Add(GenericTimeModelComparer.Default.Compare(entry.Model, yModel.Model));
+                if (!(x.ContinuationFromEarlier && entry.Index == 0) && !(y.ContinuationFromEarlier && yModel.Index == 0) && !(x.ContinuesLater && entry.Index == x.Timings.Count - 1) &&
+                    !(y.ContinuesLater && yModel.Index == y.Timings.Count - 1))
+                {
+                    timeComparisons.Add(GenericTimeModelComparer.Default.Compare(entry.Model, yModel.Model));
+                }
             }
 
             if (timeComparisons.All(t => t == 0))
@@ -148,11 +151,11 @@ namespace Timetabler.Data.Comparers
             TrainSegmentModel splitSegment;
             if (firstDifference < 0)
             {
-                splitSegment = x.SplitAtIndex(XCommonTimes[switchIdx].Index);
+                splitSegment = x.SplitAtIndex(XCommonTimes[switchIdx].Index, 2);
             }
             else
             {
-                splitSegment = y.SplitAtIndex(YCommonTimes[switchIdx].Index);
+                splitSegment = y.SplitAtIndex(YCommonTimes[switchIdx].Index, 2);
             }
             return new Tuple<int, TrainSegmentModel>(firstDifference, splitSegment);
         }
@@ -174,7 +177,7 @@ namespace Timetabler.Data.Comparers
 
         private int? CompareIfTimesNotPresent(TrainSegmentModel x, TrainSegmentModel y)
         {
-            if (x.Timings == null ||x.Timings.Count == 0)
+            if (x.Timings == null || x.Timings.Count == 0)
             {
                 if (y.Timings == null || y.Timings.Count == 0)
                 {

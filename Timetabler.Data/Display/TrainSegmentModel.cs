@@ -81,8 +81,14 @@ namespace Timetabler.Data.Display
         /// </summary>
         public GenericTimeModel LocoToWorkCell { get; set; }
 
+        /// <summary>
+        /// True if this segment represents a continuation from an earlier segment (which may or may not be displayed) and therefore has a left-pointing arrow above its first cell.
+        /// </summary>
         public bool ContinuationFromEarlier { get; set; }
 
+        /// <summary>
+        /// True if this segment is continued by a later segment (which may or may not be displayed) and therefore has a right-pointing arrow below its last cell.
+        /// </summary>
         public bool ContinuesLater { get; set; }
 
         /// <summary>

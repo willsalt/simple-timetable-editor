@@ -201,7 +201,7 @@ namespace Timetabler.Data.Display
             }
             TrainSegmentModel secondPortion = Copy();
             int firstStop = idx + overlap;
-            if (firstStop < Timings.Count - 1)
+            if (firstStop < Timings.Count)
             {
                 Timings.RemoveRange(firstStop, Timings.Count - firstStop);
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tests.Utility.Extensions;
 using Timetabler.Data.Display;
+using Timetabler.Data.Display.Interfaces;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
 namespace Timetabler.Data.Tests.Unit.Display
@@ -363,6 +364,68 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
+        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyOfCorrectLength()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+
+            TrainSegmentModel testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.PageFootnotes.Count, testOutput.PageFootnotes.Count);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectNoteIdProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+
+            TrainSegmentModel testOutput = testObject.Copy();
+
+            for (int i = 0; i < testObject.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].NoteId, testOutput.PageFootnotes[i].NoteId);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectSymbolProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+
+            TrainSegmentModel testOutput = testObject.Copy();
+
+            for (int i = 0; i < testObject.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].Symbol, testOutput.PageFootnotes[i].Symbol);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDefinitionProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+
+            TrainSegmentModel testOutput = testObject.Copy();
+
+            for (int i = 0; i < testObject.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].Definition, testOutput.PageFootnotes[i].Definition);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDisplayOnPageProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+
+            TrainSegmentModel testOutput = testObject.Copy();
+
+            for (int i = 0; i < testObject.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].DisplayOnPage, testOutput.PageFootnotes[i].DisplayOnPage);
+            }
+        }
+
+        [TestMethod]
         public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsLessThanZero()
         {
             int testParam0 = _rnd.Next(int.MaxValue - 1) * -1 - 1;
@@ -447,9 +510,291 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam1 = _rnd.Next(int.MaxValue - testObject.Timings.Count) + testObject.Timings.Count - testParam0;
             int timingCount = testObject.Timings.Count;
 
-            TrainSegmentModel train = testObject.SplitAtIndex(testParam0, testParam1);
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual(timingCount, testObject.Timings.Count);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReducesNumberOfTimingsInOriginalSegmentIfSplitPointPlusOverlapIsLessThanTotalNumberOfTimings()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            int timingCount = testObject.Timings.Count;
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.IsTrue(testObject.Timings.Count < timingCount);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReducesNumberOfTimingsInOriginalSegmentToSplitPointPlusOverlap()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0 + testParam1, testObject.Timings.Count);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodKeepsCorrectTimingsInOriginalSegment()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            List<ILocationEntry> savedTimings = testObject.Timings.Select(t => t.Copy()).ToList();
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            for (int i = 0; i < testObject.Timings.Count; ++i)
+            {
+                Assert.AreEqual(savedTimings[i].LocationKey, testObject.Timings[i].LocationKey);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodSetsContinuesLaterPropertyOfOriginalSegmentToTrue()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, false);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.IsTrue(testObject.ContinuesLater);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectFootnotesProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.Footnotes, testOutput.Footnotes);
+        }
+
+        // FIXME this tests to the code, but does not at present return the correct result in cases where the segment crosses noon.  See GitHub ticket #84
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectHalfOfDayProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            var savedTimings = testObject.Timings.Select(t => t.Copy()).ToList();
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.HalfOfDay, testOutput.HalfOfDay);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectHeadcodeProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.Headcode, testOutput.Headcode);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectIncludeSeparatorBelowProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.IncludeSeparatorBelow, testOutput.IncludeSeparatorBelow);
+        }
+
+        // FIXME this raises a question - the note should only appear on one of the two segments, but which one?  See GitHub ticket #85
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectInlineNoteProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.InlineNote, testOutput.InlineNote);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectLocoDiagramProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.LocoDiagram, testOutput.LocoDiagram);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectTrainClassProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.TrainClass, testOutput.TrainClass);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectTrainIdProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.TrainId, testOutput.TrainId);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectContinuesLaterProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            bool originalContinuesLater = testObject.ContinuesLater;
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(originalContinuesLater, testOutput.ContinuesLater);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithContinuationFromEarlierPropertyEqualToTrue()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.IsTrue(testOutput.ContinuationFromEarlier);
+        }
+
+        // all PageFootnotes tests of TrainSegmentModel.SplitAtIndex() pass with the current behaviour, which is suspected to be wrong.
+        // See GitHub issue #87
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyOfCorrectLength()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(testObject.PageFootnotes.Count, testOutput.PageFootnotes.Count);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectNoteIdProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            for (int i = 0; i < testOutput.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].NoteId, testOutput.PageFootnotes[i].NoteId);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectSymbolProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            for (int i = 0; i < testOutput.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].Symbol, testOutput.PageFootnotes[i].Symbol);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDefinitionProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            for (int i = 0; i < testOutput.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].Definition, testOutput.PageFootnotes[i].Definition);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDisplayOnPageProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            for (int i = 0; i < testOutput.PageFootnotes.Count; ++i)
+            {
+                Assert.AreEqual(testObject.PageFootnotes[i].DisplayOnPage, testOutput.PageFootnotes[i].DisplayOnPage);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectNumberOfTimings()
+        {
+            // The correct number of timings is: the number of elements from the split point to the end.
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            List<ILocationEntry> savedTimings = testObject.Timings.Select(t => t.Copy()).ToList();
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(savedTimings.Count - testParam0, testOutput.Timings.Count);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithTimingsPropertyWithObjectsContainingCorrectLocationKeys()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            List<ILocationEntry> savedTimings = testObject.Timings.Select(t => t.Copy()).ToList();
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            for (int i = 0; i < testOutput.Timings.Count; ++i)
+            {
+                Assert.AreEqual(savedTimings[i + testParam0].LocationKey, testOutput.Timings[i].LocationKey);
+            }
         }
     }
 }

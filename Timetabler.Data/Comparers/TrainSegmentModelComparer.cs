@@ -34,17 +34,10 @@ namespace Timetabler.Data.Comparers
         public Tuple<int, TrainSegmentModel> Compare(TrainSegmentModel x, TrainSegmentModel y)
         {
             // firstly, null checks
-            int? nullCheckResult = CompareNullChecks(x, y);
+            int? nullCheckResult = CompareIfTimesNotPresent(x, y);
             if (nullCheckResult.HasValue)
             {
                 return new Tuple<int, TrainSegmentModel>(nullCheckResult.Value, null);
-            }
-
-            // secondly, no-times-present checks
-            int? noTimesCheckResult = CompareNullChecks(x, y);
-            if (noTimesCheckResult.HasValue)
-            {
-                return new Tuple<int, TrainSegmentModel>(noTimesCheckResult.Value, null);
             }
 
             // Trains overlap for at least one row
@@ -160,32 +153,17 @@ namespace Timetabler.Data.Comparers
             return new Tuple<int, TrainSegmentModel>(firstDifference, splitSegment);
         }
 
-        private int? CompareNullChecks(TrainSegmentModel x, TrainSegmentModel y)
-        {
-            if (x == null)
-            {
-                return y == null ? 0 : -1;
-            }
-
-            if (y == null)
-            {
-                return 1;
-            }
-
-            return null;
-        }
-
         private int? CompareIfTimesNotPresent(TrainSegmentModel x, TrainSegmentModel y)
         {
-            if (x.Timings == null || x.Timings.Count == 0)
+            if (x?.Timings == null || x.Timings.Count == 0)
             {
-                if (y.Timings == null || y.Timings.Count == 0)
+                if (y?.Timings == null || y.Timings.Count == 0)
                 {
                     return 0;
                 }
                 return -1;
             }
-            if (y.Timings == null || y.Timings.Count == 0)
+            if (y?.Timings == null || y.Timings.Count == 0)
             {
                 return 1;
             }

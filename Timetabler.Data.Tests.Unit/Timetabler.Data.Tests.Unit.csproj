@@ -67,10 +67,13 @@
   <ItemGroup>
     <Compile Include="Collections\SignalboxCollectionUnitTests.cs" />
     <Compile Include="Collections\TrainSegmentModelCollectionUnitTests.cs" />
+    <Compile Include="Comparers\GenericTimeModelComparerUnitTests.cs" />
     <Compile Include="Comparers\LocationDisplayModelComparerUnitTests.cs" />
+    <Compile Include="Comparers\TrainSegmentModelComparerUnitTests.cs" />
     <Compile Include="Comparers\VertexInformationTimeBasedComparerUnitTests.cs" />
     <Compile Include="Display\FootnoteDisplayModelUnitTests.cs" />
     <Compile Include="Display\GenericEntryModelUnitTests.cs" />
+    <Compile Include="Display\IndexedTrainLocationTimeModelUnitTests.cs" />
     <Compile Include="Display\LineCoordinatesUnitTests.cs" />
     <Compile Include="Display\TrainDrawingInfoUnitTests.cs" />
     <Compile Include="Display\TrainGraphModelUnitTests.cs" />

@@ -26,7 +26,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         [TestMethod]
         public void VertexInformationTimeBasedComparerClassCompareMethodReturnsMinusOneIfTimePropertyOfFirstParameterIsBeforeTimePropertyOfSecondParameter()
         {
-            VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDayBefore(new TimeOfDay(86398))); // make sure there are a couple of seconds left in the day
+            VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDayBefore(86398)); // make sure there are a couple of seconds left in the day
             VertexInformation testParam1 = GetVertexInformation(_rnd.NextTimeOfDayAfter(testParam0.Time));
             VertexInformationTimeBasedComparer testObject = new VertexInformationTimeBasedComparer();
 
@@ -62,7 +62,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         [TestMethod]
         public void VertexInformationTimeBasedComparerClassCompareMethodReturnsOneIfTimePropertyOfFirstParameterIsAfterTimePropertyOfSecondParameter()
         {
-            VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDayAfter(new TimeOfDay(1)));
+            VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDayAfter(1));
             VertexInformation testParam1 = GetVertexInformation(_rnd.NextTimeOfDayBefore(testParam0.Time));
             VertexInformationTimeBasedComparer testObject = new VertexInformationTimeBasedComparer();
 

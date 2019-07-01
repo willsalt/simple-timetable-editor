@@ -39,7 +39,22 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// The text to appear in the am/pm row (if displayed).
         /// </summary>
-        public string HalfOfDay { get; set; }
+        public string HalfOfDay
+        {
+            get
+            {
+                if (Timings == null || Timings.Count == 0)
+                {
+                    return "";
+                }
+                TrainLocationTimeModel firstTimingPoint = Timings.Select(e => e as TrainLocationTimeModel).FirstOrDefault(e => e?.ActualTime != null);
+                if (firstTimingPoint == null)
+                {
+                    return "";
+                }
+                return firstTimingPoint.ActualTime.HalfOfDay.ToNameString();
+            }
+        }
 
         /// <summary>
         /// Draw separator above this segment if it does not start at the first location.
@@ -110,7 +125,6 @@ namespace Timetabler.Data.Display
             TrainId = train.Id;
             Headcode = train.Headcode ?? string.Empty;
             LocoDiagram = train.LocoDiagram ?? string.Empty;
-            HalfOfDay = string.Empty;
             TrainClass = (train.TrainClass != null) ? train.TrainClass.TableCode : string.Empty;
             Footnotes = string.Join(",", train.Footnotes.Select(f => f.Symbol));
             PageFootnotes.AddRange(train.Footnotes.Where(f => f.DefinedOnPages).Select(f => f.ToFootnoteDisplayModel()));
@@ -168,7 +182,6 @@ namespace Timetabler.Data.Display
             TrainSegmentModel tsm = new TrainSegmentModel
             {
                 Footnotes = Footnotes,
-                HalfOfDay = HalfOfDay,
                 Headcode = Headcode,
                 IncludeSeparatorAbove = IncludeSeparatorAbove,
                 IncludeSeparatorBelow = IncludeSeparatorBelow,

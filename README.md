@@ -27,7 +27,7 @@ The PDF export subsystem currently depends on PDFSharp, but I am wary of the lon
 
 Logging is currently handled by NLog, but a while ago a very experienced .NET engineer who I won't embarrass here recommended [Serilog](https://serilog.net/) to me, so I have been considering porting the logging code over to that.
 
-The program currently only handles simple timetables.  Timetables where one train passes another train in the same direction are not currently handled correctly&mdash;sorting that out has been left as a future exercise.
+The program currently only handles simple timetables.  Branching networks are not supported.  The current version does now handle trains that overtake each other, but support is limited.
 
 The program is partially unit-tested, but test coverage is not fantastic and should be improved.
 

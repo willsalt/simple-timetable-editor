@@ -70,6 +70,16 @@ namespace Unicorn.Shapes
         }
 
         /// <summary>
+        /// Return a new arrow that is the same in all dimensions as this arrow, but points in the opposite direction.
+        /// </summary>
+        /// <returns></returns>
+        public HorizontalArrow Flip()
+        {
+            HorizontalDirection dir = Direction == HorizontalDirection.ToLeft ? HorizontalDirection.ToRight : HorizontalDirection.ToLeft;
+            return new HorizontalArrow(dir, Length, StemThickness, HeadBreadth, HeadLength, HeadRake);
+        }
+
+        /// <summary>
         /// Draw the arrow onto a context.
         /// </summary>
         /// <param name="context">The context to draw on.</param>
@@ -84,7 +94,7 @@ namespace Unicorn.Shapes
                 xBase += Width;
                 factor = -1;
             }
-            double proportionalHeadRake = HeadRake * (HeadBreadth - StemThickness) / HeadBreadth;
+            double proportionalHeadRake = (HeadBreadth != 0) ? HeadRake * (HeadBreadth - StemThickness) / HeadBreadth : 0;
             double midY = HeadBreadth / 2;
             double stemY = StemThickness / 2;
             List<UniPoint> coords = new List<UniPoint>(9)

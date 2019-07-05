@@ -1,5 +1,7 @@
 ﻿using PdfSharp.Drawing;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unicorn.Impl.PdfSharp.Extensions;
 using Unicorn.Interfaces;
 
@@ -18,11 +20,7 @@ namespace Unicorn.Impl.PdfSharp
         /// <param name="graphics">The PDFSharp <see cref="XGraphics" /> object which this context wraps.</param>
         public GraphicsContext(XGraphics graphics)
         {
-            if (graphics == null)
-            {
-                throw new ArgumentNullException(nameof(graphics));
-            }
-            _core = graphics;
+            _core = graphics ?? throw new ArgumentNullException(nameof(graphics));
         }
 
         /// <summary>
@@ -64,6 +62,16 @@ namespace Unicorn.Impl.PdfSharp
             XPen pen = new XPen(XColors.Black, w);
             pen.DashStyle = style.ToXDashStyle();
             _core.DrawLine(pen, x1, y1, x2, y2);
+        }
+
+        /// <summary>
+        /// Draw a filled polygon consisting of straight lines connecting an ordered set of vertexes in sequence.
+        /// </summary>
+        /// <param name="vertexes">The vertexes of the polygon to draw.</param>
+        public void DrawFilledPolygon(IEnumerable<UniPoint> vertexes)
+        {
+            XBrush brush = XBrushes.Black;
+            _core.DrawPolygon(brush, vertexes.Select(v => new XPoint(v.X, v.Y)).ToArray(), XFillMode.Alternate);
         }
 
         /// <summary>

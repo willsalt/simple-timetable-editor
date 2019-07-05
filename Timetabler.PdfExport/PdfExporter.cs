@@ -1,21 +1,21 @@
-﻿using System.IO;
-using Timetabler.Data;
-using Timetabler.Data.Interfaces;
-using Timetabler.Data.Display;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Timetabler.Data.Collections;
-using Timetabler.CoreData;
-using Unicorn;
 using NLog;
+using Timetabler.CoreData;
 using Timetabler.CoreData.Helpers;
+using Timetabler.Data;
+using Timetabler.Data.Interfaces;
+using Timetabler.Data.Collections;
+using Timetabler.Data.Display;
+using Timetabler.Data.Display.Interfaces;
+using Timetabler.PdfExport.Extensions;
+using Unicorn;
 using Unicorn.Impl.PdfSharp;
 using Unicorn.Interfaces;
-using Timetabler.PdfExport.Extensions;
-using System;
 using Unicorn.Shapes;
-using Timetabler.Data.Display.Interfaces;
 
 namespace Timetabler.PdfExport
 {

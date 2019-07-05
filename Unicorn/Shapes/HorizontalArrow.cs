@@ -94,18 +94,34 @@ namespace Unicorn.Shapes
                 xBase += Width;
                 factor = -1;
             }
-            double proportionalHeadRake = (HeadBreadth != 0) ? HeadRake * (HeadBreadth - StemThickness) / HeadBreadth : 0;
+            double effectiveStemThickness = StemThickness > HeadBreadth ? HeadBreadth : StemThickness;
+            double effectiveHeadLength = HeadLength > Length ? Length : HeadLength;
+            double effectiveHeadRake;
+            if (HeadRake > effectiveHeadLength)
+            {
+                effectiveHeadRake = effectiveHeadLength;
+            }
+            else if (HeadRake < -(Length - effectiveHeadLength))
+            {
+                effectiveHeadRake = -(Length - effectiveHeadLength);
+            }
+            else
+            {
+                effectiveHeadRake = HeadRake;
+            }
+            double proportionalHeadRake = (HeadBreadth != 0) ? effectiveHeadRake * (HeadBreadth - effectiveStemThickness) / HeadBreadth : 0;
             double midY = HeadBreadth / 2;
-            double stemY = StemThickness / 2;
+            
+            double stemY = effectiveStemThickness / 2;
             List<UniPoint> coords = new List<UniPoint>(9)
             {
                 new UniPoint { X = xBase, Y = y + midY - stemY },
                 new UniPoint { X = xBase, Y = y + midY + stemY },
-                new UniPoint { X = xBase + factor * (Width + proportionalHeadRake - HeadLength), Y = y + midY + stemY },
-                new UniPoint { X = xBase + factor * (Width - HeadLength), Y = y + Height },
+                new UniPoint { X = xBase + factor * (Width + proportionalHeadRake - effectiveHeadLength), Y = y + midY + stemY },
+                new UniPoint { X = xBase + factor * (Width - effectiveHeadLength), Y = y + Height },
                 new UniPoint { X = xBase + factor * Width, Y = y + midY },
-                new UniPoint { X = xBase + factor * (Width - HeadLength), Y = y },
-                new UniPoint { X = xBase + factor * (Width + proportionalHeadRake - HeadLength), Y = y + midY - stemY },
+                new UniPoint { X = xBase + factor * (Width - effectiveHeadLength), Y = y },
+                new UniPoint { X = xBase + factor * (Width + proportionalHeadRake - effectiveHeadLength), Y = y + midY - stemY },
                 new UniPoint { X = xBase, Y = y + midY - stemY }
             };
             context.DrawFilledPolygon(coords);

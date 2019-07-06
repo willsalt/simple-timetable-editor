@@ -50,6 +50,9 @@ namespace Timetabler.Adapters
         private Font _stoppingFont = new Font("Cambria", 8f, FontStyle.Bold);
         private Font _passingFont = new Font("Cambria", 8f);
 
+        private const string ContinuedFromEarlier = "<<<";
+        private const string ContinuesLater = ">>>";
+
         private DataGridViewAutoSizeColumnsMode _newColumnAutoSizeColumnMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         private DataGridViewAutoSizeRowsMode _newRowAutoSizeRowMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
 
@@ -201,10 +204,17 @@ namespace Timetabler.Adapters
                 segment.LocoToWorkCell.DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, View.Rows.Count + _trainLocoToWorkRowIdx.Value] };
             }
 
+            int firstLocationIndex = -1;
+            int lastLocationIndex = -1;
             for (int i = 0; i < Model.Locations.Count; ++i)
             {
                 if (segment.TimingsIndex.ContainsKey(Model.Locations[i].LocationKey))
                 {
+                    if (firstLocationIndex < 0)
+                    {
+                        firstLocationIndex = i;
+                    }
+                    lastLocationIndex = i;
                     segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, _locationRowIdxBase + i] };
                     TrainLocationTimeModel tltm = segment.TimingsIndex[Model.Locations[i].LocationKey] as TrainLocationTimeModel;
                     if (tltm != null &&  !tltm.IsPassingTime)
@@ -216,6 +226,15 @@ namespace Timetabler.Adapters
                         View[idx, _locationRowIdxBase + i].Style.Font = _passingFont;
                     }
                 }
+            }
+
+            if (segment.ContinuationFromEarlier && _locationRowIdxBase + firstLocationIndex > 0)
+            {
+                View[idx, _locationRowIdxBase + firstLocationIndex - 1].Value = ContinuedFromEarlier;
+            }
+            if (segment.ContinuesLater && _locationRowIdxBase + lastLocationIndex < View.RowCount)
+            {
+                View[idx, _locationRowIdxBase + lastLocationIndex + 1].Value = ContinuesLater;
             }
         }
 

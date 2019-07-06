@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="FontConfigurationData.cs" />
     <Compile Include="HorizontalAlignment.cs" />
+    <Compile Include="HorizontalDirection.cs" />
     <Compile Include="IDocumentDescriptor.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="IFontDescriptor.cs" />

@@ -39,7 +39,22 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// The text to appear in the am/pm row (if displayed).
         /// </summary>
-        public string HalfOfDay { get; set; }
+        public string HalfOfDay
+        {
+            get
+            {
+                if (Timings == null || Timings.Count == 0)
+                {
+                    return "";
+                }
+                TrainLocationTimeModel firstTimingPoint = Timings.Select(e => e as TrainLocationTimeModel).FirstOrDefault(e => e?.ActualTime != null);
+                if (firstTimingPoint == null)
+                {
+                    return "";
+                }
+                return firstTimingPoint.ActualTime.HalfOfDay.ToNameString();
+            }
+        }
 
         /// <summary>
         /// Draw separator above this segment if it does not start at the first location.
@@ -82,6 +97,16 @@ namespace Timetabler.Data.Display
         public GenericTimeModel LocoToWorkCell { get; set; }
 
         /// <summary>
+        /// True if this segment represents a continuation from an earlier segment (which may or may not be displayed) and therefore has a left-pointing arrow above its first cell.
+        /// </summary>
+        public bool ContinuationFromEarlier { get; set; }
+
+        /// <summary>
+        /// True if this segment is continued by a later segment (which may or may not be displayed) and therefore has a right-pointing arrow below its last cell.
+        /// </summary>
+        public bool ContinuesLater { get; set; }
+
+        /// <summary>
         /// Default constructor.
         /// </summary>
         public TrainSegmentModel()
@@ -100,7 +125,6 @@ namespace Timetabler.Data.Display
             TrainId = train.Id;
             Headcode = train.Headcode ?? string.Empty;
             LocoDiagram = train.LocoDiagram ?? string.Empty;
-            HalfOfDay = string.Empty;
             TrainClass = (train.TrainClass != null) ? train.TrainClass.TableCode : string.Empty;
             Footnotes = string.Join(",", train.Footnotes.Select(f => f.Symbol));
             PageFootnotes.AddRange(train.Footnotes.Where(f => f.DefinedOnPages).Select(f => f.ToFootnoteDisplayModel()));
@@ -158,7 +182,6 @@ namespace Timetabler.Data.Display
             TrainSegmentModel tsm = new TrainSegmentModel
             {
                 Footnotes = Footnotes,
-                HalfOfDay = HalfOfDay,
                 Headcode = Headcode,
                 IncludeSeparatorAbove = IncludeSeparatorAbove,
                 IncludeSeparatorBelow = IncludeSeparatorBelow,
@@ -169,9 +192,43 @@ namespace Timetabler.Data.Display
                 TrainClass = TrainClass,
                 TrainId = TrainId,
                 PageFootnotes = PageFootnotes.Select(f => f.Copy()).ToList(),
+                ContinuationFromEarlier = ContinuationFromEarlier,
+                ContinuesLater = ContinuesLater,
             };
-            tsm.TimingsIndex = tsm.Timings.ToDictionary(t => t.LocationKey, t => t);
+            tsm.UpdateTimingsIndex();
             return tsm;
+        }
+
+        /// <summary>
+        /// When called with a parameter that is greater than zero and less than the index of the final timing point, this method will split the instance into two.  The instance called
+        /// has its timing points after the index truncated in-place; the method returns a second instance which starts with the timing point at the given index.
+        /// </summary>
+        /// <param name="idx">The index of the timing point which will become the first timing point of the new segment after the split</param>
+        /// <param name="overlap">The number of timing points that should overlap, and be retained by both segments.</param>
+        /// <returns>A <see cref="TrainSegmentModel" /> consisting of the second part of the newly-split segment.</returns>
+        public TrainSegmentModel SplitAtIndex(int idx, int overlap)
+        {
+            if (idx <= 0 || idx >= Timings.Count - 1)
+            {
+                return null;
+            }
+            TrainSegmentModel secondPortion = Copy();
+            int firstStop = idx + overlap;
+            if (firstStop < Timings.Count)
+            {
+                Timings.RemoveRange(firstStop, Timings.Count - firstStop);
+            }
+            secondPortion.Timings.RemoveRange(0, idx);
+            UpdateTimingsIndex();
+            secondPortion.UpdateTimingsIndex();
+            ContinuesLater = true;
+            secondPortion.ContinuationFromEarlier = true;
+            return secondPortion;
+        }
+
+        private void UpdateTimingsIndex()
+        {
+            TimingsIndex = Timings.ToDictionary(t => t.LocationKey, t => t);
         }
     }
 }

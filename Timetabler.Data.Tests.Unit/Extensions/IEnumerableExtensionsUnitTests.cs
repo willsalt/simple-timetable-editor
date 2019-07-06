@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
+using Timetabler.Data.Comparers;
 using Timetabler.Data.Display;
-using Timetabler.Data.Display.Comparers;
 using Timetabler.Data.Extensions;
 
 namespace Timetabler.Data.Tests.Unit.Extensions

@@ -65,12 +65,14 @@
     <Compile Include="Collections\TrainClassCollection.cs" />
     <Compile Include="Collections\TrainSegmentModelCollection.cs" />
     <Compile Include="Comparers\LocationDisplayModelComparer.cs" />
+    <Compile Include="Comparers\GenericTimeModelComparer.cs" />
     <Compile Include="Comparers\TrainSegmentModelComparer.cs" />
     <Compile Include="Direction.cs" />
-    <Compile Include="Display\Comparers\VertexInformationTimeBasedComparer.cs" />
+    <Compile Include="Comparers\VertexInformationTimeBasedComparer.cs" />
     <Compile Include="Display\FootnoteDisplayModel.cs" />
     <Compile Include="Display\GenericEntryModel.cs" />
     <Compile Include="Display\GenericTimeModel.cs" />
+    <Compile Include="Display\IndexedTrainLocationTimeModel.cs" />
     <Compile Include="Display\Interfaces\ILocationEntry.cs" />
     <Compile Include="Display\Interfaces\ILocationEntryDisplayAdapter.cs" />
     <Compile Include="Display\LineCoordinates.cs" />

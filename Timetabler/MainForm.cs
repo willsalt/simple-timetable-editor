@@ -147,6 +147,7 @@ namespace Timetabler
                 TrainList = Model.TrainList,
                 DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs,
                 TooltipFormattingString = Model.Options.FormattingStrings.Tooltip,
+                EditTrainMethod = EditTrain,
             };
         }
 

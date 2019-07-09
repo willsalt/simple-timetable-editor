@@ -465,5 +465,22 @@ namespace Timetabler.Controls
                 vertex.X = Model.GetXPositionFromTime(vertex.Time);
             }
         }
+
+        private void TrainGraph_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (_nearestVertex?.Train != null)
+            {
+                EditTrain(_nearestVertex?.Train);
+            }
+        }
+
+        private void EditTrain(Train train)
+        {
+            if (Model?.EditTrainMethod != null)
+            {
+                Model.EditTrainMethod(train.Id);
+                Invalidate();
+            }
+        }
     }
 }

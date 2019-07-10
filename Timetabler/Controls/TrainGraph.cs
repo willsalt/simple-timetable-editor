@@ -124,8 +124,6 @@ namespace Timetabler.Controls
 
         private VertexInformation _nearestVertex = null;
 
-        private Train _selectedTrain = null;
-
         private ToolTip _tooltip;
 
         private bool InDragMode { get; set; }
@@ -281,7 +279,7 @@ namespace Timetabler.Controls
             AddCoordinate(v0, xc0, yc0);
             AddCoordinate(v1, xc1, yc1);
             graphics.DrawLine(trainPen, new PointF(xc0, yc0), new PointF(xc1, yc1));
-            if (controlHandleCoordinates != null && v0.Train == _selectedTrain)
+            if (controlHandleCoordinates != null && v0.Train == Model.SelectedTrain)
             {
                 controlHandleCoordinates.Add(new Tuple<float, float>(xc0, yc0));
                 controlHandleCoordinates.Add(new Tuple<float, float>(xc1, yc1));
@@ -324,7 +322,7 @@ namespace Timetabler.Controls
             _nearestVertex = FindVertexFromCoordinates(e.Location);
             if (_nearestVertex != null)
             {
-                if (_nearestVertex.Train == _selectedTrain)
+                if (_nearestVertex.Train == Model.SelectedTrain)
                 {
                     Cursor.Current = Cursors.SizeWE;
                 }
@@ -399,15 +397,15 @@ namespace Timetabler.Controls
         {
             if (_nearestVertex != null)
             {
-                _selectedTrain = _nearestVertex.Train;
+                Model.SelectedTrain = _nearestVertex.Train;
                 DragPointerOffset = e.X - CoordinateHelper.Stretch(LocationAxisXCoordinate, MaximumXCoordinate, _nearestVertex.X);
                 InDragMode = true;
                 Cursor.Current = Cursors.SizeWE;
                 Invalidate();
             }
-            else if (_selectedTrain != null)
+            else if (Model.SelectedTrain != null)
             {
-                _selectedTrain = null;
+                Model.SelectedTrain = null;
                 Invalidate();
             }
         }

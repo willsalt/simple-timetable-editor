@@ -1,4 +1,5 @@
 ﻿using System;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.XmlData;
 
@@ -25,6 +26,12 @@ namespace Timetabler.DataLoader.Load
             if (Enum.TryParse(model.ClockTypeName, out ct))
             {
                 options.ClockType = ct;
+            }
+
+            GraphEditStyle ges;
+            if (Enum.TryParse(model.GraphEditStyle, out ges))
+            {
+                options.GraphEditStyle = ges;
             }
 
             return options;

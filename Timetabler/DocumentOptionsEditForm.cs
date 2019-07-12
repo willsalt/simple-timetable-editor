@@ -38,6 +38,7 @@ namespace Timetabler
         {
             InitializeComponent();
             cbClockType.Items.AddRange(HumanReadableEnum<ClockType>.GetClockTypes());
+            cbGraphEditStyle.Items.AddRange(HumanReadableEnum<GraphEditStyle>.GetGraphEditStyle());
         }
 
         private void UpdateViewFromModel()
@@ -54,6 +55,15 @@ namespace Timetabler
                 if (clockTypeItem != null && clockTypeItem.Value == _model.ClockType)
                 {
                     cbClockType.SelectedItem = clockTypeItem;
+                    break;
+                }
+            }
+            foreach (var item in cbGraphEditStyle.Items)
+            {
+                var gesItem = item as HumanReadableEnum<GraphEditStyle>;
+                if (gesItem != null && gesItem.Value == _model.GraphEditStyle)
+                {
+                    cbGraphEditStyle.SelectedItem = gesItem;
                     break;
                 }
             }
@@ -85,6 +95,22 @@ namespace Timetabler
             }
             Log.Trace("ckDisplayTrainLabelsOnGraphs is {0}", ckDisplayTrainLabelsOnGraphs.Checked);
             _model.DisplayTrainLabelsOnGraphs = ckDisplayTrainLabelsOnGraphs.Checked;
+        }
+
+        private void cbGraphEditStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || _model == null)
+            {
+                return;
+            }
+            var item = cbGraphEditStyle.SelectedItem as HumanReadableEnum<GraphEditStyle>;
+            if (item == null)
+            {
+                Log.Trace("cbGraphEditStyle: null item selected.");
+                return;
+            }
+            Log.Trace("cbGraphEditStyle: value is {0}", item.Name);
+            _model.GraphEditStyle = item.Value;
         }
     }
 }

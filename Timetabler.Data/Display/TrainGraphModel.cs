@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Timetabler.CoreData;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Events;
 
@@ -23,9 +25,29 @@ namespace Timetabler.Data.Display
         public event TrainChangedEventHandler TrainChanged;
 
         /// <summary>
+        /// Raised when the <see cref="SelectedTrain" /> property value has changed;
+        /// </summary>
+        public event TrainEventHandler SelectedTrainChanged;
+
+        /// <summary>
         /// The locations to appear on the location axis.
         /// </summary>
         public LocationCollection LocationList { get; set; }
+
+        /// <summary>
+        /// Copy the values of relevant properties from a <see cref="DocumentOptions" /> instance.
+        /// </summary>
+        /// <param name="source">The object to copy the properties from.</param>
+        public void SetPropertiesFromDocumentOptions(DocumentOptions source)
+        {
+            if (source == null)
+            {
+                return;
+            }
+            DisplayTrainLabels = source.DisplayTrainLabelsOnGraphs;
+            GraphEditStyle = source.GraphEditStyle;
+            TooltipFormattingString = source.FormattingStrings.Tooltip;
+        }
 
         /// <summary>
         /// Whether or not to display train labels on the train graph.
@@ -33,9 +55,40 @@ namespace Timetabler.Data.Display
         public bool DisplayTrainLabels { get; set; }
 
         /// <summary>
+        /// How to behave when dragging timing points
+        /// </summary>
+        public GraphEditStyle GraphEditStyle { get; set; }
+
+        /// <summary>
         /// The format string to use when converting times to strings to display in tooltips.
         /// </summary>
         public string TooltipFormattingString { get; set; }
+
+        /// <summary>
+        /// A method to be called when a train on the graph is double-clicked.
+        /// </summary>
+        public Action<string> EditTrainMethod { get; set; }
+
+        private Train _selectedTrain;
+
+        /// <summary>
+        /// The currently-selected train (if any).
+        /// </summary>
+        public Train SelectedTrain
+        {
+            get
+            {
+                return _selectedTrain;
+            }
+            set
+            {
+                if (_selectedTrain != value)
+                {
+                    _selectedTrain = value;
+                    OnSelectedTrainChanged();
+                }
+            }
+        }
 
         private TrainCollection _trainList;
 
@@ -77,6 +130,14 @@ namespace Timetabler.Data.Display
         protected void OnTrainChanged(Train train)
         {
             TrainChanged?.Invoke(this, new TrainEventArgs { Train = train });
+        }
+
+        /// <summary>
+        /// Raises the <see cref="SelectedTrainChanged" /> event.
+        /// </summary>
+        protected void OnSelectedTrainChanged()
+        {
+            SelectedTrainChanged?.Invoke(this, new TrainEventArgs { Train = SelectedTrain });
         }
 
         private void RemoveTrainListEvents()
@@ -184,23 +245,26 @@ namespace Timetabler.Data.Display
                     if (train.TrainTimes[i]?.ArrivalTime?.Time != null && train.TrainTimes[i]?.DepartureTime?.Time != null)
                     {
                         double locationCoordinate = _locationCoordinates[train.TrainTimes[i].Location.Id];
-                        tdi.LineVertexes.Add(new LineCoordinates(new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), 
-                            locationCoordinate), new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), 
-                            locationCoordinate)));
+                        tdi.Lines.Add(new LineCoordinates(
+                            new VertexInformation(tdi, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival, GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), 
+                                locationCoordinate), 
+                            new VertexInformation(tdi, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure, GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), 
+                                locationCoordinate)));
                     }
                     if (i > 0 && train.TrainTimes[i - 1]?.DepartureTime?.Time != null)
                     {
-                        VertexInformation startVertex = new VertexInformation(train, train.TrainTimes[i - 1].DepartureTime.Time, GetXPositionFromTime(train.TrainTimes[i - 1].DepartureTime.Time),
-                            _locationCoordinates[train.TrainTimes[i - 1].Location.Id]);
+                        VertexInformation startVertex = 
+                            new VertexInformation(tdi, train.TrainTimes[i - 1].DepartureTime.Time, ArrivalDepartureOptions.Departure, 
+                                GetXPositionFromTime(train.TrainTimes[i - 1].DepartureTime.Time), _locationCoordinates[train.TrainTimes[i - 1].Location.Id]);
                         double endY = _locationCoordinates[train.TrainTimes[i].Location.Id];
                         if (train.TrainTimes[i]?.ArrivalTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].ArrivalTime.Time, 
+                            tdi.Lines.Add(new LineCoordinates(startVertex, new VertexInformation(tdi, train.TrainTimes[i].ArrivalTime.Time, ArrivalDepartureOptions.Arrival,
                                 GetXPositionFromTime(train.TrainTimes[i].ArrivalTime.Time), endY)));
                         }
                         else if (train.TrainTimes[i]?.DepartureTime?.Time != null)
                         {
-                            tdi.LineVertexes.Add(new LineCoordinates(startVertex, new VertexInformation(train, train.TrainTimes[i].DepartureTime.Time, 
+                            tdi.Lines.Add(new LineCoordinates(startVertex, new VertexInformation(tdi, train.TrainTimes[i].DepartureTime.Time, ArrivalDepartureOptions.Departure,
                                 GetXPositionFromTime(train.TrainTimes[i].DepartureTime.Time), endY)));
                         }
                     }
@@ -210,7 +274,13 @@ namespace Timetabler.Data.Display
             }
         }
 
-        private double GetXPositionFromTime(TimeOfDay t)
+        /// <summary>
+        /// Convert a time of day to a relative X-position on the graph.  A position within the current bounds of the graph will be between 0 and 1; times of day outside the current
+        /// bounds of the graph may be less than 0 or greater than 1.
+        /// </summary>
+        /// <param name="t">The time of day to convert.</param>
+        /// <returns>The graph coordinate equivalent to the time of day.</returns>
+        public double GetXPositionFromTime(TimeOfDay t)
         {
             if (!_baseTimeSeconds.HasValue || !_maxTimeSeconds.HasValue)
             {

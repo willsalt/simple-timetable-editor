@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Unicorn.Interfaces;
 
 namespace Timetabler.PdfExport
@@ -8,6 +9,14 @@ namespace Timetabler.PdfExport
         internal UniSize TotalSize { get; set; }
 
         internal Dictionary<string, TextVerticalLocation> LocationOffsets { get; set; }
+
+        internal List<TextVerticalLocation> LocationOffsetList
+        {
+            get
+            {
+               return LocationOffsets.Values.Cast<TextVerticalLocation>().OrderBy(t => t.Top).ToList();
+            }
+        }
 
         internal Dictionary<string, bool> LocationParity { get; set; }
 

@@ -19,6 +19,9 @@ It depends on the following external libs:
 * [NLog](https://nlog-project.org/) - v4.6
 * [PDFSharp](http://www.pdfsharp.net/) - v1.50
 
+The unit test projects also depend on:
+* [Moq](https://github.com/moq/moq4) - v4.12
+
 ## Current state of the project
 
 Although the app currently meets most of its stated aims, there is still a fair amount of work to do.  Its performance is very bad when carrying out certain operations, due to how it uses `DataGridView` components.  I suspect the internal data model could do with a rewrite.
@@ -27,7 +30,7 @@ The PDF export subsystem currently depends on PDFSharp, but I am wary of the lon
 
 Logging is currently handled by NLog, but a while ago a very experienced .NET engineer who I won't embarrass here recommended [Serilog](https://serilog.net/) to me, so I have been considering porting the logging code over to that.
 
-The program currently only handles simple timetables.  Timetables where one train passes another train in the same direction are not currently handled correctly&mdash;sorting that out has been left as a future exercise.
+The program currently only handles simple timetables.  Branching networks are not supported.  The current version does now handle trains that overtake each other, but support is limited.
 
 The program is partially unit-tested, but test coverage is not fantastic and should be improved.
 
@@ -38,6 +41,9 @@ The program is partially unit-tested, but test coverage is not fantastic and sho
 * Consider converting to .NET Core when v3 is released
 * Consider swapping from NLog to Serilog
 * Make data input easier
-* Improve "editable train graph" functionality, for example make it impossible to make trains go back in time
-* Properly handle the display of trains that overtake other trains
+* Improve "editable train graph" functionality
+* Handle some bugs around trains overtaking other trains, particularly how this interacts with editing the train graph
+* Move to a consistent version of .NET Framework across the board, until we migrate to other targets
+* Support trains that are in transit at midnight properly
 * Improve test coverage rate
+* Improve documentation

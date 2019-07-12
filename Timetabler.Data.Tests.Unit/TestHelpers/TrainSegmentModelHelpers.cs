@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data.Display;
@@ -18,7 +16,6 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             TrainSegmentModel tsm = new TrainSegmentModel
             {
                 Footnotes = _random.NextString(_random.Next(0, 5)),
-                HalfOfDay = _random.NextString(_random.Next(0, 3)),
                 Headcode = _random.NextString(_random.Next(0, 4)),
                 IncludeSeparatorAbove = _random.NextBoolean(),
                 IncludeSeparatorBelow = _random.NextBoolean(),

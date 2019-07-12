@@ -1,19 +1,21 @@
-﻿using System.IO;
-using Timetabler.Data;
-using Timetabler.Data.Interfaces;
-using Timetabler.Data.Display;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Timetabler.Data.Collections;
-using Timetabler.CoreData;
-using Unicorn;
 using NLog;
+using Timetabler.CoreData;
 using Timetabler.CoreData.Helpers;
+using Timetabler.Data;
+using Timetabler.Data.Interfaces;
+using Timetabler.Data.Collections;
+using Timetabler.Data.Display;
+using Timetabler.Data.Display.Interfaces;
+using Timetabler.PdfExport.Extensions;
+using Unicorn;
 using Unicorn.Impl.PdfSharp;
 using Unicorn.Interfaces;
-using Timetabler.PdfExport.Extensions;
-using System;
+using Unicorn.Shapes;
 
 namespace Timetabler.PdfExport
 {
@@ -26,6 +28,7 @@ namespace Timetabler.PdfExport
         private const double interSectionGapSize = 10.0;
         private const double graphTickLength = 5.0;
         private const double distanceTickLabelMargin = 2.0;
+        private const double cellTotalMargins = 6.0;
 
         private static readonly FontConfigurator FontConfigurator = new FontConfigurator(new[]
         {
@@ -45,6 +48,10 @@ namespace Timetabler.PdfExport
         private FontDescriptor _italicBodyFont;
         private FontDescriptor _boldBodyFont;
         private FontDescriptor _alternativeLocationFont;
+
+        private HorizontalArrow _leftPointingArrow;
+        private HorizontalArrow _rightPointingArrow;
+        private double _arrowHOffset = cellTotalMargins / 2;
 
         private const double _locationListMargins = 3.0;
         private const double _locationListMinimumColumnGap = 2.5;
@@ -272,7 +279,7 @@ namespace Timetabler.PdfExport
 
             foreach (TrainDrawingInfo info in trainGraphModel.GetTrainDrawingInformation())
             {
-                foreach (LineCoordinates lineData in info.LineVertexes)
+                foreach (LineCoordinates lineData in info.Lines)
                 {
                     _currentPage.PageGraphics.DrawLine(CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.Vertex1.X),
                         CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - lineData.Vertex1.Y), CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, lineData.Vertex2.X),
@@ -282,7 +289,7 @@ namespace Timetabler.PdfExport
                 if (trainGraphModel.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
                     UniSize headcodeDimensions = _currentPage.PageGraphics.MeasureString(info.Headcode.Trim(), _plainBodyFont);
-                    LineCoordinates longestLine = info.LineVertexes[LineCoordinates.GetIndexOfLongestLine(info.LineVertexes)];
+                    LineCoordinates longestLine = info.Lines[LineCoordinates.GetIndexOfLongestLine(info.Lines)];
                     double llX1 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex1.X);
                     double llX2 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex2.X);
                     double llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex1.Y);
@@ -314,8 +321,15 @@ namespace Timetabler.PdfExport
             shm.HeaderHeight = MeasureHeaderHeight(section, options, shm.IncludeLocoDiagramRow);
             shm.HeaderIncludesFootnoteRow = section.TrainSegments.Any(t => !string.IsNullOrWhiteSpace(t.Footnotes));
             shm.ColumnWidth = MeasureMaximumCellWidth(section, options);
-
+            MeasureArrows(shm.ColumnWidth - cellTotalMargins, shm.MainSectionMetrics.LocationOffsetList.Max(t => t.Bottom - t.Top));
             return shm;
+        }
+
+        private void MeasureArrows(double timingPointWidth, double timingPointHeight)
+        {
+            _leftPointingArrow = new HorizontalArrow(HorizontalDirection.ToLeft, timingPointWidth * 0.8, MainLineWidth, timingPointHeight / 3, timingPointWidth / 6, timingPointWidth / 24);
+            _rightPointingArrow = _leftPointingArrow.Flip();
+            _arrowHOffset = cellTotalMargins / 2 + timingPointWidth * 0.1;
         }
 
         private Area LayOutFootnotesForSection(TimetableSectionModel section, int startingColumn, int columnCount)
@@ -475,6 +489,23 @@ namespace Timetabler.PdfExport
                     currentYCoord + locationDims.LocationOffsets[timingPoint.LocationKey].Baseline);
             }
 
+            // Draw continuation arrows if needed
+            List<string> locationsInSegment = segment.Timings.Select(t => t.LocationKey).ToList();
+            List<TextVerticalLocation> offsetList = null;
+            if (segment.ContinuationFromEarlier)
+            {
+                offsetList = sectionMetrics.MainSectionMetrics.LocationOffsetList;
+                DrawContinuationArrow(segment.Timings.First(), offsetList, sectionMetrics.MainSectionMetrics.LocationOffsets, locationsInSegment, _leftPointingArrow, xCoord, currentYCoord);
+            }
+            if (segment.ContinuesLater)
+            {
+                if (offsetList == null)
+                {
+                    offsetList = sectionMetrics.MainSectionMetrics.LocationOffsetList;
+                }
+                DrawContinuationArrow(segment.Timings.Last(), offsetList, sectionMetrics.MainSectionMetrics.LocationOffsets, locationsInSegment, _rightPointingArrow, xCoord, currentYCoord);
+            }
+
             // If there is an inline note to display, work out the position of the largest empty block...
             UniRange largestEmptyBlock = new UniRange(0, 0);
             if (!string.IsNullOrWhiteSpace(segment.InlineNote))
@@ -510,7 +541,7 @@ namespace Timetabler.PdfExport
             LineDrawingWrapper("separator", xCoord + segmentWidth, yCoord + lineGapSize, xCoord + segmentWidth,
                 currentYCoord + locationDims.TotalSize.Height + sectionMetrics.ToWorkHeight + sectionMetrics.LocoToWorkHeight - lineGapSize, MainLineWidth);
 
-            List<string> locationsInSegment = segment.Timings.Select(t => t.LocationKey).ToList();
+            
             UniSize fillerDims = _currentPage.PageGraphics.MeasureString(Resources.RowEmptyCellFiller, _plainBodyFont);
             UniSize alternateFillerDims = _currentPage.PageGraphics.MeasureString(Resources.RowEmptyCellAlternateFiller, _plainBodyFont);
             int firstIndex;
@@ -654,6 +685,20 @@ namespace Timetabler.PdfExport
             }
 
             return segmentWidth;
+        }
+
+        private void DrawContinuationArrow(ILocationEntry nearestTimingPoint, List<TextVerticalLocation> offsetList, Dictionary<string, TextVerticalLocation> offsetDict, List<string> keyList,
+            HorizontalArrow arrow, double xc, double yc)
+        {
+            int dir = arrow.Direction == HorizontalDirection.ToLeft ? -1 : 1;
+            int tpIndex = offsetList.IndexOf(offsetDict[nearestTimingPoint.LocationKey]);
+            if ((dir == -1 && tpIndex == 0) || (dir == 1 && tpIndex == offsetList.Count - 1))
+            {
+                return;
+            }
+            tpIndex += dir;
+            arrow.DrawAt(_currentPage.PageGraphics, xc + _arrowHOffset, yc + (offsetList[tpIndex].Top + (offsetList[tpIndex].Baseline - offsetList[tpIndex].Top) / 2));
+            keyList.Add(offsetDict.First(o => o.Value == offsetList[tpIndex]).Key);
         }
 
         private UniRange FindLargestEmptyBlock(TrainSegmentModel segment, LocationBoxDimensions locationDims)
@@ -948,7 +993,7 @@ namespace Timetabler.PdfExport
                 }
             }
 
-            return maxWidth + 6;
+            return maxWidth + cellTotalMargins;
         }
 
         private double MeasureHeaderHeight(TimetableSectionModel timetableSection, DocumentExportOptions options, bool includeLocoDiagramRow)

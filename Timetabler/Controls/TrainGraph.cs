@@ -13,6 +13,8 @@ using Timetabler.Data.Display;
 using Timetabler.Extensions;
 using Timetabler.CoreData.Helpers;
 using NLog;
+using Timetabler.CoreData;
+using Timetabler.Data.Extensions;
 
 namespace Timetabler.Controls
 {
@@ -122,8 +124,6 @@ namespace Timetabler.Controls
 
         private VertexInformation _nearestVertex = null;
 
-        private Train _selectedTrain = null;
-
         private ToolTip _tooltip;
 
         private bool InDragMode { get; set; }
@@ -222,7 +222,7 @@ namespace Timetabler.Controls
             foreach (TrainDrawingInfo info in trainDrawingInfo)
             {
                 Pen trainPen = new Pen(info.Properties.Colour, info.Properties.Width) { DashStyle = info.Properties.DashStyle };
-                foreach (LineCoordinates lineData in info.LineVertexes)
+                foreach (LineCoordinates lineData in info.Lines)
                 {
                     DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, MaximumXCoordinate, topLimit, bottomLimit, selectedTrainCoordinates);
                 }
@@ -230,7 +230,7 @@ namespace Timetabler.Controls
                 if (Model.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
                     SizeF headcodeDimensions = e.Graphics.MeasureString(info.Headcode.Trim(), TrainLabelFont);
-                    LineCoordinates longestLine = info.LineVertexes[LineCoordinates.GetIndexOfLongestLine(info.LineVertexes)];
+                    LineCoordinates longestLine = info.Lines[LineCoordinates.GetIndexOfLongestLine(info.Lines)];
                     float llX1 = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, longestLine.Vertex1.X);
                     float llX2 = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, longestLine.Vertex2.X);
                     float llY1 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex1.Y);
@@ -279,7 +279,7 @@ namespace Timetabler.Controls
             AddCoordinate(v0, xc0, yc0);
             AddCoordinate(v1, xc1, yc1);
             graphics.DrawLine(trainPen, new PointF(xc0, yc0), new PointF(xc1, yc1));
-            if (controlHandleCoordinates != null && v0.Train == _selectedTrain)
+            if (controlHandleCoordinates != null && v0.Train == Model.SelectedTrain)
             {
                 controlHandleCoordinates.Add(new Tuple<float, float>(xc0, yc0));
                 controlHandleCoordinates.Add(new Tuple<float, float>(xc1, yc1));
@@ -322,7 +322,7 @@ namespace Timetabler.Controls
             _nearestVertex = FindVertexFromCoordinates(e.Location);
             if (_nearestVertex != null)
             {
-                if (_nearestVertex.Train == _selectedTrain)
+                if (_nearestVertex.Train == Model.SelectedTrain)
                 {
                     Cursor.Current = Cursors.SizeWE;
                 }
@@ -397,15 +397,15 @@ namespace Timetabler.Controls
         {
             if (_nearestVertex != null)
             {
-                _selectedTrain = _nearestVertex.Train;
+                Model.SelectedTrain = _nearestVertex.Train;
                 DragPointerOffset = e.X - CoordinateHelper.Stretch(LocationAxisXCoordinate, MaximumXCoordinate, _nearestVertex.X);
                 InDragMode = true;
                 Cursor.Current = Cursors.SizeWE;
                 Invalidate();
             }
-            else if (_selectedTrain != null)
+            else if (Model.SelectedTrain != null)
             {
-                _selectedTrain = null;
+                Model.SelectedTrain = null;
                 Invalidate();
             }
         }
@@ -414,13 +414,71 @@ namespace Timetabler.Controls
         {
             if (InDragMode && _nearestVertex != null)
             {
-                double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, MaximumXCoordinate, e.X - DragPointerOffset);
-                _nearestVertex.X = relativeX;
-                Model.GetTimeOfDayFromXPosition(relativeX).CopyTo(_nearestVertex.Time);
-                _nearestVertex.Train.RefreshTimingPointModels();
+                ProcessEndOfDrag(e.X);
                 Invalidate();
             }
             InDragMode = false;
+        }
+
+        private void ProcessEndOfDrag(int xCoord)
+        {
+            double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, MaximumXCoordinate, xCoord - DragPointerOffset);
+            if (Model.GraphEditStyle == GraphEditStyle.Free)
+            {
+                _nearestVertex.X = relativeX;
+                Model.GetTimeOfDayFromXPosition(relativeX).CopyTo(_nearestVertex.Time);
+            }
+            else if (Model.GraphEditStyle == GraphEditStyle.PreserveSectionTimes)
+            {
+                TimeSpan timeOffset = Model.GetTimeOfDayFromXPosition(relativeX) - _nearestVertex.Time;
+                IList<VertexInformation> vertexes;
+                // Departure moved later
+                if ((_nearestVertex.ArrivalDeparture & ArrivalDepartureOptions.Departure) != 0 && timeOffset.TotalSeconds > 0)
+                {
+                    vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.LaterThan(_nearestVertex).ToList();
+                }
+                // Arrival moved earlier
+                else if ((_nearestVertex.ArrivalDeparture & ArrivalDepartureOptions.Arrival) != 0 && timeOffset.TotalSeconds < 0)
+                {
+                    vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.EarlierThan(_nearestVertex).ToList();
+                }
+                // Departure moved earlier or arrival moved later
+                else
+                {
+                    vertexes = _nearestVertex.TrainDrawingInfo.LineVertexes.ToList();
+                }
+                ShiftVertexes(vertexes, timeOffset);
+            }
+            _nearestVertex.Train.RefreshTimingPointModels();    
+        }
+
+        private void ShiftVertexes(IList<VertexInformation> vertexes, TimeSpan timeOffset)
+        {
+            foreach (TimeOfDay time in vertexes.Times())
+            {
+                (time + timeOffset).CopyTo(time);
+            }
+            foreach (VertexInformation vertex in vertexes)
+            {
+                vertex.X = Model.GetXPositionFromTime(vertex.Time);
+            }
+        }
+
+        private void TrainGraph_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (_nearestVertex?.Train != null)
+            {
+                EditTrain(_nearestVertex?.Train);
+            }
+        }
+
+        private void EditTrain(Train train)
+        {
+            if (Model?.EditTrainMethod != null)
+            {
+                Model.EditTrainMethod(train.Id);
+                Invalidate();
+            }
         }
     }
 }

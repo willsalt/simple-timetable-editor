@@ -34,6 +34,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbClockType = new System.Windows.Forms.ComboBox();
             this.ckDisplayTrainLabelsOnGraphs = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbGraphEditStyle = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnOk
@@ -70,12 +72,27 @@
             this.ckDisplayTrainLabelsOnGraphs.UseVisualStyleBackColor = true;
             this.ckDisplayTrainLabelsOnGraphs.CheckedChanged += new System.EventHandler(this.ckDisplayTrainLabelsOnGraphs_CheckedChanged);
             // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // cbGraphEditStyle
+            // 
+            this.cbGraphEditStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGraphEditStyle.FormattingEnabled = true;
+            resources.ApplyResources(this.cbGraphEditStyle, "cbGraphEditStyle");
+            this.cbGraphEditStyle.Name = "cbGraphEditStyle";
+            this.cbGraphEditStyle.SelectedIndexChanged += new System.EventHandler(this.cbGraphEditStyle_SelectedIndexChanged);
+            // 
             // DocumentOptionsEditForm
             // 
             this.AcceptButton = this.btnOk;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.Controls.Add(this.cbGraphEditStyle);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.ckDisplayTrainLabelsOnGraphs);
             this.Controls.Add(this.cbClockType);
             this.Controls.Add(this.label1);
@@ -94,5 +111,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbClockType;
         private System.Windows.Forms.CheckBox ckDisplayTrainLabelsOnGraphs;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbGraphEditStyle;
     }
 }

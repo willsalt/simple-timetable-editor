@@ -18,5 +18,11 @@ namespace Timetabler.XmlData
         /// </summary>
         [XmlElement]
         public bool? DisplayTrainLabelsOnGraphs { get; set; }
+
+        /// <summary>
+        /// How the train graph control should behave when the timetable is being edited.
+        /// </summary>
+        [XmlElement]
+        public string GraphEditStyle { get; set; }
     }
 }

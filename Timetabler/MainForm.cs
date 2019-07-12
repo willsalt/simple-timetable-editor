@@ -135,6 +135,7 @@ namespace Timetabler
             Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
             Model.UpTrainsDisplay.CheckCompulsaryLocationsAreVisible();
             UpdateTrainGraphLocationModel();
+            trainGraph.Model.SetPropertiesFromDocumentOptions(Model.Options);
             _documentChanged = false;
         }
 
@@ -146,7 +147,9 @@ namespace Timetabler
                 TrainList = Model.TrainList,
                 DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs,
                 TooltipFormattingString = Model.Options.FormattingStrings.Tooltip,
+                EditTrainMethod = EditTrain,
             };
+            trainGraph.Model.SelectedTrainChanged += TrainGraphModelSelectedTrainChanged;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -326,7 +329,7 @@ namespace Timetabler
                 }
                 return;
             }
-            Log.Trace("MainForm Edit buton clicked (normal mode)");
+            Log.Trace("MainForm Edit button clicked (normal mode)");
             string trainId = GetSelectedTrainId();
             if (trainId == null)
             {
@@ -395,6 +398,10 @@ namespace Timetabler
         {
             DataGridView selDgv = null;
             TimetableSectionModelDataAdapter adapter = null;
+            if (tcMain.SelectedTab == tabGraph)
+            {
+                return trainGraph.Model.SelectedTrain?.Id;
+            }
             if (tcMain.SelectedTab == tabDown)
             {
                 selDgv = dgvDown;
@@ -458,7 +465,8 @@ namespace Timetabler
 
         private void SetEditButtonEnabled()
         {
-            btnDel.Enabled = btnEdit.Enabled =
+            btnDel.Enabled = btnEdit.Enabled = 
+                (tcMain.SelectedTab == tabGraph && trainGraph.Model.SelectedTrain != null) ||
                 (tcMain.SelectedTab == tabDown && dgvDown.SelectedCells.Count > 0 && _downTrainsAdapter.IsColumnTrainColumn(dgvDown.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabUp && dgvUp.SelectedCells.Count > 0 && _upTrainsAdapter.IsColumnTrainColumn(dgvUp.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabHours && dgvHours.SelectedCells.Count > 0);
@@ -631,8 +639,7 @@ namespace Timetabler
                 return;
             }
             doef.Model.CopyTo(Model.Options);
-            trainGraph.Model.DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs;
-            trainGraph.Model.TooltipFormattingString = Model.Options.FormattingStrings.Tooltip;
+            trainGraph.Model.SetPropertiesFromDocumentOptions(Model.Options);
             trainGraph.Invalidate();
             Model.RefreshTrainDisplayFormatting();
             UpdateSignalboxHours();
@@ -689,7 +696,7 @@ namespace Timetabler
                 newDocument.Signalboxes = template.Signalboxes;
             }
             Model = newDocument;
-            trainGraph.Model = new TrainGraphModel { LocationList = Model.LocationList, TrainList = Model.TrainList, DisplayTrainLabels = template.DocumentOptions.DisplayTrainLabelsOnGraphs };            
+            UpdateTrainGraphLocationModel();
             UpdateFields();
             Model.UpdateTrainDisplays();
             _documentChanged = false;
@@ -972,6 +979,11 @@ namespace Timetabler
         private void supportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new SupportForm().ShowDialog();
+        }
+
+        private void TrainGraphModelSelectedTrainChanged(object sender, TrainEventArgs e)
+        {
+            SetEditButtonEnabled();
         }
     }
 }

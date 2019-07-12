@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Simple Timetable Editor" Language="1033" Version="1.1.0.0" Manufacturer="Will Salt" UpgradeCode="a7d1840d-444d-4c42-9bfb-12ebeadbdc5f">
+  <Product Id="*" Name="Simple Timetable Editor" Language="1033" Version="1.1.2.0" Manufacturer="Will Salt" UpgradeCode="a7d1840d-444d-4c42-9bfb-12ebeadbdc5f">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -11,6 +11,7 @@
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ProductFonts" />
       <ComponentGroupRef Id="ProductResourcesDe" />
+      <ComponentGroupRef Id="MiscComponents" />
     </Feature>
     <WixVariable Id="WixUILicenseRtf" Value="$(var.Timetabler.ProjectDir)Licence.rtf"/>
   </Product>
@@ -108,6 +109,18 @@
     <ComponentGroup Id="ProductResourcesDe" Directory="deFolder">
       <Component Id="de.PdfSharp.Resources.dll.comp" Guid="9200A694-F939-45C5-BECE-4DA48DCABD22">
         <File Id="de.PdfSharp.Resources.dll.file" Name="PdfSharp.Resources.dll" Source="$(var.Timetabler.TargetDir)de\PdfSharp.Resources.dll" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="MiscComponents" Directory="INSTALLFOLDER">
+      <Component Id="Timetabler.progid.comp" Guid="565BC66C-AEBA-4CFE-BD5F-48E799533974" KeyPath="yes">
+        <ProgId Id="Timetabler.wtt.progid" Description="Simple Timetable Editor timetable">
+          <Extension Id="wtt">
+            <Verb Id="open" TargetFile="Timetabler.exe.file" Argument="&quot;%1&quot;" />
+          </Extension>
+        </ProgId>
       </Component>
     </ComponentGroup>
   </Fragment>

@@ -1,4 +1,6 @@
-﻿namespace Unicorn.Interfaces
+﻿using System.Collections.Generic;
+
+namespace Unicorn.Interfaces
 {
     /// <summary>
     /// Defines a graphics context for low-level drawing operations.
@@ -55,6 +57,12 @@
         /// <param name="width">The width of the line.</param>
         /// <param name="style">The drawing style of the line - solid, dotted, dashed, etc.</param>
         void DrawLine(double x1, double y1, double x2, double y2, double width, UniDashStyle style);
+
+        /// <summary>
+        /// Draw a filled polygon consisting of straight lines connecting an ordered set of vertexes in sequence.
+        /// </summary>
+        /// <param name="vertexes">The vertexes of the polygon.</param>
+        void DrawFilledPolygon(IEnumerable<UniPoint> vertexes);
 
         /// <summary>
         /// Draw a rectangle.

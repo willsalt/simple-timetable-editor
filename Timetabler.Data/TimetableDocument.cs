@@ -541,7 +541,6 @@ namespace Timetabler.Data
             }
             if (train.TrainTimes[0].ArrivalTime?.Time != null)
             {
-                currentSegment.HalfOfDay = train.TrainTimes[0].ArrivalTime.Time.HalfOfDay.ToNameString();
                 var timeModel = train.TrainTimes[0].ArrivalTimeModel;
                 currentSegment.Timings.Add(timeModel);
                 currentSegment.TimingsIndex.Add(train.TrainTimes[0].Location.Id + LocationIdSuffixes.Arrival, timeModel);
@@ -560,10 +559,6 @@ namespace Timetabler.Data
             }
             if (train.TrainTimes[0].DepartureTime?.Time != null)
             {
-                if (currentSegment.HalfOfDay == string.Empty)
-                {
-                    currentSegment.HalfOfDay = train.TrainTimes[0].DepartureTime.Time.HalfOfDay.ToNameString();
-                }
                 var timeModel = train.TrainTimes[0].DepartureTimeModel;
                 currentSegment.Timings.Add(timeModel);
                 currentSegment.TimingsIndex.Add(train.TrainTimes[0].Location.Id + LocationIdSuffixes.Departure, timeModel);
@@ -615,10 +610,6 @@ namespace Timetabler.Data
                 }
                 if (train.TrainTimes[i].ArrivalTime?.Time != null)
                 {
-                    if (currentSegment.HalfOfDay == string.Empty)
-                    {
-                        currentSegment.HalfOfDay = train.TrainTimes[i].ArrivalTime.Time.HalfOfDay.ToNameString();
-                    }
                     var timeModel = train.TrainTimes[i].ArrivalTimeModel;
                     currentSegment.Timings.Add(timeModel);
                     currentSegment.TimingsIndex.Add(train.TrainTimes[i].Location.Id + LocationIdSuffixes.Arrival, timeModel);
@@ -637,10 +628,6 @@ namespace Timetabler.Data
                 }
                 if (train.TrainTimes[i].DepartureTime?.Time != null)
                 {
-                    if (currentSegment.HalfOfDay == string.Empty)
-                    {
-                        currentSegment.HalfOfDay = train.TrainTimes[i].DepartureTime.Time.HalfOfDay.ToNameString();
-                    }
                     var timeModel = train.TrainTimes[i].DepartureTimeModel;
                     currentSegment.Timings.Add(timeModel);
                     currentSegment.TimingsIndex.Add(train.TrainTimes[i].Location.Id + LocationIdSuffixes.Departure, timeModel);

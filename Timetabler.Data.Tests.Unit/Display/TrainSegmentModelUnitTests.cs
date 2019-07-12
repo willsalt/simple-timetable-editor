@@ -654,9 +654,21 @@ namespace Timetabler.Data.Tests.Unit.Display
             Assert.AreEqual(testObject.IncludeSeparatorBelow, testOutput.IncludeSeparatorBelow);
         }
 
-        // FIXME this raises a question - the note should only appear on one of the two segments, but which one?  See GitHub ticket #85
         [TestMethod]
         public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectInlineNoteProperty()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            string savedNote = testObject.InlineNote;
+
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual(savedNote, testOutput.InlineNote);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodSetsInlineNotePropertyOfParameterToEmptyString()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -664,7 +676,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
 
-            Assert.AreEqual(testObject.InlineNote, testOutput.InlineNote);
+            Assert.AreEqual("", testObject.InlineNote);
         }
 
         [TestMethod]

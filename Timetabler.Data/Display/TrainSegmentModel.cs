@@ -221,6 +221,7 @@ namespace Timetabler.Data.Display
             secondPortion.Timings.RemoveRange(0, idx);
             UpdateTimingsIndex();
             secondPortion.UpdateTimingsIndex();
+            InlineNote = "";
             ContinuesLater = true;
             secondPortion.ContinuationFromEarlier = true;
             return secondPortion;

@@ -528,6 +528,15 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copying train {0}.
+        /// </summary>
+        internal static string TrainCopyForm_TrainHeadcode_FormatString {
+            get {
+                return ResourceManager.GetString("TrainCopyForm_TrainHeadcode_FormatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The train you are editing has no timing points.  Trains must have timing points to appear in the timetable.
         ///
         ///If you press &quot;OK&quot; your edit will be discarded.  If you press &quot;Cancel&quot; you can continue editing the train..

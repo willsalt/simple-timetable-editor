@@ -117,6 +117,7 @@
     <Compile Include="Models\SignalboxHoursEditFormModel.cs" />
     <Compile Include="Models\SignalboxHoursSetEditFormModel.cs" />
     <Compile Include="Models\TrainAdjustTimesFormModel.cs" />
+    <Compile Include="Models\TrainCopyFormModel.cs" />
     <Compile Include="Models\TrainEditFormModel.cs" />
     <Compile Include="Models\TrainGraphYAxisTickModel.cs" />
     <Compile Include="Models\TrainLocationTimeEditFormModel.cs" />
@@ -186,6 +187,12 @@
     </Compile>
     <Compile Include="TrainClassListEditForm.Designer.cs">
       <DependentUpon>TrainClassListEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainCopyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainCopyForm.Designer.cs">
+      <DependentUpon>TrainCopyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TrainEditForm.cs">
       <SubType>Form</SubType>
@@ -262,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TrainClassListEditForm.resx">
       <DependentUpon>TrainClassListEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainCopyForm.resx">
+      <DependentUpon>TrainCopyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TrainEditForm.resx">
       <DependentUpon>TrainEditForm.cs</DependentUpon>

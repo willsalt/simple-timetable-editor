@@ -528,6 +528,15 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The offset must be a positive whole number..
+        /// </summary>
+        internal static string TrainCopyForm_Offset_ValidationFailure {
+            get {
+                return ResourceManager.GetString("TrainCopyForm_Offset_ValidationFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copying train {0}.
         /// </summary>
         internal static string TrainCopyForm_TrainHeadcode_FormatString {

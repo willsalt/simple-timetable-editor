@@ -142,6 +142,21 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// Creates a partially-deep copy of this train, changing the times of all timing points by a fixed offset.
+        /// </summary>
+        /// <param name="offsetMinutes">The number of minutes to change the timings points by (negative for earlier, positive for later).</param>
+        /// <returns>A copy of this instance with times edited.</returns>
+        public Train Copy(int offsetMinutes)
+        {
+            Train t = Copy();
+            foreach (TrainLocationTime locationTime in t.TrainTimes)
+            {
+                locationTime.OffsetTimes(offsetMinutes);
+            }
+            return t;
+        }
+
+        /// <summary>
         /// Ensure that the user-visible version of all of the data for this train is up-to-date with the raw data.
         /// </summary>
         public void RefreshTimingPointModels()

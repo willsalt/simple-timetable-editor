@@ -987,7 +987,7 @@ namespace Timetabler
             UpdateTrainEditingButtonsEnabled();
         }
 
-        private void btnCopy_Click(object sender, EventArgs e)
+        private void BtnCopy_Click(object sender, EventArgs e)
         {
             string trainId = GetSelectedTrainId();
             if (trainId == null)
@@ -1006,7 +1006,18 @@ namespace Timetabler
         {
             TrainCopyFormModel model = TrainCopyFormModel.FromTrain(selectedTrain);
             TrainCopyForm form = new TrainCopyForm { Model = model };
-            form.ShowDialog();
+            if (form.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            int offset = model.AddSubtract == AddSubtract.Add ? model.Offset : -model.Offset;
+            Train copy = selectedTrain.Copy(offset);
+            if (model.ClearInlineNotes)
+            {
+                copy.InlineNote = "";
+            }
+            Model.TrainList.Add(copy);
         }
     }
 }

@@ -284,6 +284,9 @@ Do you want to proceed?</value>
   <data name="TrainAdjustTimesForm_Offset_ValidationFailure" xml:space="preserve">
     <value>The offset must be a positive whole number.</value>
   </data>
+  <data name="TrainCopyForm_Offset_ValidationFailure" xml:space="preserve">
+    <value>The offset must be a positive whole number.</value>
+  </data>
   <data name="TrainCopyForm_TrainHeadcode_FormatString" xml:space="preserve">
     <value>Copying train {0}</value>
   </data>

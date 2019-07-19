@@ -90,6 +90,7 @@
     <Compile Include="Helpers\DataGridViewExtensions.cs" />
     <Compile Include="Helpers\FileDialogExtensions.cs" />
     <Compile Include="Helpers\HumanReadableEnum.cs" />
+    <Compile Include="Helpers\InputValidationHelper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\TimeHelpers.cs" />
     <Compile Include="Helpers\TimeOfDayExtensions.cs" />

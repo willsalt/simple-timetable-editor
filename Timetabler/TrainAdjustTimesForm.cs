@@ -155,17 +155,9 @@ namespace Timetabler
             _model.ArriveDepart = arriveDepart.Value;
         }
 
-        private void tbOffset_Validating(object sender, CancelEventArgs e)
+        private void TbOffset_Validating(object sender, CancelEventArgs e)
         {
-            int dummy;
-            if (!int.TryParse(tbOffset.Text, out dummy) || dummy < 0)
-            {
-                errorProvider.SetError(tbOffset, Resources.TrainAdjustTimesForm_Offset_ValidationFailure);
-            }
-            else
-            {
-                errorProvider.SetError(tbOffset, string.Empty);
-            }
+            InputValidationHelper.ValidateTextInputAsNonNegativeInt(sender as TextBox, errorProvider, Resources.TrainAdjustTimesForm_Offset_ValidationFailure);
         }
 
         private void tbOffset_Validated(object sender, EventArgs e)
@@ -174,8 +166,7 @@ namespace Timetabler
             {
                 return;
             }
-            int val;
-            int.TryParse(tbOffset.Text, out val);
+            int.TryParse(tbOffset.Text, out int val);
             if (val < 0)
             {
                 return;

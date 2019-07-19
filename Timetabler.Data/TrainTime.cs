@@ -54,14 +54,14 @@ namespace Timetabler.Data
         }
 
         /// <summary>
-        /// Create a shallow copy of this instance.
+        /// Create a copy of this instance.
         /// </summary>
         /// <returns></returns>
         public TrainTime Copy()
         {
             return new TrainTime
             {
-                Time = Time,
+                Time = Time?.Copy(),
                 Footnotes = Footnotes.ToList(),
             };
         }

@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timetabler.Helpers;
 using Timetabler.Models;
 
 namespace Timetabler
 {
+    /// <summary>
+    /// Form for specifying how to make a copy of a train.
+    /// </summary>
     public partial class TrainCopyForm : Form
     {
         private TrainCopyFormModel _model;
 
         private bool _inUpdate = false;
 
+        /// <summary>
+        /// The model object containing the form data.
+        /// </summary>
         public TrainCopyFormModel Model
         {
             get
@@ -31,6 +31,9 @@ namespace Timetabler
             }
         }
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public TrainCopyForm()
         {
             InitializeComponent();
@@ -55,8 +58,7 @@ namespace Timetabler
         {
             foreach (var item in cbAddSubtract.Items)
             {
-                var asItem = item as HumanReadableEnum<AddSubtract>;
-                if (asItem != null && asItem.Value == _model.AddSubtract)
+                if (item is HumanReadableEnum<AddSubtract> asItem && asItem.Value == _model.AddSubtract)
                 {
                     cbAddSubtract.SelectedItem = asItem;
                     break;
@@ -64,7 +66,7 @@ namespace Timetabler
             }
         }
 
-        private void cbAddSubtract_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbAddSubtract_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selItem = cbAddSubtract.SelectedItem as HumanReadableEnum<AddSubtract>;
             if (_model == null || selItem == null || _inUpdate)
@@ -74,9 +76,23 @@ namespace Timetabler
             _model.AddSubtract = selItem.Value;
         }
 
-        private void tbOffset_TextChanged(object sender, EventArgs e)
+        private void TbOffset_Validated(object sender, EventArgs e)
         {
+            if (_model == null)
+            {
+                return;
+            }
+            int.TryParse(tbOffset.Text, out int val);
+            if (val < 0)
+            {
+                return;
+            }
+            _model.Offset = val;
+        }
 
+        private void TbOffset_Validating(object sender, CancelEventArgs e)
+        {
+            InputValidationHelper.ValidateTextInputAsNonNegativeInt(sender as TextBox, errorProvider, Resources.TrainCopyForm_Offset_ValidationFailure);
         }
     }
 }

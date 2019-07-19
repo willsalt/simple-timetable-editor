@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TrainCopyForm));
             this.lblTitle = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,6 +38,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.ckClearInlineNote = new System.Windows.Forms.CheckBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -53,7 +56,8 @@
             // 
             resources.ApplyResources(this.tbOffset, "tbOffset");
             this.tbOffset.Name = "tbOffset";
-            this.tbOffset.TextChanged += new System.EventHandler(this.tbOffset_TextChanged);
+            this.tbOffset.Validating += new System.ComponentModel.CancelEventHandler(this.TbOffset_Validating);
+            this.tbOffset.Validated += new System.EventHandler(this.TbOffset_Validated);
             // 
             // cbAddSubtract
             // 
@@ -61,7 +65,7 @@
             this.cbAddSubtract.FormattingEnabled = true;
             resources.ApplyResources(this.cbAddSubtract, "cbAddSubtract");
             this.cbAddSubtract.Name = "cbAddSubtract";
-            this.cbAddSubtract.SelectedIndexChanged += new System.EventHandler(this.cbAddSubtract_SelectedIndexChanged);
+            this.cbAddSubtract.SelectedIndexChanged += new System.EventHandler(this.CbAddSubtract_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -88,6 +92,11 @@
             this.ckClearInlineNote.Name = "ckClearInlineNote";
             this.ckClearInlineNote.UseVisualStyleBackColor = true;
             // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
+            // 
             // TrainCopyForm
             // 
             this.AcceptButton = this.btnOk;
@@ -105,6 +114,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TrainCopyForm";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,5 +130,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.CheckBox ckClearInlineNote;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

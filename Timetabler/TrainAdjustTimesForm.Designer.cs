@@ -71,7 +71,7 @@
             // 
             resources.ApplyResources(this.tbOffset, "tbOffset");
             this.tbOffset.Name = "tbOffset";
-            this.tbOffset.Validating += new System.ComponentModel.CancelEventHandler(this.tbOffset_Validating);
+            this.tbOffset.Validating += new System.ComponentModel.CancelEventHandler(this.TbOffset_Validating);
             this.tbOffset.Validated += new System.EventHandler(this.tbOffset_Validated);
             // 
             // label1

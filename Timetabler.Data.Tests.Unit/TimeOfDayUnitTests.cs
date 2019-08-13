@@ -123,5 +123,16 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(testSeconds0 + testSeconds1, testOutput.AbsoluteSeconds);
         }
+
+        [TestMethod]
+        public void TimeOfDayClassFromTimeSpanMethodReturnsObjectWithCorrectAbsoluteSecondsProperty()
+        {
+            int testPeriod = _rnd.Next(86400);
+            TimeSpan span = new TimeSpan(0, 0, testPeriod);
+
+            TimeOfDay testOutput = TimeOfDay.FromTimeSpan(span);
+
+            Assert.AreEqual(testPeriod, testOutput.AbsoluteSeconds);
+        }
     }
 }

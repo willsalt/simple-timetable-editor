@@ -460,26 +460,27 @@ namespace Timetabler
 
         private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
         }
 
-        private void SetEditButtonEnabled()
+        private void UpdateTrainEditingButtonsEnabled()
         {
             btnDel.Enabled = btnEdit.Enabled = 
                 (tcMain.SelectedTab == tabGraph && trainGraph.Model.SelectedTrain != null) ||
                 (tcMain.SelectedTab == tabDown && dgvDown.SelectedCells.Count > 0 && _downTrainsAdapter.IsColumnTrainColumn(dgvDown.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabUp && dgvUp.SelectedCells.Count > 0 && _upTrainsAdapter.IsColumnTrainColumn(dgvUp.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabHours && dgvHours.SelectedCells.Count > 0);
+            btnCopy.Enabled = btnDel.Enabled && tcMain.SelectedTab != tabHours;
         }
 
         private void dgvDown_SelectionChanged(object sender, EventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
         }
 
         private void dgvUp_SelectionChanged(object sender, EventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
         }
 
         private void dgvDown_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -983,7 +984,40 @@ namespace Timetabler
 
         private void TrainGraphModelSelectedTrainChanged(object sender, TrainEventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
+        }
+
+        private void BtnCopy_Click(object sender, EventArgs e)
+        {
+            string trainId = GetSelectedTrainId();
+            if (trainId == null)
+            {
+                return;
+            }
+            Train selectedTrain = Model.TrainList.FirstOrDefault(t => t.Id == trainId);
+            if (selectedTrain == null)
+            {
+                return;
+            }
+            ShowTrainCopyForm(selectedTrain);
+        }
+
+        private void ShowTrainCopyForm(Train selectedTrain)
+        {
+            TrainCopyFormModel model = TrainCopyFormModel.FromTrain(selectedTrain);
+            TrainCopyForm form = new TrainCopyForm { Model = model };
+            if (form.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            int offset = model.AddSubtract == AddSubtract.Add ? model.Offset : -model.Offset;
+            Train copy = selectedTrain.Copy(offset);
+            if (model.ClearInlineNotes)
+            {
+                copy.InlineNote = "";
+            }
+            Model.TrainList.Add(copy);
         }
     }
 }

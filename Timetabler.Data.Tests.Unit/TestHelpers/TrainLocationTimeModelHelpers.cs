@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tests.Utility;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
@@ -10,7 +11,7 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
 {
     public static class TrainLocationTimeModelHelpers
     {
-        private static Random _random = new Random();
+        private static Random _random = RandomProvider.Default;
 
         public static TrainLocationTimeModel GetTrainLocationTimeModel(IEnumerable<MinimalUniqueItem> existingItems)
         {

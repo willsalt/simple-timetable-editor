@@ -186,6 +186,11 @@ namespace Timetabler.Data
             }
         }
 
+        public static TimeOfDay FromTimeSpan(TimeSpan ts)
+        {
+            return new TimeOfDay(ts.TotalSeconds);
+        }
+
         /// <summary>
         /// Is this time of day equal in value to another instance?
         /// </summary>

@@ -116,6 +116,22 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// Offset both arrival and departure time by the same specified amount.
+        /// </summary>
+        /// <param name="minutesOffset">The number of minutes to change the time by (positive for later, negative for earlier).</param>
+        public void OffsetTimes(int minutesOffset)
+        {
+            if (ArrivalTime?.Time != null)
+            {
+                ArrivalTime.Time.AddMinutes(minutesOffset);
+            }
+            if (DepartureTime?.Time != null)
+            {
+                DepartureTime.Time.AddMinutes(minutesOffset);
+            }
+        }
+
+        /// <summary>
         /// Attempt to populate the <see cref="Location"/> property, and any timing point footnote properties, by looking their values up in dictionaries.
         /// </summary>
         /// <param name="locationMap">A dictionary of valid locations.</param>

@@ -344,14 +344,7 @@ namespace Timetabler
                 case AddSubtract.Subtract:
                     foreach (var timing in _model.Data.TrainTimes)
                     {
-                        if (timing.ArrivalTime?.Time != null)
-                        {
-                            timing.ArrivalTime.Time.AddMinutes(-adjustModel.Offset);
-                        }
-                        if (timing.DepartureTime?.Time != null)
-                        {
-                            timing.DepartureTime.Time.AddMinutes(-adjustModel.Offset);
-                        }
+                        timing.OffsetTimes(-adjustModel.Offset);
                     }
                     break;
                 case AddSubtract.Add:

@@ -44,6 +44,34 @@ namespace Timetabler.Data.Tests.Unit
             return tt;
         }
 
+        private TrainTime GetTrainTimeBefore(TimeOfDay time)
+        {
+            TrainTime tt = new TrainTime
+            {
+                Time = _rnd.NextTimeOfDayBefore(time),
+            };
+            int footnoteCount = _rnd.Next(3);
+            for (int i = 0; i < footnoteCount; ++i)
+            {
+                tt.Footnotes.Add(new Note { Symbol = _rnd.NextString(1) });
+            }
+            return tt;
+        }
+
+        private TrainTime GetTrainTimeAfter(TimeOfDay time)
+        {
+            TrainTime tt = new TrainTime
+            {
+                Time = _rnd.NextTimeOfDayAfter(time),
+            };
+            int footnoteCount = _rnd.Next(3);
+            for (int i = 0; i < footnoteCount; ++i)
+            {
+                tt.Footnotes.Add(new Note { Symbol = _rnd.NextString(1) });
+            }
+            return tt;
+        }
+
         [TestMethod]
         public void TrainLocationTimeClassArrivalTimeModelPropertyIsNullIfArrivalTimePropertyIsNull()
         {
@@ -708,6 +736,226 @@ namespace Timetabler.Data.Tests.Unit
             TrainLocationTime testOutput = testObject.Copy();
 
             Assert.AreEqual(testObject.Line, testOutput.Line);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameArrivalTimePropertyIfArrivalTimeIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = null,
+                DepartureTime = GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            int offsetAmount = _rnd.Next(320) - 160;
+
+            testObject.OffsetTimes(offsetAmount);
+
+            Assert.IsNull(testObject.ArrivalTime);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameArrivalTimePropertyIfArrivalTimePropertyTimePropertyIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTime(),
+                DepartureTime = GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            testObject.ArrivalTime.Time = null;
+            int offsetAmount = _rnd.Next(320) - 160;
+
+            testObject.OffsetTimes(offsetAmount);
+
+            Assert.IsNull(testObject.ArrivalTime.Time);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameDepartureTimePropertyIfDepartureTimeIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTime(),
+                DepartureTime = null,
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            int offsetAmount = _rnd.Next(320) - 160;
+
+            testObject.OffsetTimes(offsetAmount);
+
+            Assert.IsNull(testObject.DepartureTime);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameDepartureTimePropertyIfDepartureTimePropertyTimePropertyIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTime(),
+                DepartureTime = GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            testObject.DepartureTime.Time = null;
+            int offsetAmount = _rnd.Next(320) - 160;
+
+            testObject.OffsetTimes(offsetAmount);
+
+            Assert.IsNull(testObject.DepartureTime.Time);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodDoesNotModifyTimePropertyOfArrivalTimePropertyIfOffsetIsZero()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTime(),
+                DepartureTime = GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            TimeOfDay originalArrivalTime = testObject.ArrivalTime.Time.Copy();
+
+            testObject.OffsetTimes(0);
+
+            Assert.AreEqual(originalArrivalTime, testObject.ArrivalTime.Time);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodDoesNotModifyTimePropertyOfDepartureTimePropertyIfOffsetIsZero()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTime(),
+                DepartureTime = GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            TimeOfDay originalDepartureTime = testObject.DepartureTime.Time.Copy();
+
+            testObject.OffsetTimes(0);
+
+            Assert.AreEqual(originalDepartureTime, testObject.DepartureTime.Time);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodModifiesArrivalTimeCorrectlyIfOffsetIsPositive()
+        {
+            int offset = _rnd.Next(23 * 60);
+            TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeOfDay(86399) - new TimeSpan(0, offset, 0));
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTimeBefore(timeLimit),
+                DepartureTime = GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            TimeOfDay originalArrivalTime = testObject.ArrivalTime.Time.Copy();
+
+            testObject.OffsetTimes(offset);
+
+            Assert.AreEqual(originalArrivalTime + new TimeSpan(0, offset, 0), testObject.ArrivalTime.Time);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodModifiesDepartureTimeCorrectlyIfOffsetIsPositive()
+        {
+            int offset = _rnd.Next(23 * 60);
+            TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeOfDay(86399) - new TimeSpan(0, offset, 0));
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTime(),
+                DepartureTime = GetTrainTimeBefore(timeLimit),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            TimeOfDay originalDepartureTime = testObject.DepartureTime.Time.Copy();
+
+            testObject.OffsetTimes(offset);
+
+            Assert.AreEqual(originalDepartureTime + new TimeSpan(0, offset, 0), testObject.DepartureTime.Time);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodModifiesArrivalTimeCorrectlyIfOffsetIsNegative()
+        {
+            int offset = -_rnd.Next(23 * 60);
+            TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeSpan(0, -offset, 0));
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTimeAfter(timeLimit),
+                DepartureTime = GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            TimeOfDay originalArrivalTime = testObject.ArrivalTime.Time.Copy();
+
+            testObject.OffsetTimes(offset);
+
+            Assert.AreEqual(TimeOfDay.FromTimeSpan(originalArrivalTime - new TimeSpan(0, -offset, 0)), testObject.ArrivalTime.Time);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClassOffsetTimesMethodModifiesDepartureTimeCorrectlyIfOffsetIsNegative()
+        {
+            int offset = -_rnd.Next(23 * 60);
+            TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeSpan(0, -offset, 0));
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = GetTrainTime(),
+                DepartureTime = GetTrainTimeAfter(timeLimit),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+            TimeOfDay originalDepartureTime = testObject.DepartureTime.Time.Copy();
+
+            testObject.OffsetTimes(offset);
+
+            Assert.AreEqual(TimeOfDay.FromTimeSpan(originalDepartureTime - new TimeSpan(0, -offset, 0)), testObject.DepartureTime.Time);
         }
     }
 }

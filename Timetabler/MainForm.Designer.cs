@@ -76,6 +76,7 @@
             this.colLocationUp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colArrDepUp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGraph = new System.Windows.Forms.TabPage();
+            this.trainGraph = new Timetabler.Controls.TrainGraph();
             this.tabHours = new System.Windows.Forms.TabPage();
             this.dgvHours = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -110,7 +111,7 @@
             this.sfdTemplate = new System.Windows.Forms.SaveFileDialog();
             this.ofdTemplate = new System.Windows.Forms.OpenFileDialog();
             this.btnCopy = new System.Windows.Forms.Button();
-            this.trainGraph = new Timetabler.Controls.TrainGraph();
+            this.btnReverse = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabDown.SuspendLayout();
@@ -451,6 +452,17 @@
             this.tabGraph.Name = "tabGraph";
             this.tabGraph.UseVisualStyleBackColor = true;
             // 
+            // trainGraph
+            // 
+            this.trainGraph.BackColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.trainGraph, "trainGraph");
+            this.trainGraph.LocationAxisFont = new System.Drawing.Font("Cambria", 8F);
+            this.trainGraph.Model = null;
+            this.trainGraph.Name = "trainGraph";
+            this.trainGraph.ShowVerticalGridLines = true;
+            this.trainGraph.TimeAxisFont = new System.Drawing.Font("Cambria", 8F);
+            this.trainGraph.TrainLabelFont = new System.Drawing.Font("Cambria", 8F);
+            // 
             // tabHours
             // 
             this.tabHours.Controls.Add(this.dgvHours);
@@ -684,21 +696,17 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
-            // trainGraph
+            // btnReverse
             // 
-            this.trainGraph.BackColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.trainGraph, "trainGraph");
-            this.trainGraph.LocationAxisFont = new System.Drawing.Font("Cambria", 8F);
-            this.trainGraph.Model = null;
-            this.trainGraph.Name = "trainGraph";
-            this.trainGraph.ShowVerticalGridLines = true;
-            this.trainGraph.TimeAxisFont = new System.Drawing.Font("Cambria", 8F);
-            this.trainGraph.TrainLabelFont = new System.Drawing.Font("Cambria", 8F);
+            resources.ApplyResources(this.btnReverse, "btnReverse");
+            this.btnReverse.Name = "btnReverse";
+            this.btnReverse.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnReverse);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -818,6 +826,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLocationUp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colArrDepUp;
         private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnReverse;
     }
 }
 

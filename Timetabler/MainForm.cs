@@ -470,7 +470,7 @@ namespace Timetabler
                 (tcMain.SelectedTab == tabDown && dgvDown.SelectedCells.Count > 0 && _downTrainsAdapter.IsColumnTrainColumn(dgvDown.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabUp && dgvUp.SelectedCells.Count > 0 && _upTrainsAdapter.IsColumnTrainColumn(dgvUp.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabHours && dgvHours.SelectedCells.Count > 0);
-            btnCopy.Enabled = btnDel.Enabled && tcMain.SelectedTab != tabHours;
+            btnCopy.Enabled = btnReverse.Enabled = btnDel.Enabled && tcMain.SelectedTab != tabHours;
         }
 
         private void dgvDown_SelectionChanged(object sender, EventArgs e)

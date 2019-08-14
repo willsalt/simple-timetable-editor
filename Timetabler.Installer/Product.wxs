@@ -11,7 +11,6 @@
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ProductFonts" />
       <ComponentGroupRef Id="ProductResourcesDe" />
-      <ComponentGroupRef Id="MiscComponents" />
     </Feature>
     <WixVariable Id="WixUILicenseRtf" Value="$(var.Timetabler.ProjectDir)Licence.rtf"/>
   </Product>
@@ -54,6 +53,11 @@
           <Shortcut Id="Timetabler.exe.link" Directory="ApplicationProgramsFolder" WorkingDirectory="INSTALLFOLDER" Name="Simple Timetable Editor" Advertise="yes" />
         </File>
         <RemoveFolder Id="ApplicationProgramsFolder.rem" Directory="ApplicationProgramsFolder" On="uninstall" />
+        <ProgId Id="Timetabler.wtt.progid" Description="Simple Timetable Editor timetable">
+          <Extension Id="wtt">
+            <Verb Id="open" TargetFile="Timetabler.exe.file" Argument="&quot;%1&quot;" />
+          </Extension>
+        </ProgId>
       </Component>
       <Component Id="Timetabler.exe.config.comp" Guid="8ECF9975-74E5-47EC-AF6E-3CEF96F17E1B">
         <File Id="Timetabler.exe.config.file" Name="Timetabler.exe.config" Source="$(var.Timetabler.TargetDir)Timetabler.exe.config" KeyPath="yes" />
@@ -109,18 +113,6 @@
     <ComponentGroup Id="ProductResourcesDe" Directory="deFolder">
       <Component Id="de.PdfSharp.Resources.dll.comp" Guid="9200A694-F939-45C5-BECE-4DA48DCABD22">
         <File Id="de.PdfSharp.Resources.dll.file" Name="PdfSharp.Resources.dll" Source="$(var.Timetabler.TargetDir)de\PdfSharp.Resources.dll" KeyPath="yes" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>
-
-  <Fragment>
-    <ComponentGroup Id="MiscComponents" Directory="INSTALLFOLDER">
-      <Component Id="Timetabler.progid.comp" Guid="565BC66C-AEBA-4CFE-BD5F-48E799533974" KeyPath="yes">
-        <ProgId Id="Timetabler.wtt.progid" Description="Simple Timetable Editor timetable">
-          <Extension Id="wtt">
-            <Verb Id="open" TargetFile="Timetabler.exe.file" Argument="&quot;%1&quot;" />
-          </Extension>
-        </ProgId>
       </Component>
     </ComponentGroup>
   </Fragment>

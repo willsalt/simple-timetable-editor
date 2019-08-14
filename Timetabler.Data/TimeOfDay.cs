@@ -186,6 +186,11 @@ namespace Timetabler.Data
             }
         }
 
+        /// <summary>
+        /// Create a <see cref="TimeOfDay" /> object based on a <see cref="TimeSpan" /> value, taking the latter as the time elapsed since midnight and assuming that the day is a normal 24-hour day
+        /// </summary>
+        /// <param name="ts">The amount of time elapsed since midnight.</param>
+        /// <returns>A <see cref="TimeOfDay" /> instance.</returns>
         public static TimeOfDay FromTimeSpan(TimeSpan ts)
         {
             return new TimeOfDay(ts.TotalSeconds);

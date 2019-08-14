@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.Data.Collections;
+using Timetabler.Extensions;
 using Timetabler.Helpers;
 using Timetabler.Models;
 
@@ -80,8 +81,7 @@ namespace Timetabler
             nudLineWidth.Value = (decimal) _model.Data.GraphProperties.Width;
             foreach (var item in cbLinePattern.Items)
             {
-                var enItem = item as HumanReadableEnum<DashStyle>;
-                if (enItem != null && enItem.Value == _model.Data.GraphProperties.DashStyle)
+                if (item is HumanReadableEnum<DashStyle> enItem && enItem.Value == _model.Data.GraphProperties.DashStyle)
                 {
                     cbLinePattern.SelectedItem = enItem;
                     break;

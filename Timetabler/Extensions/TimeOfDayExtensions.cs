@@ -1,7 +1,8 @@
 ﻿using System.Windows.Forms;
 using Timetabler.Data;
+using Timetabler.Helpers;
 
-namespace Timetabler.Helpers
+namespace Timetabler.Extensions
 {
     /// <summary>
     /// Extension methods for the <see cref="TimeOfDay" /> type.

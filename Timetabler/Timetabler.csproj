@@ -93,7 +93,7 @@
     <Compile Include="Helpers\InputValidationHelper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\TimeHelpers.cs" />
-    <Compile Include="Helpers\TimeOfDayExtensions.cs" />
+    <Compile Include="Extensions\TimeOfDayExtensions.cs" />
     <Compile Include="Helpers\XCoordinateHelper.cs" />
     <Compile Include="LocationEditForm.cs">
       <SubType>Form</SubType>

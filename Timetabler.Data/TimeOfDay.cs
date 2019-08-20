@@ -50,7 +50,7 @@ namespace Timetabler.Data
             AbsoluteSeconds = (hours * 3600 + minutes * 60 + seconds + half == HalfOfDay.PM ? 43200 : 0) % 86400;
         }
 
-        internal TimeOfDay CopyAndReflect(TimeOfDay aroundTime)
+        public TimeOfDay CopyAndReflect(TimeOfDay aroundTime)
         {
             int newSeconds = AbsoluteSeconds - ((AbsoluteSeconds - aroundTime.AbsoluteSeconds) * 2);
             return new TimeOfDay(newSeconds);

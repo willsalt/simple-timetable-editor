@@ -904,5 +904,42 @@ namespace Timetabler.Data.Tests.Unit
                 Assert.AreSame(testObject.Footnotes[i], testOutput.Footnotes[i]);
             }
         }
+
+        [TestMethod]
+        public void TrainClassLastTrainTimePropertyIsNullIfObjectTrainTimesPropertyIsEmpty()
+        {
+            Train testObject = GetTrain();
+            testObject.TrainTimes.Clear();
+
+            TrainTime testOutput = testObject.LastTrainTime;
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainClassLastTrainTimePropertyIsLaterThanOrEqualToAllArrivalTimes()
+        {
+            Train testObject = GetTrain();
+
+            TrainTime testOutput = testObject.LastTrainTime;
+
+            foreach (TrainLocationTime tlt in testObject.TrainTimes)
+            {
+                Assert.IsTrue(tlt.ArrivalTime?.Time == null || tlt.ArrivalTime.Time <= testOutput.Time);
+            }
+        }
+
+        [TestMethod]
+        public void TrainClassLastTrainTimePropertyIsLaterThanOrEqualToAllDepartureTimes()
+        {
+            Train testObject = GetTrain();
+
+            TrainTime testOutput = testObject.LastTrainTime;
+
+            foreach (TrainLocationTime tlt in testObject.TrainTimes)
+            {
+                Assert.IsTrue(tlt.DepartureTime?.Time == null || tlt.DepartureTime.Time <= testOutput.Time);
+            }
+        }
     }
 }

@@ -508,7 +508,7 @@
     <value>trainGraph</value>
   </data>
   <data name="&gt;&gt;trainGraph.Type" xml:space="preserve">
-    <value>Timetabler.Controls.TrainGraph, Timetabler, Version=1.2.7165.38270, Culture=neutral, PublicKeyToken=null</value>
+    <value>Timetabler.Controls.TrainGraph, Timetabler, Version=1.2.7171.22363, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;trainGraph.Parent" xml:space="preserve">
     <value>tabGraph</value>
@@ -1361,6 +1361,12 @@
   </data>
   <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="btnReverse.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnReverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="btnReverse.Location" type="System.Drawing.Point, System.Drawing">
     <value>830, 223</value>

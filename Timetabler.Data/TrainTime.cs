@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Timetabler.Data
@@ -28,7 +29,7 @@ namespace Timetabler.Data
                 return (Footnotes != null && Footnotes.Any()) ? string.Join(string.Empty, Footnotes.Select(n => n?.Symbol ?? "")) : "  ";
             }
         }
-        
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -59,11 +60,65 @@ namespace Timetabler.Data
         /// <returns></returns>
         public TrainTime Copy()
         {
+            return CopyWithTime(Time?.Copy());
+        }
+
+        internal TrainTime CopyAndReflect(TimeOfDay aroundTime)
+        {
+            return CopyWithTime(Time?.CopyAndReflect(aroundTime));
+        }
+
+        private TrainTime CopyWithTime(TimeOfDay newTime)
+        {
             return new TrainTime
             {
-                Time = Time?.Copy(),
+                Time = newTime,
                 Footnotes = Footnotes.ToList(),
             };
+        }
+
+        /// <summary>
+        /// Returns true if t1 is after t2, otherwise false.
+        /// </summary>
+        /// <param name="t1">A <see cref="TimeOfDay"/> instance.</param>
+        /// <param name="t2">A <see cref="TimeOfDay"/> instance.</param>
+        /// <returns>True or false.</returns>
+        public static bool operator >(TrainTime t1, TrainTime t2)
+        {
+            return t1?.Time > t2?.Time;
+        }
+
+        /// <summary>
+        /// Returns true if instance t1 is before t2, false otherwise.
+        /// </summary>
+        /// <param name="t1">A <see cref="TimeOfDay"/> instance.</param>
+        /// <param name="t2">A <see cref="TimeOfDay"/> instance.</param>
+        /// <returns>True or false according to whether t1 is before or after t2.</returns>
+        public static bool operator <(TrainTime t1, TrainTime t2)
+        {
+            return t1?.Time < t2?.Time;
+        }
+
+        /// <summary>
+        /// Returns false if t1 is before t2, otherwise true.
+        /// </summary>
+        /// <param name="t1">A <see cref="TimeOfDay"/> instance.</param>
+        /// <param name="t2">A <see cref="TimeOfDay"/> instance.</param>
+        /// <returns>True or false.</returns>
+        public static bool operator >=(TrainTime t1, TrainTime t2)
+        {
+            return t1?.Time >= t2?.Time;
+        }
+
+        /// <summary>
+        /// Returns false if t2 is after t1, otherwise true.
+        /// </summary>
+        /// <param name="t1">A <see cref="TimeOfDay"/> instance.</param>
+        /// <param name="t2">A <see cref="TimeOfDay"/> instance.</param>
+        /// <returns>True or false.</returns>
+        public static bool operator <=(TrainTime t1, TrainTime t2)
+        {
+            return t1?.Time <= t2?.Time;
         }
     }
 }

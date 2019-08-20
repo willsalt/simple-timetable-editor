@@ -701,6 +701,7 @@
             resources.ApplyResources(this.btnReverse, "btnReverse");
             this.btnReverse.Name = "btnReverse";
             this.btnReverse.UseVisualStyleBackColor = true;
+            this.btnReverse.Click += new System.EventHandler(this.BtnReverse_Click);
             // 
             // MainForm
             // 

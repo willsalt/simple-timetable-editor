@@ -50,6 +50,12 @@ namespace Timetabler.Data
             AbsoluteSeconds = (hours * 3600 + minutes * 60 + seconds + half == HalfOfDay.PM ? 43200 : 0) % 86400;
         }
 
+        internal TimeOfDay CopyAndReflect(TimeOfDay aroundTime)
+        {
+            int newSeconds = AbsoluteSeconds - ((AbsoluteSeconds - aroundTime.AbsoluteSeconds) * 2);
+            return new TimeOfDay(newSeconds);
+        }
+
         /// <summary>
         /// Construct from components to the nearest minute, using the twelve-hour clock.
         /// </summary>

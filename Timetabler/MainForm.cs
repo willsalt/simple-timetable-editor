@@ -1019,5 +1019,23 @@ namespace Timetabler
             }
             Model.TrainList.Add(copy);
         }
+
+        private void BtnReverse_Click(object sender, EventArgs e)
+        {
+            string trainId = GetSelectedTrainId();
+            if (trainId == null)
+            {
+                return;
+            }
+            ReverseTrain(trainId);
+        }
+
+        private void ReverseTrain(string trainId)
+        {
+            Train selectedTrain = Model.TrainList.FirstOrDefault(t => t.Id == trainId);
+            Model.TrainList.Remove(selectedTrain);
+            selectedTrain.Reverse();
+            Model.TrainList.Add(selectedTrain);
+        }
     }
 }

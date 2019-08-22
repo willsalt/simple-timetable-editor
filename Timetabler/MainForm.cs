@@ -470,7 +470,7 @@ namespace Timetabler
                 (tcMain.SelectedTab == tabDown && dgvDown.SelectedCells.Count > 0 && _downTrainsAdapter.IsColumnTrainColumn(dgvDown.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabUp && dgvUp.SelectedCells.Count > 0 && _upTrainsAdapter.IsColumnTrainColumn(dgvUp.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabHours && dgvHours.SelectedCells.Count > 0);
-            btnCopy.Enabled = btnDel.Enabled && tcMain.SelectedTab != tabHours;
+            btnCopy.Enabled = btnReverse.Enabled = btnDel.Enabled && tcMain.SelectedTab != tabHours;
         }
 
         private void dgvDown_SelectionChanged(object sender, EventArgs e)
@@ -1018,6 +1018,24 @@ namespace Timetabler
                 copy.InlineNote = "";
             }
             Model.TrainList.Add(copy);
+        }
+
+        private void BtnReverse_Click(object sender, EventArgs e)
+        {
+            string trainId = GetSelectedTrainId();
+            if (trainId == null)
+            {
+                return;
+            }
+            ReverseTrain(trainId);
+        }
+
+        private void ReverseTrain(string trainId)
+        {
+            Train selectedTrain = Model.TrainList.FirstOrDefault(t => t.Id == trainId);
+            Model.TrainList.Remove(selectedTrain);
+            selectedTrain.Reverse();
+            Model.TrainList.Add(selectedTrain);
         }
     }
 }

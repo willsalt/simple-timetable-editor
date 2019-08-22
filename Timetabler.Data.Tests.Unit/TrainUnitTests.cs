@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data.Tests.Unit.TestHelpers;
@@ -91,8 +92,8 @@ namespace Timetabler.Data.Tests.Unit
         {
             return new TrainLocationTime
             {
-                ArrivalTime = GetTrainTime(beforeTime),
-                DepartureTime = GetTrainTime(beforeTime),
+                ArrivalTime = TrainTimeHelpers.GetTrainTimeBefore(beforeTime),
+                DepartureTime = TrainTimeHelpers.GetTrainTimeBefore(beforeTime),
                 FormattingStrings = new TimeDisplayFormattingStrings
                 {
                     Complete = "h{0}mmf",
@@ -106,20 +107,6 @@ namespace Timetabler.Data.Tests.Unit
                 Path = _rnd.NextString(_rnd.Next(2)),
                 Platform = _rnd.NextString(_rnd.Next(2)),
             };
-        }
-
-        private TrainTime GetTrainTime(TimeOfDay beforeTime)
-        {
-            TrainTime tt = new TrainTime
-            {
-                Time = _rnd.NextTimeOfDayBefore(beforeTime),
-            };
-            int noteCount = _rnd.Next(3);
-            for (int i = 0; i < noteCount; ++i)
-            {
-                tt.Footnotes.Add(NoteHelpers.GetNote());
-            }
-            return tt;
         }
 
         [TestMethod]
@@ -902,6 +889,115 @@ namespace Timetabler.Data.Tests.Unit
             for (int i = 0; i < testObject.Footnotes.Count; ++i)
             {
                 Assert.AreSame(testObject.Footnotes[i], testOutput.Footnotes[i]);
+            }
+        }
+
+        [TestMethod]
+        public void TrainClassLastTrainTimePropertyIsNullIfObjectTrainTimesPropertyIsEmpty()
+        {
+            Train testObject = GetTrain();
+            testObject.TrainTimes.Clear();
+
+            TrainTime testOutput = testObject.LastTrainTime;
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainClassLastTrainTimePropertyIsLaterThanOrEqualToAllArrivalTimes()
+        {
+            Train testObject = GetTrain();
+
+            TrainTime testOutput = testObject.LastTrainTime;
+
+            foreach (TrainLocationTime tlt in testObject.TrainTimes)
+            {
+                Assert.IsTrue(tlt.ArrivalTime?.Time == null || tlt.ArrivalTime.Time <= testOutput.Time);
+            }
+        }
+
+        [TestMethod]
+        public void TrainClassLastTrainTimePropertyIsLaterThanOrEqualToAllDepartureTimes()
+        {
+            Train testObject = GetTrain();
+
+            TrainTime testOutput = testObject.LastTrainTime;
+
+            foreach (TrainLocationTime tlt in testObject.TrainTimes)
+            {
+                Assert.IsTrue(tlt.DepartureTime?.Time == null || tlt.DepartureTime.Time <= testOutput.Time);
+            }
+        }
+
+        [TestMethod]
+        public void TrainClassReverseMethodDoesNotChangeNumberOfTimingPoints()
+        {
+            Train testObject = GetTrain();
+            int originalTimingPointCount = testObject.TrainTimes.Count;
+
+            testObject.Reverse();
+
+            Assert.AreEqual(originalTimingPointCount, testObject.TrainTimes.Count);
+        }
+
+        [TestMethod]
+        public void TrainClassReverseMethodDoesNotChangeObjectReferencesContainedInTrainTimesProperty()
+        {
+            Train testObject = GetTrain();
+            List<TrainLocationTime> originalTrainTimes = testObject.TrainTimes.ToList();
+
+            testObject.Reverse();
+
+            foreach (TrainLocationTime tlt in testObject.TrainTimes)
+            {
+                Assert.IsTrue(originalTrainTimes.Contains(tlt));
+                originalTrainTimes.Remove(tlt);
+            }
+        }
+
+        [TestMethod]
+        public void TrainClassReverseMethodChangesAllTrainTimesNotEqualToTheLatestTrainTime()
+        {
+            Train testObject = GetTrain();
+            TrainTime originalLastTrainTime = testObject.LastTrainTime.Copy();
+            List<TimeOfDay> allTimes = new List<TimeOfDay>();
+            allTimes.AddRange(testObject.TrainTimes.Select(tlt => tlt.ArrivalTime.Time));
+            allTimes.AddRange(testObject.TrainTimes.Select(tlt => tlt.DepartureTime.Time));
+
+            testObject.Reverse();
+
+            foreach (TrainLocationTime tlt in testObject.TrainTimes)
+            {
+                Assert.IsTrue(originalLastTrainTime.Time == tlt.ArrivalTime.Time || !allTimes.Contains(tlt.ArrivalTime.Time));
+                Assert.IsTrue(originalLastTrainTime.Time == tlt.DepartureTime.Time || !allTimes.Contains(tlt.DepartureTime.Time));
+            }
+        }
+
+        [TestMethod]
+        public void TrainClassReverseMethodChangesAllTrainTimesToBeLaterThanTheOriginallyLastTrainTime()
+        {
+            Train testObject = GetTrain();
+            TrainTime originalLastTrainTime = testObject.LastTrainTime.Copy();
+
+            testObject.Reverse();
+
+            foreach (TrainLocationTime tlt in testObject.TrainTimes)
+            {
+                Assert.IsTrue(originalLastTrainTime.Time <= tlt.ArrivalTime.Time);
+                Assert.IsTrue(originalLastTrainTime.Time <= tlt.DepartureTime.Time);
+            }
+        }
+
+        [TestMethod]
+        public void TrainClassReverseMethodLeavesAllTrainTimesOrderedByArrivalTime()
+        {
+            Train testObject = GetTrain();
+
+            testObject.Reverse();
+
+            for (int i = 1; i < testObject.TrainTimes.Count; ++i)
+            {
+                Assert.IsTrue(testObject.TrainTimes[i].ArrivalTime.Time >= testObject.TrainTimes[i - 1].ArrivalTime.Time);
             }
         }
     }

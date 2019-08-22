@@ -214,7 +214,7 @@ namespace Timetabler.Data
             if (newDepartureTime?.Time == null && newArrivalTime?.Time != null && !alwaysSwap)
             {
                 DepartureTime = newArrivalTime;
-                ArrivalTime = newArrivalTime;
+                ArrivalTime = newDepartureTime;
             }
             else
             {

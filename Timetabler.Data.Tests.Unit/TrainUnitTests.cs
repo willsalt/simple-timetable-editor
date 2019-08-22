@@ -92,8 +92,8 @@ namespace Timetabler.Data.Tests.Unit
         {
             return new TrainLocationTime
             {
-                ArrivalTime = GetTrainTime(beforeTime),
-                DepartureTime = GetTrainTime(beforeTime),
+                ArrivalTime = TrainTimeHelpers.GetTrainTimeBefore(beforeTime),
+                DepartureTime = TrainTimeHelpers.GetTrainTimeBefore(beforeTime),
                 FormattingStrings = new TimeDisplayFormattingStrings
                 {
                     Complete = "h{0}mmf",
@@ -107,20 +107,6 @@ namespace Timetabler.Data.Tests.Unit
                 Path = _rnd.NextString(_rnd.Next(2)),
                 Platform = _rnd.NextString(_rnd.Next(2)),
             };
-        }
-
-        private TrainTime GetTrainTime(TimeOfDay beforeTime)
-        {
-            TrainTime tt = new TrainTime
-            {
-                Time = _rnd.NextTimeOfDayBefore(beforeTime),
-            };
-            int noteCount = _rnd.Next(3);
-            for (int i = 0; i < noteCount; ++i)
-            {
-                tt.Footnotes.Add(NoteHelpers.GetNote());
-            }
-            return tt;
         }
 
         [TestMethod]

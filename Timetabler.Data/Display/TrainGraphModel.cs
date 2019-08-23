@@ -25,6 +25,11 @@ namespace Timetabler.Data.Display
         public event TrainChangedEventHandler TrainChanged;
 
         /// <summary>
+        /// Raised when the <see cref="SelectedTrain" /> property value has changed;
+        /// </summary>
+        public event TrainEventHandler SelectedTrainChanged;
+
+        /// <summary>
         /// The locations to appear on the location axis.
         /// </summary>
         public LocationCollection LocationList { get; set; }
@@ -58,6 +63,32 @@ namespace Timetabler.Data.Display
         /// The format string to use when converting times to strings to display in tooltips.
         /// </summary>
         public string TooltipFormattingString { get; set; }
+
+        /// <summary>
+        /// A method to be called when a train on the graph is double-clicked.
+        /// </summary>
+        public Action<string> EditTrainMethod { get; set; }
+
+        private Train _selectedTrain;
+
+        /// <summary>
+        /// The currently-selected train (if any).
+        /// </summary>
+        public Train SelectedTrain
+        {
+            get
+            {
+                return _selectedTrain;
+            }
+            set
+            {
+                if (_selectedTrain != value)
+                {
+                    _selectedTrain = value;
+                    OnSelectedTrainChanged();
+                }
+            }
+        }
 
         private TrainCollection _trainList;
 
@@ -99,6 +130,14 @@ namespace Timetabler.Data.Display
         protected void OnTrainChanged(Train train)
         {
             TrainChanged?.Invoke(this, new TrainEventArgs { Train = train });
+        }
+
+        /// <summary>
+        /// Raises the <see cref="SelectedTrainChanged" /> event.
+        /// </summary>
+        protected void OnSelectedTrainChanged()
+        {
+            SelectedTrainChanged?.Invoke(this, new TrainEventArgs { Train = SelectedTrain });
         }
 
         private void RemoveTrainListEvents()

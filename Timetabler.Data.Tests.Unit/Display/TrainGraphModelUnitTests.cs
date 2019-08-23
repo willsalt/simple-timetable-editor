@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data.Display;
+using Timetabler.Data.Events;
 
 namespace Timetabler.Data.Tests.Unit.Display
 {
@@ -103,6 +105,83 @@ namespace Timetabler.Data.Tests.Unit.Display
             testObject.SetPropertiesFromDocumentOptions(testSource);
 
             Assert.AreEqual(testSource.FormattingStrings.Tooltip, testObject.TooltipFormattingString);
+        }
+
+        [TestMethod]
+        public void TrainGraphModelClassSelectedTrainPropertyHasConventionalPersistence()
+        {
+            TrainGraphModel testObject = GetTrainGraphModel();
+            Train testSelection = new Train();
+
+            testObject.SelectedTrain = testSelection;
+            Train testOutput = testObject.SelectedTrain;
+
+            Assert.AreSame(testSelection, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainGraphModelClassSelectedTrainPropertySetMethodFiresEventWhenPropertyIsSetToDifferentValue()
+        {
+            TrainGraphModel testObject = GetTrainGraphModel();
+            List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
+            List<object> capturedSenders = new List<object>();
+            testObject.SelectedTrainChanged += (s, e) => { capturedSenders.Add(s); capturedEventArgs.Add(e); };
+            Train testSelection = new Train();
+
+            testObject.SelectedTrain = testSelection;
+
+            Assert.AreEqual(1, capturedSenders.Count);
+            Assert.AreSame(testObject, capturedSenders[0]);
+            Assert.AreEqual(1, capturedEventArgs.Count);
+            Assert.AreSame(testSelection, capturedEventArgs[0].Train);
+        }
+
+        [TestMethod]
+        public void TrainGraphModelClassSelectedTrainPropertySetMethodDoesNotFireEventWhenPropertyIsSetToSameValue()
+        {
+            TrainGraphModel testObject = GetTrainGraphModel();
+            List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
+            List<object> capturedSenders = new List<object>();
+            Train testSelection = new Train();
+            testObject.SelectedTrain = testSelection;
+            testObject.SelectedTrainChanged += (s, e) => { capturedSenders.Add(s); capturedEventArgs.Add(e); };
+            
+            testObject.SelectedTrain = testSelection;
+
+            Assert.AreEqual(0, capturedSenders.Count);
+            Assert.AreEqual(0, capturedEventArgs.Count);
+        }
+
+        [TestMethod]
+        public void TrainGraphModelClassSelectedTrainPropertySetMethodFiresEventWhenPropertyIsNotNullAndIsSetToNull()
+        {
+            TrainGraphModel testObject = GetTrainGraphModel();
+            List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
+            List<object> capturedSenders = new List<object>();
+            Train testSelection = new Train();
+            testObject.SelectedTrain = testSelection;
+            testObject.SelectedTrainChanged += (s, e) => { capturedSenders.Add(s); capturedEventArgs.Add(e); };
+
+            testObject.SelectedTrain = null;
+
+            Assert.AreEqual(1, capturedSenders.Count);
+            Assert.AreSame(testObject, capturedSenders[0]);
+            Assert.AreEqual(1, capturedEventArgs.Count);
+            Assert.IsNull(capturedEventArgs[0].Train);
+        }
+
+        [TestMethod]
+        public void TrainGraphModelClassSelectedTrainPropertySetMethodDoesNotFireEventWhenPropertyIsNullAndIsSetToNull()
+        {
+            TrainGraphModel testObject = GetTrainGraphModel();
+            List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
+            List<object> capturedSenders = new List<object>();
+            testObject.SelectedTrainChanged += (s, e) => { capturedSenders.Add(s); capturedEventArgs.Add(e); };
+
+            testObject.SelectedTrain = null;
+
+            Assert.AreEqual(0, capturedSenders.Count);
+            Assert.AreEqual(0, capturedEventArgs.Count);
         }
     }
 }

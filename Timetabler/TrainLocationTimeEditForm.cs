@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using Timetabler.Data;
+using Timetabler.Extensions;
 using Timetabler.Helpers;
 using Timetabler.Models;
 

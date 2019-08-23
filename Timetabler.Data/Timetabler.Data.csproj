@@ -102,6 +102,7 @@
     <Compile Include="Events\SignalboxHoursEventHandler.cs" />
     <Compile Include="Events\SignalboxHoursSetEventArgs.cs" />
     <Compile Include="Events\TrainClassEventArgs.cs" />
+    <Compile Include="Events\TrainEventHandler.cs" />
     <Compile Include="Events\TrainSegmentModelEventArgs.cs" />
     <Compile Include="Events\TrainSegmentModelEventHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />

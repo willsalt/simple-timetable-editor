@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Timetabler.Helpers
+﻿namespace Timetabler.Helpers
 {
     /// <summary>
     /// A helper class for computing horizontal coordinates on a graph control.

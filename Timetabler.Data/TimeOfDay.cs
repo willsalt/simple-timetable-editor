@@ -51,6 +51,19 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// Create a <see cref="TimeOfDay" /> instance whose value is this object "reflected" in another object.  For example, if this object's value is 9am and the parameter's value is 9.15am, the 
+        /// output will be an instance whose value is 9.30am.  In more formal terms, the difference between this object and the output will be twice the difference between this object and 
+        /// the parameter.
+        /// </summary>
+        /// <param name="aroundTime">The time of day to use as the "mirror" for reflection.</param>
+        /// <returns>A <see cref="TimeOfDay" /> instance whose value differs from the current object by twice the difference between this object and the parameter.</returns>
+        public TimeOfDay CopyAndReflect(TimeOfDay aroundTime)
+        {
+            int newSeconds = AbsoluteSeconds - ((AbsoluteSeconds - aroundTime.AbsoluteSeconds) * 2);
+            return new TimeOfDay(newSeconds);
+        }
+
+        /// <summary>
         /// Construct from components to the nearest minute, using the twelve-hour clock.
         /// </summary>
         /// <param name="hours">Number of hours.</param>
@@ -184,6 +197,16 @@ namespace Timetabler.Data
                     AbsoluteSeconds += 43200;
                 }
             }
+        }
+
+        /// <summary>
+        /// Create a <see cref="TimeOfDay" /> object based on a <see cref="TimeSpan" /> value, taking the latter as the time elapsed since midnight and assuming that the day is a normal 24-hour day
+        /// </summary>
+        /// <param name="ts">The amount of time elapsed since midnight.</param>
+        /// <returns>A <see cref="TimeOfDay" /> instance.</returns>
+        public static TimeOfDay FromTimeSpan(TimeSpan ts)
+        {
+            return new TimeOfDay(ts.TotalSeconds);
         }
 
         /// <summary>

@@ -81,6 +81,25 @@ namespace Timetabler.Data
         public event ModifiedEventHandler Modified;
 
         /// <summary>
+        /// The latest entry in the <see cref="TrainTimes" /> list.
+        /// </summary>
+        public TrainTime LastTrainTime
+        {
+            get
+            {
+                TrainTime last = null;
+                foreach (TrainLocationTime tlt in TrainTimes)
+                {
+                    if (tlt.LastTime > last)
+                    {
+                        last = tlt.LastTime;
+                    }
+                }
+                return last;
+            }
+        }
+
+        /// <summary>
         /// Default constructor.
         /// </summary>
         public Train()
@@ -142,6 +161,21 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// Creates a partially-deep copy of this train, changing the times of all timing points by a fixed offset.
+        /// </summary>
+        /// <param name="offsetMinutes">The number of minutes to change the timings points by (negative for earlier, positive for later).</param>
+        /// <returns>A copy of this instance with times edited.</returns>
+        public Train Copy(int offsetMinutes)
+        {
+            Train t = Copy();
+            foreach (TrainLocationTime locationTime in t.TrainTimes)
+            {
+                locationTime.OffsetTimes(offsetMinutes);
+            }
+            return t;
+        }
+
+        /// <summary>
         /// Ensure that the user-visible version of all of the data for this train is up-to-date with the raw data.
         /// </summary>
         public void RefreshTimingPointModels()
@@ -150,6 +184,24 @@ namespace Timetabler.Data
             {
                 timingPoint.RefreshTimeModels();
             }
+        }
+
+        /// <summary>
+        /// Reverse the direction of a train by reflecting its timing points around the final one.  In other words, a train which arrives at its destination at 4pm will become a train
+        /// which departs from that location at 4pm in the opposite direction and has its section times and dwell times unchanged.
+        /// </summary>
+        public void Reverse()
+        {
+            TimeOfDay reflectAbout = LastTrainTime?.Time;
+            if (reflectAbout == null)
+            {
+                return;
+            }
+            for (int i = 0; i < TrainTimes.Count; ++i)
+            {
+                TrainTimes[i].Reflect(reflectAbout, i == 0 || i == TrainTimes.Count - 1);
+            }
+            TrainTimes.Sort(new TrainLocationArrivalTimeComparer());
         }
 
         internal void ResolveTrainClass(Dictionary<string, TrainClass> trainClasses)

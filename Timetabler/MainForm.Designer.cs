@@ -110,6 +110,8 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.sfdTemplate = new System.Windows.Forms.SaveFileDialog();
             this.ofdTemplate = new System.Windows.Forms.OpenFileDialog();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnReverse = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabDown.SuspendLayout();
@@ -459,6 +461,7 @@
             this.trainGraph.Name = "trainGraph";
             this.trainGraph.ShowVerticalGridLines = true;
             this.trainGraph.TimeAxisFont = new System.Drawing.Font("Cambria", 8F);
+            this.trainGraph.TrainLabelFont = new System.Drawing.Font("Cambria", 8F);
             // 
             // tabHours
             // 
@@ -686,10 +689,26 @@
             resources.ApplyResources(this.ofdTemplate, "ofdTemplate");
             this.ofdTemplate.RestoreDirectory = true;
             // 
+            // btnCopy
+            // 
+            resources.ApplyResources(this.btnCopy, "btnCopy");
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
+            // 
+            // btnReverse
+            // 
+            resources.ApplyResources(this.btnReverse, "btnReverse");
+            this.btnReverse.Name = "btnReverse";
+            this.btnReverse.UseVisualStyleBackColor = true;
+            this.btnReverse.Click += new System.EventHandler(this.BtnReverse_Click);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnReverse);
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btnDel);
@@ -807,6 +826,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLocationIdUp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLocationUp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colArrDepUp;
+        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnReverse;
     }
 }
 

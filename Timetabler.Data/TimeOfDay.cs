@@ -50,6 +50,13 @@ namespace Timetabler.Data
             AbsoluteSeconds = (hours * 3600 + minutes * 60 + seconds + half == HalfOfDay.PM ? 43200 : 0) % 86400;
         }
 
+        /// <summary>
+        /// Create a <see cref="TimeOfDay" /> instance whose value is this object "reflected" in another object.  For example, if this object's value is 9am and the parameter's value is 9.15am, the 
+        /// output will be an instance whose value is 9.30am.  In more formal terms, the difference between this object and the output will be twice the difference between this object and 
+        /// the parameter.
+        /// </summary>
+        /// <param name="aroundTime">The time of day to use as the "mirror" for reflection.</param>
+        /// <returns>A <see cref="TimeOfDay" /> instance whose value differs from the current object by twice the difference between this object and the parameter.</returns>
         public TimeOfDay CopyAndReflect(TimeOfDay aroundTime)
         {
             int newSeconds = AbsoluteSeconds - ((AbsoluteSeconds - aroundTime.AbsoluteSeconds) * 2);

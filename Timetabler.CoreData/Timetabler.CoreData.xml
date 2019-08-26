@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Timetabler.CoreData</name>
+    </assembly>
+    <members>
+        <member name="T:Timetabler.CoreData.ArrivalDepartureOptions">
+            <summary>
+            A flags enum which describes whether something applies to arrival, departure, or both.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.ArrivalDepartureOptions.Arrival">
+            <summary>
+            Applies to arrivals.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.ArrivalDepartureOptions.Departure">
+            <summary>
+            Applies to departures.
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.Comparers.ReferenceEqualityComparer">
+            <summary>
+            An <see cref="T:System.Collections.IEqualityComparer" /> implementation which always compares strictly by reference equality even for types that implement their own Equals() method.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.Comparers.ReferenceEqualityComparer.Default">
+            <summary>
+            The default instance of this comparer.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.Comparers.ReferenceEqualityComparer.Equals(System.Object,System.Object)">
+            <summary>
+            Returns true if the parameters are references to the same object instance, false if not.
+            </summary>
+            <param name="x">The first object</param>
+            <param name="y">The second object</param>
+            <returns>True if the objects are the same instance, false if not.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.Comparers.ReferenceEqualityComparer.GetHashCode(System.Object)">
+            <summary>
+            Return a hashcode for this object, using the runtime implementation.
+            </summary>
+            <param name="obj">The object to generate the hashcode of.</param>
+            <returns>An int representing the hashcode of the object.</returns>
+        </member>
+        <member name="T:Timetabler.CoreData.Events.ModifiedEventArgs">
+            <summary>
+            The <see cref="T:System.EventArgs" /> subclass used for <see cref="E:Timetabler.CoreData.Interfaces.IWatchableItem.Modified" /> events.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Events.ModifiedEventArgs.ModifiedItem">
+            <summary>
+            The object which has been modified.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Events.ModifiedEventArgs.ModifiedField">
+            <summary>
+            The name of the field which has been modified.
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.Events.ModifiedEventHandler">
+            <summary>
+            The event handler type for the <see cref="E:Timetabler.CoreData.Interfaces.IWatchableItem.Modified" /> event.
+            </summary>
+            <param name="sender">The object which emitted the event.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="T:Timetabler.CoreData.Exceptions.TimetableLoaderException">
+            <summary>
+            Exceptions that occur during file loading.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.Exceptions.TimetableLoaderException.#ctor(System.String)">
+            <summary>
+            Construct a TimetableLoaderException containing an error message.
+            </summary>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:Timetabler.CoreData.Exceptions.TimetableLoaderException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct a TimetableLoaderException containing an error message and an inner exception.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="innerException">The underlying exception.</param>
+        </member>
+        <member name="T:Timetabler.CoreData.Helpers.CoordinateHelper">
+            <summary>
+            Helper class for tranforming coordinates.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.Helpers.CoordinateHelper.Stretch(System.Double,System.Double,System.Double)">
+            <summary>
+            Transforms a value between 0 and 1 into a value between a minimum and maximum.
+            </summary>
+            <param name="min">The value to return if the <see cref="P:prop"/> parameter is 0.</param>
+            <param name="max">The value to return if the <see cref="P:prop"/> parameter is 1.</param>
+            <param name="prop">The proportional position between minimum and maximum.</param>
+            <returns>The calculated absolute position.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.Helpers.CoordinateHelper.Stretch(System.Single,System.Single,System.Double)">
+            <summary>
+            Transforms a value between 0 and 1 into a value between a minimum and maximum.
+            </summary>
+            <param name="min">The value to return if the <see cref="P:prop"/> parameter is 0.</param>
+            <param name="max">The value to return if the <see cref="P:prop"/> parameter is 1.</param>
+            <param name="prop">The proportional position between minimum and maximum.</param>
+            <returns>The calculated absolute position.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.Helpers.CoordinateHelper.Unstretch(System.Double,System.Double,System.Double)">
+            <summary>
+            Transforms a value between a minimum and a maximum into a value between 0 and 1.
+            </summary>
+            <param name="min">The minimum value, scaling to 0.</param>
+            <param name="max">The maximum value, scaling to 1.</param>
+            <param name="amt">The value to be scaled.</param>
+            <returns>A value representing the position of the <see cref="P:amt" /> parameter relative to the <see cref="P:min" /> and <see cref="P:max" /> parameters.</returns>
+        </member>
+        <member name="T:Timetabler.CoreData.Helpers.GeneralHelper">
+            <summary>
+            Collection of general helper methods that are static and not bound to specific classes.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.Helpers.GeneralHelper.GetNewId``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Given an enumeration of existing items, return a random string which is not used as the Id property of any existing items in the enumeration.
+            </summary>
+            <typeparam name="T">The <see cref="T:Timetabler.CoreData.Interfaces.IUniqueItem"/> implementation to provide an ID string for.</typeparam>
+            <param name="existingItems">The existing items whose IDs must not be duplicated.</param>
+            <returns>A string suitable for use as an ID string for an instance of T.</returns>
+        </member>
+        <member name="T:Timetabler.CoreData.Helpers.StringHelper">
+            <summary>
+            Helper and/or extension methods relating to strings.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.Helpers.StringHelper.StripArrivalDepartureSuffix(System.String)">
+            <summary>
+            If the input string ends in any of the <see cref="T:Timetabler.CoreData.LocationIdSuffixes"/> constants, return the input with that suffix removed.
+            </summary>
+            <param name="key">The string to test.</param>
+            <returns>The parameter with any valid suffix removed.</returns>
+        </member>
+        <member name="T:Timetabler.CoreData.Interfaces.ICopyableItem`1">
+            <summary>
+            Represents an object which can be copied, and which can copy its data into another object of the same type.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+        </member>
+        <member name="M:Timetabler.CoreData.Interfaces.ICopyableItem`1.Copy">
+            <summary>
+            Return another object that is the same as this one.
+            </summary>
+            <returns>A copy of this object.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.Interfaces.ICopyableItem`1.CopyTo(`0)">
+            <summary>
+            Copy this object's properties into another instance of this type.
+            </summary>
+            <param name="target">The target object to be overwritten.</param>
+        </member>
+        <member name="T:Timetabler.CoreData.Interfaces.IUniqueItem">
+            <summary>
+            This interface describes a class which has an <see cref="P:Timetabler.CoreData.Interfaces.IUniqueItem.Id"/> property intended to uniquely identify the instance.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Interfaces.IUniqueItem.Id">
+            <summary>
+            A string value that uniquely identifies this instance.
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.Interfaces.IWatchableItem">
+            <summary>
+            An interface describing an object which can raise an event if its properties' values are modified.
+            </summary>
+        </member>
+        <member name="E:Timetabler.CoreData.Interfaces.IWatchableItem.Modified">
+            <summary>
+            The event raised when any of the object's watchable properties are modified.
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.LocationFontType">
+            <summary>
+            Which font should be used to display a location's name on export.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.LocationFontType.Normal">
+            <summary>
+            This location uses the normal body font.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.LocationFontType.Condensed">
+            <summary>
+            This location uses the "condensed sans" body font used for significant locations.
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.LocationIdSuffixes">
+            <summary>
+            Standard "magic strings" used to distinguish different timetable rows for the same location.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.LocationIdSuffixes.Path">
+            <summary>
+            "Path" rows.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.LocationIdSuffixes.Arrival">
+            <summary>
+            "Arrival" rows.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.LocationIdSuffixes.Platform">
+            <summary>
+            "Platform" rows.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.LocationIdSuffixes.Departure">
+            <summary>
+            "Departure" rows.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.LocationIdSuffixes.Line">
+            <summary>
+            "Line" rows.
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.TrainRoutingOptions">
+            <summary>
+            An enum type to describe which of the train routing fields (if any) apply to a timing point.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.TrainRoutingOptions.Path">
+            <summary>
+            Path - the train routing field that precedes arrival
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.TrainRoutingOptions.Platform">
+            <summary>
+            Platform - the train routing field that is between arrival and departure.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.TrainRoutingOptions.Line">
+            <summary>
+            Line - the train routing field that is after departure.
+            </summary>
+        </member>
+    </members>
+</doc>

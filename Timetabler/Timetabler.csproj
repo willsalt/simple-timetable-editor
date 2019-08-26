@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Timetabler</RootNamespace>
     <AssemblyName>Timetabler</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -242,6 +243,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -299,7 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
-      <Project>{80ffe281-9a15-4da3-9e52-61fac2979c2c}</Project>
+      <Project>{ddc29237-18c5-40a7-bccc-2a51fa8c5f9f}</Project>
       <Name>Timetabler.CoreData</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.DataLoader\Timetabler.DataLoader.csproj">

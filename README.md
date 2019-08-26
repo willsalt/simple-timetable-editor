@@ -13,7 +13,7 @@ Arguably the current state of the app achieves all of those aims apart from the 
 
 ## Dependencies
 
-The program is currently a Windows Desktop app written using .NET Framework 4.5.2 and Windows Forms.
+The program is currently a Windows Desktop app written using .NET Framework 4.7.2 and Windows Forms.
 
 It depends on the following external libs:
 * [NLog](https://nlog-project.org/) - v4.6

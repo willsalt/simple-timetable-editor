@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
-    public class PdfInteger : IPdfPrimitiveObject, IEquatable<PdfInteger>
+    public class PdfName : IPdfPrimitiveObject, IEquatable<PdfName>
     {
-        private readonly int _val;
+        private readonly string _val;
         private byte[] cachedBytes = null;
 
-        public int Value => _val;
+        public string Val => _val;
 
         public int ByteLength
         {
@@ -26,15 +25,23 @@ namespace Unicorn.Writer.Primitives
             }
         }
 
-        public PdfInteger(int val)
+        public PdfName(string name)
         {
-            _val = val;
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (ContainsWhitespace(name) || ContainsDelimiter(name))
+            {
+                throw new Exception($"Name {name} contains illegal characters");
+            }
+            _val = name;
         }
 
         private void FormatBytes()
         {
-            string formatted = _val.ToString("d", CultureInfo.InvariantCulture) + " ";
-            cachedBytes = Encoding.ASCII.GetBytes(formatted);
+            string formatted = $"/{_val} ";
+            cachedBytes = Encoding.UTF8.GetBytes(formatted);
         }
 
         public int WriteTo(Stream stream)
@@ -51,7 +58,18 @@ namespace Unicorn.Writer.Primitives
             return cachedBytes.Length;
         }
 
-        public bool Equals(PdfInteger other)
+        private bool ContainsWhitespace(string name)
+        {
+            return name.Contains(" ") || name.Contains("\x0") || name.Contains("\t") || name.Contains("\r") || name.Contains("\n") || name.Contains("\f");
+        }
+
+        private bool ContainsDelimiter(string name)
+        {
+            return name.Contains("(") || name.Contains(")") || name.Contains("<") || name.Contains(">") || name.Contains("[") || name.Contains("]") || name.Contains("{") ||
+                name.Contains("}") || name.Contains("/") || name.Contains("%");
+        }
+
+        public bool Equals(PdfName other)
         {
             if (other is null)
             {
@@ -74,7 +92,7 @@ namespace Unicorn.Writer.Primitives
             return _val.GetHashCode();
         }
 
-        public static bool operator ==(PdfInteger a, PdfInteger b)
+        public static bool operator ==(PdfName a, PdfName b)
         {
             if (ReferenceEquals(a, b))
             {
@@ -87,7 +105,7 @@ namespace Unicorn.Writer.Primitives
             return a._val == b._val;
         }
 
-        public static bool operator !=(PdfInteger a, PdfInteger b)
+        public static bool operator !=(PdfName a, PdfName b)
         {
             if (ReferenceEquals(a, b))
             {

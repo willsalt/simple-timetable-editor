@@ -6,12 +6,24 @@ using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
-    public class PdfString : IPdfPrimitiveObject
+    public class PdfString : IPdfPrimitiveObject, IEquatable<PdfString>
     {
         private readonly string _val;
-        private string cachedEscaped = null;
+        private byte[] cachedBytes = null;
 
         public string Value => _val;
+
+        public int ByteLength
+        {
+            get
+            {
+                if (cachedBytes == null)
+                {
+                    GenerateEscapedString();
+                }
+                return cachedBytes.Length;
+            }
+        }
 
         public PdfString(string val)
         {
@@ -20,13 +32,16 @@ namespace Unicorn.Writer.Primitives
 
         public int WriteTo(Stream stream)
         {
-            if (cachedEscaped == null)
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+            if (cachedBytes == null)
             {
                 GenerateEscapedString();
             }
-            byte[] output = Encoding.UTF8.GetBytes(cachedEscaped);
-            stream.Write(output, 0, output.Length);
-            return output.Length;
+            stream.Write(cachedBytes, 0, cachedBytes.Length);
+            return cachedBytes.Length;
         }
 
         private void GenerateEscapedString()
@@ -45,7 +60,7 @@ namespace Unicorn.Writer.Primitives
             }
             sb.Insert(0, "(");
             sb.Append(")");
-            cachedEscaped = sb.ToString();
+            cachedBytes = Encoding.UTF8.GetBytes(sb.ToString());
         }
 
         private bool EscapeParenthesesNeeded()
@@ -69,6 +84,55 @@ namespace Unicorn.Writer.Primitives
                 }
             }
             return diff != 0;
+        }
+
+        public bool Equals(PdfString other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return _val == other._val;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as PdfBoolean);
+        }
+
+        public override int GetHashCode()
+        {
+            return _val.GetHashCode();
+        }
+
+        public static bool operator ==(PdfString a, PdfString b)
+        {
+            if (ReferenceEquals(a, b))
+            {
+                return true;
+            }
+            if (a == null || b == null)
+            {
+                return false;
+            }
+            return a._val == b._val;
+        }
+
+        public static bool operator !=(PdfString a, PdfString b)
+        {
+            if (ReferenceEquals(a, b))
+            {
+                return false;
+            }
+            if (a == null || b == null)
+            {
+                return true;
+            }
+            return a._val != b._val;
         }
     }
 }

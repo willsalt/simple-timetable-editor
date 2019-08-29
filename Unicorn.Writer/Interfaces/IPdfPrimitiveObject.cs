@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace Unicorn.Writer.Interfaces
 {
@@ -7,5 +8,7 @@ namespace Unicorn.Writer.Interfaces
         int ByteLength { get; }
 
         int WriteTo(Stream stream);
+
+        int WriteTo(List<byte> bytes);
     }
 }

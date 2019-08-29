@@ -66,6 +66,20 @@ namespace Unicorn.Writer.Primitives
             return cachedBytes.Length;
         }
 
+        public int WriteTo(List<byte> list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+            if (cachedBytes == null)
+            {
+                FormatBytes();
+            }
+            list.AddRange(cachedBytes);
+            return cachedBytes.Length;
+        }
+
         public bool Equals(PdfReal other)
         {
             if (other is null)

@@ -44,6 +44,20 @@ namespace Unicorn.Writer.Primitives
             return cachedBytes.Length;
         }
 
+        public int WriteTo(List<byte> list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+            if (cachedBytes == null)
+            {
+                GenerateEscapedString();
+            }
+            list.AddRange(cachedBytes);
+            return cachedBytes.Length;
+        }
+
         private void GenerateEscapedString()
         {
             StringBuilder sb = new StringBuilder(_val);
@@ -60,6 +74,10 @@ namespace Unicorn.Writer.Primitives
             }
             sb.Insert(0, "(");
             sb.Append(")");
+            for (int i = 253; i < sb.Length; i += 253)
+            {
+                sb.Insert(i, "\\\n");
+            }
             cachedBytes = Encoding.UTF8.GetBytes(sb.ToString());
         }
 

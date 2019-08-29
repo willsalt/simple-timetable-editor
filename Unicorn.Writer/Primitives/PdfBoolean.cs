@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Unicorn.Writer.Interfaces;
 
@@ -41,6 +42,16 @@ namespace Unicorn.Writer.Primitives
             }
             stream.Write(_false, 0, _false.Length);
             return _false.Length;
+        }
+
+        public int WriteTo(List<byte> list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+            list.AddRange(_val ? _true : _false);
+            return _val ? _true.Length : _false.Length;
         }
 
         public bool Equals(PdfBoolean other)

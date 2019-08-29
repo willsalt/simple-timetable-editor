@@ -26,6 +26,16 @@ namespace Unicorn.Writer.Primitives
             return bytes.Length;
         }
 
+        public int WriteTo(List<byte> list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+            list.AddRange(bytes);
+            return bytes.Length;
+        }
+
         public bool Equals(PdfNull other)
         {
             return true;

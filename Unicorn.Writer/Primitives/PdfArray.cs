@@ -65,13 +65,13 @@ namespace Unicorn.Writer.Primitives
                 int objLength = obj.ByteLength;
                 if (runningCount + objLength > 254)
                 {
-                    byteList.Add(0x13);
+                    byteList.Add(0xa);
                     runningCount = 0;
                 }
                 obj.WriteTo(byteList);
                 if (objLength > 254)
                 {
-                    byteList.Add(0x13);
+                    byteList.Add(0xa);
                     runningCount = 0;
                 }
                 else
@@ -80,6 +80,7 @@ namespace Unicorn.Writer.Primitives
                 }
             }
             byteList.Add(0x5d);
+            byteList.Add(0xa);
             cachedBytes = byteList.ToArray();
         }
     }

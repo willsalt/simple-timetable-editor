@@ -1,68 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Text;
-using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
-    public class PdfInteger : IPdfPrimitiveObject, IEquatable<PdfInteger>
+    public class PdfInteger : PdfSimpleObject, IEquatable<PdfInteger>
     {
-        private readonly int _val;
-        private byte[] cachedBytes = null;
-
-        public int Value => _val;
-
-        public int ByteLength
-        {
-            get
-            {
-                if (cachedBytes == null)
-                {
-                    FormatBytes();
-                }
-                return cachedBytes.Length;
-            }
-        }
+        public int Value { get; }
 
         public PdfInteger(int val)
         {
-            _val = val;
+            Value = val;
         }
 
-        private void FormatBytes()
+        protected override byte[] FormatBytes()
         {
-            string formatted = _val.ToString("d", CultureInfo.InvariantCulture) + " ";
-            cachedBytes = Encoding.ASCII.GetBytes(formatted);
-        }
-
-        public int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            if (cachedBytes == null)
-            {
-                FormatBytes();
-            }
-            stream.Write(cachedBytes, 0, cachedBytes.Length);
-            return cachedBytes.Length;
-        }
-
-        public int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            if (cachedBytes == null)
-            {
-                FormatBytes();
-            }
-            list.AddRange(cachedBytes);
-            return cachedBytes.Length;
+            string formatted = Value.ToString("d", CultureInfo.InvariantCulture) + " ";
+            return Encoding.ASCII.GetBytes(formatted);
         }
 
         public bool Equals(PdfInteger other)
@@ -75,7 +29,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return _val == other._val;
+            return Value == other.Value;
         }
 
         public override bool Equals(object obj)
@@ -85,7 +39,7 @@ namespace Unicorn.Writer.Primitives
 
         public override int GetHashCode()
         {
-            return _val.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public static bool operator ==(PdfInteger a, PdfInteger b)
@@ -98,7 +52,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return false;
             }
-            return a._val == b._val;
+            return a.Value == b.Value;
         }
 
         public static bool operator !=(PdfInteger a, PdfInteger b)
@@ -111,7 +65,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return a._val != b._val;
+            return a.Value != b.Value;
         }
     }
 }

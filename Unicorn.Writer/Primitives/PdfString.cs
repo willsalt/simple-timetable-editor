@@ -8,10 +8,9 @@ namespace Unicorn.Writer.Primitives
 {
     public class PdfString : IPdfPrimitiveObject, IEquatable<PdfString>
     {
-        private readonly string _val;
         private byte[] cachedBytes = null;
 
-        public string Value => _val;
+        public string Value { get; }
 
         public int ByteLength
         {
@@ -27,7 +26,7 @@ namespace Unicorn.Writer.Primitives
 
         public PdfString(string val)
         {
-            _val = val;
+            Value = val;
         }
 
         public int WriteTo(Stream stream)
@@ -60,7 +59,7 @@ namespace Unicorn.Writer.Primitives
 
         private void GenerateEscapedString()
         {
-            StringBuilder sb = new StringBuilder(_val);
+            StringBuilder sb = new StringBuilder(Value);
             sb.Replace("\\", @"\\");
             sb.Replace("\xa", @"\n");
             sb.Replace("\xd", @"\r");
@@ -84,21 +83,19 @@ namespace Unicorn.Writer.Primitives
         private bool EscapeParenthesesNeeded()
         {
             int diff = 0;
-            bool open = false;
-            foreach (char c in _val)
+            foreach (char c in Value)
             {
                 if (c == '(')
                 {
-                    open = true;
                     diff++;
                 }
-                if (c == ')')
+                else if (c == ')')
                 {
-                    if (!open)
+                    diff--;
+                    if (diff < 0)
                     {
                         return true;
                     }
-                    diff--;
                 }
             }
             return diff != 0;
@@ -114,7 +111,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return _val == other._val;
+            return Value == other.Value;
         }
 
         public override bool Equals(object obj)
@@ -124,7 +121,7 @@ namespace Unicorn.Writer.Primitives
 
         public override int GetHashCode()
         {
-            return _val.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public static bool operator ==(PdfString a, PdfString b)
@@ -137,7 +134,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return false;
             }
-            return a._val == b._val;
+            return a.Value == b.Value;
         }
 
         public static bool operator !=(PdfString a, PdfString b)
@@ -150,7 +147,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return a._val != b._val;
+            return a.Value != b.Value;
         }
     }
 }

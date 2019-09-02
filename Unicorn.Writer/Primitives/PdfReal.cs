@@ -9,10 +9,9 @@ namespace Unicorn.Writer.Primitives
 {
     public class PdfReal : IPdfPrimitiveObject, IEquatable<PdfReal>
     {
-        private readonly decimal _val;
         private byte[] cachedBytes = null;
 
-        public decimal Value => _val;
+        public decimal Value { get; }
 
         public int ByteLength
         {
@@ -28,27 +27,27 @@ namespace Unicorn.Writer.Primitives
 
         public PdfReal(decimal val)
         {
-            _val = val;
+            Value = val;
         }
 
         public PdfReal(int val)
         {
-            _val = val;
+            Value = val;
         }
 
         public PdfReal(float val)
         {
-            _val = (decimal)val;
+            Value = (decimal)val;
         }
 
         public PdfReal(double val)
         {
-            _val = (decimal)val;
+            Value = (decimal)val;
         }
 
         private void FormatBytes()
         {
-            string formatted = _val.ToString("################0.0################ ", CultureInfo.InvariantCulture);
+            string formatted = Value.ToString("################0.0################ ", CultureInfo.InvariantCulture);
             cachedBytes = Encoding.ASCII.GetBytes(formatted);
         }
 
@@ -58,12 +57,7 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            if (cachedBytes == null)
-            {
-                FormatBytes();
-            }
-            stream.Write(cachedBytes, 0, cachedBytes.Length);
-            return cachedBytes.Length;
+            return Write(WriteToStream, stream);
         }
 
         public int WriteTo(List<byte> list)
@@ -72,12 +66,27 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(list));
             }
+            return Write(WriteToList, list);
+        }
+
+        private int Write<T>(Action<T, byte[]> writer, T dest)
+        {
             if (cachedBytes == null)
             {
                 FormatBytes();
             }
-            list.AddRange(cachedBytes);
+            writer(dest, cachedBytes);
             return cachedBytes.Length;
+        }
+
+        private static void WriteToStream(Stream str, byte[] bytes)
+        {
+            str.Write(bytes, 0, bytes.Length);
+        }
+
+        private static void WriteToList(List<byte> list, byte[] bytes)
+        {
+            list.AddRange(bytes);
         }
 
         public bool Equals(PdfReal other)
@@ -90,7 +99,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return _val == other._val;
+            return Value == other.Value;
         }
 
         public override bool Equals(object obj)
@@ -100,7 +109,7 @@ namespace Unicorn.Writer.Primitives
 
         public override int GetHashCode()
         {
-            return _val.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public static bool operator ==(PdfReal a, PdfReal b)
@@ -113,7 +122,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return false;
             }
-            return a._val == b._val;
+            return a.Value == b.Value;
         }
 
         public static bool operator !=(PdfReal a, PdfReal b)
@@ -126,7 +135,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return a._val != b._val;
+            return a.Value != b.Value;
         }
     }
 }

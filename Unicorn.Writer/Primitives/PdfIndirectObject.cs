@@ -9,8 +9,8 @@ namespace Unicorn.Writer.Primitives
     public class PdfIndirectObject : IPdfPrimitiveObject, IPdfIndirectObject
     {
         private readonly IPdfPrimitiveObject _contents;
-        private byte[] _cachedPrologue;
-        private byte[] _cachedEpilogue;
+        protected byte[] _cachedPrologue;
+        protected byte[] _cachedEpilogue;
         private readonly bool _nonCacheable;
         private byte[] _cachedReference;
 
@@ -48,12 +48,8 @@ namespace Unicorn.Writer.Primitives
             }
         }
 
-        public PdfIndirectObject(int objectId, IPdfPrimitiveObject contents, int generation = 0)
+        protected PdfIndirectObject(int objectId, int generation)
         {
-            if (contents is IPdfIndirectObject)
-            {
-                throw new ArgumentException(Resources.Primitives_PdfIndirectObject_Nest_PdfIndirectObject_Error, nameof(contents));
-            }
             if (objectId <= 0)
             {
                 throw new ArgumentException(Resources.Primitives_PdfIndirectObject_Invalid_ObjectId_Error, nameof(objectId));
@@ -62,18 +58,27 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentException(Resources.Primitives_PdfIndirectObject_Invalid_Generation_Error, nameof(generation));
             }
+
+            ObjectId = objectId;
+            Generation = generation;
+        }
+
+        public PdfIndirectObject(int objectId, IPdfPrimitiveObject contents, int generation = 0) : this(objectId, generation)
+        {
+            if (contents is IPdfIndirectObject)
+            {
+                throw new ArgumentException(Resources.Primitives_PdfIndirectObject_Nest_PdfIndirectObject_Error, nameof(contents));
+            }
             if (contents == null)
             {
                 contents = PdfNull.Value;
             }
 
-            ObjectId = objectId;
-            Generation = generation;
             _contents = contents;
             _nonCacheable = contents is PdfDictionary;
         }
 
-        public int WriteTo(Stream stream)
+        public virtual int WriteTo(Stream stream)
         {
             if (stream == null)
             {
@@ -84,7 +89,8 @@ namespace Unicorn.Writer.Primitives
                 GeneratePrologueAndEpilogue();
             }
             stream.Write(_cachedPrologue, 0, _cachedPrologue.Length);
-            int written = _contents.WriteTo(stream);
+            int written = _cachedPrologue.Length;
+            written += _contents.WriteTo(stream);
             stream.Write(_cachedEpilogue, 0, _cachedEpilogue.Length);
             written += _cachedEpilogue.Length + _cachedPrologue.Length;
             if (_nonCacheable)
@@ -94,7 +100,7 @@ namespace Unicorn.Writer.Primitives
             return written;
         }
 
-        public int WriteTo(List<byte> list)
+        public virtual int WriteTo(List<byte> list)
         {
             if (list == null)
             {
@@ -124,7 +130,7 @@ namespace Unicorn.Writer.Primitives
             return _cachedReference;
         }
 
-        private void GeneratePrologueAndEpilogue()
+        protected void GeneratePrologueAndEpilogue()
         {
             int contentLen = _contents.ByteLength;            
             string prologueString = $"{ObjectId} {Generation} obj ";

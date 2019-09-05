@@ -39,6 +39,15 @@ namespace Unicorn.Writer.Primitives
             return Write(WriteToList, list);
         }
 
+        public int WriteTo(PdfStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+            return Write(WriteToPdfStream, stream);
+        }
+
         private int Write<T>(Action<T, byte[]> writer, T dest)
         {
             if (_cachedBytes == null)
@@ -57,6 +66,11 @@ namespace Unicorn.Writer.Primitives
         private static void WriteToList(List<byte> list, byte[] bytes)
         {
             list.AddRange(bytes);
+        }
+
+        private static void WriteToPdfStream(PdfStream stream, byte[] bytes)
+        {
+            stream.AddBytes(bytes);
         }
 
         protected abstract byte[] FormatBytes();

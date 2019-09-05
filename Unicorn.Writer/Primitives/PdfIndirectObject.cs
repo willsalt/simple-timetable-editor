@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Unicorn.Writer.Interfaces;
 
@@ -9,10 +10,12 @@ namespace Unicorn.Writer.Primitives
     public class PdfIndirectObject : IPdfPrimitiveObject, IPdfIndirectObject
     {
         private readonly IPdfPrimitiveObject _contents;
-        protected byte[] _cachedPrologue;
-        protected byte[] _cachedEpilogue;
         private readonly bool _nonCacheable;
-        private byte[] _cachedReference;
+
+        protected List<byte> CachedPrologue { get; set; }
+
+        protected List<byte> CachedEpilogue { get; set; }
+        
 
         public int ObjectId { get; }
 
@@ -22,29 +25,17 @@ namespace Unicorn.Writer.Primitives
         {
             get
             {
-                if (_cachedPrologue == null)
+                if (CachedPrologue == null)
                 {
                     GeneratePrologueAndEpilogue();
                 }
-                int val = _cachedPrologue.Length + _cachedEpilogue.Length + _contents.ByteLength;
+                int val = CachedPrologue.Count + CachedEpilogue.Count + _contents.ByteLength;
                 if (_nonCacheable)
                 {
-                    _cachedPrologue = null;
-                    _cachedEpilogue = null;
+                    CachedPrologue = null;
+                    CachedEpilogue = null;
                 }
                 return val;
-            }
-        }
-
-        public int ReferenceLength
-        {
-            get
-            {
-                if (_cachedReference == null)
-                {
-                    GenerateReference();
-                }
-                return _cachedReference.Length;
             }
         }
 
@@ -84,20 +75,7 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            if (_cachedPrologue == null)
-            {
-                GeneratePrologueAndEpilogue();
-            }
-            stream.Write(_cachedPrologue, 0, _cachedPrologue.Length);
-            int written = _cachedPrologue.Length;
-            written += _contents.WriteTo(stream);
-            stream.Write(_cachedEpilogue, 0, _cachedEpilogue.Length);
-            written += _cachedEpilogue.Length + _cachedPrologue.Length;
-            if (_nonCacheable)
-            {
-                _cachedPrologue = null;
-            }
-            return written;
+            return Write(WriteToStream, _contents.WriteTo, stream);
         }
 
         public virtual int WriteTo(List<byte> list)
@@ -106,28 +84,56 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(list));
             }
-            if (_cachedPrologue == null)
+            return Write(WriteToList, _contents.WriteTo, list);
+        }
+
+        public virtual int WriteTo(PdfStream stream)
+        {
+            throw new InvalidOperationException(Resources.Primitives_PdfIndirectObject_Write_To_PdfStream_Error);
+        }
+
+        private int Write<T>(Action<T, byte[]> writer, Func<T, int> contentWriter, T dest)
+        {
+            if (CachedPrologue == null)
             {
                 GeneratePrologueAndEpilogue();
             }
-            list.AddRange(_cachedPrologue);
-            int written = _contents.WriteTo(list);
-            list.AddRange(_cachedEpilogue);
-            written += _cachedEpilogue.Length + _cachedPrologue.Length;
+            writer(dest, CachedPrologue.ToArray());
+            int written = contentWriter(dest);
+            writer(dest, CachedEpilogue.ToArray());
+            written += CachedPrologue.Count + CachedEpilogue.Count;
             if (_nonCacheable)
             {
-                _cachedPrologue = null;
+                CachedPrologue = null;
             }
             return written;
         }
 
-        public byte[] GetReference()
+        protected static void WriteToStream(Stream str, byte[] bytes)
         {
-            if (_cachedReference == null)
+            if (str == null)
             {
-                GenerateReference();
+                throw new ArgumentNullException(nameof(str));
             }
-            return _cachedReference;
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+            str.Write(bytes, 0, bytes.Length);
+        }
+
+        protected static void WriteToList(List<byte> list, byte[] bytes)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+            list.AddRange(bytes);
+        }
+
+        public PdfReference GetReference()
+        {
+            return new PdfReference(this);
         }
 
         protected void GeneratePrologueAndEpilogue()
@@ -140,19 +146,13 @@ namespace Unicorn.Writer.Primitives
             }
             if (contentLen + prologueString.Length > 247)
             {
-                _cachedEpilogue = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x6f, 0x62, 0x6a, 0xa };
+                CachedEpilogue = new List<byte> { 0xa, 0x65, 0x6e, 0x64, 0x6f, 0x62, 0x6a, 0xa };
             }
             else
             {
-                _cachedEpilogue = new byte[] { 0x65, 0x6e, 0x64, 0x6f, 0x62, 0x6a, 0xa };
+                CachedEpilogue = new List<byte> { 0x65, 0x6e, 0x64, 0x6f, 0x62, 0x6a, 0xa };
             }
-            _cachedPrologue = Encoding.ASCII.GetBytes(prologueString);
-        }
-
-        private void GenerateReference()
-        {
-            string theRef = $"{ObjectId} {Generation} R ";
-            _cachedReference = Encoding.ASCII.GetBytes(theRef);
+            CachedPrologue = Encoding.ASCII.GetBytes(prologueString).ToList();
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
     public class PdfStream : PdfIndirectObject, IPdfPrimitiveObject
     {
-        private List<byte> _contents = new List<byte>();
+        private readonly List<byte> _contents = new List<byte>();
 
         public PdfStream(int objectId, int generation = 0) : base(objectId, generation)
         {
@@ -26,26 +25,7 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            if (_cachedPrologue == null)
-            {
-                GeneratePrologueAndEpilogue();
-            }
-            stream.Write(_cachedPrologue, 0, _cachedPrologue.Length);
-            int written = _cachedPrologue.Length;
-            PdfDictionary dict = new PdfDictionary();
-            dict.Add(new PdfName("Length"), new PdfInteger(_contents.Count));
-            written += dict.WriteTo(stream);
-            byte[] startStream = new byte[] { 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
-            byte[] endStream = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
-            stream.Write(startStream, 0, startStream.Length);
-            stream.Write(_contents.ToArray(), 0, _contents.Count);
-            stream.Write(endStream, 0, endStream.Length);
-            written += startStream.Length;
-            written += _contents.Count;
-            written += endStream.Length;
-            stream.Write(_cachedEpilogue, 0, _cachedEpilogue.Length);
-            written += _cachedEpilogue.Length + _cachedPrologue.Length;
-            return written;
+            return Write(WriteToStream, PdfDictionary.WriteTo, stream);
         }
 
         public override int WriteTo(List<byte> list)
@@ -54,25 +34,30 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(list));
             }
-            if (_cachedPrologue == null)
+            return Write(WriteToList, PdfDictionary.WriteTo, list);
+        }
+
+        private int Write<T>(Action<T, byte[]> writer, Func<PdfDictionary, T, int> dictWriter, T dest)
+        {
+            if (CachedPrologue == null)
             {
                 GeneratePrologueAndEpilogue();
             }
-            list.AddRange(_cachedPrologue);
-            int written = _cachedPrologue.Length;
+            writer(dest, CachedPrologue.ToArray());
+            int written = CachedPrologue.Count;
             PdfDictionary dict = new PdfDictionary();
             dict.Add(new PdfName("Length"), new PdfInteger(_contents.Count));
-            written += dict.WriteTo(list);
+            written += dictWriter(dict, dest);
             byte[] startStream = new byte[] { 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
             byte[] endStream = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
-            list.AddRange(startStream);
-            list.AddRange(_contents);
-            list.AddRange(endStream);
+            writer(dest, startStream);
+            writer(dest, _contents.ToArray());
+            writer(dest, endStream);
             written += startStream.Length;
             written += _contents.Count;
             written += endStream.Length;
-            list.AddRange(_cachedEpilogue);
-            written += _cachedEpilogue.Length + _cachedPrologue.Length;
+            writer(dest, CachedEpilogue.ToArray());
+            written += CachedPrologue.Count + CachedEpilogue.Count;
             return written;
         }
     }

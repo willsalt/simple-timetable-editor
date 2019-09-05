@@ -1,29 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Text;
-using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
-    public class PdfReal : IPdfPrimitiveObject, IEquatable<PdfReal>
+    public class PdfReal : PdfSimpleObject, IEquatable<PdfReal>
     {
-        private byte[] cachedBytes = null;
-
         public decimal Value { get; }
-
-        public int ByteLength
-        {
-            get
-            {
-                if (cachedBytes == null)
-                {
-                    FormatBytes();
-                }
-                return cachedBytes.Length;
-            }
-        }
 
         public PdfReal(decimal val)
         {
@@ -45,48 +28,10 @@ namespace Unicorn.Writer.Primitives
             Value = (decimal)val;
         }
 
-        private void FormatBytes()
+        protected override byte[] FormatBytes()
         {
             string formatted = Value.ToString("################0.0################ ", CultureInfo.InvariantCulture);
-            cachedBytes = Encoding.ASCII.GetBytes(formatted);
-        }
-
-        public int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            return Write(WriteToStream, stream);
-        }
-
-        public int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            return Write(WriteToList, list);
-        }
-
-        private int Write<T>(Action<T, byte[]> writer, T dest)
-        {
-            if (cachedBytes == null)
-            {
-                FormatBytes();
-            }
-            writer(dest, cachedBytes);
-            return cachedBytes.Length;
-        }
-
-        private static void WriteToStream(Stream str, byte[] bytes)
-        {
-            str.Write(bytes, 0, bytes.Length);
-        }
-
-        private static void WriteToList(List<byte> list, byte[] bytes)
-        {
-            list.AddRange(bytes);
+            return Encoding.ASCII.GetBytes(formatted);
         }
 
         public bool Equals(PdfReal other)

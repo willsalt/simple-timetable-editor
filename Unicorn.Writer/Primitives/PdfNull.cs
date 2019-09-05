@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
@@ -33,6 +32,16 @@ namespace Unicorn.Writer.Primitives
                 throw new ArgumentNullException(nameof(list));
             }
             list.AddRange(bytes);
+            return bytes.Length;
+        }
+
+        public int WriteTo(PdfStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+            stream.AddBytes(bytes);
             return bytes.Length;
         }
 

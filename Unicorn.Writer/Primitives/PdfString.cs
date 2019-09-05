@@ -6,58 +6,16 @@ using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
-    public class PdfString : IPdfPrimitiveObject, IEquatable<PdfString>
+    public class PdfString : PdfSimpleObject, IEquatable<PdfString>
     {
-        private byte[] cachedBytes = null;
-
         public string Value { get; }
-
-        public int ByteLength
-        {
-            get
-            {
-                if (cachedBytes == null)
-                {
-                    GenerateEscapedString();
-                }
-                return cachedBytes.Length;
-            }
-        }
-
+      
         public PdfString(string val)
         {
             Value = val;
         }
 
-        public int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            if (cachedBytes == null)
-            {
-                GenerateEscapedString();
-            }
-            stream.Write(cachedBytes, 0, cachedBytes.Length);
-            return cachedBytes.Length;
-        }
-
-        public int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            if (cachedBytes == null)
-            {
-                GenerateEscapedString();
-            }
-            list.AddRange(cachedBytes);
-            return cachedBytes.Length;
-        }
-
-        private void GenerateEscapedString()
+        protected override byte[] FormatBytes()
         {
             StringBuilder sb = new StringBuilder(Value);
             sb.Replace("\\", @"\\");
@@ -77,7 +35,7 @@ namespace Unicorn.Writer.Primitives
             {
                 sb.Insert(i, "\\\n");
             }
-            cachedBytes = Encoding.UTF8.GetBytes(sb.ToString());
+            return Encoding.UTF8.GetBytes(sb.ToString());
         }
 
         private bool EscapeParenthesesNeeded()

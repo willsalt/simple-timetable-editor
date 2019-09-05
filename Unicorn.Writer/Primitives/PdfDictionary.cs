@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
@@ -52,17 +51,12 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            byte[] currentBytes;
-            lock (_contents)
-            {
-                if (cachedBytes == null)
-                {
-                    GenerateBytes();
-                }
-                currentBytes = cachedBytes;
-            }
-            stream.Write(currentBytes, 0, currentBytes.Length);
-            return currentBytes.Length;
+            return Write(WriteToStream, stream);
+        }
+
+        internal static int WriteTo(PdfDictionary dict, Stream stream)
+        {
+            return dict.WriteTo(stream);
         }
 
         public int WriteTo(List<byte> list)
@@ -71,6 +65,25 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(list));
             }
+            return Write(WriteToList, list);
+        }
+
+        internal static int WriteTo(PdfDictionary dict, List<byte> list)
+        {
+            return dict.WriteTo(list);
+        }
+
+        public int WriteTo(PdfStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+            return Write(WriteToPdfStream, stream);
+        }
+
+        private int Write<T>(Action<T, byte[]> writer, T dest)
+        {
             byte[] currentBytes;
             lock (_contents)
             {
@@ -80,8 +93,23 @@ namespace Unicorn.Writer.Primitives
                 }
                 currentBytes = cachedBytes;
             }
-            list.AddRange(currentBytes);
+            writer(dest, currentBytes);
             return currentBytes.Length;
+        }
+
+        private static void WriteToStream(Stream str, byte[] bytes)
+        {
+            str.Write(bytes, 0, bytes.Length);
+        }
+
+        private static void WriteToList(List<byte> list, byte[] bytes)
+        {
+            list.AddRange(bytes);
+        }
+
+        private static void WriteToPdfStream(PdfStream stream, byte[] bytes)
+        {
+            stream.AddBytes(bytes);
         }
 
         private void GenerateBytes()

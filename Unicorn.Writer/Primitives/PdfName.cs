@@ -1,29 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
-    public class PdfName : IPdfPrimitiveObject, IEquatable<PdfName>
+    public class PdfName : PdfSimpleObject, IEquatable<PdfName>
     {
-        private readonly string _val;
-        private byte[] cachedBytes = null;
-
-        public string Val => _val;
-
-        public int ByteLength
-        {
-            get
-            {
-                if (cachedBytes == null)
-                {
-                    FormatBytes();
-                }
-                return cachedBytes.Length;
-            }
-        }
+        public string Value { get; }
 
         public PdfName(string name)
         {
@@ -35,41 +17,12 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new Exception($"Name {name} contains illegal characters");
             }
-            _val = name;
+            Value = name;
         }
 
-        private void FormatBytes()
+        protected override byte[] FormatBytes()
         {
-            string formatted = $"/{_val} ";
-            cachedBytes = Encoding.UTF8.GetBytes(formatted);
-        }
-
-        public int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            if (cachedBytes == null)
-            {
-                FormatBytes();
-            }
-            stream.Write(cachedBytes, 0, cachedBytes.Length);
-            return cachedBytes.Length;
-        }
-
-        public int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            if (cachedBytes == null)
-            {
-                FormatBytes();
-            }
-            list.AddRange(cachedBytes);
-            return cachedBytes.Length;
+            return Encoding.UTF8.GetBytes($"/{Value} ");
         }
 
         private bool ContainsWhitespace(string name)
@@ -93,7 +46,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return _val == other._val;
+            return Value == other.Value;
         }
 
         public override bool Equals(object obj)
@@ -103,7 +56,7 @@ namespace Unicorn.Writer.Primitives
 
         public override int GetHashCode()
         {
-            return _val.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public static bool operator ==(PdfName a, PdfName b)
@@ -116,7 +69,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return false;
             }
-            return a._val == b._val;
+            return a.Value == b.Value;
         }
 
         public static bool operator !=(PdfName a, PdfName b)
@@ -129,7 +82,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            return a._val != b._val;
+            return a.Value != b.Value;
         }
     }
 }

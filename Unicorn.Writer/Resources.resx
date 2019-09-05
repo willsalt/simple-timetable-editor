@@ -129,4 +129,7 @@
   <data name="Primitives_PdfIndirectObject_Nest_PdfIndirectObject_Error" xml:space="preserve">
     <value>Indirect objects may not be nested</value>
   </data>
+  <data name="Primitives_PdfIndirectObject_Write_To_PdfStream_Error" xml:space="preserve">
+    <value>Indirect objects may not be used as stream content</value>
+  </data>
 </root>

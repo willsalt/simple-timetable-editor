@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Interfaces
 {
@@ -10,8 +8,6 @@ namespace Unicorn.Writer.Interfaces
 
         int Generation { get; }
 
-        byte[] GetReference();
-
-        int ReferenceLength { get; }
+        PdfReference GetReference();
     }
 }

@@ -95,5 +95,14 @@ namespace Unicorn.Writer {
                 return ResourceManager.GetString("Primitives_PdfIndirectObject_Nest_PdfIndirectObject_Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indirect objects may not be used as stream content.
+        /// </summary>
+        internal static string Primitives_PdfIndirectObject_Write_To_PdfStream_Error {
+            get {
+                return ResourceManager.GetString("Primitives_PdfIndirectObject_Write_To_PdfStream_Error", resourceCulture);
+            }
+        }
     }
 }

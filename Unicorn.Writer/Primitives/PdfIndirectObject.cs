@@ -43,11 +43,11 @@ namespace Unicorn.Writer.Primitives
         {
             if (objectId <= 0)
             {
-                throw new ArgumentException(Resources.Primitives_PdfIndirectObject_Invalid_ObjectId_Error, nameof(objectId));
+                throw new ArgumentOutOfRangeException(nameof(objectId), Resources.Primitives_PdfIndirectObject_Invalid_ObjectId_Error);
             }
             if (generation < 0)
             {
-                throw new ArgumentException(Resources.Primitives_PdfIndirectObject_Invalid_Generation_Error, nameof(generation));
+                throw new ArgumentOutOfRangeException(nameof(generation), Resources.Primitives_PdfIndirectObject_Invalid_Generation_Error);
             }
 
             ObjectId = objectId;
@@ -92,8 +92,12 @@ namespace Unicorn.Writer.Primitives
             throw new InvalidOperationException(Resources.Primitives_PdfIndirectObject_Write_To_PdfStream_Error);
         }
 
-        private int Write<T>(Action<T, byte[]> writer, Func<T, int> contentWriter, T dest)
+        protected int Write<T>(Action<T, byte[]> writer, Func<T, int> contentWriter, T dest)
         {
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             if (CachedPrologue == null)
             {
                 GeneratePrologueAndEpilogue();

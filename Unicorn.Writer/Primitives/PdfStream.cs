@@ -46,7 +46,7 @@ namespace Unicorn.Writer.Primitives
             writer(dest, CachedPrologue.ToArray());
             int written = CachedPrologue.Count;
             PdfDictionary dict = new PdfDictionary();
-            dict.Add(new PdfName("Length"), new PdfInteger(_contents.Count));
+            dict.Add(CommonPdfNames.Length, new PdfInteger(_contents.Count));
             written += dictWriter(dict, dest);
             byte[] startStream = new byte[] { 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
             byte[] endStream = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };

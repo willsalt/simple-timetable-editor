@@ -2,7 +2,7 @@
 
 namespace Unicorn.Writer.Interfaces
 {
-    public interface IPdfIndirectObject
+    public interface IPdfIndirectObject : IPdfWriteable
     {
         int ObjectId { get; }
 

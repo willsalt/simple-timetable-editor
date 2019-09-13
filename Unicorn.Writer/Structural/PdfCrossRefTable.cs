@@ -5,11 +5,13 @@ using System.IO;
 using System.Text;
 using Unicorn.Writer.Interfaces;
 
-namespace Unicorn.Writer.Primitives
+namespace Unicorn.Writer.Structural
 {
     public class PdfCrossRefTable : IPdfCrossRefTable
     {
         private List<PdfCrossRefTableEntry> _contents = new List<PdfCrossRefTableEntry>() { null };
+
+        public int Count => _contents.Count;
 
         public int ClaimSlot()
         {

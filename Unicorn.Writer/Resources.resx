@@ -118,18 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Primitives_PdfDictionary_Add_Duplicate_Key_Error" xml:space="preserve">
-    <value>Key already exists</value>
+    <value>Key already exists.</value>
   </data>
   <data name="Primitives_PdfIndirectObject_Invalid_Generation_Error" xml:space="preserve">
-    <value>The generation number must be a non-negative integer</value>
+    <value>The generation number must be a non-negative integer.</value>
   </data>
   <data name="Primitives_PdfIndirectObject_Invalid_ObjectId_Error" xml:space="preserve">
-    <value>The object ID must be a positive integer</value>
+    <value>The object ID must be a positive integer.</value>
   </data>
   <data name="Primitives_PdfIndirectObject_Nest_PdfIndirectObject_Error" xml:space="preserve">
-    <value>Indirect objects may not be nested</value>
+    <value>Indirect objects may not be nested.</value>
   </data>
   <data name="Primitives_PdfIndirectObject_Write_To_PdfStream_Error" xml:space="preserve">
-    <value>Indirect objects may not be used as stream content</value>
+    <value>Indirect objects may not be used as stream content.</value>
+  </data>
+  <data name="Structural_PdfPageTreeItem_Invalid_Generation_Error" xml:space="preserve">
+    <value>The generation number must be a non-negative integer.</value>
+  </data>
+  <data name="Structural_PdfPageTreeItem_Invalid_ObjectId_Error" xml:space="preserve">
+    <value>The object ID must be a positive integer.</value>
+  </data>
+  <data name="Structural_PdfTrailer_WriteTo_CrossRef_Location_Not_Known_Error" xml:space="preserve">
+    <value>The file trailer cannot be written when the cross-reference table location is unknown.</value>
   </data>
 </root>

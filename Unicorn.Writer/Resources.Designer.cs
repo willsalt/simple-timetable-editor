@@ -61,7 +61,7 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Key already exists.
+        ///   Looks up a localized string similar to Key already exists..
         /// </summary>
         internal static string Primitives_PdfDictionary_Add_Duplicate_Key_Error {
             get {
@@ -70,7 +70,7 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The generation number must be a non-negative integer.
+        ///   Looks up a localized string similar to The generation number must be a non-negative integer..
         /// </summary>
         internal static string Primitives_PdfIndirectObject_Invalid_Generation_Error {
             get {
@@ -79,7 +79,7 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The object ID must be a positive integer.
+        ///   Looks up a localized string similar to The object ID must be a positive integer..
         /// </summary>
         internal static string Primitives_PdfIndirectObject_Invalid_ObjectId_Error {
             get {
@@ -88,7 +88,7 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Indirect objects may not be nested.
+        ///   Looks up a localized string similar to Indirect objects may not be nested..
         /// </summary>
         internal static string Primitives_PdfIndirectObject_Nest_PdfIndirectObject_Error {
             get {
@@ -97,11 +97,38 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Indirect objects may not be used as stream content.
+        ///   Looks up a localized string similar to Indirect objects may not be used as stream content..
         /// </summary>
         internal static string Primitives_PdfIndirectObject_Write_To_PdfStream_Error {
             get {
                 return ResourceManager.GetString("Primitives_PdfIndirectObject_Write_To_PdfStream_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The generation number must be a non-negative integer..
+        /// </summary>
+        internal static string Structural_PdfPageTreeItem_Invalid_Generation_Error {
+            get {
+                return ResourceManager.GetString("Structural_PdfPageTreeItem_Invalid_Generation_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object ID must be a positive integer..
+        /// </summary>
+        internal static string Structural_PdfPageTreeItem_Invalid_ObjectId_Error {
+            get {
+                return ResourceManager.GetString("Structural_PdfPageTreeItem_Invalid_ObjectId_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file trailer cannot be written when the cross-reference table location is unknown..
+        /// </summary>
+        internal static string Structural_PdfTrailer_WriteTo_CrossRef_Location_Not_Known_Error {
+            get {
+                return ResourceManager.GetString("Structural_PdfTrailer_WriteTo_CrossRef_Location_Not_Known_Error", resourceCulture);
             }
         }
     }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Unicorn.Writer.Interfaces;
+﻿using Unicorn.Writer.Interfaces;
 
-namespace Unicorn.Writer.Primitives
+namespace Unicorn.Writer.Structural
 {
     public class PdfCrossRefTableEntry
     {

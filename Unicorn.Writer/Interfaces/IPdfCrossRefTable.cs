@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace Unicorn.Writer.Interfaces
+﻿namespace Unicorn.Writer.Interfaces
 {
-    public interface IPdfCrossRefTable
+    public interface IPdfCrossRefTable : IPdfWriteable
     {
+        int Count { get; }
+
         int ClaimSlot();
 
         void SetSlot(IPdfIndirectObject value, int offset);
-
-        int WriteTo(Stream stream);
     }
 }

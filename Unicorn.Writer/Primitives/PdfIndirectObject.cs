@@ -12,9 +12,9 @@ namespace Unicorn.Writer.Primitives
         private readonly IPdfPrimitiveObject _contents;
         private readonly bool _nonCacheable;
 
-        protected List<byte> CachedPrologue { get; set; }
+        protected List<byte> CachedPrologue { get; private set; }
 
-        protected List<byte> CachedEpilogue { get; set; }
+        protected List<byte> CachedEpilogue { get; private set; }
         
 
         public int ObjectId { get; }

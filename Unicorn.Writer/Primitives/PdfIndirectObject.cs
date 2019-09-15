@@ -11,6 +11,7 @@ namespace Unicorn.Writer.Primitives
     {
         private readonly IPdfPrimitiveObject _contents;
         private readonly bool _nonCacheable;
+        private PdfReference _reference = null;
 
         protected List<byte> CachedPrologue { get; private set; }
 
@@ -137,12 +138,12 @@ namespace Unicorn.Writer.Primitives
 
         public PdfReference GetReference()
         {
-            return new PdfReference(this);
+            return _reference ?? (_reference = new PdfReference(this));
         }
 
         protected void GeneratePrologueAndEpilogue()
         {
-            int contentLen = _contents.ByteLength;            
+            int contentLen = _contents?.ByteLength ?? 2;            
             string prologueString = $"{ObjectId} {Generation} obj ";
             if (contentLen + prologueString.Length > 253)
             {

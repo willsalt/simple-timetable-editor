@@ -16,6 +16,7 @@ using Unicorn;
 using Unicorn.Impl.PdfSharp;
 using Unicorn.Interfaces;
 using Unicorn.Shapes;
+using Unicorn.Writer.Structural;
 
 namespace Timetabler.PdfExport
 {
@@ -78,12 +79,12 @@ namespace Timetabler.PdfExport
             PassingTrainDashWidth = 0.5;
         }
 
-        private void StartPage(DocumentDescriptor doc)
+        private void StartPage(IDocumentDescriptor doc)
         {
             _currentPage = doc.AppendPage();
         }
 
-        private void StartPage(DocumentDescriptor doc, PageOrientation orientation)
+        private void StartPage(IDocumentDescriptor doc, PageOrientation orientation)
         {
             _currentPage = doc.AppendPage(orientation);
         }
@@ -101,7 +102,7 @@ namespace Timetabler.PdfExport
 
         public void Export(TimetableDocument document, Stream outputStream)
         {
-            DocumentDescriptor doc = new DocumentDescriptor(PhysicalPageSize.A4, PageOrientation.Landscape, _defaultHorizontalMarginProportion, _defaultVerticalMarginProportion);
+            IDocumentDescriptor doc = new PdfDocument(PhysicalPageSize.A4, PageOrientation.Landscape, _defaultHorizontalMarginProportion, _defaultVerticalMarginProportion);
             bool workNotFinished = true;
             while (workNotFinished)
             {
@@ -1050,7 +1051,7 @@ namespace Timetabler.PdfExport
             return maxHeight;
         }
 
-        private void ExportGlossary(DocumentDescriptor doc, NoteCollection noteDefinitions)
+        private void ExportGlossary(IDocumentDescriptor doc, NoteCollection noteDefinitions)
         {
             StartPage(doc, PageOrientation.Portrait);
             double titleHeight = _currentPage.PageGraphics.MeasureString(Resources.GlossaryTitle, _subtitleFont).Height;

@@ -65,7 +65,7 @@ namespace Unicorn.Writer.Structural
 
         private int WriteEntry(PdfCrossRefTableEntry entry, Stream stream)
         {
-            byte[] bytes = Encoding.ASCII.GetBytes(string.Format(CultureInfo.InvariantCulture, "{0:10d} {1:5d} n \xa", entry.Offset, entry.Value.Generation));
+            byte[] bytes = Encoding.ASCII.GetBytes(string.Format(CultureInfo.InvariantCulture, "{0:d10} {1:d5} n \xa", entry.Offset, entry.Value.Generation));
             stream.Write(bytes, 0, bytes.Length);
             return bytes.Length;
         }
@@ -77,7 +77,7 @@ namespace Unicorn.Writer.Structural
             {
                 nextItem = 0;
             }
-            byte[] bytes = Encoding.ASCII.GetBytes(string.Format(CultureInfo.InvariantCulture, "{0:10d} {1:5d} f \xa", nextItem, i == 0 ? 65535 : 0));
+            byte[] bytes = Encoding.ASCII.GetBytes(string.Format(CultureInfo.InvariantCulture, "{0:d10} {1:d5} f \xa", nextItem, i == 0 ? 65535 : 0));
             stream.Write(bytes, 0, bytes.Length);
             return bytes.Length;
         }

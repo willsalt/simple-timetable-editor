@@ -56,6 +56,7 @@
     <Compile Include="IPositionedKnownSizeDrawable.cs" />
     <Compile Include="PageOrientation.cs" />
     <Compile Include="PhysicalPageSize.cs" />
+    <Compile Include="PhysicalPageSizeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UniDashStyle.cs" />
     <Compile Include="UniFontStyle.cs" />

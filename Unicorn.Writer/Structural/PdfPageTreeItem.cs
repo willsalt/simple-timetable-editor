@@ -10,7 +10,7 @@ namespace Unicorn.Writer.Structural
     {
         public PdfPageTreeNode Parent { get; }
 
-        protected PdfPageTreeItem(int objectId, int generation, PdfPageTreeNode parent) : base(objectId, generation)
+        protected PdfPageTreeItem(PdfPageTreeNode parent, int objectId, int generation = 0) : base(objectId, generation)
         {
             Parent = parent;
         }

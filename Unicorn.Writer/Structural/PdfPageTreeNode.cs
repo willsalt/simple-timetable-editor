@@ -11,7 +11,7 @@ namespace Unicorn.Writer.Structural
     {
         public IList<PdfPageTreeItem> Kids { get; }
 
-        public PdfPageTreeNode(int objectId, int generation, PdfPageTreeNode parent) : base(objectId, generation, parent)
+        public PdfPageTreeNode(PdfPageTreeNode parent, int objectId, int generation = 0) : base(parent, objectId, generation)
         {
             Kids = new List<PdfPageTreeItem>();
         }

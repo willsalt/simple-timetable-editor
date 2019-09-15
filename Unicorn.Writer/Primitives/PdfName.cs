@@ -65,7 +65,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return true;
             }
-            if (a == null || b == null)
+            if (a is null || b is null)
             {
                 return false;
             }

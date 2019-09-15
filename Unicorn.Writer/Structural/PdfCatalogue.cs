@@ -7,26 +7,39 @@ using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Structural
 {
-    public class PdfCatalogue : IPdfIndirectObject
+    public class PdfCatalogue : PdfIndirectObject
     {
-        public int ObjectId { get; }
+        public PdfPageTreeNode PageRoot { get; private set; }
 
-        public int Generation { get; }
-
-        public PdfCatalogue(int objectId, int generation = 0)
+        public PdfCatalogue(PdfPageTreeNode pageRoot, int objectId, int generation = 0) : base(objectId, generation)
         {
-            ObjectId = objectId;
-            Generation = generation;
+            PageRoot = pageRoot ?? throw new ArgumentNullException(nameof(pageRoot));
         }
 
-        public PdfReference GetReference()
+        public override int WriteTo(Stream stream)
         {
-            throw new NotImplementedException();
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+            return Write(WriteToStream, MakeDictionary().WriteTo, stream);
         }
 
-        public int WriteTo(Stream stream)
+        public override int WriteTo(List<byte> list)
         {
-            throw new NotImplementedException();
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+            return Write(WriteToList, MakeDictionary().WriteTo, list);
+        }
+
+        private PdfDictionary MakeDictionary()
+        {
+            PdfDictionary d = new PdfDictionary();
+            d.Add(CommonPdfNames.Type, CommonPdfNames.Catalog);
+            d.Add(CommonPdfNames.Pages, PageRoot.GetReference());
+            return d;
         }
     }
 }

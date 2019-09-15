@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Unicorn.Interfaces;
 using Unicorn.Writer.Interfaces;
+using Unicorn.Writer.Structural;
 
-namespace Unicorn.Writer.Structural
+namespace Unicorn.Writer
 {
     public class PdfDocument : IPdfWriteable, IDocumentDescriptor
     {

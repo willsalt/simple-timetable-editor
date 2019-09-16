@@ -109,7 +109,6 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="GraphEditStyle.cs" />
     <Compile Include="GraphTrainProperties.cs" />
-    <Compile Include="HalfOfDay.cs" />
     <Compile Include="Interfaces\IExporter.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="LocationComparer.cs" />
@@ -124,7 +123,6 @@
     <Compile Include="SignalboxHours.cs" />
     <Compile Include="SignalboxHoursSet.cs" />
     <Compile Include="TimeDisplayFormattingStrings.cs" />
-    <Compile Include="TimeOfDay.cs" />
     <Compile Include="TimetableDocument.cs" />
     <Compile Include="ToWork.cs" />
     <Compile Include="Train.cs" />

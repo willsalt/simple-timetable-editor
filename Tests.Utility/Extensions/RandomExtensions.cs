@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using Timetabler.CoreData;
-using Timetabler.Data;
 
 namespace Tests.Utility.Extensions
 {
@@ -49,47 +48,47 @@ namespace Tests.Utility.Extensions
             return random.Next(2) == 0;
         }
 
-        public static TimeOfDay NextTimeOfDay(this Random random)
-        {
-            return new TimeOfDay(random.Next(86400));
-        }
+        //public static TimeOfDay NextTimeOfDay(this Random random)
+        //{
+        //    return new TimeOfDay(random.Next(86400));
+        //}
 
-        public static TimeOfDay NextTimeOfDayBefore(this Random random, TimeOfDay t)
-        {
-            return random.NextTimeOfDayBefore(t.AbsoluteSeconds);
-        }
+        //public static TimeOfDay NextTimeOfDayBefore(this Random random, TimeOfDay t)
+        //{
+        //    return random.NextTimeOfDayBefore(t.AbsoluteSeconds);
+        //}
 
-        public static TimeOfDay NextTimeOfDayBefore(this Random random, int seconds)
-        {
-            return new TimeOfDay(random.Next(seconds));
-        }
+        //public static TimeOfDay NextTimeOfDayBefore(this Random random, int seconds)
+        //{
+        //    return new TimeOfDay(random.Next(seconds));
+        //}
 
-        public static TimeOfDay NextTimeOfDayAfter(this Random random, TimeOfDay t)
-        {
-            return random.NextTimeOfDayAfter(t.AbsoluteSeconds);
-        }
+        //public static TimeOfDay NextTimeOfDayAfter(this Random random, TimeOfDay t)
+        //{
+        //    return random.NextTimeOfDayAfter(t.AbsoluteSeconds);
+        //}
 
-        public static TimeOfDay NextTimeOfDayAfter(this Random random, int seconds)
-        {
-            int lim = 86400 - seconds;
-            return new TimeOfDay(random.Next(lim) + seconds);
-        }
+        //public static TimeOfDay NextTimeOfDayAfter(this Random random, int seconds)
+        //{
+        //    int lim = 86400 - seconds;
+        //    return new TimeOfDay(random.Next(lim) + seconds);
+        //}
 
-        public static TimeOfDay NextTimeOfDayBetween(this Random random, TimeOfDay min, TimeOfDay max)
-        {
-            return random.NextTimeOfDayBetween(min.AbsoluteSeconds, max.AbsoluteSeconds);
-        }
+        //public static TimeOfDay NextTimeOfDayBetween(this Random random, TimeOfDay min, TimeOfDay max)
+        //{
+        //    return random.NextTimeOfDayBetween(min.AbsoluteSeconds, max.AbsoluteSeconds);
+        //}
 
-        public static TimeOfDay NextTimeOfDayBetween(this Random random, TimeOfDay min, int maxSeconds)
-        {
-            return random.NextTimeOfDayBetween(min.AbsoluteSeconds, maxSeconds);
-        }
+        //public static TimeOfDay NextTimeOfDayBetween(this Random random, TimeOfDay min, int maxSeconds)
+        //{
+        //    return random.NextTimeOfDayBetween(min.AbsoluteSeconds, maxSeconds);
+        //}
 
-        public static TimeOfDay NextTimeOfDayBetween(this Random random, int minSeconds, int maxSeconds)
-        {
-            int lim = maxSeconds - minSeconds;
-            return new TimeOfDay(random.Next(lim) + minSeconds);
-        }
+        //public static TimeOfDay NextTimeOfDayBetween(this Random random, int minSeconds, int maxSeconds)
+        //{
+        //    int lim = maxSeconds - minSeconds;
+        //    return new TimeOfDay(random.Next(lim) + minSeconds);
+        //}
 
         public static ArrivalDepartureOptions NextArrivalDepartureOptions(this Random random)
         {
@@ -129,32 +128,32 @@ namespace Tests.Utility.Extensions
             return allValues[random.Next(allValues.Length)];
         }
 
-        public static Distance NextDistance(this Random random, Distance max)
-        {
-            int mileagePart;
-            double chainagePart;
-            if (max.Mileage > 0)
-            {
-                mileagePart = random.Next(max.Mileage);
-            }
-            else
-            {
-                mileagePart = 0;
-            }
-            if (mileagePart < max.Mileage)
-            {
-                chainagePart = random.NextDouble() * 80d;
-            }
-            else
-            {
-                chainagePart = random.NextDouble() * max.Chainage;
-            }
-            return new Distance { Mileage = mileagePart, Chainage = chainagePart };
-        }
+        //public static Distance NextDistance(this Random random, Distance max)
+        //{
+        //    int mileagePart;
+        //    double chainagePart;
+        //    if (max.Mileage > 0)
+        //    {
+        //        mileagePart = random.Next(max.Mileage);
+        //    }
+        //    else
+        //    {
+        //        mileagePart = 0;
+        //    }
+        //    if (mileagePart < max.Mileage)
+        //    {
+        //        chainagePart = random.NextDouble() * 80d;
+        //    }
+        //    else
+        //    {
+        //        chainagePart = random.NextDouble() * max.Chainage;
+        //    }
+        //    return new Distance { Mileage = mileagePart, Chainage = chainagePart };
+        //}
 
-        public static Distance NextDistance(this Random random)
-        {
-            return random.NextDistance(new Distance { Mileage = 32768, Chainage = 0 });
-        }
+        //public static Distance NextDistance(this Random random)
+        //{
+        //    return random.NextDistance(new Distance { Mileage = 32768, Chainage = 0 });
+        //}
     }
 }

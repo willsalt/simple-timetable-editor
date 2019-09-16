@@ -58,6 +58,7 @@
     <Compile Include="Helpers\StringHelperUnitTests.cs" />
     <Compile Include="Mocks\MockUniqueItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeOfDayUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Timetabler.CoreData;
 using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
 using Timetabler.Data.Display.Interfaces;
@@ -188,7 +189,7 @@ namespace Timetabler.Data.Display
                 InlineNote = InlineNote,
                 LocoDiagram = LocoDiagram,
                 Timings = Timings.Select(t => t.Copy()).ToList(),
-                ToWorkCell = ToWorkCell != null ? ToWorkCell.Copy() : null,
+                ToWorkCell = ToWorkCell?.Copy(),
                 TrainClass = TrainClass,
                 TrainId = TrainId,
                 PageFootnotes = PageFootnotes.Select(f => f.Copy()).ToList(),

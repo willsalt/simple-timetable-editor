@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Timetabler.Data {
+namespace Timetabler.CoreData {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Timetabler.Data {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Timetabler.Data.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Timetabler.CoreData.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,29 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Format string {0} is not supported..
+        ///   Looks up a localized string similar to a.m..
         /// </summary>
-        internal static string Distance_ToString_FormatExceptionMessage {
+        internal static string HalfOfDay_ToNameString_Am {
             get {
-                return ResourceManager.GetString("Distance_ToString_FormatExceptionMessage", resourceCulture);
+                return ResourceManager.GetString("HalfOfDay_ToNameString_Am", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to plat.
+        ///   Looks up a localized string similar to noon.
         /// </summary>
-        internal static string LocationRow_Abbreviation_Platform {
+        internal static string HalfOfDay_ToNameString_Noon {
             get {
-                return ResourceManager.GetString("LocationRow_Abbreviation_Platform", resourceCulture);
+                return ResourceManager.GetString("HalfOfDay_ToNameString_Noon", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to t.
+        ///   Looks up a localized string similar to P.M..
         /// </summary>
-        internal static string SignalboxHours_TokenBalanceWarningSymbol {
+        internal static string HalfOfDay_ToNameString_Pm {
             get {
-                return ResourceManager.GetString("SignalboxHours_TokenBalanceWarningSymbol", resourceCulture);
+                return ResourceManager.GetString("HalfOfDay_ToNameString_Pm", resourceCulture);
             }
         }
     }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timetabler.CoreData;
 using Timetabler.Data.Comparers;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;

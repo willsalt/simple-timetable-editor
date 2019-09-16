@@ -96,7 +96,6 @@
     <Compile Include="TestHelpers\TrainLocationTimeModelHelpers.cs" />
     <Compile Include="TestHelpers\TrainSegmentModelHelpers.cs" />
     <Compile Include="TestHelpers\TrainTimeHelpers.cs" />
-    <Compile Include="TimeOfDayUnitTests.cs" />
     <Compile Include="ToWorkUnitTests.cs" />
     <Compile Include="TrainLocationTimeUnitTests.cs" />
     <Compile Include="TrainTimeUnitTests.cs" />

@@ -1,4 +1,6 @@
-﻿namespace Timetabler.Data.Display
+﻿using Timetabler.CoreData;
+
+namespace Timetabler.Data.Display
 {
     /// <summary>
     /// This class represents a cell displayed on a timetable.

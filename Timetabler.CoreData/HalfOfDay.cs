@@ -1,4 +1,4 @@
-﻿namespace Timetabler.Data
+﻿namespace Timetabler.CoreData
 {
     /// <summary>
     /// An enumeration for the part of the day a time may fall in.

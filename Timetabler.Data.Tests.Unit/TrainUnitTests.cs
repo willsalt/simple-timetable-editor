@@ -5,6 +5,7 @@ using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data.Tests.Unit.TestHelpers;
+using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {

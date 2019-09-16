@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Text;
 using Timetabler.CoreData;
 using Timetabler.Data;
@@ -181,23 +179,23 @@ namespace Tests.Utility.Extensions
             return random.NextTimeOfDayModel(0, 0);
         }
 
-        public static Color NextColor(this Random random)
-        {
-            return Color.FromArgb(random.Next());
-        }
+        //public static Color NextColor(this Random random)
+        //{
+        //    return Color.FromArgb(random.Next());
+        //}
 
-        public static DashStyle NextDashStyle(this Random random)
-        {
-            DashStyle[] allValues = new DashStyle[]
-            {
-                DashStyle.Custom,
-                DashStyle.Dash,
-                DashStyle.DashDot,
-                DashStyle.DashDotDot,
-                DashStyle.Dot,
-                DashStyle.Solid,
-            };
-            return allValues[random.Next(allValues.Length)];
-        }
+        //public static DashStyle NextDashStyle(this Random random)
+        //{
+        //    DashStyle[] allValues = new DashStyle[]
+        //    {
+        //        DashStyle.Custom,
+        //        DashStyle.Dash,
+        //        DashStyle.DashDot,
+        //        DashStyle.DashDotDot,
+        //        DashStyle.Dot,
+        //        DashStyle.Solid,
+        //    };
+        //    return allValues[random.Next(allValues.Length)];
+        //}
     }
 }

@@ -65,6 +65,7 @@
     <Compile Include="Save\DocumentOptionsExtensionsUnitTests.cs" />
     <Compile Include="Save\LocationExtensionsUnitTests.cs" />
     <Compile Include="Save\TimetableDocumentExtensionsUnitTests.cs" />
+    <Compile Include="TestHelpers\Extensions\RandomExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">

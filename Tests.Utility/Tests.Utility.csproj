@@ -56,10 +56,6 @@
       <Project>{9A7E2940-50B8-4F3A-A535-AB6220E6CE3A}</Project>
       <Name>Timetabler.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Timetabler.XmlData\Timetabler.XmlData.csproj">
-      <Project>{81B88CBA-1AC7-4061-AB0B-FCFA1BE22332}</Project>
-      <Name>Timetabler.XmlData</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

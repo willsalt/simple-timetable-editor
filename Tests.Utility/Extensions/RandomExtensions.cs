@@ -2,7 +2,6 @@
 using System.Text;
 using Timetabler.CoreData;
 using Timetabler.Data;
-using Timetabler.XmlData;
 
 namespace Tests.Utility.Extensions
 {
@@ -157,45 +156,5 @@ namespace Tests.Utility.Extensions
         {
             return random.NextDistance(new Distance { Mileage = 32768, Chainage = 0 });
         }
-
-        public static TimeOfDayModel NextTimeOfDayModel(this Random random, int minSeconds, int maxSeconds)
-        {
-            if (maxSeconds == 0)
-            {
-                maxSeconds = 86400;
-            }
-            int secs = random.Next(maxSeconds - minSeconds) + minSeconds;
-
-            return new TimeOfDayModel
-            {
-                Hours24 = secs / 3600,
-                Minutes = (secs % 3600) / 60,
-                Seconds = secs % 60
-            };
-        }
-
-        public static TimeOfDayModel NextTimeOfDayModel(this Random random)
-        {
-            return random.NextTimeOfDayModel(0, 0);
-        }
-
-        //public static Color NextColor(this Random random)
-        //{
-        //    return Color.FromArgb(random.Next());
-        //}
-
-        //public static DashStyle NextDashStyle(this Random random)
-        //{
-        //    DashStyle[] allValues = new DashStyle[]
-        //    {
-        //        DashStyle.Custom,
-        //        DashStyle.Dash,
-        //        DashStyle.DashDot,
-        //        DashStyle.DashDotDot,
-        //        DashStyle.Dot,
-        //        DashStyle.Solid,
-        //    };
-        //    return allValues[random.Next(allValues.Length)];
-        //}
     }
 }

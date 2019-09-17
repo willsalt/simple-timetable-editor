@@ -65,10 +65,11 @@
     <Compile Include="Save\DocumentOptionsExtensionsUnitTests.cs" />
     <Compile Include="Save\LocationExtensionsUnitTests.cs" />
     <Compile Include="Save\TimetableDocumentExtensionsUnitTests.cs" />
+    <Compile Include="TestHelpers\Extensions\RandomExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">
-      <Project>{78CD25FC-D2CF-4B55-94DE-F752FBBD0C2D}</Project>
+      <Project>{746618e4-92ef-451e-acb6-1eef1254137a}</Project>
       <Name>Tests.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">

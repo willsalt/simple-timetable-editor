@@ -5,6 +5,7 @@ using System.Linq;
 using Tests.Utility.Extensions;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load;
+using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
 using Timetabler.XmlData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load

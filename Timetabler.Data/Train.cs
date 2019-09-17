@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Timetabler.CoreData;
 using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
 

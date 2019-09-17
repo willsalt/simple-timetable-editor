@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Comparers
@@ -9,9 +10,9 @@ namespace Timetabler.Data.Comparers
     /// </summary>
     public class LocationDisplayModelComparer : IComparer<LocationDisplayModel>
     {
-        private int xBeforeY;
-        private int yBeforeX;
-        private Direction _direction;
+        private readonly int xBeforeY;
+        private readonly int yBeforeX;
+        private readonly Direction _direction;
 
         /// <summary>
         /// The constructor needs to know what direction its output is supposed to be in.

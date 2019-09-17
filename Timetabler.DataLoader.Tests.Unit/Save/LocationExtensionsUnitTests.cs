@@ -4,6 +4,7 @@ using Tests.Utility.Extensions;
 using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.DataLoader.Save;
+using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
 using Timetabler.XmlData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Save

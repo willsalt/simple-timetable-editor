@@ -1,4 +1,5 @@
 ﻿using System;
+using Timetabler.CoreData;
 using Timetabler.CoreData.Interfaces;
 using Timetabler.Data.Display;
 

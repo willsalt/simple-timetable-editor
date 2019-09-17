@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
 namespace Timetabler.Data.Tests.Unit
@@ -9,7 +10,7 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class TrainTimeUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         [TestMethod]
         public void TrainTimeClassFootnoteSymbolsPropertyHasCorrectValueIfThereAreFootnotes()

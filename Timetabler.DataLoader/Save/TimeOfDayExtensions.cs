@@ -1,4 +1,4 @@
-﻿using Timetabler.Data;
+﻿using Timetabler.CoreData;
 using Timetabler.XmlData;
 
 namespace Timetabler.DataLoader.Save

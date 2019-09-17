@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Tests.Utility.Providers;
 using Timetabler.CoreData.Helpers;
 
 namespace Timetabler.CoreData.Tests.Unit.Helpers
@@ -7,14 +8,14 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
     [TestClass]
     public class CoordinateHelperUnitTests
     {
-        Random rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
 
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithDoubleParametersReturnsZeroIfMinAndMaxAreZero()
         {
             double min = 0d;
             double max = 0d;
-            double prop = rnd.NextDouble();
+            double prop = _rnd.NextDouble();
 
             double result = CoordinateHelper.Stretch(min, max, prop);
 
@@ -24,9 +25,9 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithDoubleParametersReturnsMinIfMinAndMaxAreSame()
         {
-            double min = rnd.NextDouble() * int.MaxValue;
+            double min = _rnd.NextDouble() * int.MaxValue;
             double max = min;
-            double prop = rnd.NextDouble();
+            double prop = _rnd.NextDouble();
 
             double result = CoordinateHelper.Stretch(min, max, prop);
 
@@ -36,8 +37,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithDoubleParametersReturnsMinIfPropIsZero()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
             double prop = 0d;
 
             double result = CoordinateHelper.Stretch(min, max, prop);
@@ -48,8 +49,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithDoubleParametersReturnsMaxIfPropIsOne()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
             double prop = 1d;
 
             double result = CoordinateHelper.Stretch(min, max, prop);
@@ -60,8 +61,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithDoubleParametersReturnsAverageOfMinAndMaxIfPropIsOneHalf()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
             double prop = 0.5d;
 
             double result = CoordinateHelper.Stretch(min, max, prop);
@@ -72,9 +73,9 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithDoubleParametersReturnsCorrectProportionalValueForAnyReasonableInput()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
-            double prop = rnd.NextDouble();
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
+            double prop = _rnd.NextDouble();
 
             double result = CoordinateHelper.Stretch(min, max, prop);
 
@@ -86,7 +87,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         {
             float min = 0f;
             float max = 0f;
-            float prop = (float)rnd.NextDouble();
+            float prop = (float)_rnd.NextDouble();
 
             float result = CoordinateHelper.Stretch(min, max, prop);
 
@@ -96,9 +97,9 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithFloatParametersReturnsMinIfMinAndMaxAreSame()
         {
-            float min = (float)(rnd.NextDouble() * int.MaxValue);
+            float min = (float)(_rnd.NextDouble() * int.MaxValue);
             float max = min;
-            float prop = (float)rnd.NextDouble();
+            float prop = (float)_rnd.NextDouble();
 
             float result = CoordinateHelper.Stretch(min, max, prop);
 
@@ -108,8 +109,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithFloatParametersReturnsMinIfPropIsZero()
         {
-            float min = (float)(rnd.NextDouble() * int.MaxValue / 2);
-            float max = min + (float)(rnd.NextDouble() * int.MaxValue / 2);
+            float min = (float)(_rnd.NextDouble() * int.MaxValue / 2);
+            float max = min + (float)(_rnd.NextDouble() * int.MaxValue / 2);
             float prop = 0f;
 
             float result = CoordinateHelper.Stretch(min, max, prop);
@@ -120,8 +121,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithFloatParametersReturnsMaxIfPropIsOne()
         {
-            float min = (float) (rnd.NextDouble() * int.MaxValue / 2);
-            float max = min + (float)(rnd.NextDouble() * int.MaxValue / 2);
+            float min = (float) (_rnd.NextDouble() * int.MaxValue / 2);
+            float max = min + (float)(_rnd.NextDouble() * int.MaxValue / 2);
             float prop = 1f;
 
             float result = CoordinateHelper.Stretch(min, max, prop);
@@ -132,8 +133,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithFloatParametersReturnsAverageOfMinAndMaxIfPropIsOneHalf()
         {
-            float min = (float)(rnd.NextDouble() * int.MaxValue / 2);
-            float max = min + (float)(rnd.NextDouble() * int.MaxValue / 2);
+            float min = (float)(_rnd.NextDouble() * int.MaxValue / 2);
+            float max = min + (float)(_rnd.NextDouble() * int.MaxValue / 2);
             float prop = 0.5f;
 
             float result = CoordinateHelper.Stretch(min, max, prop);
@@ -144,9 +145,9 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassStretchMethodWithFloatParametersReturnsCorrectProportionalValueForAnyReasonableInput()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
-            double prop = rnd.NextDouble();
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
+            double prop = _rnd.NextDouble();
 
             double result = CoordinateHelper.Stretch(min, max, prop);
 
@@ -156,8 +157,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassUnstretchMethodWithDoubleParamtersReturns0IfMinAndMaxAreEqual()
         {
-            double minMax = rnd.NextDouble() * int.MaxValue / 2;
-            double amt = rnd.NextDouble() * int.MaxValue / 2;
+            double minMax = _rnd.NextDouble() * int.MaxValue / 2;
+            double amt = _rnd.NextDouble() * int.MaxValue / 2;
 
             double result = CoordinateHelper.Unstretch(minMax, minMax, amt);
 
@@ -167,8 +168,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassUnstretchMethodWithDoubleParametersReturns0IfAmtParameterEqualsMinParameter()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
 
             double result = CoordinateHelper.Unstretch(min, max, min);
 
@@ -178,8 +179,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassUnstretchMethodWithDoubleParametersReturns1IfAmtParameterEqualsMaxParameter()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
 
             double result = CoordinateHelper.Unstretch(min, max, max);
 
@@ -189,9 +190,9 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void CoordinateHelperClassUnstretchMethodWithDoubleParametersReturnsCorrectResultForReasonableInput()
         {
-            double min = rnd.NextDouble() * int.MaxValue / 2;
-            double max = min + (rnd.NextDouble() * int.MaxValue / 2);
-            double testValue = rnd.NextDouble();
+            double min = _rnd.NextDouble() * int.MaxValue / 2;
+            double max = min + (_rnd.NextDouble() * int.MaxValue / 2);
+            double testValue = _rnd.NextDouble();
             double amt = (max - min) * testValue + min;
 
             double result = CoordinateHelper.Unstretch(min, max, amt);

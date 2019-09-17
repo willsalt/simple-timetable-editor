@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data.Comparers;
 using Timetabler.Data.Display;
 using Timetabler.Data.Tests.Unit.TestHelpers;
@@ -10,7 +12,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     [TestClass]
     public class LocationDisplayModelComparerUnitTests
     {
-        private static Random Rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
 
         [TestMethod]
         public void LocationDisplayModelComparerClassCompareMethodReturnsZeroIfConstructedForUpAndBothParametersAreNull()
@@ -128,8 +130,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForUpAndParametersHaveSameMileageAndFirstParameterIsArrivalRowAndSecondParameterIsDepartureRow()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
-            LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = Rnd.NextHexString(8) + "-a" };
-            LocationDisplayModel y = new LocationDisplayModel { Mileage = new Distance { Mileage = x.Mileage.Mileage, Chainage = x.Mileage.Chainage }, LocationKey = Rnd.NextHexString(8) + "-d" };
+            LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = _rnd.NextHexString(8) + "-a" };
+            LocationDisplayModel y = new LocationDisplayModel { Mileage = new Distance { Mileage = x.Mileage.Mileage, Chainage = x.Mileage.Chainage }, LocationKey = _rnd.NextHexString(8) + "-d" };
 
             int result = comparer.Compare(x, y);
 
@@ -140,8 +142,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForDownAndParametersHaveSameMileageAndFirstParameterIsArrivalRowAndSecondParameterIsDepartureRow()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
-            LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = Rnd.NextHexString(8) + "-a" };
-            LocationDisplayModel y = new LocationDisplayModel { Mileage = new Distance { Mileage = x.Mileage.Mileage, Chainage = x.Mileage.Chainage }, LocationKey = Rnd.NextHexString(8) + "-d" };
+            LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = _rnd.NextHexString(8) + "-a" };
+            LocationDisplayModel y = new LocationDisplayModel { Mileage = new Distance { Mileage = x.Mileage.Mileage, Chainage = x.Mileage.Chainage }, LocationKey = _rnd.NextHexString(8) + "-d" };
 
             int result = comparer.Compare(x, y);
 

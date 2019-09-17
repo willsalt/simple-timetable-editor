@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Timetabler.Data
+﻿namespace Timetabler.CoreData
 {
     /// <summary>
     /// The direction of a train, a group of trains, or a portion of a train's journey.

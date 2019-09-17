@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData.Exceptions;
 
@@ -12,7 +8,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
     [TestClass]
     public class TimetableLoaderExceptionUnitTests
     {
-        private Random _random = new Random();
+        private readonly Random _rnd = new Random();
 
         [TestMethod]
         public void TimetableLoaderExceptionClassIsAnExceptionClass()
@@ -23,7 +19,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         [TestMethod]
         public void TimetableLoaderExceptionClassConstructorWithOneParameterSetsMessagePropertyToParameter()
         {
-            string testMessage = _random.NextString(_random.Next(1, 100));
+            string testMessage = _rnd.NextString(_rnd.Next(1, 100));
 
             TimetableLoaderException testException = new TimetableLoaderException(testMessage);
 
@@ -33,7 +29,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         [TestMethod]
         public void TimetableLoaderExceptionClassConstructorWithTwoParametersSetsMessagePropertyToFirstParameter()
         {
-            string testMessage = _random.NextString(_random.Next(1, 100));
+            string testMessage = _rnd.NextString(_rnd.Next(1, 100));
             Exception inner = new Exception();
 
             TimetableLoaderException testException = new TimetableLoaderException(testMessage, inner);
@@ -44,7 +40,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         [TestMethod]
         public void TimetableLoaderExceptionClassConstructorWithTwoParametersSetsInnerExceptionPropertyToSecondParameter()
         {
-            string testMessage = _random.NextString(_random.Next(1, 100));
+            string testMessage = _rnd.NextString(_rnd.Next(1, 100));
             Exception inner = new Exception();
 
             TimetableLoaderException testException = new TimetableLoaderException(testMessage, inner);

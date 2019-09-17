@@ -1,6 +1,7 @@
 ﻿using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 
 namespace Timetabler.Data.Tests.Unit.TestHelpers
 {

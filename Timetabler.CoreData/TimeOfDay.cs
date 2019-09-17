@@ -2,7 +2,7 @@
 using System.Globalization;
 using Timetabler.CoreData.Interfaces;
 
-namespace Timetabler.Data
+namespace Timetabler.CoreData
 {
     /// <summary>
     /// A reference type which represents a clock time, to the nearest second.
@@ -266,7 +266,7 @@ namespace Timetabler.Data
         /// <returns>-1, 0 or 1 according to whether the other instance's value is less than, equal to or greater than this instance.</returns>
         public int CompareTo(TimeOfDay other)
         {
-            if (ReferenceEquals(other, null))
+            if (other is null)
             {
                 return -1;
             }
@@ -409,11 +409,11 @@ namespace Timetabler.Data
         /// <returns>True or false.</returns>
         public static bool operator ==(TimeOfDay t1, TimeOfDay t2)
         {
-            if (ReferenceEquals(t1, null))
+            if (t1 is null)
             {
-                return ReferenceEquals(t2, null);
+                return t2 is null;
             }
-            if (ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return false;
             }
@@ -428,11 +428,11 @@ namespace Timetabler.Data
         /// <returns>True or false</returns>
         public static bool operator !=(TimeOfDay t1, TimeOfDay t2)
         {
-            if (ReferenceEquals(t1, null))
+            if (t1 is null)
             {
-                return !ReferenceEquals(t2, null);
+                return t2 is object;
             }
-            if (ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return true;
             }
@@ -447,11 +447,11 @@ namespace Timetabler.Data
         /// <returns>True or false according to whether t1 is before or after t2.</returns>
         public static bool operator <(TimeOfDay t1, TimeOfDay t2)
         {
-            if (ReferenceEquals(t1, null))
+            if (t1 is null)
             {
-                return !(ReferenceEquals(t2, null));
+                return t2 is object;
             }
-            if (ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return false;
             }
@@ -466,11 +466,11 @@ namespace Timetabler.Data
         /// <returns>True or false.</returns>
         public static bool operator <=(TimeOfDay t1, TimeOfDay t2)
         {
-            if (ReferenceEquals(t1, null))
+            if (t1 is null)
             {
                 return true;
             }
-            if (ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return false;
             }
@@ -485,11 +485,11 @@ namespace Timetabler.Data
         /// <returns>True or false.</returns>
         public static bool operator >(TimeOfDay t1, TimeOfDay t2)
         {
-            if (ReferenceEquals(t1, null))
+            if (t1 is null)
             {
                 return false;
             }
-            if (ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return true;
             }
@@ -504,11 +504,11 @@ namespace Timetabler.Data
         /// <returns>True or false.</returns>
         public static bool operator >=(TimeOfDay t1, TimeOfDay t2)
         {
-            if (ReferenceEquals(t1, null))
+            if (t1 is null)
             {
-                return ReferenceEquals(t2, null);
+                return t2 is null;
             }
-            if (ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return false;
             }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
-using Timetabler.Data;
+using Timetabler.CoreData;
 
 namespace Timetabler.Helpers
 {
@@ -48,8 +48,8 @@ namespace Timetabler.Helpers
             {
                 return;
             }
-            int dummy;
-            if (tb.Text != string.Empty && !int.TryParse(tb.Text, out dummy))
+
+            if (tb.Text != string.Empty && !int.TryParse(tb.Text, out _))
             {
                 ep.SetError(tb, errorMsg);
                 e.Cancel = true;
@@ -82,9 +82,7 @@ namespace Timetabler.Helpers
             }
             else
             {
-                int h;
-                int m;
-                if (int.TryParse(tbHours.Text, out h) && int.TryParse(tbMinutes.Text, out m))
+                if (int.TryParse(tbHours.Text, out int h) && int.TryParse(tbMinutes.Text, out int m))
                 {
                     if (cbHalfOfDay != null)
                     {

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tests.Utility.Extensions;
+using Timetabler.CoreData;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
 using Timetabler.Data.Tests.Unit.TestHelpers;
@@ -102,7 +103,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             string testOutput = testObject.HalfOfDay;
 
-            Assert.AreEqual("p.m.", testOutput);
+            Assert.AreEqual("P.M.", testOutput);
         }
 
         [TestMethod]
@@ -860,7 +861,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             TrainSegmentModel testOutput = testObject.SplitAtIndex(2, 1);
 
-            Assert.AreEqual("p.m.", testOutput.HalfOfDay);
+            Assert.AreEqual("P.M.", testOutput.HalfOfDay);
         }
     }
 }

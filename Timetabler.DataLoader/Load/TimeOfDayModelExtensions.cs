@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using Timetabler.CoreData;
+using Timetabler.Data;
 using Timetabler.XmlData;
 
 namespace Timetabler.DataLoader.Load

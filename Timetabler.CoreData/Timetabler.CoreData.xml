@@ -44,6 +44,21 @@
             <param name="obj">The object to generate the hashcode of.</param>
             <returns>An int representing the hashcode of the object.</returns>
         </member>
+        <member name="T:Timetabler.CoreData.Direction">
+            <summary>
+            The direction of a train, a group of trains, or a portion of a train's journey.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.Direction.Down">
+            <summary>
+            The Down direction.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.Direction.Up">
+            <summary>
+            The Up direction.
+            </summary>
+        </member>
         <member name="T:Timetabler.CoreData.Events.ModifiedEventArgs">
             <summary>
             The <see cref="T:System.EventArgs" /> subclass used for <see cref="E:Timetabler.CoreData.Interfaces.IWatchableItem.Modified" /> events.
@@ -83,6 +98,38 @@
             </summary>
             <param name="message">The error message.</param>
             <param name="innerException">The underlying exception.</param>
+        </member>
+        <member name="T:Timetabler.CoreData.HalfOfDay">
+            <summary>
+            An enumeration for the part of the day a time may fall in.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.HalfOfDay.AM">
+            <summary>
+            Morning.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.HalfOfDay.Noon">
+            <summary>
+            Noon.
+            </summary>
+        </member>
+        <member name="F:Timetabler.CoreData.HalfOfDay.PM">
+            <summary>
+            Afternoon or evening.
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.HalfOfDayExtensions">
+            <summary>
+            Methods to operate on the <see cref="T:Timetabler.CoreData.HalfOfDay"/> enumeration.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.HalfOfDayExtensions.ToNameString(Timetabler.CoreData.HalfOfDay)">
+            <summary>
+            Converts a <see cref="T:Timetabler.CoreData.HalfOfDay"/> value to a translatable string.
+            </summary>
+            <param name="halfOfDay">The value to be converted.</param>
+            <returns>A translatable string describing the value.</returns>
         </member>
         <member name="T:Timetabler.CoreData.Helpers.CoordinateHelper">
             <summary>
@@ -223,6 +270,341 @@
             <summary>
             "Line" rows.
             </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Resources.HalfOfDay_ToNameString_Am">
+            <summary>
+              Looks up a localized string similar to a.m..
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Resources.HalfOfDay_ToNameString_Noon">
+            <summary>
+              Looks up a localized string similar to noon.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.Resources.HalfOfDay_ToNameString_Pm">
+            <summary>
+              Looks up a localized string similar to P.M..
+            </summary>
+        </member>
+        <member name="T:Timetabler.CoreData.TimeOfDay">
+            <summary>
+            A reference type which represents a clock time, to the nearest second.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Construct from components to the nearest second.
+            </summary>
+            <param name="hours">Number of hours.</param>
+            <param name="minutes">Number of minutes.</param>
+            <param name="seconds">Number of seconds.</param>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Construct from components to the nearest minute.
+            </summary>
+            <param name="hours">Number of hours.</param>
+            <param name="minutes">Number of minutes.</param>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.#ctor(System.Int32,System.Int32,System.Int32,Timetabler.CoreData.HalfOfDay)">
+            <summary>
+            Construct from components to the nearest second, using the twelve-hour clock.
+            </summary>
+            <param name="hours">Number of hours.</param>
+            <param name="minutes">Number of minutes.</param>
+            <param name="seconds">Number of seconds.</param>
+            <param name="half">AM or PM.</param>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.CopyAndReflect(Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Create a <see cref="T:Timetabler.CoreData.TimeOfDay" /> instance whose value is this object "reflected" in another object.  For example, if this object's value is 9am and the parameter's value is 9.15am, the 
+            output will be an instance whose value is 9.30am.  In more formal terms, the difference between this object and the output will be twice the difference between this object and 
+            the parameter.
+            </summary>
+            <param name="aroundTime">The time of day to use as the "mirror" for reflection.</param>
+            <returns>A <see cref="T:Timetabler.CoreData.TimeOfDay" /> instance whose value differs from the current object by twice the difference between this object and the parameter.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.#ctor(System.Int32,System.Int32,Timetabler.CoreData.HalfOfDay)">
+            <summary>
+            Construct from components to the nearest minute, using the twelve-hour clock.
+            </summary>
+            <param name="hours">Number of hours.</param>
+            <param name="minutes">Number of minutes.</param>
+            <param name="half">AM or PM.</param>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.#ctor(System.Int32)">
+            <summary>
+            Construct from the number of seconds since midnight.
+            </summary>
+            <param name="seconds">Number of seconds since midnight.</param>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.#ctor(System.Double)">
+            <summary>
+            Construct from the number of seconds since midnight, rounding to the nearest whole second.
+            </summary>
+            <param name="seconds">Number of seconds since midnight.</param>
+        </member>
+        <member name="P:Timetabler.CoreData.TimeOfDay.AbsoluteSeconds">
+            <summary>
+            The number of seconds since midnight.  This property is not serialised, but is the primary property when the object is in memory.  Other properties are derived from this one.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.TimeOfDay.Hours24">
+            <summary>
+            The number of hours in the time, using the 24-hour clock.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.TimeOfDay.Hours12">
+            <summary>
+            The number of hours in the time, using the 12-hour clock.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.TimeOfDay.Minutes">
+            <summary>
+            The number of minutes in the time.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.TimeOfDay.Seconds">
+            <summary>
+            The number of seconds in the time.
+            </summary>
+        </member>
+        <member name="P:Timetabler.CoreData.TimeOfDay.HalfOfDay">
+            <summary>
+            Whether this time is AM or PM (or noon).
+            </summary>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.FromTimeSpan(System.TimeSpan)">
+            <summary>
+            Create a <see cref="T:Timetabler.CoreData.TimeOfDay" /> object based on a <see cref="T:System.TimeSpan" /> value, taking the latter as the time elapsed since midnight and assuming that the day is a normal 24-hour day
+            </summary>
+            <param name="ts">The amount of time elapsed since midnight.</param>
+            <returns>A <see cref="T:Timetabler.CoreData.TimeOfDay" /> instance.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.Equals(Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Is this time of day equal in value to another instance?
+            </summary>
+            <param name="other">Another <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <returns>true if the instances are equal in value, false otherwise.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.Equals(System.Object)">
+            <summary>
+            Is this time of day equal in value to another instance?
+            </summary>
+            <param name="obj">An <see cref="T:System.Object"/></param>
+            <returns>true if the other instance is a <see cref="T:Timetabler.CoreData.TimeOfDay"/> equal in value to this one, false if the other instance is not equal in value or is a different type.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.GetHashCode">
+            <summary>
+            Returns an int hashcode.
+            </summary>
+            <returns>An int derived from the value of the object.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.CompareTo(System.Object)">
+            <summary>
+            Compare this instance to another object.
+            </summary>
+            <param name="obj">Another object to compare to.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the obj parameter is not a <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</exception>
+            <returns>-1, 0 or 1 according to whether the other object's value is less than, equal to or greater than this instance.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.CompareTo(Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Compare this instance to another object of the same type.
+            </summary>
+            <param name="other">The object to compare to.</param>
+            <returns>-1, 0 or 1 according to whether the other instance's value is less than, equal to or greater than this instance.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Convert to a string.
+            </summary>
+            <remarks>
+            <para>If the format parameter consists of the single character "G" or "g", the string will consist of the value of the <see cref="P:Timetabler.CoreData.TimeOfDay.AbsoluteSeconds"/> property.</para>
+            <para>Otherwise, the following character sequences in the format parameter will be replaced as follows:</para>
+            <list type="table">
+            <listheader>
+            <term>Format character</term>
+            <description>Replacement</description>
+            </listheader>
+            <item><term>f</term><description>If the seconds component of the time is 30 or greater, a half symbol; otherwise an empty string.</description></item>
+            <item><term>h</term><description>Hours from 1-12, leading zeros omitted.</description></item>
+            <item><term>hh</term><description>Hours from 01-12, leading zero preserved.</description></item>
+            <item><term>H</term><description>Hours from 0-23, leading zeros omitted.</description></item>
+            <item><term>HH</term><description>Hours from 00-23, leading zero preserved.</description></item>
+            <item><term>m</term><descrption>Minutes from 0-59, leading zero omitted.</descrption></item>
+            <item><term>mm</term><description>Minutes from 00-59, leading zero preserved.</description></item>
+            <item><term>s</term><description>Seconds from 0-59, leading zero omitted.</description></item>
+            <item><term>ss</term><description>Seconds from 00-59, leading zero preserved.</description></item>
+            <item><term>t</term><description>The first letter of the AM/PM designator for the relevant culture.</description></item>
+            <item><term>tt</term><description>The AM/PM designator for the relevant culture.</description></item>
+            </list>
+            </remarks>
+            <param name="format">Format string</param>
+            <param name="formatProvider">Culture-specific information.</param>
+            <returns>A string containing the value of the object formatted as per the format string and culture.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.ToString(System.String)">
+            <summary>
+            Convert to a string.
+            </summary>
+            <remarks>
+            <para>If the format parameter consists of the single character "G" or "g", the string will consist of the value of the <see cref="P:Timetabler.CoreData.TimeOfDay.AbsoluteSeconds"/> property.</para>
+            <para>Otherwise, the following character sequences in the format parameter will be replaced as follows:</para>
+            <list type="table">
+            <listheader>
+            <term>Format character</term>
+            <description>Replacement</description>
+            </listheader>
+            <item><term>f</term><description>If the seconds component of the time is 30 or greater, a half symbol; otherwise an empty string.</description></item>
+            <item><term>h</term><description>Hours from 1-12, leading zeros omitted.</description></item>
+            <item><term>hh</term><description>Hours from 01-12, leading zero preserved.</description></item>
+            <item><term>H</term><description>Hours from 0-23, leading zeros omitted.</description></item>
+            <item><term>HH</term><description>Hours from 00-23, leading zero preserved.</description></item>
+            <item><term>m</term><descrption>Minutes from 0-59, leading zero omitted.</descrption></item>
+            <item><term>mm</term><description>Minutes from 00-59, leading zero preserved.</description></item>
+            <item><term>s</term><description>Seconds from 0-59, leading zero omitted.</description></item>
+            <item><term>ss</term><description>Seconds from 00-59, leading zero preserved.</description></item>
+            <item><term>t</term><description>The first letter of the AM/PM designator for the current culture.</description></item>
+            <item><term>tt</term><description>The AM/PM designator for the current culture.</description></item>
+            </list>
+            </remarks>
+            <param name="format">Format string</param>
+            <returns>A string containing the value of the object formatted as per the format string and current culture.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.ToString">
+            <summary>
+            Convert to string.  Equivalent to calling ToString(string format) with "HH:mmf" as the format string.
+            </summary>
+            <returns>The instance's data converted to a string using the default format and current culture.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_Equality(Timetabler.CoreData.TimeOfDay,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns true if the two objects are equal, false otherwise.
+            </summary>
+            <param name="t1">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance to check for equality.</param>
+            <param name="t2">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance to check for equality.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_Inequality(Timetabler.CoreData.TimeOfDay,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns true if the instances are not equal, false otherwise.
+            </summary>
+            <param name="t1">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance to check for equality.</param>
+            <param name="t2">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance to check for equality.</param>
+            <returns>True or false</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_LessThan(Timetabler.CoreData.TimeOfDay,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns true if instance t1 is before t2, false otherwise.
+            </summary>
+            <param name="t1">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <param name="t2">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <returns>True or false according to whether t1 is before or after t2.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_LessThanOrEqual(Timetabler.CoreData.TimeOfDay,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns false if t2 is after t1, otherwise true.
+            </summary>
+            <param name="t1">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <param name="t2">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_GreaterThan(Timetabler.CoreData.TimeOfDay,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns true if t1 is after t2, otherwise false.
+            </summary>
+            <param name="t1">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <param name="t2">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_GreaterThanOrEqual(Timetabler.CoreData.TimeOfDay,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns false if t1 is before t2, otherwise true.
+            </summary>
+            <param name="t1">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <param name="t2">A <see cref="T:Timetabler.CoreData.TimeOfDay"/> instance.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_Subtraction(Timetabler.CoreData.TimeOfDay,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan" /> representing the time elapsed between the two parameters.
+            </summary>
+            <param name="t1"></param>
+            <param name="t2"></param>
+            <returns>A <see cref="T:System.TimeSpan" /> struct.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_Subtraction(Timetabler.CoreData.TimeOfDay,System.TimeSpan)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan" /> representing the time elapsed between the two parameters.
+            </summary>
+            <param name="t1"></param>
+            <param name="t2"></param>
+            <returns>A <see cref="T:System.TimeSpan" /> struct.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_Subtraction(System.TimeSpan,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan" /> representing the time elapsed between the two parameters.
+            </summary>
+            <param name="t1"></param>
+            <param name="t2"></param>
+            <returns>A <see cref="T:System.TimeSpan" /> struct.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_Addition(Timetabler.CoreData.TimeOfDay,System.TimeSpan)">
+            <summary>
+            Returns a new <see cref="T:Timetabler.CoreData.TimeOfDay" /> object representing the time of day of the first parameter, plus the span of time of the second parameter.
+            </summary>
+            <param name="t1"></param>
+            <param name="t2"></param>
+            <returns>A new <see cref="T:Timetabler.CoreData.TimeOfDay" /> instance.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.op_Addition(System.TimeSpan,Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Returns a new <see cref="T:Timetabler.CoreData.TimeOfDay" /> object representing the time of day of the second parameter, plus the span of time of the first parameter.
+            </summary>
+            <param name="t1"></param>
+            <param name="t2"></param>
+            <returns>A new <see cref="T:Timetabler.CoreData.TimeOfDay" /> instance.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.AddMinutes(System.Int32)">
+            <summary>
+            Offsets a <see cref="T:Timetabler.CoreData.TimeOfDay"/> by a given number of minutes.
+            </summary>
+            <param name="minutes">The number of minutes (positive or negative) to add to the current time.</param>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.Copy">
+            <summary>
+            Create a copy of this object.
+            </summary>
+            <returns>A copy of this object.</returns>
+        </member>
+        <member name="M:Timetabler.CoreData.TimeOfDay.CopyTo(Timetabler.CoreData.TimeOfDay)">
+            <summary>
+            Copy the contents of this object into another.
+            </summary>
+            <param name="target">The target object to be overwritten.</param>
         </member>
         <member name="T:Timetabler.CoreData.TrainRoutingOptions">
             <summary>

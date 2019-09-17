@@ -88,6 +88,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalboxUnitTests.cs" />
     <Compile Include="TestHelpers\DistanceHelpers.cs" />
+    <Compile Include="TestHelpers\Extensions\RandomExtensions.cs" />
     <Compile Include="TestHelpers\FootnoteDisplayModelHelpers.cs" />
     <Compile Include="TestHelpers\GenericTimeModelHelpers.cs" />
     <Compile Include="TestHelpers\NoteHelpers.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="TestHelpers\TrainLocationTimeModelHelpers.cs" />
     <Compile Include="TestHelpers\TrainSegmentModelHelpers.cs" />
     <Compile Include="TestHelpers\TrainTimeHelpers.cs" />
-    <Compile Include="TimeOfDayUnitTests.cs" />
     <Compile Include="ToWorkUnitTests.cs" />
     <Compile Include="TrainLocationTimeUnitTests.cs" />
     <Compile Include="TrainTimeUnitTests.cs" />
@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">
-      <Project>{78CD25FC-D2CF-4B55-94DE-F752FBBD0C2D}</Project>
+      <Project>{746618e4-92ef-451e-acb6-1eef1254137a}</Project>
       <Name>Tests.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">

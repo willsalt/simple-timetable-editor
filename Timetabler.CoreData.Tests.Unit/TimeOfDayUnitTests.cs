@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 
 namespace Timetabler.Data.Tests.Unit
 {
@@ -156,7 +157,7 @@ namespace Timetabler.Data.Tests.Unit
             int reflectAroundSecs = _rnd.Next((86400 - origTime) / 2 + origTime / 2) + (origTime / 2);
             TimeOfDay testParam = new TimeOfDay(reflectAroundSecs);
 
-            TimeOfDay testOutput = testObject.CopyAndReflect(testParam);
+            _ = testObject.CopyAndReflect(testParam);
 
             Assert.AreEqual(origTime, testObject.AbsoluteSeconds);
         }

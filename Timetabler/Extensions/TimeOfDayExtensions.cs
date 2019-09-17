@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.Helpers;
 
@@ -37,8 +38,7 @@ namespace Timetabler.Extensions
             HalfOfDay expectedValue = time.Hours24 < 12 ? HalfOfDay.AM : HalfOfDay.PM;
             foreach (object obj in cbHalfOfDay.Items)
             {
-                HumanReadableEnum<HalfOfDay> hodItem = obj as HumanReadableEnum<HalfOfDay>;
-                if (hodItem != null && hodItem.Value == expectedValue)
+                if (obj is HumanReadableEnum<HalfOfDay> hodItem && hodItem.Value == expectedValue)
                 {
                     cbHalfOfDay.SelectedItem = hodItem;
                     break;

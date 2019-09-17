@@ -8,7 +8,7 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class TimeOfDayUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         [TestMethod]
         public void TimeOfDayClassConstructorWithDoubleParameterReturnsTimeOfDayWithCorrectValue()

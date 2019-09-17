@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <Version>1.2.0</Version>
+    <Authors>Will Salt</Authors>
+    <Company>Will Salt</Company>
+    <Copyright>Copyright © 2019 Will Salt</Copyright>
+    <Product>Simple Timetable Editor</Product>
   </PropertyGroup>
 
   <ItemGroup>

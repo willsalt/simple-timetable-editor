@@ -43,11 +43,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetabler.Tests.Unit", "Ti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.CoreData", "Timetabler.CoreData\Timetabler.CoreData.csproj", "{DDC29237-18C5-40A7-BCCC-2A51FA8C5F9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.Writer", "Unicorn.Writer\Unicorn.Writer.csproj", "{7431CC05-B157-4EDD-83C5-42C2D5A79C55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.Writer", "Unicorn.Writer\Unicorn.Writer.csproj", "{7431CC05-B157-4EDD-83C5-42C2D5A79C55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Utility", "Tests.Utility\Tests.Utility.csproj", "{746618E4-92EF-451E-ACB6-1EEF1254137A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetabler.CoreData.Tests.Unit", "Timetabler.CoreData.Tests.Unit\Timetabler.CoreData.Tests.Unit.csproj", "{01B53591-1137-4D29-BEE7-0BAF111A1BAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.CoreData.Tests.Unit", "Timetabler.CoreData.Tests.Unit\Timetabler.CoreData.Tests.Unit.csproj", "{01B53591-1137-4D29-BEE7-0BAF111A1BAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

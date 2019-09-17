@@ -4,6 +4,6 @@ namespace Tests.Utility.Providers
 {
     public static class RandomProvider
     {
-        public static Random Default = new Random();
+        public static Random Default { get; } = new Random();
     }
 }

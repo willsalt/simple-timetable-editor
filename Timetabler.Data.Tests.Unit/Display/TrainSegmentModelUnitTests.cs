@@ -861,7 +861,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             TrainSegmentModel testOutput = testObject.SplitAtIndex(2, 1);
 
-            Assert.AreEqual("p.m.", testOutput.HalfOfDay);
+            Assert.AreEqual("P.M.", testOutput.HalfOfDay);
         }
     }
 }

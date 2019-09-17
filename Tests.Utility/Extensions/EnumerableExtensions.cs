@@ -7,8 +7,13 @@ namespace Tests.Utility.Extensions
     {
         public static int MaxIndex<T>(this IEnumerable<T> sequence) where T : IComparable<T>
         {
+            if (sequence == null)
+            {
+                throw new NullReferenceException();
+            }
+
             int maxIndex = -1;
-            T maxValue = default(T);
+            T maxValue = default;
 
             int index = 0;
             foreach (T item in sequence)

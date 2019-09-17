@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData.Helpers;
 
 namespace Timetabler.CoreData.Tests.Unit.Helpers
@@ -8,14 +9,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
     [TestClass]
     public class StringHelperUnitTests
     {
-        private Random _random;
-
+        private static readonly Random _rnd = RandomProvider.Default;
         private const int MaxTestStringLength = 1024;
-
-        public StringHelperUnitTests()
-        {
-            _random = new Random();
-        }
 
         [TestMethod]
         public void StripArrivalDepartureSuffixReturnsFirstArgumentIfFirstArgumentDoesNotEndInDashDOrDashA()
@@ -23,8 +18,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
             string testString;
             do
             {
-                testString = _random.NextString(_random.Next(MaxTestStringLength));
-            } while (testString.EndsWith("-a") || testString.EndsWith("-d"));
+                testString = _rnd.NextString(_rnd.Next(MaxTestStringLength));
+            } while (testString.EndsWith("-a", StringComparison.InvariantCulture) || testString.EndsWith("-d", StringComparison.InvariantCulture));
 
             string result = testString.StripArrivalDepartureSuffix();
 
@@ -34,7 +29,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void StripArrivalDepartureSuffixReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInArrivalSuffix()
         {
-            string expectedResult = _random.NextString(_random.Next(MaxTestStringLength));
+            string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
             string testString = expectedResult + LocationIdSuffixes.Arrival;
 
             string result = testString.StripArrivalDepartureSuffix();
@@ -45,7 +40,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         [TestMethod]
         public void StripArrivalDepartureSuffixReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInDepartureSuffix()
         {
-            string expectedResult = _random.NextString(_random.Next(MaxTestStringLength));
+            string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
             string testString = expectedResult + LocationIdSuffixes.Departure;
 
             string result = testString.StripArrivalDepartureSuffix();

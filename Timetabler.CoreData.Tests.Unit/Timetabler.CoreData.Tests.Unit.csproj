@@ -4,6 +4,14 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Version>1.2.0</Version>
+
+    <Authors>Will Salt</Authors>
+
+    <Product>Simple Timetable Editor</Product>
+
+    <Copyright>Copyright © 2017-2019 Will Salt</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

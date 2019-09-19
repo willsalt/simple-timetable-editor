@@ -10,6 +10,14 @@
     <Product>Simple Timetable Editor</Product>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Will\Source\Repos\simple-timetable-editor\Unicorn.Writer\Unicorn.Writer.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Will\Source\Repos\simple-timetable-editor\Unicorn.Writer\Unicorn.Writer.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
       <PrivateAssets>all</PrivateAssets>

@@ -106,6 +106,15 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Objects in the cross-reference table must have object IDs previously issued by the cross-reference table..
+        /// </summary>
+        internal static string Structural_PdfCrossRefTable_SetSlot_Invalid_ObjectId_Error {
+            get {
+                return ResourceManager.GetString("Structural_PdfCrossRefTable_SetSlot_Invalid_ObjectId_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The generation number must be a non-negative integer..
         /// </summary>
         internal static string Structural_PdfPageTreeItem_Invalid_Generation_Error {
@@ -120,6 +129,15 @@ namespace Unicorn.Writer {
         internal static string Structural_PdfPageTreeItem_Invalid_ObjectId_Error {
             get {
                 return ResourceManager.GetString("Structural_PdfPageTreeItem_Invalid_ObjectId_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The cross-reference table address {0} appeared to be invalid..
+        /// </summary>
+        internal static string Structural_PdfTrailer_SetCrossReferenceTableLocation_Invalid_Location_Error {
+            get {
+                return ResourceManager.GetString("Structural_PdfTrailer_SetCrossReferenceTableLocation_Invalid_Location_Error", resourceCulture);
             }
         }
         

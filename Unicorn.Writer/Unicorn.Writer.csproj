@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Will\Source\Repos\simple-timetable-editor\Unicorn.Writer\Unicorn.Writer.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Unicorn.Writer.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\Will\Source\Repos\simple-timetable-editor\Unicorn.Writer\Unicorn.Writer.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Unicorn.Writer.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

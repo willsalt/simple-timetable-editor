@@ -5,20 +5,38 @@ using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
+    /// <summary>
+    /// A class to represent a PDF stream.  These have to be stored as indirect objects, and consist of a dictionary containing stream metadata followed by the stream content itself.
+    /// </summary>
     public class PdfStream : PdfIndirectObject, IPdfPrimitiveObject
     {
         private readonly List<byte> _contents = new List<byte>();
 
+        /// <summary>
+        /// Constructor, with indirect object parameters.
+        /// </summary>
+        /// <param name="objectId">An indirect object ID obtained from a cross-reference table.</param>
+        /// <param name="generation">The generation number of this stream.  Defaults to 0.</param>
         public PdfStream(int objectId, int generation = 0) : base(objectId, generation)
         {
 
         }
 
+        /// <summary>
+        /// Add data to the stream.
+        /// </summary>
+        /// <param name="bytes">The data to add to the stream.</param>
         public void AddBytes(IEnumerable<byte> bytes)
         {
             _contents.AddRange(bytes);
         }
 
+        /// <summary>
+        /// Write this stream to a <see cref="Stream" />.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <returns>The number of bytes written.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the stream parameter is null.</exception>
         public override int WriteTo(Stream stream)
         {
             if (stream == null)
@@ -28,6 +46,12 @@ namespace Unicorn.Writer.Primitives
             return Write(WriteToStream, PdfDictionary.WriteTo, stream);
         }
 
+        /// <summary>
+        /// Convert this stream to an array of bytes and append them to a <see cref="List{Byte}" />.
+        /// </summary>
+        /// <param name="list">The list to append to.</param>
+        /// <returns>The number of bytes appended.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
         public override int WriteTo(List<byte> list)
         {
             if (list == null)

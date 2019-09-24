@@ -7,23 +7,48 @@ using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Structural
 {
+    /// <summary>
+    /// Represents the trailer of a PDF file - the very last part, which contains links to the catalogue and the cross-ref table.
+    /// </summary>
     public class PdfTrailer : IPdfWriteable
     {
         private readonly PdfCatalogue _root;
         private readonly PdfCrossRefTable _xrefs;
         private int? _xrefLocation = null;
 
+        /// <summary>
+        /// Value-setting constructor
+        /// </summary>
+        /// <param name="root">The page tree root of the document.</param>
+        /// <param name="xrefs">The cross-reference table of the document.</param>
         public PdfTrailer(PdfCatalogue root, PdfCrossRefTable xrefs)
         {
             _root = root ?? throw new ArgumentNullException(nameof(root));
             _xrefs = xrefs ?? throw new ArgumentNullException(nameof(xrefs));
         }
 
+        /// <summary>
+        /// Record the byte offset, in the PDF file, of the cross-reference table.  This method must be called before the trailer is written to the stream.
+        /// </summary>
+        /// <param name="location">The address of the cross-reference table, in bytes from the start of the file.</param>
         public void SetCrossReferenceTableLocation(int location)
         {
+            if (location <= 8)
+            {
+                throw new ArgumentOutOfRangeException(nameof(location),
+                    string.Format(CultureInfo.CurrentCulture, Resources.Structural_PdfTrailer_SetCrossReferenceTableLocation_Invalid_Location_Error, location));
+            }
             _xrefLocation = location;
         }
 
+        /// <summary>
+        /// Write this object to a <see cref="Stream" />.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <returns>The number of bytes written.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the stream parameter is null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the <see cref="SetCrossReferenceTableLocation(int)" /> method has not been called to set the address of the cross-reference 
+        /// table before writing the trailer to the stream.</exception>
         public int WriteTo(Stream stream)
         {
             if (stream == null)

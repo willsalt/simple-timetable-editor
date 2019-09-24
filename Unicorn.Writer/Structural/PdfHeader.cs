@@ -4,8 +4,14 @@ using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Structural
 {
+    /// <summary>
+    /// A singleton class representing a PDF file header.
+    /// </summary>
     public class PdfHeader : IPdfWriteable
     {
+        /// <summary>
+        /// The singleton instance of this class.
+        /// </summary>
         public static readonly PdfHeader Value = new PdfHeader();
 
         private PdfHeader()
@@ -13,6 +19,12 @@ namespace Unicorn.Writer.Structural
 
         }
 
+        /// <summary>
+        /// Write this header to a <see cref="Stream" />.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <returns>The number of bytes written.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the stream parameter is null.</exception>
         public int WriteTo(Stream stream)
         {
             if (stream == null)

@@ -132,11 +132,17 @@
   <data name="Primitives_PdfIndirectObject_Write_To_PdfStream_Error" xml:space="preserve">
     <value>Indirect objects may not be used as stream content.</value>
   </data>
+  <data name="Structural_PdfCrossRefTable_SetSlot_Invalid_ObjectId_Error" xml:space="preserve">
+    <value>Objects in the cross-reference table must have object IDs previously issued by the cross-reference table.</value>
+  </data>
   <data name="Structural_PdfPageTreeItem_Invalid_Generation_Error" xml:space="preserve">
     <value>The generation number must be a non-negative integer.</value>
   </data>
   <data name="Structural_PdfPageTreeItem_Invalid_ObjectId_Error" xml:space="preserve">
     <value>The object ID must be a positive integer.</value>
+  </data>
+  <data name="Structural_PdfTrailer_SetCrossReferenceTableLocation_Invalid_Location_Error" xml:space="preserve">
+    <value>The cross-reference table address {0} appeared to be invalid.</value>
   </data>
   <data name="Structural_PdfTrailer_WriteTo_CrossRef_Location_Not_Known_Error" xml:space="preserve">
     <value>The file trailer cannot be written when the cross-reference table location is unknown.</value>

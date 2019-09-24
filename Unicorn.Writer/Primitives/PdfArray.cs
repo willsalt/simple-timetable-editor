@@ -4,15 +4,26 @@ using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
+    /// <summary>
+    /// The class which represents a PDF array object.
+    /// </summary>
     public class PdfArray : PdfSimpleObject
     {
         private readonly IPdfPrimitiveObject[] _val;
 
+        /// <summary>
+        /// Create a new array whose contents are the given primitives.
+        /// </summary>
+        /// <param name="contents"></param>
         public PdfArray(IEnumerable<IPdfPrimitiveObject> contents)
         {
             _val = contents.ToArray();
         }
 
+        /// <summary>
+        /// Convert the contents of the array into an array of bytes.
+        /// </summary>
+        /// <returns>An array of bytes which represent this object, serialised.</returns>
         protected override byte[] FormatBytes()
         {
             List<byte> byteList = new List<byte>() { 0x5b };

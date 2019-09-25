@@ -16,12 +16,14 @@ using Unicorn;
 using Unicorn.Impl.PdfSharp;
 using Unicorn.Interfaces;
 using Unicorn.Shapes;
-using Unicorn.Writer;
+using Timetabler.PdfExport.Interfaces;
 
 namespace Timetabler.PdfExport
 {
     public class PdfExporter : IExporter
     {
+        private readonly IDocumentDescriptorFactory _engineSelector;
+
         public double MainLineWidth { get; set; }
         public double PassingTrainDashWidth { get; set; }
 
@@ -61,8 +63,10 @@ namespace Timetabler.PdfExport
 
         private IPageDescriptor _currentPage;
 
-        public PdfExporter()
+        public PdfExporter(IDocumentDescriptorFactory ddf)
         {
+            _engineSelector = ddf;
+
             _titleFont = new FontDescriptor("Serif", UniFontStyle.Bold, 16);
             _subtitleFont = new FontDescriptor("Serif", UniFontStyle.Bold, 14);
             _plainBodyFont = new FontDescriptor("Serif", 7.5);
@@ -102,7 +106,7 @@ namespace Timetabler.PdfExport
 
         public void Export(TimetableDocument document, Stream outputStream)
         {
-            IDocumentDescriptor doc = new PdfDocument(PhysicalPageSize.A4, PageOrientation.Landscape, _defaultHorizontalMarginProportion, _defaultVerticalMarginProportion);
+            IDocumentDescriptor doc = _engineSelector.GetDocumentDescriptor(_defaultHorizontalMarginProportion, _defaultVerticalMarginProportion);
             bool workNotFinished = true;
             while (workNotFinished)
             {

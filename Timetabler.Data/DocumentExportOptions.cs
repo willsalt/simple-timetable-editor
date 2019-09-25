@@ -51,12 +51,18 @@
         public double FillerDashLineWidth { get; set; }
 
         /// <summary>
+        /// The 
+        /// </summary>
+        public PdfExportEngine ExportEngine { get; set; }
+
+        /// <summary>
         /// Default constructor - sets the default values of the <see cref="LineWidth" /> and <see cref="FillerDashLineWidth" /> properties.
         /// </summary>
         public DocumentExportOptions()
         {
             LineWidth = 1.0;
             FillerDashLineWidth = 0.5;
+            ExportEngine = PdfExportEngine.External;
         }
 
         /// <summary>
@@ -75,6 +81,7 @@
                 FillerDashLineWidth = FillerDashLineWidth,
                 DisplayGraph = DisplayGraph,
                 DisplayGlossary = DisplayGlossary,
+                ExportEngine = ExportEngine,
             };
         }
     }

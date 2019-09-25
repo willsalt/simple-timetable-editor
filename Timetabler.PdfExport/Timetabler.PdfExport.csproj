@@ -51,9 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentDescriptorFactory.cs" />
     <Compile Include="Extensions\DashStyleExtensions.cs" />
     <Compile Include="Extensions\FootnoteDisplayModelExtensions.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensions.cs" />
+    <Compile Include="Interfaces\IDocumentDescriptorFactory.cs" />
     <Compile Include="LocationBoxDimensions.cs" />
     <Compile Include="PdfExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

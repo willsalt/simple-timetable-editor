@@ -75,6 +75,7 @@
             {
                 DisplayLocoDiagramRow = DisplayLocoDiagramRow,
                 DisplayToWorkRow = DisplayToWorkRow,
+                DisplayLocoToWorkRow = DisplayLocoToWorkRow,
                 DisplayBoxHours = DisplayBoxHours,
                 DisplayCredits = DisplayCredits,
                 LineWidth = LineWidth,

@@ -24,5 +24,15 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers.Extensions
             };
             return allValues[random.Next(allValues.Length)];
         }
+
+        public static PdfExportEngine NextPdfExportEngine(this Random random)
+        {
+            PdfExportEngine[] allValues = new PdfExportEngine[]
+            {
+                PdfExportEngine.External,
+                PdfExportEngine.Unicorn,
+            };
+            return allValues[random.Next(allValues.Length)];
+        }
     }
 }

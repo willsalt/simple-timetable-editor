@@ -125,5 +125,18 @@ namespace Timetabler.Helpers
                 new HumanReadableEnum<GraphEditStyle> { Name = Resources.HumanReadableEnum_GraphEditStyle_PreserveSectionTimes, Value = GraphEditStyle.PreserveSectionTimes }
             };
         }
+
+        /// <summary>
+        /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="PdfExportEngine" /> enumeration.
+        /// </summary>
+        /// <returns>An array of <see cref="HumanReadableEnum{TEnum}" /> instances.</returns>
+        public static HumanReadableEnum<PdfExportEngine>[] GetPdfExportEngine()
+        {
+            return new[]
+            {
+                new HumanReadableEnum<PdfExportEngine> { Name = Resources.HumanReadableEnum_PdfExportEngine_External, Value = PdfExportEngine.External },
+                new HumanReadableEnum<PdfExportEngine> { Name = Resources.HumanReadableEnum_PdfExportEngine_Unicorn, Value = PdfExportEngine.Unicorn },
+            };
+        }
     }
 }

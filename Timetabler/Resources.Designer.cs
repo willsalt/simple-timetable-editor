@@ -214,6 +214,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to External.
+        /// </summary>
+        internal static string HumanReadableEnum_PdfExportEngine_External {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_PdfExportEngine_External", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unicorn.
+        /// </summary>
+        internal static string HumanReadableEnum_PdfExportEngine_Unicorn {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_PdfExportEngine_Unicorn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The chainage must be a number..
         /// </summary>
         internal static string LocationEditForm_Chainage_ValidationFailureNaN {

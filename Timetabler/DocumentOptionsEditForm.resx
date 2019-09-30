@@ -229,7 +229,7 @@
     <value>MiddleRight</value>
   </data>
   <data name="ckDisplayTrainLabelsOnGraphs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 70</value>
+    <value>10, 72</value>
   </data>
   <data name="ckDisplayTrainLabelsOnGraphs.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 17</value>

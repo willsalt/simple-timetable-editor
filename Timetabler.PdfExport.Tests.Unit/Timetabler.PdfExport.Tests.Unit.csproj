@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentDescriptorFactoryUnitTests.cs" />
     <Compile Include="LocationBoxDimensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,9 +62,25 @@
       <Project>{746618e4-92ef-451e-acb6-1eef1254137a}</Project>
       <Name>Tests.Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
+      <Project>{9A7E2940-50B8-4F3A-A535-AB6220E6CE3A}</Project>
+      <Name>Timetabler.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Timetabler.PdfExport\Timetabler.PdfExport.csproj">
       <Project>{68035ddb-1c24-407c-b6b3-32cec1d964e5}</Project>
       <Name>Timetabler.PdfExport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.Impl.PdfSharp\Unicorn.Impl.PdfSharp.csproj">
+      <Project>{4D101015-CE74-4648-B07B-5AC806531E95}</Project>
+      <Name>Unicorn.Impl.PdfSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
+      <Project>{61E758D9-A9AE-4F1E-AD46-ABFFDFE67259}</Project>
+      <Name>Unicorn.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.Writer\Unicorn.Writer.csproj">
+      <Project>{7431CC05-B157-4EDD-83C5-42C2D5A79C55}</Project>
+      <Name>Unicorn.Writer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

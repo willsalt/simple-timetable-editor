@@ -42,8 +42,17 @@
             this.nudFillerDashLineWidth = new System.Windows.Forms.NumericUpDown();
             this.ckDisplayGraph = new System.Windows.Forms.CheckBox();
             this.ckDisplayGlossary = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbPdfEngine = new System.Windows.Forms.ComboBox();
+            this.lblWarning = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // ckDisplayLocoDiagram
@@ -133,28 +142,74 @@
             this.ckDisplayGlossary.UseVisualStyleBackColor = true;
             this.ckDisplayGlossary.CheckedChanged += new System.EventHandler(this.ckDisplayGlossary_CheckedChanged);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.ckDisplayLocoDiagram);
+            this.tabPage1.Controls.Add(this.ckDisplayGlossary);
+            this.tabPage1.Controls.Add(this.ckDisplayToWorkRow);
+            this.tabPage1.Controls.Add(this.ckDisplayGraph);
+            this.tabPage1.Controls.Add(this.ckDisplayBoxHours);
+            this.tabPage1.Controls.Add(this.nudFillerDashLineWidth);
+            this.tabPage1.Controls.Add(this.ckDisplayCredits);
+            this.tabPage1.Controls.Add(this.nudLineWidth);
+            this.tabPage1.Controls.Add(this.ckDisplayLocoToWorkRow);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.label1);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.Name = "tabPage1";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.cbPdfEngine);
+            this.tabPage2.Controls.Add(this.lblWarning);
+            this.tabPage2.Controls.Add(this.label3);
+            resources.ApplyResources(this.tabPage2, "tabPage2");
+            this.tabPage2.Name = "tabPage2";
+            // 
+            // cbPdfEngine
+            // 
+            this.cbPdfEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPdfEngine.FormattingEnabled = true;
+            resources.ApplyResources(this.cbPdfEngine, "cbPdfEngine");
+            this.cbPdfEngine.Name = "cbPdfEngine";
+            this.cbPdfEngine.SelectedIndexChanged += new System.EventHandler(this.CbPdfEngine_SelectedIndexChanged);
+            // 
+            // lblWarning
+            // 
+            resources.ApplyResources(this.lblWarning, "lblWarning");
+            this.lblWarning.Name = "lblWarning";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
             // DocumentExportOptionsEditForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.ckDisplayGlossary);
-            this.Controls.Add(this.ckDisplayGraph);
-            this.Controls.Add(this.nudFillerDashLineWidth);
-            this.Controls.Add(this.nudLineWidth);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.ckDisplayLocoToWorkRow);
-            this.Controls.Add(this.ckDisplayCredits);
-            this.Controls.Add(this.ckDisplayBoxHours);
-            this.Controls.Add(this.ckDisplayToWorkRow);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.ckDisplayLocoDiagram);
             this.Name = "DocumentExportOptionsEditForm";
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -173,5 +228,11 @@
         private System.Windows.Forms.NumericUpDown nudFillerDashLineWidth;
         private System.Windows.Forms.CheckBox ckDisplayGraph;
         private System.Windows.Forms.CheckBox ckDisplayGlossary;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ComboBox cbPdfEngine;
+        private System.Windows.Forms.Label lblWarning;
+        private System.Windows.Forms.Label label3;
     }
 }

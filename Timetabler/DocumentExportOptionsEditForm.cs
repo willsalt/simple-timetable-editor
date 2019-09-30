@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using Timetabler.Data;
+using Timetabler.Helpers;
 
 namespace Timetabler
 {
@@ -37,6 +38,7 @@ namespace Timetabler
         public DocumentExportOptionsEditForm()
         {
             InitializeComponent();
+            cbPdfEngine.Items.AddRange(HumanReadableEnum<PdfExportEngine>.GetPdfExportEngine());
         }
 
         private void UpdateViewFromModel()
@@ -55,6 +57,15 @@ namespace Timetabler
             ckDisplayGlossary.Checked = Model.DisplayGlossary;
             nudLineWidth.Value = (decimal)Model.LineWidth;
             nudFillerDashLineWidth.Value = (decimal)Model.FillerDashLineWidth;
+            foreach (var item in cbPdfEngine.Items)
+            {
+                var engineItem = item as HumanReadableEnum<PdfExportEngine>;
+                if (engineItem != null && engineItem.Value == Model.ExportEngine)
+                {
+                    cbPdfEngine.SelectedItem = engineItem;
+                    break;
+                }
+            }
             _inViewUpdate = false;
         }
 
@@ -146,6 +157,22 @@ namespace Timetabler
             }
             Log.Trace("ckDisplayGlossary is {0}", ckDisplayGlossary.Checked);
             Model.DisplayGlossary = ckDisplayGlossary.Checked;
+        }
+
+        private void CbPdfEngine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cbPdfEngine.SelectedItem is HumanReadableEnum<PdfExportEngine> item))
+            {
+                Log.Trace("cbPdfEngine: null item selected");
+                return;
+            }
+            lblWarning.Visible = item.Value == PdfExportEngine.Unicorn;
+            if (_inViewUpdate || Model == null)
+            {
+                return;
+            }
+            Log.Trace("cbPdfEngine is {0}", item.Name);
+            Model.ExportEngine = item.Value;
         }
     }
 }

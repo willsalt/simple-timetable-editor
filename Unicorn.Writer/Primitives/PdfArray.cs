@@ -21,6 +21,13 @@ namespace Unicorn.Writer.Primitives
         }
 
         /// <summary>
+        /// Indexer to the contents of the array.
+        /// </summary>
+        /// <param name="i">The index of the array member.</param>
+        /// <returns>The array member at the given index.</returns>
+        public IPdfPrimitiveObject this[int i] => _val[i];
+
+        /// <summary>
         /// Convert the contents of the array into an array of bytes.
         /// </summary>
         /// <returns>An array of bytes which represent this object, serialised.</returns>

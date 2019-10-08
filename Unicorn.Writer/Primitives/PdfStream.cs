@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
@@ -21,6 +22,11 @@ namespace Unicorn.Writer.Primitives
         {
 
         }
+
+        /// <summary>
+        /// A read-only copy of the stream contents.
+        /// </summary>
+        public List<byte> Contents => _contents.ToList();
 
         /// <summary>
         /// Add data to the stream.

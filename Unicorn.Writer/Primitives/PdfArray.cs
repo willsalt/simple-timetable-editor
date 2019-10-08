@@ -28,6 +28,11 @@ namespace Unicorn.Writer.Primitives
         public IPdfPrimitiveObject this[int i] => _val[i];
 
         /// <summary>
+        /// Length of the array.
+        /// </summary>
+        public int Length => _val.Length;
+
+        /// <summary>
         /// Convert the contents of the array into an array of bytes.
         /// </summary>
         /// <returns>An array of bytes which represent this object, serialised.</returns>

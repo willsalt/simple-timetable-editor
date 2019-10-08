@@ -7,12 +7,17 @@ namespace Tests.Utility.Extensions
     public static class RandomExtensions
     {
         private const string _alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
+        private const string _alphabetical = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string _hex = "abcdef0123456789";
 
         public static string NextString(this Random random, int len)
         {
             return random.NextString(_alphanumeric, len);
+        }
+
+        public static string NextAlphabeticalString(this Random random, int len)
+        {
+            return random.NextString(_alphabetical, len);
         }
 
         public static string NextHexString(this Random random, int len)

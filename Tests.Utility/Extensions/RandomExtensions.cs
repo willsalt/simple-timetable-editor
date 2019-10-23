@@ -6,23 +6,25 @@ namespace Tests.Utility.Extensions
 {
     public static class RandomExtensions
     {
-        private const string _alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        private const string _alphabetical = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private const string _hex = "abcdef0123456789";
+        public const string AlphanumericCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        public const string AlphabeticalCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public const string HexadecimalCharacters = "abcdef0123456789";
+        public const string WhiteSpaceCharacters = " \x0\t\r\n\f";
+        public const string DelimiterCharacters = "()<>[]{}/%"; // These are the characters classed as "delimiters" in PDF documents.
 
         public static string NextString(this Random random, int len)
         {
-            return random.NextString(_alphanumeric, len);
+            return random.NextString(AlphanumericCharacters, len);
         }
 
         public static string NextAlphabeticalString(this Random random, int len)
         {
-            return random.NextString(_alphabetical, len);
+            return random.NextString(AlphabeticalCharacters, len);
         }
 
         public static string NextHexString(this Random random, int len)
         {
-            return random.NextString(_hex, len);
+            return random.NextString(HexadecimalCharacters, len);
         }
 
         public static string NextString(this Random random, string characters, int len)

@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Utility", "Tests.Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.CoreData.Tests.Unit", "Timetabler.CoreData.Tests.Unit\Timetabler.CoreData.Tests.Unit.csproj", "{01B53591-1137-4D29-BEE7-0BAF111A1BAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.Writer.Tests.Unit", "Unicorn.Writer.Tests.Unit\Unicorn.Writer.Tests.Unit.csproj", "{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,6 +219,14 @@ Global
 		{01B53591-1137-4D29-BEE7-0BAF111A1BAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{01B53591-1137-4D29-BEE7-0BAF111A1BAD}.Release|x86.ActiveCfg = Release|Any CPU
 		{01B53591-1137-4D29-BEE7-0BAF111A1BAD}.Release|x86.Build.0 = Release|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Debug|x86.Build.0 = Debug|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Release|x86.ActiveCfg = Release|Any CPU
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -233,6 +243,7 @@ Global
 		{84C858E8-BE40-471D-A1D4-6659AD4CF7E6} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 		{746618E4-92EF-451E-ACB6-1EEF1254137A} = {F6B55A5E-8934-403F-9471-D3FE80B7F7F5}
 		{01B53591-1137-4D29-BEE7-0BAF111A1BAD} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
+		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EA1C6B0-D8A1-4000-A5F0-FFC1B39482AC}

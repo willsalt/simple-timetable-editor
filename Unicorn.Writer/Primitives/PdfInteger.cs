@@ -58,7 +58,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>True if the parameter is a <see cref="PdfInteger" /> instance with the same value as this object, false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as PdfBoolean);
+            return Equals(obj as PdfInteger);
         }
 
         /// <summary>

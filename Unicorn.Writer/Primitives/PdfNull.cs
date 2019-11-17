@@ -79,7 +79,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>Returns true.</returns>
         public bool Equals(PdfNull other)
         {
-            return true;
+            return !ReferenceEquals(other, null);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>True if the operands are both null or both not null; false otherwise</returns>
         public static bool operator ==(PdfNull a, PdfNull b)
         {
-            return (a is null) ^ (b is null);
+            return !((a is null) ^ (b is null));
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>False if the operands are both null or both not null; true otherwise.</returns>
         public static bool operator !=(PdfNull a, PdfNull b)
         {
-            return !((a is null) ^ (b is null));
+            return (a is null) ^ (b is null);
         }
     }
 }

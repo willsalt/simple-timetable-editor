@@ -51,7 +51,7 @@
         public double FillerDashLineWidth { get; set; }
 
         /// <summary>
-        /// The 
+        /// The PDF export engine to use.
         /// </summary>
         public PdfExportEngine ExportEngine { get; set; }
 

@@ -168,6 +168,12 @@
   <data name="HumanReadableEnum_LocationFontType_Normal" xml:space="preserve">
     <value>Normal</value>
   </data>
+  <data name="HumanReadableEnum_PdfExportEngine_External" xml:space="preserve">
+    <value>External</value>
+  </data>
+  <data name="HumanReadableEnum_PdfExportEngine_Unicorn" xml:space="preserve">
+    <value>Unicorn</value>
+  </data>
   <data name="LocationEditForm_Chainage_ValidationFailureNaN" xml:space="preserve">
     <value>The chainage must be a number.</value>
   </data>

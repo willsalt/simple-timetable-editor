@@ -48,8 +48,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\HumanReadableEnumUnitTests.cs" />
     <Compile Include="Models\TrainCopyFormModelUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +63,10 @@
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">
       <Project>{746618e4-92ef-451e-acb6-1eef1254137a}</Project>
       <Name>Tests.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
+      <Project>{DDC29237-18C5-40A7-BCCC-2A51FA8C5F9F}</Project>
+      <Name>Timetabler.CoreData</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
       <Project>{9A7E2940-50B8-4F3A-A535-AB6220E6CE3A}</Project>

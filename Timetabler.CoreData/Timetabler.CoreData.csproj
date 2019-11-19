@@ -12,7 +12,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Will\Source\Repos\simple-timetable-editor\Timetabler.CoreData\Timetabler.CoreData.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Timetabler.CoreData.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Timetabler.CoreData.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

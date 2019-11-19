@@ -82,6 +82,7 @@
     <Compile Include="Display\TrainLocationTimeModelUnitTests.cs" />
     <Compile Include="Display\TrainSegmentModelUnitTests.cs" />
     <Compile Include="Display\VertexInformationUnitTests.cs" />
+    <Compile Include="DocumentExportOptionsUnitTests.cs" />
     <Compile Include="DocumentOptionsUnitTests.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsUnitTests.cs" />
     <Compile Include="NoteUnitTests.cs" />

@@ -51,9 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentDescriptorFactory.cs" />
     <Compile Include="Extensions\DashStyleExtensions.cs" />
     <Compile Include="Extensions\FootnoteDisplayModelExtensions.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensions.cs" />
+    <Compile Include="Interfaces\IDocumentDescriptorFactory.cs" />
     <Compile Include="LocationBoxDimensions.cs" />
     <Compile Include="PdfExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +88,10 @@
     <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
       <Project>{61e758d9-a9ae-4f1e-ad46-abffdfe67259}</Project>
       <Name>Unicorn.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.Writer\Unicorn.Writer.csproj">
+      <Project>{7431cc05-b157-4edd-83c5-42c2d5a79c55}</Project>
+      <Name>Unicorn.Writer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn\Unicorn.csproj">
       <Project>{310C4830-B53A-457B-8262-0172F74BEF25}</Project>

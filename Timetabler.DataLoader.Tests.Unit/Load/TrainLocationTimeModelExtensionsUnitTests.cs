@@ -3,17 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load;
 using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load
 {
     [TestClass]
     public class TrainLocationTimeModelExtensionsUnitTests
     {
-        private Random _random = new Random();
+        private static readonly Random _random = RandomProvider.Default;
 
         [TestMethod]
         public void TrainLocationTimeModelExtensionsToTrainLocationTimeMethodReturnsNonNullIfParametersAreNotNull()

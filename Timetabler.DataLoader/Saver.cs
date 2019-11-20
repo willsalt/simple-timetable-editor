@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using Timetabler.Data;
 using Timetabler.DataLoader.Save;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader
 {

@@ -3,7 +3,7 @@ using System;
 using Tests.Utility.Extensions;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load
 {

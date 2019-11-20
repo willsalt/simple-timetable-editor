@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Load
 {
@@ -26,14 +26,12 @@ namespace Timetabler.DataLoader.Load
 
             GraphTrainProperties gtp = new GraphTrainProperties { Width = model.Width };
 
-            int col;
-            if (int.TryParse(model.ColourCode, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out col))
+            if (int.TryParse(model.ColourCode, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int col))
             {
                 gtp.Colour = Color.FromArgb(col);
             }
 
-            DashStyle style;
-            if (Enum.TryParse(model.DashStyleName, out style))
+            if (Enum.TryParse(model.DashStyleName, out DashStyle style))
             {
                 gtp.DashStyle = style;
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Load
 {
@@ -11,7 +11,7 @@ namespace Timetabler.DataLoader.Load
     /// </summary>
     public static class TimetableFileModelExtensions
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Convert a deserialized <see cref="TimetableFileModel"/> instance to a <see cref="TimetableDocument"/> instance.
@@ -28,13 +28,13 @@ namespace Timetabler.DataLoader.Load
                 Version = file.Version,
                 Options = file.Options != null ? file.Options.ToDocumentOptions() : new DocumentOptions(),
                 ExportOptions = file.ExportOptions != null ? file.ExportOptions.ToDocumentExportOptions() : new DocumentExportOptions(),
-                Title = file.Title != null ? file.Title : string.Empty,
-                Subtitle = file.Subtitle != null ? file.Subtitle : string.Empty,
-                DateDescription = file.DateDescription != null ? file.DateDescription : string.Empty,
-                WrittenBy = file.WrittenBy != null ? file.WrittenBy : string.Empty,
-                CheckedBy = file.CheckedBy != null ? file.CheckedBy : string.Empty,
-                TimetableVersion = file.TimetableVersion != null ? file.TimetableVersion : string.Empty,
-                PublishedDate = file.PublishedDate != null ? file.PublishedDate : string.Empty,
+                Title = file.Title ?? string.Empty,
+                Subtitle = file.Subtitle ?? string.Empty,
+                DateDescription = file.DateDescription ?? string.Empty,
+                WrittenBy = file.WrittenBy ?? string.Empty,
+                CheckedBy = file.CheckedBy ?? string.Empty,
+                TimetableVersion = file.TimetableVersion ?? string.Empty,
+                PublishedDate = file.PublishedDate ?? string.Empty,
             };
 
             if (file.Maps != null && file.Maps.Count > 0 && file.Maps[0] != null)

@@ -1,7 +1,6 @@
 ﻿using System;
-using Timetabler.CoreData;
 using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Load
 {
@@ -22,14 +21,12 @@ namespace Timetabler.DataLoader.Load
                 DisplayTrainLabelsOnGraphs = model.DisplayTrainLabelsOnGraphs ?? true
             };
 
-            ClockType ct;
-            if (Enum.TryParse(model.ClockTypeName, out ct))
+            if (Enum.TryParse(model.ClockTypeName, out ClockType ct))
             {
                 options.ClockType = ct;
             }
 
-            GraphEditStyle ges;
-            if (Enum.TryParse(model.GraphEditStyle, out ges))
+            if (Enum.TryParse(model.GraphEditStyle, out GraphEditStyle ges))
             {
                 options.GraphEditStyle = ges;
             }

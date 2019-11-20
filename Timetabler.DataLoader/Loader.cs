@@ -8,7 +8,7 @@ using Timetabler.Data;
 using Timetabler.Data.Collections;
 using Timetabler.DataLoader.Load;
 using Timetabler.DataLoader.Load.Legacy.V3;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader
 {
@@ -18,13 +18,18 @@ namespace Timetabler.DataLoader
     public static class Loader
     {
         /// <summary>
+        /// The latest version of the timetable document format supported by the loader.
+        /// </summary>
+        public static int LatestTimetableDocumentVersion => Versions.CurrentTimetableDocument;
+
+        /// <summary>
         /// Load a TimetableDocument class from a stream.
         /// </summary>
         /// <param name="str">The stream to load the class data from.</param>
         /// <returns>The list of locations in the template.</returns>
         public static TimetableDocument LoadTimetableDocument(Stream str)
         {
-            XmlReader reader = null;
+            XmlReader reader;
             try
             {
                 reader = XmlReader.Create(str);
@@ -70,8 +75,8 @@ namespace Timetabler.DataLoader
 
         private static TimetableDocument LoadVersion3(XmlReader reader)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(XmlData.Legacy.V3.TimetableFileModel));
-            return ((XmlData.Legacy.V3.TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
+            XmlSerializer deserializer = new XmlSerializer(typeof(SerialData.Legacy.V3.TimetableFileModel));
+            return ((SerialData.Legacy.V3.TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
         }
 
         /// <summary>
@@ -134,8 +139,8 @@ namespace Timetabler.DataLoader
 
         private static LocationCollection LoadLocationsVersion0(XmlReader reader)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(XmlData.Legacy.V1.LocationTemplateModel));
-            XmlData.Legacy.V1.LocationTemplateModel templateModel = (XmlData.Legacy.V1.LocationTemplateModel)deserializer.Deserialize(reader);
+            XmlSerializer deserializer = new XmlSerializer(typeof(SerialData.Legacy.V1.LocationTemplateModel));
+            SerialData.Legacy.V1.LocationTemplateModel templateModel = (SerialData.Legacy.V1.LocationTemplateModel)deserializer.Deserialize(reader);
             if (templateModel == null || templateModel.LocationList == null)
             {
                 return null;
@@ -169,8 +174,7 @@ namespace Timetabler.DataLoader
             {
                 throw new TimetableLoaderException("Stream does not contain <TimetableDocumentTemplate> element.");
             }
-            int version = 0;
-            if (!int.TryParse(reader.GetAttribute("version"), out version))
+            if (!int.TryParse(reader.GetAttribute("version"), out int version))
             {
                 throw new TimetableLoaderException("<TimetableDocumentTemplate> element does not specify version number.");
             }

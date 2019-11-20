@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Timetabler.Data;
 using Timetabler.Data.Collections;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Load
 {

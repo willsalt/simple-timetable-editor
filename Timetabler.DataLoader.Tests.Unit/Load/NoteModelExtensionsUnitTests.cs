@@ -1,25 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load
 {
     [TestClass]
     public class NoteModelExtensionsUnitTests
     {
-        private Random _random;
-
-        public NoteModelExtensionsUnitTests()
-        {
-            _random = new Random();
-        }
+        private static readonly Random _random = RandomProvider.Default;
 
         private NoteModel GetRandomNoteModel()
         {

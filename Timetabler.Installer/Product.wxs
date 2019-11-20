@@ -65,8 +65,8 @@
       <Component Id="Timetabler.PdfExport.dll.comp" Guid="5EF8AD12-C1C9-4EE4-9FA5-7A56CBF39F79">
         <File Id="Timetabler.PdfExport.dll.file" Name="Timetabler.PdfExport.dll" Source="$(var.Timetabler.TargetDir)Timetabler.PdfExport.dll" KeyPath="yes" />
       </Component>
-      <Component Id="Timetabler.XmlData.dll.comp" Guid="8D6348DD-F0B4-4EED-B110-C409F50945D8">
-        <File Id="Timetabler.XmlData.dll.file" Name="Timetabler.XmlData.dll" Source="$(var.Timetabler.TargetDir)Timetabler.XmlData.dll" KeyPath="yes" />
+      <Component Id="Timetabler.SerialData.dll.comp" Guid="BDA35AC7-80DA-4EFB-B9F2-2507B8BC8658">
+        <File Id="Timetabler.SerialData.dll.file" Name="Timetabler.SerialData.dll" Source="$(var.Timetabler.TargetDir)Timetabler.SerialData.dll" KeyPath="yes" />
       </Component>
       <Component Id="Unicorn.dll.comp" Guid="B982066E-7F6A-4FEE-842D-8D4592179099">
         <File Id="Unicorn.dll.file" Name="Unicorn.dll" Source="$(var.Timetabler.TargetDir)Unicorn.dll" KeyPath="yes" />

@@ -1,5 +1,5 @@
 ﻿using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Save
 {
@@ -16,7 +16,7 @@ namespace Timetabler.DataLoader.Save
         public static LocationModel ToLocationModel(this Location location)
         {
             // == is overloaded so does not compare as expected against null - it can return equal to null for a non-null object.
-            if (ReferenceEquals(location, null))
+            if (location is null)
             {
                 return null;
             }
@@ -32,7 +32,7 @@ namespace Timetabler.DataLoader.Save
                 UpRoutingCodesAlwaysDisplayed = location.UpRoutingCodesAlwaysDisplayed,
                 DownArrivalDepartureAlwaysDisplayed = location.DownArrivalDepartureAlwaysDisplayed,
                 DownRoutingCodesAlwaysDisplayed = location.DownRoutingCodesAlwaysDisplayed,
-                Mileage = location.Mileage != null ? location.Mileage.ToDistanceModel() : null,
+                Mileage = location.Mileage?.ToDistanceModel(),
                 FontTypeName = location.FontType.ToString("g"),
                 DisplaySeparatorAbove = location.DisplaySeparatorAbove,
                 DisplaySeparatorBelow = location.DisplaySeparatorBelow,

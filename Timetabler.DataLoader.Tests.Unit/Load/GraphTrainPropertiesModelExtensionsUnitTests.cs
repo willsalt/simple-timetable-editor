@@ -3,21 +3,17 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load
 {
     [TestClass]
     public class GraphTrainPropertiesModelExtensionsUnitTests
     {
-        private Random _random;
-
-        public GraphTrainPropertiesModelExtensionsUnitTests()
-        {
-            _random = new Random();
-        }
+        private static readonly Random _random = RandomProvider.Default;
 
         [TestMethod]
         public void GraphTrainPropertiesModelExtensionsClassToGraphTrainPropertiesMethodDoesNotReturnNullIfParameterIsNull()

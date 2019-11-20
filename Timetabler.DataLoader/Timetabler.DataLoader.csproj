@@ -100,9 +100,9 @@
       <Project>{9a7e2940-50b8-4f3a-a535-ab6220e6ce3a}</Project>
       <Name>Timetabler.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Timetabler.XmlData\Timetabler.XmlData.csproj">
-      <Project>{81b88cba-1ac7-4061-ab0b-fcfa1be22332}</Project>
-      <Name>Timetabler.XmlData</Name>
+    <ProjectReference Include="..\Timetabler.SerialData\Timetabler.SerialData.csproj">
+      <Project>{a651e646-e4fb-422c-9f52-cf55b3a229fc}</Project>
+      <Name>Timetabler.SerialData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

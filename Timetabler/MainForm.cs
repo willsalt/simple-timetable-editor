@@ -16,7 +16,6 @@ using Timetabler.DataLoader;
 using Timetabler.Helpers;
 using Timetabler.Models;
 using Timetabler.PdfExport;
-using Timetabler.XmlData;
 
 namespace Timetabler
 {
@@ -567,7 +566,6 @@ namespace Timetabler
 
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(LocationTemplateModel));
                 using (FileStream fs = new FileStream(sfdLocations.FileName, FileMode.Create, FileAccess.Write))
                 {
                     Saver.Save(Model.LocationList, fs);

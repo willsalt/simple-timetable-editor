@@ -1,18 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.DataLoader.Save;
 using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class LocationExtensionsUnitTests
     {
-        private Random _random = new Random();
+        private static readonly Random _random = RandomProvider.Default;
 
         [TestMethod]
         public void LocationExtensionsClassToLocationModelMethodReturnsNonNullObjectIfParameterIsNotNull()

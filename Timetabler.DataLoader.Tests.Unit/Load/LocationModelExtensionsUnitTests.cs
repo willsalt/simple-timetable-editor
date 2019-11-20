@@ -1,22 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load
 {
     [TestClass]
     public class LocationModelExtensionsUnitTests
     {
-        private Random _random;
-
-        public LocationModelExtensionsUnitTests()
-        {
-            _random = new Random();
-        }
+        private static readonly Random _random = RandomProvider.Default;
 
         [TestMethod]
         public void LocationModelExtensionsClassToLocationMethodReturnsNonNullObjectIfParameterIsNonNull()
@@ -130,8 +126,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         {
             ArrivalDepartureOptions testValue = _random.NextArrivalDepartureOptions();
             LocationModel testObject = new LocationModel { DownArrivalDepartureAlwaysDisplayed = testValue };
-
-            Location testResult = testObject.ToLocation();
+            
+            _ = testObject.ToLocation();
 
             Assert.AreEqual(testValue, testObject.DownArrivalDepartureAlwaysDisplayed);
         }

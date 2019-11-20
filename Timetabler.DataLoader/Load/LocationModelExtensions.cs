@@ -1,7 +1,7 @@
 ﻿using System;
 using Timetabler.CoreData;
 using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Load
 {
@@ -30,16 +30,15 @@ namespace Timetabler.DataLoader.Load
                 GraphDisplayName = model.GraphDisplayName,
                 Tiploc = model.Tiploc,
                 UpArrivalDepartureAlwaysDisplayed = model.UpArrivalDepartureAlwaysDisplayed,
-                UpRoutingCodesAlwaysDisplayed = model.UpRoutingCodesAlwaysDisplayed.HasValue ? model.UpRoutingCodesAlwaysDisplayed.Value : 0,
+                UpRoutingCodesAlwaysDisplayed = model.UpRoutingCodesAlwaysDisplayed ?? 0,
                 DownArrivalDepartureAlwaysDisplayed = model.DownArrivalDepartureAlwaysDisplayed,
-                DownRoutingCodesAlwaysDisplayed = model.DownRoutingCodesAlwaysDisplayed.HasValue ? model.DownRoutingCodesAlwaysDisplayed.Value : 0,
+                DownRoutingCodesAlwaysDisplayed = model.DownRoutingCodesAlwaysDisplayed ?? 0,
                 Mileage = model.Mileage.ToDistance(),
                 DisplaySeparatorAbove = model.DisplaySeparatorAbove ?? false,
                 DisplaySeparatorBelow = model.DisplaySeparatorBelow ?? false,
             };
 
-            LocationFontType lft;
-            if (!string.IsNullOrWhiteSpace(model.FontTypeName) && Enum.TryParse(model.FontTypeName, out lft))
+            if (!string.IsNullOrWhiteSpace(model.FontTypeName) && Enum.TryParse(model.FontTypeName, out LocationFontType lft))
             {
                 loc.FontType = lft;
             }

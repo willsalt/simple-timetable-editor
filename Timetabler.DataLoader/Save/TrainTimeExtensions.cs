@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Save
 {
@@ -20,7 +20,7 @@ namespace Timetabler.DataLoader.Save
             TrainTimeModel model = new TrainTimeModel
             {
                 FootnoteIds = new List<string>(),
-                Time = time.Time != null ? time.Time.ToTimeOfDayModel() : null,
+                Time = time.Time?.ToTimeOfDayModel(),
             };
 
             model.FootnoteIds.AddRange(time.Footnotes.Select(n => n.Id));

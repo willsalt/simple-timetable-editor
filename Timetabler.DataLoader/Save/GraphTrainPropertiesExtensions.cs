@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Save
 {

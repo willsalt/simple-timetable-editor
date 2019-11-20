@@ -1,6 +1,6 @@
 ﻿using System;
 using Timetabler.Data;
-using Timetabler.SerialData;
+using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
 {

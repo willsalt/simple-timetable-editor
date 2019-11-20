@@ -6,9 +6,10 @@ using System.Xml.Serialization;
 using Timetabler.CoreData.Exceptions;
 using Timetabler.Data;
 using Timetabler.Data.Collections;
-using Timetabler.DataLoader.Load;
-using Timetabler.DataLoader.Load.Legacy.V3;
+using Timetabler.DataLoader.Load.Xml;
+using Timetabler.DataLoader.Load.Xml.Legacy.V3;
 using Timetabler.SerialData;
+using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader
 {
@@ -75,8 +76,8 @@ namespace Timetabler.DataLoader
 
         private static TimetableDocument LoadVersion3(XmlReader reader)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(SerialData.Legacy.V3.TimetableFileModel));
-            return ((SerialData.Legacy.V3.TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
+            XmlSerializer deserializer = new XmlSerializer(typeof(SerialData.Xml.Legacy.V3.TimetableFileModel));
+            return ((SerialData.Xml.Legacy.V3.TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
         }
 
         /// <summary>
@@ -139,8 +140,8 @@ namespace Timetabler.DataLoader
 
         private static LocationCollection LoadLocationsVersion0(XmlReader reader)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(SerialData.Legacy.V1.LocationTemplateModel));
-            SerialData.Legacy.V1.LocationTemplateModel templateModel = (SerialData.Legacy.V1.LocationTemplateModel)deserializer.Deserialize(reader);
+            XmlSerializer deserializer = new XmlSerializer(typeof(SerialData.Xml.Legacy.V1.LocationTemplateModel));
+            SerialData.Xml.Legacy.V1.LocationTemplateModel templateModel = (SerialData.Xml.Legacy.V1.LocationTemplateModel)deserializer.Deserialize(reader);
             if (templateModel == null || templateModel.LocationList == null)
             {
                 return null;

@@ -52,19 +52,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Load\DistanceModelExtensionsUnitTests.cs" />
-    <Compile Include="Load\DocumentOptionsModelExtensionsUnitTests.cs" />
-    <Compile Include="Load\ExportOptionsModelExtensionsUnitTests.cs" />
-    <Compile Include="Load\GraphTrainPropertiesModelExtensionsUnitTests.cs" />
-    <Compile Include="Load\LocationModelExtensionsUnitTests.cs" />
-    <Compile Include="Load\NoteModelExtensionsUnitTests.cs" />
-    <Compile Include="Load\TimetableFileModelExtensionsUnitTests.cs" />
-    <Compile Include="Load\TrainLocationTimeModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\DistanceModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\DocumentOptionsModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\ExportOptionsModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\GraphTrainPropertiesModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\LocationModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\NoteModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\TimetableFileModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Xml\TrainLocationTimeModelExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Save\DocumentExportOptionsExtensionsUnitTests.cs" />
-    <Compile Include="Save\DocumentOptionsExtensionsUnitTests.cs" />
-    <Compile Include="Save\LocationExtensionsUnitTests.cs" />
-    <Compile Include="Save\TimetableDocumentExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\DocumentExportOptionsExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\DocumentOptionsExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\LocationExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\TimetableDocumentExtensionsUnitTests.cs" />
     <Compile Include="TestHelpers\Extensions\RandomExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

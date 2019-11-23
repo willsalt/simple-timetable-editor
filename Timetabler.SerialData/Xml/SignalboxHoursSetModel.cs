@@ -19,6 +19,6 @@ namespace Timetabler.SerialData.Xml
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Signalbox")]
-        public List<SignalboxHoursModel> Signalboxes { get; set; }
+        public List<SignalboxHoursModel> Signalboxes { get; } = new List<SignalboxHoursModel>();
     }
 }

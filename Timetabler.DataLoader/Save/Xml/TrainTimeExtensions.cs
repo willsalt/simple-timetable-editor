@@ -19,7 +19,6 @@ namespace Timetabler.DataLoader.Save.Xml
         {
             TrainTimeModel model = new TrainTimeModel
             {
-                FootnoteIds = new List<string>(),
                 Time = time.Time?.ToTimeOfDayModel(),
             };
 

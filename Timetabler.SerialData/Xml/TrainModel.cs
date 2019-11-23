@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
@@ -41,12 +42,12 @@ namespace Timetabler.SerialData.Xml
         /// <summary>
         /// The timing points of this train.
         /// </summary>
-        public List<TrainLocationTimeModel> TrainTimes { get; set; }
+        public List<TrainLocationTimeModel> TrainTimes { get; } = new List<TrainLocationTimeModel>();
 
         /// <summary>
         /// The IDs of the footnotes, for normalised serialisation
         /// </summary>
-        public List<string> FootnoteIds { get; set; }
+        public List<string> FootnoteIds { get; } = new List<string>();
 
         /// <summary>
         /// If this train does not start at the first location in the timetable, draw a separator line above its first timing point.
@@ -89,9 +90,11 @@ namespace Timetabler.SerialData.Xml
         public void ReadXml(XmlReader reader)
         {
             Log.Trace("Reading train.");
+            if (reader is null)
+            {
+                throw new ArgumentNullException(nameof(reader));
+            }
             GraphProperties = new GraphTrainPropertiesModel();
-            TrainTimes = new List<TrainLocationTimeModel>();
-            FootnoteIds = new List<string>();
             ToWork = new ToWorkModel();
             LocoToWork = new ToWorkModel();
 
@@ -229,6 +232,10 @@ namespace Timetabler.SerialData.Xml
         /// <param name="writer">Destination to write XML to.</param>
         public void WriteXml(XmlWriter writer)
         {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             writer.WriteAttributeString("Id", Id);
             if (Headcode != null)
             {

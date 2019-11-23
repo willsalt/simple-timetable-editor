@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
@@ -59,6 +60,10 @@ namespace Timetabler.SerialData.Xml
         /// <param name="reader">Source of XML data.</param>
         public void ReadXml(XmlReader reader)
         {
+            if (reader is null)
+            {
+                throw new ArgumentNullException(nameof(reader));
+            }
             reader.ReadStartElement();
             reader.MoveToContent();
             if (reader.LocalName == "ArrivalTime")
@@ -107,6 +112,10 @@ namespace Timetabler.SerialData.Xml
         /// <param name="writer">Destination to write XML to.</param>
         public void WriteXml(XmlWriter writer)
         {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             if (ArrivalTime != null)
             {
                 writer.WriteStartElement("ArrivalTime");

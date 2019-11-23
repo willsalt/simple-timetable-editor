@@ -20,7 +20,7 @@ namespace Timetabler.SerialData.Xml.Legacy.V1
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Location")]
-        public List<LocationModel> LocationList { get; set; }
+        public List<LocationModel> LocationList { get; }
 
         /// <summary>
         /// Default constructor; initialises file version number.

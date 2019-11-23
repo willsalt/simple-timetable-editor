@@ -21,12 +21,13 @@ namespace Timetabler.DataLoader.Save.Xml
             {
                 DefaultExportOptions = template.ExportOptions.ToExportOptionsModel(),
                 DefaultOptions = template.DocumentOptions.ToDocumentOptionsModel(),
-                Maps = new List<NetworkMapModel> { new NetworkMapModel { LocationList = template.Locations.Select(l => l.ToLocationModel()).ToList() } },
-                NoteDefinitions = template.NoteDefinitions.Select(n => n.ToNoteModel()).ToList(),
-                TrainClasses = template.TrainClasses.Select(c => c.ToTrainClassModel()).ToList(),
-                Signalboxes = template.Signalboxes.Select(s => s.ToSignalboxModel()).ToList(),
             };
-
+            NetworkMapModel nmm = new NetworkMapModel();
+            nmm.LocationList.AddRange(template.Locations.Select(c => c.ToLocationModel()));
+            model.Maps.Add(nmm);
+            model.NoteDefinitions.AddRange(template.NoteDefinitions.Select(n => n.ToNoteModel()));
+            model.TrainClasses.AddRange(template.TrainClasses.Select(c => c.ToTrainClassModel()));
+            model.Signalboxes.AddRange(template.Signalboxes.Select(s => s.ToSignalboxModel()));
             return model;
         }
     }

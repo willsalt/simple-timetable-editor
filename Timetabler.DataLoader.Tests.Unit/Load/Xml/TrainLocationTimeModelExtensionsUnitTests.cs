@@ -153,7 +153,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             string[] noteKeys = notes.Keys.ToArray();
             TrainLocationTimeModel tlt = new TrainLocationTimeModel
             {
-                ArrivalTime = hasArrivalTime ? new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 86399), FootnoteIds = new List<string>() } : null,
+                ArrivalTime = hasArrivalTime ? new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 86399) } : null,
                 Line = _random.NextString(_random.Next(3)),
                 Path = _random.NextString(_random.Next(3)),
                 Platform = _random.NextString(_random.Next(3)),
@@ -164,9 +164,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 new TrainTimeModel
                 {
                     Time = _random.NextTimeOfDayModel(tlt.ArrivalTime.Time.Hours24 * 3600 + tlt.ArrivalTime.Time.Minutes * 60 + tlt.ArrivalTime.Time.Seconds, 0),
-                    FootnoteIds = new List<string>()
                 } : 
-                new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 0), FootnoteIds = new List<string>() };
+                new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 0) };
             int fnCount = _random.Next(2);
             for (int i = 0, j = 0; i < fnCount && j < noteKeys.Length; ++j)
             {

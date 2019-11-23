@@ -31,21 +31,16 @@ namespace Timetabler.DataLoader.Save.Xml
                 CheckedBy = document.CheckedBy,
                 TimetableVersion = document.TimetableVersion,
                 PublishedDate = document.PublishedDate,
-                Maps = new List<NetworkMapModel>
-                {
-                    new NetworkMapModel { LocationList = new List<LocationModel>(), BlockSections = new List<BlockSectionModel>(), Signalboxes = new List<SignalboxModel>() }
-                },
-                NoteDefinitions = new List<NoteModel>(),
-                TrainClassList = new List<TrainClassModel>(),
-                TrainList = new List<TrainModel>(),
-                SignalboxHoursSets = document.SignalboxHoursSets.Select(h => h.ToSignalboxHoursSetModel()).ToList(),
             };
 
-            fileModel.Maps[0].LocationList.AddRange(document.LocationList.Select(l => l.ToLocationModel()));
-            fileModel.Maps[0].Signalboxes.AddRange(document.Signalboxes.Select(b => b.ToSignalboxModel()));
+            NetworkMapModel nmm = new NetworkMapModel();
+            nmm.LocationList.AddRange(document.LocationList.Select(l => l.ToLocationModel()));
+            nmm.Signalboxes.AddRange(document.Signalboxes.Select(b => b.ToSignalboxModel()));
+            fileModel.Maps.Add(nmm);
             fileModel.NoteDefinitions.AddRange(document.NoteDefinitions.Select(n => n.ToNoteModel()));
             fileModel.TrainClassList.AddRange(document.TrainClassList.Select(tc => tc.ToTrainClassModel()));
             fileModel.TrainList.AddRange(document.TrainList.Select(t => t.ToTrainModel()));
+            fileModel.SignalboxHoursSets.AddRange(document.SignalboxHoursSets.Select(h => h.ToSignalboxHoursSetModel()));
 
             return fileModel;
         }

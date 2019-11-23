@@ -27,8 +27,6 @@ namespace Timetabler.DataLoader.Save.Xml
                 IncludeSeparatorAbove = train.IncludeSeparatorAbove,
                 IncludeSeparatorBelow = train.IncludeSeparatorBelow,
                 InlineNote = train.InlineNote ?? string.Empty,
-                FootnoteIds = new List<string>(),
-                TrainTimes = new List<TrainLocationTimeModel>(),
                 ToWork = train.ToWork?.ToToWorkModel(),
                 LocoToWork = train.LocoToWork?.ToToWorkModel(),
             };

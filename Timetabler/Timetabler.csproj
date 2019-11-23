@@ -316,10 +316,6 @@
       <Project>{68035ddb-1c24-407c-b6b3-32cec1d964e5}</Project>
       <Name>Timetabler.PdfExport</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Timetabler.XmlData\Timetabler.XmlData.csproj">
-      <Project>{81b88cba-1ac7-4061-ab0b-fcfa1be22332}</Project>
-      <Name>Timetabler.XmlData</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

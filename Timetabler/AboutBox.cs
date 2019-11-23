@@ -1,6 +1,6 @@
 ﻿using NLog;
 using System.Windows.Forms;
-using Timetabler.XmlData;
+using Timetabler.DataLoader;
 
 namespace Timetabler
 {
@@ -9,7 +9,7 @@ namespace Timetabler
     /// </summary>
     public partial class AboutBox : Form
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Default constructor.
@@ -18,10 +18,10 @@ namespace Timetabler
         {
             InitializeComponent();
             lblTimetablerVersion.Text = GetType().Assembly.GetName().Version.ToString();
-            lblFileFormatVersion.Text = Versions.CurrentTimetableDocument.ToString();
+            lblFileFormatVersion.Text = Loader.LatestTimetableDocumentVersion.ToString();
         }
 
-        private void btnOk_Click(object sender, System.EventArgs e)
+        private void BtnOk_Click(object sender, System.EventArgs e)
         {
             Log.Trace("OK clicked.");
         }

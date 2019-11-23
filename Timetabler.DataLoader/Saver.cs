@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save;
-using Timetabler.XmlData;
+using Timetabler.DataLoader.Save.Xml;
+using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader
 {

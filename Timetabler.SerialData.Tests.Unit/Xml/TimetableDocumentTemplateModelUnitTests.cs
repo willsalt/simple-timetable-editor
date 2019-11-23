@@ -20,7 +20,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void TimetableDocumentTemplateModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(TimetableDocumentTemplateModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(TimetableDocumentTemplateModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

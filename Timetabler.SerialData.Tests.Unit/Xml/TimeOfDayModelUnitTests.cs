@@ -17,7 +17,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void TimeOfDayModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(TimeOfDayModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(TimeOfDayModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

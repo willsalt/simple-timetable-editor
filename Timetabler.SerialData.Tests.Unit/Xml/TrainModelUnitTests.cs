@@ -18,7 +18,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void TrainModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(TrainModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(TrainModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

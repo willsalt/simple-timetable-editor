@@ -19,7 +19,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void NoteModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(NoteModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(NoteModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

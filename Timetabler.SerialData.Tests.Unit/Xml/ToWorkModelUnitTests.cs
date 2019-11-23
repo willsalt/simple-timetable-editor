@@ -24,7 +24,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void ToWorkModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(ToWorkModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(ToWorkModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

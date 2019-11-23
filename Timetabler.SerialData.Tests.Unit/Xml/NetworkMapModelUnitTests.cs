@@ -20,7 +20,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void NetworkMapModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(NetworkMapModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(NetworkMapModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

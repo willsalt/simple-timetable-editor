@@ -40,7 +40,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V3
         [TestMethod]
         public void TimetableFileModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

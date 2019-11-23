@@ -40,7 +40,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void LocationTemplateModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(LocationTemplateModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(LocationTemplateModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

@@ -35,12 +35,12 @@ namespace Timetabler.PdfExport
 
         private static readonly FontConfigurator FontConfigurator = new FontConfigurator(new[]
         {
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace) },
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace) },
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace) },
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyle.Bold | UniFontStyle.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldItalicFace) },
-            new FontConfigurationData { Name = "Sans", Style = UniFontStyle.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace) },
-            new FontConfigurationData { Name = "Sans", Style = UniFontStyle.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace) },
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace) },
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace) },
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace) },
+            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Bold | UniFontStyles.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldItalicFace) },
+            new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace) },
+            new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace) },
         });
 
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
@@ -67,12 +67,12 @@ namespace Timetabler.PdfExport
         {
             _engineSelector = ddf;
 
-            _titleFont = new FontDescriptor("Serif", UniFontStyle.Bold, 16);
-            _subtitleFont = new FontDescriptor("Serif", UniFontStyle.Bold, 14);
+            _titleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 16);
+            _subtitleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 14);
             _plainBodyFont = new FontDescriptor("Serif", 7.5);
-            _italicBodyFont = new FontDescriptor("Serif", UniFontStyle.Italic, 7.5);
-            _boldBodyFont = new FontDescriptor("Serif", UniFontStyle.Bold, 7.5);
-            _alternativeLocationFont = new FontDescriptor("Sans", UniFontStyle.Bold, 7.5);
+            _italicBodyFont = new FontDescriptor("Serif", UniFontStyles.Italic, 7.5);
+            _boldBodyFont = new FontDescriptor("Serif", UniFontStyles.Bold, 7.5);
+            _alternativeLocationFont = new FontDescriptor("Sans", UniFontStyles.Bold, 7.5);
 
             Log.Info("Loaded fonts.");
             Log.Trace("Plain body offset is {0}", _plainBodyFont.Ascent);

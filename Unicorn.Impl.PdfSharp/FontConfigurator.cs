@@ -113,17 +113,17 @@ namespace Unicorn.Impl.PdfSharp
             }
             else if (isBold && isItalic)
             {
-                faceCode = familyMembers.FirstOrDefault(m => m.Style == (UniFontStyle.Bold | UniFontStyle.Italic))?.FaceCode ??
-                    familyMembers.FirstOrDefault(m => (m.Style & UniFontStyle.Bold) != 0 && (m.Style & UniFontStyle.Italic) != 0)?.FaceCode ??
+                faceCode = familyMembers.FirstOrDefault(m => m.Style == (UniFontStyles.Bold | UniFontStyles.Italic))?.FaceCode ??
+                    familyMembers.FirstOrDefault(m => (m.Style & UniFontStyles.Bold) != 0 && (m.Style & UniFontStyles.Italic) != 0)?.FaceCode ??
                     familyMembers.FirstOrDefault()?.FaceCode;
             }
             else if (isBold)
             {
-                faceCode = familyMembers.Where(m => (m.Style & UniFontStyle.Bold) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
+                faceCode = familyMembers.Where(m => (m.Style & UniFontStyles.Bold) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
             }
             else if (isItalic)
             {
-                faceCode = familyMembers.Where(m => (m.Style & UniFontStyle.Italic) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
+                faceCode = familyMembers.Where(m => (m.Style & UniFontStyles.Italic) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
             }
             if (faceCode == null)
             {

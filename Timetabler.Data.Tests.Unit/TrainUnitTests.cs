@@ -49,7 +49,7 @@ namespace Timetabler.Data.Tests.Unit
             return t;
         }
 
-        private TrainClass GetTrainClass()
+        private static TrainClass GetTrainClass()
         {
             return new TrainClass
             {
@@ -59,7 +59,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private ToWork GetToWork()
+        private static ToWork GetToWork()
         {
             return new ToWork
             {
@@ -68,7 +68,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private GraphTrainProperties GetGraphTrainProperties()
+        private static GraphTrainProperties GetGraphTrainProperties()
         {
             return new GraphTrainProperties
             {
@@ -78,7 +78,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private List<TrainLocationTime> GetTrainLocationTimeList(int min, int max, TimeOfDay beforeTime)
+        private static List<TrainLocationTime> GetTrainLocationTimeList(int min, int max, TimeOfDay beforeTime)
         {
             int count = _rnd.Next(min, max);
             List<TrainLocationTime> items = new List<TrainLocationTime>(count);
@@ -90,7 +90,7 @@ namespace Timetabler.Data.Tests.Unit
             return items;
         }
 
-        private TrainLocationTime GetTrainLocationTime(TimeOfDay beforeTime)
+        private static TrainLocationTime GetTrainLocationTime(TimeOfDay beforeTime)
         {
             return new TrainLocationTime
             {

@@ -79,7 +79,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
             PropertyInfo pInfo = typeof(TrainModel).GetProperty("TrainTimes");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<TrainLocationTimeModel>), pInfo.PropertyType);
         }
 
@@ -89,7 +88,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
             PropertyInfo pInfo = typeof(TrainModel).GetProperty("FootnoteIds");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<string>), pInfo.PropertyType);
         }
 

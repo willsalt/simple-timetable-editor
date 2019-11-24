@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
@@ -13,7 +15,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class TrainSegmentModelUnitTests
     {
-        private static Random _rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning)
         {
@@ -67,7 +69,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             }
             for (int i = 0; i < timingsCount; ++i)
             {
-                tsm.Timings.Add(new TrainLocationTimeModel { LocationKey = i.ToString(), ActualTime = baseTime });
+                tsm.Timings.Add(new TrainLocationTimeModel { LocationKey = i.ToString(CultureInfo.CurrentCulture), ActualTime = baseTime });
                 baseTime = _rnd.NextTimeOfDayBetween(baseTime, 86400 - (timingsCount - i));
             }
 
@@ -139,7 +141,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testFootnoteCount = testObject.PageFootnotes.Count;
             List<FootnoteDisplayModel> pageFootnotesCopy = testObject.PageFootnotes.ToList();
 
-            testObject.UpdatePageFootnotes(new Note[0]);
+            testObject.UpdatePageFootnotes(Array.Empty<Note>());
 
             Assert.AreEqual(testFootnoteCount, testObject.PageFootnotes.Count);
             for (int i = 0; i < testFootnoteCount; ++i)
@@ -548,7 +550,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam1 = testObject.Timings.Count - testParam0;
             int timingCount = testObject.Timings.Count;
 
-            TrainSegmentModel train = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual(timingCount, testObject.Timings.Count);
         }
@@ -561,7 +563,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam1 = _rnd.Next(int.MaxValue - testObject.Timings.Count) + testObject.Timings.Count - testParam0;
             int timingCount = testObject.Timings.Count;
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual(timingCount, testObject.Timings.Count);
         }
@@ -574,7 +576,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
             int timingCount = testObject.Timings.Count;
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.IsTrue(testObject.Timings.Count < timingCount);
         }
@@ -586,7 +588,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual(testParam0 + testParam1, testObject.Timings.Count);
         }
@@ -614,7 +616,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.IsTrue(testObject.ContinuesLater);
         }
@@ -675,7 +677,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual("", testObject.InlineNote);
         }

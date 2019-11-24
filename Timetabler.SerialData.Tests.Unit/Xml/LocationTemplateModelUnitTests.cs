@@ -82,7 +82,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
             PropertyInfo pInfo = typeof(LocationTemplateModel).GetProperty("Maps");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<NetworkMapModel>), pInfo.PropertyType);
         }
 

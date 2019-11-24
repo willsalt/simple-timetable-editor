@@ -8,11 +8,19 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers.Extensions
     {
         public static Color NextColor(this Random random)
         {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
             return Color.FromArgb(random.Next());
         }
 
         public static DashStyle NextDashStyle(this Random random)
         {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
             DashStyle[] allValues = new DashStyle[]
             {
                 DashStyle.Custom,
@@ -27,6 +35,10 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers.Extensions
 
         public static PdfExportEngine NextPdfExportEngine(this Random random)
         {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
             PdfExportEngine[] allValues = new PdfExportEngine[]
             {
                 PdfExportEngine.External,

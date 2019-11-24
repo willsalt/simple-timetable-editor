@@ -11,9 +11,9 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     [TestClass]
     public class VertexInformationTimeBasedComparerUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
-        private ArrivalDepartureOptions GetArrivalDepartureOptions()
+        private static ArrivalDepartureOptions GetArrivalDepartureOptions()
         {
             return (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
         }

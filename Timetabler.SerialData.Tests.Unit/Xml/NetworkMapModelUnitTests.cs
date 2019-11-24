@@ -31,7 +31,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
             PropertyInfo pInfo = typeof(NetworkMapModel).GetProperty("LocationList");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<LocationModel>), pInfo.PropertyType);
         }
 
@@ -60,7 +59,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
             PropertyInfo pInfo = typeof(NetworkMapModel).GetProperty("BlockSections");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<BlockSectionModel>), pInfo.PropertyType);
         }
 
@@ -89,7 +87,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
             PropertyInfo pInfo = typeof(NetworkMapModel).GetProperty("Signalboxes");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<SignalboxModel>), pInfo.PropertyType);
         }
 

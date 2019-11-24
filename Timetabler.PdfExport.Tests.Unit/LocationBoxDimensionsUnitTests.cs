@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Tests.Utility.Providers;
 
 namespace Timetabler.PdfExport.Tests.Unit
@@ -8,7 +9,7 @@ namespace Timetabler.PdfExport.Tests.Unit
     [TestClass]
     public class LocationBoxDimensionsUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private LocationBoxDimensions GetLocationBoxDimensions(int? locationMinCount = null)
         {
@@ -16,7 +17,7 @@ namespace Timetabler.PdfExport.Tests.Unit
             int locationOffsetCount = _rnd.Next(50) + locationMinCount ?? 0;
             for (int i = 0; i < locationOffsetCount; ++i)
             {
-                dimensions.LocationOffsets.Add(i.ToString(), new TextVerticalLocation
+                dimensions.LocationOffsets.Add(i.ToString(CultureInfo.CurrentCulture), new TextVerticalLocation
                 {
                     Baseline = _rnd.NextDouble() * 1000,
                     Bottom = _rnd.NextDouble() * 1000,

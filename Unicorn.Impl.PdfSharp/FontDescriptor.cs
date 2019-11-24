@@ -1,4 +1,5 @@
 ﻿using PdfSharp.Drawing;
+using System;
 using Unicorn.Impl.PdfSharp.Extensions;
 using Unicorn.Interfaces;
 
@@ -57,7 +58,11 @@ namespace Unicorn.Impl.PdfSharp
         /// <returns></returns>
         public double GetNormalSpaceWidth(IGraphicsContext graphicsContext)
         {
-            return graphicsContext.MeasureString(" ", this).Width;
+            if (graphicsContext is null)
+            {
+                throw new ArgumentNullException(nameof(graphicsContext));
+            }
+            return graphicsContext.MeasureString(Resources.SpaceCharacter, this).Width;
         }
     }
 }

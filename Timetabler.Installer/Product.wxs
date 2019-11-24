@@ -77,6 +77,9 @@
       <Component Id="Unicorn.Interfaces.dll.comp" Guid="980D7B21-20E1-472B-BE00-E78794876977">
         <File Id="Unicorn.Interfaces.dll.file" Name="Unicorn.Interfaces.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Interfaces.dll" KeyPath="yes" />
       </Component>
+      <Component Id="Unicorn.Writer.dll.comp" Guid="1AD3ED0F-59C6-46D9-BD1F-8F112A9A9BCF">
+        <File Id="Unicorn.Writer.dll.file" Name="Unicorn.Writer.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Writer.dll" KeyPath="yes" />
+      </Component>
     </ComponentGroup>
     <ComponentGroup Id="ProductFonts" Directory="LocalFontsFolder">
       <Component Id="CharisSIL_B.ttf.comp" Guid="124C01FE-9623-4297-A057-E21C13D2D528">

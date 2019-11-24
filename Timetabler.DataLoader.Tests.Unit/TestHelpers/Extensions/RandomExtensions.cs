@@ -8,6 +8,10 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
     {
         public static TimeOfDayModel NextTimeOfDayModel(this Random random, int minSeconds, int maxSeconds)
         {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
             if (maxSeconds == 0)
             {
                 maxSeconds = 86400;
@@ -31,6 +35,15 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
         {
             int mileagePart;
             double chainagePart;
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+            if (max is null)
+            {
+                throw new ArgumentNullException(nameof(max));
+            }
+
             if (max.Mileage > 0)
             {
                 mileagePart = random.Next(max.Mileage);

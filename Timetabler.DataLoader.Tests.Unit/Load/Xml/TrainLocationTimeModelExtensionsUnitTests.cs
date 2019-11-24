@@ -147,7 +147,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             return GetTrainLocationTimeModel(locationMap, notes, _random.Next(2) == 0);
         }
 
-        private TrainLocationTimeModel GetTrainLocationTimeModel(Dictionary<string, Location> locationMap, Dictionary<string, Note> notes, bool hasArrivalTime)
+        private static TrainLocationTimeModel GetTrainLocationTimeModel(Dictionary<string, Location> locationMap, Dictionary<string, Note> notes, bool hasArrivalTime)
         {
             string[] locationKeys = locationMap.Keys.ToArray();
             string[] noteKeys = notes.Keys.ToArray();

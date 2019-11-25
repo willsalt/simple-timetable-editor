@@ -43,7 +43,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             do
             {
                 testParam = _rnd.NextString(RandomExtensions.AlphabeticalCharacters + RandomExtensions.WhiteSpaceCharacters, _rnd.Next(10) + 1);
-            } while (!testParam.Any(c => RandomExtensions.WhiteSpaceCharacters.Contains(c)));
+            } while (!testParam.Any(c => RandomExtensions.WhiteSpaceCharacters.Contains(c, StringComparison.InvariantCulture)));
 
             _ = new PdfName(testParam);
 
@@ -58,7 +58,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             do
             {
                 testParam = _rnd.NextString(RandomExtensions.AlphabeticalCharacters + RandomExtensions.DelimiterCharacters, _rnd.Next(10) + 1);
-            } while (!testParam.Any(c => RandomExtensions.DelimiterCharacters.Contains(c)));
+            } while (!testParam.Any(c => RandomExtensions.DelimiterCharacters.Contains(c, StringComparison.InvariantCulture)));
 
             _ = new PdfName(testParam);
 

@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Tests.Unit.Primitives

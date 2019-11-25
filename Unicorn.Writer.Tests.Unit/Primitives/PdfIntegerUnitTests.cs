@@ -82,12 +82,16 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         {
             int testObjectValue = _rnd.Next(int.MinValue, int.MaxValue);
             PdfInteger testObject = new PdfInteger(testObjectValue);
-            MemoryStream testParam0 = new MemoryStream();
+            using (MemoryStream testParam0 = new MemoryStream())
+            {
 
-            testObject.WriteTo(testParam0);
+                testObject.WriteTo(testParam0);
 
-            MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes(testObjectValue.ToString("d", CultureInfo.InvariantCulture) + " "));
-            AssertionHelpers.AssertSameElements(expected, testParam0);
+                using (MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes(testObjectValue.ToString("d", CultureInfo.InvariantCulture) + " ")))
+                {
+                    AssertionHelpers.AssertSameElements(expected, testParam0);
+                }
+            }
         }
 
         [TestMethod]

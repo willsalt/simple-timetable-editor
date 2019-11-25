@@ -284,7 +284,7 @@ namespace Unicorn.Tests.Unit.Shapes
 
             testObject.DrawAt(mockGraphicsContext.Object, testParam1, testParam2);
 
-            Assert.IsTrue(capturedPointList.Count(p => p != null) != 0);
+            Assert.IsTrue(capturedPointList.Any(p => p != null));
         }
 
         // We probably should not constrain the implementation too much by specifying the exact drawing style of an arrow by test, but it is worth providing

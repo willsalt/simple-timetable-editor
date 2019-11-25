@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 using System.Collections.Generic;
 using Unicorn.Interfaces;
 
@@ -9,7 +10,7 @@ namespace Unicorn
     /// </summary>
     public class Word : IDrawable
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// The textual content of this word.
@@ -71,6 +72,10 @@ namespace Unicorn
         /// <param name="postWordSpace">The minimum amount of space to add after the word if it is not at the end of a line.</param>
         public Word(string content, IFontDescriptor font, IGraphicsContext graphicsContext, double postWordSpace)
         {
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
             Content = content;
             Font = font;
             PostWordSpace = postWordSpace;
@@ -97,6 +102,10 @@ namespace Unicorn
         /// <param name="y">The y-coordinate of the top left corner of the word.</param>
         public void DrawAt(IGraphicsContext context, double x, double y)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             double computedY = y + ComputedBaseline;
             Log.Trace("Drawing '{0}' at {1}, {2}", Content, x, computedY);
             context.DrawString(Content, Font, x, computedY);
@@ -111,9 +120,13 @@ namespace Unicorn
         /// <returns>An enumeration of <see cref="Word" /> instances, each consisting of a single word from the input text.</returns>
         public static IEnumerable<Word> MakeWords(string text, IFontDescriptor font, IGraphicsContext graphicsContext)
         {
-            if (text == null)
+            if (text is null)
             {
                 yield break;
+            }
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
             }
             double wordSpace = font.GetNormalSpaceWidth(graphicsContext);
             string[] words = text.Split(null);

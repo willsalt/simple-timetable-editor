@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unicorn.Interfaces;
 
 namespace Unicorn.Shapes
@@ -89,6 +90,10 @@ namespace Unicorn.Shapes
         {
             double xBase = x;
             int factor = 1;
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             if (Direction == HorizontalDirection.ToLeft)
             {
                 xBase += Width;

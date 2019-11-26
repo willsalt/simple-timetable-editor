@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Timetabler.CoreData.Interfaces;
 
@@ -10,7 +11,7 @@ namespace Timetabler.CoreData.Helpers
     /// </summary>
     public static class GeneralHelper
     {
-        private static Random _random = new Random();
+        private static readonly Random _random = new Random();
 
         /// <summary>
         /// Given an enumeration of existing items, return a random string which is not used as the Id property of any existing items in the enumeration.
@@ -20,15 +21,15 @@ namespace Timetabler.CoreData.Helpers
         /// <returns>A string suitable for use as an ID string for an instance of T.</returns>
         public static string GetNewId<T>(IEnumerable<T> existingItems) where T : IUniqueItem
         {
-            if (existingItems == null)
+            if (existingItems is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(existingItems));
             }
             Dictionary<string, T> map = existingItems.ToDictionary(i => i.Id);
             string id;
             do
             {
-                id = _random.Next().ToString("x8");
+                id = _random.Next().ToString("x8", CultureInfo.InvariantCulture);
             } while (map != null && map.ContainsKey(id));
 
             return id;

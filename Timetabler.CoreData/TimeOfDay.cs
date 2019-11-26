@@ -59,6 +59,11 @@ namespace Timetabler.CoreData
         /// <returns>A <see cref="TimeOfDay" /> instance whose value differs from the current object by twice the difference between this object and the parameter.</returns>
         public TimeOfDay CopyAndReflect(TimeOfDay aroundTime)
         {
+            if (aroundTime is null)
+            {
+                throw new ArgumentNullException(nameof(aroundTime));
+            }
+
             int newSeconds = AbsoluteSeconds - ((AbsoluteSeconds - aroundTime.AbsoluteSeconds) * 2);
             return new TimeOfDay(newSeconds);
         }
@@ -254,7 +259,7 @@ namespace Timetabler.CoreData
             var t = obj as TimeOfDay;
             if (t == null)
             {
-                throw new ArgumentException("Wrong data type passed.", "obj");
+                throw new ArgumentException(Resources.Error_WrongDataTypePassedIn, nameof(obj));
             }
             return CompareTo(t);
         }
@@ -310,6 +315,11 @@ namespace Timetabler.CoreData
         /// <returns>A string containing the value of the object formatted as per the format string and culture.</returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
+            if (format is null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+
             if (format == "g" || format == "G")
             {
                 return AbsoluteSeconds.ToString(formatProvider);
@@ -348,7 +358,9 @@ namespace Timetabler.CoreData
 
         private string GetDesignator(IFormatProvider formatProvider, bool upperCase)
         {
-            var info = formatProvider.GetFormat(typeof(DateTimeFormatInfo)) as DateTimeFormatInfo;
+            IFormatProvider selectedFormatProvider = formatProvider ?? CultureInfo.InvariantCulture;
+            CultureInfo selectedCulture = (selectedFormatProvider as CultureInfo) ?? CultureInfo.InvariantCulture;
+            var info = selectedFormatProvider.GetFormat(typeof(DateTimeFormatInfo)) as DateTimeFormatInfo;
             string desig;
             if (AbsoluteSeconds >= 43200)
             {
@@ -358,7 +370,7 @@ namespace Timetabler.CoreData
             {
                 desig = info.AMDesignator;
             }
-            return upperCase ? desig.ToUpper() : desig.ToLower();
+            return upperCase ? desig.ToUpper(selectedCulture) : desig.ToLower(selectedCulture);
         }
 
         /// <summary>
@@ -398,7 +410,7 @@ namespace Timetabler.CoreData
         /// <returns>The instance's data converted to a string using the default format and current culture.</returns>
         public override string ToString()
         {
-            return ToString("HH:mmf");
+            return ToString("HH:mmf", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -523,7 +535,27 @@ namespace Timetabler.CoreData
         /// <returns>A <see cref="TimeSpan" /> struct.</returns>
         public static TimeSpan operator -(TimeOfDay t1, TimeOfDay t2)
         {
+            if (t1 is null)
+            {
+                throw new ArgumentNullException(nameof(t1));
+            }
+            if (t2 is null)
+            {
+                throw new ArgumentNullException(nameof(t2));
+            }
+
             return TimeSpan.FromSeconds(t1.AbsoluteSeconds - t2.AbsoluteSeconds);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="TimeSpan" /> representing the time elapsed between the two parameters.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A <see cref="TimeSpan" /> struct.</returns>
+        public static TimeSpan Subtract(TimeOfDay t1, TimeOfDay t2)
+        {
+            return t1 - t2;
         }
 
         /// <summary>
@@ -534,7 +566,22 @@ namespace Timetabler.CoreData
         /// <returns>A <see cref="TimeSpan" /> struct.</returns>
         public static TimeSpan operator -(TimeOfDay t1, TimeSpan t2)
         {
+            if (t1 is null)
+            {
+                throw new ArgumentNullException(nameof(t1));
+            }
+
             return TimeSpan.FromSeconds(t1.AbsoluteSeconds - t2.TotalSeconds);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="TimeSpan" /> representing the time elapsed between the two parameters.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        public static TimeSpan Subtract(TimeOfDay t1, TimeSpan t2)
+        {
+            return t1 - t2;
         }
 
         /// <summary>
@@ -545,7 +592,23 @@ namespace Timetabler.CoreData
         /// <returns>A <see cref="TimeSpan" /> struct.</returns>
         public static TimeSpan operator -(TimeSpan t1, TimeOfDay t2)
         {
+            if (t2 is null)
+            {
+                throw new ArgumentNullException(nameof(t2));
+            }
+
             return TimeSpan.FromSeconds(t1.TotalSeconds - t2.AbsoluteSeconds);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="TimeSpan" /> representing the time elapsed between the two parameters.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A <see cref="TimeSpan" /> struct.</returns>
+        public static TimeSpan Subtract(TimeSpan t1, TimeOfDay t2)
+        {
+            return t1 - t2;
         }
 
         /// <summary>
@@ -556,7 +619,23 @@ namespace Timetabler.CoreData
         /// <returns>A new <see cref="TimeOfDay" /> instance.</returns>
         public static TimeOfDay operator +(TimeOfDay t1, TimeSpan t2)
         {
+            if (t1 is null)
+            {
+                throw new ArgumentNullException(nameof(t1));
+            }
+
             return new TimeOfDay(t1.AbsoluteSeconds + t2.TotalSeconds);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="TimeOfDay" /> object representing the time of day of the first parameter, plus the span of time of the second parameter.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A new <see cref="TimeOfDay" /> instance.</returns>
+        public static TimeOfDay Add(TimeOfDay t1, TimeSpan t2)
+        {
+            return t1 + t2;
         }
 
         /// <summary>
@@ -567,7 +646,23 @@ namespace Timetabler.CoreData
         /// <returns>A new <see cref="TimeOfDay" /> instance.</returns>
         public static TimeOfDay operator +(TimeSpan t1, TimeOfDay t2)
         {
+            if (t2 is null)
+            {
+                throw new ArgumentNullException(nameof(t2));
+            }
+
             return new TimeOfDay(t1.TotalSeconds + t2.AbsoluteSeconds);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="TimeOfDay" /> object representing the time of day of the second parameter, plus the span of time of the first parameter.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns>A new <see cref="TimeOfDay" /> instance.</returns>
+        public static TimeOfDay Add(TimeSpan t1, TimeOfDay t2)
+        {
+            return t1 + t2;
         }
 
         /// <summary>

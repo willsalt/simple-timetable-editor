@@ -10,8 +10,6 @@ namespace Timetabler.Data.Comparers
     /// </summary>
     public class LocationDisplayModelComparer : IComparer<LocationDisplayModel>
     {
-        private readonly int xBeforeY;
-        private readonly int yBeforeX;
         private readonly Direction _direction;
 
         /// <summary>
@@ -21,16 +19,6 @@ namespace Timetabler.Data.Comparers
         public LocationDisplayModelComparer(Direction direction)
         {
             _direction = direction;
-            if (direction == Direction.Down)
-            {
-                xBeforeY = -1;
-                yBeforeX = 1;
-            }
-            else
-            {
-                xBeforeY = 1;
-                yBeforeX = -1;
-            }
         }
 
         /// <summary>

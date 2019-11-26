@@ -42,7 +42,7 @@ namespace Timetabler.Data.Collections
         /// <param name="contents">The initial contents of the collection.</param>
         public NoteCollection(IEnumerable<Note> contents)
         {
-            _innerCollection.AddRange(contents);
+            InnerCollection.AddRange(contents);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Timetabler.Data.Collections
         /// <returns>A deep copy of this collection.</returns>
         public NoteCollection Copy()
         {
-            return new NoteCollection(_innerCollection.Select(n => n.Copy()));
+            return new NoteCollection(InnerCollection.Select(n => n.Copy()));
         }
 
         /// <summary>
@@ -89,11 +89,16 @@ namespace Timetabler.Data.Collections
         /// <param name="target">The collection whose contents should be overwritten.</param>
         public void CopyTo(NoteCollection target)
         {
-            lock (_innerCollection)
+            if (target is null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            lock (InnerCollection)
             {
                 lock (target)
                 {
-                    Dictionary<string, Note> thisContents = _innerCollection.ToDictionary(n => n.Id, n => n);
+                    Dictionary<string, Note> thisContents = InnerCollection.ToDictionary(n => n.Id, n => n);
                     Dictionary<string, bool> tagged = new Dictionary<string, bool>();
                     for (int i = 0; i < target.Count; ++i)
                     {
@@ -142,8 +147,13 @@ namespace Timetabler.Data.Collections
         /// <param name="notes">The source to copy from.</param>
         public void CopyFrom(Dictionary<string, Note> notes)
         {
+            if (notes is null)
+            {
+                throw new ArgumentNullException(nameof(notes));
+            }
+
             Dictionary<string, bool> found = new Dictionary<string, bool>();
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
                 lock (notes)
                 {

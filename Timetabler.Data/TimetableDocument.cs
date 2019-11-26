@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.Data.Collections;
@@ -17,7 +18,7 @@ namespace Timetabler.Data
     {
         private int _version;
 
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Document file format version number.
@@ -171,222 +172,55 @@ namespace Timetabler.Data
             }
         }
 
-        private LocationCollection _locationList;
-
         /// <summary>
         /// List of locations used in these timetables.
         /// </summary>
-        public LocationCollection LocationList
-        {
-            get
-            {
-                return _locationList;
-            }
-            set
-            {
-                if (_locationList != null)
-                {
-                    _locationList.LocationAdd -= LocationChangedHandler;
-                    _locationList.LocationRemove -= LocationChangedHandler;
-                }
-                _locationList = value;
-                if (DownTrainsDisplay != null)
-                {
-                    DownTrainsDisplay.LocationMap = value;
-                }
-                if (UpTrainsDisplay != null)
-                {
-                    UpTrainsDisplay.LocationMap = value;
-                }
-                if (_locationList != null)
-                {
-                    _locationList.LocationAdd += LocationChangedHandler;
-                    _locationList.LocationRemove += LocationChangedHandler;
-                }
-                OnTimetableDocumentChanged();
-            }
-        }
-
-        private SignalboxCollection _signalboxes;
+        public LocationCollection LocationList { get; private set; }
 
         /// <summary>
         /// The signalboxes in this timetable, for which we will want to specify hours.
         /// </summary>
-        public SignalboxCollection Signalboxes
-        {
-            get
-            {
-                return _signalboxes;
-            }
-            set
-            {
-                if (_signalboxes != null)
-                {
-                    _signalboxes.SignalboxAdd -= SignalboxChangedHandler;
-                    _signalboxes.SignalboxRemove -= SignalboxChangedHandler;
-                }
-                _signalboxes = value;
-                if (_signalboxes != null)
-                {
-                    _signalboxes.SignalboxAdd += SignalboxChangedHandler;
-                    _signalboxes.SignalboxRemove += SignalboxChangedHandler;
-                }
-                OnTimetableDocumentChanged();
-            }
-        }
+        public SignalboxCollection Signalboxes { get; private set; }
 
         private void SignalboxChangedHandler(object sender, SignalboxEventArgs e)
         {
             OnTimetableDocumentChanged();
         }
 
-        private SignalboxHoursSetCollection _signalboxHours;
+        private void SignalboxHoursSetChangedHandler(object sender, SignalboxHoursSetEventArgs eventArgs)
+        {
+            OnTimetableDocumentChanged();
+        }
 
         /// <summary>
         /// The collection of potential signalbox opening hours associated with this timetable.
         /// </summary>
-        public SignalboxHoursSetCollection SignalboxHoursSets
-        {
-            get
-            {
-                return _signalboxHours;
-            }
-            set
-            {
-                if (_signalboxHours != null)
-                {
-                    // FIXME remove event handlers
-                }
-                _signalboxHours = value;
-                if (_signalboxHours != null)
-                {
-                    // FIXME add event handlers
-                }
-                OnTimetableDocumentChanged();
-            }
-        }
-
-        private NoteCollection _noteDefinitions;
+        public SignalboxHoursSetCollection SignalboxHoursSets { get; private set; }
 
         /// <summary>
         /// Footnotes used in these timetables.
         /// </summary>
-        public NoteCollection NoteDefinitions
-        {
-            get
-            {
-                return _noteDefinitions;
-            }
-            set
-            {
-                if (_noteDefinitions != null)
-                {
-                    _noteDefinitions.NoteAdd -= NoteChangedHandler;
-                    _noteDefinitions.NoteRemove -= NoteChangedHandler;
-                }
-                _noteDefinitions = value;
-                if (_noteDefinitions != null)
-                {
-                    _noteDefinitions.NoteAdd += NoteChangedHandler;
-                    _noteDefinitions.NoteRemove += NoteChangedHandler;
-                }
-                OnTimetableDocumentChanged();
-            }
-        }
-
-        private TrainClassCollection _trainClassList;
+        public NoteCollection NoteDefinitions { get; private set; }
 
         /// <summary>
         /// The train classes used in these timetables.
         /// </summary>
-        public TrainClassCollection TrainClassList
-        {
-            get
-            {
-                return _trainClassList;
-            }
-            set
-            {
-                if (_trainClassList != null)
-                {
-                    _trainClassList.TrainClassAdd -= TrainClassChangedHandler;
-                    _trainClassList.TrainClassRemove -= TrainClassChangedHandler;
-                }
-                _trainClassList = value;
-                if (_trainClassList != null)
-                {
-                    _trainClassList.TrainClassAdd += TrainClassChangedHandler;
-                    _trainClassList.TrainClassRemove += TrainClassChangedHandler;
-                }
-                OnTimetableDocumentChanged();
-            }
-        }
-
-        private TrainCollection _trainList;
+        public TrainClassCollection TrainClassList { get; private set; }
 
         /// <summary>
         /// The trains in this timetable.
         /// </summary>
-        public TrainCollection TrainList
-        {
-            get
-            {
-                return _trainList;
-            }
-            set
-            {
-                if (_trainList != null)
-                {
-                    _trainList.TrainAdd -= TrainAddHandler;
-                    _trainList.TrainRemove -= TrainRemoveHandler;
-                }
-                _trainList = value;
-                if (_trainList != null)
-                {
-                    _trainList.TrainAdd += TrainAddHandler;
-                    _trainList.TrainRemove += TrainRemoveHandler;
-                }
-                OnTimetableDocumentChanged();
-            }
-        }
-
-        private TimetableSectionModel _downTrainsDisplay;
+        public TrainCollection TrainList { get; private set; }
 
         /// <summary>
         /// The Down train segments in this timetable as formatted for display.
         /// </summary>
-        public TimetableSectionModel DownTrainsDisplay
-        {
-            get
-            {
-                return _downTrainsDisplay;
-            }
-            set
-            {
-                _downTrainsDisplay = value;
-                _downTrainsDisplay.LocationMap = LocationList;
-                _downTrainsDisplay.CheckCompulsaryLocationsAreVisible();
-            }
-        }
-
-        private TimetableSectionModel _upTrainsDisplay;
+        public TimetableSectionModel DownTrainsDisplay { get; private set; }
 
         /// <summary>
         /// The Up train segments in this timetable as formatted for display.
         /// </summary>
-        public TimetableSectionModel UpTrainsDisplay
-        {
-            get
-            {
-                return _upTrainsDisplay;
-            }
-            set
-            {
-                _upTrainsDisplay = value;
-                _upTrainsDisplay.LocationMap = _locationList;
-                _upTrainsDisplay.CheckCompulsaryLocationsAreVisible();
-            }
-        }
+        public TimetableSectionModel UpTrainsDisplay { get; private set; }
 
         /// <summary>
         /// The type of event handler delegate for the <see cref="TimetableDocumentChanged"/> event.
@@ -408,16 +242,30 @@ namespace Timetabler.Data
             Version = 2;
 
             TrainClassList = new TrainClassCollection();
+            TrainClassList.TrainClassAdd += TrainClassChangedHandler;
+            TrainClassList.TrainClassRemove -= TrainClassChangedHandler;
             TrainList = new TrainCollection();
-            DownTrainsDisplay = new TimetableSectionModel(Direction.Down);
-            UpTrainsDisplay = new TimetableSectionModel(Direction.Up);
+            TrainList.TrainAdd += TrainAddHandler;
+            TrainList.TrainRemove += TrainRemoveHandler;
             LocationList = new LocationCollection();
+            LocationList.LocationAdd += LocationChangedHandler;
+            LocationList.LocationRemove += LocationChangedHandler;
+            DownTrainsDisplay = new TimetableSectionModel(Direction.Down, LocationList);
+            UpTrainsDisplay = new TimetableSectionModel(Direction.Up, LocationList);
             Signalboxes = new SignalboxCollection();
+            Signalboxes.SignalboxAdd += SignalboxChangedHandler;
+            Signalboxes.SignalboxRemove += SignalboxChangedHandler;
             SignalboxHoursSets = new SignalboxHoursSetCollection();
+            SignalboxHoursSets.SignalboxHoursSetAdd += SignalboxHoursSetChangedHandler;
+            SignalboxHoursSets.SignalboxHoursSetRemove += SignalboxHoursSetChangedHandler;
             Options = new DocumentOptions();
             NoteDefinitions = new NoteCollection();
+            NoteDefinitions.NoteAdd += NoteChangedHandler;
+            NoteDefinitions.NoteRemove += NoteChangedHandler;
             ExportOptions = new DocumentExportOptions();
         }
+
+        
 
         private void TrainAddHandler(object sender, TrainEventArgs e)
         {
@@ -496,11 +344,11 @@ namespace Timetabler.Data
             return footnotes;
         }
 
-        private IEnumerable<FootnoteDisplayModel> GetFootnotesForTrainTime(TrainTime time)
+        private static IEnumerable<FootnoteDisplayModel> GetFootnotesForTrainTime(TrainTime time)
         {
             if (time.Footnotes == null)
             {
-                return new FootnoteDisplayModel[0];
+                return Array.Empty<FootnoteDisplayModel>();
             }
             return time.Footnotes.Select(f => f.ToFootnoteDisplayModel());
         }
@@ -513,13 +361,13 @@ namespace Timetabler.Data
             }
             if (toWorkModel.ActualTime != null)
             {
-                toWorkModel.DisplayedText = toWorkModel.ActualTime.ToString(Options.FormattingStrings.TimeWithoutFootnotes);
+                toWorkModel.DisplayedText = toWorkModel.ActualTime.ToString(Options.FormattingStrings.TimeWithoutFootnotes, CultureInfo.CurrentCulture);
             }
         }
 
         private void ProcessTrain(Train train)
         {
-            Log.Trace("Entering ProcessTrain() for {0}", train.Id);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_ProcessTrain, train.Id);
 
             TrainSegmentModel currentSegment = new TrainSegmentModel(train);
             SetToWorkCellValue(currentSegment.ToWorkCell);

@@ -316,7 +316,7 @@ namespace Timetabler
             Log.Trace("TrainClassListEditForm.ShowDialog() returned {0}", result);
             if (result == DialogResult.OK)
             {
-                Model.TrainClassList = tclef.Model;
+                Model.TrainClassList.Overwrite(tclef.Model);
             }
         }
 
@@ -544,10 +544,9 @@ namespace Timetabler
             Log.Trace("LocationListEditForm.ShowDialog() returned {0}", result);
             if (result == DialogResult.OK)
             {
-                Model.LocationList = form.Model;
+                Model.LocationList.Overwrite(form.Model);
                 Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
                 Model.UpTrainsDisplay.CheckCompulsaryLocationsAreVisible();
-                trainGraph.Model.LocationList = form.Model;
                 trainGraph.Invalidate();
             }
             Model.ResolveAll();
@@ -612,10 +611,8 @@ namespace Timetabler
                     return;
                 }
 
-                Model.LocationList = locations;
-                Model.DownTrainsDisplay.LocationMap = Model.LocationList;
+                Model.LocationList.Overwrite(locations);
                 Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
-                Model.UpTrainsDisplay.LocationMap = Model.LocationList;
                 Model.UpTrainsDisplay.CheckCompulsaryLocationsAreVisible();
                 UpdateTrainGraphLocationModel();
             }
@@ -691,12 +688,12 @@ namespace Timetabler
             TimetableDocument newDocument = new TimetableDocument();
             if (template != null)
             {
-                newDocument.LocationList = template.Locations;
+                newDocument.LocationList.Overwrite(template.Locations);
                 newDocument.Options = template.DocumentOptions;
                 newDocument.ExportOptions = template.ExportOptions;
-                newDocument.NoteDefinitions = template.NoteDefinitions;
-                newDocument.TrainClassList = template.TrainClasses;
-                newDocument.Signalboxes = template.Signalboxes;
+                newDocument.NoteDefinitions.Overwrite(template.NoteDefinitions);
+                newDocument.TrainClassList.Overwrite(template.TrainClasses);
+                newDocument.Signalboxes.Overwrite(template.Signalboxes);
             }
             Model = newDocument;
             UpdateTrainGraphLocationModel();
@@ -886,7 +883,7 @@ namespace Timetabler
             {
                 return;
             }
-            Model.Signalboxes = form.Model;
+            Model.Signalboxes.Overwrite(form.Model);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

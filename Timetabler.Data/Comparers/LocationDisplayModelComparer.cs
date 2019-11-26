@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
@@ -64,7 +65,10 @@ namespace Timetabler.Data.Comparers
             // If we reach this point, the location rows are for locations with the same mileage, so we assume it is the same location and we are ordering arrival and departure rows
             if (x.LocationKey.Contains("-") && y.LocationKey.Contains("-"))
             {
-                return string.Compare(x.LocationKey.Substring(x.LocationKey.LastIndexOf("-") + 1), y.LocationKey.Substring(y.LocationKey.LastIndexOf("-") + 1));
+                return string.Compare(
+                    x.LocationKey.Substring(x.LocationKey.LastIndexOf("-", StringComparison.InvariantCulture) + 1), 
+                    y.LocationKey.Substring(y.LocationKey.LastIndexOf("-", StringComparison.InvariantCulture) + 1), 
+                    StringComparison.InvariantCulture);
             } 
             
             // The locations have the same mileage, but do not have standard format location keys.

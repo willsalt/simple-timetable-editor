@@ -54,7 +54,7 @@ namespace Timetabler.Data
         /// <summary>
         /// The collection of <see cref="SignalboxHours" /> objects, keyed by <see cref="Signalbox.Id" />
         /// </summary>
-        public SignalboxHoursCollection Hours { get; set; }
+        public SignalboxHoursDictionary Hours { get; set; }
 
         /// <summary>
         /// Event raised when this object is modified.
@@ -81,7 +81,7 @@ namespace Timetabler.Data
         /// </summary>
         public SignalboxHoursSet()
         {
-            Hours = new SignalboxHoursCollection();
+            Hours = new SignalboxHoursDictionary();
             Hours.SignalboxHoursAdd += HoursAdded;
             Hours.SignalboxHoursModified += HoursModified;
             Hours.SignalboxHoursRemove += HoursRemoved;

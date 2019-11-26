@@ -70,10 +70,10 @@ namespace Timetabler.Data.Collections
         /// <param name="locationDisplayModelComparer">The comparer to use when carrying out the sort.</param>
         public void Sort(IComparer<LocationDisplayModel> locationDisplayModelComparer)
         {
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
-                _innerCollection.Sort(locationDisplayModelComparer);
-                foreach (string id in _innerCollection.Select(l => l.LocationId).Distinct())
+                InnerCollection.Sort(locationDisplayModelComparer);
+                foreach (string id in InnerCollection.Select(l => l.LocationId).Distinct())
                 {
                     SetDisplaySeparatorPropertiesOfGroup(id);
                 }
@@ -94,9 +94,9 @@ namespace Timetabler.Data.Collections
                 throw new ArgumentNullException(nameof(id));
             }
 
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
-                foreach (LocationDisplayModel item in _innerCollection)
+                foreach (LocationDisplayModel item in InnerCollection)
                 {
                     if (item.LocationKey == id)
                     {
@@ -115,9 +115,14 @@ namespace Timetabler.Data.Collections
         /// <param name="comparer">The comparer to use when determining the location the element should be inserted at.</param>
         public int AddSorted(LocationDisplayModel item, LocationDisplayModelComparer comparer)
         {
-            lock (_innerCollection)
+            if (item is null)
             {
-                if (_innerCollection.Count == 0)
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            lock (InnerCollection)
+            {
+                if (InnerCollection.Count == 0)
                 {
                     Add(item);
                     return Count - 1;
@@ -128,15 +133,15 @@ namespace Timetabler.Data.Collections
                     throw new ArgumentNullException(nameof(comparer));
                 }
 
-                _innerCollection.Add(item);
-                for (var i = _innerCollection.Count - 1; i > 0; i--)
+                InnerCollection.Add(item);
+                for (var i = InnerCollection.Count - 1; i > 0; i--)
                 {
-                    var comparison = comparer.Compare(_innerCollection[i], _innerCollection[i - 1]);
+                    var comparison = comparer.Compare(InnerCollection[i], InnerCollection[i - 1]);
                     if (comparison < 0)
                     {
-                        LocationDisplayModel swap = _innerCollection[i];
-                        _innerCollection[i] = _innerCollection[i - 1];
-                        _innerCollection[i - 1] = swap;
+                        LocationDisplayModel swap = InnerCollection[i];
+                        InnerCollection[i] = InnerCollection[i - 1];
+                        InnerCollection[i - 1] = swap;
                     }
                     else
                     {
@@ -155,17 +160,17 @@ namespace Timetabler.Data.Collections
         private void SetDisplaySeparatorPropertiesOfGroup(string locationId)
         {
             List<LocationDisplayModel> subList = new List<LocationDisplayModel>();
-            for (int i = 0; i < _innerCollection.Count; ++i)
+            for (int i = 0; i < InnerCollection.Count; ++i)
             {
-                if (_innerCollection[i].LocationId == locationId)
+                if (InnerCollection[i].LocationId == locationId)
                 {
-                    if ((!_innerCollection[i].ParentDisplaySeparatorAbove) || (!_innerCollection[i].ParentDisplaySeparatorBelow))
+                    if ((!InnerCollection[i].ParentDisplaySeparatorAbove) || (!InnerCollection[i].ParentDisplaySeparatorBelow))
                     {
                         return;
                     }
-                    _innerCollection[i].DisplaySeparatorAbove = false;
-                    _innerCollection[i].DisplaySeparatorBelow = false;
-                    subList.Add(_innerCollection[i]);
+                    InnerCollection[i].DisplaySeparatorAbove = false;
+                    InnerCollection[i].DisplaySeparatorBelow = false;
+                    subList.Add(InnerCollection[i]);
                 }
             }
 
@@ -235,15 +240,15 @@ namespace Timetabler.Data.Collections
                 throw new ArgumentOutOfRangeException(nameof(idx));
             }
 
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
-                if (idx >= _innerCollection.Count)
+                if (idx >= InnerCollection.Count)
                 {
                     throw new ArgumentOutOfRangeException(nameof(idx));
                 }
 
-                LocationDisplayModel item = _innerCollection[idx];
-                _innerCollection.RemoveAt(idx);
+                LocationDisplayModel item = InnerCollection[idx];
+                InnerCollection.RemoveAt(idx);
                 item.Modified -= ContentsModified;
                 OnRemove(item, idx);
             }

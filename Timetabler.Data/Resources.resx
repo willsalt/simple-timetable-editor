@@ -117,12 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BaseCollection_CopyTo_Error_InsufficientArrayLength" xml:space="preserve">
+    <value>The destination array does not contain enough elements to store the collection.</value>
+  </data>
   <data name="Distance_ToString_FormatExceptionMessage" xml:space="preserve">
     <value>Format string {0} is not supported.</value>
     <comment>Exception message for FormatException instances thrown by Distance.ToString(string) and Distance.ToString(string, IFormatProvider).</comment>
   </data>
   <data name="LocationRow_Abbreviation_Platform" xml:space="preserve">
     <value>plat</value>
+  </data>
+  <data name="LogMessage_AddArrivalDepartureRow" xml:space="preserve">
+    <value>Adding location arrival/departure row for {0}</value>
+  </data>
+  <data name="LogMessage_AddRoutingRow" xml:space="preserve">
+    <value>Adding routing code row for {0}</value>
+  </data>
+  <data name="LogMessage_ProcessTrain" xml:space="preserve">
+    <value>Entering ProcessTrain() for {0}</value>
   </data>
   <data name="SignalboxHours_TokenBalanceWarningSymbol" xml:space="preserve">
     <value>t</value>

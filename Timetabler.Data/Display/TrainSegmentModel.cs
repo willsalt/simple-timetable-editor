@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.CoreData.Events;
@@ -75,17 +76,17 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// List of timings (or other data) that comprise this segment.
         /// </summary>
-        public List<ILocationEntry> Timings { get; set; }
+        public List<ILocationEntry> Timings { get; private set; }
 
         /// <summary>
         /// Footnotes which are used by this segment whose definitions should appear on the page with the timetable section.
         /// </summary>
-        public List<FootnoteDisplayModel> PageFootnotes { get; set; }
+        public List<FootnoteDisplayModel> PageFootnotes { get; private set; }
 
         /// <summary>
         /// The data contained in the <see cref="Timings"/> property, indexed by location ID.
         /// </summary>
-        public Dictionary<string, ILocationEntry> TimingsIndex { get; set; }
+        public Dictionary<string, ILocationEntry> TimingsIndex { get; private set; }
 
         /// <summary>
         /// The data to be displayed in the "To Work" row of the timetable, if there is one.
@@ -110,10 +111,11 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public TrainSegmentModel()
+        /// <param name="timings">The train timings, if any.</param>
+        public TrainSegmentModel(List<ILocationEntry> timings)
         {
-            Timings = new List<ILocationEntry>();
-            TimingsIndex = new Dictionary<string, ILocationEntry>();
+            Timings = timings ?? new List<ILocationEntry>();
+            TimingsIndex = Timings.ToDictionary(t => t.LocationKey, t => t);
             PageFootnotes = new List<FootnoteDisplayModel>();
         }
 
@@ -121,8 +123,13 @@ namespace Timetabler.Data.Display
         /// Constructor which initialises the header fields of this segment.
         /// </summary>
         /// <param name="train">The train to use for populating the header fields.</param>
-        public TrainSegmentModel(Train train) : this()
+        /// <param name="timings">The train timings.</param>
+        public TrainSegmentModel(Train train, List<ILocationEntry> timings) : this(timings)
         {
+            if (train is null)
+            {
+                throw new ArgumentNullException(nameof(train));
+            }
             TrainId = train.Id;
             Headcode = train.Headcode ?? string.Empty;
             LocoDiagram = train.LocoDiagram ?? string.Empty;
@@ -180,7 +187,7 @@ namespace Timetabler.Data.Display
         /// <returns>A <see cref="TrainSegmentModel" /> which is a deep copy of this object.</returns>
         public TrainSegmentModel Copy()
         {
-            TrainSegmentModel tsm = new TrainSegmentModel
+            TrainSegmentModel tsm = new TrainSegmentModel(Timings.Select(t => t.Copy()).ToList())
             {
                 Footnotes = Footnotes,
                 Headcode = Headcode,
@@ -188,7 +195,6 @@ namespace Timetabler.Data.Display
                 IncludeSeparatorBelow = IncludeSeparatorBelow,
                 InlineNote = InlineNote,
                 LocoDiagram = LocoDiagram,
-                Timings = Timings.Select(t => t.Copy()).ToList(),
                 ToWorkCell = ToWorkCell?.Copy(),
                 TrainClass = TrainClass,
                 TrainId = TrainId,

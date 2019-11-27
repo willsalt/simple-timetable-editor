@@ -163,11 +163,6 @@ namespace Timetabler
                 return;
             }
 
-            if (_model.Data.TrainTimes == null)
-            {
-                _model.Data.TrainTimes = new List<TrainLocationTime>();
-            }
-
             _model.Data.TrainTimes.Add(form.Model.Data);
             _model.Data.TrainTimes.Sort(new TrainLocationArrivalTimeComparer());
             UpdateTimingsViewFromModel();

@@ -35,8 +35,8 @@ namespace Timetabler.Data.Tests.Unit
                 IncludeSeparatorBelow = _rnd.NextBoolean(),
                 InlineNote = _rnd.NextString(_rnd.Next(100)),
                 GraphProperties = GetGraphTrainProperties(),
-                TrainTimes = GetTrainLocationTimeList(2, 20, beforeMidnight),
             };
+            t.TrainTimes.AddRange(GetTrainLocationTimeList(2, 20, beforeMidnight));
             t.TrainClassId = t.TrainClass.Id;
             if (withToWork ?? _rnd.NextBoolean())
             {

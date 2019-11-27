@@ -12,10 +12,10 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     [TestClass]
     public class TrainSegmentModelComparerUnitTests
     {
-        private void UpdateTimingsIndex(TrainSegmentModel segment)
-        {
-            segment.TimingsIndex = segment.Timings.ToDictionary(t => t.LocationKey, t => t);
-        }
+        //private void UpdateTimingsIndex(TrainSegmentModel segment)
+        //{
+        //    segment.TimingsIndex = segment.Timings.ToDictionary(t => t.LocationKey, t => t);
+        //}
 
         [TestMethod]
         public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfBothParametersAreNull()
@@ -38,31 +38,11 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterIsNullAndSecondParameterHasTimingsPropertyEqualToNull()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel { Timings = null });
-
-            Assert.AreEqual(0, testOutput.Item1);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterIsNullAndSecondParameterHasTimingsPropertyEqualToNull()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel { Timings = null });
-
-            Assert.AreEqual(null, testOutput.Item2);
-        }
-
-        [TestMethod]
         public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterIsNullAndSecondParameterHasNoTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel { Timings = new List<ILocationEntry>() });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel(null));
 
             Assert.AreEqual(0, testOutput.Item1);
         }
@@ -72,67 +52,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel { Timings = new List<ILocationEntry>() });
-
-            Assert.AreEqual(null, testOutput.Item2);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterHasNullTimingsPropertyAndSecondParameterIsNull()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null }, null);
-
-            Assert.AreEqual(0, testOutput.Item1);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasNullTimingsPropertyAndSecondParameterIsNull()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null }, null);
-
-            Assert.AreEqual(null, testOutput.Item2);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterHasNullTimingsPropertyAndSecondParameterHasNullTimingsProperty()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null }, new TrainSegmentModel { Timings = null });
-
-            Assert.AreEqual(0, testOutput.Item1);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasNullTimingsPropertyAndSecondParameterHasNullTimingsProperty()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null }, new TrainSegmentModel { Timings = null });
-
-            Assert.AreEqual(null, testOutput.Item2);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterHasNullTimingsPropertyAndSecondParameterHasNoTimings()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null }, new TrainSegmentModel { Timings = new List<ILocationEntry>() });
-
-            Assert.AreEqual(0, testOutput.Item1);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasNullTimingsPropertyAndSecondParameterHasNoTimings()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null }, new TrainSegmentModel { Timings = new List<ILocationEntry>() });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel(null));
 
             Assert.AreEqual(null, testOutput.Item2);
         }
@@ -142,7 +62,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() }, null);
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(null), null);
 
             Assert.AreEqual(0, testOutput.Item1);
         }
@@ -152,27 +72,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() }, null);
-
-            Assert.AreEqual(null, testOutput.Item2);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterHasNoTimingsAndSecondParameterHasNullTimingsProperty()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() }, new TrainSegmentModel { Timings = null });
-
-            Assert.AreEqual(0, testOutput.Item1);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasNoTimingsAndSecondParameterHasNullTimingsProperty()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() }, new TrainSegmentModel { Timings = null });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(null), null);
 
             Assert.AreEqual(null, testOutput.Item2);
         }
@@ -182,8 +82,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() }, 
-                new TrainSegmentModel { Timings = new List<ILocationEntry>() });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(null), new TrainSegmentModel(null));
 
             Assert.AreEqual(0, testOutput.Item1);
         }
@@ -193,8 +92,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() }, 
-                new TrainSegmentModel { Timings = new List<ILocationEntry>() });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(null), new TrainSegmentModel(null));
 
             Assert.AreEqual(null, testOutput.Item2);
         }
@@ -204,7 +102,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } }, null);
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "x" } }), null);
 
             Assert.AreEqual(1, testOutput.Item1);
         }
@@ -214,29 +112,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } }, null);
-
-            Assert.IsNull(testOutput.Item2);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualTo1IfFirstParameterHasTimingsAndSecondParameterHasTimingsPropertyNull()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } }, 
-                new TrainSegmentModel { Timings = null });
-
-            Assert.AreEqual(1, testOutput.Item1);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasTimingsAndSecondParameterHasTimingsPropertyNull()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } },
-                new TrainSegmentModel { Timings = null });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "x" } }), null);
 
             Assert.IsNull(testOutput.Item2);
         }
@@ -246,8 +122,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } },
-                new TrainSegmentModel { Timings = new List<ILocationEntry>() });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "x" } }), 
+                new TrainSegmentModel(null));
 
             Assert.AreEqual(1, testOutput.Item1);
         }
@@ -257,8 +133,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } },
-                new TrainSegmentModel { Timings = new List<ILocationEntry>() });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "c" } }), 
+                new TrainSegmentModel(null));
 
             Assert.IsNull(testOutput.Item2);
         }
@@ -268,7 +144,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "x" } }));
 
             Assert.AreEqual(-1, testOutput.Item1);
         }
@@ -278,29 +154,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } });
-
-            Assert.IsNull(testOutput.Item2);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToMinus1IfFirstParameterHasTimingsPropertyNullAndSecondParameterHasTimings()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null }, 
-                new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } });
-
-            Assert.AreEqual(-1, testOutput.Item1);
-        }
-
-        [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasTimingsPropertyNullAndSecondParameterHasTimings()
-        {
-            TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
-
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = null },
-                new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(null, new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "x" } }));
 
             Assert.IsNull(testOutput.Item2);
         }
@@ -310,8 +164,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() },
-                new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(null), 
+                new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "x" } }));
 
             Assert.AreEqual(-1, testOutput.Item1);
         }
@@ -321,8 +175,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
-            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel { Timings = new List<ILocationEntry>() },
-                new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel() } });
+            Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(new TrainSegmentModel(null), 
+                new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "x" } }));
 
             Assert.IsNull(testOutput.Item2);
         }
@@ -340,10 +194,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase1()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel> { new LocationDisplayModel { LocationKey = "A" } });
-            TrainSegmentModel testParam0 = new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) } } };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) } } };
-            UpdateTimingsIndex(testParam1);
+            TrainSegmentModel testParam0 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) } });
+            TrainSegmentModel testParam1 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) } });
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -376,22 +228,24 @@ namespace Timetabler.Data.Tests.Unit.Comparers
                 new LocationDisplayModel { LocationKey = "C" },
                 new LocationDisplayModel { LocationKey = "D" },
             });
-            TrainSegmentModel testParam0 = new TrainSegmentModel { Timings = new List<ILocationEntry>
-            {
-                new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
-                new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
-                new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
-                new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
-            } };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel { Timings = new List<ILocationEntry>
-            {
-                new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
-                new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
-                new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
-                new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
-            } };
-            UpdateTimingsIndex(testParam1);
+            TrainSegmentModel testParam0 = new TrainSegmentModel(
+                new List<ILocationEntry>
+                {
+                    new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
+                    new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
+                    new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
+                    new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
+                }
+            );
+            TrainSegmentModel testParam1 = new TrainSegmentModel(
+                new List<ILocationEntry>
+                {
+                    new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
+                    new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
+                    new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
+                    new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
+                }
+            );
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -412,10 +266,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase3()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel> { new LocationDisplayModel { LocationKey = "A" } });
-            TrainSegmentModel testParam0 = new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 59) } } };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) } } };
-            UpdateTimingsIndex(testParam1);
+            TrainSegmentModel testParam0 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 59) } });
+            TrainSegmentModel testParam1 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) } });
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -436,10 +288,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase4()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel> { new LocationDisplayModel { LocationKey = "A" } });
-            TrainSegmentModel testParam0 = new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 59) } } };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel { Timings = new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 50) } } };
-            UpdateTimingsIndex(testParam1);
+            TrainSegmentModel testParam0 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 59) } });
+            TrainSegmentModel testParam1 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 50) } });
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -472,28 +322,24 @@ namespace Timetabler.Data.Tests.Unit.Comparers
                 new LocationDisplayModel { LocationKey = "C" },
                 new LocationDisplayModel { LocationKey = "D" },
             });
-            TrainSegmentModel testParam0 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            TrainSegmentModel testParam0 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
                 }
-            };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            );
+            TrainSegmentModel testParam1 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 12, 15) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33, 1) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 59) },
                 }
-            };
-            UpdateTimingsIndex(testParam1);
+            );
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -526,28 +372,24 @@ namespace Timetabler.Data.Tests.Unit.Comparers
                 new LocationDisplayModel { LocationKey = "C" },
                 new LocationDisplayModel { LocationKey = "D" },
             });
-            TrainSegmentModel testParam0 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            TrainSegmentModel testParam0 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
                 }
-            };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            );
+            TrainSegmentModel testParam1 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(9, 45, 15) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 30) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 14) },
                 }
-            };
-            UpdateTimingsIndex(testParam1);
+            );
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -580,28 +422,24 @@ namespace Timetabler.Data.Tests.Unit.Comparers
                 new LocationDisplayModel { LocationKey = "C" },
                 new LocationDisplayModel { LocationKey = "D" },
             });
-            TrainSegmentModel testParam0 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            TrainSegmentModel testParam0 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
                 }
-            };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            );
+            TrainSegmentModel testParam1 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33, 1) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 59) },
                 }
-            };
-            UpdateTimingsIndex(testParam1);
+            );
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -634,28 +472,24 @@ namespace Timetabler.Data.Tests.Unit.Comparers
                 new LocationDisplayModel { LocationKey = "C" },
                 new LocationDisplayModel { LocationKey = "D" },
             });
-            TrainSegmentModel testParam0 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            TrainSegmentModel testParam0 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
                 }
-            };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            );
+            TrainSegmentModel testParam1 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(9, 45, 15) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 33) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
                 }
-            };
-            UpdateTimingsIndex(testParam1);
+            );
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -700,28 +534,24 @@ namespace Timetabler.Data.Tests.Unit.Comparers
                 new LocationDisplayModel { LocationKey = "C" },
                 new LocationDisplayModel { LocationKey = "D" },
             });
-            TrainSegmentModel testParam0 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            TrainSegmentModel testParam0 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 35) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
                 }
-            };
-            UpdateTimingsIndex(testParam0);
-            TrainSegmentModel testParam1 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            );
+            TrainSegmentModel testParam1 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 12) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 17, 1) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 22, 59) },
                 }
-            };
-            UpdateTimingsIndex(testParam1);
+            );
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 
@@ -782,28 +612,24 @@ namespace Timetabler.Data.Tests.Unit.Comparers
                 new LocationDisplayModel { LocationKey = "C" },
                 new LocationDisplayModel { LocationKey = "D" },
             });
-            TrainSegmentModel testParam1 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            TrainSegmentModel testParam1 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 35) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 38, 15) },
                 }
-            };
-            UpdateTimingsIndex(testParam1);
-            TrainSegmentModel testParam0 = new TrainSegmentModel
-            {
-                Timings = new List<ILocationEntry>
+            );
+            TrainSegmentModel testParam0 = new TrainSegmentModel(
+                new List<ILocationEntry>
                 {
                     new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 7) },
                     new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(10, 12) },
                     new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(10, 17, 1) },
                     new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(10, 22, 59) },
                 }
-            };
-            UpdateTimingsIndex(testParam0);
+            );
 
             Tuple<int, TrainSegmentModel> testOutput = testObject.Compare(testParam0, testParam1);
 

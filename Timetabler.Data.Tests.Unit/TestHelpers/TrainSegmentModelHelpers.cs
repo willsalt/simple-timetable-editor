@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData.Helpers;
@@ -14,7 +13,7 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
 
         public static TrainSegmentModel GetTrainSegmentModel()
         {
-            TrainSegmentModel tsm = new TrainSegmentModel
+            TrainSegmentModel tsm = new TrainSegmentModel(TrainLocationTimeModelHelpers.GetTrainLocationTimeModelList(2, _rnd.Next(2, 24)))
             {
                 Footnotes = _rnd.NextString(_rnd.Next(0, 5)),
                 Headcode = _rnd.NextString(_rnd.Next(0, 4)),
@@ -22,12 +21,10 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
                 IncludeSeparatorBelow = _rnd.NextBoolean(),
                 InlineNote = _rnd.NextString(_rnd.Next(0, 256)),
                 LocoDiagram = _rnd.NextString(_rnd.Next(0, 4)),
-                Timings = TrainLocationTimeModelHelpers.GetTrainLocationTimeModelList(2, _rnd.Next(2, 24)),
                 ToWorkCell = GenericTimeModelHelpers.GetGenericTimeModel(),
                 TrainClass = _rnd.NextString(1),
                 TrainId = GeneralHelper.GetNewId(Array.Empty<Train>()),
             };
-            tsm.TimingsIndex = tsm.Timings.ToDictionary(t => t.LocationKey, t => t);
             return tsm;
         }
 

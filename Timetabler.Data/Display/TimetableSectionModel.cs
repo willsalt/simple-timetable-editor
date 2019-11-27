@@ -82,6 +82,7 @@ namespace Timetabler.Data.Display
         /// Constructor.
         /// </summary>
         /// <param name="direction">The direction which applies to this section.</param>
+        /// <param name="map">The locations within this section.</param>
         public TimetableSectionModel(Direction direction, LocationCollection map)
         {
             Direction = direction;

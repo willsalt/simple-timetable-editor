@@ -140,10 +140,8 @@ namespace Timetabler
 
         private void UpdateTrainGraphLocationModel()
         {
-            trainGraph.Model = new TrainGraphModel
+            trainGraph.Model = new TrainGraphModel(Model.LocationList, Model.TrainList)
             {
-                LocationList = Model.LocationList,
-                TrainList = Model.TrainList,
                 DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs,
                 TooltipFormattingString = Model.Options.FormattingStrings.Tooltip,
                 EditTrainMethod = EditTrain,
@@ -800,14 +798,10 @@ namespace Timetabler
                 return;
             }
 
-            DocumentTemplate template = new DocumentTemplate
+            DocumentTemplate template = new DocumentTemplate(Model.LocationList, Model.NoteDefinitions, Model.TrainClassList, Model.Signalboxes)
             {
                 DocumentOptions = Model.Options,
                 ExportOptions = Model.ExportOptions,
-                Locations = Model.LocationList,
-                NoteDefinitions = Model.NoteDefinitions,
-                TrainClasses = Model.TrainClassList,
-                Signalboxes = Model.Signalboxes,
             };
 
             try

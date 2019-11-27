@@ -79,6 +79,15 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wrong data type..
+        /// </summary>
+        internal static string Error_WrongDataType {
+            get {
+                return ResourceManager.GetString("Error_WrongDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to plat.
         /// </summary>
         internal static string LocationRow_Abbreviation_Platform {

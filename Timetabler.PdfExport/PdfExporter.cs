@@ -241,7 +241,7 @@ namespace Timetabler.PdfExport
                 if (document.ExportOptions.DisplayGraph)
                 {
                     StartPage(doc);
-                    DrawGraph(new TrainGraphModel() { DisplayTrainLabels = document.Options.DisplayTrainLabelsOnGraphs, LocationList = document.LocationList, TrainList = document.TrainList },
+                    DrawGraph(new TrainGraphModel(document.LocationList, document.TrainList) { DisplayTrainLabels = document.Options.DisplayTrainLabelsOnGraphs },
                         document.Title, document.Subtitle, document.DateDescription);
                 }
 

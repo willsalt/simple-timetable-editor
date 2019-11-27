@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Timetabler.Data;
 using Timetabler.Data.Collections;
 using Timetabler.SerialData.Xml;
@@ -17,23 +19,25 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>A converted <see cref="DocumentTemplate"/> object.</returns>
         public static DocumentTemplate ToDocumentTemplate(this TimetableDocumentTemplateModel model)
         {
-            DocumentTemplate template = new DocumentTemplate
-            {
-                DocumentOptions = model.DefaultOptions.ToDocumentOptions(),
-                ExportOptions = model.DefaultExportOptions.ToDocumentExportOptions(),
-                NoteDefinitions = new NoteCollection(model.NoteDefinitions.Select(n => n.ToNote())),
-                TrainClasses = new TrainClassCollection(model.TrainClasses.Select(c => c.ToTrainClass())),
-                Signalboxes = new SignalboxCollection(model.Signalboxes.Select(s => s.ToSignalbox())),
-            };
-
+            IEnumerable<Location> locationSource;
             if (model.Maps != null && model.Maps.Count > 0 && model.Maps[0] != null)
             {
-                template.Locations = new LocationCollection(model.Maps[0].LocationList.Select(l => l.ToLocation()));
+                locationSource = model.Maps[0].LocationList.Select(l => l.ToLocation());
             }
             else
             {
-                template.Locations = new LocationCollection();
+                locationSource = Array.Empty<Location>();
             }
+
+            DocumentTemplate template = new DocumentTemplate(
+                locationSource, 
+                model.NoteDefinitions.Select(n => n.ToNote()), 
+                model.TrainClasses.Select(c => c.ToTrainClass()), 
+                model.Signalboxes.Select(s => s.ToSignalbox()))
+            {
+                DocumentOptions = model.DefaultOptions.ToDocumentOptions(),
+                ExportOptions = model.DefaultExportOptions.ToDocumentExportOptions(),
+            };
 
             return template;
         }

@@ -44,11 +44,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <(Distance d1, Distance d2)
         {
-            if (ReferenceEquals(d1, null))
+            if (d1 is null)
             {
-                return !ReferenceEquals(d2, null);
+                return d2 is object;
             }
-            if (ReferenceEquals(d2, null))
+            if (d2 is null)
             {
                 return false;
             }
@@ -63,11 +63,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <=(Distance d1, Distance d2)
         {
-            if (ReferenceEquals(d1, null))
+            if (d1 is null)
             {
                 return true;
             }
-            if (ReferenceEquals(d2, null))
+            if (d2 is null)
             {
                 return false;
             }
@@ -82,11 +82,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >(Distance d1, Distance d2)
         {
-            if (ReferenceEquals(d1, null))
+            if (d1 is null)
             {
                 return false;
             }
-            if (ReferenceEquals(d2, null))
+            if (d2 is null)
             {
                 return true;
             }
@@ -101,11 +101,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >=(Distance d1, Distance d2)
         {
-            if (ReferenceEquals(d1, null))
+            if (d1 is null)
             {
-                return ReferenceEquals(d2, null);
+                return d2 is null;
             }
-            if (ReferenceEquals(d2, null))
+            if (d2 is null)
             {
                 return false;
             }
@@ -121,11 +121,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator ==(Distance d1, Distance d2)
         {
-            if (ReferenceEquals(d1, null))
+            if (d1 is null)
             {
-                return ReferenceEquals(d2, null);
+                return d2 is null;
             }
-            if (ReferenceEquals(d2, null))
+            if (d2 is null)
             {
                 return false;
             }
@@ -141,11 +141,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator !=(Distance d1, Distance d2)
         {
-            if (ReferenceEquals(d1, null))
+            if (d1 is null)
             {
-                return !ReferenceEquals(d2, null);
+                return d2 is object;
             }
-            if (ReferenceEquals(d2, null))
+            if (d2 is null)
             {
                 return true;
             }
@@ -160,15 +160,15 @@ namespace Timetabler.Data
         /// <returns>A <see cref="Distance" /> instance whose value is equal to the sum of the two parameters (null being treated as zero), or null if both parameters are null.</returns>
         public static Distance operator +(Distance d1, Distance d2)
         {
-            if (ReferenceEquals(d1, null))
+            if (d1 is null)
             {
-                if (ReferenceEquals(d2, null))
+                if (d2 is null)
                 {
                     return null;
                 }
                 return new Distance { Mileage = d2.Mileage, Chainage = d2.Chainage };
             }
-            if (ReferenceEquals(d2, null))
+            if (d2 is null)
             {
                 return new Distance { Mileage = d1.Mileage, Chainage = d1.Chainage };
             }
@@ -179,6 +179,17 @@ namespace Timetabler.Data
                 sum.Chainage -= 80d;
             }
             return sum;
+        }
+
+        /// <summary>
+        /// Adds two <see cref="Distance" />s and returns a new <see cref="Distance" /> equal to their sum.  If one parameter is null, a copy of the other parameter is returned.
+        /// </summary>
+        /// <param name="d1">A <see cref="Distance" /> instance.</param>
+        /// <param name="d2">A <see cref="Distance" /> instance.</param>
+        /// <returns>A <see cref="Distance" /> instance whose value is equal to the sum of the two parameters (null being treated as zero), or null if both parameters are null.</returns>
+        public static Distance Add(Distance d1, Distance d2)
+        {
+            return d1 + d2;
         }
 
         /// <summary>
@@ -221,7 +232,7 @@ namespace Timetabler.Data
             var d = obj as Distance;
             if (d == null)
             {
-                throw new ArgumentException("Wrong data type passed", "obj");
+                throw new ArgumentException(Resources.Error_WrongDataType, nameof(obj));
             }
             return CompareTo(d);
         }
@@ -286,7 +297,7 @@ namespace Timetabler.Data
                 case "D":
                     return AbsoluteDistance.ToString(formatProvider);
                 default:
-                    throw new FormatException(string.Format(Resources.Distance_ToString_FormatExceptionMessage, format));
+                    throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.Distance_ToString_FormatExceptionMessage, format));
             }
         }
 
@@ -309,7 +320,7 @@ namespace Timetabler.Data
         /// <returns>The value of this object formatted as a string.</returns>
         public override string ToString()
         {
-            return ToString("G");
+            return ToString("G", CultureInfo.CurrentCulture);
         }
     }
 }

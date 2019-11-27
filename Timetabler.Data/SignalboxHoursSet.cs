@@ -13,6 +13,7 @@ namespace Timetabler.Data
     public class SignalboxHoursSet : IWatchableItem, IUniqueItem, ICopyableItem<SignalboxHoursSet>
     {
         private string _category;
+        private readonly object _categoryLock = new object();
 
         /// <summary>
         /// Unique ID of this set.
@@ -40,7 +41,7 @@ namespace Timetabler.Data
                     return;
                 }
 
-                lock (_category)
+                lock (_categoryLock)
                 {
                     if (_category != value)
                     {
@@ -54,7 +55,7 @@ namespace Timetabler.Data
         /// <summary>
         /// The collection of <see cref="SignalboxHours" /> objects, keyed by <see cref="Signalbox.Id" />
         /// </summary>
-        public SignalboxHoursDictionary Hours { get; set; }
+        public SignalboxHoursDictionary Hours { get; }
 
         /// <summary>
         /// Event raised when this object is modified.

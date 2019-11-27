@@ -329,7 +329,7 @@ namespace Timetabler.Data
             }
         }
 
-        private IEnumerable<FootnoteDisplayModel> GetFootnotesForTimingPoint(TrainLocationTime timingPoint)
+        private static IEnumerable<FootnoteDisplayModel> GetFootnotesForTimingPoint(TrainLocationTime timingPoint)
         {
             List<FootnoteDisplayModel> footnotes = new List<FootnoteDisplayModel>();
             if (timingPoint.ArrivalTime != null)
@@ -369,7 +369,7 @@ namespace Timetabler.Data
         {
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_ProcessTrain, train.Id);
 
-            TrainSegmentModel currentSegment = new TrainSegmentModel(train);
+            TrainSegmentModel currentSegment = new TrainSegmentModel(train, null);
             SetToWorkCellValue(currentSegment.ToWorkCell);
             SetToWorkCellValue(currentSegment.LocoToWorkCell);
 
@@ -440,7 +440,7 @@ namespace Timetabler.Data
                     {
                         UpTrainsDisplay.Add(currentSegment);
                     }
-                    currentSegment = new TrainSegmentModel(train);
+                    currentSegment = new TrainSegmentModel(train, null);
                     currentDirection = newDirection;
                 }
                 currentSegment.PageFootnotes.AddRange(GetFootnotesForTimingPoint(train.TrainTimes[i]));

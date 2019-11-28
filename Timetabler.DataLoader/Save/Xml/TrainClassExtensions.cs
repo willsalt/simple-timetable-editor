@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Save.Xml
@@ -15,6 +16,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="TrainClassModel"/> instance whose properties are the same as the parameter.</returns>
         public static TrainClassModel ToTrainClassModel(this TrainClass trainClass)
         {
+            if (trainClass is null)
+            {
+                throw new ArgumentNullException(nameof(trainClass));
+            }
+
             return new TrainClassModel
             {
                 Description = trainClass.Description,

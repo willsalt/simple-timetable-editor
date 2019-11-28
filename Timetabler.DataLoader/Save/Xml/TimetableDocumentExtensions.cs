@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data;
 using Timetabler.SerialData;
@@ -18,6 +19,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>The data prepared for serialization.</returns>
         public static TimetableFileModel ToTimetableFileModel(this TimetableDocument document)
         {
+            if (document is null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
             TimetableFileModel fileModel = new TimetableFileModel
             {
                 Version = Versions.CurrentTimetableDocument,

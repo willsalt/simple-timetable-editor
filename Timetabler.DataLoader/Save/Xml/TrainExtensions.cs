@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
@@ -17,6 +18,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="TrainModel"/> instance containing the same data as the parameter.</returns>
         public static TrainModel ToTrainModel(this Train train)
         {
+            if (train is null)
+            {
+                throw new ArgumentNullException(nameof(train));
+            }
+
             TrainModel model = new TrainModel
             {
                 Id = train.Id,

@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Save.Xml
@@ -15,6 +16,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="NoteModel"/> instance containing the same data as the parameter.</returns>
         public static NoteModel ToNoteModel(this Note note)
         {
+            if (note is null)
+            {
+                throw new ArgumentNullException(nameof(note));
+            }
+
             return new NoteModel
             {
                 AppliesToTimings = note.AppliesToTimings,

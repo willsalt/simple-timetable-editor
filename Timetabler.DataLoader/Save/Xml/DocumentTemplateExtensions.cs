@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
@@ -17,6 +18,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="TimetableDocumentTemplateModel"/> instance representing the parameter.</returns>
         public static TimetableDocumentTemplateModel ToTimetableDocumentTemplateModel(this DocumentTemplate template)
         {
+            if (template is null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
+
             TimetableDocumentTemplateModel model = new TimetableDocumentTemplateModel
             {
                 DefaultExportOptions = template.ExportOptions.ToExportOptionsModel(),

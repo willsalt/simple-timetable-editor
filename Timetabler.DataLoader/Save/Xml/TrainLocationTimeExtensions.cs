@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Save.Xml
@@ -15,6 +16,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="TrainLocationTimeModel"/> instance containing the same data as the parameter.</returns>
         public static TrainLocationTimeModel ToTrainLocationTimeModel(this TrainLocationTime tlt)
         {
+            if (tlt is null)
+            {
+                throw new ArgumentNullException(nameof(tlt));
+            }
+
             return new TrainLocationTimeModel
             {
                 ArrivalTime = tlt.ArrivalTime.ToTrainTimeModel(),

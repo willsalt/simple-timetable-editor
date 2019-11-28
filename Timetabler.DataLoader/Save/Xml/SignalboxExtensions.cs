@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Save.Xml
@@ -15,6 +16,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="SignalboxModel"/> converted from the parameter.</returns>
         public static SignalboxModel ToSignalboxModel(this Signalbox box)
         {
+            if (box is null)
+            {
+                throw new ArgumentNullException(nameof(box));
+            }
+
             return new SignalboxModel
             {
                 Id = box.Id,

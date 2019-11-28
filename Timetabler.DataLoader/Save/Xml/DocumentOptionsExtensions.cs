@@ -16,6 +16,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="DocumentOptionsModel"/> instance representing the options parameter.</returns>
         public static DocumentOptionsModel ToDocumentOptionsModel(this DocumentOptions options)
         {
+            if (options is null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             return new DocumentOptionsModel
             {
                 ClockTypeName = Enum.GetName(typeof(ClockType), options.ClockType),

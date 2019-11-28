@@ -19,6 +19,11 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>A converted <see cref="DocumentTemplate"/> object.</returns>
         public static DocumentTemplate ToDocumentTemplate(this TimetableDocumentTemplateModel model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             IEnumerable<Location> locationSource;
             if (model.Maps != null && model.Maps.Count > 0 && model.Maps[0] != null)
             {

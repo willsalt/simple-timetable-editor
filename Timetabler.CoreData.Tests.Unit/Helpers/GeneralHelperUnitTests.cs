@@ -14,7 +14,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         private static readonly Random _rnd = RandomProvider.Default;
 
         [TestMethod]
-        public void GeneralHelperClassGetNewIdMethodReturnsIdNotAlreadyInParameterContent()
+        public void GeneralHelperClass_GetNewIdMethod_ReturnsIdNotAlreadyInParameterContent()
         {
             int itemCount = _rnd.Next(1, 500);
             List<MockUniqueItem> testData = new List<MockUniqueItem>(itemCount);
@@ -24,6 +24,33 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
                 MockUniqueItem newItem = new MockUniqueItem { Id = GeneralHelper.GetNewId(testData) };
                 Assert.IsFalse(testData.Select(o => o.Id).Contains(newItem.Id));
                 testData.Add(newItem);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GeneralHelperClass_GetNewIdMethod_ThrowsArgumentNullExceptionIfParameterIsNull()
+        {
+            List<MockUniqueItem> testParam = null;
+
+            _ = GeneralHelper.GetNewId(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethod_ThrowsArgumentNullExceptionWithCorrectParamNamePropertyIfParameterIsNull()
+        {
+            List<MockUniqueItem> testParam = null;
+
+            try
+            {
+                _ = GeneralHelper.GetNewId(testParam);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("existingItems", ex.ParamName);
             }
         }
     }

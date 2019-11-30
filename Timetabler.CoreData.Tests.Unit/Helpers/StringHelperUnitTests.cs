@@ -13,7 +13,17 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         private const int MaxTestStringLength = 1024;
 
         [TestMethod]
-        public void StripArrivalDepartureSuffixReturnsFirstArgumentIfFirstArgumentDoesNotEndInDashDOrDashA()
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsNullIfParameterIsNull()
+        {
+            string testString = null;
+
+            string result = testString.StripArrivalDepartureSuffix();
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentIfFirstArgumentDoesNotEndInDashDOrDashA()
         {
             string testString;
             do
@@ -27,7 +37,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         }
 
         [TestMethod]
-        public void StripArrivalDepartureSuffixReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInArrivalSuffix()
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInArrivalSuffix()
         {
             string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
             string testString = expectedResult + LocationIdSuffixes.Arrival;
@@ -38,7 +48,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         }
 
         [TestMethod]
-        public void StripArrivalDepartureSuffixReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInDepartureSuffix()
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInDepartureSuffix()
         {
             string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
             string testString = expectedResult + LocationIdSuffixes.Departure;

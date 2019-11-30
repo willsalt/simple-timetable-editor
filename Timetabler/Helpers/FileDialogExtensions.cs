@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Timetabler.Helpers
@@ -15,6 +16,10 @@ namespace Timetabler.Helpers
         /// <param name="fd">The <see cref="FileDialog"/> to set the properties of.</param>
         public static void SetInitialDirectory(this FileDialog fd)
         {
+            if (fd is null)
+            {
+                throw new ArgumentNullException(nameof(fd));
+            }
             if (!string.IsNullOrWhiteSpace(fd.FileName))
             {
                 string folder = Path.GetDirectoryName(fd.FileName);

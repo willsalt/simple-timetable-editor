@@ -16,23 +16,13 @@ namespace Timetabler
         /// <summary>
         /// The data to be edited.
         /// </summary>
-        public LocationCollection Model { get; set; }
-
-        private static Random _random = new Random();
-
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public LocationListEditForm() : this(null)
-        {
-
-        }
+        public LocationCollection Model { get; private set; }
 
         /// <summary>
         /// Constructor including data model parameter.
         /// </summary>
         /// <param name="model">The list of locations to be edited.</param>
-        public LocationListEditForm(IEnumerable<Location> model)
+        public LocationListEditForm(LocationCollection model)
         {
             if (model == null)
             {
@@ -40,9 +30,7 @@ namespace Timetabler
             }
             else
             {
-                var contents = model.ToList();
-                contents.Sort(new LocationComparer());
-                Model = new LocationCollection(contents);
+                Model = model;
             }
             InitializeComponent();
         }
@@ -70,13 +58,14 @@ namespace Timetabler
                 return;
             }
             Location newLoc = new Location { Id = GeneralHelper.GetNewId(Model) };
-            LocationEditForm form = new LocationEditForm { Model = newLoc };
-
-            if (form.ShowDialog() == DialogResult.OK)
+            using (LocationEditForm form = new LocationEditForm { Model = newLoc })
             {
-                Model.Add(form.Model);
-                Model.Sort(new LocationComparer());
-                UpdateView();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    Model.Add(form.Model);
+                    Model.Sort(new LocationComparer());
+                    UpdateView();
+                }
             }
         }
 
@@ -97,12 +86,14 @@ namespace Timetabler
             }
 
             Location model = Model[idx].Clone() as Location;
-            LocationEditForm form = new LocationEditForm { Model = model };
-            if (form.ShowDialog() == DialogResult.OK)
+            using (LocationEditForm form = new LocationEditForm { Model = model })
             {
-                Model[idx] = form.Model;
-                Model.Sort(new LocationComparer());
-                UpdateView();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    Model[idx] = form.Model;
+                    Model.Sort(new LocationComparer());
+                    UpdateView();
+                }   
             }
         }
 

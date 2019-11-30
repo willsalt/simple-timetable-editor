@@ -259,6 +259,168 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to cbClockType: value is {0}.
+        /// </summary>
+        internal static string LogMessage_CbClockTypeValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CbClockTypeValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cbGraphEditStyle: value is {0}.
+        /// </summary>
+        internal static string LogMessage_CbGraphEditStyleValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CbGraphEditStyleValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cbPdfEngine is {0}.
+        /// </summary>
+        internal static string LogMessage_CbPdfEngineValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CbPdfEngineValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayBoxHours is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayBoxHoursValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayBoxHoursValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayCredits is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayCreditsValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayCreditsValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayGlossary is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayGlossaryValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayGlossaryValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayGraph is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayGraphValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayGraphValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayLocoDiagram is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayLocoDiagramValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayLocoDiagramValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayLocoToWorkRow is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayLocoToWorkRowValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayLocoToWorkRowValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayToWorkRow is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayToWorkRowValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayToWorkRowValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ckDisplayTrainLabelsOnGraphs is {0}.
+        /// </summary>
+        internal static string LogMessage_CkDisplayTrainLabelsOnGraphsValue {
+            get {
+                return ResourceManager.GetString("LogMessage_CkDisplayTrainLabelsOnGraphsValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column {0} is a train column..
+        /// </summary>
+        internal static string LogMessage_ColumnIsATrainColumn {
+            get {
+                return ResourceManager.GetString("LogMessage_ColumnIsATrainColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column {0} is not a train column..
+        /// </summary>
+        internal static string LogMessage_ColumnIsNotATrainColumn {
+            get {
+                return ResourceManager.GetString("LogMessage_ColumnIsNotATrainColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entering EditTrain({0}).
+        /// </summary>
+        internal static string LogMessage_EnteringEditTrain {
+            get {
+                return ResourceManager.GetString("LogMessage_EnteringEditTrain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nudFillerDashLineWidth is {0}.
+        /// </summary>
+        internal static string LogMessage_NudFillerDashLineWidthValue {
+            get {
+                return ResourceManager.GetString("LogMessage_NudFillerDashLineWidthValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nudLineWidth is {0}.
+        /// </summary>
+        internal static string LogMessage_NudLineWidthValue {
+            get {
+                return ResourceManager.GetString("LogMessage_NudLineWidthValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Train ID for selected column is {0}.
+        /// </summary>
+        internal static string LogMessage_SelectedTrainId {
+            get {
+                return ResourceManager.GetString("LogMessage_SelectedTrainId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Train {0} does not exist..
+        /// </summary>
+        internal static string LogWarning_TrainDoesNotExist {
+            get {
+                return ResourceManager.GetString("LogWarning_TrainDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export completed..
         /// </summary>
         internal static string MainForm_Export_Completed {

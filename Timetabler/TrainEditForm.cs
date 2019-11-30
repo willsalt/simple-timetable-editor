@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Timetabler.CoreData;
@@ -125,7 +126,7 @@ namespace Timetabler
 
         private string FormatTimeSpan(TimeOfDay time)
         {
-            return time.ToString(Model.DocumentOptions.ClockType == ClockType.TwentyFourHourClock ? "HH:mmf" : "h:mmf tt");
+            return time.ToString(Model.DocumentOptions.ClockType == ClockType.TwentyFourHourClock ? "HH:mmf" : "h:mmf tt", CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -135,35 +136,35 @@ namespace Timetabler
         {
             InitializeComponent();
             _inViewUpdate = true;
-            cbLinePattern.Items.AddRange(HumanReadableEnum<DashStyle>.GetDashStyles());
+            cbLinePattern.Items.AddRange(HumanReadableEnumFactory.GetDashStyles());
             TimeHelpers.PopulateHalfOfDayComboBoxes(cbToWorkHalfOfDay, cbLocoToWorkHalfOfDay);
             _inViewUpdate = false;
         }
 
         private void btnAddTiming_Click(object sender, EventArgs e)
         {
-            TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
-            {
-                Model = new TrainLocationTimeEditFormModel
+            using (TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
                 {
-                    Data = new TrainLocationTime { FormattingStrings = _model.DocumentOptions.FormattingStrings },
-                    ValidLocations = (_model != null && _model.ValidLocations != null) ? _model.ValidLocations : new LocationCollection(),
-                    ValidNotes = _model?.ValidTimingPointNotes != null ? _model.ValidTimingPointNotes : new List<Note>(),
-                    InputMode = _model.DocumentOptions.ClockType,
+                    Model = new TrainLocationTimeEditFormModel((_model != null && _model.ValidLocations != null) ? _model.ValidLocations : new LocationCollection(), 
+                        _model?.ValidTimingPointNotes != null ? _model.ValidTimingPointNotes : new List<Note>())
+                    {
+                        Data = new TrainLocationTime { FormattingStrings = _model.DocumentOptions.FormattingStrings },
+                        InputMode = _model.DocumentOptions.ClockType,
+                    }
+                })
+            {
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
                 }
-            };
 
-            if (form.ShowDialog() != DialogResult.OK)
-            {
-                return;
+                if (_model == null || _model.Data == null)
+                {
+                    return;
+                }
+
+                _model.Data.TrainTimes.Add(form.Model.Data);
             }
-
-            if (_model == null || _model.Data == null)
-            {
-                return;
-            }
-
-            _model.Data.TrainTimes.Add(form.Model.Data);
             _model.Data.TrainTimes.Sort(new TrainLocationArrivalTimeComparer());
             UpdateTimingsViewFromModel();
         }
@@ -210,22 +211,21 @@ namespace Timetabler
             {
                 return;
             }
-            TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
-            {
-                Model = new TrainLocationTimeEditFormModel
+            using (TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
                 {
-                    Data = Model.Data.TrainTimes[rowIndex].Copy(),
-                    ValidLocations = Model.ValidLocations,
-                    ValidNotes = Model.ValidTimingPointNotes != null ? Model.ValidTimingPointNotes : new List<Note>(),
-                    InputMode = Model.DocumentOptions.ClockType,
-                }
-            };
-
-            if (form.ShowDialog() != DialogResult.OK || form.Model == null || form.Model.Data == null)
+                    Model = new TrainLocationTimeEditFormModel(Model.ValidLocations, Model.ValidTimingPointNotes ?? new List<Note>())
+                    {
+                        Data = Model.Data.TrainTimes[rowIndex].Copy(),
+                        InputMode = Model.DocumentOptions.ClockType,
+                    }
+                })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK || form.Model == null || form.Model.Data == null)
+                {
+                    return;
+                }
+                Model.Data.TrainTimes[rowIndex] = form.Model.Data;
             }
-            Model.Data.TrainTimes[rowIndex] = form.Model.Data;
             Model.Data.TrainTimes.Sort(new TrainLocationArrivalTimeComparer());
             UpdateTimingsViewFromModel();
         }
@@ -267,8 +267,7 @@ namespace Timetabler
                 _model.Data.TrainClass = null;
                 return;
             }
-            var cls = cbTrainClass.SelectedItem as TrainClass;
-            if (cls == null)
+            if (!(cbTrainClass.SelectedItem is TrainClass cls))
             {
                 return;
             }
@@ -287,8 +286,7 @@ namespace Timetabler
             {
                 return;
             }
-            var pattern = cbLinePattern.SelectedItem as HumanReadableEnum<DashStyle>;
-            if (pattern == null)
+            if (!(cbLinePattern.SelectedItem is HumanReadableEnum<DashStyle> pattern))
             {
                 return;
             }
@@ -297,20 +295,22 @@ namespace Timetabler
 
         private void btnColour_Click(object sender, EventArgs e)
         {
-            if (_model == null ||_model.Data == null || _model.Data.GraphProperties == null)
+            if (_model == null || _model.Data == null || _model.Data.GraphProperties == null)
             {
                 return;
             }
-            ColorDialog cd = new ColorDialog() { AllowFullOpen = true, AnyColor = true, Color = _model.Data.GraphProperties.Colour, FullOpen = true, };
-            if (cd.ShowDialog() == DialogResult.OK)
+            using (ColorDialog cd = new ColorDialog() { AllowFullOpen = true, AnyColor = true, Color = _model.Data.GraphProperties.Colour, FullOpen = true, })
             {
-                _model.Data.GraphProperties.Colour = cd.Color;
-                btnColour.BackColor = cd.Color;
-                btnColour.ForeColor = ComputeButtonForeColour(cd.Color);
+                if (cd.ShowDialog() == DialogResult.OK)
+                {
+                    _model.Data.GraphProperties.Colour = cd.Color;
+                    btnColour.BackColor = cd.Color;
+                    btnColour.ForeColor = ComputeButtonForeColour(cd.Color);
+                }
             }
         }
 
-        private Color ComputeButtonForeColour(Color backColour)
+        private static Color ComputeButtonForeColour(Color backColour)
         {
             int sumVals = backColour.R + backColour.G + backColour.B;
             if (sumVals > 128 * 3)
@@ -322,13 +322,15 @@ namespace Timetabler
 
         private void btnAdjust_Click(object sender, EventArgs e)
         {
-            TrainAdjustTimesFormModel adjustModel = new TrainAdjustTimesFormModel { ValidLocations = _model.Data.TrainTimes.Select(t => t.Location).Where(loc => loc != null).ToList() };
-            TrainAdjustTimesForm form = new TrainAdjustTimesForm { Model = adjustModel };
-            if (form.ShowDialog() != DialogResult.OK)
+            TrainAdjustTimesFormModel adjustModel = new TrainAdjustTimesFormModel(_model.Data.TrainTimes.Select(t => t.Location).Where(loc => loc != null));
+            using (TrainAdjustTimesForm form = new TrainAdjustTimesForm { Model = adjustModel })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                AdjustTimes(form.Model);
             }
-            AdjustTimes(form.Model);
             UpdateTimingsViewFromModel();
         }
 
@@ -371,7 +373,7 @@ namespace Timetabler
             {
                 return;
             }
-            var item = clbFootnotes.Items[e.Index] as Note;
+            Note item = clbFootnotes.Items[e.Index] as Note;
             if (item == null)
             {
                 return;

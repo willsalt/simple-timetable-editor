@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.DataLoader;
 
@@ -18,7 +19,7 @@ namespace Timetabler
         {
             InitializeComponent();
             lblTimetablerVersion.Text = GetType().Assembly.GetName().Version.ToString();
-            lblFileFormatVersion.Text = Loader.LatestTimetableDocumentVersion.ToString();
+            lblFileFormatVersion.Text = Loader.LatestTimetableDocumentVersion.ToString(CultureInfo.CurrentCulture);
         }
 
         private void BtnOk_Click(object sender, System.EventArgs e)

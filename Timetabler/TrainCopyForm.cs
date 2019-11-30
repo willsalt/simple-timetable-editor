@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.Helpers;
 using Timetabler.Models;
@@ -37,7 +38,7 @@ namespace Timetabler
         public TrainCopyForm()
         {
             InitializeComponent();
-            cbAddSubtract.Items.AddRange(HumanReadableEnum<AddSubtract>.GetAddSubtract());
+            cbAddSubtract.Items.AddRange(HumanReadableEnumFactory.GetAddSubtract());
         }
 
         private void UpdateFormFromModel()
@@ -47,8 +48,8 @@ namespace Timetabler
                 return;
             }
             _inUpdate = true;
-            lblTitle.Text = string.Format(Resources.TrainCopyForm_TrainHeadcode_FormatString, Model.TrainName);
-            tbOffset.Text = Model.Offset.ToString();
+            lblTitle.Text = string.Format(CultureInfo.CurrentCulture, Resources.TrainCopyForm_TrainHeadcode_FormatString, Model.TrainName);
+            tbOffset.Text = Model.Offset.ToString(CultureInfo.CurrentCulture);
             ckClearInlineNote.Checked = Model.ClearInlineNotes;
             SetAddSubtractValue();
             _inUpdate = false;
@@ -68,8 +69,7 @@ namespace Timetabler
 
         private void CbAddSubtract_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selItem = cbAddSubtract.SelectedItem as HumanReadableEnum<AddSubtract>;
-            if (_model == null || selItem == null || _inUpdate)
+            if (_model == null || !(cbAddSubtract.SelectedItem is HumanReadableEnum<AddSubtract> selItem) || _inUpdate)
             {
                 return;
             }
@@ -82,7 +82,10 @@ namespace Timetabler
             {
                 return;
             }
-            int.TryParse(tbOffset.Text, out int val);
+            if (!int.TryParse(tbOffset.Text, out int val))
+            {
+                return;
+            }
             if (val < 0)
             {
                 return;

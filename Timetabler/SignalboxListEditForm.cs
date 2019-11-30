@@ -34,7 +34,7 @@ namespace Timetabler
             {
                 return _model;
             }
-            set
+            private set
             {
                 if (_model != null)
                 {
@@ -61,13 +61,14 @@ namespace Timetabler
             }
         }
 
-        private Dictionary<string, DataGridViewRow> _rowMap;
+        private readonly Dictionary<string, DataGridViewRow> _rowMap;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SignalboxListEditForm()
+        public SignalboxListEditForm(SignalboxCollection model)
         {
+            Model = model;
             _rowMap = new Dictionary<string, DataGridViewRow>();
             InitializeComponent();
         }
@@ -88,12 +89,14 @@ namespace Timetabler
         private void btnAdd_Click(object sender, EventArgs e)
         {
             Signalbox newBox = new Signalbox { Id = GeneralHelper.GetNewId(Model) };
-            SignalboxEditForm form = new SignalboxEditForm { Model = newBox };
-            if (form.ShowDialog() != DialogResult.OK)
+            using (SignalboxEditForm form = new SignalboxEditForm { Model = newBox })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                Model.Add(form.Model);
             }
-            Model.Add(form.Model);
         }
 
         private void RemoveSignalboxHandler(object sender, SignalboxEventArgs e)
@@ -143,12 +146,14 @@ namespace Timetabler
             {
                 return;
             }
-            SignalboxEditForm form = new SignalboxEditForm { Model = box.Copy() };
-            if (form.ShowDialog() != DialogResult.OK)
+            using (SignalboxEditForm form = new SignalboxEditForm { Model = box.Copy() })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                form.Model.CopyTo(box);
             }
-            form.Model.CopyTo(box);
         }
 
         private void ChangeSignalboxNameHandler(object sender, SignalboxEventArgs e)

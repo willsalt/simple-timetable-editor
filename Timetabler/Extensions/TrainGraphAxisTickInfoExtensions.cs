@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Extensions
@@ -16,6 +17,15 @@ namespace Timetabler.Extensions
         /// <param name="font">The font used to measure the tick's label.</param>
         public static void PopulateSize(this TrainGraphAxisTickInfo tickInfo, Graphics graphicsContext, Font font)
         {
+            if (tickInfo is null)
+            {
+                throw new ArgumentNullException(nameof(tickInfo));
+            }
+            if (graphicsContext is null)
+            {
+                throw new ArgumentNullException(nameof(graphicsContext));
+            }
+
             SizeF size = graphicsContext.MeasureString(tickInfo.Label, font);
             tickInfo.Width = size.Width;
             tickInfo.Height = size.Height;

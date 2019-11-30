@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\HumanReadableEnumFactoryUnitTests.cs" />
     <Compile Include="Helpers\HumanReadableEnumUnitTests.cs" />
     <Compile Include="Models\TrainCopyFormModelUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

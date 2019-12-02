@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.Data.Comparers;
 using Timetabler.Data.Display;
@@ -12,11 +11,6 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     [TestClass]
     public class TrainSegmentModelComparerUnitTests
     {
-        //private void UpdateTimingsIndex(TrainSegmentModel segment)
-        //{
-        //    segment.TimingsIndex = segment.Timings.ToDictionary(t => t.LocationKey, t => t);
-        //}
-
         [TestMethod]
         public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfBothParametersAreNull()
         {

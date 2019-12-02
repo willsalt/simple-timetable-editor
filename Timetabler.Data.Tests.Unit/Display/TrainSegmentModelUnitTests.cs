@@ -17,7 +17,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning)
+        private TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning, List<ILocationEntry> additionalTimings = null)
         {
             int pageFootnoteCount = _rnd.Next(10) + 1;
             TrainSegmentModel tsm = new TrainSegmentModel(null)
@@ -72,6 +72,13 @@ namespace Timetabler.Data.Tests.Unit.Display
                 tsm.Timings.Add(new TrainLocationTimeModel { LocationKey = i.ToString(CultureInfo.CurrentCulture), ActualTime = baseTime });
                 baseTime = _rnd.NextTimeOfDayBetween(baseTime, 86400 - (timingsCount - i));
             }
+            if (additionalTimings != null)
+            {
+                foreach (ILocationEntry timing in additionalTimings)
+                {
+                    tsm.Timings.Add(timing);
+                }
+            }
 
             return tsm;
         }
@@ -86,6 +93,28 @@ namespace Timetabler.Data.Tests.Unit.Display
                 notes[i] = note;
             }
             return notes;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionIfFirstParameterIsNull()
+        {
+            TrainSegmentModel testObject = new TrainSegmentModel(null, null);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionWithCorrectParamNamePropertyIfFirstParameterIsNull()
+        {
+            try
+            {
+                TrainSegmentModel testObject = new TrainSegmentModel(null, null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("train", ex.ParamName);
+            }
         }
 
         [TestMethod]
@@ -849,21 +878,20 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         // Exercises GitHub issue #84.
-        //[TestMethod]
-        //public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectHalfOfDayPropertyIfSplitIsAfterMidday()
-        //{
-        //    TrainSegmentModel testObject = GetTestObject(0, null, null, null);
-        //    testObject.Timings = new List<ILocationEntry>
-        //    {
-        //        new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(11, 0) },
-        //        new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(11, 30) },
-        //        new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(12, 10) },
-        //        new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(12, 15) },
-        //    };
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectHalfOfDayPropertyIfSplitIsAfterMidday()
+        {
+            TrainSegmentModel testObject = GetTestObject(0, null, null, null, new List<ILocationEntry>
+            {
+                new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(11, 0) },
+                new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(11, 30) },
+                new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(12, 10) },
+                new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(12, 15) },
+            });
 
-        //    TrainSegmentModel testOutput = testObject.SplitAtIndex(2, 1);
+            TrainSegmentModel testOutput = testObject.SplitAtIndex(2, 1);
 
-        //    Assert.AreEqual("P.M.", testOutput.HalfOfDay);
-        //}
+            Assert.AreEqual("P.M.", testOutput.HalfOfDay);
+        }
     }
 }

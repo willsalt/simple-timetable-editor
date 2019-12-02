@@ -84,11 +84,13 @@
     <Compile Include="Display\GenericEntryModelUnitTests.cs" />
     <Compile Include="Display\IndexedTrainLocationTimeModelUnitTests.cs" />
     <Compile Include="Display\LineCoordinatesUnitTests.cs" />
+    <Compile Include="Display\TimetableSectionModelUnitTests.cs" />
     <Compile Include="Display\TrainDrawingInfoUnitTests.cs" />
     <Compile Include="Display\TrainGraphModelUnitTests.cs" />
     <Compile Include="Display\TrainLocationTimeModelUnitTests.cs" />
     <Compile Include="Display\TrainSegmentModelUnitTests.cs" />
     <Compile Include="Display\VertexInformationUnitTests.cs" />
+    <Compile Include="DistanceUnitTests.cs" />
     <Compile Include="DocumentExportOptionsUnitTests.cs" />
     <Compile Include="DocumentOptionsUnitTests.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsUnitTests.cs" />

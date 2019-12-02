@@ -173,7 +173,7 @@ namespace Timetabler.Data
                 return new Distance { Mileage = d1.Mileage, Chainage = d1.Chainage };
             }
             Distance sum = new Distance { Mileage = d1.Mileage + d2.Mileage, Chainage = d1.Chainage + d2.Chainage };
-            while (sum.Chainage > 80d)
+            while (sum.Chainage >= 80d)
             {
                 sum.Mileage++;
                 sum.Chainage -= 80d;

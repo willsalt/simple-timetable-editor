@@ -268,7 +268,7 @@ namespace Timetabler.CoreData
         /// Compare this instance to another object of the same type.
         /// </summary>
         /// <param name="other">The object to compare to.</param>
-        /// <returns>-1, 0 or 1 according to whether the other instance's value is less than, equal to or greater than this instance.</returns>
+        /// <returns>1, 0 or -1 according to whether the other instance's value is less than, equal to or greater than this instance.</returns>
         public int CompareTo(TimeOfDay other)
         {
             if (other is null)

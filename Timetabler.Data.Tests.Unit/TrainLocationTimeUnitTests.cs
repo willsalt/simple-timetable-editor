@@ -1364,5 +1364,52 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual(originalDepartureTime.Time.CopyAndReflect(testParam0), testObject.DepartureTime.Time);
             Assert.IsNull(testObject.ArrivalTime);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainLocationTimeClass_ResolveLocationMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = null,
+                DepartureTime = TrainTimeHelpers.GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+
+            testObject.ResolveLocation(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClass_ResolveLocationMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = null,
+                DepartureTime = TrainTimeHelpers.GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+
+            try
+            {
+                testObject.ResolveLocation(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("map", ex.ParamName);
+            }
+        }
     }
 }

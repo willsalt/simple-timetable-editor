@@ -1002,5 +1002,32 @@ namespace Timetabler.Data.Tests.Unit
                 Assert.IsTrue(testObject.TrainTimes[i].ArrivalTime.Time >= testObject.TrainTimes[i - 1].ArrivalTime.Time);
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainClass_ResolveFootnotesMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            Train testObject = GetTrain();
+
+            testObject.ResolveFootnotes(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainClass_ResolveFootnotesMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            Train testObject = GetTrain();
+
+            try
+            {
+                testObject.ResolveFootnotes(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("footnoteDictionary", ex.ParamName);
+            }
+        }
     }
 }

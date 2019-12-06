@@ -37,6 +37,33 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullException_IfFourthParameterIsNull()
+        {
+            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
+
+            _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFourthParameterIsNull()
+        {
+            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
+
+            try
+            {
+                _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("options", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
         public void TrainLocationTimeModelExtensionsToTrainLocationTimeMethodReturnsObjectWithCorrectLocationPropertyIfLocationIdPropertyOfFirstParameterIsPresentAsKeyInSecondParameter()
         {
             Dictionary<string, Location> locationMap = GetRandomLocationMap();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load.Xml;
 using Timetabler.SerialData.Xml;
@@ -8,6 +9,33 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     [TestClass]
     public class DocumentOptionsModelExtensionsUnitTests
     {
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            DocumentOptionsModel testObject = null;
+
+            _ = testObject.ToDocumentOptions();
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            DocumentOptionsModel testObject = null;
+
+            try
+            {
+                _ = testObject.ToDocumentOptions();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("model", ex.ParamName);
+            }
+        }
+
         [TestMethod]
         public void DocumentOptionsModelExtensionsClassToDocumentOptionsMethodReturnsDocumentOptionsObjectWithCorrectClockTypePropertyIfArgumentClockTypeNamePropertyEqualsTwelveHourClock()
         {

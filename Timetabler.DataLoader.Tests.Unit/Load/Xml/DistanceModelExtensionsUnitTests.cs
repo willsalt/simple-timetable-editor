@@ -10,6 +10,33 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     public class DistanceModelExtensionsUnitTests
     {
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DistanceModelExtensionsClass_ToDistanceMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            DistanceModel testObject = null;
+
+            _ = testObject.ToDistance();
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void DistanceModelExtensionsClass_ToDistanceMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            DistanceModel testObject = null;
+
+            try
+            {
+                _ = testObject.ToDistance();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("model", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
         public void DistanceModelExtensionsClassToDistanceMethodReturnsDistanceObjectWithCorrectMileageProperty()
         {
             DistanceModel testObject = GetRandomDistanceModel();

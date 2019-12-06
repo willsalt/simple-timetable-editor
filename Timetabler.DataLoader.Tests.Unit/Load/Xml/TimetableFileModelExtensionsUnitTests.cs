@@ -13,6 +13,33 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         private const int TestMultipleRuns = 10;
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TimetableFileModelExtensionsClass_ToTimetableDocumentMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            TimetableFileModel testObject = null;
+
+            _ = testObject.ToTimetableDocument();
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TimetableFIleModelExtensionsClass_ToTimetableDocumentMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            TimetableFileModel testObject = null;
+
+            try
+            {
+                _ = testObject.ToTimetableDocument();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("file", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
         public void TimetableFileModelExtensionsClassToTimetableDocumentMethodReturnsTimetableDocumentObjectWithExportOptionsPropertyThatIsNotNullIfExportOptionsPropertyOfParameterIsNull()
         {
             TimetableFileModel testSourceObject = new TimetableFileModel { ExportOptions = null };

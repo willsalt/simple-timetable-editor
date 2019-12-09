@@ -87,7 +87,13 @@
     <Compile Include="Save\Xml\NoteExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\SignalboxExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\SignalboxHoursExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\SignalboxHoursSetExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\TimetableDocumentExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\ToWorkExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\TrainClassExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\TrainExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\TrainLocationTimeExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\TrainTimeExtensionsUnitTests.cs" />
     <Compile Include="TestHelpers\Extensions\RandomExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

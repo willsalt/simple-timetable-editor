@@ -32,7 +32,7 @@ namespace Timetabler.Extensions
             }
             if (tbHour is null)
             {
-                throw new ArgumentNullException(nameof(tbMinute));
+                throw new ArgumentNullException(nameof(tbHour));
             }
             if (cbHalfOfDay is null)
             {

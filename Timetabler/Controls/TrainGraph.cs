@@ -117,8 +117,6 @@ namespace Timetabler.Controls
         [DefaultValue(10f)]
         public float ControlHandleSize { get; set; }
 
-        //private Dictionary<string, TrainGraphYAxisTickModel> _locationYTicks { get; set; }
-
         private SortedDictionary<int, SortedDictionary<int, VertexInformation>> TrainCoordinates { get; set; }
 
         private VertexInformation _nearestVertex = null;

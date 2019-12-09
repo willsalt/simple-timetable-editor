@@ -12,33 +12,33 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     public class LocationTemplateModelUnitTests
     {
         [TestMethod]
-        public void LocationTemplateModelClassIsPublic()
+        public void LocationTemplateModelClass_IsPublic()
         {
             Assert.IsTrue(typeof(LocationTemplateModel).IsPublic);
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassIsDecoratedWithXmlRootAttribute()
+        public void LocationTemplateModelClass_IsDecoratedWithXmlRootAttribute()
         {
             Assert.IsNotNull(typeof(LocationTemplateModel).GetCustomAttributes<XmlRootAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassXmlRootAttributeElementNamePropertyEqualsLocationTemplateModel()
+        public void LocationTemplateModelClass_XmlRootAttributeElementNamePropertyEqualsLocationTemplateModel()
         {
             XmlRootAttribute attr = typeof(LocationTemplateModel).GetCustomAttributes<XmlRootAttribute>(false).First();
             Assert.AreEqual("LocationTemplateModel", attr.ElementName);
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassXmlRootAttributeNamespacePropertyEqualsNamespacesV3()
+        public void LocationTemplateModelClass_XmlRootAttributeNamespacePropertyEqualsNamespacesV3()
         {
             XmlRootAttribute attr = typeof(LocationTemplateModel).GetCustomAttributes<XmlRootAttribute>(false).First();
             Assert.AreEqual(Namespaces.V3, attr.Namespace);
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassHasPublicParameterlessConstructor()
+        public void LocationTemplateModelClass_HasPublicParameterlessConstructor()
         {
             ConstructorInfo cInfo = typeof(LocationTemplateModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
@@ -46,7 +46,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassParameterlessConstructorSetsVersionPropertyTo3()
+        public void LocationTemplateModelClass_ParameterlessConstructorSetsVersionPropertyTo3()
         {
             LocationTemplateModel model = new LocationTemplateModel();
 
@@ -54,7 +54,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassHasPublicVersionPropertyOfTypeInt()
+        public void LocationTemplateModelClass_HasPublicVersionPropertyOfTypeInt()
         {
             PropertyInfo pInfo = typeof(LocationTemplateModel).GetProperty("Version");
             Assert.IsNotNull(pInfo);
@@ -64,20 +64,20 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassVersionPropertyIsDecoratedWithXmlAttributeAttribute()
+        public void LocationTemplateModelClass_VersionPropertyIsDecoratedWithXmlAttributeAttribute()
         {
             Assert.IsNotNull(typeof(LocationTemplateModel).GetProperty("Version").GetCustomAttributes<XmlAttributeAttribute>().First());
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassVersionPropertyXmlAttributeAttributeAttributeNamePropertyEqualsVersion()
+        public void LocationTemplateModelClass_VersionPropertyXmlAttributeAttributeAttributeNamePropertyEqualsVersion()
         {
             XmlAttributeAttribute attribute = typeof(LocationTemplateModel).GetProperty("Version").GetCustomAttributes<XmlAttributeAttribute>().First();
             Assert.AreEqual("version", attribute.AttributeName);
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassHasPublicMapsPropertyOfTypeListOfNetworkMapModel()
+        public void LocationTemplateModelClass_HasPublicMapsPropertyOfTypeListOfNetworkMapModel()
         {
             PropertyInfo pInfo = typeof(LocationTemplateModel).GetProperty("Maps");
             Assert.IsNotNull(pInfo);
@@ -86,22 +86,30 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassMapsPropertyIsDecoratedWithXmlArrayAttribute()
+        public void LocationTemplateModelClass_MapsPropertyIsDecoratedWithXmlArrayAttribute()
         {
             Assert.IsNotNull(typeof(LocationTemplateModel).GetProperty("Maps").GetCustomAttributes<XmlArrayAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassMapsPropertyIsDecoratedWithXmlArrayItemAttribute()
+        public void LocationTemplateModelClass_MapsPropertyIsDecoratedWithXmlArrayItemAttribute()
         {
             Assert.IsNotNull(typeof(LocationTemplateModel).GetProperty("Maps").GetCustomAttributes<XmlArrayItemAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationTemplateModelClassMapsPropertyXmlArrayItemAttributeElementNamePropertyEqualsMap()
+        public void LocationTemplateModelClass_MapsPropertyXmlArrayItemAttributeElementNamePropertyEqualsMap()
         {
             XmlArrayItemAttribute attr = typeof(LocationTemplateModel).GetProperty("Maps").GetCustomAttributes<XmlArrayItemAttribute>(false).First();
             Assert.AreEqual("Map", attr.ElementName);
+        }
+
+        [TestMethod]
+        public void LocationTemplateModelClass_Constructor_CreatesObjectWithMapsPropertyThatIsNotNull()
+        {
+            LocationTemplateModel testOutput = new LocationTemplateModel();
+
+            Assert.IsNotNull(testOutput.Maps);
         }
     }
 }

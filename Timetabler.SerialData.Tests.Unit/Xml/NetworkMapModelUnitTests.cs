@@ -12,13 +12,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     public class NetworkMapModelUnitTests
     {
         [TestMethod]
-        public void NetworkMapModelClassIsPublic()
+        public void NetworkMapModelClass_IsPublic()
         {
             Assert.IsTrue(typeof(NetworkMapModel).IsPublic);
         }
 
         [TestMethod]
-        public void NetworkMapModelClassHasPublicParameterlessConstructor()
+        public void NetworkMapModelClass_HasPublicParameterlessConstructor()
         {
             ConstructorInfo cInfo = typeof(NetworkMapModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
@@ -26,7 +26,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void NetworkMapModelClassHasPublicLocationListPropertyOfTypeListOfLocationModel()
+        public void NetworkMapModelClass_HasPublicLocationListPropertyOfTypeListOfLocationModel()
         {
             PropertyInfo pInfo = typeof(NetworkMapModel).GetProperty("LocationList");
             Assert.IsNotNull(pInfo);
@@ -35,26 +35,26 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void NetworkMapModelClassLocationListPropertyIsDecoratedWithXmlArrayAttribute()
+        public void NetworkMapModelClass_LocationListProperty_IsDecoratedWithXmlArrayAttribute()
         {
             Assert.IsNotNull(typeof(NetworkMapModel).GetProperty("LocationList").GetCustomAttributes<XmlArrayAttribute>(false).First());
         }
 
         [TestMethod]
-        public void NetworkMapModelClassLocationListPropertyIsDecoratedWithXmlArrayItemAttribute()
+        public void NetworkMapModelClass_LocationListProperty_IsDecoratedWithXmlArrayItemAttribute()
         {
             Assert.IsNotNull(typeof(NetworkMapModel).GetProperty("LocationList").GetCustomAttributes<XmlArrayItemAttribute>(false).First());
         }
 
         [TestMethod]
-        public void NetworkMapModelClassLocationListPropertyXmlArrayItemAttributeElementNamePropertyEqualsLocation()
+        public void NetworkMapModelClass_LocationListPropertyXmlArrayItemAttributeElementNamePropertyEqualsLocation()
         {
             XmlArrayItemAttribute attr = typeof(NetworkMapModel).GetProperty("LocationList").GetCustomAttributes<XmlArrayItemAttribute>(false).First();
             Assert.AreEqual("Location", attr.ElementName);
         }
 
         [TestMethod]
-        public void NetworkMapModelClassHasPublicBlockSectionsPropertyOfTypeListOfBlockSectionModel()
+        public void NetworkMapModelClass_HasPublicBlockSectionsPropertyOfTypeListOfBlockSectionModel()
         {
             PropertyInfo pInfo = typeof(NetworkMapModel).GetProperty("BlockSections");
             Assert.IsNotNull(pInfo);
@@ -63,26 +63,26 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void NetworkMapModelClassBlockSectionsPropertyIsDecoratedWithXmlArrayAttribute()
+        public void NetworkMapModelClass_BlockSectionsPropertyIsDecoratedWithXmlArrayAttribute()
         {
             Assert.IsNotNull(typeof(NetworkMapModel).GetProperty("BlockSections").GetCustomAttributes<XmlArrayAttribute>(false).First());
         }
 
         [TestMethod]
-        public void NetworkMapModelClassBlockSectionsPropertyIsDecoratedWithXmlArrayItemAttribute()
+        public void NetworkMapModelClass_BlockSectionsPropertyIsDecoratedWithXmlArrayItemAttribute()
         {
             Assert.IsNotNull(typeof(NetworkMapModel).GetProperty("BlockSections").GetCustomAttributes<XmlArrayItemAttribute>(false).First());
         }
 
         [TestMethod]
-        public void NetworkMapModelClassBlockSectionsPropertyXmlArrayItemAttributeElementNamePropertyEqualsBlockSection()
+        public void NetworkMapModelClass_BlockSectionsPropertyXmlArrayItemAttributeElementNamePropertyEqualsBlockSection()
         {
             XmlArrayItemAttribute attr = typeof(NetworkMapModel).GetProperty("BlockSections").GetCustomAttributes<XmlArrayItemAttribute>(false).First();
             Assert.AreEqual("BlockSection", attr.ElementName);
         }
 
         [TestMethod]
-        public void NetworkMapModelClassHasPublicSignalboxesPropertyOfTypeListOfSignalboxModel()
+        public void NetworkMapModelClass_HasPublicSignalboxesPropertyOfTypeListOfSignalboxModel()
         {
             PropertyInfo pInfo = typeof(NetworkMapModel).GetProperty("Signalboxes");
             Assert.IsNotNull(pInfo);
@@ -91,22 +91,46 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void NetworkMapModelClassSignalboxesPropertyIsDecoratedWIthXmlArrayAttribute()
+        public void NetworkMapModelClass_SignalboxesPropertyIsDecoratedWIthXmlArrayAttribute()
         {
             Assert.IsNotNull(typeof(NetworkMapModel).GetProperty("Signalboxes").GetCustomAttributes<XmlArrayAttribute>(false).First());
         }
 
         [TestMethod]
-        public void NetworkMapModelClassSignalboxesPropertyIsDecoratedWithXmlArrayItemAttribute()
+        public void NetworkMapModelClass_SignalboxesPropertyIsDecoratedWithXmlArrayItemAttribute()
         {
             Assert.IsNotNull(typeof(NetworkMapModel).GetProperty("Signalboxes").GetCustomAttributes<XmlArrayItemAttribute>(false).First());
         }
 
         [TestMethod]
-        public void NetworkMapModelClassSignalboxesPropertyXmlArrayItemAttributeElementNamePropertyEqualsSignalbox()
+        public void NetworkMapModelClass_SignalboxesPropertyXmlArrayItemAttributeElementNamePropertyEqualsSignalbox()
         {
             XmlArrayItemAttribute attr = typeof(NetworkMapModel).GetProperty("Signalboxes").GetCustomAttributes<XmlArrayItemAttribute>(false).First();
             Assert.AreEqual("Signalbox", attr.ElementName);
+        }
+
+        [TestMethod]
+        public void NetworkMapModelClass_Constructor_CreatesObjectWithLocationListPropertyThatIsNotNull()
+        {
+            NetworkMapModel testOutput = new NetworkMapModel();
+
+            Assert.IsNotNull(testOutput.LocationList);
+        }
+
+        [TestMethod]
+        public void NetworkMapModelClass_Constructor_CreatesObjectWithBlockSectionsPropertyThatIsNotNull()
+        {
+            NetworkMapModel testOutput = new NetworkMapModel();
+
+            Assert.IsNotNull(testOutput.BlockSections);
+        }
+
+        [TestMethod]
+        public void NetworkMapModelClass_Constructor_CreatesObjectWithSignalboxesPropertyThatIsNotNull()
+        {
+            NetworkMapModel testOutput = new NetworkMapModel();
+
+            Assert.IsNotNull(testOutput.Signalboxes);
         }
     }
 }

@@ -12,13 +12,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     public class SignalboxHoursSetModelUnitTests
     {
         [TestMethod]
-        public void SignalboxHoursSetModelClassIsPublic()
+        public void SignalboxHoursSetModelClass_IsPublic()
         {
             Assert.IsTrue(typeof(SignalboxHoursSetModel).IsPublic);
         }
 
         [TestMethod]
-        public void SignalboxHoursSetModelClassHasPublicParameterlessConstructor()
+        public void SignalboxHoursSetModelClass_HasPublicParameterlessConstructor()
         {
             ConstructorInfo cInfo = typeof(SignalboxHoursSetModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
@@ -26,7 +26,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void SignalboxHoursSetModelClassHasPublicCategoryPropertyOfTypeString()
+        public void SignalboxHoursSetModelClass_HasPublicCategoryPropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(SignalboxHoursSetModel).GetProperty("Category");
             Assert.IsNotNull(pInfo);
@@ -36,13 +36,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void SignalboxHoursSetModelClassCategoryPropertyIsDecoratedWithXmlElementAttribute()
+        public void SignalboxHoursSetModelClass_CategoryPropertyIsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(SignalboxHoursSetModel).GetProperty("Category").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void SignalboxHoursSetModelClassHasPublicSignalboxesPropertyOfTypeListOfSignalboxHoursModel()
+        public void SignalboxHoursSetModelClass_HasPublicSignalboxesPropertyOfTypeListOfSignalboxHoursModel()
         {
             PropertyInfo pInfo = typeof(SignalboxHoursSetModel).GetProperty("Signalboxes");
             Assert.IsNotNull(pInfo);
@@ -51,22 +51,30 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void SignalboxHoursSetModelClassSignalboxesPropertyIsDecoratedWithXmlArrayAttribute()
+        public void SignalboxHoursSetModelClass_SignalboxesPropertyIsDecoratedWithXmlArrayAttribute()
         {
             Assert.IsNotNull(typeof(SignalboxHoursSetModel).GetProperty("Signalboxes").GetCustomAttributes<XmlArrayAttribute>(false).First());
         }
 
         [TestMethod]
-        public void SignalboxHoursSetModelClassSignalboxesPropertyIsDecoratedWithXmlArrayItemAttribute()
+        public void SignalboxHoursSetModelClass_SignalboxesPropertyIsDecoratedWithXmlArrayItemAttribute()
         {
             Assert.IsNotNull(typeof(SignalboxHoursSetModel).GetProperty("Signalboxes").GetCustomAttributes<XmlArrayItemAttribute>(false).First());
         }
 
         [TestMethod]
-        public void SignalboxHoursSetModelClassSignalboxesPropertyXmlArrayItemAttributeElementNamePropertyEqualsSignalbox()
+        public void SignalboxHoursSetModelClass_SignalboxesPropertyXmlArrayItemAttributeElementNamePropertyEqualsSignalbox()
         {
             XmlArrayItemAttribute attr = typeof(SignalboxHoursSetModel).GetProperty("Signalboxes").GetCustomAttributes<XmlArrayItemAttribute>(false).First();
             Assert.AreEqual("Signalbox", attr.ElementName);
+        }
+
+        [TestMethod]
+        public void SignalboxHoursSetModelClass_Constructor_CreatesObjectThatHasSignalboxesPropertyThatIsNotNull()
+        {
+            SignalboxHoursSetModel testOutput = new SignalboxHoursSetModel();
+
+            Assert.IsNotNull(testOutput.Signalboxes);
         }
     }
 }

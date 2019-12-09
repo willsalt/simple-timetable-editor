@@ -18,7 +18,7 @@ namespace Timetabler.Data.Tests.Unit
             return new Distance { Mileage = _rnd.Next(512), Chainage = _rnd.Next(80) };
         }
 
-        private void AssertEqual(Distance d1, Distance d2)
+        private static void AssertEqual(Distance d1, Distance d2)
         {
             if (d1 is null)
             {

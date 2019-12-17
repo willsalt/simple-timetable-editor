@@ -79,7 +79,7 @@ namespace Unicorn
         /// </summary>
         public Line()
         {
-            Content = new List<Word>();
+            
         }
 
         /// <summary>

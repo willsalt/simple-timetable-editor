@@ -47,9 +47,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.CoreData.Tests.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.Writer.Tests.Unit", "Unicorn.Writer.Tests.Unit\Unicorn.Writer.Tests.Unit.csproj", "{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetabler.SerialData", "Timetabler.SerialData\Timetabler.SerialData.csproj", "{A651E646-E4FB-422C-9F52-CF55B3A229FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.SerialData", "Timetabler.SerialData\Timetabler.SerialData.csproj", "{A651E646-E4FB-422C-9F52-CF55B3A229FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetabler.SerialData.Tests.Unit", "Timetabler.SerialData.Tests.Unit\Timetabler.SerialData.Tests.Unit.csproj", "{44A1AC21-EAFE-4F47-BBD0-530F3E7A95FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.SerialData.Tests.Unit", "Timetabler.SerialData.Tests.Unit\Timetabler.SerialData.Tests.Unit.csproj", "{44A1AC21-EAFE-4F47-BBD0-530F3E7A95FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.Impl.PdfSharp.Tests.Unit", "Unicorn.Impl.PdfSharp.Tests.Unit\Unicorn.Impl.PdfSharp.Tests.Unit.csproj", "{163B6897-0E9A-420B-9E3B-D72310E3EB4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -227,6 +229,14 @@ Global
 		{44A1AC21-EAFE-4F47-BBD0-530F3E7A95FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44A1AC21-EAFE-4F47-BBD0-530F3E7A95FC}.Release|x86.ActiveCfg = Release|Any CPU
 		{44A1AC21-EAFE-4F47-BBD0-530F3E7A95FC}.Release|x86.Build.0 = Release|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Debug|x86.Build.0 = Debug|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -244,6 +254,7 @@ Global
 		{01B53591-1137-4D29-BEE7-0BAF111A1BAD} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 		{3F85FAE7-E5B5-4373-931C-DAB4440BD0E7} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 		{44A1AC21-EAFE-4F47-BBD0-530F3E7A95FC} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
+		{163B6897-0E9A-420B-9E3B-D72310E3EB4A} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EA1C6B0-D8A1-4000-A5F0-FFC1B39482AC}

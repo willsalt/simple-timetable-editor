@@ -58,11 +58,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\TimeOfDayExtensionsUnitTests.cs" />
+    <Compile Include="Extensions\TrainGraphAxisTickInfoExtensionsUnitTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\ClockTypeHelperUnitTests.cs" />
+    <Compile Include="Helpers\DataGridViewExtensionsUnitTests.cs" />
+    <Compile Include="Helpers\FileDialogExtensionsUnitTests.cs" />
     <Compile Include="Helpers\HumanReadableEnumFactoryUnitTests.cs" />
     <Compile Include="Helpers\HumanReadableEnumUnitTests.cs" />
+    <Compile Include="Helpers\TimeHelpersUnitTests.cs" />
+    <Compile Include="Models\NoteListEditFormModelUnitTests.cs" />
+    <Compile Include="Models\TrainAdjustTimesFormModelUnitTests.cs" />
     <Compile Include="Models\TrainCopyFormModelUnitTests.cs" />
+    <Compile Include="Models\TrainEditFormModelUnitTests.cs" />
+    <Compile Include="Models\TrainLocationTimeEditFormModelUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHelpers\MockData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

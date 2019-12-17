@@ -11,7 +11,6 @@ namespace Timetabler
     public partial class SignalboxHoursSetEditForm : Form
     {
         private const int BoxIdColIdx = 0;
-        //private const int BoxColIdx = 1;
         private const int StartColIdx = 2;
         private const int EndColIdx = 3;
 

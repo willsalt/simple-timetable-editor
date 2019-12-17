@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using Timetabler.Data;
 
-namespace Timetabler.Helpers
+namespace Timetabler.Extensions
 {
     /// <summary>
     /// Helper classes for the <see cref="ClockType" /> enum.
     /// </summary>
-    public static class ClockTypeHelper
+    public static class ClockTypeExtensions
     {
         /// <summary>
         /// Extension method that takes a list of <see cref="Control" /> objects and sets them to visible if the <see cref="ClockType" /> is the 12-hour clock.

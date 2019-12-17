@@ -13,7 +13,7 @@ namespace Timetabler
     /// </summary>
     public partial class NoteListEditForm : Form
     {
-        private NoteListEditFormModel _model = new NoteListEditFormModel();
+        private NoteListEditFormModel _model = new NoteListEditFormModel(null);
 
         /// <summary>
         /// The data to be edited in this form.
@@ -51,12 +51,14 @@ namespace Timetabler
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var nef = new NoteEditForm { Model = new Note { Id = GeneralHelper.GetNewId(_model.Data.Values) } };
-            if (nef.ShowDialog() != DialogResult.OK)
+            using (NoteEditForm nef = new NoteEditForm { Model = new Note { Id = GeneralHelper.GetNewId(_model.Data.Values) } })
             {
-                return;
+                if (nef.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                _model.Data.Add(nef.Model.Id, nef.Model);
             }
-            _model.Data.Add(nef.Model.Id, nef.Model);
             UpdateViewFromModel();
         }
 
@@ -82,12 +84,14 @@ namespace Timetabler
             {
                 return;
             }
-            var nef = new NoteEditForm { Model = _model.Data[id].Copy() };
-            if (nef.ShowDialog() != DialogResult.OK)
+            using (NoteEditForm nef = new NoteEditForm { Model = _model.Data[id].Copy() })
             {
-                return;
+                if (nef.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                nef.Model.CopyTo(_model.Data[id]);
             }
-            nef.Model.CopyTo(_model.Data[id]);
             Model.ExistingNoteChanged = true;
             UpdateViewFromModel();
         }

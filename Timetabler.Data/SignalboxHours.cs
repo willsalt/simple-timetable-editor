@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Timetabler.CoreData;
 using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
@@ -176,6 +177,11 @@ namespace Timetabler.Data
         /// <param name="target">The <see cref="SignalboxHours" /> object to be overwritten.</param>
         public void CopyTo(SignalboxHours target)
         {
+            if (target is null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
             target.Signalbox = Signalbox;
             target.StartTime = StartTime;
             target.EndTime = EndTime;
@@ -216,12 +222,17 @@ namespace Timetabler.Data
         public string ToString(ClockType clockType)
         {
             string[] strings = ToStrings(clockType);
-            return string.Format("{0} - {1}", strings[0], strings[1]);
+            return string.Format(CultureInfo.CurrentCulture, "{0} - {1}", strings[0], strings[1]);
         }
 
         private string FormatTime(TimeOfDay time, string format, string noTokenWarning)
         {
-            return time != null ? string.Format(time.ToString(format), TokenBalanceWarning ? Resources.SignalboxHours_TokenBalanceWarningSymbol : noTokenWarning) : string.Empty;
+            return time != null 
+                ? string.Format(
+                    CultureInfo.CurrentCulture, 
+                    time.ToString(format, CultureInfo.CurrentCulture), 
+                    TokenBalanceWarning ? Resources.SignalboxHours_TokenBalanceWarningSymbol : noTokenWarning) 
+                : "";
         }
     }
 }

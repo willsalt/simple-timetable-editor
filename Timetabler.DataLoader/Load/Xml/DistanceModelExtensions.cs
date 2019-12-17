@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Load.Xml
@@ -15,6 +16,10 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>The <see cref="Distance"/> object.</returns>
         public static Distance ToDistance(this DistanceModel model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
             return new Distance
             {
                 Mileage = model.Mileage,

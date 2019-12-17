@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
@@ -141,7 +142,8 @@ namespace Timetabler.Data.Tests.Unit
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
-            Assert.AreEqual(string.Format(testTime.Time.ToString(formattingStrings.Complete), testTime.FootnoteSymbols), testOutput.DisplayedText);
+            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime.Time.ToString(formattingStrings.Complete, CultureInfo.CurrentCulture), testTime.FootnoteSymbols), 
+                testOutput.DisplayedText);
         }
 
         [TestMethod]
@@ -154,7 +156,7 @@ namespace Timetabler.Data.Tests.Unit
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
-            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Hours), testOutput.DisplayedTextHours);
+            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Hours, CultureInfo.CurrentCulture), testOutput.DisplayedTextHours);
         }
 
         [TestMethod]
@@ -167,7 +169,7 @@ namespace Timetabler.Data.Tests.Unit
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
-            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Minutes), testOutput.DisplayedTextMinutes);
+            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Minutes, CultureInfo.CurrentCulture), testOutput.DisplayedTextMinutes);
         }
 
         [TestMethod]
@@ -294,7 +296,8 @@ namespace Timetabler.Data.Tests.Unit
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
-            Assert.AreEqual(string.Format(testTime.Time.ToString(formattingStrings.Complete), testTime.FootnoteSymbols), testOutput.DisplayedText);
+            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime.Time.ToString(formattingStrings.Complete, CultureInfo.CurrentCulture), testTime.FootnoteSymbols), 
+                testOutput.DisplayedText);
         }
 
         [TestMethod]
@@ -307,7 +310,7 @@ namespace Timetabler.Data.Tests.Unit
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
-            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Hours), testOutput.DisplayedTextHours);
+            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Hours, CultureInfo.CurrentCulture), testOutput.DisplayedTextHours);
         }
 
         [TestMethod]
@@ -320,7 +323,7 @@ namespace Timetabler.Data.Tests.Unit
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
-            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Minutes), testOutput.DisplayedTextMinutes);
+            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Minutes, CultureInfo.CurrentCulture), testOutput.DisplayedTextMinutes);
         }
 
         [TestMethod]
@@ -380,7 +383,8 @@ namespace Timetabler.Data.Tests.Unit
             testObject.ArrivalTime = testTime1;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(string.Format(testTime1.Time.ToString(formattingStrings.Complete), testTime1.FootnoteSymbols), testOutput.DisplayedText);
+            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime1.Time.ToString(formattingStrings.Complete, CultureInfo.CurrentCulture), testTime1.FootnoteSymbols), 
+                testOutput.DisplayedText);
         }
 
         [TestMethod]
@@ -396,7 +400,7 @@ namespace Timetabler.Data.Tests.Unit
             testObject.ArrivalTime = testTime1;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Hours), testOutput.DisplayedTextHours);
+            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Hours, CultureInfo.CurrentCulture), testOutput.DisplayedTextHours);
         }
 
         [TestMethod]
@@ -412,7 +416,7 @@ namespace Timetabler.Data.Tests.Unit
             testObject.ArrivalTime = testTime1;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Minutes), testOutput.DisplayedTextMinutes);
+            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Minutes, CultureInfo.CurrentCulture), testOutput.DisplayedTextMinutes);
         }
 
         [TestMethod]
@@ -475,7 +479,8 @@ namespace Timetabler.Data.Tests.Unit
             testObject.DepartureTime = testTime1;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(string.Format(testTime1.Time.ToString(formattingStrings.Complete), testTime1.FootnoteSymbols), testOutput.DisplayedText);
+            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime1.Time.ToString(formattingStrings.Complete, CultureInfo.CurrentCulture), testTime1.FootnoteSymbols), 
+                testOutput.DisplayedText);
         }
 
         [TestMethod]
@@ -491,7 +496,7 @@ namespace Timetabler.Data.Tests.Unit
             testObject.DepartureTime = testTime1;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Hours), testOutput.DisplayedTextHours);
+            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Hours, CultureInfo.CurrentCulture), testOutput.DisplayedTextHours);
         }
 
         [TestMethod]
@@ -507,7 +512,7 @@ namespace Timetabler.Data.Tests.Unit
             testObject.DepartureTime = testTime1;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Minutes), testOutput.DisplayedTextMinutes);
+            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Minutes, CultureInfo.CurrentCulture), testOutput.DisplayedTextMinutes);
         }
 
         [TestMethod]
@@ -1358,6 +1363,53 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(originalDepartureTime.Time.CopyAndReflect(testParam0), testObject.DepartureTime.Time);
             Assert.IsNull(testObject.ArrivalTime);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainLocationTimeClass_ResolveLocationMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = null,
+                DepartureTime = TrainTimeHelpers.GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+
+            testObject.ResolveLocation(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClass_ResolveLocationMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            TrainLocationTime testObject = new TrainLocationTime
+            {
+                ArrivalTime = null,
+                DepartureTime = TrainTimeHelpers.GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
+            };
+
+            try
+            {
+                testObject.ResolveLocation(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("map", ex.ParamName);
+            }
         }
     }
 }

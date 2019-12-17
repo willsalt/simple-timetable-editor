@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -18,7 +19,7 @@ namespace Timetabler.SerialData.Xml
         /// <summary>
         /// The IDs of the footnotes to apply to this time entry.
         /// </summary>
-        public List<string> FootnoteIds { get; set; }
+        public List<string> FootnoteIds { get; } = new List<string>();
 
         /// <summary>
         /// Required to implement <see cref="IXmlSerializable"/>.
@@ -35,8 +36,11 @@ namespace Timetabler.SerialData.Xml
         /// <param name="reader">Source of XML data.</param>
         public void ReadXml(XmlReader reader)
         {
+            if (reader is null)
+            {
+                throw new ArgumentNullException(nameof(reader));
+            }
             reader.ReadStartElement();
-            FootnoteIds = new List<string>();
             reader.MoveToContent();
             if (reader.LocalName == "Time")
             {
@@ -69,6 +73,10 @@ namespace Timetabler.SerialData.Xml
         /// <param name="writer">Destination to write XML to.</param>
         public void WriteXml(XmlWriter writer)
         {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             if (Time != null)
             {
                 writer.WriteStartElement("Time");

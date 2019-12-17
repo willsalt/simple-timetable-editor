@@ -15,11 +15,17 @@ namespace Timetabler
             Application.SetCompatibleTextRenderingDefault(false);
             if (args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
             {
-                Application.Run(new MainForm(args[0]));
+                using (MainForm f = new MainForm(args[0]))
+                {
+                    Application.Run(f);
+                }
             }
             else
             {
-                Application.Run(new MainForm());
+                using (MainForm f = new MainForm())
+                {
+                    Application.Run(f);
+                }
             }
         }
     }

@@ -14,7 +14,34 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
         private const int TestMultipleRuns = 10;
 
         [TestMethod]
-        public void TimetableDocumentExtensionsClassToTimetableFileModelMethodReturnsModelWithExportOptionsPropertyThatIsNotNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TimetableDocumentExtensionsClass_ToTimetableFileModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            TimetableDocument document = null;
+
+            _ = document.ToTimetableFileModel();
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TimetableFileDocumentExtensionsClass_ToTimetableFileModelMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            TimetableDocument document = null;
+
+            try
+            {
+                _ = document.ToTimetableFileModel();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("document", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void TimetableDocumentExtensionsClass_ToTimetableFileModelMethod_ReturnsModelWithExportOptionsPropertyThatIsNotNull()
         {
             TimetableDocument document = new TimetableDocument();
 
@@ -24,7 +51,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
         }
 
         [TestMethod]
-        public void TimetableDocumentExtensionsClassToTimetableFileModelMethodReturnsModelWithExportOptionsPropertyWithCorrectDisplayLocoDiagramRowValue()
+        public void TimetableDocumentExtensionsClass_ToTimetableFileModelMethod_ReturnsModelWithExportOptionsPropertyWithCorrectDisplayLocoDiagramRowValue()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)

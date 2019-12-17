@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.CoreData.Events;
@@ -44,7 +45,7 @@ namespace Timetabler.Data
         /// <summary>
         /// The timing points of this train.
         /// </summary>
-        public List<TrainLocationTime> TrainTimes { get; set; }
+        public List<TrainLocationTime> TrainTimes { get; private set; }
 
         /// <summary>
         /// Include separator above this train if it does not start at the first location.
@@ -120,6 +121,10 @@ namespace Timetabler.Data
         /// <param name="footnoteDictionary"></param>
         public void ResolveFootnotes(Dictionary<string, Note> footnoteDictionary)
         {
+            if (footnoteDictionary is null)
+            {
+                throw new ArgumentNullException(nameof(footnoteDictionary));
+            }
             List<string> currentIds = Footnotes.Select(n => n.Id).ToList();
             for (int i = 0; i < currentIds.Count; ++i)
             {

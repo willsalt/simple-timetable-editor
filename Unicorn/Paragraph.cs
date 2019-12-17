@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unicorn.Interfaces;
 
@@ -91,7 +92,7 @@ namespace Unicorn
         /// <summary>
         /// The paragraph content.
         /// </summary>
-        public List<Line> Lines { get; set; }
+        public List<Line> Lines { get; } = new List<Line>();
 
         /// <summary>
         /// Constructor which specified ideal maximum sizes.
@@ -164,6 +165,10 @@ namespace Unicorn
         /// <param name="y">The Y-coordinate of the top-left corner of the paragraph.</param>
         public void DrawAt(IGraphicsContext context, double x, double y)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             IGraphicsState state = context.Save();
             Reorientate(context, x, y, false);
             try

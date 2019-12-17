@@ -20,6 +20,10 @@ namespace Timetabler.Helpers
         /// <param name="controls">The <see cref="Control" /> objects to control the visibility of.</param>
         public static void SetControlsVisibleIn12HourMode(this ClockType clockType, IList<Control> controls)
         {
+            if (controls is null)
+            {
+                return;
+            }
             bool visibility = clockType == ClockType.TwelveHourClock;
             foreach (Control control in controls)
             {

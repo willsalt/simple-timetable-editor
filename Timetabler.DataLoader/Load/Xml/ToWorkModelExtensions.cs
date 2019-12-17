@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Load.Xml
@@ -15,6 +16,11 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>A <see cref="ToWork" /> instance which is equivalent to the object.</returns>
         public static ToWork ToToWork(this ToWorkModel model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             ToWork output = new ToWork { Text = model.Text };
             if (model.AtTime != null)
             {

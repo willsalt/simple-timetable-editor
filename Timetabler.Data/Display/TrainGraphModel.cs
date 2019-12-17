@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.Data.Collections;
@@ -32,7 +33,7 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// The locations to appear on the location axis.
         /// </summary>
-        public LocationCollection LocationList { get; set; }
+        public LocationCollection LocationList { get; private set; }
 
         /// <summary>
         /// Copy the values of relevant properties from a <see cref="DocumentOptions" /> instance.
@@ -90,8 +91,6 @@ namespace Timetabler.Data.Display
             }
         }
 
-        private TrainCollection _trainList;
-
         private int? _baseTimeSeconds;
 
         private int? _maxTimeSeconds;
@@ -99,24 +98,25 @@ namespace Timetabler.Data.Display
         private Dictionary<string, double> _locationCoordinates = new Dictionary<string, double>();
 
         /// <summary>
-        /// The trains to be displayed on the graph.
+        /// Constructor.
         /// </summary>
-        public TrainCollection TrainList
+        /// <param name="locations">The locations to appear on the Y-axis of the graph.</param>
+        /// <param name="trains">The trains to appear on the graph.</param>
+        public TrainGraphModel(LocationCollection locations, TrainCollection trains)
         {
-            get
+            LocationList = locations;
+            TrainList = trains;
+            if (TrainList != null)
             {
-                return _trainList;
-            }
-            set
-            {
-                if (_trainList != null)
-                {
-                    RemoveTrainListEvents();
-                }
-                _trainList = value;
-                SetTrainListEvents();
+                TrainList.TrainAdd += TrainListChangeHandler;
+                TrainList.TrainRemove += TrainListChangeHandler;
             }
         }
+
+        /// <summary>
+        /// The trains to be displayed on the graph.
+        /// </summary>
+        public TrainCollection TrainList { get; private set; }
 
         private void TrainListChangeHandler(object sender, TrainEventArgs e)
         {
@@ -138,18 +138,6 @@ namespace Timetabler.Data.Display
         protected void OnSelectedTrainChanged()
         {
             SelectedTrainChanged?.Invoke(this, new TrainEventArgs { Train = SelectedTrain });
-        }
-
-        private void RemoveTrainListEvents()
-        {
-            _trainList.TrainAdd -= TrainListChangeHandler;
-            _trainList.TrainRemove -= TrainListChangeHandler;
-        }
-
-        private void SetTrainListEvents()
-        {
-            _trainList.TrainAdd += TrainListChangeHandler;
-            _trainList.TrainRemove += TrainListChangeHandler;
         }
 
         private void RecomputeTimeBase()
@@ -199,7 +187,9 @@ namespace Timetabler.Data.Display
             // Assumes hourly ticks - will need changing if this ever becomes configurable.
             for (int pos = _baseTimeSeconds.Value; pos <= _maxTimeSeconds; pos += 3600)
             {
-                yield return new TrainGraphAxisTickInfo(new TimeOfDay(pos).ToString("htt"), (double)(pos - _baseTimeSeconds) / (double)(_maxTimeSeconds - _baseTimeSeconds));
+                yield return new TrainGraphAxisTickInfo(
+                    new TimeOfDay(pos).ToString("htt", CultureInfo.CurrentCulture), 
+                    (double)(pos - _baseTimeSeconds) / (double)(_maxTimeSeconds - _baseTimeSeconds));
             }
         }
 
@@ -285,6 +275,10 @@ namespace Timetabler.Data.Display
             if (!_baseTimeSeconds.HasValue || !_maxTimeSeconds.HasValue)
             {
                 return 0;
+            }
+            if (t is null)
+            {
+                throw new ArgumentNullException(nameof(t));
             }
 
             return (double)(t.AbsoluteSeconds - _baseTimeSeconds) / (double)(_maxTimeSeconds - _baseTimeSeconds);

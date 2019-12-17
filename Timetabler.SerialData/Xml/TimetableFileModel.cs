@@ -74,34 +74,34 @@ namespace Timetabler.SerialData.Xml
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Map")]
-        public List<NetworkMapModel> Maps { get; set; }
+        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         /// <summary>
         /// Footnotes used in these timetables.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Note")]
-        public List<NoteModel> NoteDefinitions { get; set; }
+        public List<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
 
         /// <summary>
         /// The train classes used in these timetables.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "TrainClass")]
-        public List<TrainClassModel> TrainClassList { get; set; }
+        public List<TrainClassModel> TrainClassList { get; } = new List<TrainClassModel>();
 
         /// <summary>
         /// The trains in this timetable.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Train", Namespace = Namespaces.V2)]
-        public List<TrainModel> TrainList { get; set; }
+        public List<TrainModel> TrainList { get; } = new List<TrainModel>();
 
         /// <summary>
         /// Signalbox hours in this timetable.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "SignalboxHoursSet")]
-        public List<SignalboxHoursSetModel> SignalboxHoursSets { get; set; }
+        public List<SignalboxHoursSetModel> SignalboxHoursSets { get; } = new List<SignalboxHoursSetModel>();
     }
 }

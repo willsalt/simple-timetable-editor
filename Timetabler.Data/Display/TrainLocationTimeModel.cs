@@ -1,4 +1,5 @@
-﻿using Timetabler.Data.Display.Interfaces;
+﻿using System.Globalization;
+using Timetabler.Data.Display.Interfaces;
 
 namespace Timetabler.Data.Display
 {
@@ -75,10 +76,10 @@ namespace Timetabler.Data.Display
             }
             ActualTime = trainTime.Time;
             EntryType = TrainLocationTimeEntryType.Time;
-            DisplayedText = string.Format(trainTime.Time.ToString(formats.Complete), trainTime.FootnoteSymbols);
-            DisplayedTextHours = trainTime.Time.ToString(formats.Hours);
+            DisplayedText = string.Format(CultureInfo.CurrentCulture, trainTime.Time.ToString(formats.Complete, CultureInfo.CurrentCulture), trainTime.FootnoteSymbols);
+            DisplayedTextHours = trainTime.Time.ToString(formats.Hours, CultureInfo.CurrentCulture);
             DisplayedTextFootnote = trainTime.FootnoteSymbols;
-            DisplayedTextMinutes = trainTime.Time.ToString(formats.Minutes);
+            DisplayedTextMinutes = trainTime.Time.ToString(formats.Minutes, CultureInfo.CurrentCulture);
         }
     }
 }

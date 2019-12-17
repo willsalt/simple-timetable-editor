@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Timetabler.CoreData;
 using Timetabler.CoreData.Interfaces;
 using Timetabler.Data.Display;
@@ -72,7 +73,7 @@ namespace Timetabler.Data
                 }
                 else
                 {
-                    model.DisplayedText = AtTime.ToString(formats.TimeWithoutFootnotes);
+                    model.DisplayedText = AtTime.ToString(formats.TimeWithoutFootnotes, CultureInfo.CurrentCulture);
                 }
             }
             else

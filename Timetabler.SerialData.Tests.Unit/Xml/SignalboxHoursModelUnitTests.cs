@@ -19,7 +19,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void SignalboxHoursModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(SignalboxHoursModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(SignalboxHoursModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
         }
 

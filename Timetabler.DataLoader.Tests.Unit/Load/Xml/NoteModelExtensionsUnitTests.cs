@@ -28,6 +28,33 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NoteModelExtensionsClass_ToNoteMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            NoteModel testObject = null;
+
+            _ = testObject.ToNote();
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void NoteModelExtensionsClass_ToNoteMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            NoteModel testObject = null;
+
+            try
+            {
+                _ = testObject.ToNote();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("model", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
         public void NoteModelExtensionsClassToNoteMethodReturnsObjectIfParameterIsNotNull()
         {
             NoteModel testObject = GetRandomNoteModel();

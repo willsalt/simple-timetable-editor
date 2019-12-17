@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -26,51 +27,48 @@ namespace Timetabler.DataLoader
         /// <summary>
         /// Load a TimetableDocument class from a stream.
         /// </summary>
-        /// <param name="str">The stream to load the class data from.</param>
+        /// <param name="stream">The stream to load the class data from.</param>
         /// <returns>The list of locations in the template.</returns>
-        public static TimetableDocument LoadTimetableDocument(Stream str)
+        public static TimetableDocument LoadTimetableDocument(Stream stream)
         {
-            XmlReader reader;
             try
             {
-                reader = XmlReader.Create(str);
-                reader.MoveToContent();
-            }
-            catch (Exception ex)
-            {
-                throw new TimetableLoaderException("Unexpected exception occurred in loader.", ex);
-            }
-
-            if (reader == null)
-            {
-                throw new TimetableLoaderException("Could not create XML reader.");
-            }
-            if (reader.Name != "DocumentModel")
-            {
-                throw new TimetableLoaderException("Stream does not contain <DocumentModel>");
-            }
-            int version = 0;
-            if (!int.TryParse(reader.GetAttribute("version"), out version))
-            {
-                throw new TimetableLoaderException("<DocumentModel> element does not specify version number.");
-            }
-            if (version > Versions.CurrentTimetableDocument)
-            {
-                throw new TimetableLoaderException(string.Format("<DocumentModel> version {0} is too high to be supported.", version));
-            }
-
-            try
-            {
-                if (version < 4)
+                using (XmlReader reader = XmlReader.Create(stream))
                 {
-                    return LoadVersion3(reader);
+                    if (reader == null)
+                    {
+                        throw new TimetableLoaderException(Resources.Error_CouldNotCreateXmlReader);
+                    }
+                    reader.MoveToContent();
+                    if (reader.Name != "DocumentModel")
+                    {
+                        throw new TimetableLoaderException(Resources.Error_XmlDoesNotContainDocumentModel);
+                    }
+                    if (!int.TryParse(reader.GetAttribute("version"), out int version))
+                    {
+                        throw new TimetableLoaderException(Resources.Error_XmlDoesNotSpecifyVersion);
+                    }
+                    if (version > Versions.CurrentTimetableDocument)
+                    {
+                        throw new TimetableLoaderException(string.Format(CultureInfo.CurrentCulture, Resources.Error_XmlUnsupportedVersion, version));
+                    }
+
+
+                    if (version < 4)
+                    {
+                        return LoadVersion3(reader);
+                    }
+                    XmlSerializer deserializer = new XmlSerializer(typeof(TimetableFileModel));
+                    return ((TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
                 }
-                XmlSerializer deserializer = new XmlSerializer(typeof(TimetableFileModel));
-                return ((TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
+            }
+            catch (TimetableLoaderException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
-                throw new TimetableLoaderException("Unexpected exception occurred in loader.", ex);
+                throw new TimetableLoaderException(Resources.Error_GenericLoaderError, ex);
             }
         }
 
@@ -87,54 +85,49 @@ namespace Timetabler.DataLoader
         /// <returns>The list of locations in the template.</returns>
         public static LocationCollection LoadLocationTemplate(Stream str)
         {
-            XmlReader reader = null;
             try
             {
-                reader = XmlReader.Create(str);
-                reader.MoveToContent();
+                using (XmlReader reader = XmlReader.Create(str))
+                {
+                    if (reader == null)
+                    {
+                        throw new TimetableLoaderException(Resources.Error_CouldNotCreateXmlReader);
+                    }
+                    reader.MoveToContent();
+                    if (reader.Name != "LocationTemplateModel")
+                    {
+                        throw new TimetableLoaderException(Resources.Error_XmlDoesNotContainLocationTemplateModel);
+                    }
+                    if (!int.TryParse(reader.GetAttribute("version"), out int version))
+                    {
+                        throw new TimetableLoaderException(Resources.Error_XmlLocationTemplateDoesNotSpecifyVersion);
+                    }
+                    if (version > Versions.CurrentLocationTemplate)
+                    {
+                        throw new TimetableLoaderException(string.Format(CultureInfo.CurrentCulture, Resources.Error_XmlLocationTemplateUnsupportedVersion, version));
+                    }
+
+                    // Version-detection code goes here!
+                    if (version < 3)
+                    {
+                        return LoadLocationsVersion0(reader);
+                    }
+                    XmlSerializer deserialiser = new XmlSerializer(typeof(LocationTemplateModel));
+                    LocationTemplateModel templateModel = (LocationTemplateModel)deserialiser.Deserialize(reader);
+                    if (templateModel == null || templateModel.Maps == null || templateModel.Maps.Count == 0 || templateModel.Maps[0].LocationList == null)
+                    {
+                        return null;
+                    }
+                    return new LocationCollection(templateModel.Maps[0].LocationList.Select(l => l.ToLocation()));
+                }
+            }
+            catch (TimetableLoaderException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
-                throw new TimetableLoaderException("Unexpected exception occurred in loader.", ex);
-            }
-
-            if (reader == null)
-            {
-                throw new TimetableLoaderException("Could not create XML reader.");
-            }
-            if (reader.Name != "LocationTemplateModel")
-            {
-                throw new TimetableLoaderException("Stream does not contain <LocationTemplateModel>");
-            }
-            int version = 0;
-            if (!int.TryParse(reader.GetAttribute("version"), out version))
-            {
-                throw new TimetableLoaderException("<LocationTemplateModel> element does not specify version number.");
-            }
-            if (version > Versions.CurrentLocationTemplate)
-            {
-                throw new TimetableLoaderException(string.Format("<LocationTemplateModel> version {0} is too high to be supported.", version));
-            }
-
-            // Version-detection code goes here!
-
-            try
-            {
-                if (version < 3)
-                {
-                    return LoadLocationsVersion0(reader);
-                }
-                XmlSerializer deserialiser = new XmlSerializer(typeof(LocationTemplateModel));
-                LocationTemplateModel templateModel = (LocationTemplateModel)deserialiser.Deserialize(reader);
-                if (templateModel == null || templateModel.Maps == null || templateModel.Maps.Count == 0 || templateModel.Maps[0].LocationList == null)
-                {
-                    return null;
-                }
-                return new LocationCollection(templateModel.Maps[0].LocationList.Select(l => l.ToLocation()));
-            }
-            catch (Exception ex)
-            {
-                throw new TimetableLoaderException("Unexpected exception occurred in loader.", ex);
+                throw new TimetableLoaderException(Resources.Error_GenericLoaderError, ex);
             }
         }
 
@@ -156,45 +149,41 @@ namespace Timetabler.DataLoader
         /// <returns>A <see cref="DocumentTemplate"/> object.</returns>
         public static DocumentTemplate LoadDocumentTemplate(Stream str)
         {
-            XmlReader reader = null;
             try
             {
-                reader = XmlReader.Create(str);
-                reader.MoveToContent();
+                using (XmlReader reader = XmlReader.Create(str))
+                {
+                    if (reader == null)
+                    {
+                        throw new TimetableLoaderException(Resources.Error_CouldNotCreateXmlReader);
+                    }
+                    reader.MoveToContent();
+                    if (reader.Name != "TimetableDocumentTemplate")
+                    {
+                        throw new TimetableLoaderException(Resources.Error_XmlDoesNotContainTimetableDocumentTemplate);
+                    }
+                    if (!int.TryParse(reader.GetAttribute("version"), out int version))
+                    {
+                        throw new TimetableLoaderException(Resources.Error_XmlTimetableDocumentTemplateDoesNotSpecifyVersion);
+                    }
+                    if (version > Versions.CurrentDocumentTemplate)
+                    {
+                        throw new TimetableLoaderException(string.Format(CultureInfo.CurrentCulture, Resources.Error_XmlTimetableDocumentTemplateUnsupportedVersion, version));
+                    }
+
+                    // Version-detection code to go here.
+                    XmlSerializer deserializer = new XmlSerializer(typeof(TimetableDocumentTemplateModel));
+                    TimetableDocumentTemplateModel templateModel = (TimetableDocumentTemplateModel)deserializer.Deserialize(reader);
+                    return templateModel.ToDocumentTemplate();
+                }
+            }
+            catch (TimetableLoaderException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
-                throw new TimetableLoaderException("Unexpected exception occurred in loader.", ex);
-            }
-
-            if (reader == null)
-            {
-                throw new TimetableLoaderException("Could not create XML reader.");
-            }
-            if (reader.Name != "TimetableDocumentTemplate")
-            {
-                throw new TimetableLoaderException("Stream does not contain <TimetableDocumentTemplate> element.");
-            }
-            if (!int.TryParse(reader.GetAttribute("version"), out int version))
-            {
-                throw new TimetableLoaderException("<TimetableDocumentTemplate> element does not specify version number.");
-            }
-            if (version > Versions.CurrentDocumentTemplate)
-            {
-                throw new TimetableLoaderException(string.Format("<TimetableDocumentTemplate> version {0} is too high to be supported.", version));
-            }
-
-            // Version-detection code to go here.
-
-            try
-            {
-                XmlSerializer deserializer = new XmlSerializer(typeof(TimetableDocumentTemplateModel));
-                TimetableDocumentTemplateModel templateModel = (TimetableDocumentTemplateModel)deserializer.Deserialize(reader);
-                return templateModel.ToDocumentTemplate();
-            }
-            catch (Exception ex)
-            {
-                throw new TimetableLoaderException("Unexpected exception occurred in loader.", ex);
+                throw new TimetableLoaderException(Resources.Error_GenericLoaderError, ex);
             }
         }
     }

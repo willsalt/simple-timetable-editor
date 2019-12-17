@@ -1,5 +1,7 @@
 ﻿using NLog;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
@@ -20,9 +22,14 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>The data.</returns>
         public static TimetableDocument ToTimetableDocument(this TimetableFileModel file)
         {
+            if (file is null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+
             Dictionary<string, Signalbox> signalboxes = new Dictionary<string, Signalbox>();
 
-            Log.Trace("Converting TimetableFileModel to TimetableDocument, file version {0}", file.Version);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_TimetableFileModelConversionVersion, file.Version);
             TimetableDocument document = new TimetableDocument
             {
                 Version = file.Version,
@@ -41,12 +48,12 @@ namespace Timetabler.DataLoader.Load.Xml
             {
                 if (file.Maps[0].LocationList != null)
                 {
-                    Log.Trace("There are {0} locations to load.", file.Maps[0].LocationList.Count);
+                    Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_LocationCount, file.Maps[0].LocationList.Count);
                     foreach (LocationModel loc in file.Maps[0].LocationList)
                     {
                         document.LocationList.Add(loc.ToLocation());
                     }
-                    Log.Trace("Loaded {0} locations", document.LocationList.Count);
+                    Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_LocationsLoaded, document.LocationList.Count);
                 }
                 else
                 {
@@ -55,7 +62,7 @@ namespace Timetabler.DataLoader.Load.Xml
 
                 if (file.Maps[0].Signalboxes != null)
                 {
-                    Log.Trace("There are {0} signalboxes to load.", file.Maps[0].Signalboxes.Count);
+                    Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_SignalboxCount, file.Maps[0].Signalboxes.Count);
                     foreach (SignalboxModel box in file.Maps[0].Signalboxes)
                     {
                         Signalbox b = box.ToSignalbox();
@@ -65,7 +72,7 @@ namespace Timetabler.DataLoader.Load.Xml
                             signalboxes.Add(b.Id, b);
                         }
                     }
-                    Log.Trace("Loaded {0} signalboxes", document.Signalboxes.Count);
+                    Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_SignalboxesLoaded, document.Signalboxes.Count);
                 }
                 else
                 {
@@ -75,12 +82,12 @@ namespace Timetabler.DataLoader.Load.Xml
 
             if (file.SignalboxHoursSets != null)
             {
-                Log.Trace("There are {0} signalbox hours sets to load.", file.SignalboxHoursSets.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_SignalboxHoursSetCount, file.SignalboxHoursSets.Count);
                 foreach (SignalboxHoursSetModel set in file.SignalboxHoursSets)
                 {
                     document.SignalboxHoursSets.Add(set.ToSignalboxHoursSet(signalboxes, document.SignalboxHoursSets));
                 }
-                Log.Trace("Loaded {0} signalbox hours sets", document.SignalboxHoursSets.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_SignalboxHoursSetsLoaded, document.SignalboxHoursSets.Count);
             }
             else
             {
@@ -89,12 +96,12 @@ namespace Timetabler.DataLoader.Load.Xml
 
             if (file.NoteDefinitions != null)
             {
-                Log.Trace("There are {0} note definitions to load.", file.NoteDefinitions.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NoteDefinitionCount, file.NoteDefinitions.Count);
                 foreach (NoteModel note in file.NoteDefinitions)
                 {
                     document.NoteDefinitions.Add(note.ToNote());
                 }
-                Log.Trace("Loaded {0} note definitions", document.NoteDefinitions.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NoteDefinitionsLoaded, document.NoteDefinitions.Count);
             }
             else
             {
@@ -103,12 +110,12 @@ namespace Timetabler.DataLoader.Load.Xml
 
             if (file.TrainClassList != null)
             {
-                Log.Trace("There are {0} train classes to load.", file.TrainClassList.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_TrainClassCount, file.TrainClassList.Count);
                 foreach (TrainClassModel tc in file.TrainClassList)
                 {
                     document.TrainClassList.Add(tc.ToTrainClass());
                 }
-                Log.Trace("Loaded {0} train classes", document.TrainClassList.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_TrainClassesLoaded, document.TrainClassList.Count);
             }
             else
             {
@@ -120,12 +127,12 @@ namespace Timetabler.DataLoader.Load.Xml
             Dictionary<string, Note> noteMap = document.NoteDefinitions.ToDictionary(n => n.Id);
             if (file.TrainList != null)
             {
-                Log.Trace("There are {0} trains to load", file.TrainList.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_TrainCount, file.TrainList.Count);
                 foreach (TrainModel trn in file.TrainList)
                 {
                     document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap, document.Options));
                 }
-                Log.Trace("Loaded {0} trains", document.TrainList.Count);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_TrainsLoaded, document.TrainList.Count);
             }
             else
             {

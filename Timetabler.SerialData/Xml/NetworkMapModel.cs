@@ -13,20 +13,20 @@ namespace Timetabler.SerialData.Xml
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Location")]
-        public List<LocationModel> LocationList { get; set; }
+        public List<LocationModel> LocationList { get; } = new List<LocationModel>();
 
         /// <summary>
         /// List of block sections in this network map.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "BlockSection")]
-        public List<BlockSectionModel> BlockSections { get; set; }
+        public List<BlockSectionModel> BlockSections { get; } = new List<BlockSectionModel>();
 
         /// <summary>
         /// List of signalboxes in this network map.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Signalbox")]
-        public List<SignalboxModel> Signalboxes { get; set; }
+        public List<SignalboxModel> Signalboxes { get; } = new List<SignalboxModel>();
     }
 }

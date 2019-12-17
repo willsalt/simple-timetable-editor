@@ -20,7 +20,7 @@ namespace Timetabler.SerialData.Xml
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Map")]
-        public List<NetworkMapModel> Maps { get; set; }
+        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         /// <summary>
         /// Default constructor; initialises file version number.

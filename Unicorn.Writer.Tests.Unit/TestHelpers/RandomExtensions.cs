@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Unicorn.Writer.Primitives;
 using Tests.Utility.Extensions;
 using Unicorn.Writer.Interfaces;
@@ -11,6 +9,10 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
     {
         public static IPdfPrimitiveObject NextPdfPrimitive(this Random rnd)
         {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
             int selector = rnd.Next(7);
             switch (selector)
             {
@@ -39,21 +41,37 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
 
         public static PdfInteger NextPdfInteger(this Random rnd)
         {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
             return new PdfInteger(rnd.Next());
         }
 
         public static PdfInteger NextPdfInteger(this Random rnd, int maxValue)
         {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
             return new PdfInteger(rnd.Next(maxValue));
         }
 
         public static PdfInteger NextPdfInteger(this Random rnd, int minValue, int maxValue)
         {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
             return new PdfInteger(rnd.Next(minValue, maxValue));
         }
 
         public static PdfName NextPdfName(this Random rnd)
         {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
             return new PdfName(rnd.NextAlphabeticalString(rnd.Next(16) + 1));
         }
 
@@ -66,12 +84,22 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
 
         public static PdfReal NextPdfReal(this Random rnd)
         {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
+
             // The offset and multiplier here are arbitrary amounts that are within the range likely to be seen on a PDF - 5,000 points is just over 176cm.
             return new PdfReal(rnd.NextDouble() * 1000 - 5000);
         }
 
         public static PdfRectangle NextPdfRectangle(this Random rnd)
         {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
+
             // See NextPdfReal() for a note on why these multipliers and offsets were chosen.
             double leftX = rnd.NextDouble() * 1000 - 5000;
             double bottomY = rnd.NextDouble() * 1000 - 5000;

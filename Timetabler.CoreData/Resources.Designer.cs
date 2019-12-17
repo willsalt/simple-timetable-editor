@@ -61,6 +61,15 @@ namespace Timetabler.CoreData {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wrong data type passed..
+        /// </summary>
+        internal static string Error_WrongDataTypePassedIn {
+            get {
+                return ResourceManager.GetString("Error_WrongDataTypePassedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to a.m..
         /// </summary>
         internal static string HalfOfDay_ToNameString_Am {

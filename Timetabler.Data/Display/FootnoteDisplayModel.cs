@@ -64,11 +64,11 @@ namespace Timetabler.Data.Display
         /// <returns>Returns true if the parameters are both null or have the same <see cref="NoteId"/> property; false otherwise.</returns>
         public static bool operator ==(FootnoteDisplayModel x, FootnoteDisplayModel y)
         {
-            if (ReferenceEquals(x, null))
+            if (x is null)
             {
-                return ReferenceEquals(y, null);
+                return y is null;
             }
-            if (ReferenceEquals(y, null))
+            if (y is null)
             {
                 return false;
             }
@@ -83,7 +83,7 @@ namespace Timetabler.Data.Display
         /// <returns>Returns true if the parameter is not null and has the same <see cref="NoteId" /> property as this; false otherwise.</returns>
         public bool Equals(FootnoteDisplayModel x)
         {
-            if (ReferenceEquals(x, null))
+            if (x is null)
             {
                 return false;
             }
@@ -112,11 +112,11 @@ namespace Timetabler.Data.Display
         /// <returns>Returns false if the parameters are both null or have the same <see cref="NoteId"/> property; true otherwise.</returns>
         public static bool operator !=(FootnoteDisplayModel x, FootnoteDisplayModel y)
         {
-            if (x.Equals(null))
+            if (x is null)
             {
-                return !y.Equals(null);
+                return !(y is null);
             }
-            if (y.Equals(null))
+            if (y is null)
             {
                 return true;
             }

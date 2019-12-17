@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
 using Timetabler.Data;
 using Timetabler.Data.Events;
-using Timetabler.Helpers;
 using Timetabler.Models;
 
 namespace Timetabler
@@ -12,7 +11,6 @@ namespace Timetabler
     public partial class SignalboxHoursSetEditForm : Form
     {
         private const int BoxIdColIdx = 0;
-        private const int BoxColIdx = 1;
         private const int StartColIdx = 2;
         private const int EndColIdx = 3;
 
@@ -103,13 +101,14 @@ namespace Timetabler
                 return;
             }
             SignalboxHours hours = _model.Data.Hours[boxIdx];
-            SignalboxHoursEditForm form = new SignalboxHoursEditForm { Model = new SignalboxHoursEditFormModel { Data = hours.Copy(), InputMode = _model.InputMode } };
-            if (form.ShowDialog() != DialogResult.OK)
+            using (SignalboxHoursEditForm form = new SignalboxHoursEditForm { Model = new SignalboxHoursEditFormModel { Data = hours.Copy(), InputMode = _model.InputMode } })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                form.Model.Data.CopyTo(hours);
             }
-
-            form.Model.Data.CopyTo(hours);
         }
 
         private void tbCategory_TextChanged(object sender, System.EventArgs e)

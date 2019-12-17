@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.CoreData;
 using Timetabler.Data;
@@ -40,7 +41,7 @@ namespace Timetabler
         private void PopulateFontTypeComboBox()
         {
             cbFontType.BeginUpdate();
-            cbFontType.Items.AddRange(HumanReadableEnum<LocationFontType>.GetLocationFontType());
+            cbFontType.Items.AddRange(HumanReadableEnumFactory.GetLocationFontType());
             cbFontType.EndUpdate();
         }
 
@@ -72,8 +73,8 @@ namespace Timetabler
             {
                 return;
             }
-            tbMileage.Text = _model.Mileage.Mileage.ToString();
-            tbChainage.Text = ((int)_model.Mileage.Chainage).ToString();
+            tbMileage.Text = _model.Mileage.Mileage.ToString(CultureInfo.CurrentCulture);
+            tbChainage.Text = ((int)_model.Mileage.Chainage).ToString(CultureInfo.CurrentCulture);
             SetLocationFontTypeCbValue();
         }
 
@@ -81,8 +82,7 @@ namespace Timetabler
         {
             foreach (var item in cbFontType.Items)
             {
-                var lftItem = item as HumanReadableEnum<LocationFontType>;
-                if (lftItem != null && _model.FontType == lftItem.Value)
+                if (item is HumanReadableEnum<LocationFontType> lftItem && _model.FontType == lftItem.Value)
                 {
                     cbFontType.SelectedItem = lftItem;
                     break;

@@ -11,7 +11,7 @@ namespace Timetabler.Data.Comparers
         /// <summary>
         /// A static instance of this class, to act as a singleton instance.
         /// </summary>
-        public static GenericTimeModelComparer Default = new GenericTimeModelComparer();
+        public static GenericTimeModelComparer Default { get; } = new GenericTimeModelComparer();
 
         /// <summary>
         /// Compares two <see cref="GenericTimeModel" /> objects according to their <see cref="GenericTimeModel.ActualTime" /> properties.

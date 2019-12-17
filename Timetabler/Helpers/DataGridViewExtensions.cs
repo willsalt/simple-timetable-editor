@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Display;
@@ -19,6 +20,11 @@ namespace Timetabler.Helpers
         /// <param name="clearFrom">The index of the rightmost column to retain.</param>
         public static void ClearGrid(this DataGridView grid, int clearFrom)
         {
+            if (grid is null)
+            {
+                throw new ArgumentNullException(nameof(grid));
+            }
+
             grid.Rows.Clear();
             while (grid.Columns.Count > clearFrom + 1)
             {
@@ -33,6 +39,11 @@ namespace Timetabler.Helpers
         /// <param name="count">The number of visible rows to add.</param>
         public static void AddStartingRows(this DataGridView grid, int count)
         {
+            if (grid is null)
+            {
+                throw new ArgumentNullException(nameof(grid));
+            }
+
             grid.Rows.Add(new DataGridViewRow { Visible = false });
             grid.Rows.Add(count);
         }
@@ -50,6 +61,15 @@ namespace Timetabler.Helpers
         /// <param name="footnoteRowIdx">The index of the row to populate with the train's footnotes.</param>
         public static void AddColumnsForSegments(this DataGridView grid, IEnumerable<TrainSegmentModel> segments, int idRowIdx, int diagramRowIdx, int? locoDiagramRowIdx, int amPmRowIdx, int classRowIdx, int footnoteRowIdx)
         {
+            if (grid is null)
+            {
+                throw new ArgumentNullException(nameof(grid));
+            }
+            if (segments is null)
+            {
+                throw new ArgumentNullException(nameof(segments));
+            }
+
             foreach (var seg in segments)
             {
                 int idx = grid.Columns.Add(new DataGridViewTextBoxColumn { DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleCenter } });
@@ -80,6 +100,19 @@ namespace Timetabler.Helpers
         public static void AddAndPopulateLocationRows(this DataGridView grid, IEnumerable<LocationDisplayModel> locations, TrainSegmentModelCollection segments, int locationIdColIdx, 
             int locationNameColIdx, int locationADSymColIdx, Font stoppingFont, Font passingFont)
         {
+            if (grid is null)
+            {
+                throw new ArgumentNullException(nameof(grid));
+            }
+            if (segments is null)
+            {
+                throw new ArgumentNullException(nameof(segments));
+            }
+            if (locations is null)
+            {
+                throw new ArgumentNullException(nameof(locations));
+            }
+
             ColumnCountCheck(grid, locationADSymColIdx, segments.Count);
             foreach (var loc in locations)
             {
@@ -92,8 +125,7 @@ namespace Timetabler.Helpers
                     if (segments[i].TimingsIndex.ContainsKey(loc.LocationKey))
                     {
                         grid[locationADSymColIdx + i + 1, idx].Value = segments[i].TimingsIndex[loc.LocationKey].DisplayedText;
-                        var tltm = segments[i].TimingsIndex[loc.LocationKey] as TrainLocationTimeModel;
-                        if (tltm != null && !tltm.IsPassingTime)
+                        if (segments[i].TimingsIndex[loc.LocationKey] is TrainLocationTimeModel tltm && !tltm.IsPassingTime)
                         {
                             grid[locationADSymColIdx + i + 1, idx].Style.Font = stoppingFont;
                         }
@@ -110,8 +142,8 @@ namespace Timetabler.Helpers
         {
             if (grid.ColumnCount <= locationADSymColIdx + segmentCount)
             {
-                throw new InvalidOperationException(string.Format("This grid does not have enough columns for the number of trains ({0}/{2}+{1})", grid.ColumnCount, segmentCount,
-                    locationADSymColIdx));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "This grid does not have enough columns for the number of trains ({0}/{2}+{1})", grid.ColumnCount, 
+                    segmentCount, locationADSymColIdx));
             }
         }
 
@@ -125,6 +157,15 @@ namespace Timetabler.Helpers
         /// <param name="toWorkFont"></param>
         public static void AddAndPopulateToWorkRow(this DataGridView grid, TrainSegmentModelCollection segments, int locationNameColIdx, int locationADSymColIdx, Font toWorkFont)
         {
+            if (grid is null)
+            {
+                throw new ArgumentNullException(nameof(grid));
+            }
+            if (segments is null)
+            {
+                throw new ArgumentNullException(nameof(segments));
+            }
+
             ColumnCountCheck(grid, locationADSymColIdx, segments.Count);
             int rowIdx = grid.Rows.Add();
             grid[locationNameColIdx, rowIdx].Value = Resources.MainForm_TimetableGridView_ToWorkRowName;

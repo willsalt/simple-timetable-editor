@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
@@ -173,6 +174,10 @@ namespace Timetabler.Data
             if (Location == null)
             {
                 return;
+            }
+            if (map is null)
+            {
+                throw new ArgumentNullException(nameof(map));
             }
             if (map.ContainsKey(Location.Id))
             {

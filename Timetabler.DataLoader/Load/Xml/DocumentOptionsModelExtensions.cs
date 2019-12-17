@@ -16,6 +16,11 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>The<see cref="DocumentOptions"/> instance.</returns>
         public static DocumentOptions ToDocumentOptions(this DocumentOptionsModel model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             DocumentOptions options = new DocumentOptions
             {
                 DisplayTrainLabelsOnGraphs = model.DisplayTrainLabelsOnGraphs ?? true

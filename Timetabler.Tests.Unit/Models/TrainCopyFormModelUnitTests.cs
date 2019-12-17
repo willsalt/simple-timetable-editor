@@ -18,7 +18,34 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithOffsetPropertyEqualToZero()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainCopyFormModelClass_FromTrainMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            Train testParam = null;
+
+            _ = TrainCopyFormModel.FromTrain(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainCopyFormModelClass_FromTrainMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            Train testParam = null;
+
+            try
+            {
+                _ = TrainCopyFormModel.FromTrain(testParam);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("train", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithOffsetPropertyEqualToZero_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -28,7 +55,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithClearInlineNotesPropertyEqualToFalse()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithClearInlineNotesPropertyEqualToFalse_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -38,7 +65,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithAddSubtractPropertyEqualToAdd()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithAddSubtractPropertyEqualToAdd_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -48,7 +75,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithCorrectTrainIdProperty()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithCorrectTrainIdProperty_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -58,7 +85,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithCorrectTrainNameProperty()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithCorrectTrainNameProperty_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 

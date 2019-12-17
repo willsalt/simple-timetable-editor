@@ -34,12 +34,12 @@ namespace Timetabler.SerialData.Xml.Legacy.V1
         /// <summary>
         /// The timing points of this train.
         /// </summary>
-        public List<TrainLocationTimeModel> TrainTimes { get; set; }
+        public List<TrainLocationTimeModel> TrainTimes { get; private set; }
 
         /// <summary>
         /// The IDs of the footnotes, for normalised serialisation
         /// </summary>
-        public List<string> FootnoteIds { get; set; }
+        public List<string> FootnoteIds { get; private set; }
 
         /// <summary>
         /// Populate the properties of this object from XML.
@@ -47,6 +47,10 @@ namespace Timetabler.SerialData.Xml.Legacy.V1
         /// <param name="reader">Source of the XML to be read.</param>
         public void ReadXml(XmlReader reader)
         {
+            if (reader is null)
+            {
+                throw new ArgumentNullException(nameof(reader));
+            }
             GraphProperties = new GraphTrainPropertiesModel();
             TrainTimes = new List<TrainLocationTimeModel>();
             FootnoteIds = new List<string>();
@@ -142,6 +146,10 @@ namespace Timetabler.SerialData.Xml.Legacy.V1
         /// <param name="writer">The destination to write the serialized object data to.</param>
         public void WriteXml(XmlWriter writer)
         {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             writer.WriteAttributeString("Id", Id);
             if (Headcode != null)
             {

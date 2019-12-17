@@ -74,27 +74,27 @@ namespace Timetabler.SerialData.Xml.Legacy.V2
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Location")]
-        public List<LocationModel> LocationList { get; set; }
+        public List<LocationModel> LocationList { get; }
 
         /// <summary>
         /// Footnotes used in these timetables.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Note")]
-        public List<NoteModel> NoteDefinitions { get; set; }
+        public List<NoteModel> NoteDefinitions { get; }
 
         /// <summary>
         /// The train classes used in these timetables.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "TrainClass")]
-        public List<TrainClassModel> TrainClassList { get; set; }
+        public List<TrainClassModel> TrainClassList { get; }
 
         /// <summary>
         /// The trains in this timetable.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Train", Namespace = Namespaces.V2)]
-        public List<TrainModel> TrainList { get; set; }
+        public List<TrainModel> TrainList { get; }
     }
 }

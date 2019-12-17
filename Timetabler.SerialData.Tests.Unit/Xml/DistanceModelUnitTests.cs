@@ -19,7 +19,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void DistanceModelHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(DistanceModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(DistanceModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

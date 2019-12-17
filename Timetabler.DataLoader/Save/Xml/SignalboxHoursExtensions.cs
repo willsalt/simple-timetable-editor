@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader.Save.Xml
@@ -15,6 +16,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="SignalboxHoursModel" /> instance that is equivalent to the hours parameter.</returns>
         public static SignalboxHoursModel ToSignalboxHoursModel(this SignalboxHours hours)
         {
+            if (hours is null)
+            {
+                throw new ArgumentNullException(nameof(hours));
+            }
+
             return new SignalboxHoursModel
             {
                 SignalboxId = hours.Signalbox?.Id,

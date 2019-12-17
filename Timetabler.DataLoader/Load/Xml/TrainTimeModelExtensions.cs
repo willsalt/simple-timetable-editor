@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
@@ -17,6 +18,11 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>A <see cref="TrainTime"/> instance.</returns>
         public static TrainTime ToTrainTime(this TrainTimeModel model, Dictionary<string, Note> notes)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             TrainTime tt = new TrainTime { Time = model.Time?.ToTimeOfDay() };
             
             foreach (string noteId in model.FootnoteIds)

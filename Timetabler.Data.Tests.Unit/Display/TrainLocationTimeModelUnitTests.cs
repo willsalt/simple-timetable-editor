@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
 
@@ -9,7 +11,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class TrainLocationTimeModelUnitTests
     {
-        private static Random _rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private TrainLocationTimeModel GetTestObject()
         {
@@ -22,9 +24,9 @@ namespace Timetabler.Data.Tests.Unit.Display
                 LocationKey = _rnd.NextString("0123456789abcdef", 10),
                 IsPassingTime = _rnd.NextBoolean(),
             };
-            testObject.DisplayedTextHours = testObject.ActualTime.ToString("h");
-            testObject.DisplayedTextMinutes = testObject.ActualTime.ToString("mm");
-            testObject.DisplayedText = testObject.DisplayedTextHours + (testObject.DisplayedTextFootnote != "" ? testObject.DisplayedTextFootnote : " ") + testObject.DisplayedTextMinutes;
+            testObject.DisplayedTextHours = testObject.ActualTime.ToString("h", CultureInfo.CurrentCulture);
+            testObject.DisplayedTextMinutes = testObject.ActualTime.ToString("mm", CultureInfo.CurrentCulture);
+            testObject.DisplayedText = testObject.DisplayedTextHours + (testObject.DisplayedTextFootnote.Length == 0 ? testObject.DisplayedTextFootnote : " ") + testObject.DisplayedTextMinutes;
             return testObject;
         }
 
@@ -319,7 +321,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             testObject.Populate(param0, param1);
 
-            Assert.AreEqual(string.Format(param0.Time.ToString(param1.Complete), param0.FootnoteSymbols), testObject.DisplayedText);
+            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, param0.Time.ToString(param1.Complete, CultureInfo.CurrentCulture), param0.FootnoteSymbols), testObject.DisplayedText);
         }
 
         [TestMethod]
@@ -331,7 +333,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             testObject.Populate(param0, param1);
 
-            Assert.AreEqual(param0.Time.ToString(param1.Hours), testObject.DisplayedTextHours);
+            Assert.AreEqual(param0.Time.ToString(param1.Hours, CultureInfo.CurrentCulture), testObject.DisplayedTextHours);
         }
 
         [TestMethod]
@@ -343,7 +345,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             testObject.Populate(param0, param1);
 
-            Assert.AreEqual(param0.Time.ToString(param1.Minutes), testObject.DisplayedTextMinutes);
+            Assert.AreEqual(param0.Time.ToString(param1.Minutes, CultureInfo.CurrentCulture), testObject.DisplayedTextMinutes);
         }
 
         [TestMethod]

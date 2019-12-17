@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unicorn.Interfaces;
 
@@ -9,8 +10,8 @@ namespace Unicorn
     /// </summary>
     public class Table : IDrawable
     {
-        private List<TableRow> _rows;
-        private List<TableColumn> _columns;
+        private readonly List<TableRow> _rows;
+        private readonly List<TableColumn> _columns;
 
         /// <summary>
         /// Style to use when drawing table gridlines.
@@ -88,6 +89,11 @@ namespace Unicorn
         /// width as the new row.  If the added row contains fewer cells than the rows currently in the table, it is padded on the right until it is the same with as the other rows.</remarks>
         public void AddRow(TableRow row)
         {
+            if (row is null)
+            {
+                throw new ArgumentNullException(nameof(row));
+            }
+
             // Make sure table is wide enough for the new row
             while (row.Count > _columns.Count)
             {
@@ -139,6 +145,11 @@ namespace Unicorn
         /// <param name="col">The column to add to the table.</param>
         public void AddColumn(TableColumn col)
         {
+            if (col is null)
+            {
+                throw new ArgumentNullException(nameof(col));
+            }
+
             // Make sure table is deep enough for the new column
             while (col.Count > _rows.Count)
             {
@@ -188,6 +199,11 @@ namespace Unicorn
         /// <param name="yCoord">The Y coordinate of the top left corner of the table.</param>
         public void DrawAt(IGraphicsContext graphicsContext, double xCoord, double yCoord)
         {
+            if (graphicsContext is null)
+            {
+                throw new ArgumentNullException(nameof(graphicsContext));
+            }
+
             double yOffset = 0;
             foreach (TableRow row in _rows)
             {

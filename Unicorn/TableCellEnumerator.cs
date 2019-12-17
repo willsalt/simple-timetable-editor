@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Unicorn
@@ -10,7 +11,6 @@ namespace Unicorn
     {
         private TableCellCollection _collection;
         private int _curIdx;
-        private TableCell _cur;
 
         /// <summary>
         /// Constructs the enumerator for a given <see cref="TableCellCollection"/>.
@@ -20,29 +20,36 @@ namespace Unicorn
         {
             _collection = collection;
             _curIdx = -1;
-            _cur = null;
+            Current = null;
         }
 
         /// <summary>
         /// Gets the currently-enumerated object.
         /// </summary>
-        public TableCell Current
-        {
-            get { return _cur; }
-        }
+        public TableCell Current { get; private set; }
 
         /// <summary>
         /// Gets the currently-enumerated object.
         /// </summary>
         object IEnumerator.Current
         {
-            get { return _cur; }
+            get { return Current; }
         }
 
         /// <summary>
         /// Dispose of this enumerator.
         /// </summary>
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose of this enumerator.
+        /// </summary>
+        /// <param name="disposing">Whether or not to dispose of managed objects.</param>
+        protected virtual void Dispose(bool disposing)
         {
 
         }
@@ -57,7 +64,7 @@ namespace Unicorn
             {
                 return false;
             }
-            _cur = _collection[_curIdx];
+            Current = _collection[_curIdx];
             return true;
         }
 
@@ -67,7 +74,7 @@ namespace Unicorn
         public void Reset()
         {
             _curIdx = -1;
-            _cur = null;
+            Current = null;
         }
     }
 }

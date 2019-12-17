@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
@@ -17,6 +18,15 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>A <see cref="SignalboxHours" /> instance whose contents match those of the model parameter.</returns>
         public static SignalboxHours ToSignalboxHours(this SignalboxHoursModel model, IDictionary<string, Signalbox> signalboxes)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+            if (signalboxes is null)
+            {
+                throw new ArgumentNullException(nameof(signalboxes));
+            }
+
             return new SignalboxHours
             {
                 Signalbox = signalboxes.ContainsKey(model.SignalboxId) ? signalboxes[model.SignalboxId] : null,

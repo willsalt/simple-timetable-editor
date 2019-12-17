@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
@@ -19,9 +20,13 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>A converted <see cref="TrainLocationTime"/> instance.</returns>
         public static TrainLocationTime ToTrainLocationTime(this TrainLocationTimeModel model, Dictionary<string, Location> locations, Dictionary<string, Note> notes, DocumentOptions options)
         {
-            if (model == null)
+            if (model is null)
             {
                 return null;
+            }
+            if (options is null)
+            {
+                throw new ArgumentNullException(nameof(options));
             }
 
             TrainLocationTime output = new TrainLocationTime

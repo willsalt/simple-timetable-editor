@@ -40,7 +40,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V3
         [TestMethod]
         public void TimetableFileModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }
@@ -138,7 +138,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V3
             PropertyInfo pInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetProperty("NoteDefinitions");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<NoteModel>), pInfo.PropertyType);
         }
 
@@ -167,7 +166,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V3
             PropertyInfo pInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetProperty("TrainClassList");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<TrainClassModel>), pInfo.PropertyType);
         }
 
@@ -196,7 +194,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V3
             PropertyInfo pInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetProperty("TrainList");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<TrainModel>), pInfo.PropertyType);
         }
 
@@ -289,7 +286,6 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V3
             PropertyInfo pInfo = typeof(SerialData.Xml.Legacy.V3.TimetableFileModel).GetProperty("Maps");
             Assert.IsNotNull(pInfo);
             Assert.IsTrue(pInfo.GetMethod.IsPublic);
-            Assert.IsTrue(pInfo.SetMethod.IsPublic);
             Assert.AreEqual(typeof(List<NetworkMapModel>), pInfo.PropertyType);
         }
 

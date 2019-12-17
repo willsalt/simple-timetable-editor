@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 using Timetabler.CoreData;
@@ -18,6 +19,19 @@ namespace Timetabler.Helpers
         /// <param name="cbHalf">A <see cref="ComboBox" /> to be reset.</param>
         public static void ClearTimeBoxes(TextBox tbHours, TextBox tbMinutes, ComboBox cbHalf)
         {
+            if (tbHours is null)
+            {
+                throw new ArgumentNullException(nameof(tbHours));
+            }
+            if (tbMinutes is null)
+            {
+                throw new ArgumentNullException(nameof(tbMinutes));
+            }
+            if (cbHalf is null)
+            {
+                throw new ArgumentNullException(nameof(cbHalf));
+            }
+
             tbHours.Text = string.Empty;
             tbMinutes.Text = string.Empty;
             cbHalf.SelectedIndex = 0;
@@ -31,7 +45,7 @@ namespace Timetabler.Helpers
         {
             foreach (ComboBox box in boxes)
             {
-                box.Items.AddRange(HumanReadableEnum<HalfOfDay>.GetHalfOfDayForSelection());
+                box.Items.AddRange(HumanReadableEnumFactory.GetHalfOfDayForSelection());
             }
         }
 
@@ -44,12 +58,16 @@ namespace Timetabler.Helpers
         /// <param name="e">The event to cancel if validation fails.</param>
         public static void ValidateTimeTextBox(TextBox tb, ErrorProvider ep, string errorMsg, CancelEventArgs e)
         { 
-            if (tb == null)
+            if (tb is null || e is null)
             {
                 return;
             }
+            if (ep is null)
+            {
+                throw new ArgumentNullException(nameof(ep));
+            }
 
-            if (tb.Text != string.Empty && !int.TryParse(tb.Text, out _))
+            if (tb.Text.Length != 0 && !int.TryParse(tb.Text, out _))
             {
                 ep.SetError(tb, errorMsg);
                 e.Cancel = true;
@@ -76,7 +94,20 @@ namespace Timetabler.Helpers
         /// midday.</remarks>
         public static void SetTimeProperty(object model, PropertyInfo prop, TextBox tbHours, TextBox tbMinutes, ComboBox cbHalfOfDay, int seconds)
         {
-            if (tbHours.Text == string.Empty || tbMinutes.Text == string.Empty)
+            if (tbHours is null)
+            {
+                throw new ArgumentNullException(nameof(tbHours));
+            }
+            if (tbMinutes is null)
+            {
+                throw new ArgumentNullException(nameof(tbMinutes));
+            }
+            if (prop is null)
+            {
+                throw new ArgumentNullException(nameof(prop));
+            }
+
+            if (tbHours.Text.Length == 0 || tbMinutes.Text.Length == 0)
             {
                 prop.SetValue(model, null);
             }

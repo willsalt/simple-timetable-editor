@@ -15,7 +15,7 @@ namespace Timetabler.Data.Collections
         /// <summary>
         /// Stores the collection contents.
         /// </summary>
-        protected List<T> _innerCollection = new List<T>();
+        protected List<T> InnerCollection { get; } = new List<T>();
 
         /// <summary>
         /// Access members of the collection by index.
@@ -26,19 +26,19 @@ namespace Timetabler.Data.Collections
         {
             get
             {
-                return _innerCollection[index];
+                return InnerCollection[index];
             }
             set
             {
-                lock (_innerCollection)
+                lock (InnerCollection)
                 {
-                    if (_innerCollection[index] != value)
+                    if (InnerCollection[index] != value)
                     {
-                        _innerCollection[index].Modified -= ContentsModified;
-                        OnRemove(_innerCollection[index], index);
-                        _innerCollection[index] = value;
-                        OnAdd(_innerCollection[index], index);
-                        _innerCollection[index].Modified += ContentsModified;
+                        InnerCollection[index].Modified -= ContentsModified;
+                        OnRemove(InnerCollection[index], index);
+                        InnerCollection[index] = value;
+                        OnAdd(InnerCollection[index], index);
+                        InnerCollection[index].Modified += ContentsModified;
                     }
                 }
             }
@@ -51,7 +51,7 @@ namespace Timetabler.Data.Collections
         {
             get
             {
-                return _innerCollection.Count;
+                return InnerCollection.Count;
             }
         }
 
@@ -66,16 +66,18 @@ namespace Timetabler.Data.Collections
             }
         }
 
+        
+
         /// <summary>
         /// Add an item to the collection.
         /// </summary>
         /// <param name="item">The item to add.</param>
         public virtual void Add(T item)
         {
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
-                _innerCollection.Add(item);
-                OnAdd(item, _innerCollection.Count - 1);
+                InnerCollection.Add(item);
+                OnAdd(item, InnerCollection.Count - 1);
             }
             if (item != null)
             {
@@ -90,9 +92,9 @@ namespace Timetabler.Data.Collections
         /// <param name="item">The item to be inserted.</param>
         public virtual void Insert(int idx, T item)
         {
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
-                _innerCollection.Insert(idx, item);
+                InnerCollection.Insert(idx, item);
                 OnAdd(item, idx);
             }
             if (item != null)
@@ -133,10 +135,29 @@ namespace Timetabler.Data.Collections
         /// </summary>
         public void Clear()
         {
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
-                _innerCollection.ForEach(i => i.Modified -= ContentsModified);
-                _innerCollection.Clear();
+                ClearImpl();
+            }
+        }
+
+        private void ClearImpl()
+        {
+            InnerCollection.ForEach(i => i.Modified -= ContentsModified);
+            InnerCollection.Clear();
+        }
+
+        /// <summary>
+        /// Clear the contents of the collection and replace it with new contents.  Does not trigger Add or Remove events.
+        /// </summary>
+        /// <param name="newContents">The new contents of the collection.</param>
+        public void Overwrite(IEnumerable<T> newContents)
+        {
+            lock (InnerCollection)
+            {
+                ClearImpl();
+                InnerCollection.AddRange(newContents);
+                InnerCollection.ForEach(i => i.Modified += ContentsModified);
             }
         }
 
@@ -147,7 +168,7 @@ namespace Timetabler.Data.Collections
         /// <returns>True if the item is contained in the collection, false if not.</returns>
         public bool Contains(T item)
         {
-            return _innerCollection.Contains(item);
+            return InnerCollection.Contains(item);
         }
 
         /// <summary>
@@ -157,7 +178,7 @@ namespace Timetabler.Data.Collections
         /// <returns>The index of the item if it is contained in the collection, or -1 if not.</returns>
         public int IndexOf(T item)
         {
-            return _innerCollection.IndexOf(item);
+            return InnerCollection.IndexOf(item);
         }
 
         /// <summary>
@@ -170,24 +191,24 @@ namespace Timetabler.Data.Collections
         /// <exception cref="ArgumentException">Thrown if the array is not large enough to contain the collection contents.</exception>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (array == null)
+            if (array is null)
             {
-                throw new ArgumentNullException("array", "The array parameter cannot be null.");
+                throw new ArgumentNullException(nameof(array));
             }
             if (arrayIndex < 0)
             {
-                throw new ArgumentOutOfRangeException("arrayIndex", "The arrayIndex parameter cannot be negative.");
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
             }
             if (Count > array.Length - arrayIndex)
             {
-                throw new ArgumentException("The destination array does not contain enough elements to store the collection.");
+                throw new ArgumentException(Resources.BaseCollection_CopyTo_Error_InsufficientArrayLength, nameof(array));
             }
 
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
                 for (int i = 0; i < Count; ++i)
                 {
-                    array[arrayIndex + i] = _innerCollection[i];
+                    array[arrayIndex + i] = InnerCollection[i];
                 }
             }
         }
@@ -208,13 +229,17 @@ namespace Timetabler.Data.Collections
         /// <returns>True if the item was removed from the collection; false if the collection did not contain the item.</returns>
         public virtual bool Remove(T item)
         {
-            lock (_innerCollection)
+            if (item is null)
             {
-                for (int i = 0; i < _innerCollection.Count; ++i)
+                return false;
+            }
+            lock (InnerCollection)
+            {
+                for (int i = 0; i < InnerCollection.Count; ++i)
                 {
-                    if (_innerCollection[i] == item)
+                    if (InnerCollection[i] == item)
                     {
-                        _innerCollection.RemoveAt(i);
+                        InnerCollection.RemoveAt(i);
                         item.Modified -= ContentsModified;
                         OnRemove(item, i);
                         return true;
@@ -235,15 +260,15 @@ namespace Timetabler.Data.Collections
                 throw new ArgumentOutOfRangeException(nameof(idx));
             }
 
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
-                if (idx >= _innerCollection.Count)
+                if (idx >= InnerCollection.Count)
                 {
                     throw new ArgumentOutOfRangeException(nameof(idx));
                 }
 
-                T item = _innerCollection[idx];
-                _innerCollection.RemoveAt(idx);
+                T item = InnerCollection[idx];
+                InnerCollection.RemoveAt(idx);
                 item.Modified -= ContentsModified;
                 OnRemove(item, idx);
             }

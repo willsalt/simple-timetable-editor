@@ -1,5 +1,7 @@
 ﻿using NLog;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.CoreData.Helpers;
@@ -14,7 +16,7 @@ namespace Timetabler.Data.Display
     /// </summary>
     public class TimetableSectionModel
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// The event handler type for the <see cref="TrainSegmentAdd"/> event.
@@ -28,10 +30,10 @@ namespace Timetabler.Data.Display
         /// </summary>
         public event TrainSegmentEventHandler TrainSegmentAdd;
 
-        /// <summary>
-        /// Event raised when a train segment is removed from the model.
-        /// </summary>
-        public event TrainSegmentEventHandler TrainSegmentRemove;
+        // <summary>
+        // Event raised when a train segment is removed from the model.
+        // </summary>
+        // public event TrainSegmentEventHandler TrainSegmentRemove;
 
         /// <summary>
         /// Which direction of travel this timetable section is for.
@@ -53,22 +55,10 @@ namespace Timetabler.Data.Display
 
         private LocationDisplayModelComparer _locationDisplayModelComparer;
 
-        private LocationCollection _locationMap;
-
         /// <summary>
         /// A list of all the locations that may appear in this section.
         /// </summary>
-        public LocationCollection LocationMap
-        {
-            get
-            {
-                return _locationMap;
-            }
-            set
-            {
-                _locationMap = value;
-            }
-        }
+        public LocationCollection LocationMap { get; private set; }
 
         private Dictionary<string, Location> LocationDict
         {
@@ -81,7 +71,7 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// The list of locations display rows in this section.
         /// </summary>
-        public LocationDisplayModelCollection Locations { get; set; }
+        public LocationDisplayModelCollection Locations { get; } = new LocationDisplayModelCollection();
 
         /// <summary>
         /// The list of train segments which make up the columns of this section.
@@ -92,9 +82,11 @@ namespace Timetabler.Data.Display
         /// Constructor.
         /// </summary>
         /// <param name="direction">The direction which applies to this section.</param>
-        public TimetableSectionModel(Direction direction)
+        /// <param name="map">The locations within this section.</param>
+        public TimetableSectionModel(Direction direction, LocationCollection map)
         {
             Direction = direction;
+            LocationMap = map;
             Locations = new LocationDisplayModelCollection();
             TrainSegments = new TrainSegmentModelCollection();
         }
@@ -114,6 +106,11 @@ namespace Timetabler.Data.Display
         /// <param name="segment">The data in the column to be added.</param>
         public void Add(TrainSegmentModel segment)
         {
+            if (segment is null)
+            {
+                throw new ArgumentNullException(nameof(segment));
+            }
+
             foreach (string locationKey in TrainSegments.SelectMany(t => t.TimingsIndex).Select(t => t.Key).Union(segment.TimingsIndex.Select(t => t.Key)))
             {
                 if (!Locations.Any(l => l.LocationKey == locationKey))
@@ -131,7 +128,7 @@ namespace Timetabler.Data.Display
                         ParentDisplaySeparatorBelow = loc.DisplaySeparatorBelow,
                         ParentDisplaySeparatorAbove = loc.DisplaySeparatorAbove,
                     };
-                    if (locationKey.EndsWith(LocationIdSuffixes.Arrival) || locationKey.EndsWith(LocationIdSuffixes.Departure))
+                    if (locationKey.EndsWith(LocationIdSuffixes.Arrival, StringComparison.InvariantCulture) || locationKey.EndsWith(LocationIdSuffixes.Departure, StringComparison.InvariantCulture))
                     {
                         ldm.ArrivalDepartureLabel = locationKey.Substring(locationKey.Length - 1);
                         ldm.EditorDisplayName = loc.EditorDisplayName;
@@ -142,7 +139,7 @@ namespace Timetabler.Data.Display
                         ldm.EditorDisplayName = string.Empty;
                         ldm.ExportDisplayName = string.Empty;
                         ldm.IsRoutingCodeRow = true;
-                        if (locationKey.EndsWith(LocationIdSuffixes.Platform))
+                        if (locationKey.EndsWith(LocationIdSuffixes.Platform, StringComparison.InvariantCulture))
                         {
                             ldm.ArrivalDepartureLabel = Resources.LocationRow_Abbreviation_Platform;
                         }
@@ -230,7 +227,7 @@ namespace Timetabler.Data.Display
         private void AddCompulsaryLocation(Location loc, string locationKeySuffix)
         {
             string locationKey = loc.Id + locationKeySuffix;
-            Log.Trace("Adding location arrival/departure row for {0}", locationKey);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_AddArrivalDepartureRow, locationKey);
             if (!Locations.Any(l => l.LocationKey == locationKey))
             {
                 Locations.AddSorted(new LocationDisplayModel
@@ -255,7 +252,7 @@ namespace Timetabler.Data.Display
         private void AddCompulsaryRoutingCodeRow(Location loc, string keySuffix)
         {
             string locationKey = loc.Id + keySuffix;
-            Log.Trace("Adding routing code row for {0}", locationKey);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_AddRoutingRow, locationKey);
             if (!Locations.Any(l => l.LocationKey == locationKey))
             {
                 Locations.AddSorted(new LocationDisplayModel

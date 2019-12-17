@@ -19,7 +19,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         [TestMethod]
         public void BlockSectionModelClassHasPublicParameterlessConstructor()
         {
-            ConstructorInfo cInfo = typeof(BlockSectionModel).GetConstructor(new Type[0]);
+            ConstructorInfo cInfo = typeof(BlockSectionModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
             Assert.IsTrue(cInfo.IsPublic);
         }

@@ -20,7 +20,7 @@ namespace Timetabler.SerialData.Xml
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Map")]
-        public List<NetworkMapModel> Maps { get; set; }
+        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         /// <summary>
         /// The default document options.
@@ -39,21 +39,21 @@ namespace Timetabler.SerialData.Xml
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "Note")]
-        public List<NoteModel> NoteDefinitions { get; set; }
+        public List<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
 
         /// <summary>
         /// Train classes for trains that can be used in timetables.
         /// </summary>
         [XmlArray]
         [XmlArrayItem(ElementName = "TrainClass")]
-        public List<TrainClassModel> TrainClasses { get; set; }
+        public List<TrainClassModel> TrainClasses { get; } = new List<TrainClassModel>();
 
         /// <summary>
         /// Signalboxes.
         /// </summary>
         [XmlArray]
-        [XmlArrayItem(ElementName ="Signalbox")]
-        public List<SignalboxModel> Signalboxes { get; set; }
+        [XmlArrayItem(ElementName = "Signalbox")]
+        public List<SignalboxModel> Signalboxes { get; } = new List<SignalboxModel>();
 
         /// <summary>
         /// Default constructor.

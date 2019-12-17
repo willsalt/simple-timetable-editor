@@ -11,7 +11,7 @@ namespace Timetabler.Data.Collections
     /// <summary>
     /// A collection class for <see cref="SignalboxHours" /> objects.  Based on the <see cref="IDictionary" /> interface.
     /// </summary>
-    public class SignalboxHoursCollection : IDictionary<string, SignalboxHours>, ICollection<KeyValuePair<string, SignalboxHours>>
+    public class SignalboxHoursDictionary : IDictionary<string, SignalboxHours>, ICollection<KeyValuePair<string, SignalboxHours>>
     {
         /// <summary>
         /// Event raised when an object is added to the collection.
@@ -33,7 +33,7 @@ namespace Timetabler.Data.Collections
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SignalboxHoursCollection()
+        public SignalboxHoursDictionary()
         {
             _innerCollection = new Dictionary<string, SignalboxHours>();
         }
@@ -219,15 +219,15 @@ namespace Timetabler.Data.Collections
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array", "The array parameter cannot be null.");
+                throw new ArgumentNullException(nameof(array));
             }
             if (arrayIndex < 0)
             {
-                throw new ArgumentOutOfRangeException("arrayIndex", "The arrayIndex parameter cannot be negative.");
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
             }
             if (Count > array.Length - arrayIndex + 1)
             {
-                throw new ArgumentException("The destination array does not contain enough elements to store the collection.");
+                throw new ArgumentException(Resources.BaseCollection_CopyTo_Error_InsufficientArrayLength, nameof(array));
             }
 
             int i = 0;

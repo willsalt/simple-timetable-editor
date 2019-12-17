@@ -18,6 +18,11 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="GraphTrainProperties"/> instance containing the same data as the model.</returns>
         public static GraphTrainPropertiesModel ToGraphTrainPropertiesModel(this GraphTrainProperties gtp)
         {
+            if (gtp is null)
+            {
+                throw new ArgumentNullException(nameof(gtp));
+            }
+
             return new GraphTrainPropertiesModel
             {
                 ColourCode = gtp.Colour.ToArgb().ToString("X8", CultureInfo.InvariantCulture),

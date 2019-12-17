@@ -109,25 +109,33 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         [TestMethod]
         public void PdfBooleanClass_WriteToMethodWithStreamParameter_WritesCorrectValueToParameterIfValueIsTrue()
         {
-            MemoryStream testParam0 = new MemoryStream();
-            PdfBoolean testObject = PdfBoolean.True;
+            using (MemoryStream testParam0 = new MemoryStream())
+            {
+                PdfBoolean testObject = PdfBoolean.True;
 
-            testObject.WriteTo(testParam0);
+                testObject.WriteTo(testParam0);
 
-            MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes("true "));
-            AssertionHelpers.AssertSameElements(expected, testParam0);
+                using (MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes("true ")))
+                {
+                    AssertionHelpers.AssertSameElements(expected, testParam0);
+                }
+            }
         }
 
         [TestMethod]
         public void PdfBooleanClass_WriteToMethodWithStreamParameter_WritesCorrectValueToParameterIfValueIsFalse()
         {
-            MemoryStream testParam0 = new MemoryStream();
-            PdfBoolean testObject = PdfBoolean.False;
+            using (MemoryStream testParam0 = new MemoryStream())
+            {
+                PdfBoolean testObject = PdfBoolean.False;
 
-            testObject.WriteTo(testParam0);
+                testObject.WriteTo(testParam0);
 
-            MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes("false "));
-            AssertionHelpers.AssertSameElements(expected, testParam0);
+                using (MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes("false ")))
+                {
+                    AssertionHelpers.AssertSameElements(expected, testParam0);
+                }
+            }
         }
 
         [TestMethod]

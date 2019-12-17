@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
@@ -25,6 +26,11 @@ namespace Timetabler.DataLoader.Load.Xml
             Dictionary<string, Note> notes,
             DocumentOptions options)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             Train trn = new Train
             {
                 Id = model.Id,

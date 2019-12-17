@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
@@ -19,6 +20,11 @@ namespace Timetabler.DataLoader.Load.Xml
         /// <returns>A <see cref="SignalboxHoursSet" /> instance.</returns>
         public static SignalboxHoursSet ToSignalboxHoursSet(this SignalboxHoursSetModel model, IDictionary<string, Signalbox> signalboxes, IEnumerable<SignalboxHoursSet> existingSets)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             SignalboxHoursSet hoursSet = new SignalboxHoursSet { Id = GeneralHelper.GetNewId(existingSets), Category = model.Category };
             foreach (SignalboxHoursModel hoursModel in model.Signalboxes)
             {

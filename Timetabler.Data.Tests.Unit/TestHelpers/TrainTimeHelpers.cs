@@ -48,5 +48,11 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             TrainTime tt = new TrainTime { Time = time.Copy() };
             return AddFootnotesToTrainTime(tt, footnoteCount);
         }
+
+        internal static TrainTime GetTrainTimeNotAt(TimeOfDay time, int? footnoteCount = null)
+        {
+            TrainTime tt = new TrainTime { Time = _rnd.NextBoolean() ? _rnd.NextTimeOfDayAfter(time) : _rnd.NextTimeOfDayBefore(time) };
+            return AddFootnotesToTrainTime(tt, footnoteCount);
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace Unicorn.Interfaces
     /// A flags enumeration which describes the style of a font.
     /// </summary>
     [Flags]
-    public enum UniFontStyle
+    public enum UniFontStyles
     {
         /// <summary>
         /// Regular roman face

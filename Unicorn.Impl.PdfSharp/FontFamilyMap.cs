@@ -9,7 +9,7 @@ namespace Unicorn.Impl.PdfSharp
 {
     class FontFamilyMap
     {
-        internal UniFontStyle Style { get; set; }
+        internal UniFontStyles Style { get; set; }
 
         internal string FaceCode { get; set; }
     }

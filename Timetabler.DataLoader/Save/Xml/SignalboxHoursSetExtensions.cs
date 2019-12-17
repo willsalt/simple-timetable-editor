@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
@@ -16,11 +17,17 @@ namespace Timetabler.DataLoader.Save.Xml
         /// <returns>A <see cref="SignalboxHoursSetModel" /> instance that is equivalent to the hoursSet parameter.</returns>
         public static SignalboxHoursSetModel ToSignalboxHoursSetModel(this SignalboxHoursSet hoursSet)
         {
-            return new SignalboxHoursSetModel
+            if (hoursSet is null)
+            {
+                throw new ArgumentNullException(nameof(hoursSet));
+            }
+
+            SignalboxHoursSetModel model = new SignalboxHoursSetModel
             {
                 Category = hoursSet.Category,
-                Signalboxes = hoursSet.Hours.Values.Select(h => h.ToSignalboxHoursModel()).ToList(),
             };
+            model.Signalboxes.AddRange(hoursSet.Hours.Values.Select(h => h.ToSignalboxHoursModel()));
+            return model;
         }
     }
 }

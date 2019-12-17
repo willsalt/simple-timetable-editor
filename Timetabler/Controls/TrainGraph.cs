@@ -15,6 +15,7 @@ using Timetabler.CoreData.Helpers;
 using NLog;
 using Timetabler.CoreData;
 using Timetabler.Data.Extensions;
+using System.Globalization;
 
 namespace Timetabler.Controls
 {
@@ -23,8 +24,6 @@ namespace Timetabler.Controls
     /// </summary>
     public partial class TrainGraph : UserControl
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// The distance from the left edge of the graph to the left edge of the control, as a proportion of control width.
         /// </summary>
@@ -118,13 +117,11 @@ namespace Timetabler.Controls
         [DefaultValue(10f)]
         public float ControlHandleSize { get; set; }
 
-        private Dictionary<string, TrainGraphYAxisTickModel> _locationYTicks { get; set; }
-
-        private SortedDictionary<int, SortedDictionary<int, VertexInformation>> _trainCoordinates { get; set; }
+        private SortedDictionary<int, SortedDictionary<int, VertexInformation>> TrainCoordinates { get; set; }
 
         private VertexInformation _nearestVertex = null;
 
-        private ToolTip _tooltip;
+        private readonly ToolTip _tooltip;
 
         private bool InDragMode { get; set; }
 
@@ -161,7 +158,7 @@ namespace Timetabler.Controls
             TimeAxisFont = new Font("Cambria", 8);
             TrainLabelFont = new Font("Cambria", 8);
             GraphBackColour = Color.White;
-            _trainCoordinates = new SortedDictionary<int, SortedDictionary<int, VertexInformation>>();
+            TrainCoordinates = new SortedDictionary<int, SortedDictionary<int, VertexInformation>>();
             ShowTooltip = true;
             _tooltip = new ToolTip();
             InitializeComponent();
@@ -175,7 +172,7 @@ namespace Timetabler.Controls
         {
             base.OnPaint(e);
 
-            if (Model == null || Model.LocationList == null || Model.LocationList.Count == 0 || Model.TrainList == null || Model.TrainList.Count == 0)
+            if (Model == null || Model.LocationList == null || Model.LocationList.Count == 0 || Model.TrainList == null || Model.TrainList.Count == 0 || e is null)
             {
                 return;
             }
@@ -185,35 +182,42 @@ namespace Timetabler.Controls
             float topLimit = Size.Height * TopMarginPercent;
             float bottomLimit = Size.Height * (1 - BottomMarginPercent);
 
-            _trainCoordinates.Clear();
+            TrainCoordinates.Clear();
 
             // Work out horizontal resolution
             List<TrainGraphAxisTickInfo> timeAxisInfo = Model.GetTimeAxisInformation().Select(i => { i.PopulateSize(e.Graphics, TimeAxisFont); return i; }).ToList();
             bottomLimit -= timeAxisInfo.Max(i => (float)i.Height.Value) + 5;
-            Pen axisPen = new Pen(Color.Black, 1f);
-
-            // Draw Y axis
-            List<TrainGraphAxisTickInfo> locationAxisInfo = Model.GetDistanceAxisInformation().Select(i => { i.PopulateSize(e.Graphics, LocationAxisFont); return i; }).ToList();
-            topLimit += (float)locationAxisInfo.Last().Height.Value / 2;
-            LocationAxisXCoordinate = leftLimit += locationAxisInfo.Max(i => (float)i.Width) + 5;
-
-            e.Graphics.FillRectangle(new SolidBrush(GraphBackColour), leftLimit, topLimit, MaximumXCoordinate - leftLimit, bottomLimit - topLimit);
-            e.Graphics.DrawLine(axisPen, leftLimit, bottomLimit, leftLimit, topLimit);
-            e.Graphics.DrawLine(axisPen, MaximumXCoordinate, bottomLimit, MaximumXCoordinate, topLimit);
-            foreach (TrainGraphAxisTickInfo tick in locationAxisInfo)
+            using (Pen axisPen = new Pen(Color.Black, 1f))
             {
-                float y = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - tick.Coordinate);
-                e.Graphics.DrawLine(axisPen, MaximumXCoordinate, y, leftLimit - 5, y);
-                e.Graphics.DrawString(tick.Label, LocationAxisFont, new SolidBrush(Color.Black), (float)(leftLimit - (tick.Width.Value + 5)), (float)(y - tick.Height.Value / 2));
-            }
+                // Draw Y axis
+                List<TrainGraphAxisTickInfo> locationAxisInfo = Model.GetDistanceAxisInformation().Select(i => { i.PopulateSize(e.Graphics, LocationAxisFont); return i; }).ToList();
+                topLimit += (float)locationAxisInfo.Last().Height.Value / 2;
+                LocationAxisXCoordinate = leftLimit += locationAxisInfo.Max(i => (float)i.Width) + 5;
 
-            // Draw X axis ticks / gridlines.
-            foreach (TrainGraphAxisTickInfo tick in timeAxisInfo)
-            {
-                float x = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, tick.Coordinate);
-                float yTop = ShowVerticalGridLines ? topLimit : bottomLimit;
-                e.Graphics.DrawLine(axisPen, x, yTop, x, bottomLimit + 5);
-                e.Graphics.DrawString(tick.Label, TimeAxisFont, new SolidBrush(Color.Black), (float)(x - tick.Width.Value / 2), bottomLimit + 5);
+                using (SolidBrush backColourBrush = new SolidBrush(GraphBackColour))
+                {
+                    e.Graphics.FillRectangle(backColourBrush, leftLimit, topLimit, MaximumXCoordinate - leftLimit, bottomLimit - topLimit);
+                }
+                e.Graphics.DrawLine(axisPen, leftLimit, bottomLimit, leftLimit, topLimit);
+                e.Graphics.DrawLine(axisPen, MaximumXCoordinate, bottomLimit, MaximumXCoordinate, topLimit);
+                using (SolidBrush blackBrush = new SolidBrush(Color.Black))
+                {
+                    foreach (TrainGraphAxisTickInfo tick in locationAxisInfo)
+                    {
+                        float y = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - tick.Coordinate);
+                        e.Graphics.DrawLine(axisPen, MaximumXCoordinate, y, leftLimit - 5, y);
+                        e.Graphics.DrawString(tick.Label, LocationAxisFont, blackBrush, (float)(leftLimit - (tick.Width.Value + 5)), (float)(y - tick.Height.Value / 2));
+                    }
+
+                    // Draw X axis ticks / gridlines.
+                    foreach (TrainGraphAxisTickInfo tick in timeAxisInfo)
+                    {
+                        float x = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, tick.Coordinate);
+                        float yTop = ShowVerticalGridLines ? topLimit : bottomLimit;
+                        e.Graphics.DrawLine(axisPen, x, yTop, x, bottomLimit + 5);
+                        e.Graphics.DrawString(tick.Label, TimeAxisFont, blackBrush, (float)(x - tick.Width.Value / 2), bottomLimit + 5);
+                    }
+                }
             }
 
             // Draw trains
@@ -221,12 +225,13 @@ namespace Timetabler.Controls
             List<Tuple<float, float>> selectedTrainCoordinates = new List<Tuple<float, float>>();
             foreach (TrainDrawingInfo info in trainDrawingInfo)
             {
-                Pen trainPen = new Pen(info.Properties.Colour, info.Properties.Width) { DashStyle = info.Properties.DashStyle };
-                foreach (LineCoordinates lineData in info.Lines)
+                using (Pen trainPen = new Pen(info.Properties.Colour, info.Properties.Width) { DashStyle = info.Properties.DashStyle })
                 {
-                    DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, MaximumXCoordinate, topLimit, bottomLimit, selectedTrainCoordinates);
+                    foreach (LineCoordinates lineData in info.Lines)
+                    {
+                        DrawLine(e.Graphics, trainPen, lineData.Vertex1, lineData.Vertex2, leftLimit, MaximumXCoordinate, topLimit, bottomLimit, selectedTrainCoordinates);
+                    }
                 }
-
                 if (Model.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
                     SizeF headcodeDimensions = e.Graphics.MeasureString(info.Headcode.Trim(), TrainLabelFont);
@@ -291,13 +296,13 @@ namespace Timetabler.Controls
             int xc = (int)xCoord;
             int yc = (int)yCoord;
 
-            if (!_trainCoordinates.ContainsKey(xc))
+            if (!TrainCoordinates.ContainsKey(xc))
             {
-                _trainCoordinates.Add(xc, new SortedDictionary<int, VertexInformation>());
+                TrainCoordinates.Add(xc, new SortedDictionary<int, VertexInformation>());
             }
-            if (!_trainCoordinates[xc].ContainsKey(yc))
+            if (!TrainCoordinates[xc].ContainsKey(yc))
             {
-                _trainCoordinates[xc].Add(yc, vertex);
+                TrainCoordinates[xc].Add(yc, vertex);
             }
         }
 
@@ -314,7 +319,7 @@ namespace Timetabler.Controls
                 double relativeX = CoordinateHelper.Unstretch(LocationAxisXCoordinate, MaximumXCoordinate, e.X - DragPointerOffset);
                 _nearestVertex.DragOffset = relativeX - _nearestVertex.X;            
                 TimeOfDay coordinateTime = Model.GetTimeOfDayFromXPosition(relativeX);
-                _tooltip.Show(coordinateTime.ToString(Model.TooltipFormattingString), this);
+                _tooltip.Show(coordinateTime.ToString(Model.TooltipFormattingString, CultureInfo.CurrentCulture), this);
                 Invalidate();
                 return;
             }
@@ -332,7 +337,7 @@ namespace Timetabler.Controls
                 }
                 if (ShowTooltip)
                 {
-                    _tooltip.Show(_nearestVertex.Time.ToString(Model.TooltipFormattingString), this);
+                    _tooltip.Show(_nearestVertex.Time.ToString(Model.TooltipFormattingString, CultureInfo.CurrentCulture), this);
                 }
             }
             else
@@ -344,17 +349,17 @@ namespace Timetabler.Controls
 
         private VertexInformation FindVertexFromCoordinates(Point location)
         {
-            var nearestX = FindFuzzyItemInList(location.X, _trainCoordinates.Keys.ToList());
+            var nearestX = FindFuzzyItemInList(location.X, TrainCoordinates.Keys.ToList());
             if (!nearestX.HasValue)
             {
                 return null;
             }
-            var nearestY = FindFuzzyItemInList(location.Y, _trainCoordinates[nearestX.Value].Keys.ToList());
+            var nearestY = FindFuzzyItemInList(location.Y, TrainCoordinates[nearestX.Value].Keys.ToList());
             if (!nearestY.HasValue)
             {
                 return null;
             }
-            return _trainCoordinates[nearestX.Value][nearestY.Value];
+            return TrainCoordinates[nearestX.Value][nearestY.Value];
         }
 
         private int? FindFuzzyItemInList(int val, List<int> keys)

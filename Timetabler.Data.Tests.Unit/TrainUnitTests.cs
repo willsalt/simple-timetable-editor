@@ -35,8 +35,8 @@ namespace Timetabler.Data.Tests.Unit
                 IncludeSeparatorBelow = _rnd.NextBoolean(),
                 InlineNote = _rnd.NextString(_rnd.Next(100)),
                 GraphProperties = GetGraphTrainProperties(),
-                TrainTimes = GetTrainLocationTimeList(2, 20, beforeMidnight),
             };
+            t.TrainTimes.AddRange(GetTrainLocationTimeList(2, 20, beforeMidnight));
             t.TrainClassId = t.TrainClass.Id;
             if (withToWork ?? _rnd.NextBoolean())
             {
@@ -49,7 +49,7 @@ namespace Timetabler.Data.Tests.Unit
             return t;
         }
 
-        private TrainClass GetTrainClass()
+        private static TrainClass GetTrainClass()
         {
             return new TrainClass
             {
@@ -59,7 +59,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private ToWork GetToWork()
+        private static ToWork GetToWork()
         {
             return new ToWork
             {
@@ -68,7 +68,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private GraphTrainProperties GetGraphTrainProperties()
+        private static GraphTrainProperties GetGraphTrainProperties()
         {
             return new GraphTrainProperties
             {
@@ -78,7 +78,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private List<TrainLocationTime> GetTrainLocationTimeList(int min, int max, TimeOfDay beforeTime)
+        private static List<TrainLocationTime> GetTrainLocationTimeList(int min, int max, TimeOfDay beforeTime)
         {
             int count = _rnd.Next(min, max);
             List<TrainLocationTime> items = new List<TrainLocationTime>(count);
@@ -90,7 +90,7 @@ namespace Timetabler.Data.Tests.Unit
             return items;
         }
 
-        private TrainLocationTime GetTrainLocationTime(TimeOfDay beforeTime)
+        private static TrainLocationTime GetTrainLocationTime(TimeOfDay beforeTime)
         {
             return new TrainLocationTime
             {
@@ -1000,6 +1000,33 @@ namespace Timetabler.Data.Tests.Unit
             for (int i = 1; i < testObject.TrainTimes.Count; ++i)
             {
                 Assert.IsTrue(testObject.TrainTimes[i].ArrivalTime.Time >= testObject.TrainTimes[i - 1].ArrivalTime.Time);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainClass_ResolveFootnotesMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            Train testObject = GetTrain();
+
+            testObject.ResolveFootnotes(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainClass_ResolveFootnotesMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            Train testObject = GetTrain();
+
+            try
+            {
+                testObject.ResolveFootnotes(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("footnoteDictionary", ex.ParamName);
             }
         }
     }

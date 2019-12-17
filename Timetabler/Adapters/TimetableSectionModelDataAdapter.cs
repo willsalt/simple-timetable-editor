@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.Data.Display;
 using Timetabler.Data.Events;
@@ -23,7 +24,7 @@ namespace Timetabler.Adapters
         /// </summary>
         public DataGridView View { get; private set; }
 
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         // Fixed column indexes
         private const int _locationIdColIdx = 0;
@@ -31,7 +32,7 @@ namespace Timetabler.Adapters
         private const int _locationArrivalDepartureSymbolColIdx = 2;
 
         // The column index of the first train column in the view.
-        private int _trainColumnIdxBase = 3;
+        private const int _trainColumnIdxBase = 3;
 
         // Fixed row indexes
         private const int _trainIdRowIdx = 0;
@@ -42,13 +43,17 @@ namespace Timetabler.Adapters
         private int? _trainLocoDiagramRowIdx = null;
         private int? _trainLocoToWorkRowIdx = null;
         private int _trainFootnotesRowIdx = 2;
-        private int _trainClassRowIdx { get { return _trainFootnotesRowIdx + 1; } }
-        private int _trainAmPmRowIdx { get { return _trainFootnotesRowIdx + 2; } }
-        private int _startingRowCount { get { return _trainAmPmRowIdx; } }
-        private int _locationRowIdxBase { get { return _trainAmPmRowIdx + 1; } }
+        
+        private int TrainClassRowIdx { get { return _trainFootnotesRowIdx + 1; } }
+        
+        private int TrainAmPmRowIdx { get { return _trainFootnotesRowIdx + 2; } }
+        
+        private int StartingRowCount { get { return TrainAmPmRowIdx; } }
+        
+        private int LocationRowIdxBase { get { return TrainAmPmRowIdx + 1; } }
 
-        private Font _stoppingFont = new Font("Cambria", 8f, FontStyle.Bold);
-        private Font _passingFont = new Font("Cambria", 8f);
+        private static readonly Font _stoppingFont = new Font("Cambria", 8f, FontStyle.Bold);
+        private static readonly Font _passingFont = new Font("Cambria", 8f);
 
         private const string ContinuedFromEarlier = "<<<";
         private const string ContinuesLater = ">>>";
@@ -109,7 +114,7 @@ namespace Timetabler.Adapters
         {
             for (int i = 0; i < Model.Locations.Count; ++i)
             {
-                InsertLocationRow(i + _locationRowIdxBase, Model.Locations[i]);
+                InsertLocationRow(i + LocationRowIdxBase, Model.Locations[i]);
             }
             for (int i = 0; i < Model.TrainSegments.Count; ++i)
             {
@@ -123,7 +128,7 @@ namespace Timetabler.Adapters
             {
                 return;
             }
-            View.Rows.RemoveAt(e.Index.Value + _locationRowIdxBase);
+            View.Rows.RemoveAt(e.Index.Value + LocationRowIdxBase);
         }
 
         private void LocationAdded(object sender, LocationDisplayModelEventArgs e)
@@ -132,7 +137,7 @@ namespace Timetabler.Adapters
             {
                 return;
             }
-            InsertLocationRow(e.Index.Value + _locationRowIdxBase, e.Model);
+            InsertLocationRow(e.Index.Value + LocationRowIdxBase, e.Model);
         }
 
         private void InsertLocationRow(int rowIdx, LocationDisplayModel model)
@@ -188,8 +193,8 @@ namespace Timetabler.Adapters
             });
             View[idx, _trainIdRowIdx].Value = segment.TrainId;
             View[idx, _trainDiagramRowIdx].Value = segment.Headcode;
-            View[idx, _trainAmPmRowIdx].Value = segment.HalfOfDay;
-            View[idx, _trainClassRowIdx].Value = segment.TrainClass;
+            View[idx, TrainAmPmRowIdx].Value = segment.HalfOfDay;
+            View[idx, TrainClassRowIdx].Value = segment.TrainClass;
             View[idx, _trainFootnotesRowIdx].Value = segment.Footnotes;
             if (segment.ToWorkCell != null)
             {
@@ -215,26 +220,25 @@ namespace Timetabler.Adapters
                         firstLocationIndex = i;
                     }
                     lastLocationIndex = i;
-                    segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, _locationRowIdxBase + i] };
-                    TrainLocationTimeModel tltm = segment.TimingsIndex[Model.Locations[i].LocationKey] as TrainLocationTimeModel;
-                    if (tltm != null &&  !tltm.IsPassingTime)
+                    segment.TimingsIndex[Model.Locations[i].LocationKey].DisplayAdapter = new LocationEntryDisplayAdapter { Cell = View[idx, LocationRowIdxBase + i] };
+                    if (segment.TimingsIndex[Model.Locations[i].LocationKey] is TrainLocationTimeModel tltm && !tltm.IsPassingTime)
                     {
-                        View[idx, _locationRowIdxBase + i].Style.Font = _stoppingFont;
+                        View[idx, LocationRowIdxBase + i].Style.Font = _stoppingFont;
                     }
                     else
                     {
-                        View[idx, _locationRowIdxBase + i].Style.Font = _passingFont;
+                        View[idx, LocationRowIdxBase + i].Style.Font = _passingFont;
                     }
                 }
             }
 
-            if (segment.ContinuationFromEarlier && _locationRowIdxBase + firstLocationIndex > 0)
+            if (segment.ContinuationFromEarlier && LocationRowIdxBase + firstLocationIndex > 0)
             {
-                View[idx, _locationRowIdxBase + firstLocationIndex - 1].Value = ContinuedFromEarlier;
+                View[idx, LocationRowIdxBase + firstLocationIndex - 1].Value = ContinuedFromEarlier;
             }
-            if (segment.ContinuesLater && _locationRowIdxBase + lastLocationIndex < View.RowCount)
+            if (segment.ContinuesLater && LocationRowIdxBase + lastLocationIndex < View.RowCount)
             {
-                View[idx, _locationRowIdxBase + lastLocationIndex + 1].Value = ContinuesLater;
+                View[idx, LocationRowIdxBase + lastLocationIndex + 1].Value = ContinuesLater;
             }
         }
 
@@ -270,7 +274,7 @@ namespace Timetabler.Adapters
             View.ClearGrid(_locationArrivalDepartureSymbolColIdx);
             if (Model.TrainSegments.Count > 0 || Model.Locations.Count > 0)
             {
-                View.AddStartingRows(_startingRowCount + 1); // _startingRowCount is the number of rows in the header; we also add one for the To Work row in the footer.
+                View.AddStartingRows(StartingRowCount + 1); // _startingRowCount is the number of rows in the header; we also add one for the To Work row in the footer.
                 View[_locationNameColIdx, View.Rows.Count + _trainToWorkRowIdx].Value = Resources.MainForm_TimetableGridView_ToWorkRowName;
             }
         }
@@ -312,7 +316,7 @@ namespace Timetabler.Adapters
                 return false;
             }
 
-            Log.Trace("Column {0} is a train column.", columnIdx);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_ColumnIsATrainColumn, columnIdx);
             return true;
         }
     }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Tests.Utility.Providers;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
@@ -54,7 +53,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         public void PdfArrayClass_ByteLengthProperty_HasCorrectValueWhenArrayIsEmpty()
         {
             // The correct value for this test is 3: "[]\r".
-            PdfArray testObject = new PdfArray(new IPdfPrimitiveObject[0]);
+            PdfArray testObject = new PdfArray(Array.Empty<IPdfPrimitiveObject>());
 
             Assert.AreEqual(3, testObject.ByteLength);
         }

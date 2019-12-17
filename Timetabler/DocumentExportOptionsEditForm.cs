@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.Data;
 using Timetabler.Helpers;
@@ -11,7 +12,7 @@ namespace Timetabler
     /// </summary>
     public partial class DocumentExportOptionsEditForm : Form
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         private bool _inViewUpdate;
         private DocumentExportOptions _model;
@@ -38,7 +39,7 @@ namespace Timetabler
         public DocumentExportOptionsEditForm()
         {
             InitializeComponent();
-            cbPdfEngine.Items.AddRange(HumanReadableEnum<PdfExportEngine>.GetPdfExportEngine());
+            cbPdfEngine.Items.AddRange(HumanReadableEnumFactory.GetPdfExportEngine());
         }
 
         private void UpdateViewFromModel()
@@ -59,8 +60,7 @@ namespace Timetabler
             nudFillerDashLineWidth.Value = (decimal)Model.FillerDashLineWidth;
             foreach (var item in cbPdfEngine.Items)
             {
-                var engineItem = item as HumanReadableEnum<PdfExportEngine>;
-                if (engineItem != null && engineItem.Value == Model.ExportEngine)
+                if (item is HumanReadableEnum<PdfExportEngine> engineItem && engineItem.Value == Model.ExportEngine)
                 {
                     cbPdfEngine.SelectedItem = engineItem;
                     break;
@@ -75,7 +75,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("ckDisplayLocoDiagram is {0}", ckDisplayLocoDiagram.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayLocoDiagramValue, ckDisplayLocoDiagram.Checked);
             Model.DisplayLocoDiagramRow = ckDisplayLocoDiagram.Checked;
         }
 
@@ -85,7 +85,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("ckDisplayToWorkRow is {0}", ckDisplayToWorkRow.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayToWorkRowValue, ckDisplayToWorkRow.Checked);
             Model.DisplayToWorkRow = ckDisplayToWorkRow.Checked;
         }
 
@@ -95,7 +95,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("ckDisplayBoxHours is {0}", ckDisplayBoxHours.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayBoxHoursValue, ckDisplayBoxHours.Checked);
             Model.DisplayBoxHours = ckDisplayBoxHours.Checked;
         }
 
@@ -105,7 +105,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("ckDisplayCredits is {0}", ckDisplayCredits.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayCreditsValue, ckDisplayCredits.Checked);
             Model.DisplayCredits = ckDisplayCredits.Checked;
         }
 
@@ -115,7 +115,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("ckDisplayLocoToWorkRow is {0}", ckDisplayLocoToWorkRow.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayLocoToWorkRowValue, ckDisplayLocoToWorkRow.Checked);
             Model.DisplayLocoToWorkRow = ckDisplayLocoToWorkRow.Checked;
         }
 
@@ -125,7 +125,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("nudLineWidth is {0}", nudLineWidth.Value);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NudLineWidthValue, nudLineWidth.Value);
             Model.LineWidth = (double)nudLineWidth.Value;
         }
 
@@ -135,7 +135,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("nudFillerDashLineWidth is {0}", nudFillerDashLineWidth.Value);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NudFillerDashLineWidthValue, nudFillerDashLineWidth.Value);
             Model.FillerDashLineWidth = (double)nudFillerDashLineWidth.Value;
         }
 
@@ -145,7 +145,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("ckDisplayGraph is {0}", ckDisplayGraph.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayGraphValue, ckDisplayGraph.Checked);
             Model.DisplayGraph = ckDisplayGraph.Checked;
         }
 
@@ -155,7 +155,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("ckDisplayGlossary is {0}", ckDisplayGlossary.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayGlossaryValue, ckDisplayGlossary.Checked);
             Model.DisplayGlossary = ckDisplayGlossary.Checked;
         }
 
@@ -171,7 +171,7 @@ namespace Timetabler
             {
                 return;
             }
-            Log.Trace("cbPdfEngine is {0}", item.Name);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbPdfEngineValue, item.Name);
             Model.ExportEngine = item.Value;
         }
     }

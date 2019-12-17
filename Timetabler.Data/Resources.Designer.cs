@@ -61,6 +61,15 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The destination array does not contain enough elements to store the collection..
+        /// </summary>
+        internal static string BaseCollection_CopyTo_Error_InsufficientArrayLength {
+            get {
+                return ResourceManager.GetString("BaseCollection_CopyTo_Error_InsufficientArrayLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format string {0} is not supported..
         /// </summary>
         internal static string Distance_ToString_FormatExceptionMessage {
@@ -70,11 +79,47 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wrong data type..
+        /// </summary>
+        internal static string Error_WrongDataType {
+            get {
+                return ResourceManager.GetString("Error_WrongDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to plat.
         /// </summary>
         internal static string LocationRow_Abbreviation_Platform {
             get {
                 return ResourceManager.GetString("LocationRow_Abbreviation_Platform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding location arrival/departure row for {0}.
+        /// </summary>
+        internal static string LogMessage_AddArrivalDepartureRow {
+            get {
+                return ResourceManager.GetString("LogMessage_AddArrivalDepartureRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding routing code row for {0}.
+        /// </summary>
+        internal static string LogMessage_AddRoutingRow {
+            get {
+                return ResourceManager.GetString("LogMessage_AddRoutingRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entering ProcessTrain() for {0}.
+        /// </summary>
+        internal static string LogMessage_ProcessTrain {
+            get {
+                return ResourceManager.GetString("LogMessage_ProcessTrain", resourceCulture);
             }
         }
         

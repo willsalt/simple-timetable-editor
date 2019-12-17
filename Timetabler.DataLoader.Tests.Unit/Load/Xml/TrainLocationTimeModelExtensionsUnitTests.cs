@@ -37,6 +37,33 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullException_IfFourthParameterIsNull()
+        {
+            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
+
+            _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFourthParameterIsNull()
+        {
+            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
+
+            try
+            {
+                _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("options", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
         public void TrainLocationTimeModelExtensionsToTrainLocationTimeMethodReturnsObjectWithCorrectLocationPropertyIfLocationIdPropertyOfFirstParameterIsPresentAsKeyInSecondParameter()
         {
             Dictionary<string, Location> locationMap = GetRandomLocationMap();
@@ -147,13 +174,13 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             return GetTrainLocationTimeModel(locationMap, notes, _random.Next(2) == 0);
         }
 
-        private TrainLocationTimeModel GetTrainLocationTimeModel(Dictionary<string, Location> locationMap, Dictionary<string, Note> notes, bool hasArrivalTime)
+        private static TrainLocationTimeModel GetTrainLocationTimeModel(Dictionary<string, Location> locationMap, Dictionary<string, Note> notes, bool hasArrivalTime)
         {
             string[] locationKeys = locationMap.Keys.ToArray();
             string[] noteKeys = notes.Keys.ToArray();
             TrainLocationTimeModel tlt = new TrainLocationTimeModel
             {
-                ArrivalTime = hasArrivalTime ? new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 86399), FootnoteIds = new List<string>() } : null,
+                ArrivalTime = hasArrivalTime ? new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 86399) } : null,
                 Line = _random.NextString(_random.Next(3)),
                 Path = _random.NextString(_random.Next(3)),
                 Platform = _random.NextString(_random.Next(3)),
@@ -164,9 +191,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 new TrainTimeModel
                 {
                     Time = _random.NextTimeOfDayModel(tlt.ArrivalTime.Time.Hours24 * 3600 + tlt.ArrivalTime.Time.Minutes * 60 + tlt.ArrivalTime.Time.Seconds, 0),
-                    FootnoteIds = new List<string>()
                 } : 
-                new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 0), FootnoteIds = new List<string>() };
+                new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 0) };
             int fnCount = _random.Next(2);
             for (int i = 0, j = 0; i < fnCount && j < noteKeys.Length; ++j)
             {

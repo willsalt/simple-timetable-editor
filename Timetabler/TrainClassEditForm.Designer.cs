@@ -51,13 +51,13 @@
             // 
             resources.ApplyResources(this.tbDescription, "tbDescription");
             this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Validated += new System.EventHandler(this.tbDescription_Validated);
+            this.tbDescription.Validated += new System.EventHandler(this.TbDescription_Validated);
             // 
             // tbTableCode
             // 
             resources.ApplyResources(this.tbTableCode, "tbTableCode");
             this.tbTableCode.Name = "tbTableCode";
-            this.tbTableCode.Validated += new System.EventHandler(this.tbTableCode_Validated);
+            this.tbTableCode.Validated += new System.EventHandler(this.TbTableCode_Validated);
             // 
             // btnOk
             // 

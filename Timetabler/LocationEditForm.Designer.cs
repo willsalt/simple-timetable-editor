@@ -89,53 +89,53 @@
             // 
             resources.ApplyResources(this.tbTiploc, "tbTiploc");
             this.tbTiploc.Name = "tbTiploc";
-            this.tbTiploc.Validated += new System.EventHandler(this.tbTiploc_Validated);
+            this.tbTiploc.Validated += new System.EventHandler(this.TbTiploc_Validated);
             // 
             // tbEditorName
             // 
             resources.ApplyResources(this.tbEditorName, "tbEditorName");
             this.tbEditorName.Name = "tbEditorName";
-            this.tbEditorName.Validated += new System.EventHandler(this.tbEditorName_Validated);
+            this.tbEditorName.Validated += new System.EventHandler(this.TbEditorName_Validated);
             // 
             // tbGraphName
             // 
             resources.ApplyResources(this.tbGraphName, "tbGraphName");
             this.tbGraphName.Name = "tbGraphName";
-            this.tbGraphName.Validated += new System.EventHandler(this.tbGraphName_Validated);
+            this.tbGraphName.Validated += new System.EventHandler(this.TbGraphName_Validated);
             // 
             // tbTableName
             // 
             resources.ApplyResources(this.tbTableName, "tbTableName");
             this.tbTableName.Name = "tbTableName";
-            this.tbTableName.Validated += new System.EventHandler(this.tbTableName_Validated);
+            this.tbTableName.Validated += new System.EventHandler(this.TbTableName_Validated);
             // 
             // tbChainage
             // 
             resources.ApplyResources(this.tbChainage, "tbChainage");
             this.tbChainage.Name = "tbChainage";
-            this.tbChainage.Validating += new System.ComponentModel.CancelEventHandler(this.tbChainage_Validating);
-            this.tbChainage.Validated += new System.EventHandler(this.tbChainage_Validated);
+            this.tbChainage.Validating += new System.ComponentModel.CancelEventHandler(this.TbChainage_Validating);
+            this.tbChainage.Validated += new System.EventHandler(this.TbChainage_Validated);
             // 
             // tbMileage
             // 
             resources.ApplyResources(this.tbMileage, "tbMileage");
             this.tbMileage.Name = "tbMileage";
-            this.tbMileage.Validating += new System.ComponentModel.CancelEventHandler(this.tbMileage_Validating);
-            this.tbMileage.Validated += new System.EventHandler(this.tbMileage_Validated);
+            this.tbMileage.Validating += new System.ComponentModel.CancelEventHandler(this.TbMileage_Validating);
+            this.tbMileage.Validated += new System.EventHandler(this.TbMileage_Validated);
             // 
             // ckShowDepartureUp
             // 
             resources.ApplyResources(this.ckShowDepartureUp, "ckShowDepartureUp");
             this.ckShowDepartureUp.Name = "ckShowDepartureUp";
             this.ckShowDepartureUp.UseVisualStyleBackColor = true;
-            this.ckShowDepartureUp.CheckedChanged += new System.EventHandler(this.ckShowDepartureUp_CheckedChanged);
+            this.ckShowDepartureUp.CheckedChanged += new System.EventHandler(this.CkShowDepartureUp_CheckedChanged);
             // 
             // ckShowArrivalUp
             // 
             resources.ApplyResources(this.ckShowArrivalUp, "ckShowArrivalUp");
             this.ckShowArrivalUp.Name = "ckShowArrivalUp";
             this.ckShowArrivalUp.UseVisualStyleBackColor = true;
-            this.ckShowArrivalUp.CheckedChanged += new System.EventHandler(this.ckShowArrivalUp_CheckedChanged);
+            this.ckShowArrivalUp.CheckedChanged += new System.EventHandler(this.CkShowArrivalUp_CheckedChanged);
             // 
             // label1
             // 
@@ -205,21 +205,21 @@
             resources.ApplyResources(this.ckShowLineUp, "ckShowLineUp");
             this.ckShowLineUp.Name = "ckShowLineUp";
             this.ckShowLineUp.UseVisualStyleBackColor = true;
-            this.ckShowLineUp.CheckedChanged += new System.EventHandler(this.ckShowLineUp_CheckedChanged);
+            this.ckShowLineUp.CheckedChanged += new System.EventHandler(this.CkShowLineUp_CheckedChanged);
             // 
             // ckShowPlatformUp
             // 
             resources.ApplyResources(this.ckShowPlatformUp, "ckShowPlatformUp");
             this.ckShowPlatformUp.Name = "ckShowPlatformUp";
             this.ckShowPlatformUp.UseVisualStyleBackColor = true;
-            this.ckShowPlatformUp.CheckedChanged += new System.EventHandler(this.ckShowPlatformUp_CheckedChanged);
+            this.ckShowPlatformUp.CheckedChanged += new System.EventHandler(this.CkShowPlatformUp_CheckedChanged);
             // 
             // ckShowPathUp
             // 
             resources.ApplyResources(this.ckShowPathUp, "ckShowPathUp");
             this.ckShowPathUp.Name = "ckShowPathUp";
             this.ckShowPathUp.UseVisualStyleBackColor = true;
-            this.ckShowPathUp.CheckedChanged += new System.EventHandler(this.ckShowPathUp_CheckedChanged);
+            this.ckShowPathUp.CheckedChanged += new System.EventHandler(this.CkShowPathUp_CheckedChanged);
             // 
             // groupBox3
             // 
@@ -237,35 +237,35 @@
             resources.ApplyResources(this.ckShowLineDown, "ckShowLineDown");
             this.ckShowLineDown.Name = "ckShowLineDown";
             this.ckShowLineDown.UseVisualStyleBackColor = true;
-            this.ckShowLineDown.CheckedChanged += new System.EventHandler(this.ckShowLineDown_CheckedChanged);
+            this.ckShowLineDown.CheckedChanged += new System.EventHandler(this.CkShowLineDown_CheckedChanged);
             // 
             // ckShowPlatformDown
             // 
             resources.ApplyResources(this.ckShowPlatformDown, "ckShowPlatformDown");
             this.ckShowPlatformDown.Name = "ckShowPlatformDown";
             this.ckShowPlatformDown.UseVisualStyleBackColor = true;
-            this.ckShowPlatformDown.CheckedChanged += new System.EventHandler(this.ckShowPlatformDown_CheckedChanged);
+            this.ckShowPlatformDown.CheckedChanged += new System.EventHandler(this.CkShowPlatformDown_CheckedChanged);
             // 
             // ckShowPathDown
             // 
             resources.ApplyResources(this.ckShowPathDown, "ckShowPathDown");
             this.ckShowPathDown.Name = "ckShowPathDown";
             this.ckShowPathDown.UseVisualStyleBackColor = true;
-            this.ckShowPathDown.CheckedChanged += new System.EventHandler(this.ckShowPathDown_CheckedChanged);
+            this.ckShowPathDown.CheckedChanged += new System.EventHandler(this.CkShowPathDown_CheckedChanged);
             // 
             // ckShowArrivalDown
             // 
             resources.ApplyResources(this.ckShowArrivalDown, "ckShowArrivalDown");
             this.ckShowArrivalDown.Name = "ckShowArrivalDown";
             this.ckShowArrivalDown.UseVisualStyleBackColor = true;
-            this.ckShowArrivalDown.CheckedChanged += new System.EventHandler(this.ckShowArrivalDown_CheckedChanged);
+            this.ckShowArrivalDown.CheckedChanged += new System.EventHandler(this.CkShowArrivalDown_CheckedChanged);
             // 
             // ckShowDepartureDown
             // 
             resources.ApplyResources(this.ckShowDepartureDown, "ckShowDepartureDown");
             this.ckShowDepartureDown.Name = "ckShowDepartureDown";
             this.ckShowDepartureDown.UseVisualStyleBackColor = true;
-            this.ckShowDepartureDown.CheckedChanged += new System.EventHandler(this.ckShowDepartureDown_CheckedChanged);
+            this.ckShowDepartureDown.CheckedChanged += new System.EventHandler(this.CkShowDepartureDown_CheckedChanged);
             // 
             // groupBox4
             // 
@@ -283,7 +283,7 @@
             this.cbFontType.FormattingEnabled = true;
             resources.ApplyResources(this.cbFontType, "cbFontType");
             this.cbFontType.Name = "cbFontType";
-            this.cbFontType.SelectedIndexChanged += new System.EventHandler(this.cbFontType_SelectedIndexChanged);
+            this.cbFontType.SelectedIndexChanged += new System.EventHandler(this.CbFontType_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -295,14 +295,14 @@
             resources.ApplyResources(this.ckDisplaySeparatorAbove, "ckDisplaySeparatorAbove");
             this.ckDisplaySeparatorAbove.Name = "ckDisplaySeparatorAbove";
             this.ckDisplaySeparatorAbove.UseVisualStyleBackColor = true;
-            this.ckDisplaySeparatorAbove.CheckedChanged += new System.EventHandler(this.ckDisplaySeparatorAbove_CheckedChanged);
+            this.ckDisplaySeparatorAbove.CheckedChanged += new System.EventHandler(this.CkDisplaySeparatorAbove_CheckedChanged);
             // 
             // ckDisplaySeparatorBelow
             // 
             resources.ApplyResources(this.ckDisplaySeparatorBelow, "ckDisplaySeparatorBelow");
             this.ckDisplaySeparatorBelow.Name = "ckDisplaySeparatorBelow";
             this.ckDisplaySeparatorBelow.UseVisualStyleBackColor = true;
-            this.ckDisplaySeparatorBelow.CheckedChanged += new System.EventHandler(this.ckDisplaySeparatorBelow_CheckedChanged);
+            this.ckDisplaySeparatorBelow.CheckedChanged += new System.EventHandler(this.CkDisplaySeparatorBelow_CheckedChanged);
             // 
             // LocationEditForm
             // 

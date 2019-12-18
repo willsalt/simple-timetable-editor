@@ -108,7 +108,7 @@ namespace Timetabler
             cbArriveDepart.Items.AddRange(HumanReadableEnumFactory.GetArrivalDeparture());
         }
 
-        private void cbAddSubtract_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbAddSubtract_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_model == null || !(cbAddSubtract.SelectedItem is HumanReadableEnum<AddSubtract> selItem))
             {
@@ -134,7 +134,7 @@ namespace Timetabler
             cbLocation.Visible = visible;
         }
 
-        private void cbLocation_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -143,7 +143,7 @@ namespace Timetabler
             _model.SelectedLocation = cbLocation.SelectedItem as Location;
         }
 
-        private void cbArriveDepart_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbArriveDepart_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_model == null || !(cbArriveDepart.SelectedItem is HumanReadableEnum<ArrivalDepartureOptions> arriveDepart))
             {
@@ -157,7 +157,7 @@ namespace Timetabler
             InputValidationHelper.ValidateTextInputAsNonNegativeInt(sender as TextBox, errorProvider, Resources.TrainAdjustTimesForm_Offset_ValidationFailure);
         }
 
-        private void tbOffset_Validated(object sender, EventArgs e)
+        private void TbOffset_Validated(object sender, EventArgs e)
         {
             if (_model == null)
             {

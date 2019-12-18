@@ -69,7 +69,7 @@ namespace Timetabler
             _inViewUpdate = false;
         }
 
-        private void ckDisplayLocoDiagram_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayLocoDiagram_CheckedChanged(object sender, EventArgs e)
         {          
             if (_inViewUpdate || Model == null)
             {
@@ -79,7 +79,7 @@ namespace Timetabler
             Model.DisplayLocoDiagramRow = ckDisplayLocoDiagram.Checked;
         }
 
-        private void ckDisplayToWorkRow_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayToWorkRow_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
@@ -89,7 +89,7 @@ namespace Timetabler
             Model.DisplayToWorkRow = ckDisplayToWorkRow.Checked;
         }
 
-        private void ckDisplayBoxHours_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayBoxHours_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
@@ -99,7 +99,7 @@ namespace Timetabler
             Model.DisplayBoxHours = ckDisplayBoxHours.Checked;
         }
 
-        private void ckDisplayCredits_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayCredits_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
@@ -109,7 +109,7 @@ namespace Timetabler
             Model.DisplayCredits = ckDisplayCredits.Checked;
         }
 
-        private void ckDisplayLocoToWorkRow_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayLocoToWorkRow_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
@@ -119,7 +119,7 @@ namespace Timetabler
             Model.DisplayLocoToWorkRow = ckDisplayLocoToWorkRow.Checked;
         }
 
-        private void nudLineWidth_ValueChanged(object sender, EventArgs e)
+        private void NudLineWidth_ValueChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
@@ -129,7 +129,7 @@ namespace Timetabler
             Model.LineWidth = (double)nudLineWidth.Value;
         }
 
-        private void nudFillerDashLineWidth_ValueChanged(object sender, EventArgs e)
+        private void NudFillerDashLineWidth_ValueChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
@@ -139,7 +139,7 @@ namespace Timetabler
             Model.FillerDashLineWidth = (double)nudFillerDashLineWidth.Value;
         }
 
-        private void ckDisplayGraph_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayGraph_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
@@ -149,7 +149,7 @@ namespace Timetabler
             Model.DisplayGraph = ckDisplayGraph.Checked;
         }
 
-        private void ckDisplayGlossary_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayGlossary_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {

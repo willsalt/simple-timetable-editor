@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Drawing.Drawing2D;
-using Timetabler.CoreData;
-using Timetabler.Data;
-using Timetabler.Models;
 
 namespace Timetabler.Helpers
 {

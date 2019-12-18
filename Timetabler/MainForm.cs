@@ -92,13 +92,13 @@ namespace Timetabler
             OpenFile(initialFile);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Exit");
             Close();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Open...");
             if (!CheckIfUnsavedChanges(Resources.MainForm_FileOpen_UnsavedChanges))
@@ -152,7 +152,7 @@ namespace Timetabler
             trainGraph.Model.SelectedTrainChanged += TrainGraphModelSelectedTrainChanged;
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Save...");
             sfdDocument.SetInitialDirectory();
@@ -188,7 +188,7 @@ namespace Timetabler
             }
         }
 
-        private void exportToPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportToPDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Export to PDF...");
             sfdExport.SetInitialDirectory();
@@ -233,7 +233,7 @@ namespace Timetabler
             };
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             if (tcMain.SelectedTab == tabHours)
             {
@@ -305,7 +305,7 @@ namespace Timetabler
             tbPublishedDate.Text = Model.PublishedDate;
         }
 
-        private void trainClassesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TrainClassesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Train Classes...");
             using (TrainClassListEditForm tclef = new TrainClassListEditForm(new TrainClassCollection(Model.TrainClassList)))
@@ -319,7 +319,7 @@ namespace Timetabler
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (tcMain.SelectedTab == tabHours)
             {
@@ -376,7 +376,7 @@ namespace Timetabler
             return null;
         }
 
-        private void btnDel_Click(object sender, EventArgs e)
+        private void BtnDel_Click(object sender, EventArgs e)
         {
             if (tcMain.SelectedTab == tabHours)
             {
@@ -464,7 +464,7 @@ namespace Timetabler
             Model.TrainList.Remove(targetTrain);
         }
 
-        private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
+        private void TcMain_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateTrainEditingButtonsEnabled();
         }
@@ -479,23 +479,23 @@ namespace Timetabler
             btnCopy.Enabled = btnReverse.Enabled = btnDel.Enabled && tcMain.SelectedTab != tabHours;
         }
 
-        private void dgvDown_SelectionChanged(object sender, EventArgs e)
+        private void DgvDown_SelectionChanged(object sender, EventArgs e)
         {
             UpdateTrainEditingButtonsEnabled();
         }
 
-        private void dgvUp_SelectionChanged(object sender, EventArgs e)
+        private void DgvUp_SelectionChanged(object sender, EventArgs e)
         {
             UpdateTrainEditingButtonsEnabled();
         }
 
-        private void dgvDown_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvDown_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Log.Trace("Down grid: cell col {0}, row {1} double-clicked", e.ColumnIndex, e.RowIndex);
             CellDoubleClicked(dgvDown, e);
         }    
 
-        private void dgvUp_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvUp_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Log.Trace("Up grid: cell col {0}, row {1} double-clicked", e.ColumnIndex, e.RowIndex);
             CellDoubleClicked(dgvUp, e);
@@ -622,7 +622,7 @@ namespace Timetabler
             }
         }
 
-        private void openTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Locations>Open...");
             if (Model.TrainList != null && Model.TrainList.Count > 0)
@@ -707,7 +707,7 @@ namespace Timetabler
             }
         }
 
-        private void editOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Document Options...");
             if (Model?.Options == null)
@@ -791,7 +791,7 @@ namespace Timetabler
             _documentChanged = false;
         }
 
-        private void editFootnotesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditFootnotesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Footnotes");
             using (NoteListEditForm nef = new NoteListEditForm { Model = new NoteListEditFormModel(Model.NoteDefinitions.ToDictionary(n => n.Id, n => n.Copy())) })
@@ -810,7 +810,7 @@ namespace Timetabler
             }
         }
         
-        private void tbTitle_TextChanged(object sender, EventArgs e)
+        private void TbTitle_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -818,7 +818,7 @@ namespace Timetabler
             }
         }
 
-        private void tbSubtitle_TextChanged(object sender, EventArgs e)
+        private void TbSubtitle_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -826,7 +826,7 @@ namespace Timetabler
             }
         }
 
-        private void tbDateDescription_TextChanged(object sender, EventArgs e)
+        private void TbDateDescription_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -834,7 +834,7 @@ namespace Timetabler
             }
         }
 
-        private void tbWrittenBy_TextChanged(object sender, EventArgs e)
+        private void TbWrittenBy_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -842,7 +842,7 @@ namespace Timetabler
             }
         }
 
-        private void tbCheckedBy_TextChanged(object sender, EventArgs e)
+        private void TbCheckedBy_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -850,7 +850,7 @@ namespace Timetabler
             }
         }
 
-        private void tbTimetableVersion_TextChanged(object sender, EventArgs e)
+        private void TbTimetableVersion_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -858,7 +858,7 @@ namespace Timetabler
             }
         }
 
-        private void tbPublishedDate_TextChanged(object sender, EventArgs e)
+        private void TbPublishedDate_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -866,7 +866,7 @@ namespace Timetabler
             }
         }
 
-        private void exportOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Export Options...");
             EditExportOptions();
@@ -880,7 +880,7 @@ namespace Timetabler
             }
         }
 
-        private void saveAsTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Template>Save As Template...");
             sfdTemplate.SetInitialDirectory();
@@ -945,7 +945,7 @@ namespace Timetabler
             }
         }
 
-        private void newFromTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewFromTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: \"File>New>New From Template...\"");
             if (!CheckIfUnsavedChanges(Resources.MainForm_FileNew_UnsavedChanges))
@@ -1024,7 +1024,7 @@ namespace Timetabler
             }
         }
 
-        private void signalboxesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SignalboxesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Signalboxes...");
             using (SignalboxListEditForm form = new SignalboxListEditForm(Model.Signalboxes.Copy()))
@@ -1039,7 +1039,7 @@ namespace Timetabler
             }
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Help>About");
             using (AboutBox aboutBox = new AboutBox())
@@ -1098,8 +1098,7 @@ namespace Timetabler
         {
             foreach (var r in dgvHours.Rows)
             {
-                DataGridViewRow row = r as DataGridViewRow;
-                if (row == null || row.Cells[_signalboxHoursIdColumn].Value as string != eventArgs.HoursSet.Id)
+                if (!(r is DataGridViewRow row) || row.Cells[_signalboxHoursIdColumn].Value as string != eventArgs.HoursSet.Id)
                 {
                     continue;
                 }
@@ -1132,7 +1131,7 @@ namespace Timetabler
             }
         }
 
-        private void supportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SupportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (SupportForm f = new SupportForm())
             {

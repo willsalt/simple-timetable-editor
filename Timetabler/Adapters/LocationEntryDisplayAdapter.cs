@@ -7,7 +7,7 @@ namespace Timetabler.Adapters
     {
         private DataGridViewCell _cell;
         private string _lastSetValue;
-        private object _lockObject = new object();
+        private readonly object _lockObject = new object();
 
         internal DataGridViewCell Cell
         {

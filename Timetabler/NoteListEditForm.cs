@@ -49,7 +49,7 @@ namespace Timetabler
             dgvNotes.AutoResizeColumns();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             using (NoteEditForm nef = new NoteEditForm { Model = new Note { Id = GeneralHelper.GetNewId(_model.Data.Values) } })
             {
@@ -62,7 +62,7 @@ namespace Timetabler
             UpdateViewFromModel();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (dgvNotes.SelectedCells.Count == 0)
             {
@@ -72,7 +72,7 @@ namespace Timetabler
             ShowNoteEditForm(id);
         }
 
-        private void dgvNotes_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvNotes_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string id = dgvNotes[0, e.RowIndex].Value as string;           
             ShowNoteEditForm(id);
@@ -96,7 +96,7 @@ namespace Timetabler
             UpdateViewFromModel();
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void BtnRemove_Click(object sender, EventArgs e)
         {
             if (dgvNotes.SelectedCells.Count == 0)
             {
@@ -111,7 +111,7 @@ namespace Timetabler
             UpdateViewFromModel();
         }
 
-        private void dgvNotes_SelectionChanged(object sender, EventArgs e)
+        private void DgvNotes_SelectionChanged(object sender, EventArgs e)
         {
             bool flag = !(dgvNotes.SelectedCells.Count == 0);
             btnEdit.Enabled = flag;

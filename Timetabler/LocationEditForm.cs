@@ -90,7 +90,7 @@ namespace Timetabler
             }
         }
 
-        private void tbTiploc_Validated(object sender, EventArgs e)
+        private void TbTiploc_Validated(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -98,7 +98,7 @@ namespace Timetabler
             }
         }
 
-        private void tbEditorName_Validated(object sender, EventArgs e)
+        private void TbEditorName_Validated(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -106,7 +106,7 @@ namespace Timetabler
             }
         }
 
-        private void tbGraphName_Validated(object sender, EventArgs e)
+        private void TbGraphName_Validated(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -114,7 +114,7 @@ namespace Timetabler
             }
         }
 
-        private void tbTableName_Validated(object sender, EventArgs e)
+        private void TbTableName_Validated(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -122,7 +122,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowArrivalUp_CheckedChanged(object sender, EventArgs e)
+        private void CkShowArrivalUp_CheckedChanged(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -137,7 +137,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowDepartureUp_CheckedChanged(object sender, EventArgs e)
+        private void CkShowDepartureUp_CheckedChanged(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -152,7 +152,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowArrivalDown_CheckedChanged(object sender, EventArgs e)
+        private void CkShowArrivalDown_CheckedChanged(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -167,7 +167,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowDepartureDown_CheckedChanged(object sender, EventArgs e)
+        private void CkShowDepartureDown_CheckedChanged(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -182,51 +182,52 @@ namespace Timetabler
             }
         }
 
-        private void tbMileage_Validating(object sender, CancelEventArgs e)
+        private void TbMileage_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbMileage.Text))
             {
                 return;
             }
 
-            int dummy;
-            if (!int.TryParse(tbMileage.Text, out dummy))
+            if (int.TryParse(tbMileage.Text, out _))
+            {
+                errorProvider.SetError(tbMileage, string.Empty);
+            }
+            else
             {
                 errorProvider.SetError(tbMileage, Resources.LocationEditForm_Mileage_ValidationFailureNaN);
                 e.Cancel = true;
             }
-            else
-            {
-                errorProvider.SetError(tbMileage, string.Empty);
-            }
         }
 
-        private void tbChainage_Validating(object sender, CancelEventArgs e)
+        private void TbChainage_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbChainage.Text))
             {
                 return;
             }
 
-            int val;
-            if (!int.TryParse(tbChainage.Text, out val))
+            if (int.TryParse(tbChainage.Text, out int val))
+            {
+                if (val < 0 || val >= 80)
+                {
+                    errorProvider.SetError(tbChainage, Resources.LocationEditForm_Chainage_ValidationFailureOutOfRange);
+                    e.Cancel = true;
+                }
+                else
+                {
+                    errorProvider.SetError(tbChainage, string.Empty);
+                }
+            }
+            else
             {
                 errorProvider.SetError(tbChainage, Resources.LocationEditForm_Chainage_ValidationFailureNaN);
                 e.Cancel = true;
                 return;
             }
-            if (val < 0 || val >= 80)
-            {
-                errorProvider.SetError(tbChainage, Resources.LocationEditForm_Chainage_ValidationFailureOutOfRange);
-                e.Cancel = true;
-            }
-            else
-            {
-                errorProvider.SetError(tbChainage, string.Empty);
-            }
         }
 
-        private void tbMileage_Validated(object sender, EventArgs e)
+        private void TbMileage_Validated(object sender, EventArgs e)
         {
             if (_model == null || _model.Mileage == null)
             {
@@ -237,18 +238,17 @@ namespace Timetabler
                 _model.Mileage.Mileage = 0;
             }
 
-            int val;
-            if (int.TryParse(tbMileage.Text, out val))
-            {
-                _model.Mileage.Mileage = val;
-            }
-            else
+            if (!int.TryParse(tbMileage.Text, out int val))
             {
                 _model.Mileage.Mileage = 0;
             }
+            else
+            {
+                _model.Mileage.Mileage = val;
+            }
         }
 
-        private void tbChainage_Validated(object sender, EventArgs e)
+        private void TbChainage_Validated(object sender, EventArgs e)
         {
             if (_model == null || _model.Mileage == null)
             {
@@ -259,26 +259,12 @@ namespace Timetabler
                 _model.Mileage.Chainage = 0;
             }
 
-            int val;
-            if (int.TryParse(tbChainage.Text, out val))
-            {
-                _model.Mileage.Chainage = val;
-            }
-            else
-            {
-                _model.Mileage.Chainage = 0;
-            }
+            _model.Mileage.Chainage = int.TryParse(tbChainage.Text, out int val) ? val : 0;
         }
 
-        private void cbFontType_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbFontType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_model == null)
-            {
-                return;
-            }
-
-            var lftItem = cbFontType.SelectedItem as HumanReadableEnum<LocationFontType>;
-            if (lftItem == null)
+            if (_model == null || !(cbFontType.SelectedItem is HumanReadableEnum<LocationFontType> lftItem))
             {
                 return;
             }
@@ -286,7 +272,7 @@ namespace Timetabler
             _model.FontType = lftItem.Value;
         }
 
-        private void ckShowPathDown_CheckedChanged(object sender, EventArgs e)
+        private void CkShowPathDown_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -303,7 +289,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowPlatformDown_CheckedChanged(object sender, EventArgs e)
+        private void CkShowPlatformDown_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -320,7 +306,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowLineDown_CheckedChanged(object sender, EventArgs e)
+        private void CkShowLineDown_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -337,7 +323,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowPathUp_CheckedChanged(object sender, EventArgs e)
+        private void CkShowPathUp_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -354,7 +340,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowPlatformUp_CheckedChanged(object sender, EventArgs e)
+        private void CkShowPlatformUp_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -371,7 +357,7 @@ namespace Timetabler
             }
         }
 
-        private void ckShowLineUp_CheckedChanged(object sender, EventArgs e)
+        private void CkShowLineUp_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -388,7 +374,7 @@ namespace Timetabler
             }
         }
 
-        private void ckDisplaySeparatorAbove_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplaySeparatorAbove_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -398,7 +384,7 @@ namespace Timetabler
             _model.DisplaySeparatorAbove = ckDisplaySeparatorAbove.Checked;
         }
 
-        private void ckDisplaySeparatorBelow_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplaySeparatorBelow_CheckedChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {

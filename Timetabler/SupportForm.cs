@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using NLog;
 using System.Linq;
 using NLog.Targets;
@@ -12,7 +11,7 @@ namespace Timetabler
     /// </summary>
     public partial class SupportForm : Form
     {
-        private static ILogger Log = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// A form for editing the logging configuration (and possibly other things at some point)

@@ -1,7 +1,7 @@
 ﻿using Timetabler.Data;
-using Timetabler.XmlData;
+using Timetabler.SerialData.Xml;
 
-namespace Timetabler.DataLoader.Save
+namespace Timetabler.DataLoader.Save.Xml
 {
     public static class BlockSectionExtensions
     {

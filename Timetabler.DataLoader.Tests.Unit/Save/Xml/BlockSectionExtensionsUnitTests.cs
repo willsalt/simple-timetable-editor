@@ -1,15 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save;
-using Timetabler.XmlData;
+using Timetabler.DataLoader.Save.Xml;
+using Timetabler.SerialData.Xml;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save
+namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
 {
     [TestClass]
     public class BlockSectionExtensionsUnitTests

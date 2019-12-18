@@ -5,15 +5,15 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using Timetabler.Data;
-using Timetabler.Data.Events;
 using System;
-using Timetabler.Data.Display;
 using Timetabler.Extensions;
+using System.Globalization;
+using Timetabler.Data.Display;
+using Timetabler.Data.Events;
 using Timetabler.CoreData.Helpers;
 using Timetabler.CoreData;
+using Timetabler.Data;
 using Timetabler.Data.Extensions;
-using System.Globalization;
 
 namespace Timetabler.Controls
 {

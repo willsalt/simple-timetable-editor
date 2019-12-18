@@ -78,7 +78,7 @@
     <Compile Include="Load\Xml\TrainModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Xml\TrainTimeModelExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-	<Compile Include="Save\BlockSectionExtensionsUnitTests.cs" />
+    <Compile Include="Save\Xml\BlockSectionExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DistanceExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DocumentExportOptionsExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DocumentOptionsExtensionsUnitTests.cs" />

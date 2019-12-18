@@ -85,7 +85,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Saver.cs" />
-	<Compile Include="Save\BlockSectionExtensions.cs" />
+    <Compile Include="Save\Xml\BlockSectionExtensions.cs" />
     <Compile Include="Save\Xml\DistanceExtensions.cs" />
     <Compile Include="Save\Xml\DocumentExportOptionsExtensions.cs" />
     <Compile Include="Save\Xml\DocumentOptionsExtensions.cs" />

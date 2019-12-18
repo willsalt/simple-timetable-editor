@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Timetabler.Helpers
+﻿namespace Timetabler.Helpers
 {
     /// <summary>
     /// A helper class for computing horizontal coordinates on a graph control.
     /// </summary>
     public class XCoordinateHelper
     {
-        private float _margin;
-        private double _stretchFactor;
+        private readonly float _margin;
+        private readonly double _stretchFactor;
         private int _baseValue;
         private double _range;
 

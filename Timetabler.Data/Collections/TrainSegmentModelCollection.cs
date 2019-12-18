@@ -37,7 +37,7 @@ namespace Timetabler.Data.Collections
         /// <remarks>No <see cref="TrainSegmentModelAdd"/> events are raised when setting the initial contents of the collection.</remarks>
         public TrainSegmentModelCollection(IEnumerable<TrainSegmentModel> data)
         {
-            _innerCollection.AddRange(data);
+            InnerCollection.AddRange(data);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Timetabler.Data.Collections
         /// <returns>A deep copy of the collection.</returns>
         public TrainSegmentModelCollection Copy()
         {
-            return new TrainSegmentModelCollection(_innerCollection.Select(s => s.Copy()));
+            return new TrainSegmentModelCollection(InnerCollection.Select(s => s.Copy()));
         }
 
         /// <summary>
@@ -90,10 +90,10 @@ namespace Timetabler.Data.Collections
         /// <exception cref="ArgumentNullException">Thrown if the <see cref="TrainSegmentModelComparer"/> parameter is null and the collection is not empty.</exception>
         public void AddSorted(TrainSegmentModel item, TrainSegmentModelComparer comparer)
         {
-            lock (_innerCollection)
+            lock (InnerCollection)
             {
                 // Degenerate case with no sorting required.
-                if (_innerCollection.Count == 0)
+                if (InnerCollection.Count == 0)
                 {
                     Add(item);
                     return;
@@ -105,20 +105,20 @@ namespace Timetabler.Data.Collections
                 }
 
                 List<TrainSegmentModel> newAdditions = new List<TrainSegmentModel>();
-                _innerCollection.Add(item);
+                InnerCollection.Add(item);
                 bool eventRaised = false;
-                for (var i = _innerCollection.Count - 1; i > 0; i--)
+                for (var i = InnerCollection.Count - 1; i > 0; i--)
                 {
-                    var comparison = comparer.Compare(_innerCollection[i], _innerCollection[i - 1]);
+                    var comparison = comparer.Compare(InnerCollection[i], InnerCollection[i - 1]);
                     if (comparison.Item2 != null)
                     {
                         newAdditions.Add(comparison.Item2);
                     }
                     if (comparison.Item1 < 0)
                     {
-                        TrainSegmentModel swap = _innerCollection[i];
-                        _innerCollection[i] = _innerCollection[i - 1];
-                        _innerCollection[i - 1] = swap;
+                        TrainSegmentModel swap = InnerCollection[i];
+                        InnerCollection[i] = InnerCollection[i - 1];
+                        InnerCollection[i - 1] = swap;
                     }
                     else
                     {

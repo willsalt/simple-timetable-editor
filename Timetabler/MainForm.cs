@@ -1,11 +1,13 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using Timetabler.Adapters;
+using Timetabler.CoreData.Exceptions;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data;
 using Timetabler.Data.Collections;
@@ -13,10 +15,10 @@ using Timetabler.Data.Display;
 using Timetabler.Data.Events;
 using Timetabler.Data.Interfaces;
 using Timetabler.DataLoader;
+using Timetabler.Extensions;
 using Timetabler.Helpers;
 using Timetabler.Models;
 using Timetabler.PdfExport;
-using Timetabler.XmlData;
 
 namespace Timetabler
 {
@@ -59,9 +61,9 @@ namespace Timetabler
 
         private bool _documentChanged = false;
 
-        private Dictionary<string, int> _signalboxHoursColumnMap = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _signalboxHoursColumnMap = new Dictionary<string, int>();
 
-        private static ILogger Log = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Default constructor.  Creates an empty document, and initialises the file dialogs' default folders to My Documents.
@@ -90,13 +92,13 @@ namespace Timetabler
             OpenFile(initialFile);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Exit");
             Close();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Open...");
             if (!CheckIfUnsavedChanges(Resources.MainForm_FileOpen_UnsavedChanges))
@@ -125,7 +127,7 @@ namespace Timetabler
                     Model = Loader.LoadTimetableDocument(fs);
                 }
             }
-            catch (Exception ex)
+            catch (TimetableLoaderException ex)
             {
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, ofdDocument.FileName);
             }
@@ -141,10 +143,8 @@ namespace Timetabler
 
         private void UpdateTrainGraphLocationModel()
         {
-            trainGraph.Model = new TrainGraphModel
+            trainGraph.Model = new TrainGraphModel(Model.LocationList, Model.TrainList)
             {
-                LocationList = Model.LocationList,
-                TrainList = Model.TrainList,
                 DisplayTrainLabels = Model.Options.DisplayTrainLabelsOnGraphs,
                 TooltipFormattingString = Model.Options.FormattingStrings.Tooltip,
                 EditTrainMethod = EditTrain,
@@ -152,7 +152,7 @@ namespace Timetabler
             trainGraph.Model.SelectedTrainChanged += TrainGraphModelSelectedTrainChanged;
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Save...");
             sfdDocument.SetInitialDirectory();
@@ -176,19 +176,19 @@ namespace Timetabler
                 bool showSecondMessage = true;
                 if ((ex.HResult & 0xffff) == 0x20)
                 {
-                    MessageBox.Show(this, string.Format(Resources.MainForm_FileSave_SharingViolation, sfdDocument.FileName), Resources.MainForm_FileSave_SharingViolationTitle,
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, string.Format(CultureInfo.CurrentCulture, Resources.MainForm_FileSave_SharingViolation, sfdDocument.FileName), 
+                        Resources.MainForm_FileSave_SharingViolationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     showSecondMessage = false;
                 }
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, showSecondMessage, Resources.MainForm_FileSave_Failure, sfdDocument.FileName, ex.GetType().Name, ex.Message);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdDocument.FileName);
             }
         }
 
-        private void exportToPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportToPDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Export to PDF...");
             sfdExport.SetInitialDirectory();
@@ -201,7 +201,11 @@ namespace Timetabler
 
             try
             {
-                IExporter exporter = new PdfExporter { MainLineWidth = Model.ExportOptions.LineWidth, PassingTrainDashWidth = Model.ExportOptions.FillerDashLineWidth };
+                IExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine))
+                {
+                    MainLineWidth = Model.ExportOptions.LineWidth,
+                    PassingTrainDashWidth = Model.ExportOptions.FillerDashLineWidth
+                };
                 using (FileStream fs = new FileStream(sfdExport.FileName, FileMode.Create, FileAccess.Write))
                 {
                     exporter.Export(Model, fs);
@@ -213,31 +217,23 @@ namespace Timetabler
                 bool showSecondMessage = true;
                 if ((ex.HResult & 0xffff) == 0x20)
                 {
-                    MessageBox.Show(this, string.Format(Resources.MainForm_FileExport_SharingViolation, sfdExport.FileName), Resources.MainForm_FileExport_SharingViolationTitle,  
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, string.Format(CultureInfo.CurrentCulture, Resources.MainForm_FileExport_SharingViolation, sfdExport.FileName), 
+                        Resources.MainForm_FileExport_SharingViolationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     showSecondMessage = false;
                 }
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, showSecondMessage, Resources.MainForm_FileExport_Failure, sfdExport.FileName, ex.GetType().Name, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileExport_Failure, sfdExport.FileName, ex.GetType().Name, ex.Message);
             }
         }
 
         private TrainEditFormModel GetBaseTrainEditFormModel()
         {
-            return new TrainEditFormModel
+            return new TrainEditFormModel(Model.LocationList, Model.TrainClassList, Model.NoteDefinitions.Where(n => n.AppliesToTrains), Model.NoteDefinitions.Where(n => n.AppliesToTimings))
             {
-                ValidLocations = Model.LocationList,
-                ValidClasses = Model.TrainClassList,
-                ValidTrainNotes = Model.NoteDefinitions.Where(n => n.AppliesToTrains).ToList(),
-                ValidTimingPointNotes = Model.NoteDefinitions.Where(n => n.AppliesToTimings).ToList(),
                 DocumentOptions = Model.Options,
             };
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             if (tcMain.SelectedTab == tabHours)
             {
@@ -255,17 +251,19 @@ namespace Timetabler
         {
             TrainEditFormModel formModel = GetBaseTrainEditFormModel();
             formModel.Data = new Train { Id = GeneralHelper.GetNewId(Model.TrainList) };
-            TrainEditForm form = new TrainEditForm { Model = formModel };
-            DialogResult result = form.ShowDialog();
-            Log.Trace("TrainEditForm.ShowDialog() returned {0}", result);
-            if (result != DialogResult.OK)
+            using (TrainEditForm form = new TrainEditForm { Model = formModel })
             {
-                return;
-            }
+                DialogResult result = form.ShowDialog();
+                Log.Trace("TrainEditForm.ShowDialog() returned {0}", result);
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
 
-            if (form.Model != null && form.Model.Data != null)
-            {
-                Model.TrainList.Add(form.Model.Data);
+                if (form.Model != null && form.Model.Data != null)
+                {
+                    Model.TrainList.Add(form.Model.Data);
+                }
             }
         }
 
@@ -276,12 +274,14 @@ namespace Timetabler
             {
                 model.Data.Hours.Add(box.Id, new SignalboxHours { Signalbox = box });
             }
-            SignalboxHoursSetEditForm form = new SignalboxHoursSetEditForm { Model = model };
-            DialogResult result = form.ShowDialog();
-            Log.Trace("SignalboxHoursSetEditForm.ShowDialog() returned {0}", result);
-            if (result == DialogResult.OK)
+            using (SignalboxHoursSetEditForm form = new SignalboxHoursSetEditForm { Model = model })
             {
-                Model.SignalboxHoursSets.Add(form.Model.Data);
+                DialogResult result = form.ShowDialog();
+                Log.Trace("SignalboxHoursSetEditForm.ShowDialog() returned {0}", result);
+                if (result == DialogResult.OK)
+                {
+                    Model.SignalboxHoursSets.Add(form.Model.Data);
+                }
             }
         }
         
@@ -305,19 +305,21 @@ namespace Timetabler
             tbPublishedDate.Text = Model.PublishedDate;
         }
 
-        private void trainClassesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TrainClassesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Train Classes...");
-            var tclef = new TrainClassListEditForm { Model = new TrainClassCollection(Model.TrainClassList) };
-            var result = tclef.ShowDialog();
-            Log.Trace("TrainClassListEditForm.ShowDialog() returned {0}", result);
-            if (result == DialogResult.OK)
+            using (TrainClassListEditForm tclef = new TrainClassListEditForm(new TrainClassCollection(Model.TrainClassList)))
             {
-                Model.TrainClassList = tclef.Model;
+                var result = tclef.ShowDialog();
+                Log.Trace("TrainClassListEditForm.ShowDialog() returned {0}", result);
+                if (result == DialogResult.OK)
+                {
+                    Model.TrainClassList.Overwrite(tclef.Model);
+                }
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (tcMain.SelectedTab == tabHours)
             {
@@ -340,18 +342,20 @@ namespace Timetabler
 
         private void EditSignalboxHoursSet(SignalboxHoursSet selectedSignalboxHoursSet)
         {
-            SignalboxHoursSetEditForm form = new SignalboxHoursSetEditForm
+            using (SignalboxHoursSetEditForm form = new SignalboxHoursSetEditForm
+                {
+                    Model = new SignalboxHoursSetEditFormModel { Data = selectedSignalboxHoursSet.Copy(), InputMode = Model.Options.ClockType }
+                })
             {
-                Model = new SignalboxHoursSetEditFormModel { Data = selectedSignalboxHoursSet.Copy(), InputMode = Model.Options.ClockType }
-            };
-            DialogResult result = form.ShowDialog();
-            Log.Trace("SignalboxHoursSetEditForm.ShowDialog() returned {0}", result);
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
+                DialogResult result = form.ShowDialog();
+                Log.Trace("SignalboxHoursSetEditForm.ShowDialog() returned {0}", result);
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
 
-            form.Model.Data.CopyTo(selectedSignalboxHoursSet);
+                form.Model.Data.CopyTo(selectedSignalboxHoursSet);
+            }
         }
 
         private SignalboxHoursSet GetSelectedSignalboxHoursSet()
@@ -372,7 +376,7 @@ namespace Timetabler
             return null;
         }
 
-        private void btnDel_Click(object sender, EventArgs e)
+        private void BtnDel_Click(object sender, EventArgs e)
         {
             if (tcMain.SelectedTab == tabHours)
             {
@@ -425,10 +429,10 @@ namespace Timetabler
 
         private void EditTrain(string trainId)
         {
-            Log.Trace("Entering EditTrain(\"{0}\")", trainId);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_EnteringEditTrain, trainId);
             if (!Model.TrainList.Any(t => t.Id == trainId))
             {
-                Log.Warn("Train {0} does not exist", trainId);
+                Log.Warn(CultureInfo.CurrentCulture, Resources.LogWarning_TrainDoesNotExist, trainId);
                 return;
             }
             Train targetTrain = Model.TrainList.First(t => t.Id == trainId);
@@ -436,16 +440,18 @@ namespace Timetabler
             copyTrain.Id = GeneralHelper.GetNewId(Model.TrainList);
             TrainEditFormModel formModel = GetBaseTrainEditFormModel();
             formModel.Data = copyTrain;
-            TrainEditForm tef = new TrainEditForm { Model = formModel };
-            DialogResult result = tef.ShowDialog();
-            Log.Trace("TrainEditForm.ShowDialog() returned {0}", result);
-            if (result != DialogResult.OK)
+            using (TrainEditForm tef = new TrainEditForm { Model = formModel })
             {
-                return;
-            }
+                DialogResult result = tef.ShowDialog();
+                Log.Trace("TrainEditForm.ShowDialog() returned {0}", result);
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
 
-            Model.TrainList.Remove(targetTrain);
-            Model.TrainList.Add(tef.Model.Data);
+                Model.TrainList.Remove(targetTrain);
+                Model.TrainList.Add(tef.Model.Data);
+            }
         }
 
         private void DeleteTrain(string trainId)
@@ -458,37 +464,38 @@ namespace Timetabler
             Model.TrainList.Remove(targetTrain);
         }
 
-        private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
+        private void TcMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
         }
 
-        private void SetEditButtonEnabled()
+        private void UpdateTrainEditingButtonsEnabled()
         {
             btnDel.Enabled = btnEdit.Enabled = 
                 (tcMain.SelectedTab == tabGraph && trainGraph.Model.SelectedTrain != null) ||
                 (tcMain.SelectedTab == tabDown && dgvDown.SelectedCells.Count > 0 && _downTrainsAdapter.IsColumnTrainColumn(dgvDown.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabUp && dgvUp.SelectedCells.Count > 0 && _upTrainsAdapter.IsColumnTrainColumn(dgvUp.SelectedCells[0].ColumnIndex)) ||
                 (tcMain.SelectedTab == tabHours && dgvHours.SelectedCells.Count > 0);
+            btnCopy.Enabled = btnReverse.Enabled = btnDel.Enabled && tcMain.SelectedTab != tabHours;
         }
 
-        private void dgvDown_SelectionChanged(object sender, EventArgs e)
+        private void DgvDown_SelectionChanged(object sender, EventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
         }
 
-        private void dgvUp_SelectionChanged(object sender, EventArgs e)
+        private void DgvUp_SelectionChanged(object sender, EventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
         }
 
-        private void dgvDown_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvDown_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Log.Trace("Down grid: cell col {0}, row {1} double-clicked", e.ColumnIndex, e.RowIndex);
             CellDoubleClicked(dgvDown, e);
         }    
 
-        private void dgvUp_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvUp_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Log.Trace("Up grid: cell col {0}, row {1} double-clicked", e.ColumnIndex, e.RowIndex);
             CellDoubleClicked(dgvUp, e);
@@ -514,11 +521,11 @@ namespace Timetabler
             }
             if (!adapter.IsColumnTrainColumn(e.ColumnIndex))
             {
-                Log.Trace("Column {0} is not a train column.", e.ColumnIndex);
+                Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_ColumnIsNotATrainColumn, e.ColumnIndex);
                 return;
             }
             string trainId = adapter.GetTrainIdForViewColumn(e.ColumnIndex);
-            Log.Trace("Train ID for selected column is {0}", trainId);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_SelectedTrainId, trainId);
             if (string.IsNullOrWhiteSpace(trainId))
             {
                 return;
@@ -535,16 +542,17 @@ namespace Timetabler
 
         private void EditLocations()
         {
-            LocationListEditForm form = new LocationListEditForm { Model = new LocationCollection(Model.LocationList) };
-            DialogResult result = form.ShowDialog();
-            Log.Trace("LocationListEditForm.ShowDialog() returned {0}", result);
-            if (result == DialogResult.OK)
+            using (LocationListEditForm form = new LocationListEditForm(new LocationCollection(Model.LocationList)))
             {
-                Model.LocationList = form.Model;
-                Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
-                Model.UpTrainsDisplay.CheckCompulsaryLocationsAreVisible();
-                trainGraph.Model.LocationList = form.Model;
-                trainGraph.Invalidate();
+                DialogResult result = form.ShowDialog();
+                Log.Trace("LocationListEditForm.ShowDialog() returned {0}", result);
+                if (result == DialogResult.OK)
+                {
+                    Model.LocationList.Overwrite(form.Model);
+                    Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
+                    Model.UpTrainsDisplay.CheckCompulsaryLocationsAreVisible();
+                    trainGraph.Invalidate();
+                }
             }
             Model.ResolveAll();
         }
@@ -562,20 +570,59 @@ namespace Timetabler
 
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(LocationTemplateModel));
                 using (FileStream fs = new FileStream(sfdLocations.FileName, FileMode.Create, FileAccess.Write))
                 {
                     Saver.Save(Model.LocationList, fs);
                 }
                 MessageBox.Show(this, Resources.MainForm_LocationsTemplateFileSave_Success, Resources.MainForm_LocationsTemplateFileSave_Title, MessageBoxButtons.OK);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (ArgumentNullException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (ArgumentException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (NotSupportedException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (FileNotFoundException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (PathTooLongException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (IOException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (SecurityException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (UnauthorizedAccessException ex)
             {
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
             }
         }
 
-        private void openTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Locations>Open...");
             if (Model.TrainList != null && Model.TrainList.Count > 0)
@@ -609,20 +656,58 @@ namespace Timetabler
                     return;
                 }
 
-                Model.LocationList = locations;
-                Model.DownTrainsDisplay.LocationMap = Model.LocationList;
+                Model.LocationList.Overwrite(locations);
                 Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
-                Model.UpTrainsDisplay.LocationMap = Model.LocationList;
                 Model.UpTrainsDisplay.CheckCompulsaryLocationsAreVisible();
                 UpdateTrainGraphLocationModel();
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_LocationsTemplateFileLoad_Exception, ofdLocations.FileName, ex.GetType().Name, ex.Message);
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (ArgumentNullException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (ArgumentException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (NotSupportedException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (FileNotFoundException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (PathTooLongException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (IOException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (SecurityException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, sfdLocations.FileName);
             }
         }
 
-        private void editOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Document Options...");
             if (Model?.Options == null)
@@ -630,15 +715,17 @@ namespace Timetabler
                 Log.Warn("Not displaying DocumentOptionsEditForm as model options object is null.");
                 return;
             }
-            DocumentOptionsEditForm doef = new DocumentOptionsEditForm { Model = Model.Options.Copy() };
-            DialogResult result = doef.ShowDialog();
-            Log.Trace("DocumentOptionsEditForm.ShowDialog() returned {0}", result);
-
-            if (result != DialogResult.OK)
+            using (DocumentOptionsEditForm doef = new DocumentOptionsEditForm { Model = Model.Options.Copy() })
             {
-                return;
+                DialogResult result = doef.ShowDialog();
+                Log.Trace("DocumentOptionsEditForm.ShowDialog() returned {0}", result);
+
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+                doef.Model.CopyTo(Model.Options);
             }
-            doef.Model.CopyTo(Model.Options);
             trainGraph.Model.SetPropertiesFromDocumentOptions(Model.Options);
             trainGraph.Invalidate();
             Model.RefreshTrainDisplayFormatting();
@@ -652,14 +739,16 @@ namespace Timetabler
                 Log.Warn("Not displaying DocumentExportOptionsEditForm as model export options object is null.");
                 return;
             }
-            DocumentExportOptionsEditForm form = new DocumentExportOptionsEditForm { Model = Model.ExportOptions.Copy() };
-            DialogResult result = form.ShowDialog();
-            Log.Trace("DocumentExportOptionsEditForm.ShowDialog() returned {0}", result);
-            if (result != DialogResult.OK)
+            using (DocumentExportOptionsEditForm form = new DocumentExportOptionsEditForm { Model = Model.ExportOptions.Copy() })
             {
-                return;
+                DialogResult result = form.ShowDialog();
+                Log.Trace("DocumentExportOptionsEditForm.ShowDialog() returned {0}", result);
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+                Model.ExportOptions = form.Model;
             }
-            Model.ExportOptions = form.Model;
         }
 
         private bool CheckIfUnsavedChanges(string text)
@@ -688,12 +777,12 @@ namespace Timetabler
             TimetableDocument newDocument = new TimetableDocument();
             if (template != null)
             {
-                newDocument.LocationList = template.Locations;
+                newDocument.LocationList.Overwrite(template.Locations);
                 newDocument.Options = template.DocumentOptions;
                 newDocument.ExportOptions = template.ExportOptions;
-                newDocument.NoteDefinitions = template.NoteDefinitions;
-                newDocument.TrainClassList = template.TrainClasses;
-                newDocument.Signalboxes = template.Signalboxes;
+                newDocument.NoteDefinitions.Overwrite(template.NoteDefinitions);
+                newDocument.TrainClassList.Overwrite(template.TrainClasses);
+                newDocument.Signalboxes.Overwrite(template.Signalboxes);
             }
             Model = newDocument;
             UpdateTrainGraphLocationModel();
@@ -702,24 +791,26 @@ namespace Timetabler
             _documentChanged = false;
         }
 
-        private void editFootnotesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditFootnotesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Footnotes");
-            NoteListEditForm nef = new NoteListEditForm { Model = new NoteListEditFormModel { Data = Model.NoteDefinitions.ToDictionary(n => n.Id, n => n.Copy()) } };
-            DialogResult result = nef.ShowDialog();
-            Log.Trace("NoteListEditForm.ShowDialog() returned {0}", result);
-            if (result != DialogResult.OK)
+            using (NoteListEditForm nef = new NoteListEditForm { Model = new NoteListEditFormModel(Model.NoteDefinitions.ToDictionary(n => n.Id, n => n.Copy())) })
             {
-                return;
-            }
-            Model.NoteDefinitions.CopyFrom(nef.Model.Data);
-            if (nef.Model.ExistingNoteChanged)
-            {
-                Model.RefreshTrainDisplayFormatting();
+                DialogResult result = nef.ShowDialog();
+                Log.Trace("NoteListEditForm.ShowDialog() returned {0}", result);
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+                Model.NoteDefinitions.CopyFrom(nef.Model.Data);
+                if (nef.Model.ExistingNoteChanged)
+                {
+                    Model.RefreshTrainDisplayFormatting();
+                }
             }
         }
         
-        private void tbTitle_TextChanged(object sender, EventArgs e)
+        private void TbTitle_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -727,7 +818,7 @@ namespace Timetabler
             }
         }
 
-        private void tbSubtitle_TextChanged(object sender, EventArgs e)
+        private void TbSubtitle_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -735,7 +826,7 @@ namespace Timetabler
             }
         }
 
-        private void tbDateDescription_TextChanged(object sender, EventArgs e)
+        private void TbDateDescription_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -743,7 +834,7 @@ namespace Timetabler
             }
         }
 
-        private void tbWrittenBy_TextChanged(object sender, EventArgs e)
+        private void TbWrittenBy_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -751,7 +842,7 @@ namespace Timetabler
             }
         }
 
-        private void tbCheckedBy_TextChanged(object sender, EventArgs e)
+        private void TbCheckedBy_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -759,7 +850,7 @@ namespace Timetabler
             }
         }
 
-        private void tbTimetableVersion_TextChanged(object sender, EventArgs e)
+        private void TbTimetableVersion_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -767,7 +858,7 @@ namespace Timetabler
             }
         }
 
-        private void tbPublishedDate_TextChanged(object sender, EventArgs e)
+        private void TbPublishedDate_TextChanged(object sender, EventArgs e)
         {
             if (Model != null)
             {
@@ -775,7 +866,7 @@ namespace Timetabler
             }
         }
 
-        private void exportOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Export Options...");
             EditExportOptions();
@@ -789,7 +880,7 @@ namespace Timetabler
             }
         }
 
-        private void saveAsTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Template>Save As Template...");
             sfdTemplate.SetInitialDirectory();
@@ -800,14 +891,10 @@ namespace Timetabler
                 return;
             }
 
-            DocumentTemplate template = new DocumentTemplate
+            DocumentTemplate template = new DocumentTemplate(Model.LocationList, Model.NoteDefinitions, Model.TrainClassList, Model.Signalboxes)
             {
                 DocumentOptions = Model.Options,
                 ExportOptions = Model.ExportOptions,
-                Locations = Model.LocationList,
-                NoteDefinitions = Model.NoteDefinitions,
-                TrainClasses = Model.TrainClassList,
-                Signalboxes = Model.Signalboxes,
             };
 
             try
@@ -822,19 +909,43 @@ namespace Timetabler
                 bool showSecondMessage = true;
                 if ((ex.HResult & 0xffff) == 0x20)
                 {
-                    MessageBox.Show(this, string.Format(Resources.MainForm_TemplateFileSave_SharingViolation, sfdTemplate.FileName), Resources.MainForm_FileExport_SharingViolationTitle,
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, string.Format(CultureInfo.CurrentCulture, Resources.MainForm_TemplateFileSave_SharingViolation, sfdTemplate.FileName), 
+                        Resources.MainForm_FileExport_SharingViolationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     showSecondMessage = false;
                 }
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, showSecondMessage, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
+            }
+            catch (ArgumentNullException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
+            }
+            catch (ArgumentException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
+            }
+            catch (NotSupportedException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
+            }
+            catch (SecurityException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
+            }
+            catch (UnauthorizedAccessException ex)
             {
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileSave_Failure, ex.GetType().Name, ex.Message, sfdTemplate.FileName);
             }
         }
 
-        private void newFromTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewFromTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: \"File>New>New From Template...\"");
             if (!CheckIfUnsavedChanges(Resources.MainForm_FileNew_UnsavedChanges))
@@ -867,29 +978,74 @@ namespace Timetabler
 
                 SetUpNewDocument(template);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (NotSupportedException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (FileNotFoundException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (PathTooLongException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (IOException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (SecurityException ex)
+            {
+                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
             {
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_TemplateFileLoad_Exception, ofdTemplate.FileName, ex.GetType().Name, ex.Message);
             }
         }
 
-        private void signalboxesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SignalboxesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Edit>Signalboxes...");
-            SignalboxListEditForm form = new SignalboxListEditForm { Model = Model.Signalboxes.Copy() };
-            DialogResult result = form.ShowDialog();
-            Log.Trace("SignalboxListEditForm.ShowDialog() returned {0}", result);
-            if (result != DialogResult.OK)
+            using (SignalboxListEditForm form = new SignalboxListEditForm(Model.Signalboxes.Copy()))
             {
-                return;
+                DialogResult result = form.ShowDialog();
+                Log.Trace("SignalboxListEditForm.ShowDialog() returned {0}", result);
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+                Model.Signalboxes.Overwrite(form.Model);
             }
-            Model.Signalboxes = form.Model;
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: Help>About");
-            new AboutBox().ShowDialog();
+            using (AboutBox aboutBox = new AboutBox())
+            {
+                aboutBox.ShowDialog();
+            }
         }
 
         private void SignalboxHoursSetAddedHandler(object sender, SignalboxHoursSetEventArgs e)
@@ -942,8 +1098,7 @@ namespace Timetabler
         {
             foreach (var r in dgvHours.Rows)
             {
-                DataGridViewRow row = r as DataGridViewRow;
-                if (row == null || row.Cells[_signalboxHoursIdColumn].Value as string != eventArgs.HoursSet.Id)
+                if (!(r is DataGridViewRow row) || row.Cells[_signalboxHoursIdColumn].Value as string != eventArgs.HoursSet.Id)
                 {
                     continue;
                 }
@@ -976,14 +1131,70 @@ namespace Timetabler
             }
         }
 
-        private void supportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SupportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new SupportForm().ShowDialog();
+            using (SupportForm f = new SupportForm())
+            {
+                f.ShowDialog();
+            }
         }
 
         private void TrainGraphModelSelectedTrainChanged(object sender, TrainEventArgs e)
         {
-            SetEditButtonEnabled();
+            UpdateTrainEditingButtonsEnabled();
+        }
+
+        private void BtnCopy_Click(object sender, EventArgs e)
+        {
+            string trainId = GetSelectedTrainId();
+            if (trainId == null)
+            {
+                return;
+            }
+            Train selectedTrain = Model.TrainList.FirstOrDefault(t => t.Id == trainId);
+            if (selectedTrain == null)
+            {
+                return;
+            }
+            ShowTrainCopyForm(selectedTrain);
+        }
+
+        private void ShowTrainCopyForm(Train selectedTrain)
+        {
+            TrainCopyFormModel model = TrainCopyFormModel.FromTrain(selectedTrain);
+            using (TrainCopyForm form = new TrainCopyForm { Model = model })
+            {
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                int offset = model.AddSubtract == AddSubtract.Add ? model.Offset : -model.Offset;
+                Train copy = selectedTrain.Copy(offset);
+                if (model.ClearInlineNotes)
+                {
+                    copy.InlineNote = "";
+                }
+                Model.TrainList.Add(copy);
+            }
+        }
+
+        private void BtnReverse_Click(object sender, EventArgs e)
+        {
+            string trainId = GetSelectedTrainId();
+            if (trainId == null)
+            {
+                return;
+            }
+            ReverseTrain(trainId);
+        }
+
+        private void ReverseTrain(string trainId)
+        {
+            Train selectedTrain = Model.TrainList.FirstOrDefault(t => t.Id == trainId);
+            Model.TrainList.Remove(selectedTrain);
+            selectedTrain.Reverse();
+            Model.TrainList.Add(selectedTrain);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Timetabler.Helpers
@@ -21,18 +22,18 @@ namespace Timetabler.Helpers
         /// <param name="arguments">Arguments to the message format string.</param>
         public static void LogWithMessageBox(ILogger logger, LogLevel level, Exception ex, IWin32Window parent, bool showBox, string format, params object[] arguments)
         {
-            string msg = string.Format(format, arguments);
+            string msg = string.Format(CultureInfo.CurrentCulture, format, arguments);
             if (showBox)
             {
                 MessageBox.Show(parent, msg);
             }
             if (ex == null)
             {
-                logger.Log(level, msg);
+                logger?.Log(level, msg);
             }
             else
             {
-                logger.Log(level, ex, msg);
+                logger?.Log(level, ex, msg);
             }
         }
 

@@ -91,7 +91,7 @@
             resources.ApplyResources(this.btnOk, "btnOk");
             this.btnOk.Name = "btnOk";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
             // 
             // btnCancel
             // 
@@ -130,7 +130,7 @@
             // 
             resources.ApplyResources(this.tbInlineNote, "tbInlineNote");
             this.tbInlineNote.Name = "tbInlineNote";
-            this.tbInlineNote.TextChanged += new System.EventHandler(this.tbInlineNote_TextChanged);
+            this.tbInlineNote.TextChanged += new System.EventHandler(this.TbInlineNote_TextChanged);
             // 
             // label8
             // 
@@ -141,7 +141,7 @@
             // 
             resources.ApplyResources(this.tbLocoDiagram, "tbLocoDiagram");
             this.tbLocoDiagram.Name = "tbLocoDiagram";
-            this.tbLocoDiagram.TextChanged += new System.EventHandler(this.tbLocoDiagram_TextChanged);
+            this.tbLocoDiagram.TextChanged += new System.EventHandler(this.TbLocoDiagram_TextChanged);
             // 
             // label7
             // 
@@ -158,7 +158,7 @@
             this.clbFootnotes.FormattingEnabled = true;
             resources.ApplyResources(this.clbFootnotes, "clbFootnotes");
             this.clbFootnotes.Name = "clbFootnotes";
-            this.clbFootnotes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbFootnotes_ItemCheck);
+            this.clbFootnotes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ClbFootnotes_ItemCheck);
             // 
             // label2
             // 
@@ -171,13 +171,13 @@
             this.cbTrainClass.FormattingEnabled = true;
             resources.ApplyResources(this.cbTrainClass, "cbTrainClass");
             this.cbTrainClass.Name = "cbTrainClass";
-            this.cbTrainClass.SelectedIndexChanged += new System.EventHandler(this.cbTrainClass_SelectedIndexChanged);
+            this.cbTrainClass.SelectedIndexChanged += new System.EventHandler(this.CbTrainClass_SelectedIndexChanged);
             // 
             // tbHeadcode
             // 
             resources.ApplyResources(this.tbHeadcode, "tbHeadcode");
             this.tbHeadcode.Name = "tbHeadcode";
-            this.tbHeadcode.Validated += new System.EventHandler(this.tbHeadcode_Validated);
+            this.tbHeadcode.Validated += new System.EventHandler(this.TbHeadcode_Validated);
             // 
             // label1
             // 
@@ -223,33 +223,33 @@
             this.cbLocoToWorkHalfOfDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLocoToWorkHalfOfDay.FormattingEnabled = true;
             this.cbLocoToWorkHalfOfDay.Name = "cbLocoToWorkHalfOfDay";
-            this.cbLocoToWorkHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.cbLocoToWorkHalfOfDay_SelectedIndexChanged);
+            this.cbLocoToWorkHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.CbLocoToWorkHalfOfDay_SelectedIndexChanged);
             // 
             // tbLocoToWorkText
             // 
             resources.ApplyResources(this.tbLocoToWorkText, "tbLocoToWorkText");
             this.tbLocoToWorkText.Name = "tbLocoToWorkText";
-            this.tbLocoToWorkText.TextChanged += new System.EventHandler(this.tbLocoToWorkText_TextChanged);
+            this.tbLocoToWorkText.TextChanged += new System.EventHandler(this.TbLocoToWorkText_TextChanged);
             // 
             // tbLocoToWorkHour
             // 
             resources.ApplyResources(this.tbLocoToWorkHour, "tbLocoToWorkHour");
             this.tbLocoToWorkHour.Name = "tbLocoToWorkHour";
-            this.tbLocoToWorkHour.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbLocoToWorkHour.Validated += new System.EventHandler(this.textBoxLocoToWorkHoursMinutes_Validated);
+            this.tbLocoToWorkHour.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbLocoToWorkHour.Validated += new System.EventHandler(this.TextBoxLocoToWorkHoursMinutes_Validated);
             // 
             // tbLocoToWorkMinute
             // 
             resources.ApplyResources(this.tbLocoToWorkMinute, "tbLocoToWorkMinute");
             this.tbLocoToWorkMinute.Name = "tbLocoToWorkMinute";
-            this.tbLocoToWorkMinute.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbLocoToWorkMinute.Validated += new System.EventHandler(this.textBoxLocoToWorkHoursMinutes_Validated);
+            this.tbLocoToWorkMinute.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbLocoToWorkMinute.Validated += new System.EventHandler(this.TextBoxLocoToWorkHoursMinutes_Validated);
             // 
             // tbToWorkText
             // 
             resources.ApplyResources(this.tbToWorkText, "tbToWorkText");
             this.tbToWorkText.Name = "tbToWorkText";
-            this.tbToWorkText.TextChanged += new System.EventHandler(this.tbToWorkText_TextChanged);
+            this.tbToWorkText.TextChanged += new System.EventHandler(this.TbToWorkText_TextChanged);
             // 
             // label10
             // 
@@ -262,21 +262,21 @@
             this.cbToWorkHalfOfDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbToWorkHalfOfDay.FormattingEnabled = true;
             this.cbToWorkHalfOfDay.Name = "cbToWorkHalfOfDay";
-            this.cbToWorkHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.cbToWorkHalfOfDay_SelectedIndexChanged);
+            this.cbToWorkHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.CbToWorkHalfOfDay_SelectedIndexChanged);
             // 
             // tbToWorkMinute
             // 
             resources.ApplyResources(this.tbToWorkMinute, "tbToWorkMinute");
             this.tbToWorkMinute.Name = "tbToWorkMinute";
-            this.tbToWorkMinute.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbToWorkMinute.Validated += new System.EventHandler(this.textBoxToWorkHoursMinutes_Validated);
+            this.tbToWorkMinute.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbToWorkMinute.Validated += new System.EventHandler(this.TextBoxToWorkHoursMinutes_Validated);
             // 
             // tbToWorkHour
             // 
             resources.ApplyResources(this.tbToWorkHour, "tbToWorkHour");
             this.tbToWorkHour.Name = "tbToWorkHour";
-            this.tbToWorkHour.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbToWorkHour.Validated += new System.EventHandler(this.textBoxToWorkHoursMinutes_Validated);
+            this.tbToWorkHour.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbToWorkHour.Validated += new System.EventHandler(this.TextBoxToWorkHoursMinutes_Validated);
             // 
             // label9
             // 
@@ -288,7 +288,7 @@
             resources.ApplyResources(this.btnAdjust, "btnAdjust");
             this.btnAdjust.Name = "btnAdjust";
             this.btnAdjust.UseVisualStyleBackColor = true;
-            this.btnAdjust.Click += new System.EventHandler(this.btnAdjust_Click);
+            this.btnAdjust.Click += new System.EventHandler(this.BtnAdjust_Click);
             // 
             // dgvTimings
             // 
@@ -304,8 +304,8 @@
             this.colTimingDep});
             this.dgvTimings.Name = "dgvTimings";
             this.dgvTimings.RowHeadersVisible = false;
-            this.dgvTimings.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTimings_CellContentDoubleClick);
-            this.dgvTimings.SelectionChanged += new System.EventHandler(this.dgvTimings_SelectionChanged);
+            this.dgvTimings.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvTimings_CellContentDoubleClick);
+            this.dgvTimings.SelectionChanged += new System.EventHandler(this.DgvTimings_SelectionChanged);
             // 
             // colTimingLocation
             // 
@@ -327,21 +327,21 @@
             resources.ApplyResources(this.btnDeleteTiming, "btnDeleteTiming");
             this.btnDeleteTiming.Name = "btnDeleteTiming";
             this.btnDeleteTiming.UseVisualStyleBackColor = true;
-            this.btnDeleteTiming.Click += new System.EventHandler(this.btnDeleteTiming_Click);
+            this.btnDeleteTiming.Click += new System.EventHandler(this.BtnDeleteTiming_Click);
             // 
             // btnEditTiming
             // 
             resources.ApplyResources(this.btnEditTiming, "btnEditTiming");
             this.btnEditTiming.Name = "btnEditTiming";
             this.btnEditTiming.UseVisualStyleBackColor = true;
-            this.btnEditTiming.Click += new System.EventHandler(this.btnEditTiming_Click);
+            this.btnEditTiming.Click += new System.EventHandler(this.BtnEditTiming_Click);
             // 
             // btnAddTiming
             // 
             resources.ApplyResources(this.btnAddTiming, "btnAddTiming");
             this.btnAddTiming.Name = "btnAddTiming";
             this.btnAddTiming.UseVisualStyleBackColor = true;
-            this.btnAddTiming.Click += new System.EventHandler(this.btnAddTiming_Click);
+            this.btnAddTiming.Click += new System.EventHandler(this.BtnAddTiming_Click);
             // 
             // tabPage1
             // 
@@ -365,14 +365,14 @@
             65536});
             resources.ApplyResources(this.nudLineWidth, "nudLineWidth");
             this.nudLineWidth.Name = "nudLineWidth";
-            this.nudLineWidth.ValueChanged += new System.EventHandler(this.nudLineWidth_ValueChanged);
+            this.nudLineWidth.ValueChanged += new System.EventHandler(this.NudLineWidth_ValueChanged);
             // 
             // btnColour
             // 
             resources.ApplyResources(this.btnColour, "btnColour");
             this.btnColour.Name = "btnColour";
             this.btnColour.UseVisualStyleBackColor = true;
-            this.btnColour.Click += new System.EventHandler(this.btnColour_Click);
+            this.btnColour.Click += new System.EventHandler(this.BtnColour_Click);
             // 
             // cbLinePattern
             // 
@@ -380,7 +380,7 @@
             this.cbLinePattern.FormattingEnabled = true;
             resources.ApplyResources(this.cbLinePattern, "cbLinePattern");
             this.cbLinePattern.Name = "cbLinePattern";
-            this.cbLinePattern.SelectedIndexChanged += new System.EventHandler(this.cbLinePattern_SelectedIndexChanged);
+            this.cbLinePattern.SelectedIndexChanged += new System.EventHandler(this.CbLinePattern_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -410,14 +410,14 @@
             resources.ApplyResources(this.ckSeparatorBelow, "ckSeparatorBelow");
             this.ckSeparatorBelow.Name = "ckSeparatorBelow";
             this.ckSeparatorBelow.UseVisualStyleBackColor = true;
-            this.ckSeparatorBelow.CheckedChanged += new System.EventHandler(this.ckSeparatorBelow_CheckedChanged);
+            this.ckSeparatorBelow.CheckedChanged += new System.EventHandler(this.CkSeparatorBelow_CheckedChanged);
             // 
             // ckSeparatorAbove
             // 
             resources.ApplyResources(this.ckSeparatorAbove, "ckSeparatorAbove");
             this.ckSeparatorAbove.Name = "ckSeparatorAbove";
             this.ckSeparatorAbove.UseVisualStyleBackColor = true;
-            this.ckSeparatorAbove.CheckedChanged += new System.EventHandler(this.ckSeparatorAbove_CheckedChanged);
+            this.ckSeparatorAbove.CheckedChanged += new System.EventHandler(this.CkSeparatorAbove_CheckedChanged);
             // 
             // errorProvider
             // 

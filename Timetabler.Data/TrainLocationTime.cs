@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
@@ -75,6 +76,21 @@ namespace Timetabler.Data
             }
         }
 
+        /// <summary>
+        /// Gets whichever time occurs later, the arrival time or the departure time.  In theory this should always be the departure time.
+        /// </summary>
+        public TrainTime LastTime
+        {
+            get
+            {
+                if (ArrivalTime?.Time > DepartureTime?.Time)
+                {
+                    return ArrivalTime;
+                }
+                return DepartureTime;
+            }
+        }
+
         private TrainLocationTimeModel UpdateTrainLocationTimeModel(ref TrainLocationTimeModel model, TrainTime time, string idSuffix)
         {
             if (time == null || FormattingStrings == null || Location == null)
@@ -116,6 +132,22 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// Offset both arrival and departure time by the same specified amount.
+        /// </summary>
+        /// <param name="minutesOffset">The number of minutes to change the time by (positive for later, negative for earlier).</param>
+        public void OffsetTimes(int minutesOffset)
+        {
+            if (ArrivalTime?.Time != null)
+            {
+                ArrivalTime.Time.AddMinutes(minutesOffset);
+            }
+            if (DepartureTime?.Time != null)
+            {
+                DepartureTime.Time.AddMinutes(minutesOffset);
+            }
+        }
+
+        /// <summary>
         /// Attempt to populate the <see cref="Location"/> property, and any timing point footnote properties, by looking their values up in dictionaries.
         /// </summary>
         /// <param name="locationMap">A dictionary of valid locations.</param>
@@ -143,6 +175,10 @@ namespace Timetabler.Data
             {
                 return;
             }
+            if (map is null)
+            {
+                throw new ArgumentNullException(nameof(map));
+            }
             if (map.ContainsKey(Location.Id))
             {
                 Location = map[Location.Id];
@@ -167,6 +203,29 @@ namespace Timetabler.Data
                 FormattingStrings = FormattingStrings,
             };
             return tlt;
+        }
+
+        /// <summary>
+        /// Change the times of this <see cref="TrainLocationTime" /> by reflecting them over another time.  In other words, if beforehand the train arrives ten minutes before and departs five 
+        /// minutes before the reflection time, then afterwards, the train will arrive five minutes after and depart ten minutes after the reflection time.
+        /// </summary>
+        /// <param name="aroundTime">The time to reflect about.</param>
+        /// <param name="alwaysSwap">If this parameter is false (the default), if the object only has a <see cref="DepartureTime" />, the reflected time will still be the 
+        ///   <see cref="DepartureTime" />.  If it is true, then if the object only has a <see cref="DepartureTime" /> it will become the <see cref="ArrivalTime" />.</param>
+        public void Reflect(TimeOfDay aroundTime, bool alwaysSwap = false)
+        {
+            TrainTime newArrivalTime = DepartureTime?.CopyAndReflect(aroundTime);
+            TrainTime newDepartureTime = ArrivalTime?.CopyAndReflect(aroundTime);
+            if (newDepartureTime?.Time == null && newArrivalTime?.Time != null && !alwaysSwap)
+            {
+                DepartureTime = newArrivalTime;
+                ArrivalTime = newDepartureTime;
+            }
+            else
+            {
+                DepartureTime = newDepartureTime;
+                ArrivalTime = newArrivalTime;
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Timetabler
             {
                 return _model;
             }
-            set
+            private set
             {
                 _model = value;
                 UpdateViewToModel();
@@ -42,23 +42,26 @@ namespace Timetabler
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public TrainClassListEditForm()
+        public TrainClassListEditForm(TrainClassCollection model)
         {
             InitializeComponent();
+            Model = model;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
-            var tcef = new TrainClassEditForm { Model = new TrainClass { Id = GeneralHelper.GetNewId(_model) } };
-            var result = tcef.ShowDialog();
-            if (result == DialogResult.OK)
+            using (TrainClassEditForm tcef = new TrainClassEditForm { Model = new TrainClass { Id = GeneralHelper.GetNewId(_model) } })
             {
-                _model.Add(tcef.Model);
-                UpdateViewToModel();
+                DialogResult result = tcef.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    _model.Add(tcef.Model);
+                    UpdateViewToModel();
+                }
             }
         }
 
-        private void dataGridView_SelectionChanged(object sender, EventArgs e)
+        private void DataGridView_SelectionChanged(object sender, EventArgs e)
         {
             ResetButtons();
         }
@@ -80,7 +83,7 @@ namespace Timetabler
             btnDown.Enabled = cellRow < (dataGridView.Rows.Count - 1);
         }
 
-        private void btnDel_Click(object sender, EventArgs e)
+        private void BtnDel_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -90,7 +93,7 @@ namespace Timetabler
             UpdateViewToModel();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -100,17 +103,19 @@ namespace Timetabler
         }
 
         private void EditRow(int idx)
-        {            
-            TrainClassEditForm tcef = new TrainClassEditForm { Model = _model[idx].Copy() };
-            var result = tcef.ShowDialog();
-            if (result == DialogResult.OK)
+        {
+            using (TrainClassEditForm tcef = new TrainClassEditForm { Model = _model[idx].Copy() })
             {
-                tcef.Model.CopyTo(_model[idx]);
-                UpdateViewToModel();
+                DialogResult result = tcef.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    tcef.Model.CopyTo(_model[idx]);
+                    UpdateViewToModel();
+                }
             }
         }
 
-        private void btnUp_Click(object sender, EventArgs e)
+        private void BtnUp_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -129,7 +134,7 @@ namespace Timetabler
             UpdateViewToModel();    
         }
 
-        private void btnDown_Click(object sender, EventArgs e)
+        private void BtnDown_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -148,7 +153,7 @@ namespace Timetabler
             UpdateViewToModel();
         }
 
-        private void dataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex < _model.Count)
             {

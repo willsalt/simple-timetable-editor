@@ -58,19 +58,19 @@
             // 
             resources.ApplyResources(this.tbCode, "tbCode");
             this.tbCode.Name = "tbCode";
-            this.tbCode.TextChanged += new System.EventHandler(this.tbCode_TextChanged);
+            this.tbCode.TextChanged += new System.EventHandler(this.TbCode_TextChanged);
             // 
             // tbEditorDisplayName
             // 
             resources.ApplyResources(this.tbEditorDisplayName, "tbEditorDisplayName");
             this.tbEditorDisplayName.Name = "tbEditorDisplayName";
-            this.tbEditorDisplayName.TextChanged += new System.EventHandler(this.tbEditorDisplayName_TextChanged);
+            this.tbEditorDisplayName.TextChanged += new System.EventHandler(this.TbEditorDisplayName_TextChanged);
             // 
             // tbExportDisplayName
             // 
             resources.ApplyResources(this.tbExportDisplayName, "tbExportDisplayName");
             this.tbExportDisplayName.Name = "tbExportDisplayName";
-            this.tbExportDisplayName.TextChanged += new System.EventHandler(this.tbExportDisplayName_TextChanged);
+            this.tbExportDisplayName.TextChanged += new System.EventHandler(this.TbExportDisplayName_TextChanged);
             // 
             // btnOk
             // 

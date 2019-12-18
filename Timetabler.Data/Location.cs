@@ -139,7 +139,7 @@ namespace Timetabler.Data
         /// <returns>A boolean value indicating equality.</returns>
         public bool Equals(Location other)
         {
-            if (ReferenceEquals(other, null))
+            if (other is null)
             {
                 return false;
             }
@@ -157,7 +157,7 @@ namespace Timetabler.Data
         /// <returns>A boolean value indicating equality.</returns>
         public bool Equals(Distance other)
         {
-            if (ReferenceEquals(other, null))
+            if (other is null)
             {
                 return false;
             }
@@ -204,7 +204,7 @@ namespace Timetabler.Data
         /// <returns>An integer indicating whether the <see cref="Mileage"/> property is less than, equal to or greater than the parameter.</returns>
         public int CompareTo(Distance other)
         {
-            if (ReferenceEquals(other, null))
+            if (other is null)
             {
                 return Mileage == null ? 0 : 1;
             }
@@ -222,7 +222,7 @@ namespace Timetabler.Data
         /// <returns>An integer indicating whether the <see cref="Mileage"/> property of this object is less than, equal to or greater than that of the parameter.</returns>
         public int CompareTo(Location other)
         {
-            if (ReferenceEquals(other, null) || other.Mileage == null)
+            if (other is null || other.Mileage == null)
             {
                 return Mileage == null ? 0 : 1;
             }
@@ -257,7 +257,7 @@ namespace Timetabler.Data
                 return CompareTo(d);
             }
 
-            throw new ArgumentException("Wrong data type passed", "obj");
+            throw new ArgumentException(Resources.Error_WrongDataType, nameof(obj));
         }
 
         /// <summary>
@@ -268,11 +268,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <(Location l1, Location l2)
         {
-            if (ReferenceEquals(l1, null) || l1.Mileage == null)
+            if (l1 is null || l1.Mileage == null)
             {
-                return !(ReferenceEquals(l2, null) || l2.Mileage == null);
+                return !(l2 is null || l2.Mileage == null);
             }
-            if (ReferenceEquals(l2, null) || l2.Mileage == null)
+            if (l2 is null || l2.Mileage == null)
             {
                 return false;
             }
@@ -288,11 +288,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <=(Location l1, Location l2)
         {
-            if (ReferenceEquals(l1, null) || l1.Mileage == null)
+            if (l1 is null || l1.Mileage == null)
             {
                 return true;
             }
-            if (ReferenceEquals(l2, null) || l2.Mileage == null)
+            if (l2 is null || l2.Mileage == null)
             {
                 return false;
             }
@@ -308,11 +308,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >(Location l1, Location l2)
         {
-            if (ReferenceEquals(l1, null) || l1.Mileage == null)
+            if (l1 is null || l1.Mileage == null)
             {
                 return false;
             }
-            if (ReferenceEquals(l2, null) || l2.Mileage == null)
+            if (l2 is null || l2.Mileage == null)
             {
                 return true;
             }
@@ -328,11 +328,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >=(Location l1, Location l2)
         {
-            if (ReferenceEquals(l1, null) || l1.Mileage == null)
+            if (l1 is null || l1.Mileage == null)
             {
-                return ReferenceEquals(l2, null) || l2.Mileage == null;
+                return l2 is null || l2.Mileage == null;
             }
-            if (ReferenceEquals(l2, null) || l2.Mileage == null)
+            if (l2 is null || l2.Mileage == null)
             {
                 return false;
             }
@@ -348,11 +348,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator ==(Location l1, Location l2)
         {
-            if (ReferenceEquals(l1, null) || l1.Mileage == null)
+            if (l1 is null || l1.Mileage == null)
             {
-                return ReferenceEquals(l2, null) || l2.Mileage == null;
+                return l2 is null || l2.Mileage == null;
             }
-            if (ReferenceEquals(l2, null) || l2.Mileage == null)
+            if (l2 is null || l2.Mileage == null)
             {
                 return false;
             }
@@ -368,11 +368,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator !=(Location l1, Location l2)
         {
-            if (ReferenceEquals(l1, null) || l1.Mileage == null)
+            if (l1 is null || l1.Mileage == null)
             {
-                return !(ReferenceEquals(l2, null) || l2.Mileage == null);
+                return !(l2 is null || l2.Mileage == null);
             }
-            if (ReferenceEquals(l2, null) || l2.Mileage == null)
+            if (l2 is null || l2.Mileage == null)
             {
                 return true;
             }

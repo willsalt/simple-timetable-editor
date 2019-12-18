@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using Timetabler.Data;
+using Timetabler.Extensions;
 using Timetabler.Helpers;
 using Timetabler.Models;
 
@@ -113,7 +114,7 @@ namespace Timetabler
             TimeHelpers.PopulateHalfOfDayComboBoxes(cbArrivalHalfOfDay, cbDepartureHalfOfDay);
         }
 
-        private void cbLocation_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
             Location loc = cbLocation.SelectedItem as Location;
             if (loc == null)
@@ -127,7 +128,7 @@ namespace Timetabler
             _model.Data.Location = loc;
         }
 
-        private void textBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
+        private void TextBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
         {
             TimeHelpers.ValidateTimeTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
         }
@@ -152,32 +153,32 @@ namespace Timetabler
                 _model.InputMode == ClockType.TwelveHourClock ? cbDepartureHalfOfDay : null, _model.Data.DepartureTime?.Time != null ? _model.Data.DepartureTime.Time.Seconds : 0);
         }
 
-        private void tbArrivalHour_Validated(object sender, EventArgs e)
+        private void TbArrivalHour_Validated(object sender, EventArgs e)
         {
             StoreArrivalTime();
         }
 
-        private void tbArrivalMinute_Validated(object sender, EventArgs e)
+        private void TbArrivalMinute_Validated(object sender, EventArgs e)
         {
             StoreArrivalTime();
         }
 
-        private void tbDepartureHour_Validated(object sender, EventArgs e)
+        private void TbDepartureHour_Validated(object sender, EventArgs e)
         {
             StoreDepartureTime();
         }
 
-        private void tbDepartureMinute_Validated(object sender, EventArgs e)
+        private void TbDepartureMinute_Validated(object sender, EventArgs e)
         {
             StoreDepartureTime();
         }
 
-        private void ckPassingTime_CheckedChanged(object sender, EventArgs e)
+        private void CkPassingTime_CheckedChanged(object sender, EventArgs e)
         {
             _model.Data.Pass = ckPassingTime.Checked;
         }
 
-        private void clbArrival_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void ClbArrival_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -186,7 +187,7 @@ namespace Timetabler
             FootnoteItemCheck(clbArrival, _model.Data.ArrivalTime, e);
         }
 
-        private void clbDeparture_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void ClbDeparture_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -197,8 +198,7 @@ namespace Timetabler
 
         private static void FootnoteItemCheck(CheckedListBox clb, TrainTime timingPoint, ItemCheckEventArgs e)
         {
-            var item = clb.Items[e.Index] as Note;
-            if (item == null)
+            if (!(clb.Items[e.Index] is Note item))
             {
                 return;
             }
@@ -212,7 +212,7 @@ namespace Timetabler
             }
         }
 
-        private void cbArrivalHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbArrivalHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -222,7 +222,7 @@ namespace Timetabler
             StoreArrivalTime();
         }
 
-        private void cbDepartureHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbDepartureHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -232,7 +232,7 @@ namespace Timetabler
             StoreDepartureTime();
         }
 
-        private void tbPath_TextChanged(object sender, EventArgs e)
+        private void TbPath_TextChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model?.Data == null)
             {
@@ -242,7 +242,7 @@ namespace Timetabler
             _model.Data.Path = tbPath.Text;
         }
 
-        private void tbPlatform_TextChanged(object sender, EventArgs e)
+        private void TbPlatform_TextChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model?.Data == null)
             {
@@ -252,7 +252,7 @@ namespace Timetabler
             _model.Data.Platform = tbPlatform.Text;
         }
 
-        private void tbLine_TextChanged(object sender, EventArgs e)
+        private void TbLine_TextChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model?.Data == null)
             {

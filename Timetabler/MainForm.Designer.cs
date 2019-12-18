@@ -110,6 +110,8 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.sfdTemplate = new System.Windows.Forms.SaveFileDialog();
             this.ofdTemplate = new System.Windows.Forms.OpenFileDialog();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnReverse = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabDown.SuspendLayout();
@@ -168,19 +170,19 @@
             // 
             this.newFromTemplateToolStripMenuItem.Name = "newFromTemplateToolStripMenuItem";
             resources.ApplyResources(this.newFromTemplateToolStripMenuItem, "newFromTemplateToolStripMenuItem");
-            this.newFromTemplateToolStripMenuItem.Click += new System.EventHandler(this.newFromTemplateToolStripMenuItem_Click);
+            this.newFromTemplateToolStripMenuItem.Click += new System.EventHandler(this.NewFromTemplateToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // templateToolStripMenuItem
             // 
@@ -193,19 +195,19 @@
             // 
             this.saveAsTemplateToolStripMenuItem.Name = "saveAsTemplateToolStripMenuItem";
             resources.ApplyResources(this.saveAsTemplateToolStripMenuItem, "saveAsTemplateToolStripMenuItem");
-            this.saveAsTemplateToolStripMenuItem.Click += new System.EventHandler(this.saveAsTemplateToolStripMenuItem_Click);
+            this.saveAsTemplateToolStripMenuItem.Click += new System.EventHandler(this.SaveAsTemplateToolStripMenuItem_Click);
             // 
             // exportToPDFToolStripMenuItem
             // 
             this.exportToPDFToolStripMenuItem.Name = "exportToPDFToolStripMenuItem";
             resources.ApplyResources(this.exportToPDFToolStripMenuItem, "exportToPDFToolStripMenuItem");
-            this.exportToPDFToolStripMenuItem.Click += new System.EventHandler(this.exportToPDFToolStripMenuItem_Click);
+            this.exportToPDFToolStripMenuItem.Click += new System.EventHandler(this.ExportToPDFToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -223,7 +225,7 @@
             // 
             this.trainClassesToolStripMenuItem.Name = "trainClassesToolStripMenuItem";
             resources.ApplyResources(this.trainClassesToolStripMenuItem, "trainClassesToolStripMenuItem");
-            this.trainClassesToolStripMenuItem.Click += new System.EventHandler(this.trainClassesToolStripMenuItem_Click);
+            this.trainClassesToolStripMenuItem.Click += new System.EventHandler(this.TrainClassesToolStripMenuItem_Click);
             // 
             // locationsToolStripMenuItem1
             // 
@@ -250,31 +252,31 @@
             // 
             this.openTemplateToolStripMenuItem.Name = "openTemplateToolStripMenuItem";
             resources.ApplyResources(this.openTemplateToolStripMenuItem, "openTemplateToolStripMenuItem");
-            this.openTemplateToolStripMenuItem.Click += new System.EventHandler(this.openTemplateToolStripMenuItem_Click);
+            this.openTemplateToolStripMenuItem.Click += new System.EventHandler(this.OpenTemplateToolStripMenuItem_Click);
             // 
             // footnotesToolStripMenuItem
             // 
             this.footnotesToolStripMenuItem.Name = "footnotesToolStripMenuItem";
             resources.ApplyResources(this.footnotesToolStripMenuItem, "footnotesToolStripMenuItem");
-            this.footnotesToolStripMenuItem.Click += new System.EventHandler(this.editFootnotesToolStripMenuItem_Click);
+            this.footnotesToolStripMenuItem.Click += new System.EventHandler(this.EditFootnotesToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             resources.ApplyResources(this.optionsToolStripMenuItem, "optionsToolStripMenuItem");
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.editOptionsToolStripMenuItem_Click);
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.EditOptionsToolStripMenuItem_Click);
             // 
             // exportOptionsToolStripMenuItem
             // 
             this.exportOptionsToolStripMenuItem.Name = "exportOptionsToolStripMenuItem";
             resources.ApplyResources(this.exportOptionsToolStripMenuItem, "exportOptionsToolStripMenuItem");
-            this.exportOptionsToolStripMenuItem.Click += new System.EventHandler(this.exportOptionsToolStripMenuItem_Click);
+            this.exportOptionsToolStripMenuItem.Click += new System.EventHandler(this.ExportOptionsToolStripMenuItem_Click);
             // 
             // signalboxesToolStripMenuItem
             // 
             this.signalboxesToolStripMenuItem.Name = "signalboxesToolStripMenuItem";
             resources.ApplyResources(this.signalboxesToolStripMenuItem, "signalboxesToolStripMenuItem");
-            this.signalboxesToolStripMenuItem.Click += new System.EventHandler(this.signalboxesToolStripMenuItem_Click);
+            this.signalboxesToolStripMenuItem.Click += new System.EventHandler(this.SignalboxesToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -289,7 +291,7 @@
             // 
             this.supportSettingsToolStripMenuItem.Name = "supportSettingsToolStripMenuItem";
             resources.ApplyResources(this.supportSettingsToolStripMenuItem, "supportSettingsToolStripMenuItem");
-            this.supportSettingsToolStripMenuItem.Click += new System.EventHandler(this.supportSettingsToolStripMenuItem_Click);
+            this.supportSettingsToolStripMenuItem.Click += new System.EventHandler(this.SupportSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -300,7 +302,7 @@
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // ofdDocument
             // 
@@ -318,7 +320,7 @@
             resources.ApplyResources(this.btnAdd, "btnAdd");
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // tcMain
             // 
@@ -329,7 +331,7 @@
             this.tcMain.Controls.Add(this.tabHours);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.SelectedIndexChanged += new System.EventHandler(this.tcMain_SelectedIndexChanged);
+            this.tcMain.SelectedIndexChanged += new System.EventHandler(this.TcMain_SelectedIndexChanged);
             // 
             // tabDown
             // 
@@ -363,8 +365,8 @@
             this.dgvDown.Name = "dgvDown";
             this.dgvDown.ReadOnly = true;
             this.dgvDown.RowHeadersVisible = false;
-            this.dgvDown.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDown_CellContentDoubleClick);
-            this.dgvDown.SelectionChanged += new System.EventHandler(this.dgvDown_SelectionChanged);
+            this.dgvDown.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvDown_CellContentDoubleClick);
+            this.dgvDown.SelectionChanged += new System.EventHandler(this.DgvDown_SelectionChanged);
             // 
             // colLocationIdDown
             // 
@@ -419,8 +421,8 @@
             this.dgvUp.Name = "dgvUp";
             this.dgvUp.ReadOnly = true;
             this.dgvUp.RowHeadersVisible = false;
-            this.dgvUp.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUp_CellContentDoubleClick);
-            this.dgvUp.SelectionChanged += new System.EventHandler(this.dgvUp_SelectionChanged);
+            this.dgvUp.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUp_CellContentDoubleClick);
+            this.dgvUp.SelectionChanged += new System.EventHandler(this.DgvUp_SelectionChanged);
             // 
             // colLocationIdUp
             // 
@@ -459,6 +461,7 @@
             this.trainGraph.Name = "trainGraph";
             this.trainGraph.ShowVerticalGridLines = true;
             this.trainGraph.TimeAxisFont = new System.Drawing.Font("Cambria", 8F);
+            this.trainGraph.TrainLabelFont = new System.Drawing.Font("Cambria", 8F);
             // 
             // tabHours
             // 
@@ -515,7 +518,7 @@
             resources.ApplyResources(this.btnEdit, "btnEdit");
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // sfdLocations
             // 
@@ -531,7 +534,7 @@
             // 
             resources.ApplyResources(this.tbTitle, "tbTitle");
             this.tbTitle.Name = "tbTitle";
-            this.tbTitle.TextChanged += new System.EventHandler(this.tbTitle_TextChanged);
+            this.tbTitle.TextChanged += new System.EventHandler(this.TbTitle_TextChanged);
             // 
             // label1
             // 
@@ -542,7 +545,7 @@
             // 
             resources.ApplyResources(this.tbSubtitle, "tbSubtitle");
             this.tbSubtitle.Name = "tbSubtitle";
-            this.tbSubtitle.TextChanged += new System.EventHandler(this.tbSubtitle_TextChanged);
+            this.tbSubtitle.TextChanged += new System.EventHandler(this.TbSubtitle_TextChanged);
             // 
             // label2
             // 
@@ -553,7 +556,7 @@
             // 
             resources.ApplyResources(this.tbDateDescription, "tbDateDescription");
             this.tbDateDescription.Name = "tbDateDescription";
-            this.tbDateDescription.TextChanged += new System.EventHandler(this.tbDateDescription_TextChanged);
+            this.tbDateDescription.TextChanged += new System.EventHandler(this.TbDateDescription_TextChanged);
             // 
             // label3
             // 
@@ -570,31 +573,31 @@
             resources.ApplyResources(this.btnDel, "btnDel");
             this.btnDel.Name = "btnDel";
             this.btnDel.UseVisualStyleBackColor = true;
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            this.btnDel.Click += new System.EventHandler(this.BtnDel_Click);
             // 
             // tbWrittenBy
             // 
             resources.ApplyResources(this.tbWrittenBy, "tbWrittenBy");
             this.tbWrittenBy.Name = "tbWrittenBy";
-            this.tbWrittenBy.TextChanged += new System.EventHandler(this.tbWrittenBy_TextChanged);
+            this.tbWrittenBy.TextChanged += new System.EventHandler(this.TbWrittenBy_TextChanged);
             // 
             // tbCheckedBy
             // 
             resources.ApplyResources(this.tbCheckedBy, "tbCheckedBy");
             this.tbCheckedBy.Name = "tbCheckedBy";
-            this.tbCheckedBy.TextChanged += new System.EventHandler(this.tbCheckedBy_TextChanged);
+            this.tbCheckedBy.TextChanged += new System.EventHandler(this.TbCheckedBy_TextChanged);
             // 
             // tbTimetableVersion
             // 
             resources.ApplyResources(this.tbTimetableVersion, "tbTimetableVersion");
             this.tbTimetableVersion.Name = "tbTimetableVersion";
-            this.tbTimetableVersion.TextChanged += new System.EventHandler(this.tbTimetableVersion_TextChanged);
+            this.tbTimetableVersion.TextChanged += new System.EventHandler(this.TbTimetableVersion_TextChanged);
             // 
             // tbPublishedDate
             // 
             resources.ApplyResources(this.tbPublishedDate, "tbPublishedDate");
             this.tbPublishedDate.Name = "tbPublishedDate";
-            this.tbPublishedDate.TextChanged += new System.EventHandler(this.tbPublishedDate_TextChanged);
+            this.tbPublishedDate.TextChanged += new System.EventHandler(this.TbPublishedDate_TextChanged);
             // 
             // label4
             // 
@@ -686,10 +689,26 @@
             resources.ApplyResources(this.ofdTemplate, "ofdTemplate");
             this.ofdTemplate.RestoreDirectory = true;
             // 
+            // btnCopy
+            // 
+            resources.ApplyResources(this.btnCopy, "btnCopy");
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
+            // 
+            // btnReverse
+            // 
+            resources.ApplyResources(this.btnReverse, "btnReverse");
+            this.btnReverse.Name = "btnReverse";
+            this.btnReverse.UseVisualStyleBackColor = true;
+            this.btnReverse.Click += new System.EventHandler(this.BtnReverse_Click);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnReverse);
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btnDel);
@@ -807,6 +826,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colLocationIdUp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLocationUp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colArrDepUp;
+        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnReverse;
     }
 }
 

@@ -13,7 +13,7 @@ namespace Timetabler.Data.Comparers
     /// </summary>
     public class TrainSegmentModelComparer
     {
-        private List<LocationDisplayModel> _locationMap;
+        private readonly List<LocationDisplayModel> _locationMap;
 
         /// <summary>
         /// Constructor.
@@ -97,7 +97,7 @@ namespace Timetabler.Data.Comparers
             return new Tuple<int, TrainSegmentModel>(dir, null);
         }
 
-        private Tuple<int, TrainSegmentModel> CompareWithSharedTimes(TrainSegmentModel x, TrainSegmentModel y)
+        private static Tuple<int, TrainSegmentModel> CompareWithSharedTimes(TrainSegmentModel x, TrainSegmentModel y)
         {
             // Check first common time
             var xFirstCommon = x.Timings.First(t => t is TrainLocationTimeModel && y.TimingsIndex.ContainsKey(t.LocationKey)) as TrainLocationTimeModel;
@@ -153,7 +153,7 @@ namespace Timetabler.Data.Comparers
             return new Tuple<int, TrainSegmentModel>(firstDifference, splitSegment);
         }
 
-        private int? CompareIfTimesNotPresent(TrainSegmentModel x, TrainSegmentModel y)
+        private static int? CompareIfTimesNotPresent(TrainSegmentModel x, TrainSegmentModel y)
         {
             if (x?.Timings == null || x.Timings.Count == 0)
             {

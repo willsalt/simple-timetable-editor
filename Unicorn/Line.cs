@@ -12,7 +12,7 @@ namespace Unicorn
         /// <summary>
         /// The words making up this line.
         /// </summary>
-        public List<Word> Content { get; set; }
+        public List<Word> Content { get; } = new List<Word>();
 
         /// <summary>
         /// The minimum width of this line.
@@ -79,7 +79,7 @@ namespace Unicorn
         /// </summary>
         public Line()
         {
-            Content = new List<Word>();
+            
         }
 
         /// <summary>

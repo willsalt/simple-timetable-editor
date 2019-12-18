@@ -63,14 +63,14 @@
             this.cbClockType.FormattingEnabled = true;
             resources.ApplyResources(this.cbClockType, "cbClockType");
             this.cbClockType.Name = "cbClockType";
-            this.cbClockType.SelectedIndexChanged += new System.EventHandler(this.cbClockType_SelectedIndexChanged);
+            this.cbClockType.SelectedIndexChanged += new System.EventHandler(this.CbClockType_SelectedIndexChanged);
             // 
             // ckDisplayTrainLabelsOnGraphs
             // 
             resources.ApplyResources(this.ckDisplayTrainLabelsOnGraphs, "ckDisplayTrainLabelsOnGraphs");
             this.ckDisplayTrainLabelsOnGraphs.Name = "ckDisplayTrainLabelsOnGraphs";
             this.ckDisplayTrainLabelsOnGraphs.UseVisualStyleBackColor = true;
-            this.ckDisplayTrainLabelsOnGraphs.CheckedChanged += new System.EventHandler(this.ckDisplayTrainLabelsOnGraphs_CheckedChanged);
+            this.ckDisplayTrainLabelsOnGraphs.CheckedChanged += new System.EventHandler(this.CkDisplayTrainLabelsOnGraphs_CheckedChanged);
             // 
             // label2
             // 
@@ -83,7 +83,7 @@
             this.cbGraphEditStyle.FormattingEnabled = true;
             resources.ApplyResources(this.cbGraphEditStyle, "cbGraphEditStyle");
             this.cbGraphEditStyle.Name = "cbGraphEditStyle";
-            this.cbGraphEditStyle.SelectedIndexChanged += new System.EventHandler(this.cbGraphEditStyle_SelectedIndexChanged);
+            this.cbGraphEditStyle.SelectedIndexChanged += new System.EventHandler(this.CbGraphEditStyle_SelectedIndexChanged);
             // 
             // DocumentOptionsEditForm
             // 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Comparers
@@ -9,9 +11,7 @@ namespace Timetabler.Data.Comparers
     /// </summary>
     public class LocationDisplayModelComparer : IComparer<LocationDisplayModel>
     {
-        private int xBeforeY;
-        private int yBeforeX;
-        private Direction _direction;
+        private readonly Direction _direction;
 
         /// <summary>
         /// The constructor needs to know what direction its output is supposed to be in.
@@ -20,16 +20,6 @@ namespace Timetabler.Data.Comparers
         public LocationDisplayModelComparer(Direction direction)
         {
             _direction = direction;
-            if (direction == Direction.Down)
-            {
-                xBeforeY = -1;
-                yBeforeX = 1;
-            }
-            else
-            {
-                xBeforeY = 1;
-                yBeforeX = -1;
-            }
         }
 
         /// <summary>
@@ -75,7 +65,10 @@ namespace Timetabler.Data.Comparers
             // If we reach this point, the location rows are for locations with the same mileage, so we assume it is the same location and we are ordering arrival and departure rows
             if (x.LocationKey.Contains("-") && y.LocationKey.Contains("-"))
             {
-                return string.Compare(x.LocationKey.Substring(x.LocationKey.LastIndexOf("-") + 1), y.LocationKey.Substring(y.LocationKey.LastIndexOf("-") + 1));
+                return string.Compare(
+                    x.LocationKey.Substring(x.LocationKey.LastIndexOf("-", StringComparison.InvariantCulture) + 1), 
+                    y.LocationKey.Substring(y.LocationKey.LastIndexOf("-", StringComparison.InvariantCulture) + 1), 
+                    StringComparison.InvariantCulture);
             } 
             
             // The locations have the same mileage, but do not have standard format location keys.

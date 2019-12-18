@@ -138,10 +138,11 @@ namespace Timetabler.Data
         /// <exception cref="ArgumentNullException">Thrown if the box parameter is null.</exception>
         public void CopyTo(Signalbox box)
         {
-            if (box == null)
+            if (box is null)
             {
-                throw new ArgumentNullException("box");
+                throw new ArgumentNullException(nameof(box));
             }
+
             box.Id = Id;
             box.Code = Code;
             box.EditorDisplayName = EditorDisplayName;

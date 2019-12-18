@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save;
-using Timetabler.XmlData;
+using Timetabler.DataLoader.Save.Xml;
+using Timetabler.SerialData.Xml;
 
 namespace Timetabler.DataLoader
 {
@@ -32,10 +32,11 @@ namespace Timetabler.DataLoader
         public static void Save(IEnumerable<Location> locations, Stream destination)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(LocationTemplateModel));
-            serializer.Serialize(destination, new LocationTemplateModel
-            {
-                Maps = new List<NetworkMapModel> { new NetworkMapModel { LocationList = locations.Select(l => l.ToLocationModel()).ToList() } }
-            });
+            NetworkMapModel networkMapModel = new NetworkMapModel();
+            networkMapModel.LocationList.AddRange(locations.Select(c => c.ToLocationModel()));
+            LocationTemplateModel locationTemplateModel = new LocationTemplateModel();
+            locationTemplateModel.Maps.Add(networkMapModel);
+            serializer.Serialize(destination, locationTemplateModel);
         }
 
         /// <summary>

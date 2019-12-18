@@ -8,14 +8,14 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class DocumentOptionsUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private DocumentOptions GetDocumentOptions()
         {
             return GetDocumentOptions(_rnd.NextBoolean() ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock);
         }
 
-        private DocumentOptions GetDocumentOptions(ClockType clockType)
+        private static DocumentOptions GetDocumentOptions(ClockType clockType)
         {
             return new DocumentOptions
             {

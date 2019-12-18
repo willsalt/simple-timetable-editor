@@ -58,8 +58,8 @@
             this.dgvHours.Name = "dgvHours";
             this.dgvHours.ReadOnly = true;
             this.dgvHours.RowHeadersVisible = false;
-            this.dgvHours.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHours_CellContentDoubleClick);
-            this.dgvHours.SelectionChanged += new System.EventHandler(this.dgvHours_SelectionChanged);
+            this.dgvHours.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvHours_CellContentDoubleClick);
+            this.dgvHours.SelectionChanged += new System.EventHandler(this.DgvHours_SelectionChanged);
             // 
             // colBoxId
             // 
@@ -89,14 +89,14 @@
             // 
             resources.ApplyResources(this.tbCategory, "tbCategory");
             this.tbCategory.Name = "tbCategory";
-            this.tbCategory.TextChanged += new System.EventHandler(this.tbCategory_TextChanged);
+            this.tbCategory.TextChanged += new System.EventHandler(this.TbCategory_TextChanged);
             // 
             // btnEdit
             // 
             resources.ApplyResources(this.btnEdit, "btnEdit");
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnCancel
             // 

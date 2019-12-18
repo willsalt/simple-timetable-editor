@@ -13,7 +13,7 @@
         /// <summary>
         /// The style of the font.
         /// </summary>
-        public UniFontStyle Style { get; set; }
+        public UniFontStyles Style { get; set; }
 
         /// <summary>
         /// The filename of the font file.

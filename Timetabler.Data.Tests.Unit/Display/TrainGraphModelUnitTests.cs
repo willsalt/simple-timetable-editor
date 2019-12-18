@@ -11,11 +11,11 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class TrainGraphModelUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private TrainGraphModel GetTrainGraphModel()
         {
-            return new TrainGraphModel
+            return new TrainGraphModel(null, null)
             {
                 DisplayTrainLabels = _rnd.NextBoolean(),
                 GraphEditStyle = _rnd.NextBoolean() ? GraphEditStyle.Free : GraphEditStyle.PreserveSectionTimes,

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timetabler.Data;
 
@@ -53,7 +46,7 @@ namespace Timetabler
             InitializeComponent();
         }
 
-        private void tbTableCode_Validated(object sender, EventArgs e)
+        private void TbTableCode_Validated(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -61,7 +54,7 @@ namespace Timetabler
             }
         }
 
-        private void tbDescription_Validated(object sender, EventArgs e)
+        private void TbDescription_Validated(object sender, EventArgs e)
         {
             if (_model != null)
             {

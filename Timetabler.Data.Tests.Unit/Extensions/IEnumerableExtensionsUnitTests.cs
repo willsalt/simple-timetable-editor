@@ -23,7 +23,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(),
                     _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
@@ -31,6 +31,9 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             sortedData.Sort(new VertexInformationTimeBasedComparer());
             int cutIdx = _rnd.Next(rawData.Count);
             VertexInformation cut = sortedData[cutIdx];
+            // If our randomly-selected cut item has the same time value as another in the list, then its index does not actually give us the correct number of items
+            // that will be in the output.
+            cutIdx = sortedData.FindIndex(vi => vi.Time == cut.Time);
 
             List<VertexInformation> testOutput = rawData.LaterThan(cut).ToList();
 
@@ -45,7 +48,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(),
                     _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
@@ -62,6 +65,10 @@ namespace Timetabler.Data.Tests.Unit.Extensions
                 Assert.IsTrue(rawData.Contains(filtered));
                 rawData.Remove(filtered);
             }
+            foreach (VertexInformation unfiltered in rawData)
+            {
+                Assert.IsTrue(unfiltered.Time < cut.Time);
+            }
         }
 
         [TestMethod]
@@ -72,7 +79,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(),
                     _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
@@ -80,6 +87,9 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             sortedData.Sort(new VertexInformationTimeBasedComparer());
             int cutIdx = _rnd.Next(rawData.Count);
             VertexInformation cut = sortedData[cutIdx];
+            // If our randomly-selected cut item has the same time value as another in the list, then its index does not actually give us the correct number of items
+            // that will be in the output.
+            cutIdx = sortedData.FindLastIndex(vi => vi.Time == cut.Time);
 
             List<VertexInformation> testOutput = rawData.EarlierThan(cut).ToList();
 
@@ -94,7 +104,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
             List<VertexInformation> sortedData = new List<VertexInformation>(listLen);
             for (int i = 0; i < listLen; ++i)
             {
-                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(), 
+                VertexInformation vi = new VertexInformation(new TrainDrawingInfo(), new TimeOfDay(_rnd.Next(86400)), (ArrivalDepartureOptions)(_rnd.Next(3) + 1), _rnd.NextDouble(),
                     _rnd.NextDouble());
                 rawData.Add(vi);
                 sortedData.Add(vi);
@@ -110,6 +120,10 @@ namespace Timetabler.Data.Tests.Unit.Extensions
                 Assert.IsTrue(filtered.Time <= cut.Time);
                 Assert.IsTrue(rawData.Contains(filtered));
                 rawData.Remove(filtered);
+            }
+            foreach (VertexInformation unfiltered in rawData)
+            {
+                Assert.IsTrue(unfiltered.Time > cut.Time);
             }
         }
     }

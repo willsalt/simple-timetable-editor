@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using Tests.Utility.Extensions;
+using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Tests.Unit
@@ -135,7 +137,7 @@ namespace Timetabler.Data.Tests.Unit
 
             testObject.UpdateModel(testTarget, new TimeDisplayFormattingStrings { TimeWithoutFootnotes = "mmHH" });
 
-            Assert.AreEqual(testObject.AtTime.ToString("mmHH"), testTarget.DisplayedText);
+            Assert.AreEqual(testObject.AtTime.ToString("mmHH", CultureInfo.CurrentCulture), testTarget.DisplayedText);
         }
 
         [TestMethod]
@@ -168,7 +170,7 @@ namespace Timetabler.Data.Tests.Unit
 
             testObject.UpdateModel(testTarget, new TimeDisplayFormattingStrings { TimeWithoutFootnotes = "mmHH" });
 
-            Assert.AreEqual(testObject.AtTime.ToString("mmHH"), testTarget.DisplayedText);
+            Assert.AreEqual(testObject.AtTime.ToString("mmHH", CultureInfo.CurrentCulture), testTarget.DisplayedText);
         }
 
         [TestMethod]

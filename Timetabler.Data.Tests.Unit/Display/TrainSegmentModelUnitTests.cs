@@ -1,8 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
 using Timetabler.Data.Tests.Unit.TestHelpers;
@@ -12,12 +15,12 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class TrainSegmentModelUnitTests
     {
-        private static Random _rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
 
-        private TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning)
+        private TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning, List<ILocationEntry> additionalTimings = null)
         {
             int pageFootnoteCount = _rnd.Next(10) + 1;
-            TrainSegmentModel tsm = new TrainSegmentModel
+            TrainSegmentModel tsm = new TrainSegmentModel(null)
             {
                 Footnotes = _rnd.NextString(_rnd.Next(5)),
                 Headcode = _rnd.NextString(4),
@@ -66,8 +69,15 @@ namespace Timetabler.Data.Tests.Unit.Display
             }
             for (int i = 0; i < timingsCount; ++i)
             {
-                tsm.Timings.Add(new TrainLocationTimeModel { LocationKey = i.ToString(), ActualTime = baseTime });
+                tsm.Timings.Add(new TrainLocationTimeModel { LocationKey = i.ToString(CultureInfo.CurrentCulture), ActualTime = baseTime });
                 baseTime = _rnd.NextTimeOfDayBetween(baseTime, 86400 - (timingsCount - i));
+            }
+            if (additionalTimings != null)
+            {
+                foreach (ILocationEntry timing in additionalTimings)
+                {
+                    tsm.Timings.Add(timing);
+                }
             }
 
             return tsm;
@@ -83,6 +93,28 @@ namespace Timetabler.Data.Tests.Unit.Display
                 notes[i] = note;
             }
             return notes;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionIfFirstParameterIsNull()
+        {
+            TrainSegmentModel testObject = new TrainSegmentModel(null, null);
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionWithCorrectParamNamePropertyIfFirstParameterIsNull()
+        {
+            try
+            {
+                TrainSegmentModel testObject = new TrainSegmentModel(null, null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("train", ex.ParamName);
+            }
         }
 
         [TestMethod]
@@ -102,7 +134,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             string testOutput = testObject.HalfOfDay;
 
-            Assert.AreEqual("p.m.", testOutput);
+            Assert.AreEqual("P.M.", testOutput);
         }
 
         [TestMethod]
@@ -138,7 +170,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testFootnoteCount = testObject.PageFootnotes.Count;
             List<FootnoteDisplayModel> pageFootnotesCopy = testObject.PageFootnotes.ToList();
 
-            testObject.UpdatePageFootnotes(new Note[0]);
+            testObject.UpdatePageFootnotes(Array.Empty<Note>());
 
             Assert.AreEqual(testFootnoteCount, testObject.PageFootnotes.Count);
             for (int i = 0; i < testFootnoteCount; ++i)
@@ -547,7 +579,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam1 = testObject.Timings.Count - testParam0;
             int timingCount = testObject.Timings.Count;
 
-            TrainSegmentModel train = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual(timingCount, testObject.Timings.Count);
         }
@@ -560,7 +592,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam1 = _rnd.Next(int.MaxValue - testObject.Timings.Count) + testObject.Timings.Count - testParam0;
             int timingCount = testObject.Timings.Count;
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual(timingCount, testObject.Timings.Count);
         }
@@ -573,7 +605,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
             int timingCount = testObject.Timings.Count;
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.IsTrue(testObject.Timings.Count < timingCount);
         }
@@ -585,7 +617,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.AreEqual(testParam0 + testParam1, testObject.Timings.Count);
         }
@@ -613,7 +645,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
 
-            TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
 
             Assert.IsTrue(testObject.ContinuesLater);
         }
@@ -654,17 +686,29 @@ namespace Timetabler.Data.Tests.Unit.Display
             Assert.AreEqual(testObject.IncludeSeparatorBelow, testOutput.IncludeSeparatorBelow);
         }
 
-        // FIXME this raises a question - the note should only appear on one of the two segments, but which one?  See GitHub ticket #85
         [TestMethod]
         public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectInlineNoteProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
             int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+            string savedNote = testObject.InlineNote;
 
             TrainSegmentModel testOutput = testObject.SplitAtIndex(testParam0, testParam1);
 
-            Assert.AreEqual(testObject.InlineNote, testOutput.InlineNote);
+            Assert.AreEqual(savedNote, testOutput.InlineNote);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClassSplitAtIndexMethodSetsInlineNotePropertyOfParameterToEmptyString()
+        {
+            TrainSegmentModel testObject = GetTestObject(null, null, null, null);
+            int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
+            int testParam1 = _rnd.Next(testObject.Timings.Count - testParam0);
+
+            _ = testObject.SplitAtIndex(testParam0, testParam1);
+
+            Assert.AreEqual("", testObject.InlineNote);
         }
 
         [TestMethod]
@@ -837,18 +881,17 @@ namespace Timetabler.Data.Tests.Unit.Display
         [TestMethod]
         public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectHalfOfDayPropertyIfSplitIsAfterMidday()
         {
-            TrainSegmentModel testObject = GetTestObject(0, null, null, null);
-            testObject.Timings = new List<ILocationEntry>
+            TrainSegmentModel testObject = GetTestObject(0, null, null, null, new List<ILocationEntry>
             {
                 new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(11, 0) },
                 new TrainLocationTimeModel { LocationKey = "B", ActualTime = new TimeOfDay(11, 30) },
                 new TrainLocationTimeModel { LocationKey = "C", ActualTime = new TimeOfDay(12, 10) },
                 new TrainLocationTimeModel { LocationKey = "D", ActualTime = new TimeOfDay(12, 15) },
-            };
+            });
 
             TrainSegmentModel testOutput = testObject.SplitAtIndex(2, 1);
 
-            Assert.AreEqual("p.m.", testOutput.HalfOfDay);
+            Assert.AreEqual("P.M.", testOutput.HalfOfDay);
         }
     }
 }

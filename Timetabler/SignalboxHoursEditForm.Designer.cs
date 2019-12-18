@@ -72,7 +72,7 @@
             resources.ApplyResources(this.ckTokenWarning, "ckTokenWarning");
             this.ckTokenWarning.Name = "ckTokenWarning";
             this.ckTokenWarning.UseVisualStyleBackColor = true;
-            this.ckTokenWarning.CheckedChanged += new System.EventHandler(this.ckTokenWarning_CheckedChanged);
+            this.ckTokenWarning.CheckedChanged += new System.EventHandler(this.CkTokenWarning_CheckedChanged);
             // 
             // btnOk
             // 
@@ -92,29 +92,29 @@
             // 
             resources.ApplyResources(this.tbStartHours, "tbStartHours");
             this.tbStartHours.Name = "tbStartHours";
-            this.tbStartHours.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbStartHours.Validated += new System.EventHandler(this.tbStartHours_Validated);
+            this.tbStartHours.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbStartHours.Validated += new System.EventHandler(this.TbStartHours_Validated);
             // 
             // tbStartMinutes
             // 
             resources.ApplyResources(this.tbStartMinutes, "tbStartMinutes");
             this.tbStartMinutes.Name = "tbStartMinutes";
-            this.tbStartMinutes.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbStartMinutes.Validated += new System.EventHandler(this.tbStartMinutes_Validated);
+            this.tbStartMinutes.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbStartMinutes.Validated += new System.EventHandler(this.TbStartMinutes_Validated);
             // 
             // tbEndMinutes
             // 
             resources.ApplyResources(this.tbEndMinutes, "tbEndMinutes");
             this.tbEndMinutes.Name = "tbEndMinutes";
-            this.tbEndMinutes.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbEndMinutes.Validated += new System.EventHandler(this.tbEndMinutes_Validated);
+            this.tbEndMinutes.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbEndMinutes.Validated += new System.EventHandler(this.TbEndMinutes_Validated);
             // 
             // tbEndHours
             // 
             resources.ApplyResources(this.tbEndHours, "tbEndHours");
             this.tbEndHours.Name = "tbEndHours";
-            this.tbEndHours.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbEndHours.Validated += new System.EventHandler(this.tbEndHours_Validated);
+            this.tbEndHours.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbEndHours.Validated += new System.EventHandler(this.TbEndHours_Validated);
             // 
             // cbStartHalfOfDay
             // 
@@ -122,7 +122,7 @@
             this.cbStartHalfOfDay.FormattingEnabled = true;
             resources.ApplyResources(this.cbStartHalfOfDay, "cbStartHalfOfDay");
             this.cbStartHalfOfDay.Name = "cbStartHalfOfDay";
-            this.cbStartHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.cbStartHalfOfDay_SelectedIndexChanged);
+            this.cbStartHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.CbStartHalfOfDay_SelectedIndexChanged);
             // 
             // cbEndHalfOfDay
             // 
@@ -130,7 +130,7 @@
             this.cbEndHalfOfDay.FormattingEnabled = true;
             resources.ApplyResources(this.cbEndHalfOfDay, "cbEndHalfOfDay");
             this.cbEndHalfOfDay.Name = "cbEndHalfOfDay";
-            this.cbEndHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.cbEndHalfOfDay_SelectedIndexChanged);
+            this.cbEndHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.CbEndHalfOfDay_SelectedIndexChanged);
             // 
             // errorProvider
             // 

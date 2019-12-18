@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
+  <Import Project="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,8 +14,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Timetabler.DataLoader</RootNamespace>
     <AssemblyName>Timetabler.DataLoader</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.6.2\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -52,63 +60,95 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Loader.cs" />
-    <Compile Include="Load\DistanceModelExtensions.cs" />
-    <Compile Include="Load\DocumentOptionsModelExtensions.cs" />
-    <Compile Include="Load\ExportOptionsModelExtensions.cs" />
-    <Compile Include="Load\GraphTrainPropertiesModelExtensions.cs" />
-    <Compile Include="Load\Legacy\V3\TimetableFileModelExtensions.cs" />
-    <Compile Include="Load\LocationModelExtensions.cs" />
-    <Compile Include="Load\NoteModelExtensions.cs" />
-    <Compile Include="Load\SignalboxHoursModelExtensions.cs" />
-    <Compile Include="Load\SignalboxHoursSetModelExtensions.cs" />
-    <Compile Include="Load\SignalboxModelExtensions.cs" />
-    <Compile Include="Load\TimeOfDayModelExtensions.cs" />
-    <Compile Include="Load\TimetableDocumentTemplateModelExtensions.cs" />
-    <Compile Include="Load\TimetableFileModelExtensions.cs" />
-    <Compile Include="Load\ToWorkModelExtensions.cs" />
-    <Compile Include="Load\TrainClassModelExtensions.cs" />
-    <Compile Include="Load\TrainLocationTimeModelExtensions.cs" />
-    <Compile Include="Load\TrainModelExtensions.cs" />
-    <Compile Include="Load\TrainTimeModelExtensions.cs" />
+    <Compile Include="Load\Xml\DistanceModelExtensions.cs" />
+    <Compile Include="Load\Xml\DocumentOptionsModelExtensions.cs" />
+    <Compile Include="Load\Xml\ExportOptionsModelExtensions.cs" />
+    <Compile Include="Load\Xml\GraphTrainPropertiesModelExtensions.cs" />
+    <Compile Include="Load\Xml\Legacy\V3\TimetableFileModelExtensions.cs" />
+    <Compile Include="Load\Xml\LocationModelExtensions.cs" />
+    <Compile Include="Load\Xml\NoteModelExtensions.cs" />
+    <Compile Include="Load\Xml\SignalboxHoursModelExtensions.cs" />
+    <Compile Include="Load\Xml\SignalboxHoursSetModelExtensions.cs" />
+    <Compile Include="Load\Xml\SignalboxModelExtensions.cs" />
+    <Compile Include="Load\Xml\TimeOfDayModelExtensions.cs" />
+    <Compile Include="Load\Xml\TimetableDocumentTemplateModelExtensions.cs" />
+    <Compile Include="Load\Xml\TimetableFileModelExtensions.cs" />
+    <Compile Include="Load\Xml\ToWorkModelExtensions.cs" />
+    <Compile Include="Load\Xml\TrainClassModelExtensions.cs" />
+    <Compile Include="Load\Xml\TrainLocationTimeModelExtensions.cs" />
+    <Compile Include="Load\Xml\TrainModelExtensions.cs" />
+    <Compile Include="Load\Xml\TrainTimeModelExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Saver.cs" />
-    <Compile Include="Save\BlockSectionExtensions.cs" />
-    <Compile Include="Save\DistanceExtensions.cs" />
-    <Compile Include="Save\DocumentExportOptionsExtensions.cs" />
-    <Compile Include="Save\DocumentOptionsExtensions.cs" />
-    <Compile Include="Save\DocumentTemplateExtensions.cs" />
-    <Compile Include="Save\GraphTrainPropertiesExtensions.cs" />
-    <Compile Include="Save\LocationExtensions.cs" />
-    <Compile Include="Save\NoteExtensions.cs" />
-    <Compile Include="Save\SignalboxExtensions.cs" />
-    <Compile Include="Save\SignalboxHoursExtensions.cs" />
-    <Compile Include="Save\SignalboxHoursSetExtensions.cs" />
-    <Compile Include="Save\TimeOfDayExtensions.cs" />
-    <Compile Include="Save\TimetableDocumentExtensions.cs" />
-    <Compile Include="Save\ToWorkExtensions.cs" />
-    <Compile Include="Save\TrainClassExtensions.cs" />
-    <Compile Include="Save\TrainExtensions.cs" />
-    <Compile Include="Save\TrainLocationTimeExtensions.cs" />
-    <Compile Include="Save\TrainTimeExtensions.cs" />
+	<Compile Include="Save\BlockSectionExtensions.cs" />
+    <Compile Include="Save\Xml\DistanceExtensions.cs" />
+    <Compile Include="Save\Xml\DocumentExportOptionsExtensions.cs" />
+    <Compile Include="Save\Xml\DocumentOptionsExtensions.cs" />
+    <Compile Include="Save\Xml\DocumentTemplateExtensions.cs" />
+    <Compile Include="Save\Xml\GraphTrainPropertiesExtensions.cs" />
+    <Compile Include="Save\Xml\LocationExtensions.cs" />
+    <Compile Include="Save\Xml\NoteExtensions.cs" />
+    <Compile Include="Save\Xml\SignalboxExtensions.cs" />
+    <Compile Include="Save\Xml\SignalboxHoursExtensions.cs" />
+    <Compile Include="Save\Xml\SignalboxHoursSetExtensions.cs" />
+    <Compile Include="Save\Xml\TimeOfDayExtensions.cs" />
+    <Compile Include="Save\Xml\TimetableDocumentExtensions.cs" />
+    <Compile Include="Save\Xml\ToWorkExtensions.cs" />
+    <Compile Include="Save\Xml\TrainClassExtensions.cs" />
+    <Compile Include="Save\Xml\TrainExtensions.cs" />
+    <Compile Include="Save\Xml\TrainLocationTimeExtensions.cs" />
+    <Compile Include="Save\Xml\TrainTimeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
-      <Project>{80ffe281-9a15-4da3-9e52-61fac2979c2c}</Project>
+      <Project>{ddc29237-18c5-40a7-bccc-2a51fa8c5f9f}</Project>
       <Name>Timetabler.CoreData</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
       <Project>{9a7e2940-50b8-4f3a-a535-ab6220e6ce3a}</Project>
       <Name>Timetabler.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Timetabler.XmlData\Timetabler.XmlData.csproj">
-      <Project>{81b88cba-1ac7-4061-ab0b-fcfa1be22332}</Project>
-      <Name>Timetabler.XmlData</Name>
+    <ProjectReference Include="..\Timetabler.SerialData\Timetabler.SerialData.csproj">
+      <Project>{a651e646-e4fb-422c-9f52-cf55b3a229fc}</Project>
+      <Name>Timetabler.SerialData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Humanizer.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -39,7 +39,7 @@ namespace Timetabler.Data.Collections
         /// <param name="contents">The initial contents of the collection.</param>
         public TrainClassCollection(IEnumerable<TrainClass> contents)
         {
-            _innerCollection.AddRange(contents);
+            InnerCollection.AddRange(contents);
         }
 
         /// <summary>

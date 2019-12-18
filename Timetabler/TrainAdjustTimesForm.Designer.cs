@@ -49,7 +49,7 @@
             this.cbLocation.FormattingEnabled = true;
             resources.ApplyResources(this.cbLocation, "cbLocation");
             this.cbLocation.Name = "cbLocation";
-            this.cbLocation.SelectedIndexChanged += new System.EventHandler(this.cbLocation_SelectedIndexChanged);
+            this.cbLocation.SelectedIndexChanged += new System.EventHandler(this.CbLocation_SelectedIndexChanged);
             // 
             // cbArriveDepart
             // 
@@ -57,7 +57,7 @@
             this.cbArriveDepart.FormattingEnabled = true;
             resources.ApplyResources(this.cbArriveDepart, "cbArriveDepart");
             this.cbArriveDepart.Name = "cbArriveDepart";
-            this.cbArriveDepart.SelectedIndexChanged += new System.EventHandler(this.cbArriveDepart_SelectedIndexChanged);
+            this.cbArriveDepart.SelectedIndexChanged += new System.EventHandler(this.CbArriveDepart_SelectedIndexChanged);
             // 
             // cbAddSubtract
             // 
@@ -65,14 +65,14 @@
             this.cbAddSubtract.FormattingEnabled = true;
             resources.ApplyResources(this.cbAddSubtract, "cbAddSubtract");
             this.cbAddSubtract.Name = "cbAddSubtract";
-            this.cbAddSubtract.SelectedIndexChanged += new System.EventHandler(this.cbAddSubtract_SelectedIndexChanged);
+            this.cbAddSubtract.SelectedIndexChanged += new System.EventHandler(this.CbAddSubtract_SelectedIndexChanged);
             // 
             // tbOffset
             // 
             resources.ApplyResources(this.tbOffset, "tbOffset");
             this.tbOffset.Name = "tbOffset";
-            this.tbOffset.Validating += new System.ComponentModel.CancelEventHandler(this.tbOffset_Validating);
-            this.tbOffset.Validated += new System.EventHandler(this.tbOffset_Validated);
+            this.tbOffset.Validating += new System.ComponentModel.CancelEventHandler(this.TbOffset_Validating);
+            this.tbOffset.Validated += new System.EventHandler(this.TbOffset_Validated);
             // 
             // label1
             // 

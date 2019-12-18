@@ -1,4 +1,5 @@
 ﻿using PdfSharp.Drawing;
+using System;
 using Unicorn.Impl.PdfSharp.Extensions;
 using Unicorn.Interfaces;
 
@@ -15,7 +16,7 @@ namespace Unicorn.Impl.PdfSharp
         /// <param name="name">The font family name</param>
         /// <param name="style">The font style</param>
         /// <param name="size">The font size in em-units</param>
-        public FontDescriptor(string name, UniFontStyle style, double size)
+        public FontDescriptor(string name, UniFontStyles style, double size)
         {
             Font = new XFont(name, size, style.ToXFontStyle());
             if (Font != null)
@@ -30,7 +31,7 @@ namespace Unicorn.Impl.PdfSharp
         /// </summary>
         /// <param name="name">The font family name</param>
         /// <param name="size">The font size in em-units</param>
-        public FontDescriptor(string name, double size) : this(name, UniFontStyle.Regular, size)
+        public FontDescriptor(string name, double size) : this(name, UniFontStyles.Regular, size)
         {
 
         }
@@ -57,7 +58,11 @@ namespace Unicorn.Impl.PdfSharp
         /// <returns></returns>
         public double GetNormalSpaceWidth(IGraphicsContext graphicsContext)
         {
-            return graphicsContext.MeasureString(" ", this).Width;
+            if (graphicsContext is null)
+            {
+                throw new ArgumentNullException(nameof(graphicsContext));
+            }
+            return graphicsContext.MeasureString(Resources.SpaceCharacter, this).Width;
         }
     }
 }

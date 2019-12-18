@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data.Display;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
@@ -13,7 +9,34 @@ namespace Timetabler.Data.Tests.Unit
     public class NoteUnitTests
     {
         [TestMethod]
-        public void NoteClassToFootnoteDisplayModelMethodReturnsFootnoteDisplayModelWithCorrectNoteIdProperty()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NoteClass_CopyToMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            Note testObject = NoteHelpers.GetNote();
+
+            testObject.CopyTo(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void NoteClass_CopyToMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            Note testObject = NoteHelpers.GetNote();
+
+            try
+            {
+                testObject.CopyTo(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("target", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void NoteClass_ToFootnoteDisplayModelMethod_ReturnsFootnoteDisplayModelWithCorrectNoteIdProperty()
         {
             Note testObject = NoteHelpers.GetNote();
 
@@ -23,7 +46,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void NoteClassToFootnoteDisplayModelMethodReturnsFootnoteDisplayModelWithCorrectSymbolProperty()
+        public void NoteClass_ToFootnoteDisplayModelMethod_ReturnsFootnoteDisplayModelWithCorrectSymbolProperty()
         {
             Note testObject = NoteHelpers.GetNote();
 
@@ -33,7 +56,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void NoteClassToFootnoteDisplayModelMethodReturnsFootnoteDisplayModelWithCorrectDefinitionProperty()
+        public void NoteClass_ToFootnoteDisplayModelMethod_ReturnsFootnoteDisplayModelWithCorrectDefinitionProperty()
         {
             Note testObject = NoteHelpers.GetNote();
 
@@ -43,7 +66,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void NoteClassToFootnoteDisplayModelMethodReturnsFootnoteDisplayModelWithCorrectDisplayOnPagesProperty()
+        public void NoteClass_ToFootnoteDisplayModelMethod_ReturnsFootnoteDisplayModelWithCorrectDisplayOnPagesProperty()
         {
             Note testObject = NoteHelpers.GetNote();
 

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace Timetabler.Helpers
+namespace Timetabler.Extensions
 {
     /// <summary>
     /// Extension methods for the <see cref="FileDialog" /> class and its descendants. 

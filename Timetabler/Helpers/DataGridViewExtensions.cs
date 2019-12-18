@@ -6,10 +6,10 @@ using System.Windows.Forms;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Display;
 
-namespace Timetabler.Helpers
+namespace Timetabler.Extensions
 {
     /// <summary>
-    /// Extension methods for <see cref="DataGridView"/>
+    /// Extension methods for <see cref="DataGridView"/>C:\Users\Will\Source\Repos\simple-timetable-editor\Timetabler\Helpers\DataGridViewExtensions.cs
     /// </summary>
     public static class DataGridViewExtensions
     {

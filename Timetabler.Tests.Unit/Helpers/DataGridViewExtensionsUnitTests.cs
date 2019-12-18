@@ -6,9 +6,9 @@ using System.Windows.Forms;
 using Tests.Utility.Providers;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Display;
-using Timetabler.Helpers;
+using Timetabler.Extensions;
 
-namespace Timetabler.Tests.Unit.Helpers
+namespace Timetabler.Tests.Unit.Extensions
 {
     [TestClass]
     public class DataGridViewExtensionsUnitTests

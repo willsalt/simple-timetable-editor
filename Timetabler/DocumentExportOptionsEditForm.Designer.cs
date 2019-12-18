@@ -60,7 +60,7 @@
             resources.ApplyResources(this.ckDisplayLocoDiagram, "ckDisplayLocoDiagram");
             this.ckDisplayLocoDiagram.Name = "ckDisplayLocoDiagram";
             this.ckDisplayLocoDiagram.UseVisualStyleBackColor = true;
-            this.ckDisplayLocoDiagram.CheckedChanged += new System.EventHandler(this.ckDisplayLocoDiagram_CheckedChanged);
+            this.ckDisplayLocoDiagram.CheckedChanged += new System.EventHandler(this.CkDisplayLocoDiagram_CheckedChanged);
             // 
             // btnOk
             // 
@@ -81,28 +81,28 @@
             resources.ApplyResources(this.ckDisplayToWorkRow, "ckDisplayToWorkRow");
             this.ckDisplayToWorkRow.Name = "ckDisplayToWorkRow";
             this.ckDisplayToWorkRow.UseVisualStyleBackColor = true;
-            this.ckDisplayToWorkRow.CheckedChanged += new System.EventHandler(this.ckDisplayToWorkRow_CheckedChanged);
+            this.ckDisplayToWorkRow.CheckedChanged += new System.EventHandler(this.CkDisplayToWorkRow_CheckedChanged);
             // 
             // ckDisplayBoxHours
             // 
             resources.ApplyResources(this.ckDisplayBoxHours, "ckDisplayBoxHours");
             this.ckDisplayBoxHours.Name = "ckDisplayBoxHours";
             this.ckDisplayBoxHours.UseVisualStyleBackColor = true;
-            this.ckDisplayBoxHours.CheckedChanged += new System.EventHandler(this.ckDisplayBoxHours_CheckedChanged);
+            this.ckDisplayBoxHours.CheckedChanged += new System.EventHandler(this.CkDisplayBoxHours_CheckedChanged);
             // 
             // ckDisplayCredits
             // 
             resources.ApplyResources(this.ckDisplayCredits, "ckDisplayCredits");
             this.ckDisplayCredits.Name = "ckDisplayCredits";
             this.ckDisplayCredits.UseVisualStyleBackColor = true;
-            this.ckDisplayCredits.CheckedChanged += new System.EventHandler(this.ckDisplayCredits_CheckedChanged);
+            this.ckDisplayCredits.CheckedChanged += new System.EventHandler(this.CkDisplayCredits_CheckedChanged);
             // 
             // ckDisplayLocoToWorkRow
             // 
             resources.ApplyResources(this.ckDisplayLocoToWorkRow, "ckDisplayLocoToWorkRow");
             this.ckDisplayLocoToWorkRow.Name = "ckDisplayLocoToWorkRow";
             this.ckDisplayLocoToWorkRow.UseVisualStyleBackColor = true;
-            this.ckDisplayLocoToWorkRow.CheckedChanged += new System.EventHandler(this.ckDisplayLocoToWorkRow_CheckedChanged);
+            this.ckDisplayLocoToWorkRow.CheckedChanged += new System.EventHandler(this.CkDisplayLocoToWorkRow_CheckedChanged);
             // 
             // label1
             // 
@@ -119,28 +119,28 @@
             this.nudLineWidth.DecimalPlaces = 2;
             resources.ApplyResources(this.nudLineWidth, "nudLineWidth");
             this.nudLineWidth.Name = "nudLineWidth";
-            this.nudLineWidth.ValueChanged += new System.EventHandler(this.nudLineWidth_ValueChanged);
+            this.nudLineWidth.ValueChanged += new System.EventHandler(this.NudLineWidth_ValueChanged);
             // 
             // nudFillerDashLineWidth
             // 
             this.nudFillerDashLineWidth.DecimalPlaces = 2;
             resources.ApplyResources(this.nudFillerDashLineWidth, "nudFillerDashLineWidth");
             this.nudFillerDashLineWidth.Name = "nudFillerDashLineWidth";
-            this.nudFillerDashLineWidth.ValueChanged += new System.EventHandler(this.nudFillerDashLineWidth_ValueChanged);
+            this.nudFillerDashLineWidth.ValueChanged += new System.EventHandler(this.NudFillerDashLineWidth_ValueChanged);
             // 
             // ckDisplayGraph
             // 
             resources.ApplyResources(this.ckDisplayGraph, "ckDisplayGraph");
             this.ckDisplayGraph.Name = "ckDisplayGraph";
             this.ckDisplayGraph.UseVisualStyleBackColor = true;
-            this.ckDisplayGraph.CheckedChanged += new System.EventHandler(this.ckDisplayGraph_CheckedChanged);
+            this.ckDisplayGraph.CheckedChanged += new System.EventHandler(this.CkDisplayGraph_CheckedChanged);
             // 
             // ckDisplayGlossary
             // 
             resources.ApplyResources(this.ckDisplayGlossary, "ckDisplayGlossary");
             this.ckDisplayGlossary.Name = "ckDisplayGlossary";
             this.ckDisplayGlossary.UseVisualStyleBackColor = true;
-            this.ckDisplayGlossary.CheckedChanged += new System.EventHandler(this.ckDisplayGlossary_CheckedChanged);
+            this.ckDisplayGlossary.CheckedChanged += new System.EventHandler(this.CkDisplayGlossary_CheckedChanged);
             // 
             // tabControl1
             // 

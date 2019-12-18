@@ -48,7 +48,7 @@ namespace Timetabler
             Model = model;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             using (TrainClassEditForm tcef = new TrainClassEditForm { Model = new TrainClass { Id = GeneralHelper.GetNewId(_model) } })
             {
@@ -61,7 +61,7 @@ namespace Timetabler
             }
         }
 
-        private void dataGridView_SelectionChanged(object sender, EventArgs e)
+        private void DataGridView_SelectionChanged(object sender, EventArgs e)
         {
             ResetButtons();
         }
@@ -83,7 +83,7 @@ namespace Timetabler
             btnDown.Enabled = cellRow < (dataGridView.Rows.Count - 1);
         }
 
-        private void btnDel_Click(object sender, EventArgs e)
+        private void BtnDel_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -93,7 +93,7 @@ namespace Timetabler
             UpdateViewToModel();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -115,7 +115,7 @@ namespace Timetabler
             }
         }
 
-        private void btnUp_Click(object sender, EventArgs e)
+        private void BtnUp_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -134,7 +134,7 @@ namespace Timetabler
             UpdateViewToModel();    
         }
 
-        private void btnDown_Click(object sender, EventArgs e)
+        private void BtnDown_Click(object sender, EventArgs e)
         {
             if (_model == null || dataGridView.SelectedCells.Count == 0)
             {
@@ -153,7 +153,7 @@ namespace Timetabler
             UpdateViewToModel();
         }
 
-        private void dataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex < _model.Count)
             {

@@ -70,7 +70,7 @@ namespace Timetabler
             _inViewUpdate = false;
         }
 
-        private void textBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
+        private void TextBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
         {
             TimeHelpers.ValidateTimeTextBox(sender as TextBox, errorProvider, Resources.SignalboxHoursEditForm_ValidateTimes_Error, e);
         }
@@ -95,17 +95,17 @@ namespace Timetabler
                 _model.InputMode == ClockType.TwelveHourClock ? cbEndHalfOfDay : null, _model.Data.EndTime?.Seconds ?? 0);
         }
 
-        private void tbStartHours_Validated(object sender, EventArgs e)
+        private void TbStartHours_Validated(object sender, EventArgs e)
         {
             StoreStartTime();
         }
 
-        private void tbStartMinutes_Validated(object sender, EventArgs e)
+        private void TbStartMinutes_Validated(object sender, EventArgs e)
         {
             StoreStartTime();
         }
 
-        private void cbStartHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbStartHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -114,17 +114,17 @@ namespace Timetabler
             StoreStartTime();
         }
 
-        private void tbEndHours_Validated(object sender, EventArgs e)
+        private void TbEndHours_Validated(object sender, EventArgs e)
         {
             StoreEndTime();
         }
 
-        private void tbEndMinutes_Validated(object sender, EventArgs e)
+        private void TbEndMinutes_Validated(object sender, EventArgs e)
         {
             StoreEndTime();
         }
 
-        private void cbEndHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbEndHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -133,7 +133,7 @@ namespace Timetabler
             StoreEndTime();
         }
 
-        private void ckTokenWarning_CheckedChanged(object sender, EventArgs e)
+        private void CkTokenWarning_CheckedChanged(object sender, EventArgs e)
         {
             if (!_inViewUpdate)
             {

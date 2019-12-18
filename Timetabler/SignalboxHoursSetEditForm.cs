@@ -75,12 +75,12 @@ namespace Timetabler
             }
         }
 
-        private void dgvHours_SelectionChanged(object sender, System.EventArgs e)
+        private void DgvHours_SelectionChanged(object sender, System.EventArgs e)
         {
             btnEdit.Enabled = dgvHours.SelectedCells.Count > 0;
         }
 
-        private void btnEdit_Click(object sender, System.EventArgs e)
+        private void BtnEdit_Click(object sender, System.EventArgs e)
         {
             if (dgvHours.SelectedCells.Count > 0)
             {
@@ -88,7 +88,7 @@ namespace Timetabler
             }
         }
 
-        private void dgvHours_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvHours_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             EditSelectedRow(e.RowIndex);
         }
@@ -111,7 +111,7 @@ namespace Timetabler
             }
         }
 
-        private void tbCategory_TextChanged(object sender, System.EventArgs e)
+        private void TbCategory_TextChanged(object sender, System.EventArgs e)
         {
             if (_model?.Data != null)
             {

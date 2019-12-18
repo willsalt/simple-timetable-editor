@@ -5,8 +5,8 @@
     /// </summary>
     public class XCoordinateHelper
     {
-        private float _margin;
-        private double _stretchFactor;
+        private readonly float _margin;
+        private readonly double _stretchFactor;
         private int _baseValue;
         private double _range;
 

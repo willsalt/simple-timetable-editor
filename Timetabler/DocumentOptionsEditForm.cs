@@ -12,7 +12,7 @@ namespace Timetabler
     /// </summary>
     public partial class DocumentOptionsEditForm : Form
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private bool _inViewUpdate;
         private DocumentOptions _model;
 
@@ -70,7 +70,7 @@ namespace Timetabler
             _inViewUpdate = false;
         }
 
-        private void cbClockType_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbClockType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model == null)
             {
@@ -85,7 +85,7 @@ namespace Timetabler
             _model.ClockType = item.Value;
         }
 
-        private void ckDisplayTrainLabelsOnGraphs_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayTrainLabelsOnGraphs_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model == null)
             {
@@ -95,7 +95,7 @@ namespace Timetabler
             _model.DisplayTrainLabelsOnGraphs = ckDisplayTrainLabelsOnGraphs.Checked;
         }
 
-        private void cbGraphEditStyle_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbGraphEditStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model == null)
             {

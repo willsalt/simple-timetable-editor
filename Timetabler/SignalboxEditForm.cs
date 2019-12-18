@@ -46,7 +46,7 @@ namespace Timetabler
             tbExportDisplayName.Text = _model.ExportDisplayName;
         }
 
-        private void tbCode_TextChanged(object sender, EventArgs e)
+        private void TbCode_TextChanged(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -54,7 +54,7 @@ namespace Timetabler
             }
         }
 
-        private void tbEditorDisplayName_TextChanged(object sender, EventArgs e)
+        private void TbEditorDisplayName_TextChanged(object sender, EventArgs e)
         {
             if (_model != null)
             {
@@ -62,7 +62,7 @@ namespace Timetabler
             }
         }
 
-        private void tbExportDisplayName_TextChanged(object sender, EventArgs e)
+        private void TbExportDisplayName_TextChanged(object sender, EventArgs e)
         {
             if (_model != null)
             {

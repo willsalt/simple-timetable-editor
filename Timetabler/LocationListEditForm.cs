@@ -51,7 +51,7 @@ namespace Timetabler
             dataGridView.ResumeLayout();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             if (Model == null)
             {
@@ -69,7 +69,7 @@ namespace Timetabler
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count <= 0)
             {
@@ -97,7 +97,7 @@ namespace Timetabler
             }
         }
 
-        private void btnDel_Click(object sender, EventArgs e)
+        private void BtnDel_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count <= 0)
             {
@@ -116,7 +116,7 @@ namespace Timetabler
             UpdateView();
         }
 
-        private void dataGridView_SelectionChanged(object sender, EventArgs e)
+        private void DataGridView_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count > 0)
             {
@@ -130,7 +130,7 @@ namespace Timetabler
             }
         }
 
-        private void dataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             EditModelAt(e.RowIndex);
         }

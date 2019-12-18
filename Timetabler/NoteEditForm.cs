@@ -49,7 +49,7 @@ namespace Timetabler
             ckInGlossary.Checked = Model.DefinedInGlossary;
         }
 
-        private void tbSymbol_Validated(object sender, EventArgs e)
+        private void TbSymbol_Validated(object sender, EventArgs e)
         {
             if (Model == null)
             {
@@ -58,7 +58,7 @@ namespace Timetabler
             Model.Symbol = tbSymbol.Text;
         }
 
-        private void tbDefinition_Validated(object sender, EventArgs e)
+        private void TbDefinition_Validated(object sender, EventArgs e)
         {
             if (Model == null)
             {
@@ -67,7 +67,7 @@ namespace Timetabler
             Model.Definition = tbDefinition.Text;
         }
 
-        private void ckAppliesToTrains_CheckedChanged(object sender, EventArgs e)
+        private void CkAppliesToTrains_CheckedChanged(object sender, EventArgs e)
         {
             if (Model == null)
             {
@@ -76,7 +76,7 @@ namespace Timetabler
             Model.AppliesToTrains = ckAppliesToTrains.Checked;
         }
 
-        private void ckAppliesToTimings_CheckedChanged(object sender, EventArgs e)
+        private void CkAppliesToTimings_CheckedChanged(object sender, EventArgs e)
         {
             if (Model == null)
             {
@@ -85,7 +85,7 @@ namespace Timetabler
             Model.AppliesToTimings = ckAppliesToTimings.Checked;
         }
 
-        private void ckPageFootnote_CheckedChanged(object sender, EventArgs e)
+        private void CkPageFootnote_CheckedChanged(object sender, EventArgs e)
         {
             if (Model == null)
             {
@@ -94,7 +94,7 @@ namespace Timetabler
             Model.DefinedOnPages = ckPageFootnote.Checked;
         }
 
-        private void ckInGlossary_CheckedChanged(object sender, EventArgs e)
+        private void CkInGlossary_CheckedChanged(object sender, EventArgs e)
         {
             if (Model == null)
             {

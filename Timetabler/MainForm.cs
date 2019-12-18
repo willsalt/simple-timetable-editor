@@ -15,6 +15,7 @@ using Timetabler.Data.Display;
 using Timetabler.Data.Events;
 using Timetabler.Data.Interfaces;
 using Timetabler.DataLoader;
+using Timetabler.Extensions;
 using Timetabler.Helpers;
 using Timetabler.Models;
 using Timetabler.PdfExport;

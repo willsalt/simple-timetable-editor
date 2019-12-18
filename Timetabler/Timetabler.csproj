@@ -97,7 +97,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Extensions\ClockTypeExtensions.cs" />
     <Compile Include="Extensions\DataGridViewExtensions.cs" />
-    <Compile Include="Helpers\FileDialogExtensions.cs" />
+    <Compile Include="Extensions\FileDialogExtensions.cs" />
     <Compile Include="Helpers\HumanReadableEnum.cs" />
     <Compile Include="Helpers\HumanReadableEnumFactory.cs" />
     <Compile Include="Helpers\InputValidationHelper.cs" />

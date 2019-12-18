@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Windows.Forms;
-using Timetabler.Helpers;
+using Timetabler.Extensions;
 
-namespace Timetabler.Tests.Unit.Helpers
+namespace Timetabler.Tests.Unit.Extensions
 {
     [TestClass]
     public class FileDialogExtensionsUnitTests

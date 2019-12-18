@@ -61,7 +61,7 @@
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensionsUnitTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Extensions\ClockTypeExtensionsUnitTests.cs" />
-    <Compile Include="Helpers\DataGridViewExtensionsUnitTests.cs" />
+    <Compile Include="Extensions\DataGridViewExtensionsUnitTests.cs" />
     <Compile Include="Helpers\FileDialogExtensionsUnitTests.cs" />
     <Compile Include="Helpers\HumanReadableEnumFactoryUnitTests.cs" />
     <Compile Include="Helpers\HumanReadableEnumUnitTests.cs" />

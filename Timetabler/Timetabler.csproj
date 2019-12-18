@@ -96,7 +96,7 @@
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Extensions\ClockTypeExtensions.cs" />
-    <Compile Include="Helpers\DataGridViewExtensions.cs" />
+    <Compile Include="Extensions\DataGridViewExtensions.cs" />
     <Compile Include="Helpers\FileDialogExtensions.cs" />
     <Compile Include="Helpers\HumanReadableEnum.cs" />
     <Compile Include="Helpers\HumanReadableEnumFactory.cs" />

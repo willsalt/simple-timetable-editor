@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.Data.Display;
 using Timetabler.Data.Events;
-using Timetabler.Helpers;
+using Timetabler.Extensions;
 
 namespace Timetabler.Adapters
 {

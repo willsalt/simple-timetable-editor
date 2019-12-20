@@ -59,6 +59,7 @@
     <Compile Include="PhysicalPageSizeExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UniRangeUnitTests.cs" />
+    <Compile Include="UniSizeUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

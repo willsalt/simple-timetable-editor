@@ -26,12 +26,32 @@ namespace Timetabler.Extensions
                 if (Directory.Exists(folder))
                 {
                     fd.InitialDirectory = folder;
+                    fd.FileName = Path.GetFileName(fd.FileName);
                 }
                 else
                 {
                     fd.FileName = string.Empty;
                 }
             }
+        }
+
+        public static void SetDirectoryAndFilename(this FileDialog fd, string path)
+        {
+            if (fd is null)
+            {
+                throw new ArgumentNullException(nameof(fd));
+            }
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return;
+            }
+            string folder = Path.GetDirectoryName(path);
+            if (Directory.Exists(folder))
+            {
+                fd.InitialDirectory = folder;
+            }
+            string fn = Path.GetFileName(path);
+            fd.FileName = fn;
         }
     }
 }

@@ -10,31 +10,10 @@ namespace Timetabler.Extensions
     public static class FileDialogExtensions
     {
         /// <summary>
-        /// Set the <see cref="FileDialog.InitialDirectory" /> property of a <see cref="FileDialog" /> to match its current <see cref="FileDialog.FileName" />.  If that property points to a
-        /// non-existant directory, clear the FileName property.
+        /// Set the initial directory and filename properties of a file dialog to match a particular path.
         /// </summary>
-        /// <param name="fd">The <see cref="FileDialog"/> to set the properties of.</param>
-        public static void SetInitialDirectory(this FileDialog fd)
-        {
-            if (fd is null)
-            {
-                throw new ArgumentNullException(nameof(fd));
-            }
-            if (!string.IsNullOrWhiteSpace(fd.FileName))
-            {
-                string folder = Path.GetDirectoryName(fd.FileName);
-                if (Directory.Exists(folder))
-                {
-                    fd.InitialDirectory = folder;
-                    fd.FileName = Path.GetFileName(fd.FileName);
-                }
-                else
-                {
-                    fd.FileName = string.Empty;
-                }
-            }
-        }
-
+        /// <param name="fd">The file dialog to set the properties of.</param>
+        /// <param name="path">The path to set as the initial selection in the dialog.</param>
         public static void SetDirectoryAndFilename(this FileDialog fd, string path)
         {
             if (fd is null)

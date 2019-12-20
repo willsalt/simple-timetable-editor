@@ -788,6 +788,7 @@ namespace Timetabler
             UpdateTrainGraphLocationModel();
             UpdateFields();
             Model.UpdateTrainDisplays();
+            UpdateSignalboxHours();
             _documentChanged = false;
         }
 

@@ -107,7 +107,7 @@ namespace Timetabler
                 return;
             }
 
-            ofdDocument.SetInitialDirectory();
+            ofdDocument.FileName = "";
             DialogResult dialogResult = ofdDocument.ShowDialog();
             if (dialogResult != DialogResult.OK)
             {
@@ -132,6 +132,7 @@ namespace Timetabler
                 LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, Resources.MainForm_FileOpen_Failure, ex.GetType().Name, ex.Message, ofdDocument.FileName);
             }
 
+            Model.FileName = fn;
             UpdateFields();
             UpdateSignalboxHours();
             Model.DownTrainsDisplay.CheckCompulsaryLocationsAreVisible();
@@ -155,7 +156,7 @@ namespace Timetabler
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Save...");
-            sfdDocument.SetInitialDirectory();
+            sfdDocument.SetDirectoryAndFilename(Model.FileName);
             DialogResult dialogResult = sfdDocument.ShowDialog();
             if (dialogResult != DialogResult.OK)
             {
@@ -169,6 +170,7 @@ namespace Timetabler
                 {
                     Saver.Save(Model, fs);
                 }
+                Model.FileName = sfdDocument.FileName;
                 _documentChanged = false;
             }
             catch (IOException ex)
@@ -191,7 +193,7 @@ namespace Timetabler
         private void ExportToPDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Export to PDF...");
-            sfdExport.SetInitialDirectory();
+            sfdExport.SetDirectoryAndFilename(Path.ChangeExtension(Model.FileName, FileHelpers.PdfFileExtension));
             DialogResult dialogResult = sfdExport.ShowDialog();
             if (dialogResult != DialogResult.OK)
             {
@@ -560,7 +562,7 @@ namespace Timetabler
         private void LocationSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu>Locations>Save...");
-            sfdLocations.SetInitialDirectory();
+            sfdLocations.SetDirectoryAndFilename(Path.ChangeExtension(Model.FileName, FileHelpers.LocationTemplateFileExtension));
             DialogResult result = sfdLocations.ShowDialog();
             Log.Trace("(SaveFileDialog)sfdLocations.ShowDialog() returned {0}", result);
             if (result != DialogResult.OK)
@@ -634,7 +636,7 @@ namespace Timetabler
                 }
             }
 
-            ofdLocations.SetInitialDirectory();
+            ofdLocations.FileName = "";
             DialogResult result = ofdLocations.ShowDialog();
             Log.Trace("(OpenFileDialog)odfLocations.ShowDialog() returned {0}", result);
             if (result != DialogResult.OK)
@@ -884,7 +886,7 @@ namespace Timetabler
         private void SaveAsTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Template>Save As Template...");
-            sfdTemplate.SetInitialDirectory();
+            sfdTemplate.SetDirectoryAndFilename(Path.ChangeExtension(Model.FileName, FileHelpers.DocumentTemplateFileExtension));
             DialogResult dialogResult = sfdTemplate.ShowDialog();
             if (dialogResult != DialogResult.OK)
             {
@@ -955,7 +957,7 @@ namespace Timetabler
                 return;
             }
 
-            ofdTemplate.SetInitialDirectory();
+            ofdTemplate.FileName = "";
             DialogResult dialogResult = ofdTemplate.ShowDialog();
             if (dialogResult != DialogResult.OK)
             {

@@ -37,6 +37,11 @@ namespace Timetabler.Data
         }
 
         /// <summary>
+        /// The filename that this document was loaded from or last saved to.
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
         /// Document-level settings.
         /// </summary>
         public DocumentOptions Options { get; set; }

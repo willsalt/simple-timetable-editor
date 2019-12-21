@@ -98,6 +98,7 @@
     <Compile Include="Extensions\ClockTypeExtensions.cs" />
     <Compile Include="Extensions\DataGridViewExtensions.cs" />
     <Compile Include="Extensions\FileDialogExtensions.cs" />
+    <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\HumanReadableEnum.cs" />
     <Compile Include="Helpers\HumanReadableEnumFactory.cs" />
     <Compile Include="Helpers\InputValidationHelper.cs" />

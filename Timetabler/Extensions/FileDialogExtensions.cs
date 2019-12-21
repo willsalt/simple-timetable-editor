@@ -22,6 +22,8 @@ namespace Timetabler.Extensions
             }
             if (string.IsNullOrWhiteSpace(path))
             {
+                fd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                fd.FileName = "";
                 return;
             }
             string folder = Path.GetDirectoryName(path);

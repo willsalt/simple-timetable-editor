@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyVersion>1.2.0.0</AssemblyVersion>
     <FileVersion>1.2.0.0</FileVersion>
-    <Copyright>Copyright © 2016-2019 Will Salt</Copyright>
+    <Copyright>Copyright © 2016-2020 Will Salt</Copyright>
     <Authors>Will Salt</Authors>
     <Company />
     <Product>Simple Timetable Editor</Product>

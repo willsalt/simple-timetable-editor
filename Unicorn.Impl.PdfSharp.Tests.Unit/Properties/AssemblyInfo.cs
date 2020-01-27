@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Will Salt")]
 [assembly: AssemblyProduct("Simple Timetable Editor")]
-[assembly: AssemblyCopyright("Copyright ©  2019 Will Salt")]
+[assembly: AssemblyCopyright("Copyright ©  2019-2020 Will Salt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

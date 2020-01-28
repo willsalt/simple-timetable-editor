@@ -108,6 +108,7 @@
     <Compile Include="Save\Yaml\DistanceExtensions.cs" />
     <Compile Include="Save\Yaml\DocumentExportOptionsExtensions.cs" />
     <Compile Include="Save\Yaml\DocumentOptionsExtensions.cs" />
+    <Compile Include="Save\Yaml\DocumentTemplateExtensions.cs" />
     <Compile Include="Save\Yaml\GraphTrainPropertiesExtensions.cs" />
     <Compile Include="Save\Yaml\LocationExtensions.cs" />
     <Compile Include="Save\Yaml\NoteExtensions.cs" />

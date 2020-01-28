@@ -2,7 +2,7 @@
 {
     public class ExportOptionsModel
     {
-        public bool DisplayLocoDiagramRow { get; set; }
+        public bool? DisplayLocoDiagramRow { get; set; }
 
         public string FontSet { get; set; }
 

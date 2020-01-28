@@ -4,7 +4,9 @@ using System.Linq;
 using System.Xml.Serialization;
 using Timetabler.Data;
 using Timetabler.DataLoader.Save.Xml;
+using Timetabler.DataLoader.Save.Yaml;
 using Timetabler.SerialData.Xml;
+using YamlDotNet.Serialization;
 
 namespace Timetabler.DataLoader
 {
@@ -20,8 +22,14 @@ namespace Timetabler.DataLoader
         /// <param name="destination">The stream to save the document to.</param>
         public static void Save(TimetableDocument document, Stream destination)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(TimetableFileModel));
-            serializer.Serialize(destination, document.ToTimetableFileModel());
+            //XmlSerializer serializer = new XmlSerializer(typeof(TimetableFileModel));
+            //serializer.Serialize(destination, document.ToTimetableFileModel());
+            ISerializer serializer = new SerializerBuilder().ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull).Build();
+            using (StreamWriter writer = new StreamWriter(destination))
+            {
+                writer.WriteLine("%WTT");
+                serializer.Serialize(writer, document.ToYamlTimetableFileModel());
+            } 
         }
 
         /// <summary>

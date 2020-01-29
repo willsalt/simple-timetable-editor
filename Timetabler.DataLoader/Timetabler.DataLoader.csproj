@@ -81,6 +81,23 @@
     <Compile Include="Load\Xml\TrainLocationTimeModelExtensions.cs" />
     <Compile Include="Load\Xml\TrainModelExtensions.cs" />
     <Compile Include="Load\Xml\TrainTimeModelExtensions.cs" />
+    <Compile Include="Load\Yaml\DistanceModelExtensions.cs" />
+    <Compile Include="Load\Yaml\DocumentOptionsModelExtensions.cs" />
+    <Compile Include="Load\Yaml\ExportOptionsModelExtensions.cs" />
+    <Compile Include="Load\Yaml\GraphTrainPropertiesModelExtensions.cs" />
+    <Compile Include="Load\Yaml\LocationModelExtensions.cs" />
+    <Compile Include="Load\Yaml\NoteModelExtensions.cs" />
+    <Compile Include="Load\Yaml\SignalboxHoursModelExtensions.cs" />
+    <Compile Include="Load\Yaml\SignalboxHoursSetModelExtensions.cs" />
+    <Compile Include="Load\Yaml\SignalboxModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TimeOfDayModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TimetableDocumentTemplateModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TimetableFileModelExtensions.cs" />
+    <Compile Include="Load\Yaml\ToWorkModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainClassModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainLocationTimeModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainTimeModelExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

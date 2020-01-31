@@ -32,7 +32,7 @@ namespace Timetabler.SerialData.Yaml
 
         public List<TrainClassModel> TrainClassList { get; set; }
 
-        public List<TrainModel> TrainList { get; set; }
+        public List<TrainModel> TrainList { get; } = new List<TrainModel>();
 
         public List<SignalboxHoursSetModel> SignalboxHoursSets { get; set; }
     }

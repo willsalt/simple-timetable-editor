@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpYaml.Serialization;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,7 +13,6 @@ using Timetabler.DataLoader.Load.Xml.Legacy.V3;
 using Timetabler.DataLoader.Load.Yaml;
 using Timetabler.SerialData;
 using Timetabler.SerialData.Xml;
-using YamlDotNet.Serialization;
 
 namespace Timetabler.DataLoader
 {
@@ -69,7 +69,7 @@ namespace Timetabler.DataLoader
 
         internal static TimetableDocument LoadYamlTimetableDocument(string content)
         {
-            Deserializer deserialiser = new Deserializer();
+            Serializer deserialiser = new Serializer();
             return deserialiser.Deserialize<SerialData.Yaml.TimetableFileModel>(content).ToTimetableDocument();
         }
 
@@ -123,7 +123,7 @@ namespace Timetabler.DataLoader
 
         internal static LocationCollection LoadYamlLocationTemplate(string content)
         {
-            Deserializer deserialiser = new Deserializer();
+            Serializer deserialiser = new Serializer();
             SerialData.Yaml.LocationTemplateModel templateModel = deserialiser.Deserialize<SerialData.Yaml.LocationTemplateModel>(content);
             if (templateModel == null || templateModel.Maps == null || templateModel.Maps.Count == 0 || templateModel.Maps[0].LocationList == null)
             {
@@ -203,7 +203,7 @@ namespace Timetabler.DataLoader
 
         internal static DocumentTemplate LoadYamlDocumentTemplate(string content)
         {
-            Deserializer deserialiser = new Deserializer();
+            Serializer deserialiser = new Serializer();
             SerialData.Yaml.TimetableDocumentTemplateModel templateModel = deserialiser.Deserialize<SerialData.Yaml.TimetableDocumentTemplateModel>(content);
             return templateModel.ToDocumentTemplate();
         }

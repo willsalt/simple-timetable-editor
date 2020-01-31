@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using SharpYaml.Serialization;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Timetabler.Data;
 using Timetabler.DataLoader.Save.Yaml;
 using Timetabler.SerialData.Yaml;
-using YamlDotNet.Serialization;
 
 namespace Timetabler.DataLoader
 {
@@ -23,7 +23,7 @@ namespace Timetabler.DataLoader
         {
             //XmlSerializer serializer = new XmlSerializer(typeof(TimetableFileModel));
             //serializer.Serialize(destination, document.ToTimetableFileModel());
-            ISerializer serializer = GetSerializer();
+            Serializer serializer = GetSerializer();
             using (StreamWriter writer = new StreamWriter(destination))
             {
                 writer.WriteLine("%WTT");
@@ -46,7 +46,7 @@ namespace Timetabler.DataLoader
             //serializer.Serialize(destination, locationTemplateModel);
             LocationTemplateModel locationTemplateModel = new LocationTemplateModel();
             locationTemplateModel.Maps = new List<NetworkMapModel> { new NetworkMapModel { LocationList = locations.Select(c => c.ToYamlLocationModel()).ToList() } };
-            ISerializer serialiser = GetSerializer();
+            Serializer serialiser = GetSerializer();
             using (StreamWriter writer = new StreamWriter(destination))
             {
                 writer.WriteLine("%WTL");
@@ -63,7 +63,7 @@ namespace Timetabler.DataLoader
         {
             // XmlSerializer serializer = new XmlSerializer(typeof(TimetableDocumentTemplateModel));
             // serializer.Serialize(destination, template.ToTimetableDocumentTemplateModel());
-            ISerializer serializer = GetSerializer();
+            Serializer serializer = GetSerializer();
             using (StreamWriter writer = new StreamWriter(destination))
             {
                 writer.WriteLine("%WTM");
@@ -71,9 +71,10 @@ namespace Timetabler.DataLoader
             }
         }
 
-        private static ISerializer GetSerializer()
+        private static Serializer GetSerializer()
         {
-            return new SerializerBuilder().ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull).Build();
+            SerializerSettings settings = new SerializerSettings { EmitAlias = false, EmitTags = false };
+            return new Serializer(settings);
         }
     }
 }

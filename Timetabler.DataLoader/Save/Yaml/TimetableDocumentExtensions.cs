@@ -44,9 +44,10 @@ namespace Timetabler.DataLoader.Save.Yaml
 
                 NoteDefinitions = doc.NoteDefinitions.Select(n => n.ToYamlNoteModel()).ToList(),
                 TrainClassList = doc.TrainClassList.Select(c => c.ToYamlTrainClassModel()).ToList(),
-                TrainList = doc.TrainList.Select(t => t.ToYamlTrainModel()).ToList(),
                 SignalboxHoursSets = doc.SignalboxHoursSets.Select(s => s.ToYamlSignalboxHoursSetModel()).ToList(),
             };
+
+            fileModel.TrainList.AddRange(doc.TrainList.Select(t => t.ToYamlTrainModel()));
 
             return fileModel;
         }

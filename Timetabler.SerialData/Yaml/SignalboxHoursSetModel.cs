@@ -6,6 +6,6 @@ namespace Timetabler.SerialData.Yaml
     {
         public string Category { get; set; }
 
-        public List<SignalboxHoursModel> Signalboxes { get; set; }
+        public List<SignalboxHoursModel> Signalboxes { get; } = new List<SignalboxHoursModel>();
     }
 }

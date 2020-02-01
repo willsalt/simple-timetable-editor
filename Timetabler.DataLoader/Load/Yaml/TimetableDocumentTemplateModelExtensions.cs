@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Load.Yaml
 {
+    /// <summary>
+    /// Extension methods for <see cref="TimetableDocumentTemplateModel" /> class.
+    /// </summary>
     public static class TimetableDocumentTemplateModelExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="TimetableDocumentTemplateModel" /> instance to a <see cref="DocumentTemplate" /> instance.
+        /// </summary>
+        /// <param name="model">The object to be converted.</param>
+        /// <returns>A <see cref="DocumentTemplate" /> instance containing the same data as the parameter.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
         public static DocumentTemplate ToDocumentTemplate(this TimetableDocumentTemplateModel model)
         {
             if (model is null)

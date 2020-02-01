@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Load.Yaml
 {
+    /// <summary>
+    /// Extension methods for the <see cref="NoteModel" /> class.
+    /// </summary>
     public static class NoteModelExtensions
     {
+        /// <summary>
+        /// Converts a <see cref="NoteModel" /> instance into a <see cref="Note" /> instance.
+        /// </summary>
+        /// <param name="model">The instance to be converted.</param>
+        /// <returns>A <see cref="Note" /> instance that is equivalent to the parameter.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c></exception>
         public static Note ToNote(this NoteModel model)
         {
             if (model is null)

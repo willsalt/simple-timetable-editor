@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Timetabler.SerialData.Yaml
 {
@@ -8,7 +6,7 @@ namespace Timetabler.SerialData.Yaml
     {
         public int? Version { get; set; }
 
-        public List<NetworkMapModel> Maps { get; set; }
+        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         public LocationTemplateModel()
         {

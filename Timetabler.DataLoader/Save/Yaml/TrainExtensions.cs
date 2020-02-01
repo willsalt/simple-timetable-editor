@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Save.Yaml
 {
+    /// <summary>
+    /// YAML-related extension methods for the <see cref="Train" /> class.
+    /// </summary>
     public static class TrainExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="Train" /> instance to a <see cref="TrainModel" /> instance.
+        /// </summary>
+        /// <param name="train">The object to be converted.</param>
+        /// <returns>A <see cref="TrainModel" /> instance containing the same data as the parameter in serialisable form.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
         public static TrainModel ToYamlTrainModel(this Train train)
         {
             if (train is null)
@@ -17,7 +23,7 @@ namespace Timetabler.DataLoader.Save.Yaml
                 throw new NullReferenceException();
             }
 
-            return new TrainModel
+            TrainModel model = new TrainModel
             {
                 Id = train.Id,
                 GraphProperties = train.GraphProperties.ToYamlGraphTrainPropertiesModel(),
@@ -29,9 +35,12 @@ namespace Timetabler.DataLoader.Save.Yaml
                 InlineNote = train.InlineNote,
                 SetToWork = train.ToWork?.ToYamlToWorkModel(),
                 LocoToWork = train.LocoToWork?.ToYamlToWorkModel(),
-                FootnoteIds = train.Footnotes.Select(n => n.Id).ToList(),
-                TrainTimes = train.TrainTimes.Select(tt => tt.ToYamlTrainLocationTimeModel()).ToList(),
             };
+
+            model.FootnoteIds.AddRange(train.Footnotes.Select(n => n.Id));
+            model.TrainTimes.AddRange(train.TrainTimes.Select(tt => tt.ToYamlTrainLocationTimeModel()));
+
+            return model;
         }
     }
 }

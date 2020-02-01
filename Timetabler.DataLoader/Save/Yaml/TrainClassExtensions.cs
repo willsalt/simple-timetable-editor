@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Save.Yaml
 {
+    /// <summary>
+    /// YAML-related extension methods for the <see cref="TrainClass" /> class.
+    /// </summary>
     public static class TrainClassExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="TrainClass" /> instance to a <see cref="TrainClassModel" /> instance.
+        /// </summary>
+        /// <param name="trainClass">The object to be converted.</param>
+        /// <returns>A <see cref="TrainClassModel" /> instance containing the same data as the parameter in serialisable form.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
         public static TrainClassModel ToYamlTrainClassModel(this TrainClass trainClass)
         {
             if (trainClass is null)

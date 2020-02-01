@@ -3,17 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Load.Yaml
 {
+    /// <summary>
+    /// Extension methods for <see cref="TimetableFileModel" /> class.
+    /// </summary>
     public static class TimetableFileModelExtensions
     {
-        public static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// Convert a <see cref="TimetableFileModel" /> instance to a <see cref="TimetableDocument" /> instance.
+        /// </summary>
+        /// <param name="model">The object to convert.</param>
+        /// <returns>A <see cref="TimetableDocument" /> instance containing the same data as the parameter.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
         public static TimetableDocument ToTimetableDocument(this TimetableFileModel model)
         {
             if (model is null)

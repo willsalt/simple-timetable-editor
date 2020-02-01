@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Save.Yaml
 {
+    /// <summary>
+    /// YAML-related extension methods for the <see cref="TrainTime" /> class.
+    /// </summary>
     public static class TrainTimeExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="TrainTime" /> instance to a <see cref="TrainTimeModel" /> instance.
+        /// </summary>
+        /// <param name="tt">The object to convert.</param>
+        /// <returns>A <see cref="TrainTimeModel" /> instance containing the same data as the parameter.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
         public static TrainTimeModel ToYamlTrainTimeModel(this TrainTime tt)
         {
             if (tt is null)
@@ -17,11 +23,14 @@ namespace Timetabler.DataLoader.Save.Yaml
                 throw new NullReferenceException();
             }
 
-            return new TrainTimeModel
+            TrainTimeModel model = new TrainTimeModel
             {
                 At = tt.Time?.ToYamlTimeOfDayModel(),
-                FootnoteIds = tt.Footnotes.Select(n => n.Id).ToList(),
             };
+
+            model.FootnoteIds.AddRange(tt.Footnotes.Select(n => n.Id));
+
+            return model;
         }
     }
 }

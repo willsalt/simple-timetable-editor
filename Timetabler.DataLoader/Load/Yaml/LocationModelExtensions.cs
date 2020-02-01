@@ -1,16 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Load.Yaml
 {
+    /// <summary>
+    /// Extension methods for the <see cref="LocationModel" /> class.
+    /// </summary>
     public static class LocationModelExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="LocationModel" /> instance to a <see cref="Location" /> instance.
+        /// </summary>
+        /// <param name="model">The object to be converted.</param>
+        /// <returns>A <see cref="Location" /> object containing the same data as the parameter.</returns>
         public static Location ToLocation(this LocationModel model)
         {
             if (model is null)

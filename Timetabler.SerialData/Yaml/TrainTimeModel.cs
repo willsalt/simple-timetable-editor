@@ -6,6 +6,6 @@ namespace Timetabler.SerialData.Yaml
     {
         public TimeOfDayModel At { get; set; }
 
-        public List<string> FootnoteIds { get; set; }
+        public List<string> FootnoteIds { get; } = new List<string>();
     }
 }

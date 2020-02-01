@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Timetabler.SerialData.Yaml
 {
@@ -26,14 +24,14 @@ namespace Timetabler.SerialData.Yaml
 
         public string PublishedDate { get; set; }
 
-        public List<NetworkMapModel> Maps { get; set; }
+        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
-        public List<NoteModel> NoteDefinitions { get; set; }
+        public List<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
 
-        public List<TrainClassModel> TrainClassList { get; set; }
+        public List<TrainClassModel> TrainClassList { get; } = new List<TrainClassModel>();
 
         public List<TrainModel> TrainList { get; } = new List<TrainModel>();
 
-        public List<SignalboxHoursSetModel> SignalboxHoursSets { get; set; }
+        public List<SignalboxHoursSetModel> SignalboxHoursSets { get; } = new List<SignalboxHoursSetModel>();
     }
 }

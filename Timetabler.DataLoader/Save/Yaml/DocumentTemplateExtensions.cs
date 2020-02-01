@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Save.Yaml
 {
+    /// <summary>
+    /// YAML-related extensions methods for the <see cref="DocumentTemplate" /> class.
+    /// </summary>
     public static class DocumentTemplateExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="DocumentTemplate" /> instance to a <see cref="TimetableDocumentTemplateModel" /> instance.
+        /// </summary>
+        /// <param name="template">The object to be converted.</param>
+        /// <returns>A <see cref="TimetableDocumentTemplateModel" /> instance containing the same data as the original object in serialisable form.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
         public static TimetableDocumentTemplateModel ToYamlTimetableDocumentTemplateModel(this DocumentTemplate template)
         {
             if (template is null)
@@ -17,21 +23,18 @@ namespace Timetabler.DataLoader.Save.Yaml
                 throw new NullReferenceException();
             }
 
-            return new TimetableDocumentTemplateModel
+            TimetableDocumentTemplateModel tdtm = new TimetableDocumentTemplateModel
             {
                 DefaultExportOptions = template.ExportOptions.ToYamlExportOptionsModel(),
                 DefaultOptions = template.DocumentOptions.ToYamlDocumentOptionsModel(),
-                Maps = new List<NetworkMapModel>()
-                {
-                    new NetworkMapModel
-                    {
-                        LocationList = template.Locations.Select(c => c.ToYamlLocationModel()).ToList(),
-                    }
-                },
-                NoteDefinitions = template.NoteDefinitions.Select(n => n.ToYamlNoteModel()).ToList(),
-                TrainClasses = template.TrainClasses.Select(c => c.ToYamlTrainClassModel()).ToList(),
-                Signalboxes = template.Signalboxes.Select(b => b.ToYamlSignalboxModel()).ToList(),
             };
+            NetworkMapModel nmm = new NetworkMapModel();
+            nmm.LocationList.AddRange(template.Locations.Select(c => c.ToYamlLocationModel()));
+            tdtm.Maps.Add(nmm);
+            tdtm.NoteDefinitions.AddRange(template.NoteDefinitions.Select(n => n.ToYamlNoteModel()));
+            tdtm.TrainClasses.AddRange(template.TrainClasses.Select(c => c.ToYamlTrainClassModel()));
+            tdtm.Signalboxes.AddRange(template.Signalboxes.Select(b => b.ToYamlSignalboxModel()));
+            return tdtm;
         }
     }
 }

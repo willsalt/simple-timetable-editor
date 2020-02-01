@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Timetabler.SerialData.Yaml
 {
@@ -8,17 +6,17 @@ namespace Timetabler.SerialData.Yaml
     {
         public int? Version { get; set; }
 
-        public List<NetworkMapModel> Maps { get; set; }
+        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         public DocumentOptionsModel DefaultOptions { get; set; }
 
         public ExportOptionsModel DefaultExportOptions { get; set; }
 
-        public List<NoteModel> NoteDefinitions { get; set; }
+        public List<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
 
-        public List<TrainClassModel> TrainClasses { get; set; }
+        public List<TrainClassModel> TrainClasses { get; } = new List<TrainClassModel>();
 
-        public List<SignalboxModel> Signalboxes { get; set; }
+        public List<SignalboxModel> Signalboxes { get; } = new List<SignalboxModel>();
 
         public TimetableDocumentTemplateModel()
         {

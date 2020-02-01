@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Timetabler.Data;
+﻿using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Save.Yaml
 {
+    /// <summary>
+    /// YAML-related extension methods for the <see cref="Location" /> class.
+    /// </summary>
     public static class LocationExtensions
     {
+        /// <summary>
+        /// Converts a <see cref="Location" /> instance to a <see cref="LocationModel" /> instance.
+        /// </summary>
+        /// <param name="location">The object to be converted.</param>
+        /// <returns>A <see cref="LocationModel" /> instance containing the same data in serialisable form, or <c>null</c> if the parameter is <c>null</c>.</returns>
         public static LocationModel ToYamlLocationModel(this Location location)
         {
             if (location is null)

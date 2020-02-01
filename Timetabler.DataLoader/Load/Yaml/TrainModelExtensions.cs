@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Load.Yaml
 {
+    /// <summary>
+    /// Extension methods for the <see cref="TrainModel" /> class.
+    /// </summary>
     public static class TrainModelExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="TrainModel" /> instance to a <see cref="Train" /> instance.
+        /// </summary>
+        /// <param name="model">The object to be converted.</param>
+        /// <param name="locations">A dictionary of known locations, to be used to resolve references to locations the train visits.</param>
+        /// <param name="trainClasses">A dictionary of known train classes, to be used to resolve the reference to the train's class.</param>
+        /// <param name="notes">A dictionary of known footnotes, to be used to resolve references to any footnotes that are relevant.</param>
+        /// <param name="options">Options for this document, to be used to control any document-level settings.</param>
+        /// <returns>A <see cref="Train" /> instance containing the same data as the <c>model</c> parameter with all ID-based references resolved to objects.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the <c>model</c> parameter is null.</exception>
         public static Train ToTrain(
             this TrainModel model,
             Dictionary<string, Location> locations,

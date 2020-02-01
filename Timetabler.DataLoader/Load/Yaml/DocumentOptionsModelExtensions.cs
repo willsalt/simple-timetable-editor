@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Load.Yaml
 {
+    /// <summary>
+    /// Extension methods for the <see cref="DocumentOptionsModel" /> class.
+    /// </summary>
     public static class DocumentOptionsModelExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="DocumentOptionsModel" /> instance to a <see cref="DocumentOptions" /> instance.
+        /// </summary>
+        /// <param name="model">The object to be converted.</param>
+        /// <returns>A <see cref="DocumentOptions" /> insstance whose properties match the parameter.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
         public static DocumentOptions ToDocumentOptions(this DocumentOptionsModel model)
         {
             if (model is null)

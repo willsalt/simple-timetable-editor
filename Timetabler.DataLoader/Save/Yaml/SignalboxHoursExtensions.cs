@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Save.Yaml
 {
+    /// <summary>
+    /// YAML-related extension methods for the <see cref="SignalboxHours" /> class.
+    /// </summary>
     public static class SignalboxHoursExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="SignalboxHours" /> instance to a <see cref="SignalboxHoursModel" /> instance.
+        /// </summary>
+        /// <param name="hours">The object to be converted.</param>
+        /// <returns>A <see cref="SignalboxHoursModel" /> instance containing the same data as the parameter in serialisable form.</returns>
+        /// <exception cref="NullReferenceException">Thrown if parameter is <c>null</c>.</exception>
         public static SignalboxHoursModel ToYamlSignalboxHoursModel(this SignalboxHours hours)
         {
             if (hours is null)

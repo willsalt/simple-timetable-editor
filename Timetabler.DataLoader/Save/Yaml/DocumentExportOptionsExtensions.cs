@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Save.Yaml
 {
+    /// <summary>
+    /// YAML-related extension methods for the <see cref="DocumentExportOptions" /> class.
+    /// </summary>
     public static class DocumentExportOptionsExtensions
     {
+        /// <summary>
+        /// Convert a <see cref="DocumentExportOptions" /> instance into an <see cref="ExportOptionsModel" /> instance.
+        /// </summary>
+        /// <param name="options">The instance to convert.</param>
+        /// <returns>An <see cref="ExportOptionsModel" /> instance containing the same data in serialisable form.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
         public static ExportOptionsModel ToYamlExportOptionsModel(this DocumentExportOptions options)
         {
             if (options is null)

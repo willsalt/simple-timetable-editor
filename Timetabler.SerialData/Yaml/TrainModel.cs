@@ -14,9 +14,9 @@ namespace Timetabler.SerialData.Yaml
 
         public GraphTrainPropertiesModel GraphProperties { get; set; }
 
-        public List<TrainLocationTimeModel> TrainTimes { get; set; }
+        public List<TrainLocationTimeModel> TrainTimes { get; } = new List<TrainLocationTimeModel>();
 
-        public List<string> FootnoteIds { get; set; }
+        public List<string> FootnoteIds { get; } = new List<string>();
 
         public bool? IncludeSeparatorAbove { get; set; }
 

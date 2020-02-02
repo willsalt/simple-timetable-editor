@@ -77,6 +77,10 @@
     <Compile Include="Load\Xml\TrainLocationTimeModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Xml\TrainModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Xml\TrainTimeModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\DistanceModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\DocumentOptionsModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\ExportOptionsModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\GraphTrainPropertiesModelExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Save\Xml\DistanceExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DocumentExportOptionsExtensionsUnitTests.cs" />

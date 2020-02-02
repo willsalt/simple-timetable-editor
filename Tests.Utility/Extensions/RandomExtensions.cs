@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Timetabler.CoreData;
 
@@ -66,6 +67,44 @@ namespace Tests.Utility.Extensions
                 throw new NullReferenceException();
             }
             return random.Next(2) == 0;
+        }
+
+        public static bool? NextNullableBoolean(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            bool?[] values = { true, false, null };
+            return values[random.Next(values.Length)];
+        }
+
+        public static double? NextNullableDouble(this Random random, double scale)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return random.NextDouble() * scale;
+        }
+
+        public static double? NextNullableDouble(this Random random)
+        {
+            return NextNullableDouble(random, 1.0);
+        }
+
+        public static float? NextNullableFloat(this Random random)
+        {
+            return (float?)NextNullableDouble(random);
+        }
+
+        public static float? NextNullableFloat(this Random random, float scale)
+        {
+            return (float?)NextNullableDouble(random, scale);
         }
 
         public static TimeOfDay NextTimeOfDay(this Random random)
@@ -200,6 +239,42 @@ namespace Tests.Utility.Extensions
             };
 
             return allValues[random.Next(allValues.Length)];
+        }
+
+        public static string NextPotentiallyValidString(this Random random, string[] validValues)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (validValues is null)
+            {
+                throw new ArgumentNullException(nameof(validValues));
+            }
+
+            if (random.Next(5) == 0)
+            {
+                return NextDefinitelyInvalidString(random, validValues);
+            }
+            else
+            {
+                return validValues[random.Next(validValues.Length)];
+            }
+        }
+
+        public static string NextDefinitelyInvalidString(this Random random, string[] validValues)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            string rval;
+            do
+            {
+                rval = random.NextString(random.Next(10));
+            } while (validValues.Contains(rval));
+            return rval;
         }
     }
 }

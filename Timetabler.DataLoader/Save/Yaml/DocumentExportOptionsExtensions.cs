@@ -25,7 +25,7 @@ namespace Timetabler.DataLoader.Save.Yaml
             return new ExportOptionsModel
             {
                 DisplayLocoDiagramRow = options.DisplayLocoDiagramRow,
-                ToWorkRowInOutput = options.DisplayToWorkRow,
+                SetToWorkRowInOutput = options.DisplayToWorkRow,
                 LocoToWorkRowInOutput = options.DisplayLocoToWorkRow,
                 BoxHoursInOutput = options.DisplayBoxHours,
                 CreditsInOutput = options.DisplayCredits,

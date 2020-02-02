@@ -25,7 +25,7 @@ namespace Timetabler.DataLoader.Load.Yaml
             return new DocumentExportOptions
             {
                 DisplayLocoDiagramRow = model.DisplayLocoDiagramRow ?? false,
-                DisplayToWorkRow = model.ToWorkRowInOutput ?? false,
+                DisplayToWorkRow = model.SetToWorkRowInOutput ?? false,
                 DisplayLocoToWorkRow = model.LocoToWorkRowInOutput ?? false,
                 DisplayBoxHours = model.BoxHoursInOutput ?? false,
                 DisplayCredits = model.CreditsInOutput ?? false,

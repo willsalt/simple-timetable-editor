@@ -8,7 +8,7 @@
 
         public bool? GraphsInOutput { get; set; }
 
-        public bool? ToWorkRowInOutput { get; set; }
+        public bool? SetToWorkRowInOutput { get; set; }
 
         public bool? LocoToWorkRowInOutput { get; set; }
 

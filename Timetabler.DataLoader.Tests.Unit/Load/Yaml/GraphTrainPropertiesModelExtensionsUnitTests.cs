@@ -1,12 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.Data;
 using Timetabler.DataLoader.Load.Yaml;
 using Timetabler.SerialData.Yaml;
 
@@ -41,6 +40,93 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             testParam.ToGraphTrainProperties();
 
             Assert.Fail();
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithCorrectWidthProperty_IfWidthPropertyOfParameterIsNotNull()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+            testParam.Width = (float)(_rnd.NextDouble() * 5);
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(testParam.Width, testOutput.Width);
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithWidthPropertyEqualTo1_IfWidthPropertyOfParameterIsNull()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+            testParam.Width = null;
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(1f, testOutput.Width);
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithCorrectColourProperty_IfColourPropertyOfParameterIsValid()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(testParam.Colour, testOutput.Colour.ToArgb().ToString("X8", CultureInfo.InvariantCulture));
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithColourPropertyEqualToBlack_IfColourPropertyOfParameterIsNotValid()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+            testParam.Colour = _rnd.NextString("GHIJKLMNOPQRSTVWXYZ", _rnd.Next(20));
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(Color.Black, testOutput.Colour);
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithColourPropertyEqualToBlack_IfColourPropertyOfParameterIsNull()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+            testParam.Colour = null;
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(Color.Black, testOutput.Colour);
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithCorrectDashStyleProperty_IfDashStyleNamePropertyOfParameterIsValid()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+            testParam.DashStyleName = _validDashStyles[_rnd.Next(_validDashStyles.Length)];
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(testParam.DashStyleName, testOutput.DashStyle.ToString("g"));
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithDashStylePropertyEqualToSolid_IfDashStyleNamePropertyOfParameterIsNotValid()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+            testParam.DashStyleName = _rnd.NextDefinitelyInvalidString(_validDashStyles);
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(DashStyle.Solid, testOutput.DashStyle);
+        }
+
+        [TestMethod]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesModel_ReturnsObjectWithDashStylePropertyEqualToSolid_IfDashStyleNamePropertyOfParameterIsNull()
+        {
+            GraphTrainPropertiesModel testParam = GetModel();
+            testParam.DashStyleName = null;
+
+            GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
+
+            Assert.AreEqual(DashStyle.Solid, testOutput.DashStyle);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

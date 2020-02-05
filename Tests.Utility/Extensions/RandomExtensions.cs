@@ -197,11 +197,27 @@ namespace Tests.Utility.Extensions
 
             ArrivalDepartureOptions[] allValues = new ArrivalDepartureOptions[]
             {
+                0,
                 ArrivalDepartureOptions.Arrival,
                 ArrivalDepartureOptions.Departure,
                 ArrivalDepartureOptions.Arrival | ArrivalDepartureOptions.Departure
             };
             return allValues[random.Next(allValues.Length)];
+        }
+
+        public static ArrivalDepartureOptions? NextNullableArrivalDepartureOptions(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (random.Next(5) == 0)
+            {
+                return null;
+            }
+
+            return NextArrivalDepartureOptions(random);
         }
 
         public static TrainRoutingOptions NextTrainRoutingOptions(this Random random)
@@ -223,6 +239,21 @@ namespace Tests.Utility.Extensions
                 TrainRoutingOptions.Line | TrainRoutingOptions.Path | TrainRoutingOptions.Platform,
             };
             return allValues[random.Next(allValues.Length)];
+        }
+
+        public static TrainRoutingOptions? NextNullableTrainRoutingOptions(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (random.Next(9) == 0)
+            {
+                return null;
+            }
+
+            return NextTrainRoutingOptions(random);
         }
 
         public static LocationFontType NextLocationFontType(this Random random)

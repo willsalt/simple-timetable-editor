@@ -81,6 +81,10 @@
     <Compile Include="Load\Yaml\DocumentOptionsModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Yaml\ExportOptionsModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Yaml\GraphTrainPropertiesModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\LocationModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\NoteModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\SignalboxModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\TimeOfDayModelExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Save\Xml\DistanceExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DocumentExportOptionsExtensionsUnitTests.cs" />

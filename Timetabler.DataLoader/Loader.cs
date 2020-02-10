@@ -50,7 +50,6 @@ namespace Timetabler.DataLoader
                     string startLine = reader.ReadLine();
                     if (startLine.StartsWith("%W", StringComparison.InvariantCulture))
                     {
-                        //return LoadYamlTimetableDocument(reader.ReadToEnd());
                         return yamlLoader(reader.ReadToEnd());
                     }
                     stream.Seek(0, SeekOrigin.Begin);

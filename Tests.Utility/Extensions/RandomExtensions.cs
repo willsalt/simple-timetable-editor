@@ -303,7 +303,7 @@ namespace Tests.Utility.Extensions
             string rval;
             do
             {
-                rval = random.NextString(random.Next(10));
+                rval = random.NextAlphabeticalString(random.Next(10));
             } while (validValues.Contains(rval));
             return rval;
         }

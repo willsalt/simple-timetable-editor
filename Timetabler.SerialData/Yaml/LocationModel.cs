@@ -29,7 +29,5 @@ namespace Timetabler.SerialData.Yaml
         public DistanceModel Mileage { get; set; }
 
         public string FontTypeName { get; set; }
-
-
     }
 }

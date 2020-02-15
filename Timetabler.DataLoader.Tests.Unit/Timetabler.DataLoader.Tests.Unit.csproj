@@ -110,6 +110,12 @@
     <Compile Include="Save\Yaml\DocumentOptionsExtensionsUnitTests.cs" />
     <Compile Include="Save\Yaml\GraphTrainPropertiesExtensionsUnitTests.cs" />
     <Compile Include="Save\Yaml\LocationExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\NoteExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\SignalboxExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\TimeOfDayExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\ToWorkExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\TrainClassExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\TrainTimeExtensionsUnitTests.cs" />
     <Compile Include="TestHelpers\Extensions\RandomExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

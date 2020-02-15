@@ -23,7 +23,7 @@ namespace Timetabler.DataLoader.Save.Yaml
 
             return new TimeOfDayModel
             {
-                Time = string.Format(CultureInfo.InvariantCulture, "{0}:{1}:{2}", tod.Hours24, tod.Minutes, tod.Seconds)
+                Time = string.Format(CultureInfo.InvariantCulture, "{0:d2}:{1:d2}:{2:d2}", tod.Hours24, tod.Minutes, tod.Seconds)
             };
         }
     }

@@ -28,6 +28,8 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+        
         [TestMethod]
         public void DocumentExportOptionsClass_ParameterlessConstructor_SetsLineWidthPropertyToOnePointZero()
         {
@@ -161,5 +163,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(testObject.ExportEngine, testOutput.ExportEngine);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

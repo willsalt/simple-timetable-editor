@@ -8,6 +8,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml.Legacy.V3
     [TestClass]
     public class TimetableFileModelExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TimetableFileModelExtensionsClass_ToTimetableDocumentMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -34,5 +36,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml.Legacy.V3
                 Assert.AreEqual("file", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

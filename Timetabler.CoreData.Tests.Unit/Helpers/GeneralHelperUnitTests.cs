@@ -13,6 +13,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void GeneralHelperClass_GetNewIdMethod_ReturnsIdNotAlreadyInParameterContent()
         {
@@ -53,5 +55,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
                 Assert.AreEqual("existingItems", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

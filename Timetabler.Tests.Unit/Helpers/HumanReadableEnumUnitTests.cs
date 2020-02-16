@@ -12,6 +12,8 @@ namespace Timetabler.Tests.Unit.Helpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void HumanReadableEnumClass_ToStringMethod_ReturnsNameProperty()
         {
@@ -22,5 +24,8 @@ namespace Timetabler.Tests.Unit.Helpers
 
             Assert.AreEqual(testValue, testOutput);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

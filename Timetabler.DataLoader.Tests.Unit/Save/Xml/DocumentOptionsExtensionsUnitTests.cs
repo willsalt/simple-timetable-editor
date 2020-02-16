@@ -9,6 +9,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
     [TestClass]
     public class DocumentOptionsExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -55,5 +57,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
 
             Assert.AreEqual("PreserveSectionTimes", testOutput.GraphEditStyle);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

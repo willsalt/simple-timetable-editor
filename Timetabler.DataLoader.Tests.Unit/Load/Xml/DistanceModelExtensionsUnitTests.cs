@@ -9,6 +9,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     [TestClass]
     public class DistanceModelExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DistanceModelExtensionsClass_ToDistanceMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -56,6 +58,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             Assert.AreEqual(testObject.Chainage, resultObject.Chainage);
         }
 
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+        
         private DistanceModel GetRandomDistanceModel()
         {
             Random random = new Random();

@@ -10,6 +10,8 @@ namespace Timetabler.PdfExport.Tests.Unit
     [TestClass]
     public class PdfExporterUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void PdfExporterClass_ExportMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
@@ -40,5 +42,8 @@ namespace Timetabler.PdfExport.Tests.Unit
                 Assert.AreEqual("document", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

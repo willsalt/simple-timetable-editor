@@ -70,7 +70,6 @@
   <ItemGroup>
     <Compile Include="DocumentDescriptorFactoryUnitTests.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensionsUnitTests.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="LocationBoxDimensionsUnitTests.cs" />
     <Compile Include="PdfExporterUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

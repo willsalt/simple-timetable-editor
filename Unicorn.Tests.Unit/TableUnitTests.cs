@@ -9,6 +9,8 @@ namespace Unicorn.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TableClass_AddRowMethodWithTableRowParameter_ThrowsArgumentNullException_IfParameterIsNull()
@@ -93,5 +95,8 @@ namespace Unicorn.Tests.Unit
                 Assert.AreEqual("graphicsContext", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

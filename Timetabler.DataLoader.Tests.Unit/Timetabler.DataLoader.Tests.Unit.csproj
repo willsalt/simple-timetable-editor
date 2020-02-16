@@ -59,7 +59,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Load\Xml\DistanceModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Xml\DocumentOptionsModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Xml\TimetableDocumentTemplateModelExtensionsUnitTests.cs" />

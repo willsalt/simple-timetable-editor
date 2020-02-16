@@ -9,6 +9,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     [TestClass]
     public class DocumentOptionsModelExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -95,5 +97,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
 
             Assert.AreEqual(GraphEditStyle.PreserveSectionTimes, resultObject.GraphEditStyle);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

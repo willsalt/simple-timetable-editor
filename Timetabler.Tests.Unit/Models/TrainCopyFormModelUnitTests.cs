@@ -10,12 +10,14 @@ namespace Timetabler.Tests.Unit.Models
     [TestClass]
     public class TrainCopyFormModelUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private Train GetTrain()
         {
             return new Train { Id = _rnd.NextHexString(8), Headcode = _rnd.NextString(4) };
         }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -93,5 +95,8 @@ namespace Timetabler.Tests.Unit.Models
 
             Assert.AreEqual(testParam.Headcode, testOutput.TrainName);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

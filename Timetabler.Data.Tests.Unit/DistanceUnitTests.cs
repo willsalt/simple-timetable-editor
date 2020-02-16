@@ -47,6 +47,8 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual((p0.Chainage + p1.Chainage) % 80, t.Chainage);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+        
         [TestMethod]
         public void DistanceClass_AddMethod_ReturnsNullIfBothParametersAreNull()
         {
@@ -127,5 +129,8 @@ namespace Timetabler.Data.Tests.Unit
                 AssertEqual(testParam0, testParam1, testOutput);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

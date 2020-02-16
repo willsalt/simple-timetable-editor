@@ -8,6 +8,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
     [TestClass]
     public class DocumentTemplateExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentTemplateExtensionsClass_ToTimetableDocumentTemplateModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -34,5 +36,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
                 Assert.AreEqual("template", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

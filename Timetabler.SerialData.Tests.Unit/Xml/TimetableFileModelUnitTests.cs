@@ -11,6 +11,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     [TestClass]
     public class TimetableFileModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void TimetableFileModelClass_IsPublic()
         {
@@ -391,5 +393,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
 
             Assert.IsNotNull(testOutput.SignalboxHoursSets);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

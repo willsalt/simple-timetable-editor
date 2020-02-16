@@ -21,6 +21,8 @@ namespace Unicorn.Tests.Unit
             return new Word("", mockFont.Object, mockContext.Object, _rnd.NextDouble() * 10);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void WordClass_DrawAtMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
@@ -84,5 +86,8 @@ namespace Unicorn.Tests.Unit
                 Assert.AreEqual("font", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

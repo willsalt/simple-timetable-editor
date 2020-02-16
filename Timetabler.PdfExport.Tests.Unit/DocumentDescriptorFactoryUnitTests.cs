@@ -13,6 +13,8 @@ namespace Timetabler.PdfExport.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void DocumentDescriptorFactoryClass_GetDocumentDescriptorMethod_ReturnsPdfDocumentClassInstance_IfConstructorParameterWasEqualToUnicorn()
         {
@@ -132,5 +134,8 @@ namespace Timetabler.PdfExport.Tests.Unit
 
             Assert.AreEqual(testParam1, testOutput.DefaultVerticalMarginProportion);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

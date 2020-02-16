@@ -15,6 +15,8 @@ namespace Timetabler.Tests.Unit.Extensions
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DataGridViewExtensionsClass_ClearGridMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
@@ -361,5 +363,8 @@ namespace Timetabler.Tests.Unit.Extensions
                 }
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

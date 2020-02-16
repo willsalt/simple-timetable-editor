@@ -8,6 +8,8 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class NoteUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void NoteClass_CopyToMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -74,5 +76,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(testObject.DefinedOnPages, testOutput.DisplayOnPage);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

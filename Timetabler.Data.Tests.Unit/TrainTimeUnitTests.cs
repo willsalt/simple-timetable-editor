@@ -583,6 +583,8 @@ namespace Timetabler.Data.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+        
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainTimeClass_ResolveFootnotesMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -1126,5 +1128,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreNotEqual(testOutput0, testOutput1);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

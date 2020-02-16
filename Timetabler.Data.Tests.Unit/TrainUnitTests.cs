@@ -1003,6 +1003,8 @@ namespace Timetabler.Data.Tests.Unit
             }
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainClass_ResolveFootnotesMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -1029,5 +1031,8 @@ namespace Timetabler.Data.Tests.Unit
                 Assert.AreEqual("footnoteDictionary", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

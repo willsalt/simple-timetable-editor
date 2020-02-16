@@ -224,6 +224,8 @@ namespace Timetabler.Data.Tests.Unit
             return s1.Id != s2.Id && s1.Code != s2.Code && s1.EditorDisplayName != s2.EditorDisplayName && s1.ExportDisplayName != s2.ExportDisplayName;
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SignalboxClass_CopyToMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -310,5 +312,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(sourceObject.ExportDisplayName, testObject.ExportDisplayName);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

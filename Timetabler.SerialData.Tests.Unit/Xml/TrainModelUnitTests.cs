@@ -9,6 +9,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     [TestClass]
     public class TrainModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void TrainModelClass_IsPublic()
         {
@@ -210,5 +212,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
                 Assert.AreEqual("writer", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

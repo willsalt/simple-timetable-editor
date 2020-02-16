@@ -6,6 +6,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
     [TestClass]
     public class CommonPdfNamesUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void CommonPdfNamesClass_CatalogField_HasCorrectValueProperty()
         {
@@ -101,5 +103,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.AreEqual("Type", testOutput.Value);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

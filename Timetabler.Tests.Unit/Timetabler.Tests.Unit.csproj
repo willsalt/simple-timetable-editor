@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Extensions\TimeOfDayExtensionsUnitTests.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensionsUnitTests.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Extensions\ClockTypeExtensionsUnitTests.cs" />
     <Compile Include="Extensions\DataGridViewExtensionsUnitTests.cs" />
     <Compile Include="Extensions\FileDialogExtensionsUnitTests.cs" />

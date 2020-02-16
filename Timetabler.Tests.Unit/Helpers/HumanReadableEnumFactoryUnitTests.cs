@@ -15,6 +15,8 @@ namespace Timetabler.Tests.Unit.Helpers
     [TestClass]
     public class HumanReadableEnumFactoryUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void HumanReadableEnumFactoryClass_GetDashStylesMethod_ReturnsArrayOfLength5()
         {
@@ -249,5 +251,8 @@ namespace Timetabler.Tests.Unit.Helpers
             HumanReadableEnum<PdfExportEngine> item = testOutput.Single(e => e.Value == PdfExportEngine.External);
             Assert.AreEqual(Resources.HumanReadableEnum_PdfExportEngine_External, item.Name);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

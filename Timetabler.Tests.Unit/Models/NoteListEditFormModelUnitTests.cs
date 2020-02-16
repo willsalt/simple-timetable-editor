@@ -8,6 +8,8 @@ namespace Timetabler.Tests.Unit.Models
     [TestClass]
     public class NoteListEditFormModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void NoteListEditFormModelClass_Constructor_SetsDataPropertyToNonNullValue_IfParameterIsNull()
         {
@@ -37,5 +39,8 @@ namespace Timetabler.Tests.Unit.Models
 
             Assert.AreSame(testParam0, testOutput.Data);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

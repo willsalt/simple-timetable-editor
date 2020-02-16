@@ -57,6 +57,8 @@ namespace Timetabler.Data.Tests.Unit
             return result;
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void DocumentTemplateClass_Constructor_CreatesObjectWithEmptyLocationsProperty_IfFirstParameterIsNull()
         {
@@ -148,5 +150,8 @@ namespace Timetabler.Data.Tests.Unit
                 Assert.AreSame(testParam3[i], testObject.Signalboxes[i]);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

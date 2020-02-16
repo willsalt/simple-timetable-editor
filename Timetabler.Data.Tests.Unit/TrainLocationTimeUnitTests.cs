@@ -1365,6 +1365,8 @@ namespace Timetabler.Data.Tests.Unit
             Assert.IsNull(testObject.ArrivalTime);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainLocationTimeClass_ResolveLocationMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -1411,5 +1413,8 @@ namespace Timetabler.Data.Tests.Unit
                 Assert.AreEqual("map", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

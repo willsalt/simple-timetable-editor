@@ -23,6 +23,8 @@ namespace Unicorn.Tests.Unit
             return new PlainTextTableCell("", mockFont.Object, mockContext.Object);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void PlainTextTableCellClass_MeasureSizeMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -80,5 +82,8 @@ namespace Unicorn.Tests.Unit
                 Assert.AreEqual("context", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

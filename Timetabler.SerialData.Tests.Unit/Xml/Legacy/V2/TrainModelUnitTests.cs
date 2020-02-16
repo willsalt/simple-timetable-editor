@@ -7,6 +7,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V2
     [TestClass]
     public class TrainModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainModelClass_ReadXmlMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -60,5 +62,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml.Legacy.V2
                 Assert.AreEqual("writer", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

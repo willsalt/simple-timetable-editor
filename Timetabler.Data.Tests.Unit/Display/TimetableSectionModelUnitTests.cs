@@ -22,6 +22,9 @@ namespace Timetabler.Data.Tests.Unit.Display
             return new TimetableSectionModel(_rnd.NextBoolean() ? Direction.Down : Direction.Up, new LocationCollection());
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TimetableSectionModelClass_AddMethod_ThrowsArgumentNullExceptionIfParameterIsNull()
@@ -48,5 +51,8 @@ namespace Timetabler.Data.Tests.Unit.Display
                 Assert.AreEqual("segment", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

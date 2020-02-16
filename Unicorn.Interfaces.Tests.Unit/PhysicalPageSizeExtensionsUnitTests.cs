@@ -9,6 +9,8 @@ namespace Unicorn.Interfaces.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void PhysicalPageSizeExtensionsClass_ToUniSizeMethodWithOneParameter_ReturnsCorrectValueWhenParameterEqualsA1()
         {
@@ -431,5 +433,8 @@ namespace Unicorn.Interfaces.Tests.Unit
 
             Assert.Fail();
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

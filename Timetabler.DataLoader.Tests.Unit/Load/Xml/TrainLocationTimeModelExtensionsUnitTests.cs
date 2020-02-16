@@ -36,6 +36,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             Assert.IsNull(testResult);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullException_IfFourthParameterIsNull()
@@ -63,6 +65,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             }
         }
 
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+        
         [TestMethod]
         public void TrainLocationTimeModelExtensionsToTrainLocationTimeMethodReturnsObjectWithCorrectLocationPropertyIfLocationIdPropertyOfFirstParameterIsPresentAsKeyInSecondParameter()
         {

@@ -13,6 +13,8 @@ namespace Timetabler.Tests.Unit.Helpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TimeHelpersClass_ClearTimeBoxesMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
@@ -228,5 +230,8 @@ namespace Timetabler.Tests.Unit.Helpers
                 }
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

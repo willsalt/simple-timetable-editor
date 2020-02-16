@@ -27,6 +27,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             };
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+        
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void NoteModelExtensionsClass_ToNoteMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -54,6 +56,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             }
         }
 
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+        
         [TestMethod]
         public void NoteModelExtensionsClassToNoteMethodReturnsObjectIfParameterIsNotNull()
         {

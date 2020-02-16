@@ -24,6 +24,8 @@ namespace Unicorn.Tests.Unit.Shapes
             return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void HorizontalArrowClass_Constructor_FirstParameterSetsDirectionProperty()
         {
@@ -394,5 +396,8 @@ namespace Unicorn.Tests.Unit.Shapes
                 Assert.IsTrue(point.Y - (testParam2 + testObject.Height) < 0.0000000001);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

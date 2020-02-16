@@ -8,6 +8,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     [TestClass]
     public class ToWorkModelExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ToWorkModelExtensionsClass_ToToWorkMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -34,5 +36,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 Assert.AreEqual("model", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

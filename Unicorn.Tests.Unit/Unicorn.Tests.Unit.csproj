@@ -68,7 +68,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ParagraphUnitTests.cs" />
     <Compile Include="PlainTextTableCellUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

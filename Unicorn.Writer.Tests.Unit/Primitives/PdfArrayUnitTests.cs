@@ -14,6 +14,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         private IEnumerable<IPdfPrimitiveObject> GetPdfPrimitiveObjects(int? count = null)
         {
             if (!count.HasValue)
@@ -69,5 +71,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             // long enough to trigger adding a line ending.
             Assert.AreEqual(testObjectContents[0].ByteLength + 3, testObject.ByteLength);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

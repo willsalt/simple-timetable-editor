@@ -25,7 +25,7 @@ namespace Timetabler.CoreData
         /// <param name="seconds">Number of seconds.</param>
         public TimeOfDay(int hours, int minutes, int seconds)
         {
-            AbsoluteSeconds = (hours * 3600 + minutes * 60 + seconds) % 86400;
+            AbsoluteSeconds = (int)((hours * 3600L + minutes * 60 + seconds) % 86400);
         }
 
         /// <summary>

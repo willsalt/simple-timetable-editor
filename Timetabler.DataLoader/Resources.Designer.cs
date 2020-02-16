@@ -70,11 +70,29 @@ namespace Timetabler.DataLoader {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empty time of day could not be parsed..
+        /// </summary>
+        internal static string Error_EmptyTime {
+            get {
+                return ResourceManager.GetString("Error_EmptyTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unexpected exception occurred in loader..
         /// </summary>
         internal static string Error_GenericLoaderError {
             get {
                 return ResourceManager.GetString("Error_GenericLoaderError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time of day could not be parsed..
+        /// </summary>
+        internal static string Error_TimeUnparseable {
+            get {
+                return ResourceManager.GetString("Error_TimeUnparseable", resourceCulture);
             }
         }
         

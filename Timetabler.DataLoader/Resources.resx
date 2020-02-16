@@ -120,8 +120,14 @@
   <data name="Error_CouldNotCreateXmlReader" xml:space="preserve">
     <value>Could not create XML reader.</value>
   </data>
+  <data name="Error_EmptyTime" xml:space="preserve">
+    <value>Empty time of day could not be parsed.</value>
+  </data>
   <data name="Error_GenericLoaderError" xml:space="preserve">
     <value>Unexpected exception occurred in loader.</value>
+  </data>
+  <data name="Error_TimeUnparseable" xml:space="preserve">
+    <value>Time of day could not be parsed.</value>
   </data>
   <data name="Error_XmlDoesNotContainDocumentModel" xml:space="preserve">
     <value>Stream does not contain &lt;DocumentModel&gt;.</value>

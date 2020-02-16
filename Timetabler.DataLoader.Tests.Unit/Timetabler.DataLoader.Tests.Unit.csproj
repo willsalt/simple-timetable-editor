@@ -77,7 +77,21 @@
     <Compile Include="Load\Xml\TrainLocationTimeModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Xml\TrainModelExtensionsUnitTests.cs" />
     <Compile Include="Load\Xml\TrainTimeModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\DistanceModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\DocumentOptionsModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\ExportOptionsModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\GraphTrainPropertiesModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\LocationModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\NoteModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\SignalboxHoursModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\SignalboxHoursSetModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\SignalboxModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\TimeOfDayModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\ToWorkModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\TrainClassModelExtensionsUnitTests.cs" />
+    <Compile Include="Load\Yaml\TrainTimeModelExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Save\Yaml\DistanceExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DistanceExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DocumentExportOptionsExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\DocumentOptionsExtensionsUnitTests.cs" />
@@ -94,7 +108,18 @@
     <Compile Include="Save\Xml\TrainExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\TrainLocationTimeExtensionsUnitTests.cs" />
     <Compile Include="Save\Xml\TrainTimeExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\DocumentExportOptionsExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\DocumentOptionsExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\GraphTrainPropertiesExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\LocationExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\NoteExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\SignalboxExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\TimeOfDayExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\ToWorkExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\TrainClassExtensionsUnitTests.cs" />
+    <Compile Include="Save\Yaml\TrainTimeExtensionsUnitTests.cs" />
     <Compile Include="TestHelpers\Extensions\RandomExtensions.cs" />
+    <Compile Include="TestHelpers\TimeOfDaySpecification.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">
@@ -104,6 +129,10 @@
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
       <Project>{ddc29237-18c5-40a7-bccc-2a51fa8c5f9f}</Project>
       <Name>Timetabler.CoreData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.Data.Tests.Utility\Timetabler.Data.Tests.Utility.csproj">
+      <Project>{29375882-f201-482a-aab6-ac7fb95f15cf}</Project>
+      <Name>Timetabler.Data.Tests.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.DataLoader\Timetabler.DataLoader.csproj">
       <Project>{e6ff8e04-a41d-446b-9f8a-ccfaf4b08ad2}</Project>

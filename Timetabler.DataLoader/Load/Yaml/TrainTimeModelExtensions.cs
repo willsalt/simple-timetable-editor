@@ -28,7 +28,11 @@ namespace Timetabler.DataLoader.Load.Yaml
 
             foreach (string noteId in model.FootnoteIds)
             {
-                tt.Footnotes.Add(notes?[noteId]);
+                Note note = notes?[noteId];
+                if (note != null)
+                {
+                    tt.Footnotes.Add(notes?[noteId]);
+                }
             }
 
             return tt;

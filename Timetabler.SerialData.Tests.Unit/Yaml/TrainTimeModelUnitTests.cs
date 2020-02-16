@@ -64,6 +64,5 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
-
     }
 }

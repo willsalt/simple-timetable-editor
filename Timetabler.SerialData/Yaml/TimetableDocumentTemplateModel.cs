@@ -38,11 +38,6 @@ namespace Timetabler.SerialData.Yaml
         public List<TrainClassModel> TrainClasses { get; } = new List<TrainClassModel>();
 
         /// <summary>
-        /// Signalboxes in this template.
-        /// </summary>
-        public List<SignalboxModel> Signalboxes { get; } = new List<SignalboxModel>();
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         public TimetableDocumentTemplateModel()

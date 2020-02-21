@@ -127,15 +127,6 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
         }
 
         [TestMethod]
-        public void TimetableDocumentTemplateModelClass_Constructor_SetsSignalboxesPropertyToEmptyCollection()
-        {
-            TimetableDocumentTemplateModel testOutput = new TimetableDocumentTemplateModel();
-
-            Assert.IsNotNull(testOutput.Signalboxes);
-            Assert.AreEqual(0, testOutput.Signalboxes.Count);
-        }
-
-        [TestMethod]
         public void TimetableDocumentTemplateModelClass_Constructor_SetsVersionPropertyTo3()
         {
             TimetableDocumentTemplateModel testOutput = new TimetableDocumentTemplateModel();

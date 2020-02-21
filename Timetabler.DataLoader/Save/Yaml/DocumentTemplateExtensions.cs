@@ -30,10 +30,10 @@ namespace Timetabler.DataLoader.Save.Yaml
             };
             NetworkMapModel nmm = new NetworkMapModel();
             nmm.LocationList.AddRange(template.Locations.Select(c => c.ToYamlLocationModel()));
+            nmm.Signalboxes.AddRange(template.Signalboxes.Select(b => b.ToYamlSignalboxModel()));
             tdtm.Maps.Add(nmm);
             tdtm.NoteDefinitions.AddRange(template.NoteDefinitions.Select(n => n.ToYamlNoteModel()));
             tdtm.TrainClasses.AddRange(template.TrainClasses.Select(c => c.ToYamlTrainClassModel()));
-            tdtm.Signalboxes.AddRange(template.Signalboxes.Select(b => b.ToYamlSignalboxModel()));
             return tdtm;
         }
     }

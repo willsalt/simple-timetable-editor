@@ -172,6 +172,7 @@ namespace Timetabler
                 }
                 Model.FileName = sfdDocument.FileName;
                 _documentChanged = false;
+                MessageBox.Show(this, Resources.MainForm_FileSave_Success, Resources.MainForm_FileSave_SuccessTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (IOException ex)
             {

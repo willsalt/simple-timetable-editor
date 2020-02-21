@@ -276,6 +276,12 @@ Detail message: {1}</value>
   <data name="MainForm_FileSave_SharingViolationTitle" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="MainForm_FileSave_Success" xml:space="preserve">
+    <value>File saved.</value>
+  </data>
+  <data name="MainForm_FileSave_SuccessTitle" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="MainForm_FormClosing_UnsavedChanges" xml:space="preserve">
     <value>There are unsaved changes.  Do you really want to exit?</value>
   </data>

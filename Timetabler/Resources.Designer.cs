@@ -520,6 +520,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File saved..
+        /// </summary>
+        internal static string MainForm_FileSave_Success {
+            get {
+                return ResourceManager.GetString("MainForm_FileSave_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string MainForm_FileSave_SuccessTitle {
+            get {
+                return ResourceManager.GetString("MainForm_FileSave_SuccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unsaved changes.  Do you really want to exit?.
         /// </summary>
         internal static string MainForm_FormClosing_UnsavedChanges {

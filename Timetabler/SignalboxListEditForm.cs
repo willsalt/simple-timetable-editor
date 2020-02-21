@@ -63,9 +63,9 @@ namespace Timetabler
         /// </summary>
         public SignalboxListEditForm(SignalboxCollection model)
         {
-            Model = model;
             _rowMap = new Dictionary<string, DataGridViewRow>();
             InitializeComponent();
+            Model = model;
         }
 
         private void UpdateViewFromModel()

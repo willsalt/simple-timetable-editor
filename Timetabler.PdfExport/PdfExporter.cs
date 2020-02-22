@@ -179,7 +179,7 @@ namespace Timetabler.PdfExport
                 UniSize boxHoursSize = null;
                 if ((document.ExportOptions?.DisplayBoxHours ?? true) && document.SignalboxHoursSets.Count > 0)
                 {
-                    Table hoursTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows };
+                    Table hoursTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
                     MarginSet hoursTableCellMargins = new MarginSet(0, 3, 0, 3);
                     List<TableCell> cells = new List<TableCell>
                     {

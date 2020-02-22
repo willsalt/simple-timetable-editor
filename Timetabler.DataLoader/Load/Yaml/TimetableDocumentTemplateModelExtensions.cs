@@ -38,7 +38,7 @@ namespace Timetabler.DataLoader.Load.Yaml
                 locationSource,
                 model.NoteDefinitions.Select(n => n.ToNote()),
                 model.TrainClasses.Select(c => c.ToTrainClass()),
-                model.Signalboxes.Select(s => s.ToSignalbox()))
+                model.Maps[0].Signalboxes.Select(s => s.ToSignalbox()))
             {
                 DocumentOptions = model.DefaultOptions.ToDocumentOptions(),
                 ExportOptions = model.DefaultExportOptions.ToDocumentExportOptions(),

@@ -666,7 +666,7 @@ namespace Timetabler.PdfExport
 
             // Write am/pm indicator
             Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_DrawingSeparator, xCoord + lineGapSize, currentYCoord, (xCoord + segmentWidth) - lineGapSize, currentYCoord);
-            _currentPage.PageGraphics.DrawLine(xCoord + lineGapSize, currentYCoord, (xCoord + segmentWidth) - lineGapSize, currentYCoord);
+            _currentPage.PageGraphics.DrawLine(xCoord + lineGapSize, currentYCoord, (xCoord + segmentWidth) - lineGapSize, currentYCoord, MainLineWidth);
             currentDims = _currentPage.PageGraphics.MeasureString(segment.HalfOfDay, _plainBodyFont);
             Log.Trace("Writing \"{0}\" at {1}, {2}", segment.HalfOfDay, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + _plainBodyFont.Ascent);
             _currentPage.PageGraphics.DrawString(segment.HalfOfDay, _plainBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + _plainBodyFont.Ascent);

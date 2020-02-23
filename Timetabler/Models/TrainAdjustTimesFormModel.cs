@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Timetabler.CoreData;
 using Timetabler.Data;
 
@@ -21,7 +17,7 @@ namespace Timetabler.Models
         /// <summary>
         /// List of valid locations for the locations combobox.
         /// </summary>
-        public List<Location> ValidLocations { get; set; }
+        public List<Location> ValidLocations { get; private set; }
 
         /// <summary>
         /// The selected location in the locations combobox.
@@ -37,5 +33,15 @@ namespace Timetabler.Models
         /// The time offset to add or subtract, in minutes.
         /// </summary>
         public int Offset { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="validLocations">The locations that this train stops at or passes.</param>
+        public TrainAdjustTimesFormModel(IEnumerable<Location> validLocations)
+        {
+            ValidLocations = new List<Location>();
+            ValidLocations.AddRange(validLocations);
+        }
     }
 }

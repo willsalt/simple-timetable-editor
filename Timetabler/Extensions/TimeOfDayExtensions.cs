@@ -1,4 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Globalization;
+using System.Windows.Forms;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.Helpers;
 
@@ -19,15 +22,32 @@ namespace Timetabler.Extensions
         /// <param name="inputMode">The <see cref="ClockType" /> to determine whether to format the values using the 12-hour or 24-hour clock.</param>
         public static void SetTime(this TimeOfDay time, TextBox tbHour, TextBox tbMinute, ComboBox cbHalfOfDay, ClockType inputMode)
         {
-            tbMinute.Text = time.Minutes.ToString("d2");
+            if (time is null)
+            {
+                throw new ArgumentNullException(nameof(time));
+            }
+            if (tbMinute is null)
+            {
+                throw new ArgumentNullException(nameof(tbMinute));
+            }
+            if (tbHour is null)
+            {
+                throw new ArgumentNullException(nameof(tbHour));
+            }
+            if (cbHalfOfDay is null)
+            {
+                throw new ArgumentNullException(nameof(cbHalfOfDay));
+            }
+
+            tbMinute.Text = time.Minutes.ToString("d2", CultureInfo.CurrentCulture);
             switch (inputMode)
             {
                 case ClockType.TwelveHourClock:
-                    tbHour.Text = time.Hours12.ToString();
+                    tbHour.Text = time.Hours12.ToString(CultureInfo.CurrentCulture);
                     SetTimeHalfOfDay(cbHalfOfDay, time);
                     break;
                 case ClockType.TwentyFourHourClock:
-                    tbHour.Text = time.Hours24.ToString();
+                    tbHour.Text = time.Hours24.ToString(CultureInfo.CurrentCulture);
                     break;
             }
         }
@@ -37,8 +57,7 @@ namespace Timetabler.Extensions
             HalfOfDay expectedValue = time.Hours24 < 12 ? HalfOfDay.AM : HalfOfDay.PM;
             foreach (object obj in cbHalfOfDay.Items)
             {
-                HumanReadableEnum<HalfOfDay> hodItem = obj as HumanReadableEnum<HalfOfDay>;
-                if (hodItem != null && hodItem.Value == expectedValue)
+                if (obj is HumanReadableEnum<HalfOfDay> hodItem && hodItem.Value == expectedValue)
                 {
                     cbHalfOfDay.SelectedItem = hodItem;
                     break;

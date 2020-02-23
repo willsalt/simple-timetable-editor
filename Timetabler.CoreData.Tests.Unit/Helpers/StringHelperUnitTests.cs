@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData.Helpers;
 
 namespace Timetabler.CoreData.Tests.Unit.Helpers
@@ -8,23 +9,29 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
     [TestClass]
     public class StringHelperUnitTests
     {
-        private Random _random;
-
+        private static readonly Random _rnd = RandomProvider.Default;
         private const int MaxTestStringLength = 1024;
 
-        public StringHelperUnitTests()
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
+        [TestMethod]
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsNullIfParameterIsNull()
         {
-            _random = new Random();
+            string testString = null;
+
+            string result = testString.StripArrivalDepartureSuffix();
+
+            Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void StripArrivalDepartureSuffixReturnsFirstArgumentIfFirstArgumentDoesNotEndInDashDOrDashA()
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentIfFirstArgumentDoesNotEndInDashDOrDashA()
         {
             string testString;
             do
             {
-                testString = _random.NextString(_random.Next(MaxTestStringLength));
-            } while (testString.EndsWith("-a") || testString.EndsWith("-d"));
+                testString = _rnd.NextString(_rnd.Next(MaxTestStringLength));
+            } while (testString.EndsWith("-a", StringComparison.InvariantCulture) || testString.EndsWith("-d", StringComparison.InvariantCulture));
 
             string result = testString.StripArrivalDepartureSuffix();
 
@@ -32,9 +39,9 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         }
 
         [TestMethod]
-        public void StripArrivalDepartureSuffixReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInArrivalSuffix()
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInArrivalSuffix()
         {
-            string expectedResult = _random.NextString(_random.Next(MaxTestStringLength));
+            string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
             string testString = expectedResult + LocationIdSuffixes.Arrival;
 
             string result = testString.StripArrivalDepartureSuffix();
@@ -43,14 +50,17 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         }
 
         [TestMethod]
-        public void StripArrivalDepartureSuffixReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInDepartureSuffix()
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInDepartureSuffix()
         {
-            string expectedResult = _random.NextString(_random.Next(MaxTestStringLength));
+            string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
             string testString = expectedResult + LocationIdSuffixes.Departure;
 
             string result = testString.StripArrivalDepartureSuffix();
 
             Assert.AreEqual(expectedResult, result);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

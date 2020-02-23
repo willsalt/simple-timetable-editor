@@ -168,6 +168,12 @@
   <data name="HumanReadableEnum_LocationFontType_Normal" xml:space="preserve">
     <value>Normal</value>
   </data>
+  <data name="HumanReadableEnum_PdfExportEngine_External" xml:space="preserve">
+    <value>External</value>
+  </data>
+  <data name="HumanReadableEnum_PdfExportEngine_Unicorn" xml:space="preserve">
+    <value>Unicorn</value>
+  </data>
   <data name="LocationEditForm_Chainage_ValidationFailureNaN" xml:space="preserve">
     <value>The chainage must be a number.</value>
   </data>
@@ -176,6 +182,60 @@
   </data>
   <data name="LocationEditForm_Mileage_ValidationFailureNaN" xml:space="preserve">
     <value>The mileage must be a number.</value>
+  </data>
+  <data name="LogMessage_CbClockTypeValue" xml:space="preserve">
+    <value>cbClockType: value is {0}</value>
+  </data>
+  <data name="LogMessage_CbGraphEditStyleValue" xml:space="preserve">
+    <value>cbGraphEditStyle: value is {0}</value>
+  </data>
+  <data name="LogMessage_CbPdfEngineValue" xml:space="preserve">
+    <value>cbPdfEngine is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayBoxHoursValue" xml:space="preserve">
+    <value>ckDisplayBoxHours is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayCreditsValue" xml:space="preserve">
+    <value>ckDisplayCredits is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayGlossaryValue" xml:space="preserve">
+    <value>ckDisplayGlossary is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayGraphValue" xml:space="preserve">
+    <value>ckDisplayGraph is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayLocoDiagramValue" xml:space="preserve">
+    <value>ckDisplayLocoDiagram is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayLocoToWorkRowValue" xml:space="preserve">
+    <value>ckDisplayLocoToWorkRow is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayToWorkRowValue" xml:space="preserve">
+    <value>ckDisplayToWorkRow is {0}</value>
+  </data>
+  <data name="LogMessage_CkDisplayTrainLabelsOnGraphsValue" xml:space="preserve">
+    <value>ckDisplayTrainLabelsOnGraphs is {0}</value>
+  </data>
+  <data name="LogMessage_ColumnIsATrainColumn" xml:space="preserve">
+    <value>Column {0} is a train column.</value>
+  </data>
+  <data name="LogMessage_ColumnIsNotATrainColumn" xml:space="preserve">
+    <value>Column {0} is not a train column.</value>
+  </data>
+  <data name="LogMessage_EnteringEditTrain" xml:space="preserve">
+    <value>Entering EditTrain({0})</value>
+  </data>
+  <data name="LogMessage_NudFillerDashLineWidthValue" xml:space="preserve">
+    <value>nudFillerDashLineWidth is {0}</value>
+  </data>
+  <data name="LogMessage_NudLineWidthValue" xml:space="preserve">
+    <value>nudLineWidth is {0}</value>
+  </data>
+  <data name="LogMessage_SelectedTrainId" xml:space="preserve">
+    <value>Train ID for selected column is {0}</value>
+  </data>
+  <data name="LogWarning_TrainDoesNotExist" xml:space="preserve">
+    <value>Train {0} does not exist.</value>
   </data>
   <data name="MainForm_Export_Completed" xml:space="preserve">
     <value>Export completed.</value>
@@ -215,6 +275,12 @@ Detail message: {1}</value>
   </data>
   <data name="MainForm_FileSave_SharingViolationTitle" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="MainForm_FileSave_Success" xml:space="preserve">
+    <value>File saved.</value>
+  </data>
+  <data name="MainForm_FileSave_SuccessTitle" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="MainForm_FormClosing_UnsavedChanges" xml:space="preserve">
     <value>There are unsaved changes.  Do you really want to exit?</value>

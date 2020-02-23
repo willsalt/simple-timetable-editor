@@ -40,7 +40,7 @@ namespace Timetabler.Data.Collections
         /// <param name="contents"></param>
         public LocationCollection(IEnumerable<Location> contents)
         {
-            _innerCollection.AddRange(contents);
+            InnerCollection.AddRange(contents);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Timetabler.Data.Collections
         /// <param name="locationComparer">The <see cref="LocationComparer"/> to use to order the collection contents.</param>
         public void Sort(LocationComparer locationComparer)
         {
-            _innerCollection.Sort(locationComparer);
+            InnerCollection.Sort(locationComparer);
         }
 
         /// <summary>

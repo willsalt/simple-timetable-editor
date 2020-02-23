@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.CoreData.Interfaces;
 
 namespace Timetabler.Data.Collections
@@ -16,7 +13,6 @@ namespace Timetabler.Data.Collections
     {
         private BaseCollection<T> _collection;
         private int _curIdx;
-        private T _cur;
 
         /// <summary>
         /// Constructs the enumerator for a given <see cref="BaseCollection{T}"/>.
@@ -26,29 +22,36 @@ namespace Timetabler.Data.Collections
         {
             _collection = collection;
             _curIdx = -1;
-            _cur = null;
+            Current = null;
         }
 
         /// <summary>
         /// Gets the currently-enumerated object.
         /// </summary>
-        public T Current
-        {
-            get { return _cur; }
-        }
+        public T Current { get; private set; }
 
         /// <summary>
         /// Gets the currently-enumerated object.
         /// </summary>
         object IEnumerator.Current
         {
-            get { return _cur; }
+            get { return Current; }
         }
 
         /// <summary>
         /// Dispose of this enumerator.
         /// </summary>
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose of this enumerator.
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
         {
 
         }
@@ -63,7 +66,7 @@ namespace Timetabler.Data.Collections
             {
                 return false;
             }
-            _cur = _collection[_curIdx];
+            Current = _collection[_curIdx];
             return true;
         }
 
@@ -73,7 +76,7 @@ namespace Timetabler.Data.Collections
         public void Reset()
         {
             _curIdx = -1;
-            _cur = null;
+            Current = null;
         }
     }
 }

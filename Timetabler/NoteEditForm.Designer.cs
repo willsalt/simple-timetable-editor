@@ -55,41 +55,41 @@
             // 
             resources.ApplyResources(this.tbSymbol, "tbSymbol");
             this.tbSymbol.Name = "tbSymbol";
-            this.tbSymbol.Validated += new System.EventHandler(this.tbSymbol_Validated);
+            this.tbSymbol.Validated += new System.EventHandler(this.TbSymbol_Validated);
             // 
             // tbDefinition
             // 
             resources.ApplyResources(this.tbDefinition, "tbDefinition");
             this.tbDefinition.Name = "tbDefinition";
-            this.tbDefinition.Validated += new System.EventHandler(this.tbDefinition_Validated);
+            this.tbDefinition.Validated += new System.EventHandler(this.TbDefinition_Validated);
             // 
             // ckAppliesToTrains
             // 
             resources.ApplyResources(this.ckAppliesToTrains, "ckAppliesToTrains");
             this.ckAppliesToTrains.Name = "ckAppliesToTrains";
             this.ckAppliesToTrains.UseVisualStyleBackColor = true;
-            this.ckAppliesToTrains.CheckedChanged += new System.EventHandler(this.ckAppliesToTrains_CheckedChanged);
+            this.ckAppliesToTrains.CheckedChanged += new System.EventHandler(this.CkAppliesToTrains_CheckedChanged);
             // 
             // ckAppliesToTimings
             // 
             resources.ApplyResources(this.ckAppliesToTimings, "ckAppliesToTimings");
             this.ckAppliesToTimings.Name = "ckAppliesToTimings";
             this.ckAppliesToTimings.UseVisualStyleBackColor = true;
-            this.ckAppliesToTimings.CheckedChanged += new System.EventHandler(this.ckAppliesToTimings_CheckedChanged);
+            this.ckAppliesToTimings.CheckedChanged += new System.EventHandler(this.CkAppliesToTimings_CheckedChanged);
             // 
             // ckPageFootnote
             // 
             resources.ApplyResources(this.ckPageFootnote, "ckPageFootnote");
             this.ckPageFootnote.Name = "ckPageFootnote";
             this.ckPageFootnote.UseVisualStyleBackColor = true;
-            this.ckPageFootnote.CheckedChanged += new System.EventHandler(this.ckPageFootnote_CheckedChanged);
+            this.ckPageFootnote.CheckedChanged += new System.EventHandler(this.CkPageFootnote_CheckedChanged);
             // 
             // ckInGlossary
             // 
             resources.ApplyResources(this.ckInGlossary, "ckInGlossary");
             this.ckInGlossary.Name = "ckInGlossary";
             this.ckInGlossary.UseVisualStyleBackColor = true;
-            this.ckInGlossary.CheckedChanged += new System.EventHandler(this.ckInGlossary_CheckedChanged);
+            this.ckInGlossary.CheckedChanged += new System.EventHandler(this.CkInGlossary_CheckedChanged);
             // 
             // btnOk
             // 

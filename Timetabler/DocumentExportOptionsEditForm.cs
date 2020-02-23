@@ -1,7 +1,9 @@
 ﻿using NLog;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.Data;
+using Timetabler.Helpers;
 
 namespace Timetabler
 {
@@ -10,7 +12,7 @@ namespace Timetabler
     /// </summary>
     public partial class DocumentExportOptionsEditForm : Form
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         private bool _inViewUpdate;
         private DocumentExportOptions _model;
@@ -37,6 +39,7 @@ namespace Timetabler
         public DocumentExportOptionsEditForm()
         {
             InitializeComponent();
+            cbPdfEngine.Items.AddRange(HumanReadableEnumFactory.GetPdfExportEngine());
         }
 
         private void UpdateViewFromModel()
@@ -55,97 +58,121 @@ namespace Timetabler
             ckDisplayGlossary.Checked = Model.DisplayGlossary;
             nudLineWidth.Value = (decimal)Model.LineWidth;
             nudFillerDashLineWidth.Value = (decimal)Model.FillerDashLineWidth;
+            foreach (var item in cbPdfEngine.Items)
+            {
+                if (item is HumanReadableEnum<PdfExportEngine> engineItem && engineItem.Value == Model.ExportEngine)
+                {
+                    cbPdfEngine.SelectedItem = engineItem;
+                    break;
+                }
+            }
             _inViewUpdate = false;
         }
 
-        private void ckDisplayLocoDiagram_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayLocoDiagram_CheckedChanged(object sender, EventArgs e)
         {          
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayLocoDiagram is {0}", ckDisplayLocoDiagram.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayLocoDiagramValue, ckDisplayLocoDiagram.Checked);
             Model.DisplayLocoDiagramRow = ckDisplayLocoDiagram.Checked;
         }
 
-        private void ckDisplayToWorkRow_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayToWorkRow_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayToWorkRow is {0}", ckDisplayToWorkRow.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayToWorkRowValue, ckDisplayToWorkRow.Checked);
             Model.DisplayToWorkRow = ckDisplayToWorkRow.Checked;
         }
 
-        private void ckDisplayBoxHours_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayBoxHours_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayBoxHours is {0}", ckDisplayBoxHours.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayBoxHoursValue, ckDisplayBoxHours.Checked);
             Model.DisplayBoxHours = ckDisplayBoxHours.Checked;
         }
 
-        private void ckDisplayCredits_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayCredits_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayCredits is {0}", ckDisplayCredits.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayCreditsValue, ckDisplayCredits.Checked);
             Model.DisplayCredits = ckDisplayCredits.Checked;
         }
 
-        private void ckDisplayLocoToWorkRow_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayLocoToWorkRow_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayLocoToWorkRow is {0}", ckDisplayLocoToWorkRow.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayLocoToWorkRowValue, ckDisplayLocoToWorkRow.Checked);
             Model.DisplayLocoToWorkRow = ckDisplayLocoToWorkRow.Checked;
         }
 
-        private void nudLineWidth_ValueChanged(object sender, EventArgs e)
+        private void NudLineWidth_ValueChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("nudLineWidth is {0}", nudLineWidth.Value);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NudLineWidthValue, nudLineWidth.Value);
             Model.LineWidth = (double)nudLineWidth.Value;
         }
 
-        private void nudFillerDashLineWidth_ValueChanged(object sender, EventArgs e)
+        private void NudFillerDashLineWidth_ValueChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("nudFillerDashLineWidth is {0}", nudFillerDashLineWidth.Value);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NudFillerDashLineWidthValue, nudFillerDashLineWidth.Value);
             Model.FillerDashLineWidth = (double)nudFillerDashLineWidth.Value;
         }
 
-        private void ckDisplayGraph_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayGraph_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayGraph is {0}", ckDisplayGraph.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayGraphValue, ckDisplayGraph.Checked);
             Model.DisplayGraph = ckDisplayGraph.Checked;
         }
 
-        private void ckDisplayGlossary_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayGlossary_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || Model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayGlossary is {0}", ckDisplayGlossary.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayGlossaryValue, ckDisplayGlossary.Checked);
             Model.DisplayGlossary = ckDisplayGlossary.Checked;
+        }
+
+        private void CbPdfEngine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cbPdfEngine.SelectedItem is HumanReadableEnum<PdfExportEngine> item))
+            {
+                Log.Trace("cbPdfEngine: null item selected");
+                return;
+            }
+            lblWarning.Visible = item.Value == PdfExportEngine.Unicorn;
+            if (_inViewUpdate || Model == null)
+            {
+                return;
+            }
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbPdfEngineValue, item.Name);
+            Model.ExportEngine = item.Value;
         }
     }
 }

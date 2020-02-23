@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Timetabler.CoreData;
@@ -125,7 +126,7 @@ namespace Timetabler
 
         private string FormatTimeSpan(TimeOfDay time)
         {
-            return time.ToString(Model.DocumentOptions.ClockType == ClockType.TwentyFourHourClock ? "HH:mmf" : "h:mmf tt");
+            return time.ToString(Model.DocumentOptions.ClockType == ClockType.TwentyFourHourClock ? "HH:mmf" : "h:mmf tt", CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -135,45 +136,40 @@ namespace Timetabler
         {
             InitializeComponent();
             _inViewUpdate = true;
-            cbLinePattern.Items.AddRange(HumanReadableEnum<DashStyle>.GetDashStyles());
+            cbLinePattern.Items.AddRange(HumanReadableEnumFactory.GetDashStyles());
             TimeHelpers.PopulateHalfOfDayComboBoxes(cbToWorkHalfOfDay, cbLocoToWorkHalfOfDay);
             _inViewUpdate = false;
         }
 
-        private void btnAddTiming_Click(object sender, EventArgs e)
+        private void BtnAddTiming_Click(object sender, EventArgs e)
         {
-            TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
-            {
-                Model = new TrainLocationTimeEditFormModel
+            using (TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
                 {
-                    Data = new TrainLocationTime { FormattingStrings = _model.DocumentOptions.FormattingStrings },
-                    ValidLocations = (_model != null && _model.ValidLocations != null) ? _model.ValidLocations : new LocationCollection(),
-                    ValidNotes = _model?.ValidTimingPointNotes != null ? _model.ValidTimingPointNotes : new List<Note>(),
-                    InputMode = _model.DocumentOptions.ClockType,
+                    Model = new TrainLocationTimeEditFormModel((_model != null && _model.ValidLocations != null) ? _model.ValidLocations : new LocationCollection(), 
+                        _model?.ValidTimingPointNotes != null ? _model.ValidTimingPointNotes : new List<Note>())
+                    {
+                        Data = new TrainLocationTime { FormattingStrings = _model.DocumentOptions.FormattingStrings },
+                        InputMode = _model.DocumentOptions.ClockType,
+                    }
+                })
+            {
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
                 }
-            };
 
-            if (form.ShowDialog() != DialogResult.OK)
-            {
-                return;
+                if (_model == null || _model.Data == null)
+                {
+                    return;
+                }
+
+                _model.Data.TrainTimes.Add(form.Model.Data);
             }
-
-            if (_model == null || _model.Data == null)
-            {
-                return;
-            }
-
-            if (_model.Data.TrainTimes == null)
-            {
-                _model.Data.TrainTimes = new List<TrainLocationTime>();
-            }
-
-            _model.Data.TrainTimes.Add(form.Model.Data);
             _model.Data.TrainTimes.Sort(new TrainLocationArrivalTimeComparer());
             UpdateTimingsViewFromModel();
         }
 
-        private void dgvTimings_SelectionChanged(object sender, EventArgs e)
+        private void DgvTimings_SelectionChanged(object sender, EventArgs e)
         {
             UpdateButtons();
         }
@@ -192,7 +188,7 @@ namespace Timetabler
             }
         }
 
-        private void btnEditTiming_Click(object sender, EventArgs e)
+        private void BtnEditTiming_Click(object sender, EventArgs e)
         {
             if (dgvTimings.SelectedCells.Count == 0)
             {
@@ -201,7 +197,7 @@ namespace Timetabler
             EditTimingRow(dgvTimings.SelectedCells[0].RowIndex);
         }
 
-        private void dgvTimings_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvTimings_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -215,27 +211,26 @@ namespace Timetabler
             {
                 return;
             }
-            TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
-            {
-                Model = new TrainLocationTimeEditFormModel
+            using (TrainLocationTimeEditForm form = new TrainLocationTimeEditForm
                 {
-                    Data = Model.Data.TrainTimes[rowIndex].Copy(),
-                    ValidLocations = Model.ValidLocations,
-                    ValidNotes = Model.ValidTimingPointNotes != null ? Model.ValidTimingPointNotes : new List<Note>(),
-                    InputMode = Model.DocumentOptions.ClockType,
-                }
-            };
-
-            if (form.ShowDialog() != DialogResult.OK || form.Model == null || form.Model.Data == null)
+                    Model = new TrainLocationTimeEditFormModel(Model.ValidLocations, Model.ValidTimingPointNotes ?? new List<Note>())
+                    {
+                        Data = Model.Data.TrainTimes[rowIndex].Copy(),
+                        InputMode = Model.DocumentOptions.ClockType,
+                    }
+                })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK || form.Model == null || form.Model.Data == null)
+                {
+                    return;
+                }
+                Model.Data.TrainTimes[rowIndex] = form.Model.Data;
             }
-            Model.Data.TrainTimes[rowIndex] = form.Model.Data;
             Model.Data.TrainTimes.Sort(new TrainLocationArrivalTimeComparer());
             UpdateTimingsViewFromModel();
         }
 
-        private void btnDeleteTiming_Click(object sender, EventArgs e)
+        private void BtnDeleteTiming_Click(object sender, EventArgs e)
         {
             if (dgvTimings.SelectedCells.Count == 0 || Model == null || Model.Data == null || Model.Data.TrainTimes == null)
             {
@@ -255,12 +250,12 @@ namespace Timetabler
             UpdateTimingsViewFromModel();
         }
 
-        private void tbHeadcode_Validated(object sender, EventArgs e)
+        private void TbHeadcode_Validated(object sender, EventArgs e)
         {
             Model.Data.Headcode = tbHeadcode.Text;
         }
 
-        private void cbTrainClass_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbTrainClass_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model.Data == null)
             {
@@ -272,8 +267,7 @@ namespace Timetabler
                 _model.Data.TrainClass = null;
                 return;
             }
-            var cls = cbTrainClass.SelectedItem as TrainClass;
-            if (cls == null)
+            if (!(cbTrainClass.SelectedItem is TrainClass cls))
             {
                 return;
             }
@@ -281,41 +275,42 @@ namespace Timetabler
             _model.Data.TrainClassId = cls.Id;
         }
 
-        private void nudLineWidth_ValueChanged(object sender, EventArgs e)
+        private void NudLineWidth_ValueChanged(object sender, EventArgs e)
         {
             _model.Data.GraphProperties.Width = (float) nudLineWidth.Value;
         }
 
-        private void cbLinePattern_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLinePattern_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate)
             {
                 return;
             }
-            var pattern = cbLinePattern.SelectedItem as HumanReadableEnum<DashStyle>;
-            if (pattern == null)
+            if (!(cbLinePattern.SelectedItem is HumanReadableEnum<DashStyle> pattern))
             {
                 return;
             }
             _model.Data.GraphProperties.DashStyle = pattern.Value;
         }
 
-        private void btnColour_Click(object sender, EventArgs e)
+        private void BtnColour_Click(object sender, EventArgs e)
         {
-            if (_model == null ||_model.Data == null || _model.Data.GraphProperties == null)
+            if (_model == null || _model.Data == null || _model.Data.GraphProperties == null)
             {
                 return;
             }
-            ColorDialog cd = new ColorDialog() { AllowFullOpen = true, AnyColor = true, Color = _model.Data.GraphProperties.Colour, FullOpen = true, };
-            if (cd.ShowDialog() == DialogResult.OK)
+            using (ColorDialog cd = new ColorDialog() { AllowFullOpen = true, AnyColor = true, Color = _model.Data.GraphProperties.Colour, FullOpen = true, })
             {
-                _model.Data.GraphProperties.Colour = cd.Color;
-                btnColour.BackColor = cd.Color;
-                btnColour.ForeColor = ComputeButtonForeColour(cd.Color);
+                if (cd.ShowDialog() == DialogResult.OK)
+                {
+                    _model.Data.GraphProperties.Colour = cd.Color;
+                    btnColour.BackColor = cd.Color;
+                    btnColour.ForeColor = ComputeButtonForeColour(cd.Color);
+                }
             }
         }
 
-        private Color ComputeButtonForeColour(Color backColour)
+        private static Color ComputeButtonForeColour(Color backColour)
         {
             int sumVals = backColour.R + backColour.G + backColour.B;
             if (sumVals > 128 * 3)
@@ -325,15 +320,17 @@ namespace Timetabler
             return Color.White;
         }
 
-        private void btnAdjust_Click(object sender, EventArgs e)
+        private void BtnAdjust_Click(object sender, EventArgs e)
         {
-            TrainAdjustTimesFormModel adjustModel = new TrainAdjustTimesFormModel { ValidLocations = _model.Data.TrainTimes.Select(t => t.Location).Where(loc => loc != null).ToList() };
-            TrainAdjustTimesForm form = new TrainAdjustTimesForm { Model = adjustModel };
-            if (form.ShowDialog() != DialogResult.OK)
+            TrainAdjustTimesFormModel adjustModel = new TrainAdjustTimesFormModel(_model.Data.TrainTimes.Select(t => t.Location).Where(loc => loc != null));
+            using (TrainAdjustTimesForm form = new TrainAdjustTimesForm { Model = adjustModel })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                AdjustTimes(form.Model);
             }
-            AdjustTimes(form.Model);
             UpdateTimingsViewFromModel();
         }
 
@@ -370,14 +367,13 @@ namespace Timetabler
             }
         }
 
-        private void clbFootnotes_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void ClbFootnotes_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (_inViewUpdate)
             {
                 return;
             }
-            var item = clbFootnotes.Items[e.Index] as Note;
-            if (item == null)
+            if (!(clbFootnotes.Items[e.Index] is Note item))
             {
                 return;
             }
@@ -391,12 +387,12 @@ namespace Timetabler
             }
         }
 
-        private void tbLocoDiagram_TextChanged(object sender, EventArgs e)
+        private void TbLocoDiagram_TextChanged(object sender, EventArgs e)
         {
             Model.Data.LocoDiagram = tbLocoDiagram.Text;
         }
 
-        private void ckSeparatorAbove_CheckedChanged(object sender, EventArgs e)
+        private void CkSeparatorAbove_CheckedChanged(object sender, EventArgs e)
         {
             if (!_inViewUpdate)
             {
@@ -404,7 +400,7 @@ namespace Timetabler
             }
         }
 
-        private void ckSeparatorBelow_CheckedChanged(object sender, EventArgs e)
+        private void CkSeparatorBelow_CheckedChanged(object sender, EventArgs e)
         {
             if (!_inViewUpdate)
             {
@@ -412,7 +408,7 @@ namespace Timetabler
             }
         }
 
-        private void tbInlineNote_TextChanged(object sender, EventArgs e)
+        private void TbInlineNote_TextChanged(object sender, EventArgs e)
         {
             if (!_inViewUpdate && _model?.Data != null)
             {
@@ -420,17 +416,17 @@ namespace Timetabler
             }
         }
 
-        private void textBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
+        private void TextBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
         {
             TimeHelpers.ValidateTimeTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
         }
 
-        private void textBoxToWorkHoursMinutes_Validated(object sender, EventArgs e)
+        private void TextBoxToWorkHoursMinutes_Validated(object sender, EventArgs e)
         {
             StoreToWorkTime();
         }
 
-        private void cbToWorkHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbToWorkHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -455,7 +451,7 @@ namespace Timetabler
                 _model.DocumentOptions.ClockType == ClockType.TwelveHourClock ? cbToWorkHalfOfDay : null, _model.Data.ToWork.AtTime != null ? _model.Data.ToWork.AtTime.Seconds : 0);
         }
 
-        private void tbToWorkText_TextChanged(object sender, EventArgs e)
+        private void TbToWorkText_TextChanged(object sender, EventArgs e)
         {
             StoreToWorkText();
         }
@@ -503,12 +499,12 @@ namespace Timetabler
             _model.Data.LocoToWork.Text = tbLocoToWorkText.Text;
         }
 
-        private void textBoxLocoToWorkHoursMinutes_Validated(object sender, EventArgs e)
+        private void TextBoxLocoToWorkHoursMinutes_Validated(object sender, EventArgs e)
         {
             StoreLocoToWorkTime();
         }
 
-        private void cbLocoToWorkHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLocoToWorkHalfOfDay_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate)
             {
@@ -518,12 +514,12 @@ namespace Timetabler
             StoreLocoToWorkTime();
         }
 
-        private void tbLocoToWorkText_TextChanged(object sender, EventArgs e)
+        private void TbLocoToWorkText_TextChanged(object sender, EventArgs e)
         {
             StoreLocoToWorkText();
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void BtnOk_Click(object sender, EventArgs e)
         {
             if (Model?.Data?.TrainTimes != null && Model.Data.TrainTimes.Count > 0)
             {

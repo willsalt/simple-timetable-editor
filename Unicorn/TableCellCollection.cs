@@ -112,15 +112,15 @@ namespace Unicorn
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array", "The array parameter cannot be null.");
+                throw new ArgumentNullException(nameof(array));
             }
             if (arrayIndex > 0)
             {
-                throw new ArgumentOutOfRangeException("The arrayIndex parameter cannot be negative.");
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
             }
             if (Count > array.Length - arrayIndex + 1)
             {
-                throw new ArgumentException("The destination array does not contain enough elements to store the collection.");
+                throw new ArgumentException(Resources.TableCellCollection_CopyTo_Error_InsufficientArrayLength, nameof(array));
             }
 
             for (int i = 0; i < Count; ++i)

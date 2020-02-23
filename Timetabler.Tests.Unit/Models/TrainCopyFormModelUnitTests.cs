@@ -10,15 +10,44 @@ namespace Timetabler.Tests.Unit.Models
     [TestClass]
     public class TrainCopyFormModelUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private Train GetTrain()
         {
             return new Train { Id = _rnd.NextHexString(8), Headcode = _rnd.NextString(4) };
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithOffsetPropertyEqualToZero()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainCopyFormModelClass_FromTrainMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            Train testParam = null;
+
+            _ = TrainCopyFormModel.FromTrain(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainCopyFormModelClass_FromTrainMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            Train testParam = null;
+
+            try
+            {
+                _ = TrainCopyFormModel.FromTrain(testParam);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("train", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithOffsetPropertyEqualToZero_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -28,7 +57,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithClearInlineNotesPropertyEqualToFalse()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithClearInlineNotesPropertyEqualToFalse_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -38,7 +67,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithAddSubtractPropertyEqualToAdd()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithAddSubtractPropertyEqualToAdd_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -48,7 +77,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithCorrectTrainIdProperty()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithCorrectTrainIdProperty_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -58,7 +87,7 @@ namespace Timetabler.Tests.Unit.Models
         }
 
         [TestMethod]
-        public void TrainCopyFormModelClassFromTrainMethodReturnsObjectWithCorrectTrainNameProperty()
+        public void TrainCopyFormModelClass_FromTrainMethod_ReturnsObjectWithCorrectTrainNameProperty_IfParameterIsNotNull()
         {
             Train testParam = GetTrain();
 
@@ -66,5 +95,8 @@ namespace Timetabler.Tests.Unit.Models
 
             Assert.AreEqual(testParam.Headcode, testOutput.TrainName);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

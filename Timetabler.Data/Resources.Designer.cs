@@ -19,7 +19,7 @@ namespace Timetabler.Data {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,6 +61,15 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The destination array does not contain enough elements to store the collection..
+        /// </summary>
+        internal static string BaseCollection_CopyTo_Error_InsufficientArrayLength {
+            get {
+                return ResourceManager.GetString("BaseCollection_CopyTo_Error_InsufficientArrayLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format string {0} is not supported..
         /// </summary>
         internal static string Distance_ToString_FormatExceptionMessage {
@@ -70,29 +79,11 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to a.m..
+        ///   Looks up a localized string similar to Wrong data type..
         /// </summary>
-        internal static string HalfOfDay_ToNameString_Am {
+        internal static string Error_WrongDataType {
             get {
-                return ResourceManager.GetString("HalfOfDay_ToNameString_Am", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to noon.
-        /// </summary>
-        internal static string HalfOfDay_ToNameString_Noon {
-            get {
-                return ResourceManager.GetString("HalfOfDay_ToNameString_Noon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to p.m..
-        /// </summary>
-        internal static string HalfOfDay_ToNameString_Pm {
-            get {
-                return ResourceManager.GetString("HalfOfDay_ToNameString_Pm", resourceCulture);
+                return ResourceManager.GetString("Error_WrongDataType", resourceCulture);
             }
         }
         
@@ -102,6 +93,33 @@ namespace Timetabler.Data {
         internal static string LocationRow_Abbreviation_Platform {
             get {
                 return ResourceManager.GetString("LocationRow_Abbreviation_Platform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding location arrival/departure row for {0}.
+        /// </summary>
+        internal static string LogMessage_AddArrivalDepartureRow {
+            get {
+                return ResourceManager.GetString("LogMessage_AddArrivalDepartureRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding routing code row for {0}.
+        /// </summary>
+        internal static string LogMessage_AddRoutingRow {
+            get {
+                return ResourceManager.GetString("LogMessage_AddRoutingRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entering ProcessTrain() for {0}.
+        /// </summary>
+        internal static string LogMessage_ProcessTrain {
+            get {
+                return ResourceManager.GetString("LogMessage_ProcessTrain", resourceCulture);
             }
         }
         

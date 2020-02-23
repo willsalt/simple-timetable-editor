@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data;
@@ -34,7 +29,7 @@ namespace Timetabler
             {
                 return _model;
             }
-            set
+            private set
             {
                 if (_model != null)
                 {
@@ -61,15 +56,16 @@ namespace Timetabler
             }
         }
 
-        private Dictionary<string, DataGridViewRow> _rowMap;
+        private readonly Dictionary<string, DataGridViewRow> _rowMap;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public SignalboxListEditForm()
+        public SignalboxListEditForm(SignalboxCollection model)
         {
             _rowMap = new Dictionary<string, DataGridViewRow>();
             InitializeComponent();
+            Model = model;
         }
 
         private void UpdateViewFromModel()
@@ -85,15 +81,17 @@ namespace Timetabler
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             Signalbox newBox = new Signalbox { Id = GeneralHelper.GetNewId(Model) };
-            SignalboxEditForm form = new SignalboxEditForm { Model = newBox };
-            if (form.ShowDialog() != DialogResult.OK)
+            using (SignalboxEditForm form = new SignalboxEditForm { Model = newBox })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                Model.Add(form.Model);
             }
-            Model.Add(form.Model);
         }
 
         private void RemoveSignalboxHandler(object sender, SignalboxEventArgs e)
@@ -132,7 +130,7 @@ namespace Timetabler
             _rowMap.Add(e.Signalbox.Id, row);
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedCells.Count == 0)
             {
@@ -143,12 +141,14 @@ namespace Timetabler
             {
                 return;
             }
-            SignalboxEditForm form = new SignalboxEditForm { Model = box.Copy() };
-            if (form.ShowDialog() != DialogResult.OK)
+            using (SignalboxEditForm form = new SignalboxEditForm { Model = box.Copy() })
             {
-                return;
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                form.Model.CopyTo(box);
             }
-            form.Model.CopyTo(box);
         }
 
         private void ChangeSignalboxNameHandler(object sender, SignalboxEventArgs e)
@@ -167,7 +167,7 @@ namespace Timetabler
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedCells.Count == 0)
             {
@@ -181,7 +181,7 @@ namespace Timetabler
             Model.Remove(box);
         }
 
-        private void dataGridView_SelectionChanged(object sender, EventArgs e)
+        private void DataGridView_SelectionChanged(object sender, EventArgs e)
         {
             bool mainButtonsEnabled = dataGridView.SelectedCells.Count > 0;
 
@@ -191,11 +191,11 @@ namespace Timetabler
             btnDown.Enabled = mainButtonsEnabled && dataGridView.SelectedCells[0].RowIndex < dataGridView.RowCount - 1;
         }
 
-        private void btnUp_Click(object sender, EventArgs e)
+        private void BtnUp_Click(object sender, EventArgs e)
         {
             MoveUpDown(-1);
         }
-        private void btnDown_Click(object sender, EventArgs e)
+        private void BtnDown_Click(object sender, EventArgs e)
         {
             MoveUpDown(1);
         }

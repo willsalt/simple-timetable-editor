@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
 namespace Timetabler.Data.Tests.Unit
@@ -9,7 +11,7 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class TrainTimeUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         [TestMethod]
         public void TrainTimeClassFootnoteSymbolsPropertyHasCorrectValueIfThereAreFootnotes()
@@ -580,5 +582,554 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.IsTrue(testOutput);
         }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainTimeClass_ResolveFootnotesMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+
+            testObject.ResolveFootnotes(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_ResolveFootnotesMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+
+            try
+            {
+                testObject.ResolveFootnotes(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("allFootnotes", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTimeOfDayParameter_ReturnsMinusOne_IfParameterIsNull()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TimeOfDay testParam = null;
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTimeOfDayParameter_ReturnsMinusOne_IfParameterValueIsLaterThanValueOfTimeProperty()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TimeOfDay testParam = _rnd.NextTimeOfDayAfter(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTimeOfDayParameter_ReturnsZero_IfParameterValueIsEqualToTimeProperty()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TimeOfDay testParam = testObject.Time.Copy();
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(0, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTimeOfDayParameter_ReturnsOne_IfParameterValueIsBeforeTimeProperty()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TimeOfDay testParam = _rnd.NextTimeOfDayBefore(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTrainTimeParameter_ReturnsMinusOne_IfParameterIsNull()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = null;
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTrainTimeParameter_ReturnsMinusOne_IfParameterHasTimePropertyEqualToNull()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = TrainTimeHelpers.GetTrainTime();
+            testParam.Time = null;
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTrainTimeParameter_ReturnsMinusOne_IfParameterHasTimePropertyLaterThanTimePropertyOfThisObject()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = TrainTimeHelpers.GetTrainTimeAfter(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTrainTimeParameter_ReturnsZero_IfParameterHasTimePropertyEqualToTimePropertyOfThisObject()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = TrainTimeHelpers.GetTrainTimeAt(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(0, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithTrainTimeParameter_ReturnsOne_IfParameterHasTimePropertyBeforeTimePropertyOfThisObject()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = TrainTimeHelpers.GetTrainTimeBefore(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(1, testOutput);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ThrowsArgumentException_IfParameterTypeIsNotTrainTimeOrTimeOfDay()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            object testParam = new object();
+
+            _ = testObject.CompareTo(testParam);
+
+            Assert.Fail();
+        }
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ReturnsMinusOne_IfParameterIsTimeOfDayObjectWithValueLaterThanValueOfTimeProperty()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            object testParam = _rnd.NextTimeOfDayAfter(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ReturnsZero_IfParameterIsTimeOfDayObjectWithValueEqualToTimeProperty()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            object testParam = testObject.Time.Copy();
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(0, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ReturnsOne_IfParameterIsTimeOfDayObjectWithValueBeforeTimeProperty()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            object testParam = _rnd.NextTimeOfDayBefore(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ReturnsMinusOne_IfParameterIsTrainTimeObjectWithTimePropertyEqualToNull()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testTrainTime = TrainTimeHelpers.GetTrainTime();
+            testTrainTime.Time = null;
+            object testParam = testTrainTime;
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ReturnsMinusOne_IfParameterIsTrainTimeObjectWithTimePropertyLaterThanTimePropertyOfThisObject()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            object testParam = TrainTimeHelpers.GetTrainTimeAfter(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(-1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ReturnsZero_IfParameterIsTrainTimeObjectWithTimePropertyEqualToTimePropertyOfThisObject()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            object testParam = TrainTimeHelpers.GetTrainTimeAt(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(0, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_CompareToMethodWithObjectParameter_ReturnsOne_IfParameterIsTrainTimeObjectWithTimePropertyBeforeTimePropertyOfThisObject()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            object testParam = TrainTimeHelpers.GetTrainTimeBefore(testObject.Time);
+
+            int testOutput = testObject.CompareTo(testParam);
+
+            Assert.AreEqual(1, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualityOperator_ReturnsTrue_IfBothOperandsAreNull()
+        {
+            TrainTime op0 = null;
+            TrainTime op1 = null;
+
+            bool testOutput = op0 == op1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualityOperator_ReturnsFalse_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TrainTime op0 = null;
+            TrainTime op1 = TrainTimeHelpers.GetTrainTime();
+
+            bool testOutput = op0 == op1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualityOperator_ReturnsFalse_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1 = null;
+
+            bool testOutput = op0 == op1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualityOperator_ReturnsFalse_IfOperandTimesAreDifferentAndFootnotesAreDifferent()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1;
+            do
+            {
+                op1 = TrainTimeHelpers.GetTrainTimeNotAt(op0.Time);
+            } while (op0.FootnoteSymbols == op1.FootnoteSymbols);
+
+            bool testOutput = op0 == op1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualityOperator_ReturnsFalse_IfOperandTimesAreDifferentAndFootnotesAreSame()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1 = TrainTimeHelpers.GetTrainTimeNotAt(op0.Time, 0);
+            op1.Footnotes.AddRange(op0.Footnotes.Select(n => n.Copy()));
+
+            bool testOutput = op0 == op1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualityOperator_ReturnsFalse_IfOperandTimesAreSameAndFootnotesAreDifferent()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1;
+            do
+            {
+                op1 = TrainTimeHelpers.GetTrainTimeAt(op0.Time);
+            } while (op0.FootnoteSymbols == op1.FootnoteSymbols);
+
+            bool testOutput = op0 == op1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualityOperator_ReturnsTrue_IfOperandTimesAreSameAndFootnotesAreSame()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1 = TrainTimeHelpers.GetTrainTimeAt(op0.Time, 0);
+            op1.Footnotes.AddRange(op0.Footnotes.Select(n => n.Copy()));
+
+            bool testOutput = op0 == op1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_InequalityOperator_ReturnsFalse_IfBothOperandsAreNull()
+        {
+            TrainTime op0 = null;
+            TrainTime op1 = null;
+
+            bool testOutput = op0 != op1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_InequalityOperator_ReturnsTrue_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TrainTime op0 = null;
+            TrainTime op1 = TrainTimeHelpers.GetTrainTime();
+
+            bool testOutput = op0 != op1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_InequalityOperator_ReturnsTrue_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1 = null;
+
+            bool testOutput = op0 != op1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_InequalityOperator_ReturnsTrue_IfOperandTimesAreDifferentAndFootnotesAreDifferent()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1;
+            do
+            {
+                op1 = TrainTimeHelpers.GetTrainTimeNotAt(op0.Time);
+            } while (op0.FootnoteSymbols == op1.FootnoteSymbols);
+
+            bool testOutput = op0 != op1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_InequalityOperator_ReturnsTrue_IfOperandTimesAreDifferentAndFootnotesAreSame()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1 = TrainTimeHelpers.GetTrainTimeNotAt(op0.Time, 0);
+            op1.Footnotes.AddRange(op0.Footnotes.Select(n => n.Copy()));
+
+            bool testOutput = op0 != op1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_InequalityOperator_ReturnsTrue_IfOperandTimesAreSameAndFootnotesAreDifferent()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1;
+            do
+            {
+                op1 = TrainTimeHelpers.GetTrainTimeAt(op0.Time);
+            } while (op0.FootnoteSymbols == op1.FootnoteSymbols);
+
+            bool testOutput = op0 != op1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_InequalityOperator_ReturnsFalse_IfOperandTimesAreSameAndFootnotesAreSame()
+        {
+            TrainTime op0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime op1 = TrainTimeHelpers.GetTrainTimeAt(op0.Time, 0);
+            op1.Footnotes.AddRange(op0.Footnotes.Select(n => n.Copy()));
+
+            bool testOutput = op0 != op1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualsMethod_ReturnsTrue_IfParameterIsTheSameObject()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = testObject;
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualsMethod_ReturnsFalse_IfParameterIsNull()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = null;
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualsMethod_ReturnsFalse_IfParameterTimeAndFootnotesAreDifferentToObjectTimeAndFootnotes()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam;
+            do
+            {
+                testParam = TrainTimeHelpers.GetTrainTimeNotAt(testObject.Time);
+            } while (testObject.FootnoteSymbols == testParam.FootnoteSymbols);
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualsMethod_ReturnsFalse_IfParameterTimeIsNotEqualToObjectTimeAndParameterFootnotesAreEqualToObjectFootnotes()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = TrainTimeHelpers.GetTrainTimeNotAt(testObject.Time, 0);
+            testParam.Footnotes.AddRange(testObject.Footnotes.Select(n => n.Copy()));
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualsMethod_ReturnsFalse_IfParameterTimePropertyEqualsObjectTimePropertyAndParameterFootnotesPropertyDoesNotEqualObjectFootnotesProperty()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam;
+            do
+            {
+                testParam = TrainTimeHelpers.GetTrainTimeAt(testObject.Time);
+            } while (testObject.FootnoteSymbols == testParam.FootnoteSymbols);
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_EqualsMethod_ReturnsTrue_IfParameterTimeAndFootnotesPropertiesEqualObjectTimeAndFootnotesProperties()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+            TrainTime testParam = TrainTimeHelpers.GetTrainTimeAt(testObject.Time, 0);
+            testParam.Footnotes.AddRange(testObject.Footnotes.Select(n => n.Copy()));
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_GetHashCodeMethod_ReturnsSameValueWhenCalledTwiceOnSameObject_IfObjectPropertiesHaveNotChanged()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+
+            int testOutput0 = testObject.GetHashCode();
+            int testOutput1 = testObject.GetHashCode();
+
+            Assert.AreEqual(testOutput0, testOutput1);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_GetHashCodeMethod_ReturnsDifferentValueWhenCalledTwiceOnSameObject_IfObjectTimePropertyHasChanged()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime();
+
+            int testOutput0 = testObject.GetHashCode();
+            testObject.Time = _rnd.NextBoolean() ? _rnd.NextTimeOfDayAfter(testObject.Time) : _rnd.NextTimeOfDayBefore(testObject.Time);
+            int testOutput1 = testObject.GetHashCode();
+
+            Assert.AreNotEqual(testOutput0, testOutput1);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_GetHashCodeMethod_ReturnsDifferentValueWhenCalledTwiceOnSameObject_IfObjectFootnotesPropertyHasChanged()
+        {
+            TrainTime testObject = TrainTimeHelpers.GetTrainTime(_rnd.Next(1, 5));
+
+            int testOutput0 = testObject.GetHashCode();
+            testObject.Footnotes.Clear();
+            int testOutput1 = testObject.GetHashCode();
+
+            Assert.AreNotEqual(testOutput0, testOutput1);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_GetHashCodeMethod_ReturnsSameValueWhenCalledOnDifferentObjects_IfObjectsHaveSameTimeAndFootnotesProperties()
+        {
+            TrainTime testObject0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime testObject1 = TrainTimeHelpers.GetTrainTimeAt(testObject0.Time, 0);
+            testObject1.Footnotes.AddRange(testObject0.Footnotes.Select(n => n.Copy()));
+
+            int testOutput0 = testObject0.GetHashCode();
+            int testOutput1 = testObject1.GetHashCode();
+
+            Assert.AreEqual(testOutput0, testOutput1);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnDifferentObjects_IfObjectsHaveDifferentTimeProperty()
+        {
+            TrainTime testObject0 = TrainTimeHelpers.GetTrainTime();
+            TrainTime testObject1 = TrainTimeHelpers.GetTrainTimeNotAt(testObject0.Time, 0);
+            testObject1.Footnotes.AddRange(testObject0.Footnotes.Select(n => n.Copy()));
+
+            int testOutput0 = testObject0.GetHashCode();
+            int testOutput1 = testObject1.GetHashCode();
+
+            Assert.AreNotEqual(testOutput0, testOutput1);
+        }
+
+        [TestMethod]
+        public void TrainTimeClass_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnDifferentObject_IfObjectsHaveDifferentFootnoteProperties()
+        {
+            TrainTime testObject0 = TrainTimeHelpers.GetTrainTime(_rnd.Next(1, 5));
+            TrainTime testObject1;
+            do
+            {
+                testObject1 = TrainTimeHelpers.GetTrainTimeAt(testObject0.Time);
+            } while (testObject0.FootnoteSymbols == testObject1.FootnoteSymbols);
+
+            int testOutput0 = testObject0.GetHashCode();
+            int testOutput1 = testObject1.GetHashCode();
+
+            Assert.AreNotEqual(testOutput0, testOutput1);
+        }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

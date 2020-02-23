@@ -1,4 +1,5 @@
-﻿using Timetabler.CoreData.Events;
+﻿using System.Globalization;
+using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
 
 namespace Timetabler.Data
@@ -58,7 +59,7 @@ namespace Timetabler.Data
         /// <returns>A string containing the code and description of this instance.</returns>
         public override string ToString()
         {
-            return string.Format("{0}: {1}", TableCode, Description);
+            return string.Format(CultureInfo.CurrentCulture, "{0}: {1}", TableCode, Description);
         }
     }
 }

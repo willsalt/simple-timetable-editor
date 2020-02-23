@@ -1,31 +1,44 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Text;
 using Timetabler.CoreData;
-using Timetabler.Data;
-using Timetabler.XmlData;
 
 namespace Tests.Utility.Extensions
 {
     public static class RandomExtensions
     {
-        private const string _alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-        private const string _hex = "abcdef0123456789";
+        public const string AlphanumericCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        public const string AlphabeticalCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public const string HexadecimalCharacters = "abcdef0123456789";
+        public const string WhiteSpaceCharacters = " \x0\t\r\n\f";
+        public const string DelimiterCharacters = "()<>[]{}/%"; // These are the characters classed as "delimiters" in PDF documents.
 
         public static string NextString(this Random random, int len)
         {
-            return random.NextString(_alphanumeric, len);
+            return random.NextString(AlphanumericCharacters, len);
+        }
+
+        public static string NextAlphabeticalString(this Random random, int len)
+        {
+            return random.NextString(AlphabeticalCharacters, len);
         }
 
         public static string NextHexString(this Random random, int len)
         {
-            return random.NextString(_hex, len);
+            return random.NextString(HexadecimalCharacters, len);
         }
 
         public static string NextString(this Random random, string characters, int len)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
+            if (characters == null)
+            {
+                throw new ArgumentNullException(nameof(characters));
+            }
+
             if (len == 0)
             {
                 return string.Empty;
@@ -49,55 +62,142 @@ namespace Tests.Utility.Extensions
 
         public static bool NextBoolean(this Random random)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
             return random.Next(2) == 0;
+        }
+
+        public static bool? NextNullableBoolean(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            bool?[] values = { true, false, null };
+            return values[random.Next(values.Length)];
+        }
+
+        public static double? NextNullableDouble(this Random random, double scale)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return random.NextDouble() * scale;
+        }
+
+        public static double? NextNullableDouble(this Random random)
+        {
+            return NextNullableDouble(random, 1.0);
+        }
+
+        public static float? NextNullableFloat(this Random random)
+        {
+            return (float?)NextNullableDouble(random);
+        }
+
+        public static float? NextNullableFloat(this Random random, float scale)
+        {
+            return (float?)NextNullableDouble(random, scale);
         }
 
         public static TimeOfDay NextTimeOfDay(this Random random)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
             return new TimeOfDay(random.Next(86400));
         }
 
         public static TimeOfDay NextTimeOfDayBefore(this Random random, TimeOfDay t)
         {
+            if (t == null)
+            {
+                throw new ArgumentNullException(nameof(t));
+            }
             return random.NextTimeOfDayBefore(t.AbsoluteSeconds);
         }
 
         public static TimeOfDay NextTimeOfDayBefore(this Random random, int seconds)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
             return new TimeOfDay(random.Next(seconds));
         }
 
         public static TimeOfDay NextTimeOfDayAfter(this Random random, TimeOfDay t)
         {
+            if (t == null)
+            {
+                throw new ArgumentNullException(nameof(t));
+            }
             return random.NextTimeOfDayAfter(t.AbsoluteSeconds);
         }
 
         public static TimeOfDay NextTimeOfDayAfter(this Random random, int seconds)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
             int lim = 86400 - seconds;
             return new TimeOfDay(random.Next(lim) + seconds);
         }
 
         public static TimeOfDay NextTimeOfDayBetween(this Random random, TimeOfDay min, TimeOfDay max)
         {
+            if (min == null)
+            {
+                throw new ArgumentNullException(nameof(min));
+            }
+            if (max == null)
+            {
+                throw new ArgumentNullException(nameof(max));
+            }
+
             return random.NextTimeOfDayBetween(min.AbsoluteSeconds, max.AbsoluteSeconds);
         }
 
         public static TimeOfDay NextTimeOfDayBetween(this Random random, TimeOfDay min, int maxSeconds)
         {
+            if (min == null)
+            {
+                throw new ArgumentNullException(nameof(min));
+            }
+
             return random.NextTimeOfDayBetween(min.AbsoluteSeconds, maxSeconds);
         }
 
         public static TimeOfDay NextTimeOfDayBetween(this Random random, int minSeconds, int maxSeconds)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
+
             int lim = maxSeconds - minSeconds;
             return new TimeOfDay(random.Next(lim) + minSeconds);
         }
 
         public static ArrivalDepartureOptions NextArrivalDepartureOptions(this Random random)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
+
             ArrivalDepartureOptions[] allValues = new ArrivalDepartureOptions[]
             {
+                0,
                 ArrivalDepartureOptions.Arrival,
                 ArrivalDepartureOptions.Departure,
                 ArrivalDepartureOptions.Arrival | ArrivalDepartureOptions.Departure
@@ -105,10 +205,30 @@ namespace Tests.Utility.Extensions
             return allValues[random.Next(allValues.Length)];
         }
 
+        public static ArrivalDepartureOptions? NextNullableArrivalDepartureOptions(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (random.Next(5) == 0)
+            {
+                return null;
+            }
+
+            return NextArrivalDepartureOptions(random);
+        }
+
         public static TrainRoutingOptions NextTrainRoutingOptions(this Random random)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
+
             TrainRoutingOptions[] allValues = new TrainRoutingOptions[]
-{
+            {
                 0,
                 TrainRoutingOptions.Line,
                 TrainRoutingOptions.Path,
@@ -117,12 +237,32 @@ namespace Tests.Utility.Extensions
                 TrainRoutingOptions.Line | TrainRoutingOptions.Platform,
                 TrainRoutingOptions.Path | TrainRoutingOptions.Platform,
                 TrainRoutingOptions.Line | TrainRoutingOptions.Path | TrainRoutingOptions.Platform,
-};
+            };
             return allValues[random.Next(allValues.Length)];
+        }
+
+        public static TrainRoutingOptions? NextNullableTrainRoutingOptions(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (random.Next(9) == 0)
+            {
+                return null;
+            }
+
+            return NextTrainRoutingOptions(random);
         }
 
         public static LocationFontType NextLocationFontType(this Random random)
         {
+            if (random == null)
+            {
+                throw new NullReferenceException();
+            }
+
             LocationFontType[] allValues = new LocationFontType[]
             {
                 LocationFontType.Condensed,
@@ -132,72 +272,40 @@ namespace Tests.Utility.Extensions
             return allValues[random.Next(allValues.Length)];
         }
 
-        public static Distance NextDistance(this Random random, Distance max)
+        public static string NextPotentiallyValidString(this Random random, string[] validValues)
         {
-            int mileagePart;
-            double chainagePart;
-            if (max.Mileage > 0)
+            if (random is null)
             {
-                mileagePart = random.Next(max.Mileage);
+                throw new NullReferenceException();
+            }
+            if (validValues is null)
+            {
+                throw new ArgumentNullException(nameof(validValues));
+            }
+
+            if (random.Next(5) == 0)
+            {
+                return NextDefinitelyInvalidString(random, validValues);
             }
             else
             {
-                mileagePart = 0;
+                return validValues[random.Next(validValues.Length)];
             }
-            if (mileagePart < max.Mileage)
+        }
+
+        public static string NextDefinitelyInvalidString(this Random random, string[] validValues)
+        {
+            if (random is null)
             {
-                chainagePart = random.NextDouble() * 80d;
+                throw new NullReferenceException();
             }
-            else
+
+            string rval;
+            do
             {
-                chainagePart = random.NextDouble() * max.Chainage;
-            }
-            return new Distance { Mileage = mileagePart, Chainage = chainagePart };
-        }
-
-        public static Distance NextDistance(this Random random)
-        {
-            return random.NextDistance(new Distance { Mileage = 32768, Chainage = 0 });
-        }
-
-        public static TimeOfDayModel NextTimeOfDayModel(this Random random, int minSeconds, int maxSeconds)
-        {
-            if (maxSeconds == 0)
-            {
-                maxSeconds = 86400;
-            }
-            int secs = random.Next(maxSeconds - minSeconds) + minSeconds;
-
-            return new TimeOfDayModel
-            {
-                Hours24 = secs / 3600,
-                Minutes = (secs % 3600) / 60,
-                Seconds = secs % 60
-            };
-        }
-
-        public static TimeOfDayModel NextTimeOfDayModel(this Random random)
-        {
-            return random.NextTimeOfDayModel(0, 0);
-        }
-
-        public static Color NextColor(this Random random)
-        {
-            return Color.FromArgb(random.Next());
-        }
-
-        public static DashStyle NextDashStyle(this Random random)
-        {
-            DashStyle[] allValues = new DashStyle[]
-            {
-                DashStyle.Custom,
-                DashStyle.Dash,
-                DashStyle.DashDot,
-                DashStyle.DashDotDot,
-                DashStyle.Dot,
-                DashStyle.Solid,
-            };
-            return allValues[random.Next(allValues.Length)];
+                rval = random.NextAlphabeticalString(random.Next(10));
+            } while (validValues.Contains(rval));
+            return rval;
         }
     }
 }

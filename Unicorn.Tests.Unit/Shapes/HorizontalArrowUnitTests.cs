@@ -13,7 +13,7 @@ namespace Unicorn.Tests.Unit.Shapes
     [TestClass]
     public class HorizontalArrowUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private HorizontalArrow GetArrow(HorizontalDirection? dir = null)
         {
@@ -24,8 +24,10 @@ namespace Unicorn.Tests.Unit.Shapes
             return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void HorizontalArrowClassConstructorFirstParameterSetsDirectionProperty()
+        public void HorizontalArrowClass_Constructor_FirstParameterSetsDirectionProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -40,7 +42,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassConstructorSecondParameterSetsLengthProperty()
+        public void HorizontalArrowClass_Constructor_SecondParameterSetsLengthProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -55,7 +57,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassConstructorSecondParameterSetsWidthProperty()
+        public void HorizontalArrowClass_Constructor_SecondParameterSetsWidthProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -70,7 +72,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassConstructorThirdParameterSetsStemThicknessProperty()
+        public void HorizontalArrowClass_Constructor_ThirdParameterSetsStemThicknessProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -85,7 +87,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassConstructorFourthParameterSetsHeadBreadthProperty()
+        public void HorizontalArrowClass_Constructor_FourthParameterSetsHeadBreadthProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -100,7 +102,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassConstructorFourthParameterSetsHeightProperty()
+        public void HorizontalArrowClass_Constructor_FourthParameterSetsHeightProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -115,7 +117,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassConstructorFifthParameterSetsHeadLengthProperty()
+        public void HorizontalArrowClass_Constructor_FifthParameterSetsHeadLengthProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -130,7 +132,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassConstructorSixthParameterSetsHeadRakeProperty()
+        public void HorizontalArrowClass_Constructor_SixthParameterSetsHeadRakeProperty()
         {
             HorizontalDirection testParam0 = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             double testParam1 = _rnd.NextDouble() * 100;
@@ -145,7 +147,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithDirectionPropertyToRightIfDirectionPropertyEqualsToLeft()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithDirectionPropertyToRight_IfDirectionPropertyEqualsToLeft()
         {
             HorizontalArrow testObject = GetArrow(HorizontalDirection.ToLeft);
 
@@ -155,7 +157,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithDirectionPropertyToLeftIfDirectionPropertyEqualsToRight()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithDirectionPropertyToLeft_IfDirectionPropertyEqualsToRight()
         {
             HorizontalArrow testObject = GetArrow(HorizontalDirection.ToRight);
 
@@ -165,7 +167,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsDifferentObject()
+        public void HorizontalArrowClass_FlipMethod_ReturnsDifferentObject()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -175,7 +177,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithSameLength()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithSameLength()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -185,7 +187,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithSameStemThickness()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithSameStemThickness()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -195,7 +197,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithSameHeadBreadth()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithSameHeadBreadth()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -205,7 +207,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithSameHeadLength()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithSameHeadLength()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -215,7 +217,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithSameHeadRake()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithSameHeadRake()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -225,7 +227,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithSameWidth()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithSameWidth()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -235,7 +237,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassFlipMethodReturnsObjectWithSameHeight()
+        public void HorizontalArrowClass_FlipMethod_ReturnsObjectWithSameHeight()
         {
             HorizontalArrow testObject = GetArrow();
 
@@ -245,7 +247,38 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassDrawAtMethodCallsDrawFilledPolygonMethodOfFirstParameter()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void HorizontalArrowClass_DrawAtMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
+        {
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+            HorizontalArrow testObject = GetArrow();
+
+            testObject.DrawAt(null, testParam1, testParam2);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void HorizontalArrowClass_DrawAtMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFirstParameterIsNull()
+        {
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+            HorizontalArrow testObject = GetArrow();
+
+            try
+            {
+                testObject.DrawAt(null, testParam1, testParam2);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("context", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodOfFirstParameter()
         {
             Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
             double testParam1 = _rnd.NextDouble() * 100;
@@ -258,7 +291,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassDrawAtMethodCallsDrawFilledPolygonMethodOfFirstParameterWithNonNullParameter()
+        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodOfFirstParameterWithNonNullParameter()
         {
             List<UniPoint> capturedPointList = null;
             Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
@@ -273,7 +306,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassDrawAtMethodCallsDrawFilledPolygonMethodOfFirstParameterWithParameterContainingPoints()
+        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodOfFirstParameterWithParameterContainingPoints()
         {
             List<UniPoint> capturedPointList = null;
             Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
@@ -284,7 +317,7 @@ namespace Unicorn.Tests.Unit.Shapes
 
             testObject.DrawAt(mockGraphicsContext.Object, testParam1, testParam2);
 
-            Assert.IsTrue(capturedPointList.Count(p => p != null) != 0);
+            Assert.IsTrue(capturedPointList.Any(p => p != null));
         }
 
         // We probably should not constrain the implementation too much by specifying the exact drawing style of an arrow by test, but it is worth providing
@@ -293,7 +326,7 @@ namespace Unicorn.Tests.Unit.Shapes
         // These methods allow for the drawn arrow to project outside its bounding box _very slightly_ due to rounding errors.  When I say "very slightly": if the 
         // output was not enlarged, the amount of overdraw allowed would be on roughly the atomic scale.
         [TestMethod]
-        public void HorizontalArrowClassDrawAtMethodCallsDrawFilledPolygonMethodWithNoPointsWithALowerXCoordinateThanTheSecondParameterToTheOriginalMethod()
+        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodWithNoPointsWithALowerXCoordinateThanTheSecondParameterToTheOriginalMethod()
         {
             List<UniPoint> capturedPointList = null;
             Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
@@ -311,7 +344,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassDrawAtMethodCallsDrawFilledPolygonMethodWithNoPointsWithALowerYCoordinateThanTheThirdParameterToTheOriginalMethod()
+        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodWithNoPointsWithALowerYCoordinateThanTheThirdParameterToTheOriginalMethod()
         {
             List<UniPoint> capturedPointList = null;
             Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
@@ -329,7 +362,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassDrawAtMethodCallsDrawFilledPolygonMethodWithNoPointsWithAGreaterXCoordinateThanTheSecondParameterToTheOriginalMethodPlusTheArrowWidthProperty()
+        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodWithNoPointsWithAGreaterXCoordinateThanTheSecondParameterToTheOriginalMethodPlusTheArrowWidthProperty()
         {
             List<UniPoint> capturedPointList = null;
             Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
@@ -347,7 +380,7 @@ namespace Unicorn.Tests.Unit.Shapes
         }
 
         [TestMethod]
-        public void HorizontalArrowClassDrawAtMethodCallsDrawFilledPolygonMethodWithNoPointsWithAGreaterYCoordinateThanTheThirdParameterToTheOriginalMethodPlusTheArrowHeightProperty()
+        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodWithNoPointsWithAGreaterYCoordinateThanTheThirdParameterToTheOriginalMethodPlusTheArrowHeightProperty()
         {
             List<UniPoint> capturedPointList = null;
             Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
@@ -363,5 +396,8 @@ namespace Unicorn.Tests.Unit.Shapes
                 Assert.IsTrue(point.Y - (testParam2 + testObject.Height) < 0.0000000001);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

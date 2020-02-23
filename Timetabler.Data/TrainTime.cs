@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timetabler.CoreData;
 
 namespace Timetabler.Data
 {
     /// <summary>
     /// Represents a time in a timetable, plus any footnotes associated with it.
     /// </summary>
-    public class TrainTime
+    public class TrainTime : IComparable, IComparable<TrainTime>, IComparable<TimeOfDay>
     {
         /// <summary>
         /// The time.
@@ -17,7 +18,7 @@ namespace Timetabler.Data
         /// <summary>
         /// The footnotes that apply to this timing point.
         /// </summary>
-        public List<Note> Footnotes { get; set; }
+        public List<Note> Footnotes { get; private set; }
 
         /// <summary>
         /// The symbols of all the footnotes that apply to this timing point, concatenated into a single string, or a space if this timing point has no footnotes.
@@ -44,6 +45,10 @@ namespace Timetabler.Data
         /// <param name="allFootnotes"></param>
         public void ResolveFootnotes(IDictionary<string, Note> allFootnotes)
         {
+            if (allFootnotes is null)
+            {
+                throw new ArgumentNullException(nameof(allFootnotes));
+            }
             List<string> currentIds = Footnotes.Select(n => n.Id).ToList();
             for (int i = 0; i < currentIds.Count; ++i)
             {
@@ -75,6 +80,45 @@ namespace Timetabler.Data
                 Time = newTime,
                 Footnotes = Footnotes.ToList(),
             };
+        }
+
+        /// <summary>
+        /// Compare this object to a <see cref="TimeOfDay" /> instance.
+        /// </summary>
+        /// <param name="other">The instance to compare against.</param>
+        /// <returns>-1, 0 or 1 according to whether the other object's value is less than, equal to or greater than this instance.</returns>
+        public int CompareTo(TimeOfDay other)
+        {
+            return Time.CompareTo(other);
+        }
+
+        /// <summary>
+        /// Compare this object to another <see cref="TrainTime" /> instance.
+        /// </summary>
+        /// <param name="other">The instance to compare against.</param>
+        /// <returns>-1, 0 or 1 according to whether the other object's value is less than, equal to or greater than this instance.</returns>
+        public int CompareTo(TrainTime other)
+        {
+            return Time.CompareTo(other?.Time);
+        }
+
+        /// <summary>
+        /// Compare this object to another.
+        /// </summary>
+        /// <param name="obj">The object to compare against.</param>
+        /// <returns>-1, 0 or 1 according to whether the other object's value is less than, equal to or greater than this instance.</returns>
+        /// <exception cref="ArgumentException">Thrown if the <c>obj</c> param is not of a type that this object can be compared to.</exception>
+        public int CompareTo(object obj)
+        {
+            if (obj is TrainTime ttObj)
+            {
+                return CompareTo(ttObj);
+            }
+            if (obj is TimeOfDay todObj)
+            {
+                return CompareTo(todObj);
+            }
+            throw new ArgumentException(Resources.Error_WrongDataType, nameof(obj));
         }
 
         /// <summary>
@@ -119,6 +163,80 @@ namespace Timetabler.Data
         public static bool operator <=(TrainTime t1, TrainTime t2)
         {
             return t1?.Time <= t2?.Time;
+        }
+
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="t1">First operand.</param>
+        /// <param name="t2">Second operand.</param>
+        /// <returns>True if the operands have the same times and footnote symbols, false otherwise.</returns>
+        public static bool operator ==(TrainTime t1, TrainTime t2)
+        {
+            if (t1 is null)
+            {
+                return t2 is null;
+            }
+            if (t2 is null)
+            {
+                return false;
+            }
+            if (t1.Time != t2.Time)
+            {
+                return false;
+            }
+            return t1.FootnoteSymbols == t2.FootnoteSymbols;
+        }
+
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="t1">First operand.</param>
+        /// <param name="t2">Second operand.</param>
+        /// <returns>False if the operands have the same times and footnote symbols, false otherwise.</returns>
+        public static bool operator !=(TrainTime t1, TrainTime t2)
+        {
+            if (t1 is null)
+            {
+                return !(t2 is null);
+            }
+            if (t2 is null)
+            {
+                return true;
+            }
+            if (t1.Time != t2.Time)
+            {
+                return true;
+            }
+            return t1.FootnoteSymbols != t2.FootnoteSymbols;
+        }
+
+        /// <summary>
+        /// Equality test.
+        /// </summary>
+        /// <param name="obj">The object to test for equality.</param>
+        /// <returns>True if the objects are equal, false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (!(obj is TrainTime ttObj))
+            {
+                return false;
+            }
+            
+            return this == ttObj;
+        }
+
+        /// <summary>
+        /// Generate a hashcode for this object.
+        /// </summary>
+        /// <returns>A hashcode generated based on the content of this object.</returns>
+        public override int GetHashCode()
+        {
+            return (Time?.GetHashCode() ?? 0) ^ FootnoteSymbols.GetHashCode(); 
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Timetabler.CoreData.Events;
+﻿using System;
+using System.Globalization;
+using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
 using Timetabler.Data.Display;
 
@@ -179,6 +181,10 @@ namespace Timetabler.Data
         /// <param name="target">The instance to overwrite.</param>
         public void CopyTo(Note target)
         {
+            if (target is null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.Id = Id;
             target.Symbol = Symbol;
             target.Definition = Definition;
@@ -194,7 +200,7 @@ namespace Timetabler.Data
         /// <returns>A string consisting of the <see cref="Symbol"/> and <see cref="Definition"/> properties separated by a colon.</returns>
         public override string ToString()
         {
-            return string.Format("{0}: {1}", Symbol, Definition);
+            return string.Format(CultureInfo.CurrentCulture, "{0}: {1}", Symbol, Definition);
         }
 
         /// <summary>

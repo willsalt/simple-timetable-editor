@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Unicorn.Interfaces.Tests.Unit")]
-[assembly: AssemblyCopyright("Copyright © 2019 Will Salt")]
+[assembly: AssemblyCopyright("Copyright © 2019-2020 Will Salt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,4 +15,4 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("98ad8b4a-13e3-482b-a001-65ca51f2604f")]
 
-[assembly: AssemblyVersion("1.1.*")]
+[assembly: AssemblyVersion("1.2.*")]

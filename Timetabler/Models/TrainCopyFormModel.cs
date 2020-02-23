@@ -1,4 +1,5 @@
-﻿using Timetabler.Data;
+﻿using System;
+using Timetabler.Data;
 
 namespace Timetabler.Models
 {
@@ -39,6 +40,11 @@ namespace Timetabler.Models
         /// <returns>A <see cref="TrainCopyForm" /> with <see cref="TrainId" /> and <see cref="TrainName" /> properties matching the properties of the passed-in train.</returns>
         public static TrainCopyFormModel FromTrain(Train train)
         {
+            if (train is null)
+            {
+                throw new ArgumentNullException(nameof(train));
+            }
+
             return new TrainCopyFormModel
             {
                 TrainId = train.Id,

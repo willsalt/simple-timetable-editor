@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
-using Timetabler.CoreData.Helpers;
 using Timetabler.Data.Events;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
@@ -225,8 +224,37 @@ namespace Timetabler.Data.Tests.Unit
             return s1.Id != s2.Id && s1.Code != s2.Code && s1.EditorDisplayName != s2.EditorDisplayName && s1.ExportDisplayName != s2.ExportDisplayName;
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void SignalboxClassCopyToMethodOverwritesIdProperty()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SignalboxClass_CopyToMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            Signalbox testObject = SignalboxHelpers.GetSignalbox();
+
+            testObject.CopyTo(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void SignalboxClass_CopyToMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            Signalbox testObject = SignalboxHelpers.GetSignalbox();
+
+            try
+            {
+                testObject.CopyTo(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("box", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void SignalboxClass_CopyToMethod_OverwritesIdProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
             Signalbox testObject;
@@ -241,7 +269,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyToMethodOverwritesCodeProperty()
+        public void SignalboxClass_CopyToMethod_OverwritesCodeProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
             Signalbox testObject;
@@ -256,7 +284,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyToMethodOverwritesEditorDisplayNameProperty()
+        public void SignalboxClass_CopyToMethod_OverwritesEditorDisplayNameProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
             Signalbox testObject;
@@ -271,7 +299,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyToMethodOVerwritesExportDisplayNameProperty()
+        public void SignalboxClass_CopyToMethod_OverwritesExportDisplayNameProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
             Signalbox testObject;
@@ -284,5 +312,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(sourceObject.ExportDisplayName, testObject.ExportDisplayName);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

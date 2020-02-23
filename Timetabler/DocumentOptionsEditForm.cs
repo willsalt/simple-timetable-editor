@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.Data;
 using Timetabler.Helpers;
@@ -11,7 +12,7 @@ namespace Timetabler
     /// </summary>
     public partial class DocumentOptionsEditForm : Form
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private bool _inViewUpdate;
         private DocumentOptions _model;
 
@@ -37,8 +38,8 @@ namespace Timetabler
         public DocumentOptionsEditForm()
         {
             InitializeComponent();
-            cbClockType.Items.AddRange(HumanReadableEnum<ClockType>.GetClockTypes());
-            cbGraphEditStyle.Items.AddRange(HumanReadableEnum<GraphEditStyle>.GetGraphEditStyle());
+            cbClockType.Items.AddRange(HumanReadableEnumFactory.GetClockTypes());
+            cbGraphEditStyle.Items.AddRange(HumanReadableEnumFactory.GetGraphEditStyle());
         }
 
         private void UpdateViewFromModel()
@@ -51,8 +52,7 @@ namespace Timetabler
             _inViewUpdate = true;
             foreach (var item in cbClockType.Items)
             {
-                var clockTypeItem = item as HumanReadableEnum<ClockType>;
-                if (clockTypeItem != null && clockTypeItem.Value == _model.ClockType)
+                if (item is HumanReadableEnum<ClockType> clockTypeItem && clockTypeItem.Value == _model.ClockType)
                 {
                     cbClockType.SelectedItem = clockTypeItem;
                     break;
@@ -60,8 +60,7 @@ namespace Timetabler
             }
             foreach (var item in cbGraphEditStyle.Items)
             {
-                var gesItem = item as HumanReadableEnum<GraphEditStyle>;
-                if (gesItem != null && gesItem.Value == _model.GraphEditStyle)
+                if (item is HumanReadableEnum<GraphEditStyle> gesItem && gesItem.Value == _model.GraphEditStyle)
                 {
                     cbGraphEditStyle.SelectedItem = gesItem;
                     break;
@@ -71,45 +70,43 @@ namespace Timetabler
             _inViewUpdate = false;
         }
 
-        private void cbClockType_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbClockType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model == null)
             {
                 return;
             }
-            var item = cbClockType.SelectedItem as HumanReadableEnum<ClockType>;
-            if (item == null)
+            if (!(cbClockType.SelectedItem is HumanReadableEnum<ClockType> item))
             {
                 Log.Trace("cbCLockType: null item selected");
                 return;
             }
-            Log.Trace("cbClockType: value is {0}", item.Name);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbClockTypeValue, item.Name);
             _model.ClockType = item.Value;
         }
 
-        private void ckDisplayTrainLabelsOnGraphs_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplayTrainLabelsOnGraphs_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model == null)
             {
                 return;
             }
-            Log.Trace("ckDisplayTrainLabelsOnGraphs is {0}", ckDisplayTrainLabelsOnGraphs.Checked);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayTrainLabelsOnGraphsValue, ckDisplayTrainLabelsOnGraphs.Checked);
             _model.DisplayTrainLabelsOnGraphs = ckDisplayTrainLabelsOnGraphs.Checked;
         }
 
-        private void cbGraphEditStyle_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbGraphEditStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model == null)
             {
                 return;
             }
-            var item = cbGraphEditStyle.SelectedItem as HumanReadableEnum<GraphEditStyle>;
-            if (item == null)
+            if (!(cbGraphEditStyle.SelectedItem is HumanReadableEnum<GraphEditStyle> item))
             {
                 Log.Trace("cbGraphEditStyle: null item selected.");
                 return;
             }
-            Log.Trace("cbGraphEditStyle: value is {0}", item.Name);
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbGraphEditStyleValue, item.Name);
             _model.GraphEditStyle = item.Value;
         }
     }

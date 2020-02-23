@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data.Tests.Unit.TestHelpers;
+using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {
     [TestClass]
     public class TrainUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         private Train GetTrain(bool? withToWork = null, bool? withLocoToWork = null, int? minutesBeforeMidnight = null)
         {
@@ -33,8 +35,8 @@ namespace Timetabler.Data.Tests.Unit
                 IncludeSeparatorBelow = _rnd.NextBoolean(),
                 InlineNote = _rnd.NextString(_rnd.Next(100)),
                 GraphProperties = GetGraphTrainProperties(),
-                TrainTimes = GetTrainLocationTimeList(2, 20, beforeMidnight),
             };
+            t.TrainTimes.AddRange(GetTrainLocationTimeList(2, 20, beforeMidnight));
             t.TrainClassId = t.TrainClass.Id;
             if (withToWork ?? _rnd.NextBoolean())
             {
@@ -47,7 +49,7 @@ namespace Timetabler.Data.Tests.Unit
             return t;
         }
 
-        private TrainClass GetTrainClass()
+        private static TrainClass GetTrainClass()
         {
             return new TrainClass
             {
@@ -57,7 +59,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private ToWork GetToWork()
+        private static ToWork GetToWork()
         {
             return new ToWork
             {
@@ -66,7 +68,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private GraphTrainProperties GetGraphTrainProperties()
+        private static GraphTrainProperties GetGraphTrainProperties()
         {
             return new GraphTrainProperties
             {
@@ -76,7 +78,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private List<TrainLocationTime> GetTrainLocationTimeList(int min, int max, TimeOfDay beforeTime)
+        private static List<TrainLocationTime> GetTrainLocationTimeList(int min, int max, TimeOfDay beforeTime)
         {
             int count = _rnd.Next(min, max);
             List<TrainLocationTime> items = new List<TrainLocationTime>(count);
@@ -88,7 +90,7 @@ namespace Timetabler.Data.Tests.Unit
             return items;
         }
 
-        private TrainLocationTime GetTrainLocationTime(TimeOfDay beforeTime)
+        private static TrainLocationTime GetTrainLocationTime(TimeOfDay beforeTime)
         {
             return new TrainLocationTime
             {
@@ -1000,5 +1002,37 @@ namespace Timetabler.Data.Tests.Unit
                 Assert.IsTrue(testObject.TrainTimes[i].ArrivalTime.Time >= testObject.TrainTimes[i - 1].ArrivalTime.Time);
             }
         }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainClass_ResolveFootnotesMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            Train testObject = GetTrain();
+
+            testObject.ResolveFootnotes(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainClass_ResolveFootnotesMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
+        {
+            Train testObject = GetTrain();
+
+            try
+            {
+                testObject.ResolveFootnotes(null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("footnoteDictionary", ex.ParamName);
+            }
+        }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

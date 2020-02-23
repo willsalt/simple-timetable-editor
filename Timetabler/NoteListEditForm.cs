@@ -13,7 +13,7 @@ namespace Timetabler
     /// </summary>
     public partial class NoteListEditForm : Form
     {
-        private NoteListEditFormModel _model = new NoteListEditFormModel();
+        private NoteListEditFormModel _model = new NoteListEditFormModel(null);
 
         /// <summary>
         /// The data to be edited in this form.
@@ -49,18 +49,20 @@ namespace Timetabler
             dgvNotes.AutoResizeColumns();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
-            var nef = new NoteEditForm { Model = new Note { Id = GeneralHelper.GetNewId(_model.Data.Values) } };
-            if (nef.ShowDialog() != DialogResult.OK)
+            using (NoteEditForm nef = new NoteEditForm { Model = new Note { Id = GeneralHelper.GetNewId(_model.Data.Values) } })
             {
-                return;
+                if (nef.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                _model.Data.Add(nef.Model.Id, nef.Model);
             }
-            _model.Data.Add(nef.Model.Id, nef.Model);
             UpdateViewFromModel();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (dgvNotes.SelectedCells.Count == 0)
             {
@@ -70,7 +72,7 @@ namespace Timetabler
             ShowNoteEditForm(id);
         }
 
-        private void dgvNotes_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvNotes_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string id = dgvNotes[0, e.RowIndex].Value as string;           
             ShowNoteEditForm(id);
@@ -82,17 +84,19 @@ namespace Timetabler
             {
                 return;
             }
-            var nef = new NoteEditForm { Model = _model.Data[id].Copy() };
-            if (nef.ShowDialog() != DialogResult.OK)
+            using (NoteEditForm nef = new NoteEditForm { Model = _model.Data[id].Copy() })
             {
-                return;
+                if (nef.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                nef.Model.CopyTo(_model.Data[id]);
             }
-            nef.Model.CopyTo(_model.Data[id]);
             Model.ExistingNoteChanged = true;
             UpdateViewFromModel();
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void BtnRemove_Click(object sender, EventArgs e)
         {
             if (dgvNotes.SelectedCells.Count == 0)
             {
@@ -107,7 +111,7 @@ namespace Timetabler
             UpdateViewFromModel();
         }
 
-        private void dgvNotes_SelectionChanged(object sender, EventArgs e)
+        private void DgvNotes_SelectionChanged(object sender, EventArgs e)
         {
             bool flag = !(dgvNotes.SelectedCells.Count == 0);
             btnEdit.Enabled = flag;

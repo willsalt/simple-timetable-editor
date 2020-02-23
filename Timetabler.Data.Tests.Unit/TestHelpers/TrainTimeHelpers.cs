@@ -1,6 +1,7 @@
 ﻿using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 
 namespace Timetabler.Data.Tests.Unit.TestHelpers
 {
@@ -45,6 +46,12 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
         internal static TrainTime GetTrainTimeAt(TimeOfDay time, int? footnoteCount = null)
         {
             TrainTime tt = new TrainTime { Time = time.Copy() };
+            return AddFootnotesToTrainTime(tt, footnoteCount);
+        }
+
+        internal static TrainTime GetTrainTimeNotAt(TimeOfDay time, int? footnoteCount = null)
+        {
+            TrainTime tt = new TrainTime { Time = _rnd.NextBoolean() ? _rnd.NextTimeOfDayAfter(time) : _rnd.NextTimeOfDayBefore(time) };
             return AddFootnotesToTrainTime(tt, footnoteCount);
         }
     }

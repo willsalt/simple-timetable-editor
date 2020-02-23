@@ -13,14 +13,15 @@ Arguably the current state of the app achieves all of those aims apart from the 
 
 ## Dependencies
 
-The program is currently a Windows Desktop app written using .NET Framework 4.5.2 and Windows Forms.
+The program is currently a Windows Desktop app written using .NET Framework 4.7.2 and Windows Forms.
 
 It depends on the following external libs:
-* [NLog](https://nlog-project.org/) - v4.6
+* [NLog](https://nlog-project.org/) - v4.6.8
 * [PDFSharp](http://www.pdfsharp.net/) - v1.50
+* [SharpYaml](https://github.com/xoofx/SharpYaml) - v1.6.5
 
 The unit test projects also depend on:
-* [Moq](https://github.com/moq/moq4) - v4.12
+* [Moq](https://github.com/moq/moq4) - v4.13.1
 
 ## Current state of the project
 
@@ -28,7 +29,7 @@ Although the app currently meets most of its stated aims, there is still a fair 
 
 The PDF export subsystem currently depends on PDFSharp, but I am wary of the long-term health of that project given their website still says their code is hosted on Codeplex.  Given there is not much choice for good PDF-writing software, my long-term aim is to be able to write PDFs from scratch, then spin off the PDF export subsystem into its own separate library.
 
-Logging is currently handled by NLog, but a while ago a very experienced .NET engineer who I won't embarrass here recommended [Serilog](https://serilog.net/) to me, so I have been considering porting the logging code over to that.
+Logging is currently handled by NLog.  Following a recommendation from a very experienced .NET engineer I considered porting the logging code over to [Serilog](https://serilog.net/), but although it has a number of benefits it does not currently support the run-time reconfiguration features of NLog.
 
 The program currently only handles simple timetables.  Branching networks are not supported.  The current version does now handle trains that overtake each other, but support is limited.
 
@@ -36,14 +37,12 @@ The program is partially unit-tested, but test coverage is not fantastic and sho
 
 ## Short-to-medium-term aims
 
-* Fix various small bugs
-* See what can be done to improve performance
-* Consider converting to .NET Core when v3 is released
-* Consider swapping from NLog to Serilog
-* Make data input easier
-* Improve "editable train graph" functionality
-* Handle some bugs around trains overtaking other trains, particularly how this interacts with editing the train graph
-* Move to a consistent version of .NET Framework across the board, until we migrate to other targets
-* Support trains that are in transit at midnight properly
-* Improve test coverage rate
-* Improve documentation
+* Fix various small bugs.
+* Port more of the program to .NET Core (and .NET 5 when it is released).
+* Make data input easier.
+* Improve "editable train graph" functionality.
+* Handle some bugs around trains overtaking other trains, particularly how this interacts with editing the train graph.
+* Support trains that are in transit at midnight properly.
+* Remove reliance on third-party libraries for PDF generation.
+* Improve test coverage rate.
+* Improve documentation.

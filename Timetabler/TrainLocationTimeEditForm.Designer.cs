@@ -88,29 +88,29 @@
             // 
             resources.ApplyResources(this.tbArrivalHour, "tbArrivalHour");
             this.tbArrivalHour.Name = "tbArrivalHour";
-            this.tbArrivalHour.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbArrivalHour.Validated += new System.EventHandler(this.tbArrivalHour_Validated);
+            this.tbArrivalHour.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbArrivalHour.Validated += new System.EventHandler(this.TbArrivalHour_Validated);
             // 
             // tbArrivalMinute
             // 
             resources.ApplyResources(this.tbArrivalMinute, "tbArrivalMinute");
             this.tbArrivalMinute.Name = "tbArrivalMinute";
-            this.tbArrivalMinute.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbArrivalMinute.Validated += new System.EventHandler(this.tbArrivalMinute_Validated);
+            this.tbArrivalMinute.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbArrivalMinute.Validated += new System.EventHandler(this.TbArrivalMinute_Validated);
             // 
             // tbDepartureHour
             // 
             resources.ApplyResources(this.tbDepartureHour, "tbDepartureHour");
             this.tbDepartureHour.Name = "tbDepartureHour";
-            this.tbDepartureHour.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbDepartureHour.Validated += new System.EventHandler(this.tbDepartureHour_Validated);
+            this.tbDepartureHour.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbDepartureHour.Validated += new System.EventHandler(this.TbDepartureHour_Validated);
             // 
             // tbDepartureMinute
             // 
             resources.ApplyResources(this.tbDepartureMinute, "tbDepartureMinute");
             this.tbDepartureMinute.Name = "tbDepartureMinute";
-            this.tbDepartureMinute.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxHoursMinutes_Validating);
-            this.tbDepartureMinute.Validated += new System.EventHandler(this.tbDepartureMinute_Validated);
+            this.tbDepartureMinute.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxHoursMinutes_Validating);
+            this.tbDepartureMinute.Validated += new System.EventHandler(this.TbDepartureMinute_Validated);
             // 
             // cbLocation
             // 
@@ -118,7 +118,7 @@
             this.cbLocation.FormattingEnabled = true;
             resources.ApplyResources(this.cbLocation, "cbLocation");
             this.cbLocation.Name = "cbLocation";
-            this.cbLocation.SelectedIndexChanged += new System.EventHandler(this.cbLocation_SelectedIndexChanged);
+            this.cbLocation.SelectedIndexChanged += new System.EventHandler(this.CbLocation_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -135,21 +135,21 @@
             resources.ApplyResources(this.ckPassingTime, "ckPassingTime");
             this.ckPassingTime.Name = "ckPassingTime";
             this.ckPassingTime.UseVisualStyleBackColor = true;
-            this.ckPassingTime.CheckedChanged += new System.EventHandler(this.ckPassingTime_CheckedChanged);
+            this.ckPassingTime.CheckedChanged += new System.EventHandler(this.CkPassingTime_CheckedChanged);
             // 
             // clbArrival
             // 
             resources.ApplyResources(this.clbArrival, "clbArrival");
             this.clbArrival.FormattingEnabled = true;
             this.clbArrival.Name = "clbArrival";
-            this.clbArrival.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbArrival_ItemCheck);
+            this.clbArrival.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ClbArrival_ItemCheck);
             // 
             // clbDeparture
             // 
             resources.ApplyResources(this.clbDeparture, "clbDeparture");
             this.clbDeparture.FormattingEnabled = true;
             this.clbDeparture.Name = "clbDeparture";
-            this.clbDeparture.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbDeparture_ItemCheck);
+            this.clbDeparture.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ClbDeparture_ItemCheck);
             // 
             // label4
             // 
@@ -167,7 +167,7 @@
             this.cbArrivalHalfOfDay.FormattingEnabled = true;
             resources.ApplyResources(this.cbArrivalHalfOfDay, "cbArrivalHalfOfDay");
             this.cbArrivalHalfOfDay.Name = "cbArrivalHalfOfDay";
-            this.cbArrivalHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.cbArrivalHalfOfDay_SelectedIndexChanged);
+            this.cbArrivalHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.CbArrivalHalfOfDay_SelectedIndexChanged);
             // 
             // cbDepartureHalfOfDay
             // 
@@ -175,7 +175,7 @@
             this.cbDepartureHalfOfDay.FormattingEnabled = true;
             resources.ApplyResources(this.cbDepartureHalfOfDay, "cbDepartureHalfOfDay");
             this.cbDepartureHalfOfDay.Name = "cbDepartureHalfOfDay";
-            this.cbDepartureHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.cbDepartureHalfOfDay_SelectedIndexChanged);
+            this.cbDepartureHalfOfDay.SelectedIndexChanged += new System.EventHandler(this.CbDepartureHalfOfDay_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -196,19 +196,19 @@
             // 
             resources.ApplyResources(this.tbPlatform, "tbPlatform");
             this.tbPlatform.Name = "tbPlatform";
-            this.tbPlatform.TextChanged += new System.EventHandler(this.tbPlatform_TextChanged);
+            this.tbPlatform.TextChanged += new System.EventHandler(this.TbPlatform_TextChanged);
             // 
             // tbPath
             // 
             resources.ApplyResources(this.tbPath, "tbPath");
             this.tbPath.Name = "tbPath";
-            this.tbPath.TextChanged += new System.EventHandler(this.tbPath_TextChanged);
+            this.tbPath.TextChanged += new System.EventHandler(this.TbPath_TextChanged);
             // 
             // tbLine
             // 
             resources.ApplyResources(this.tbLine, "tbLine");
             this.tbLine.Name = "tbLine";
-            this.tbLine.TextChanged += new System.EventHandler(this.tbLine_TextChanged);
+            this.tbLine.TextChanged += new System.EventHandler(this.TbLine_TextChanged);
             // 
             // TrainLocationTimeEditForm
             // 

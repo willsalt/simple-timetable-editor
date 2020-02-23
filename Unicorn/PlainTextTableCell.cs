@@ -1,4 +1,5 @@
-﻿using Unicorn.Interfaces;
+﻿using System;
+using Unicorn.Interfaces;
 
 namespace Unicorn
 {
@@ -50,7 +51,11 @@ namespace Unicorn
         /// <param name="context">The graphics context which will be used to measure and draw the cell.</param>
         public override void MeasureSize(IGraphicsContext context)
         {
-            string content = Content != null ? Content : string.Empty;
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            string content = Content ?? string.Empty;
             var metrics = context.MeasureString(content, Font);
             ContentWidth = metrics.Width;
             ContentAscent = Font.Ascent;
@@ -68,6 +73,10 @@ namespace Unicorn
         /// <param name="y">The Y coordinate of the top-left corner of the cell.</param>
         public override void DrawContentsAt(IGraphicsContext context, double x, double y)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             double xOffset = (ComputedWidth - MinWidth) / 2 + MarginLeft;
             context.DrawString(Content, Font, x + xOffset, y + ComputedBaseline);
         }

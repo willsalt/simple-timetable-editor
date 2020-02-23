@@ -26,7 +26,7 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// List of lines to draw to display this train.
         /// </summary>
-        public List<LineCoordinates> Lines { get; set; }
+        public List<LineCoordinates> Lines { get; private set; }
 
         /// <summary>
         /// An enumeration of all of the vertexes associated with the <see cref="Lines" /> property.

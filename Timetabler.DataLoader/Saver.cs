@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using SharpYaml.Serialization;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save;
-using Timetabler.XmlData;
+using Timetabler.DataLoader.Save.Yaml;
+using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader
 {
@@ -20,8 +20,12 @@ namespace Timetabler.DataLoader
         /// <param name="destination">The stream to save the document to.</param>
         public static void Save(TimetableDocument document, Stream destination)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(TimetableFileModel));
-            serializer.Serialize(destination, document.ToTimetableFileModel());
+            Serializer serializer = GetSerializer();
+            using (StreamWriter writer = new StreamWriter(destination))
+            {
+                writer.WriteLine("%WTT");
+                serializer.Serialize(writer, document.ToYamlTimetableFileModel());
+            } 
         }
 
         /// <summary>
@@ -31,11 +35,21 @@ namespace Timetabler.DataLoader
         /// <param name="destination">The stream to save the location template to.</param>
         public static void Save(IEnumerable<Location> locations, Stream destination)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(LocationTemplateModel));
-            serializer.Serialize(destination, new LocationTemplateModel
+            LocationTemplateModel locationTemplateModel = new LocationTemplateModel();
+            locationTemplateModel.Maps.Add(BuildNetworkMapModel(locations));
+            Serializer serialiser = GetSerializer();
+            using (StreamWriter writer = new StreamWriter(destination))
             {
-                Maps = new List<NetworkMapModel> { new NetworkMapModel { LocationList = locations.Select(l => l.ToLocationModel()).ToList() } }
-            });
+                writer.WriteLine("%WTL");
+                serialiser.Serialize(writer, locationTemplateModel);
+            }
+        }
+
+        private static NetworkMapModel BuildNetworkMapModel(IEnumerable<Location> locations)
+        {
+            NetworkMapModel model = new NetworkMapModel();
+            model.LocationList.AddRange(locations.Select(c => c.ToYamlLocationModel()));
+            return model;
         }
 
         /// <summary>
@@ -45,8 +59,18 @@ namespace Timetabler.DataLoader
         /// <param name="destination">The stream to save the location template to.</param>
         public static void Save(DocumentTemplate template, Stream destination)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(TimetableDocumentTemplateModel));
-            serializer.Serialize(destination, template.ToTimetableDocumentTemplateModel());
+            Serializer serializer = GetSerializer();
+            using (StreamWriter writer = new StreamWriter(destination))
+            {
+                writer.WriteLine("%WTM");
+                serializer.Serialize(writer, template.ToYamlTimetableDocumentTemplateModel());
+            }
+        }
+
+        private static Serializer GetSerializer()
+        {
+            SerializerSettings settings = new SerializerSettings { EmitAlias = false, EmitTags = false };
+            return new Serializer(settings);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Unicorn.Impl.PdfSharp
     /// </summary>
     public class GraphicsContext : IGraphicsContext
     {
-        private XGraphics _core;
+        private readonly XGraphics _core;
 
         /// <summary>
         /// Constructor.
@@ -59,8 +59,10 @@ namespace Unicorn.Impl.PdfSharp
         /// <param name="style">Drawing style of the line.</param>
         public void DrawLine(double x1, double y1, double x2, double y2, double w, UniDashStyle style)
         {
-            XPen pen = new XPen(XColors.Black, w);
-            pen.DashStyle = style.ToXDashStyle();
+            XPen pen = new XPen(XColors.Black, w)
+            {
+                DashStyle = style.ToXDashStyle()
+            };
             _core.DrawLine(pen, x1, y1, x2, y2);
         }
 
@@ -84,10 +86,9 @@ namespace Unicorn.Impl.PdfSharp
         /// <exception cref="ArgumentException" />Thrown if the <see cref="IFontDescriptor" /> parameter is not a <see cref="FontDescriptor" /> object.  
         public void DrawString(string text, IFontDescriptor font, double x, double y)
         {
-            FontDescriptor ourFont = font as FontDescriptor;
-            if (ourFont == null)
+            if (!(font is FontDescriptor ourFont))
             {
-                throw new ArgumentException(nameof(font));
+                throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
 
             _core.DrawString(text, ourFont.Font, XBrushes.Black, x, y);
@@ -104,12 +105,11 @@ namespace Unicorn.Impl.PdfSharp
         /// <exception cref="ArgumentException" />Thrown if the <see cref="IFontDescriptor" /> paramter is not a <see cref="FontDescriptor" /> object.  
         public void DrawString(string text, IFontDescriptor font, UniRectangle rect, HorizontalAlignment hAlign, VerticalAlignment vAlign)
         {
-            FontDescriptor ourFont = font as FontDescriptor;
-            if (ourFont == null)
+            if (!(font is FontDescriptor ourFont))
             {
-                throw new ArgumentException(nameof(font));
+                throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
-            if (rect == null)
+            if (rect is null)
             {
                 throw new ArgumentNullException(nameof(rect));
             }
@@ -174,10 +174,9 @@ namespace Unicorn.Impl.PdfSharp
         /// <exception cref="ArgumentException" />Thrown if the <see cref="IFontDescriptor" /> paramter is not a <see cref="FontDescriptor" /> instance.  
         public UniSize MeasureString(string text, IFontDescriptor font)
         {
-            FontDescriptor ourFont = font as FontDescriptor;
-            if (ourFont == null)
+            if (!(font is FontDescriptor ourFont))
             {
-                throw new ArgumentException(nameof(font));
+                throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
 
             var size = _core.MeasureString(text, ourFont.Font);
@@ -191,10 +190,9 @@ namespace Unicorn.Impl.PdfSharp
         /// <exception cref="ArgumentException" />Thrown if the <see cref="IGraphicsState" /> parameter is not a <see cref="GraphicsState" /> instance.  
         public void Restore(IGraphicsState state)
         {
-            GraphicsState ourState = state as GraphicsState;
-            if (ourState == null)
+            if (!(state is GraphicsState ourState))
             {
-                throw new ArgumentException(nameof(state));
+                throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(state));
             }
 
             _core.Restore(ourState.InnerState);

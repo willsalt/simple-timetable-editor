@@ -2,6 +2,7 @@
 using PdfSharp.Fonts;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Unicorn.Interfaces;
@@ -19,10 +20,10 @@ namespace Unicorn.Impl.PdfSharp
     /// </summary>
     public class FontConfigurator : IFontResolver
     {
-        private static ILogger _log = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger _log = LogManager.GetCurrentClassLogger();
 
-        private Dictionary<string, byte[]> _faceData = new Dictionary<string, byte[]>();
-        private Dictionary<string, List<FontFamilyMap>> _faceMap = new Dictionary<string, List<FontFamilyMap>>();
+        private readonly Dictionary<string, byte[]> _faceData = new Dictionary<string, byte[]>();
+        private readonly Dictionary<string, List<FontFamilyMap>> _faceMap = new Dictionary<string, List<FontFamilyMap>>();
 
         /// <summary>
         /// Construct a new FontConfigurator, setting it up with font configuration data.
@@ -31,6 +32,10 @@ namespace Unicorn.Impl.PdfSharp
         public FontConfigurator(IEnumerable<FontConfigurationData> fontInfo)
         {
             string fontCode = "0000";
+            if (fontInfo is null)
+            {
+                throw new ArgumentNullException(nameof(fontInfo));
+            }
             foreach (FontConfigurationData fontData in fontInfo)
             {
                 fontCode = SetUpFont(fontData, fontCode);
@@ -42,8 +47,7 @@ namespace Unicorn.Impl.PdfSharp
         {
             string fontCode = Increment(lastFontCode);
             _faceData.Add(fontCode, GetFontFile(fontData.Filename));
-            List<FontFamilyMap> familyList;
-            if (!_faceMap.TryGetValue(fontData.Name, out familyList))
+            if (!_faceMap.TryGetValue(fontData.Name, out List<FontFamilyMap> familyList))
             {
                 familyList = new List<FontFamilyMap>();
                 _faceMap.Add(fontData.Name, familyList);
@@ -52,13 +56,13 @@ namespace Unicorn.Impl.PdfSharp
             return fontCode;
         }
 
-        private string Increment(string lastFontCode)
+        private static string Increment(string lastFontCode)
         {
-            int val = int.Parse(lastFontCode);
-            return (val + 1).ToString("D4");
+            int val = int.Parse(lastFontCode, CultureInfo.InvariantCulture);
+            return (val + 1).ToString("D4", CultureInfo.InvariantCulture);
         }
 
-        private byte[] GetFontFile(string fn)
+        private static byte[] GetFontFile(string fn)
         {
             try
             {
@@ -67,14 +71,16 @@ namespace Unicorn.Impl.PdfSharp
                     return ReadEntireStream(fs);
                 }
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 _log.Error(ex, "Failed to load font file {0}", fn);
                 return null;
             }
         }
 
-        private byte[] ReadEntireStream(Stream str)
+        private static byte[] ReadEntireStream(Stream str)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -113,17 +119,17 @@ namespace Unicorn.Impl.PdfSharp
             }
             else if (isBold && isItalic)
             {
-                faceCode = familyMembers.FirstOrDefault(m => m.Style == (UniFontStyle.Bold | UniFontStyle.Italic))?.FaceCode ??
-                    familyMembers.FirstOrDefault(m => (m.Style & UniFontStyle.Bold) != 0 && (m.Style & UniFontStyle.Italic) != 0)?.FaceCode ??
+                faceCode = familyMembers.FirstOrDefault(m => m.Style == (UniFontStyles.Bold | UniFontStyles.Italic))?.FaceCode ??
+                    familyMembers.FirstOrDefault(m => (m.Style & UniFontStyles.Bold) != 0 && (m.Style & UniFontStyles.Italic) != 0)?.FaceCode ??
                     familyMembers.FirstOrDefault()?.FaceCode;
             }
             else if (isBold)
             {
-                faceCode = familyMembers.Where(m => (m.Style & UniFontStyle.Bold) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
+                faceCode = familyMembers.Where(m => (m.Style & UniFontStyles.Bold) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
             }
             else if (isItalic)
             {
-                faceCode = familyMembers.Where(m => (m.Style & UniFontStyle.Italic) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
+                faceCode = familyMembers.Where(m => (m.Style & UniFontStyles.Italic) != 0).OrderBy(m => m.Style).FirstOrDefault()?.FaceCode;
             }
             if (faceCode == null)
             {

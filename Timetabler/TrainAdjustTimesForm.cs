@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 using Timetabler.CoreData;
 using Timetabler.Data;
@@ -27,7 +28,7 @@ namespace Timetabler
             set
             {
                 _model = value;
-                if (_model.ValidLocations != null)
+                if (_model?.ValidLocations != null)
                 {
                     SetLocationsComboBoxItems();
                 }
@@ -47,8 +48,7 @@ namespace Timetabler
         {
             foreach (var item in cbArriveDepart.Items)
             {
-                var adItem = item as HumanReadableEnum<ArrivalDepartureOptions>;
-                if (adItem != null && _model.ArriveDepart == adItem.Value)
+                if (item is HumanReadableEnum<ArrivalDepartureOptions> adItem && _model.ArriveDepart == adItem.Value)
                 {
                     cbArriveDepart.SelectedItem = adItem;
                     break;
@@ -75,15 +75,14 @@ namespace Timetabler
 
         private void SetOffsetValue()
         {
-            tbOffset.Text = _model.Offset.ToString();
+            tbOffset.Text = _model.Offset.ToString(CultureInfo.CurrentCulture);
         }
 
         private void SetAddSubtractValue()
         {
             foreach (var item in cbAddSubtract.Items)
             {
-                var asItem = item as HumanReadableEnum<AddSubtract>;
-                if (asItem != null && asItem.Value == _model.AddSubtract)
+                if (item is HumanReadableEnum<AddSubtract> asItem && asItem.Value == _model.AddSubtract)
                 {
                     cbAddSubtract.SelectedItem = asItem;
                     break;
@@ -105,14 +104,13 @@ namespace Timetabler
         public TrainAdjustTimesForm()
         {
             InitializeComponent();
-            cbAddSubtract.Items.AddRange(HumanReadableEnum<AddSubtract>.GetAddSubtract());
-            cbArriveDepart.Items.AddRange(HumanReadableEnum<ArrivalDepartureOptions>.GetArrivalDeparture());
+            cbAddSubtract.Items.AddRange(HumanReadableEnumFactory.GetAddSubtract());
+            cbArriveDepart.Items.AddRange(HumanReadableEnumFactory.GetArrivalDeparture());
         }
 
-        private void cbAddSubtract_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbAddSubtract_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selItem = cbAddSubtract.SelectedItem as HumanReadableEnum<AddSubtract>;
-            if (_model == null || selItem == null)
+            if (_model == null || !(cbAddSubtract.SelectedItem is HumanReadableEnum<AddSubtract> selItem))
             {
                 return;
             }
@@ -136,7 +134,7 @@ namespace Timetabler
             cbLocation.Visible = visible;
         }
 
-        private void cbLocation_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_model == null)
             {
@@ -145,10 +143,9 @@ namespace Timetabler
             _model.SelectedLocation = cbLocation.SelectedItem as Location;
         }
 
-        private void cbArriveDepart_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbArriveDepart_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var arriveDepart = cbArriveDepart.SelectedItem as HumanReadableEnum<ArrivalDepartureOptions>;
-            if (_model == null || arriveDepart == null)
+            if (_model == null || !(cbArriveDepart.SelectedItem is HumanReadableEnum<ArrivalDepartureOptions> arriveDepart))
             {
                 return;
             }
@@ -160,13 +157,16 @@ namespace Timetabler
             InputValidationHelper.ValidateTextInputAsNonNegativeInt(sender as TextBox, errorProvider, Resources.TrainAdjustTimesForm_Offset_ValidationFailure);
         }
 
-        private void tbOffset_Validated(object sender, EventArgs e)
+        private void TbOffset_Validated(object sender, EventArgs e)
         {
             if (_model == null)
             {
                 return;
             }
-            int.TryParse(tbOffset.Text, out int val);
+            if (!int.TryParse(tbOffset.Text, out int val))
+            {
+                return;
+            }
             if (val < 0)
             {
                 return;

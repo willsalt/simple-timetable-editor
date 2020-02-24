@@ -227,18 +227,6 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
         }
 
         [TestMethod]
-        [ExpectedException(typeof(KeyNotFoundException))]
-        public void TrainTimeModelExtensionsClass_ToTrainTimeMethod_ThrowsKeyNotFoundException_IfSecondParameterIsEmptyCollection()
-        {
-            TrainTimeModel testParam0 = GetTestObject();
-            Dictionary<string, Note> testParam1 = new Dictionary<string, Note>();
-
-            _ = testParam0.ToTrainTime(testParam1);
-
-            Assert.Fail();
-        }
-
-        [TestMethod]
         public void TrainTimeModelExtensionsClass_ToTrainTimeMethod_ReturnsObjectWithFootnotesCollectionWithCorrectContents_IfSecondParameterIsCollectionWithAllElementsContainedInFootnoteIdsPropertyOfFirstParameter()
         {
             TrainTimeModel testParam0 = GetTestObject();

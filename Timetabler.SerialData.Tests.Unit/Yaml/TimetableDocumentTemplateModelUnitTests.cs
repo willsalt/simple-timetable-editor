@@ -91,15 +91,6 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
         }
 
         [TestMethod]
-        public void TimetableDocumentTemplateModelClass_HasPublicReadableSignalboxesPropertyDerivedFromTypeICollectionOfSignalboxModel()
-        {
-            Type classType = typeof(TimetableDocumentTemplateModel);
-            PropertyInfo property = classType.GetProperty("Signalboxes");
-            Assert.IsTrue(typeof(ICollection<SignalboxModel>).IsAssignableFrom(property.PropertyType));
-            Assert.IsTrue(property.GetMethod.IsPublic);
-        }
-
-        [TestMethod]
         public void TimetableDocumentTemplateModelClass_Constructor_SetsMapsPropertyToEmptyCollection()
         {
             TimetableDocumentTemplateModel testOutput = new TimetableDocumentTemplateModel();

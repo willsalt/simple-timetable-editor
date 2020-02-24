@@ -14,6 +14,8 @@
     <Product>Simple Timetable Editor</Product>
 
     <Copyright>Copyright © 2016-2020 Will Salt</Copyright>
+
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

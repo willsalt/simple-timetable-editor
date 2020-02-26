@@ -85,7 +85,7 @@
       <Name>Tests.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
-      <Project>{61E758D9-A9AE-4F1E-AD46-ABFFDFE67259}</Project>
+      <Project>{f0a39340-f45e-4534-b87a-6fdf0202f4ea}</Project>
       <Name>Unicorn.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn\Unicorn.csproj">

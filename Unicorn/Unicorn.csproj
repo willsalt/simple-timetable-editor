@@ -83,12 +83,6 @@
     <Compile Include="Word.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
-      <Project>{61E758D9-A9AE-4F1E-AD46-ABFFDFE67259}</Project>
-      <Name>Unicorn.Interfaces</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +101,12 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
+      <Project>{f0a39340-f45e-4534-b87a-6fdf0202f4ea}</Project>
+      <Name>Unicorn.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Loader.cs" />
+    <Compile Include="LoaderWarningMessage.cs" />
     <Compile Include="Load\Xml\DistanceModelExtensions.cs" />
     <Compile Include="Load\Xml\DocumentOptionsModelExtensions.cs" />
     <Compile Include="Load\Xml\ExportOptionsModelExtensions.cs" />

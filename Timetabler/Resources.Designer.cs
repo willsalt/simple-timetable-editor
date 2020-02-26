@@ -481,6 +481,26 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file you are opening is in the format used by version 1.1 (and older) of the program.  Although it will work for now, future versions of the program may refuse to open the file.
+        ///
+        ///You can get rid of this warning by re-saving the file using this version of the program..
+        /// </summary>
+        internal static string MainForm_FileOpen_OldFileFormatWarning {
+            get {
+                return ResourceManager.GetString("MainForm_FileOpen_OldFileFormatWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File version warning.
+        /// </summary>
+        internal static string MainForm_FileOpen_OldFileFormatWarningTitle {
+            get {
+                return ResourceManager.GetString("MainForm_FileOpen_OldFileFormatWarningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unsaved changes.  Do you really want to open a different file?.
         /// </summary>
         internal static string MainForm_FileOpen_UnsavedChanges {

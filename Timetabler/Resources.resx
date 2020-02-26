@@ -261,6 +261,14 @@ Detail message: {2}</value>
 Error type: {0}
 Detail message: {1}</value>
   </data>
+  <data name="MainForm_FileOpen_OldFileFormatWarning" xml:space="preserve">
+    <value>The file you are opening is in the format used by version 1.1 (and older) of the program.  Although it will work for now, future versions of the program may refuse to open the file.
+
+You can get rid of this warning by re-saving the file using this version of the program.</value>
+  </data>
+  <data name="MainForm_FileOpen_OldFileFormatWarningTitle" xml:space="preserve">
+    <value>File version warning</value>
+  </data>
   <data name="MainForm_FileOpen_UnsavedChanges" xml:space="preserve">
     <value>There are unsaved changes.  Do you really want to open a different file?</value>
   </data>

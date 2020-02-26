@@ -124,7 +124,7 @@ namespace Timetabler
             {
                 using (FileStream fs = new FileStream(fn, FileMode.Open, FileAccess.Read))
                 {
-                    Model = Loader.LoadTimetableDocument(fs);
+                    Model = Loader.LoadTimetableDocument(fs, DisplayFileLoadWarningMessage);
                 }
             }
             catch (TimetableLoaderException ex)
@@ -650,7 +650,7 @@ namespace Timetabler
                 LocationCollection locations;
                 using (FileStream fs = new FileStream(ofdLocations.FileName, FileMode.Open, FileAccess.Read))
                 {
-                    locations = Loader.LoadLocationTemplate(fs);
+                    locations = Loader.LoadLocationTemplate(fs, DisplayFileLoadWarningMessage);
                 }
                 if (locations == null)
                 {
@@ -971,7 +971,7 @@ namespace Timetabler
                 DocumentTemplate template;
                 using (FileStream fs = new FileStream(ofdTemplate.FileName, FileMode.Open, FileAccess.Read))
                 {
-                    template = Loader.LoadDocumentTemplate(fs);
+                    template = Loader.LoadDocumentTemplate(fs, DisplayFileLoadWarningMessage);
                 }
                 if (template == null)
                 {
@@ -1049,6 +1049,15 @@ namespace Timetabler
             using (AboutBox aboutBox = new AboutBox())
             {
                 aboutBox.ShowDialog();
+            }
+        }
+
+        private void DisplayFileLoadWarningMessage(LoaderWarningMessage messageType)
+        {
+            if (messageType == LoaderWarningMessage.XmlFile)
+            {
+                MessageBox.Show(this, Resources.MainForm_FileOpen_OldFileFormatWarning, Resources.MainForm_FileOpen_OldFileFormatWarningTitle, 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

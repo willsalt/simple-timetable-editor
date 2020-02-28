@@ -1,6 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
+using System.Collections.Generic;
 using Tests.Utility.Providers;
+using Unicorn.Interfaces;
+using Unicorn.Tests.Unit.TestHelpers;
 
 namespace Unicorn.Tests.Unit
 {
@@ -8,6 +12,37 @@ namespace Unicorn.Tests.Unit
     public class TableUnitTests
     {
         private static readonly Random _rnd = RandomProvider.Default;
+
+        private class TableDefinition
+        {
+            internal Table Table { get; } = new Table();
+
+            internal List<double> ColumnWidths { get; } = new List<double>();
+
+            internal List<double> RowHeights { get; } = new List<double>();
+        }
+
+        private TableDefinition GetTestObject()
+        {
+            int columns = _rnd.Next(1, 6);
+            int rows = _rnd.Next(1, 10);
+            TableDefinition def = new TableDefinition();
+            for (int i = 0; i < columns; ++i)
+            {
+                def.ColumnWidths.Add((_rnd.NextDouble() + 0.001) * 10);
+            }
+            for (int y = 0; y < rows; ++y)
+            {
+                def.RowHeights.Add((_rnd.NextDouble() + 0.001) * 10);
+                List<TableCell> currentRow = new List<TableCell>();
+                for (int x = 0; x < columns; ++x)
+                {
+                    currentRow.Add(new FixedSizeTableCell(def.ColumnWidths[x], def.RowHeights[y]));
+                }
+                def.Table.AddRow(currentRow);
+            }
+            return def;
+        }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
@@ -94,6 +129,22 @@ namespace Unicorn.Tests.Unit
             {
                 Assert.AreEqual("graphicsContext", ex.ParamName);
             }
+        }
+
+        [TestMethod]
+        public void TableClass_DrawAtMethod_CallsIGraphicsContextImplementationDrawLineMethodCorrectNumberOfTimes_IfTableRuleStyleIsLinesMeet()
+        {
+            TableDefinition testObjectDetails = GetTestObject();
+            Table testObject = testObjectDetails.Table;
+            testObject.RuleStyle = TableRuleStyle.LinesMeet;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            testParam0Details.Verify(x => x.DrawLine(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()),
+                Times.Exactly(testObjectDetails.ColumnWidths.Count + testObjectDetails.RowHeights.Count + 2));
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

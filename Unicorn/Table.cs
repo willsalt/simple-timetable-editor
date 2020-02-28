@@ -237,7 +237,7 @@ namespace Unicorn
 
         private void DrawFullGrid(IGraphicsContext graphicsContext, double x, double y)
         {
-            graphicsContext.DrawLine(x, y, x, y + ComputedHeight);
+            graphicsContext.DrawLine(x, y, x, y + ComputedHeight, RuleWidth);
             double xOffset = 0;
             double lineWidthOffset = RuleWidth / 2;
             foreach (TableColumn column in _columns)

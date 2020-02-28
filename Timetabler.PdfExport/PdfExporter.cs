@@ -267,6 +267,7 @@ namespace Timetabler.PdfExport
             double bottomLimit = _currentPage.BottomMarginPosition;
             double topLimit = _currentPage.CurrentVerticalCursor;
             double leftLimit = _currentPage.LeftMarginPosition;
+            double lineWidthOffset = MainLineWidth / 2;
             List<TrainGraphAxisTickInfo> timeAxisInfo = trainGraphModel.GetTimeAxisInformation().Select(i => { i.PopulateSize(_currentPage.PageGraphics, _plainBodyFont); return i; }).ToList();
             bottomLimit -= (timeAxisInfo.Max(i => i.Height).Value + graphTickLength);
 
@@ -274,12 +275,13 @@ namespace Timetabler.PdfExport
             topLimit += distanceAxisInfo.Last().Height.Value / 2;
             leftLimit += distanceAxisInfo.Max(i => i.Width).Value + graphTickLength + distanceTickLabelMargin;
 
-            LineDrawingWrapper("y-axis", leftLimit, topLimit, leftLimit, bottomLimit, MainLineWidth);
-            LineDrawingWrapper("x-axis", leftLimit, bottomLimit, _currentPage.RightMarginPosition, bottomLimit, MainLineWidth);
+            LineDrawingWrapper("y-axis", leftLimit, topLimit - lineWidthOffset, leftLimit, bottomLimit + lineWidthOffset, MainLineWidth);
+            LineDrawingWrapper("x-axis", leftLimit - lineWidthOffset, bottomLimit, _currentPage.RightMarginPosition + lineWidthOffset, bottomLimit, MainLineWidth);
             foreach (TrainGraphAxisTickInfo tick in distanceAxisInfo)
             {
                 double y = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - tick.Coordinate);
-                LineDrawingWrapper("horizontal grid line", _currentPage.RightMarginPosition, y, leftLimit - graphTickLength, y, MainLineWidth);
+                LineDrawingWrapper("horizontal grid line", _currentPage.RightMarginPosition + lineWidthOffset, y, leftLimit - (graphTickLength + lineWidthOffset), y, 
+                    MainLineWidth);
                 Word tickWord = new Word(tick.Label, _plainBodyFont, _currentPage.PageGraphics, 0);
                 tickWord.DrawAt(_currentPage.PageGraphics, leftLimit - (tick.Width.Value + graphTickLength + distanceTickLabelMargin), y - tick.Height.Value / 2);
             }
@@ -287,7 +289,7 @@ namespace Timetabler.PdfExport
             foreach (TrainGraphAxisTickInfo tick in timeAxisInfo)
             {
                 double x = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, tick.Coordinate);
-                LineDrawingWrapper("vertical grid line", x, topLimit, x, bottomLimit + graphTickLength, MainLineWidth);
+                LineDrawingWrapper("vertical grid line", x, topLimit - lineWidthOffset, x, bottomLimit + graphTickLength + lineWidthOffset, MainLineWidth);
                 Word tickWord = new Word(tick.Label, _plainBodyFont, _currentPage.PageGraphics, 0);
                 tickWord.DrawAt(_currentPage.PageGraphics, x - tick.Width.Value / 2, bottomLimit + graphTickLength);
             }

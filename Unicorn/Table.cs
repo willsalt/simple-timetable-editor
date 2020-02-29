@@ -278,7 +278,7 @@ namespace Unicorn
                 foreach (TableColumn column in _columns)
                 {
                     graphicsContext.DrawLine(x + RuleGapSize + lineWidthOffset + xOffset, y + yOffset, 
-                        x + column.ComputedWidth + xOffset - (RuleGapSize + lineWidthOffset), y + yOffset);
+                        x + column.ComputedWidth + xOffset - (RuleGapSize + lineWidthOffset), y + yOffset, RuleWidth);
                     xOffset += column.ComputedWidth;
                 }
             }

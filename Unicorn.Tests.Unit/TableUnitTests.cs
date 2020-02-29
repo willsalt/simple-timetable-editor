@@ -132,6 +132,22 @@ namespace Unicorn.Tests.Unit
         }
 
         [TestMethod]
+        public void TableClass_DrawAtMethod_CallsIGraphicsContextImplementationDrawLineMethodCorrectNumberOfTimes_IfTableRuleStyleIsNone()
+        {
+            TableDefinition testObjectDetails = GetTestObject();
+            Table testObject = testObjectDetails.Table;
+            testObject.RuleStyle = TableRuleStyle.None;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            testParam0Details.Verify(x => x.DrawLine(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()),
+                Times.Exactly(0));
+        }
+
+        [TestMethod]
         public void TableClass_DrawAtMethod_CallsIGraphicsContextImplementationDrawLineMethodCorrectNumberOfTimes_IfTableRuleStyleIsLinesMeet()
         {
             TableDefinition testObjectDetails = GetTestObject();
@@ -145,6 +161,38 @@ namespace Unicorn.Tests.Unit
 
             testParam0Details.Verify(x => x.DrawLine(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()),
                 Times.Exactly(testObjectDetails.ColumnWidths.Count + testObjectDetails.RowHeights.Count + 2));
+        }
+
+        [TestMethod]
+        public void TableClass_DrawAtMethod_CallsIGraphicsContextImplementationDrawLineMethodCorrectNumberOfTimes_IfTableRuleStyleIsSolidColumnsBrokenRows()
+        {
+            TableDefinition testObjectDetails = GetTestObject();
+            Table testObject = testObjectDetails.Table;
+            testObject.RuleStyle = TableRuleStyle.SolidColumnsBrokenRows;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            testParam0Details.Verify(x => x.DrawLine(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()),
+                Times.Exactly(testObjectDetails.ColumnWidths.Count * testObjectDetails.RowHeights.Count  + 3));
+        }
+
+        [TestMethod]
+        public void TableClass_DrawAtMethod_CallsIGraphicsContextImplementationDrawLineMethodCorrectNumberOfTimes_IfTableRuleStyleIsSolidRowsBrokenColumns()
+        {
+            TableDefinition testObjectDetails = GetTestObject();
+            Table testObject = testObjectDetails.Table;
+            testObject.RuleStyle = TableRuleStyle.SolidRowsBrokenColumns;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            testParam0Details.Verify(x => x.DrawLine(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()),
+                Times.Exactly(testObjectDetails.ColumnWidths.Count * testObjectDetails.RowHeights.Count + 3));
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

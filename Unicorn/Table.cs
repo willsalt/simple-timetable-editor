@@ -237,25 +237,27 @@ namespace Unicorn
 
         private void DrawFullGrid(IGraphicsContext graphicsContext, double x, double y)
         {
-            graphicsContext.DrawLine(x, y, x, y + ComputedHeight);
+            graphicsContext.DrawLine(x, y, x, y + ComputedHeight, RuleWidth);
             double xOffset = 0;
+            double lineWidthOffset = RuleWidth / 2;
             foreach (TableColumn column in _columns)
             {
                 xOffset += column.ComputedWidth;
-                graphicsContext.DrawLine(x + xOffset, y, x + xOffset, y + ComputedHeight, RuleWidth);
+                graphicsContext.DrawLine(x + xOffset, y - lineWidthOffset, x + xOffset, y + ComputedHeight + lineWidthOffset, RuleWidth);
             }
             graphicsContext.DrawLine(x, y, x + ComputedWidth, y, RuleWidth);
             double yOffset = 0;
             foreach (TableRow row in _rows)
             {
                 yOffset += row.ComputedWidth;
-                graphicsContext.DrawLine(x, y + yOffset, x + ComputedWidth, y + yOffset, RuleWidth);
+                graphicsContext.DrawLine(x - lineWidthOffset, y + yOffset, x + ComputedWidth + lineWidthOffset, y + yOffset, RuleWidth);
             }
         }
 
         private void DrawSolidColumnGrid(IGraphicsContext graphicsContext, double x, double y)
         {
-            graphicsContext.DrawLine(x, y, x, y + ComputedHeight, RuleWidth);
+            double lineWidthOffset = RuleWidth / 2;
+            graphicsContext.DrawLine(x, y - lineWidthOffset, x, y + ComputedHeight + lineWidthOffset, RuleWidth);
             double xOffset = 0;
             for (int i = 0; i < _columns.Count; ++i)
             {
@@ -265,9 +267,9 @@ namespace Unicorn
                     rgs = 0d;
                 }
                 xOffset += _columns[i].ComputedWidth;
-                graphicsContext.DrawLine(x + xOffset, y + rgs, x + xOffset, y + ComputedHeight - rgs, RuleWidth);
+                graphicsContext.DrawLine(x + xOffset, y + rgs + lineWidthOffset, x + xOffset, y + ComputedHeight - (rgs + lineWidthOffset), RuleWidth);
             }
-            graphicsContext.DrawLine(x, y, x + ComputedWidth, y, RuleWidth);
+            graphicsContext.DrawLine(x - lineWidthOffset, y, x + ComputedWidth + lineWidthOffset, y, RuleWidth);
             double yOffset = 0;
             for (int i = 0; i < _rows.Count - 1; ++i)
             {
@@ -275,16 +277,18 @@ namespace Unicorn
                 xOffset = 0;
                 foreach (TableColumn column in _columns)
                 {
-                    graphicsContext.DrawLine(x + RuleGapSize + xOffset, y + yOffset, x + column.ComputedWidth + xOffset - RuleGapSize, y + yOffset);
+                    graphicsContext.DrawLine(x + RuleGapSize + lineWidthOffset + xOffset, y + yOffset, 
+                        x + column.ComputedWidth + xOffset - (RuleGapSize + lineWidthOffset), y + yOffset, RuleWidth);
                     xOffset += column.ComputedWidth;
                 }
             }
-            graphicsContext.DrawLine(x, y + ComputedHeight, x + ComputedWidth, y + ComputedHeight, RuleWidth);
+            graphicsContext.DrawLine(x - lineWidthOffset, y + ComputedHeight, x + ComputedWidth + lineWidthOffset, y + ComputedHeight, RuleWidth);
         }
 
         private void DrawSolidRowGrid(IGraphicsContext graphicsContext, double x, double y)
         {
-            graphicsContext.DrawLine(x, y, x + ComputedWidth, y, RuleWidth);
+            double lineWidthOffset = RuleWidth / 2;
+            graphicsContext.DrawLine(x - lineWidthOffset, y, x + ComputedWidth + lineWidthOffset, y, RuleWidth);
             double yOffset = 0;
             for (int i = 0; i < _rows.Count; ++i)
             {
@@ -294,9 +298,9 @@ namespace Unicorn
                     rgs = 0d;
                 }
                 yOffset += _rows[i].ComputedHeight;
-                graphicsContext.DrawLine(x + rgs, y + yOffset, x + ComputedWidth - rgs, y + yOffset, RuleWidth);
+                graphicsContext.DrawLine(x + rgs + lineWidthOffset, y + yOffset, x + ComputedWidth - (rgs + lineWidthOffset), y + yOffset, RuleWidth);
             }
-            graphicsContext.DrawLine(x, y, x, y + ComputedHeight, RuleWidth);
+            graphicsContext.DrawLine(x, y - lineWidthOffset, x, y + ComputedHeight + lineWidthOffset, RuleWidth);
             double xOffset = 0;
             for (int i = 0; i < _columns.Count - 1; ++i)
             {
@@ -304,11 +308,12 @@ namespace Unicorn
                 yOffset = 0;
                 foreach (TableRow row in _rows)
                 {
-                    graphicsContext.DrawLine(x + xOffset, y + yOffset + RuleGapSize, x + xOffset, y + yOffset + row.ComputedHeight - RuleGapSize, RuleWidth);
+                    graphicsContext.DrawLine(x + xOffset, y + yOffset + RuleGapSize + lineWidthOffset, x + xOffset, 
+                        y + yOffset + row.ComputedHeight - (RuleGapSize + lineWidthOffset), RuleWidth);
                     yOffset += row.ComputedWidth;
                 }
             }
-            graphicsContext.DrawLine(x + ComputedWidth, y, x + ComputedWidth, y + ComputedHeight, RuleWidth);
+            graphicsContext.DrawLine(x + ComputedWidth, y - lineWidthOffset, x + ComputedWidth, y + ComputedHeight + lineWidthOffset, RuleWidth);
         }
     }
 }

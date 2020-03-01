@@ -27,13 +27,13 @@ namespace Unicorn
         }
 
         /// <summary>
-        /// The computed width of the row, equal to the sum of the computed widths of all cells in the row.
+        /// The computed width of the row, equal to the sum of the computed widths of all cells in the row plus the grid lines between and either side of them.
         /// </summary>
         public double ComputedWidth
         {
             get
             {
-                return this.Sum(c => c?.ComputedWidth ?? 0);
+                return this.Sum(c => c?.ComputedWidth ?? 0) + (Parent?.RuleWidth ?? 0) * (Count + 1);
             }
         }
     }

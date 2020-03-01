@@ -10,7 +10,12 @@ namespace Unicorn
     /// </summary>
     public class TableCellCollection : IList<TableCell>
     {
-        private List<TableCell> _theList;
+        private readonly List<TableCell> _theList;
+
+        /// <summary>
+        /// The table containing this row or column (if any).
+        /// </summary>
+        public Table Parent { get; set; }
 
         /// <summary>
         /// Default constructor.

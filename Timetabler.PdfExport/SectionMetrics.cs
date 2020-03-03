@@ -20,9 +20,9 @@
 
         internal double LocoToWorkHeight { get; set; }
 
-        internal double TotalHeight { get { return TitleHeight + SubtitleHeight + TableHeight; } }
+        internal double TotalHeight { get { return TitleHeight + SubtitleHeight + TableHeight + LineWidth; } }
 
-        internal double TableHeight { get { return HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight + LineWidth * 3; } }
+        internal double TableHeight { get { return HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight; } }
 
         internal double HeaderOffset { get { return TitleHeight + SubtitleHeight; } }
 

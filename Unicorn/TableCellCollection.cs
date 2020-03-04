@@ -208,6 +208,10 @@ namespace Unicorn
         /// </summary>
         protected virtual void ComputeCellWidths()
         {
+            if (Count == 0)
+            {
+                return;
+            }
             double width = _theList.Select(c => c.MinWidth).Max();
             foreach (TableCell cell in _theList)
             {
@@ -220,6 +224,10 @@ namespace Unicorn
         /// </summary>
         protected virtual void ComputeCellHeights()
         {
+            if (Count == 0)
+            {
+                return;
+            }
             double ascent = _theList.Select(c => c.MinAscent).Max();
             double descent = _theList.Select(c => c.MinDescent).Max();
             foreach (TableCell cell in _theList)

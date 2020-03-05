@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tests.Utility.Providers;
 using Unicorn.Interfaces;
 using Unicorn.Tests.Unit.TestHelpers;
@@ -20,6 +21,8 @@ namespace Unicorn.Tests.Unit
             internal List<double> ColumnWidths { get; } = new List<double>();
 
             internal List<double> RowHeights { get; } = new List<double>();
+
+            internal List<FixedSizeTableCell> Cells { get; } = new List<FixedSizeTableCell>();
         }
 
         private TableDefinition GetTestObject()
@@ -27,6 +30,7 @@ namespace Unicorn.Tests.Unit
             int columns = _rnd.Next(1, 6);
             int rows = _rnd.Next(1, 10);
             TableDefinition def = new TableDefinition();
+            def.Table.RuleStyle = _rnd.NextTableRuleStyle();
             for (int i = 0; i < columns; ++i)
             {
                 def.ColumnWidths.Add((_rnd.NextDouble() + 0.001) * 10);
@@ -37,7 +41,13 @@ namespace Unicorn.Tests.Unit
                 List<TableCell> currentRow = new List<TableCell>();
                 for (int x = 0; x < columns; ++x)
                 {
-                    currentRow.Add(new FixedSizeTableCell(def.ColumnWidths[x], def.RowHeights[y]));
+                    FixedSizeTableCell cell = new FixedSizeTableCell(def.ColumnWidths[x], def.RowHeights[y])
+                    {
+                        ColumnIndex = x,
+                        RowIndex = y,
+                    };
+                    def.Cells.Add(cell);
+                    currentRow.Add(cell);
                 }
                 def.Table.AddRow(currentRow);
             }
@@ -76,6 +86,20 @@ namespace Unicorn.Tests.Unit
         }
 
         [TestMethod]
+        public void TableClass_AddRowMethodWithTableRowParameter_SetsParentPropertyOfParameterToThis_IfParameterIsNotNull()
+        {
+            TableDefinition testObjectDef = GetTestObject();
+            TableRow testParam = new TableRow { Parent = null }; 
+            testParam.AddRange(FixedSizeTableCell.GetCellList(testObjectDef.ColumnWidths.Count));
+
+            testObjectDef.Table.AddRow(testParam);
+
+            Assert.AreSame(testObjectDef.Table, testParam.Parent);
+        }
+
+        
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TableClass_AddColumnMethodWithTableColumnParameter_ThrowsArgumentNullException_IfParameterIsNull()
         {
@@ -105,6 +129,18 @@ namespace Unicorn.Tests.Unit
         }
 
         [TestMethod]
+        public void TableClass_AddColumnMethodWithTableColumnParameter_SetsParentPropertyOfParameterToThis_IfParameterIsNotNull()
+        {
+            TableDefinition testObjectDef = GetTestObject();
+            TableColumn testParam = new TableColumn { Parent = null };
+            testParam.AddRange(FixedSizeTableCell.GetCellList(testObjectDef.RowHeights.Count));
+
+            testObjectDef.Table.AddColumn(testParam);
+
+            Assert.AreSame(testObjectDef.Table, testParam.Parent);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TableClass_DrawAtMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
@@ -128,6 +164,76 @@ namespace Unicorn.Tests.Unit
             catch (ArgumentNullException ex)
             {
                 Assert.AreEqual("graphicsContext", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void TableClass_DrawAtMethod_CallsDrawContentsAtMethodOfEachCellInTableOnce()
+        {
+            TableDefinition testObjectDef = GetTestObject();
+            Table testObject = testObjectDef.Table;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            foreach (FixedSizeTableCell cell in testObjectDef.Cells)
+            {
+                Assert.AreEqual(1, cell.DrawContentsAtCalls.Count);
+            }
+        }
+
+        [TestMethod]
+        public void TableClass_DrawAtMethod_CallsDrawContentsAtMethodOfEachCellWithCorrectFirstParameter()
+        {
+            TableDefinition testObjectDef = GetTestObject();
+            Table testObject = testObjectDef.Table;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            foreach (FixedSizeTableCell cell in testObjectDef.Cells)
+            {
+                Assert.AreSame(testParam0Details.Object, cell.DrawContentsAtCalls.First().Item1);
+            }
+        }
+
+        [TestMethod]
+        public void TableClass_DrawAtMethod_CallsDrawContentsAtMethodOfEachCellWithCorrectSecondParameter()
+        {
+            TableDefinition testObjectDef = GetTestObject();
+            Table testObject = testObjectDef.Table;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            foreach (FixedSizeTableCell cell in testObjectDef.Cells)
+            {
+                double expectedValue = testParam1 + testObjectDef.ColumnWidths.Take(cell.ColumnIndex).Sum() + (cell.ColumnIndex + 1) * testObject.RuleWidth;
+                Assert.AreEqual(expectedValue, cell.DrawContentsAtCalls.First().Item2);
+            }
+        }
+
+        [TestMethod]
+        public void TableClass_DrawAtMethod_CallsDrawContentsAtMethodOfEachCellWithCorrectThirdParameter()
+        {
+            TableDefinition testObjectDef = GetTestObject();
+            Table testObject = testObjectDef.Table;
+            Mock<IGraphicsContext> testParam0Details = new Mock<IGraphicsContext>();
+            double testParam1 = _rnd.NextDouble() * 100;
+            double testParam2 = _rnd.NextDouble() * 100;
+
+            testObject.DrawAt(testParam0Details.Object, testParam1, testParam2);
+
+            foreach (FixedSizeTableCell cell in testObjectDef.Cells)
+            {
+                double expectedValue = testParam2 + testObjectDef.RowHeights.Take(cell.RowIndex).Sum() + (cell.RowIndex + 1) * testObject.RuleWidth;
+                Assert.AreEqual(expectedValue, cell.DrawContentsAtCalls.First().Item3);
             }
         }
 

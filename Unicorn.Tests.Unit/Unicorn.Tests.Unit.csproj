@@ -76,6 +76,7 @@
     <Compile Include="TableRowUnitTests.cs" />
     <Compile Include="TableUnitTests.cs" />
     <Compile Include="TestHelpers\FixedSizeTableCell.cs" />
+    <Compile Include="TestHelpers\RandomExtensions.cs" />
     <Compile Include="WordUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>

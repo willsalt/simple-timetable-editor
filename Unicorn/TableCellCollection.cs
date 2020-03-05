@@ -11,6 +11,7 @@ namespace Unicorn
     public class TableCellCollection : IList<TableCell>
     {
         private readonly List<TableCell> _theList;
+        private uint _version = 0;
 
         /// <summary>
         /// The table containing this row or column (if any).
@@ -39,6 +40,7 @@ namespace Unicorn
 
             set
             {
+                _version++;
                 _theList[index] = value;
                 ComputeCellDimensions();
             }
@@ -72,6 +74,7 @@ namespace Unicorn
         /// <param name="item">The cell to add to the collection.</param>
         public void Add(TableCell item)
         {
+            _version++;
             _theList.Add(item);
             ComputeCellDimensions();
         }
@@ -82,6 +85,7 @@ namespace Unicorn
         /// <param name="items"></param>
         public void AddRange(IEnumerable<TableCell> items)
         {
+            _version++;
             _theList.AddRange(items);
             ComputeCellDimensions();
         }
@@ -91,6 +95,7 @@ namespace Unicorn
         /// </summary>
         public void Clear()
         {
+            _version++;
             _theList.Clear();
         }
 
@@ -140,7 +145,7 @@ namespace Unicorn
         /// <returns>An enumerator for this collection.</returns>
         public IEnumerator<TableCell> GetEnumerator()
         {
-            return new TableCellEnumerator(this);
+            return new Enumerator(this);
         }
 
         /// <summary>
@@ -160,6 +165,7 @@ namespace Unicorn
         /// <param name="item">The cell to insert into the collection.</param>
         public void Insert(int index, TableCell item)
         {
+            _version++;
             _theList.Insert(index, item);
             ComputeCellDimensions();
         }
@@ -174,6 +180,7 @@ namespace Unicorn
             bool result = _theList.Remove(item);
             if (result)
             {
+                _version++;
                 ComputeCellDimensions();
             }
             return result;
@@ -185,6 +192,7 @@ namespace Unicorn
         /// <param name="index"></param>
         public void RemoveAt(int index)
         {
+            _version++;
             _theList.RemoveAt(index);
             ComputeCellDimensions();
         }
@@ -234,6 +242,110 @@ namespace Unicorn
             {
                 cell.ComputedBaseline = ascent;
                 cell.ComputedHeight = ascent + descent;
+            }
+        }
+
+        /// <summary>
+        /// Enumerator for <see cref="TableCellCollection" />-derived instances.
+        /// </summary>
+        public class Enumerator : IEnumerator<TableCell>
+        {
+            private readonly TableCellCollection _collection;
+            private int _curIdx;
+            private readonly uint _ver;
+
+            /// <summary>
+            /// Constructs the enumerator for a given <see cref="TableCellCollection"/>.
+            /// </summary>
+            /// <param name="collection">The <see cref="TableCellCollection"/> to construct an enumerator for.</param>
+            public Enumerator(TableCellCollection collection)
+            {
+                if (collection is null)
+                {
+                    throw new ArgumentNullException(nameof(collection));
+                }
+
+                _collection = collection;
+                _curIdx = -1;
+                Current = null;
+                _ver = _collection._version;
+            }
+
+            private TableCell _current;
+
+            /// <summary>
+            /// Gets the currently-enumerated object.
+            /// </summary>
+            public TableCell Current 
+            {
+                get
+                {
+                    CheckCollectionModification();
+                    return _current;
+                }
+                private set
+                {
+                    _current = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets the currently-enumerated object.
+            /// </summary>
+            object IEnumerator.Current
+            {
+                get { return Current; }
+            }
+
+            /// <summary>
+            /// Dispose of this enumerator.
+            /// </summary>
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            /// <summary>
+            /// Dispose of this enumerator.
+            /// </summary>
+            /// <param name="disposing">Whether or not to dispose of managed objects.</param>
+            protected virtual void Dispose(bool disposing)
+            {
+
+            }
+
+            /// <summary>
+            /// Move the enumerator to the next object in the collection.
+            /// </summary>
+            /// <returns>True if the operation was succesful; false if the end of the collection has been reached.</returns>
+            public bool MoveNext()
+            {
+                CheckCollectionModification();
+                if (++_curIdx >= _collection.Count)
+                {
+                    return false;
+                }
+                Current = _collection[_curIdx];
+                return true;
+            }
+
+            /// <summary>
+            /// Resets the enumerator state, so that the enumerator is pointing before the start of the collection.
+            /// </summary>
+            public void Reset()
+            {
+                CheckCollectionModification();
+                _curIdx = -1;
+                Current = null;
+            }
+
+            private void CheckCollectionModification()
+            {
+                if (_ver != _collection._version)
+                {
+                    throw new InvalidOperationException(Resources.TableCellCollection_Enumerator_Error_CollectionModified);
+                }
             }
         }
     }

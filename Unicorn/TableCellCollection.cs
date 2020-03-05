@@ -10,7 +10,12 @@ namespace Unicorn
     /// </summary>
     public class TableCellCollection : IList<TableCell>
     {
-        private List<TableCell> _theList;
+        private readonly List<TableCell> _theList;
+
+        /// <summary>
+        /// The table containing this row or column (if any).
+        /// </summary>
+        public Table Parent { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -203,6 +208,10 @@ namespace Unicorn
         /// </summary>
         protected virtual void ComputeCellWidths()
         {
+            if (Count == 0)
+            {
+                return;
+            }
             double width = _theList.Select(c => c.MinWidth).Max();
             foreach (TableCell cell in _theList)
             {
@@ -215,6 +224,10 @@ namespace Unicorn
         /// </summary>
         protected virtual void ComputeCellHeights()
         {
+            if (Count == 0)
+            {
+                return;
+            }
             double ascent = _theList.Select(c => c.MinAscent).Max();
             double descent = _theList.Select(c => c.MinDescent).Max();
             foreach (TableCell cell in _theList)

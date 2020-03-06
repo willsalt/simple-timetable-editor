@@ -49,24 +49,12 @@ namespace Unicorn
         /// <summary>
         /// The number of cells in the collection.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _theList.Count;
-            }
-        }
+        public int Count => _theList.Count;
 
         /// <summary>
         /// Whether the collection is read-only or not.  Returns false.
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// Add a cell to the collection and recompute the collection dimensions.

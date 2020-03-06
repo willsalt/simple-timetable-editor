@@ -20,5 +20,14 @@ namespace Unicorn.Tests.Unit.TestHelpers
             }
             return _validTableRuleStyles[rnd.Next(_validTableRuleStyles.Length)];
         }
+
+        internal static FixedSizeTableCell NextFixedSizeTableCell(this Random rnd)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new FixedSizeTableCell(rnd.NextDouble() * 100, rnd.NextDouble() * 100);
+        }
     }
 }

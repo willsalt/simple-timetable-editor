@@ -76,7 +76,6 @@
     <Compile Include="Table.cs" />
     <Compile Include="TableCell.cs" />
     <Compile Include="TableCellCollection.cs" />
-    <Compile Include="TableCellEnumerator.cs" />
     <Compile Include="TableColumn.cs" />
     <Compile Include="TableRow.cs" />
     <Compile Include="TableRuleStyle.cs" />

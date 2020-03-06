@@ -68,5 +68,14 @@ namespace Unicorn {
                 return ResourceManager.GetString("TableCellCollection_CopyTo_Error_InsufficientArrayLength", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collection has been modified..
+        /// </summary>
+        internal static string TableCellCollection_Enumerator_Error_CollectionModified {
+            get {
+                return ResourceManager.GetString("TableCellCollection_Enumerator_Error_CollectionModified", resourceCulture);
+            }
+        }
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="PlainTextTableCellUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\HorizontalArrowUnitTests.cs" />
+    <Compile Include="TableCellCollectionEnumeratorUnitTests.cs" />
     <Compile Include="TableColumnUnitTests.cs" />
     <Compile Include="TableRowUnitTests.cs" />
     <Compile Include="TableUnitTests.cs" />

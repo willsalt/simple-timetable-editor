@@ -215,7 +215,7 @@ namespace Unicorn.Tests.Unit
             foreach (FixedSizeTableCell cell in testObjectDef.Cells)
             {
                 double expectedValue = testParam1 + testObjectDef.ColumnWidths.Take(cell.ColumnIndex).Sum() + (cell.ColumnIndex + 1) * testObject.RuleWidth;
-                Assert.AreEqual(expectedValue, cell.DrawContentsAtCalls.First().Item2);
+                Assert.AreEqual(expectedValue, cell.DrawContentsAtCalls.First().Item2, 0.0000000001);
             }
         }
 
@@ -233,7 +233,7 @@ namespace Unicorn.Tests.Unit
             foreach (FixedSizeTableCell cell in testObjectDef.Cells)
             {
                 double expectedValue = testParam2 + testObjectDef.RowHeights.Take(cell.RowIndex).Sum() + (cell.RowIndex + 1) * testObject.RuleWidth;
-                Assert.AreEqual(expectedValue, cell.DrawContentsAtCalls.First().Item3);
+                Assert.AreEqual(expectedValue, cell.DrawContentsAtCalls.First().Item3, 0.0000000001);
             }
         }
 

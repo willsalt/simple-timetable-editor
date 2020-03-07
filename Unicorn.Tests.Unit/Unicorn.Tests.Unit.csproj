@@ -94,7 +94,7 @@
       <Name>Unicorn.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn\Unicorn.csproj">
-      <Project>{310C4830-B53A-457B-8262-0172F74BEF25}</Project>
+      <Project>{3ff5f14c-ad99-4e3e-a1ce-c005cf87b94b}</Project>
       <Name>Unicorn</Name>
     </ProjectReference>
   </ItemGroup>

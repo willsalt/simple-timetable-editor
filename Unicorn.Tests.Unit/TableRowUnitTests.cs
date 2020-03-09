@@ -91,7 +91,7 @@ namespace Unicorn.Tests.Unit
         [ExpectedException(typeof(InvalidOperationException))]
         public void TableRowClass_AddMethod_InvalidatesEnumerator()
         {
-            List<TableCell> testContents = FixedSizeTableCell.GetCellList();
+            List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 40));
             TableRow testObject = new TableRow();
             testObject.AddRange(testContents);
             TableCell testParam = _rnd.NextFixedSizeTableCell();

@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load.Yaml;
 using Timetabler.SerialData.Yaml;
@@ -27,6 +28,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
                 GlossaryInOutput = _rnd.NextNullableBoolean(),
                 LineWidth = _rnd.NextNullableDouble(3d),
                 FillerDashLineWidth = _rnd.NextNullableDouble(3d),
+                TablePageOrientation = _rnd.NextNullableOrientation(),
+                GraphPageOrientation = _rnd.NextNullableOrientation(),
             };
         }
 
@@ -316,6 +319,72 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
 
             Assert.AreEqual(0.5, testOutput.FillerDashLineWidth);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectTablePageOrientationProperty_IfTablePageOrientationPropertyOfParameterIsPortrait()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.TablePageOrientation = Orientation.Portrait;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Portrait, testOutput.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectTablePageOrientationProperty_IfTablePageOrientationPropertyOfParameterIsLandscape()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.TablePageOrientation = Orientation.Landscape;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectTablePageOrientationProperty_IfTablePageOrientationPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.TablePageOrientation = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfGraphPageOrientationPropertyOfParameterIsPortrait()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphPageOrientation = Orientation.Portrait;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Portrait, testOutput.GraphPageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfGraphPageOrientationPropertyOfParameterIsLandscape()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphPageOrientation = Orientation.Landscape;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.GraphPageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfGraphPageOrientationPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphPageOrientation = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.GraphPageOrientation);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

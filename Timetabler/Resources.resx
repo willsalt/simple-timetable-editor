@@ -168,6 +168,12 @@
   <data name="HumanReadableEnum_LocationFontType_Normal" xml:space="preserve">
     <value>Normal</value>
   </data>
+  <data name="HumanReadableEnum_Orientation_Landscape" xml:space="preserve">
+    <value>Landscape</value>
+  </data>
+  <data name="HumanReadableEnum_Orientation_Portrait" xml:space="preserve">
+    <value>Portrait</value>
+  </data>
   <data name="HumanReadableEnum_PdfExportEngine_External" xml:space="preserve">
     <value>External</value>
   </data>
@@ -189,8 +195,14 @@
   <data name="LogMessage_CbGraphEditStyleValue" xml:space="preserve">
     <value>cbGraphEditStyle: value is {0}</value>
   </data>
+  <data name="LogMessage_CbGraphOrientation_Value" xml:space="preserve">
+    <value>cbGraphOrientation is {0}</value>
+  </data>
   <data name="LogMessage_CbPdfEngineValue" xml:space="preserve">
     <value>cbPdfEngine is {0}</value>
+  </data>
+  <data name="LogMessage_CbTableOrientation_Value" xml:space="preserve">
+    <value>cbTableOrientation is {0}</value>
   </data>
   <data name="LogMessage_CkDisplayBoxHoursValue" xml:space="preserve">
     <value>ckDisplayBoxHours is {0}</value>

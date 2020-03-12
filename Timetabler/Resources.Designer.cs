@@ -214,6 +214,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Landscape.
+        /// </summary>
+        internal static string HumanReadableEnum_Orientation_Landscape {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_Orientation_Landscape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portrait.
+        /// </summary>
+        internal static string HumanReadableEnum_Orientation_Portrait {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_Orientation_Portrait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External.
         /// </summary>
         internal static string HumanReadableEnum_PdfExportEngine_External {
@@ -277,11 +295,29 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to cbGraphOrientation is {0}.
+        /// </summary>
+        internal static string LogMessage_CbGraphOrientation_Value {
+            get {
+                return ResourceManager.GetString("LogMessage_CbGraphOrientation_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cbPdfEngine is {0}.
         /// </summary>
         internal static string LogMessage_CbPdfEngineValue {
             get {
                 return ResourceManager.GetString("LogMessage_CbPdfEngineValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cbTableOrientation is {0}.
+        /// </summary>
+        internal static string LogMessage_CbTableOrientation_Value {
+            get {
+                return ResourceManager.GetString("LogMessage_CbTableOrientation_Value", resourceCulture);
             }
         }
         

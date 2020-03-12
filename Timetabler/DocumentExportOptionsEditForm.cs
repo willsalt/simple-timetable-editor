@@ -40,6 +40,9 @@ namespace Timetabler
         {
             InitializeComponent();
             cbPdfEngine.Items.AddRange(HumanReadableEnumFactory.GetPdfExportEngine());
+            HumanReadableEnum<CoreData.Orientation>[] orientations = HumanReadableEnumFactory.GetOrientation();
+            cbTableOrientation.Items.AddRange(orientations);
+            cbGraphOrientation.Items.AddRange(orientations);
         }
 
         private void UpdateViewFromModel()
@@ -63,6 +66,22 @@ namespace Timetabler
                 if (item is HumanReadableEnum<PdfExportEngine> engineItem && engineItem.Value == Model.ExportEngine)
                 {
                     cbPdfEngine.SelectedItem = engineItem;
+                    break;
+                }
+            }
+            foreach (var item in cbTableOrientation.Items)
+            {
+                if (item is HumanReadableEnum<CoreData.Orientation> orientItem && orientItem.Value == Model.TablePageOrientation)
+                {
+                    cbTableOrientation.SelectedItem = orientItem;
+                    break;
+                }
+            }
+            foreach (var item in cbGraphOrientation.Items)
+            {
+                if (item is HumanReadableEnum<CoreData.Orientation> orientItem && orientItem.Value == Model.GraphPageOrientation)
+                {
+                    cbGraphOrientation.SelectedItem = orientItem;
                     break;
                 }
             }
@@ -173,6 +192,36 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbPdfEngineValue, item.Name);
             Model.ExportEngine = item.Value;
+        }
+
+        private void CbTableOrientation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cbTableOrientation.SelectedItem is HumanReadableEnum<CoreData.Orientation> item))
+            {
+                Log.Trace("cbTableOrientation: null item selected.");
+                return;
+            }
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbTableOrientation_Value, item.Name);
+            Model.TablePageOrientation = item.Value;
+        }
+
+        private void CbGraphOrientation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cbGraphOrientation.SelectedItem is HumanReadableEnum<CoreData.Orientation> item))
+            {
+                Log.Trace("cbGraphOrientation: null item selected.");
+                return;
+            }
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbGraphOrientation_Value, item.Name);
+            Model.GraphPageOrientation = item.Value;
         }
     }
 }

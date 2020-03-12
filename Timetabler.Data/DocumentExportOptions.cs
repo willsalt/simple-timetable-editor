@@ -1,4 +1,6 @@
-﻿namespace Timetabler.Data
+﻿using Timetabler.CoreData;
+
+namespace Timetabler.Data
 {
     /// <summary>
     /// Export-specific document settings.
@@ -56,6 +58,16 @@
         public PdfExportEngine ExportEngine { get; set; }
 
         /// <summary>
+        /// The output orientation of table pages.
+        /// </summary>
+        public Orientation TablePageOrientation { get; set; }
+
+        /// <summary>
+        /// The output orientation of graph pages.
+        /// </summary>
+        public Orientation GraphPageOrientation { get; set; }
+
+        /// <summary>
         /// Default constructor - sets the default values of the <see cref="LineWidth" /> and <see cref="FillerDashLineWidth" /> properties.
         /// </summary>
         public DocumentExportOptions()
@@ -63,6 +75,8 @@
             LineWidth = 1.0;
             FillerDashLineWidth = 0.5;
             ExportEngine = PdfExportEngine.External;
+            TablePageOrientation = Orientation.Landscape;
+            GraphPageOrientation = Orientation.Landscape;
         }
 
         /// <summary>
@@ -83,6 +97,8 @@
                 DisplayGraph = DisplayGraph,
                 DisplayGlossary = DisplayGlossary,
                 ExportEngine = ExportEngine,
+                TablePageOrientation = TablePageOrientation,
+                GraphPageOrientation = GraphPageOrientation,
             };
         }
     }

@@ -144,14 +144,14 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;ckDisplayLocoDiagram.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>4</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnOk.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
   </data>
   <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 284</value>
+    <value>156, 324</value>
   </data>
   <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -178,7 +178,7 @@
     <value>Bottom</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 284</value>
+    <value>237, 324</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -226,7 +226,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;ckDisplayToWorkRow.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="ckDisplayBoxHours.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -253,7 +253,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;ckDisplayBoxHours.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="ckDisplayCredits.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -280,7 +280,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;ckDisplayCredits.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="ckDisplayLocoToWorkRow.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -307,7 +307,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;ckDisplayLocoToWorkRow.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>12</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -334,7 +334,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>14</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -361,10 +361,10 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>13</value>
   </data>
   <data name="nudLineWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>140, 167</value>
+    <value>147, 167</value>
   </data>
   <data name="nudLineWidth.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 20</value>
@@ -382,10 +382,10 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;nudLineWidth.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>11</value>
   </data>
   <data name="nudFillerDashLineWidth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>140, 193</value>
+    <value>147, 193</value>
   </data>
   <data name="nudFillerDashLineWidth.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 20</value>
@@ -403,7 +403,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;nudFillerDashLineWidth.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="ckDisplayGraph.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -430,7 +430,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;ckDisplayGraph.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="ckDisplayGlossary.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -457,7 +457,103 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;ckDisplayGlossary.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 249</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 13</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Graph page orientation:</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 222</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 13</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Timetable page orientation:</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="cbGraphOrientation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 246</value>
+  </data>
+  <data name="cbGraphOrientation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
+  </data>
+  <data name="cbGraphOrientation.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;cbGraphOrientation.Name" xml:space="preserve">
+    <value>cbGraphOrientation</value>
+  </data>
+  <data name="&gt;&gt;cbGraphOrientation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbGraphOrientation.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;cbGraphOrientation.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cbTableOrientation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 219</value>
+  </data>
+  <data name="cbTableOrientation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
+  </data>
+  <data name="cbTableOrientation.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;cbTableOrientation.Name" xml:space="preserve">
+    <value>cbTableOrientation</value>
+  </data>
+  <data name="&gt;&gt;cbTableOrientation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbTableOrientation.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;cbTableOrientation.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -466,7 +562,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>438, 240</value>
+    <value>438, 280</value>
   </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -575,7 +671,7 @@ As things stand, it doesn't do what you need.</value>
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>438, 240</value>
+    <value>438, 280</value>
   </data>
   <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -599,7 +695,7 @@ As things stand, it doesn't do what you need.</value>
     <value>12, 12</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>446, 266</value>
+    <value>446, 306</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -623,7 +719,7 @@ As things stand, it doesn't do what you need.</value>
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>468, 319</value>
+    <value>468, 359</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Export Options</value>

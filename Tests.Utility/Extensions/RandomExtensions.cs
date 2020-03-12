@@ -307,5 +307,24 @@ namespace Tests.Utility.Extensions
             } while (validValues.Contains(rval));
             return rval;
         }
+
+        public static Orientation NextOrientation(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            Orientation[] allValues = new[] { Orientation.Landscape, Orientation.Portrait };
+            return allValues[random.Next(allValues.Length)];
+        }
+
+        public static Orientation? NextNullableOrientation(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return random.Next(5) == 0 ? (Orientation?)null : NextOrientation(random);
+        }
     }
 }

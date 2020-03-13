@@ -24,6 +24,8 @@ namespace Timetabler.Tests.Unit.Models
             return data;
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void TrainAdjustTimesFormModelClass_Constructor_CreatesObjectWithNonNullValidLocationsProperty_IfParameterIsNull()
         {
@@ -67,5 +69,8 @@ namespace Timetabler.Tests.Unit.Models
                 Assert.AreSame(testData[i], testOutput.ValidLocations[i]);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="DocumentDescriptorFactory.cs" />
     <Compile Include="Extensions\DashStyleExtensions.cs" />
     <Compile Include="Extensions\FootnoteDisplayModelExtensions.cs" />
+    <Compile Include="Extensions\OrientationExtensions.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensions.cs" />
     <Compile Include="Interfaces\IDocumentDescriptorFactory.cs" />
     <Compile Include="LocationBoxDimensions.cs" />
@@ -98,7 +99,7 @@
       <Name>Unicorn.Impl.PdfSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
-      <Project>{61e758d9-a9ae-4f1e-ad46-abffdfe67259}</Project>
+      <Project>{f0a39340-f45e-4534-b87a-6fdf0202f4ea}</Project>
       <Name>Unicorn.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn.Writer\Unicorn.Writer.csproj">
@@ -106,7 +107,7 @@
       <Name>Unicorn.Writer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn\Unicorn.csproj">
-      <Project>{310C4830-B53A-457B-8262-0172F74BEF25}</Project>
+      <Project>{3ff5f14c-ad99-4e3e-a1ce-c005cf87b94b}</Project>
       <Name>Unicorn</Name>
     </ProjectReference>
   </ItemGroup>

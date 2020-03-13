@@ -16,13 +16,13 @@ namespace Unicorn
         }
 
         /// <summary>
-        /// The computed height of the column, consisting of the sum of all computed heights of all cells in the column.
+        /// The computed height of the column, consisting of the sum of all computed heights of all cells in the column plus any grid lines between and at either side of them.
         /// </summary>
         public double ComputedHeight
         {
             get
             {
-                return this.Sum(c => c?.ComputedHeight ?? 0);
+                return this.Sum(c => c?.ComputedHeight ?? 0) + (Parent?.RuleWidth ?? 0) * (Count + 1);
             }
         }
 

@@ -117,5 +117,18 @@ namespace Timetabler.Helpers
                 new HumanReadableEnum<PdfExportEngine> { Name = Resources.HumanReadableEnum_PdfExportEngine_Unicorn, Value = PdfExportEngine.Unicorn },
             };
         }
+
+        /// <summary>
+        /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="Orientation" /> enumeration.
+        /// </summary>
+        /// <returns>An array of <see cref="HumanReadableEnum{TEnum}" /> instances.</returns>
+        public static HumanReadableEnum<Orientation>[] GetOrientation()
+        {
+            return new[]
+            {
+                new HumanReadableEnum<Orientation> { Name = Resources.HumanReadableEnum_Orientation_Landscape, Value = Orientation.Landscape },
+                new HumanReadableEnum<Orientation> { Name = Resources.HumanReadableEnum_Orientation_Portrait, Value = Orientation.Portrait },
+            };
+        }
     }
 }

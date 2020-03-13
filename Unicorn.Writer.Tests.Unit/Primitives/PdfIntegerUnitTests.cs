@@ -16,6 +16,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void PdfIntegerClass_Constructor_CreatesObjectWithValuePropertyEqualToParameter()
         {
@@ -435,5 +437,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsTrue(testOutput);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

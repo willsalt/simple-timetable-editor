@@ -6,7 +6,9 @@
     <Authors>Will Salt</Authors>
     <Company>Will Salt</Company>
     <Product>Simple Timetable Editor</Product>
-    <Copyright>Copyright © 2016-2019 Will Salt</Copyright>
+    <Copyright>Copyright © 2016-2020 Will Salt</Copyright>
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
+    <FileVersion>1.3.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -14,6 +14,8 @@ namespace Timetabler.Tests.Unit.Extensions
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void ClockTypeExtensionsClass_SetControlsVisibleIn12HourModeMethod_DoesNotCrash_IfSecondParameterIsNull()
         {
@@ -22,5 +24,8 @@ namespace Timetabler.Tests.Unit.Extensions
 
             testValue.SetControlsVisibleIn12HourMode(testParam1);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

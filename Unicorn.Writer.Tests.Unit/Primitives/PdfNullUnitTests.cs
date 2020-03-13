@@ -12,6 +12,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
     [TestClass]
     public class PdfNullUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void PdfNullClass_ValueProperty_ReturnsPdfNullInstance()
         {
@@ -88,29 +90,23 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         public void PdfNullClass_WriteToMethodWithStreamParameter_WritesCorrectValueToParameterWhenParameterIsNotNull()
         {
             PdfNull testObject = PdfNull.Value;
-            using (MemoryStream testParam = new MemoryStream())
-            {
+            using MemoryStream testParam = new MemoryStream();
 
-                testObject.WriteTo(testParam);
+            testObject.WriteTo(testParam);
 
-                using (MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes("null ")))
-                {
-                    AssertionHelpers.AssertSameElements(expected, testParam);
-                }
-            }
+            using MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes("null "));
+            AssertionHelpers.AssertSameElements(expected, testParam);
         }
 
         [TestMethod]
         public void PdfNullClass_WriteToMethodWithStreamParameter_Returns5()
         {
-            using (MemoryStream testParam = new MemoryStream())
-            {
-                PdfNull testObject = PdfNull.Value;
+            using MemoryStream testParam = new MemoryStream();
+            PdfNull testObject = PdfNull.Value;
 
-                int testOutput = testObject.WriteTo(testParam);
+            int testOutput = testObject.WriteTo(testParam);
 
-                Assert.AreEqual(5, testOutput);
-            }
+            Assert.AreEqual(5, testOutput);
         }
 
         [TestMethod]
@@ -267,5 +263,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

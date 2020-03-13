@@ -2,6 +2,8 @@
 {
     internal class SectionMetrics
     {
+        internal double LineWidth { get; set; }
+
         internal double TitleHeight { get; set; }
 
         internal double SubtitleHeight { get; set; }
@@ -18,7 +20,7 @@
 
         internal double LocoToWorkHeight { get; set; }
 
-        internal double TotalHeight { get { return TitleHeight + SubtitleHeight + TableHeight; } }
+        internal double TotalHeight { get { return TitleHeight + SubtitleHeight + TableHeight + LineWidth; } }
 
         internal double TableHeight { get { return HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight; } }
 
@@ -36,9 +38,14 @@
 
         internal bool IncludeLocoToWorkRow { get; set; }
 
+        internal SectionMetrics(double lineWidth)
+        {
+            LineWidth = lineWidth;
+        }
+
         internal SectionMetrics CopyWithNoTitle()
         {
-            return new SectionMetrics
+            return new SectionMetrics(LineWidth)
             {
                 TitleHeight = 0,
                 SubtitleHeight = 0,

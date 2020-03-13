@@ -10,6 +10,8 @@ namespace Timetabler.CoreData.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void TimeOfDayClass_ConstructorWithDoubleParameter_ReturnsTimeOfDayWithCorrectValue()
         {
@@ -731,5 +733,8 @@ namespace Timetabler.CoreData.Tests.Unit
                 Assert.AreEqual("format", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

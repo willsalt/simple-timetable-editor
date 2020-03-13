@@ -13,6 +13,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
         // Run some tests this number of times to ensure a good range of randomly-selected data is tested.
         private const int TestMultipleRuns = 10;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+        
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TimetableDocumentExtensionsClass_ToTimetableFileModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -64,5 +66,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
                 Assert.AreEqual(testValue, result.ExportOptions.DisplayLocoDiagramRow);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

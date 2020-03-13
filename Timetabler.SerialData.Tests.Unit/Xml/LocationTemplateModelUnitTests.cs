@@ -11,6 +11,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     [TestClass]
     public class LocationTemplateModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void LocationTemplateModelClass_IsPublic()
         {
@@ -111,5 +113,8 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
 
             Assert.IsNotNull(testOutput.Maps);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

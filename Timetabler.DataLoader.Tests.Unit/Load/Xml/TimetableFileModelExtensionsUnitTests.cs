@@ -12,6 +12,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     {
         private const int TestMultipleRuns = 10;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TimetableFileModelExtensionsClass_ToTimetableDocumentMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -38,6 +40,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 Assert.AreEqual("file", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         public void TimetableFileModelExtensionsClassToTimetableDocumentMethodReturnsTimetableDocumentObjectWithExportOptionsPropertyThatIsNotNullIfExportOptionsPropertyOfParameterIsNull()

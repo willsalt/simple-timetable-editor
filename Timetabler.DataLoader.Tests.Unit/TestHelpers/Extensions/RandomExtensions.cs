@@ -67,5 +67,15 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
         {
             return random.NextDistance(new Distance { Mileage = 32768, Chainage = 0 });
         }
+
+        public static SerialData.Yaml.DistanceModel NextDistanceModel(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            return new SerialData.Yaml.DistanceModel { Miles = random.Next(32768), Chains = random.NextDouble() * 80 };
+        }
     }
 }

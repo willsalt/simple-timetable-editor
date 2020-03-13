@@ -19,6 +19,8 @@ namespace Timetabler.PdfExport.Tests.Unit.Extensions
             return new TrainGraphAxisTickInfo(_rnd.NextString(_rnd.Next(1, 10)), _rnd.NextDouble() * 1000);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainGraphAxisTickInfoExtensionsClass_PopulateSizeMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
@@ -80,5 +82,8 @@ namespace Timetabler.PdfExport.Tests.Unit.Extensions
                 Assert.AreEqual("context", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

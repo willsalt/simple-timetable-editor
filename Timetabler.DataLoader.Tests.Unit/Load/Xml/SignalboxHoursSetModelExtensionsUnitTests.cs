@@ -13,6 +13,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     [TestClass]
     public class SignalboxHoursSetModelExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SignalboxHoursSetModelExtensionsClass_ToSignalboxHoursSetMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
@@ -43,5 +45,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 Assert.AreEqual("model", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -9,6 +9,8 @@ namespace Timetabler.Tests.Unit.Models
     [TestClass]
     public class TrainLocationTimeEditFormModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         public void TrainLocationTimeEditFormModelClass_Constructor_SetsValidLocationsPropertyToEqualFirstParameter_IfFirstParameterIsNull()
         {
@@ -52,5 +54,8 @@ namespace Timetabler.Tests.Unit.Models
 
             Assert.AreSame(testParam1, testOutput.ValidNotes);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

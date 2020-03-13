@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpYaml.Serialization;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ using Timetabler.Data;
 using Timetabler.Data.Collections;
 using Timetabler.DataLoader.Load.Xml;
 using Timetabler.DataLoader.Load.Xml.Legacy.V3;
+using Timetabler.DataLoader.Load.Yaml;
 using Timetabler.SerialData;
 using Timetabler.SerialData.Xml;
 
@@ -28,47 +30,84 @@ namespace Timetabler.DataLoader
         /// Load a TimetableDocument class from a stream.
         /// </summary>
         /// <param name="stream">The stream to load the class data from.</param>
+        /// <param name="displayWarning">Method to use to display warning messages to the user if necessary.</param>
         /// <returns>The list of locations in the template.</returns>
-        public static TimetableDocument LoadTimetableDocument(Stream stream)
+        public static TimetableDocument LoadTimetableDocument(Stream stream, Action<LoaderWarningMessage> displayWarning)
         {
-            try
+            return LoadByFileType(stream, LoadXmlTimetableDocument, LoadYamlTimetableDocument, displayWarning);
+        }
+
+        private static T LoadByFileType<T>(Stream stream, Func<Stream, T> xmlLoader, Func<string, T> yamlLoader, Action<LoaderWarningMessage> displayWarning)
+        {
+            if (stream is null)
             {
-                using (XmlReader reader = XmlReader.Create(stream))
+                throw new NullReferenceException();
+            }
+            if (displayWarning is null)
+            {
+                throw new ArgumentNullException(nameof(displayWarning));
+            }
+
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                try
                 {
-                    if (reader == null)
+                    string startLine = reader.ReadLine();
+                    if (startLine.StartsWith("%W", StringComparison.InvariantCulture))
                     {
-                        throw new TimetableLoaderException(Resources.Error_CouldNotCreateXmlReader);
+                        return yamlLoader(reader.ReadToEnd());
                     }
-                    reader.MoveToContent();
-                    if (reader.Name != "DocumentModel")
-                    {
-                        throw new TimetableLoaderException(Resources.Error_XmlDoesNotContainDocumentModel);
-                    }
-                    if (!int.TryParse(reader.GetAttribute("version"), out int version))
-                    {
-                        throw new TimetableLoaderException(Resources.Error_XmlDoesNotSpecifyVersion);
-                    }
-                    if (version > Versions.CurrentTimetableDocument)
-                    {
-                        throw new TimetableLoaderException(string.Format(CultureInfo.CurrentCulture, Resources.Error_XmlUnsupportedVersion, version));
-                    }
-
-
-                    if (version < 4)
-                    {
-                        return LoadVersion3(reader);
-                    }
-                    XmlSerializer deserializer = new XmlSerializer(typeof(TimetableFileModel));
-                    return ((TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
+                    stream.Seek(0, SeekOrigin.Begin);
+                    T data = xmlLoader(stream);
+                    displayWarning(LoaderWarningMessage.XmlFile);
+                    return data;
+                }
+                catch (TimetableLoaderException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw new TimetableLoaderException(Resources.Error_GenericLoaderError, ex);
                 }
             }
-            catch (TimetableLoaderException)
+        }
+
+        internal static TimetableDocument LoadYamlTimetableDocument(string content)
+        {
+            Serializer deserialiser = new Serializer();
+            return deserialiser.Deserialize<SerialData.Yaml.TimetableFileModel>(content).ToTimetableDocument();
+        }
+
+        internal static TimetableDocument LoadXmlTimetableDocument(Stream stream)
+        {
+            using (XmlReader reader = XmlReader.Create(stream))
             {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new TimetableLoaderException(Resources.Error_GenericLoaderError, ex);
+                if (reader == null)
+                {
+                    throw new TimetableLoaderException(Resources.Error_CouldNotCreateXmlReader);
+                }
+                reader.MoveToContent();
+                if (reader.Name != "DocumentModel")
+                {
+                    throw new TimetableLoaderException(Resources.Error_XmlDoesNotContainDocumentModel);
+                }
+                if (!int.TryParse(reader.GetAttribute("version"), out int version))
+                {
+                    throw new TimetableLoaderException(Resources.Error_XmlDoesNotSpecifyVersion);
+                }
+                if (version > Versions.CurrentTimetableDocument)
+                {
+                    throw new TimetableLoaderException(string.Format(CultureInfo.CurrentCulture, Resources.Error_XmlUnsupportedVersion, version));
+                }
+
+
+                if (version < 4)
+                {
+                    return LoadVersion3(reader);
+                }
+                XmlSerializer deserializer = new XmlSerializer(typeof(TimetableFileModel));
+                return ((TimetableFileModel)deserializer.Deserialize(reader)).ToTimetableDocument();
             }
         }
 
@@ -82,8 +121,25 @@ namespace Timetabler.DataLoader
         /// Load a timetable location template from a stream.
         /// </summary>
         /// <param name="str">The stream containing the template to be loaded.</param>
+        /// <param name="displayWarning">Method to use to display warning messages to the user if necessary.</param>
         /// <returns>The list of locations in the template.</returns>
-        public static LocationCollection LoadLocationTemplate(Stream str)
+        public static LocationCollection LoadLocationTemplate(Stream str, Action<LoaderWarningMessage> displayWarning)
+        {
+            return LoadByFileType(str, LoadXmlLocationTemplate, LoadYamlLocationTemplate, displayWarning);
+        }
+
+        internal static LocationCollection LoadYamlLocationTemplate(string content)
+        {
+            Serializer deserialiser = new Serializer();
+            SerialData.Yaml.LocationTemplateModel templateModel = deserialiser.Deserialize<SerialData.Yaml.LocationTemplateModel>(content);
+            if (templateModel == null || templateModel.Maps == null || templateModel.Maps.Count == 0 || templateModel.Maps[0].LocationList == null)
+            {
+                return null;
+            }
+            return new LocationCollection(templateModel.Maps[0].LocationList.Select(l => l.ToLocation()));
+        }
+
+        internal static LocationCollection LoadXmlLocationTemplate(Stream str)
         {
             try
             {
@@ -146,8 +202,21 @@ namespace Timetabler.DataLoader
         /// Load a <see cref="DocumentTemplate"/> object from a <see cref="Stream"/>.
         /// </summary>
         /// <param name="str">The <see cref="Stream"/> to load data from.</param>
+        /// <param name="displayWarning">A method to call to display warning messages to the user if necessary.</param>
         /// <returns>A <see cref="DocumentTemplate"/> object.</returns>
-        public static DocumentTemplate LoadDocumentTemplate(Stream str)
+        public static DocumentTemplate LoadDocumentTemplate(Stream str, Action<LoaderWarningMessage> displayWarning)
+        {
+            return LoadByFileType(str, LoadXmlDocumentTemplate, LoadYamlDocumentTemplate, displayWarning);
+        }
+
+        internal static DocumentTemplate LoadYamlDocumentTemplate(string content)
+        {
+            Serializer deserialiser = new Serializer();
+            SerialData.Yaml.TimetableDocumentTemplateModel templateModel = deserialiser.Deserialize<SerialData.Yaml.TimetableDocumentTemplateModel>(content);
+            return templateModel.ToDocumentTemplate();
+        }
+
+        internal static DocumentTemplate LoadXmlDocumentTemplate(Stream str)
         {
             try
             {

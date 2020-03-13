@@ -95,6 +95,8 @@ namespace Timetabler.Data.Tests.Unit.Display
             return notes;
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionIfFirstParameterIsNull()
@@ -893,5 +895,8 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             Assert.AreEqual("P.M.", testOutput.HalfOfDay);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

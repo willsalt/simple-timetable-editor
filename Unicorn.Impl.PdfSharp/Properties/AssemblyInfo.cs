@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Unicorn.Impl.PdfSharp")]
-[assembly: AssemblyCopyright("Copyright ©  2017-2019 Will Salt")]
+[assembly: AssemblyCopyright("Copyright ©  2017-2020 Will Salt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-GB")]
@@ -34,6 +34,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.*")]
+[assembly: AssemblyVersion("1.3.*")]
 
 [assembly: InternalsVisibleTo("Unicorn.Impl.PdfSharp.Tests.Unit")]

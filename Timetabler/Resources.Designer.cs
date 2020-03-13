@@ -214,6 +214,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Landscape.
+        /// </summary>
+        internal static string HumanReadableEnum_Orientation_Landscape {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_Orientation_Landscape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portrait.
+        /// </summary>
+        internal static string HumanReadableEnum_Orientation_Portrait {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_Orientation_Portrait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External.
         /// </summary>
         internal static string HumanReadableEnum_PdfExportEngine_External {
@@ -277,11 +295,29 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to cbGraphOrientation is {0}.
+        /// </summary>
+        internal static string LogMessage_CbGraphOrientation_Value {
+            get {
+                return ResourceManager.GetString("LogMessage_CbGraphOrientation_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cbPdfEngine is {0}.
         /// </summary>
         internal static string LogMessage_CbPdfEngineValue {
             get {
                 return ResourceManager.GetString("LogMessage_CbPdfEngineValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cbTableOrientation is {0}.
+        /// </summary>
+        internal static string LogMessage_CbTableOrientation_Value {
+            get {
+                return ResourceManager.GetString("LogMessage_CbTableOrientation_Value", resourceCulture);
             }
         }
         
@@ -481,6 +517,26 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file you are opening is in the format used by version 1.1 (and older) of the program.  Although it will work for now, future versions of the program may refuse to open the file.
+        ///
+        ///You can get rid of this warning by re-saving the file using this version of the program..
+        /// </summary>
+        internal static string MainForm_FileOpen_OldFileFormatWarning {
+            get {
+                return ResourceManager.GetString("MainForm_FileOpen_OldFileFormatWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File version warning.
+        /// </summary>
+        internal static string MainForm_FileOpen_OldFileFormatWarningTitle {
+            get {
+                return ResourceManager.GetString("MainForm_FileOpen_OldFileFormatWarningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unsaved changes.  Do you really want to open a different file?.
         /// </summary>
         internal static string MainForm_FileOpen_UnsavedChanges {
@@ -516,6 +572,24 @@ namespace Timetabler {
         internal static string MainForm_FileSave_SharingViolationTitle {
             get {
                 return ResourceManager.GetString("MainForm_FileSave_SharingViolationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File saved..
+        /// </summary>
+        internal static string MainForm_FileSave_Success {
+            get {
+                return ResourceManager.GetString("MainForm_FileSave_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string MainForm_FileSave_SuccessTitle {
+            get {
+                return ResourceManager.GetString("MainForm_FileSave_SuccessTitle", resourceCulture);
             }
         }
         

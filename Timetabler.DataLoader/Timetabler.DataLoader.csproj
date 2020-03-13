@@ -43,6 +43,9 @@
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="SharpYaml, Version=1.6.6.0, Culture=neutral, PublicKeyToken=1ced8108e942bc02, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpYaml.1.6.6\lib\net45\SharpYaml.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -60,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Loader.cs" />
+    <Compile Include="LoaderWarningMessage.cs" />
     <Compile Include="Load\Xml\DistanceModelExtensions.cs" />
     <Compile Include="Load\Xml\DocumentOptionsModelExtensions.cs" />
     <Compile Include="Load\Xml\ExportOptionsModelExtensions.cs" />
@@ -78,6 +82,23 @@
     <Compile Include="Load\Xml\TrainLocationTimeModelExtensions.cs" />
     <Compile Include="Load\Xml\TrainModelExtensions.cs" />
     <Compile Include="Load\Xml\TrainTimeModelExtensions.cs" />
+    <Compile Include="Load\Yaml\DistanceModelExtensions.cs" />
+    <Compile Include="Load\Yaml\DocumentOptionsModelExtensions.cs" />
+    <Compile Include="Load\Yaml\ExportOptionsModelExtensions.cs" />
+    <Compile Include="Load\Yaml\GraphTrainPropertiesModelExtensions.cs" />
+    <Compile Include="Load\Yaml\LocationModelExtensions.cs" />
+    <Compile Include="Load\Yaml\NoteModelExtensions.cs" />
+    <Compile Include="Load\Yaml\SignalboxHoursModelExtensions.cs" />
+    <Compile Include="Load\Yaml\SignalboxHoursSetModelExtensions.cs" />
+    <Compile Include="Load\Yaml\SignalboxModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TimeOfDayModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TimetableDocumentTemplateModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TimetableFileModelExtensions.cs" />
+    <Compile Include="Load\Yaml\ToWorkModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainClassModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainLocationTimeModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainModelExtensions.cs" />
+    <Compile Include="Load\Yaml\TrainTimeModelExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -102,6 +123,23 @@
     <Compile Include="Save\Xml\TrainExtensions.cs" />
     <Compile Include="Save\Xml\TrainLocationTimeExtensions.cs" />
     <Compile Include="Save\Xml\TrainTimeExtensions.cs" />
+    <Compile Include="Save\Yaml\DistanceExtensions.cs" />
+    <Compile Include="Save\Yaml\DocumentExportOptionsExtensions.cs" />
+    <Compile Include="Save\Yaml\DocumentOptionsExtensions.cs" />
+    <Compile Include="Save\Yaml\DocumentTemplateExtensions.cs" />
+    <Compile Include="Save\Yaml\GraphTrainPropertiesExtensions.cs" />
+    <Compile Include="Save\Yaml\LocationExtensions.cs" />
+    <Compile Include="Save\Yaml\NoteExtensions.cs" />
+    <Compile Include="Save\Yaml\SignalboxExtensions.cs" />
+    <Compile Include="Save\Yaml\SignalboxHoursExtensions.cs" />
+    <Compile Include="Save\Yaml\SignalboxHoursSetExtensions.cs" />
+    <Compile Include="Save\Yaml\TimeOfDayExtensions.cs" />
+    <Compile Include="Save\Yaml\TimetableDocumentExtensions.cs" />
+    <Compile Include="Save\Yaml\ToWorkExtensions.cs" />
+    <Compile Include="Save\Yaml\TrainClassExtensions.cs" />
+    <Compile Include="Save\Yaml\TrainExtensions.cs" />
+    <Compile Include="Save\Yaml\TrainLocationTimeExtensions.cs" />
+    <Compile Include="Save\Yaml\TrainTimeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
@@ -137,6 +175,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

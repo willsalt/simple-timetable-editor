@@ -94,10 +94,12 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(row));
             }
 
+            row.Parent = this;
+
             // Make sure table is wide enough for the new row
             while (row.Count > _columns.Count)
             {
-                _columns.Add(new TableColumn());
+                _columns.Add(new TableColumn { Parent = this });
                 for (int i = 0; i < _rows.Count; ++i)
                 {
                     _columns[_columns.Count - 1].Add(null);
@@ -123,7 +125,7 @@ namespace Unicorn
         /// the new row is padded with null cells on the right.  If there are more cells than columns, the existing rows in the table are passed with null cells on the right.</remarks>
         public void AddRow(IEnumerable<TableCell> rowContents)
         {
-            TableRow row = new TableRow();
+            TableRow row = new TableRow { Parent = this };
             row.AddRange(rowContents);
             AddRow(row);
         }
@@ -131,7 +133,7 @@ namespace Unicorn
         /// <summary>
         /// Add a row to the table, consisting of a list of cells.
         /// </summary>
-        /// <param name="rowContents">The cels to add to the table.</param>
+        /// <param name="rowContents">The cells to add to the table.</param>
         /// <remarks>This method adds a new row to the table, consisting of a range of cells.  The cells are added to columns starting with column 0.  If there are fewer cells than columns,
         /// the new row is padded with null cells on the right.  If there are more cells than columns, the existing rows in the table are passed with null cells on the right.</remarks>
         public void AddRow(params TableCell[] rowContents)
@@ -150,10 +152,12 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(col));
             }
 
+            col.Parent = this;
+
             // Make sure table is deep enough for the new column
             while (col.Count > _rows.Count)
             {
-                _rows.Add(new TableRow());
+                _rows.Add(new TableRow { Parent = this });
                 for (int i = 0; i < _columns.Count; ++i)
                 {
                     _rows[_rows.Count - 1].Add(null);
@@ -177,7 +181,7 @@ namespace Unicorn
         /// <param name="columnContents">The cells to add to the table.</param>
         public void AddColumn(IEnumerable<TableCell> columnContents)
         {
-            TableColumn col = new TableColumn();
+            TableColumn col = new TableColumn { Parent = this };
             col.AddRange(columnContents);
             AddColumn(col);
         }
@@ -204,18 +208,19 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(graphicsContext));
             }
 
-            double yOffset = 0;
+            double ruleOffset = RuleWidth / 2;
+            double yOffset = ruleOffset;
             foreach (TableRow row in _rows)
             {
-                double xOffset = 0;
+                double xOffset = ruleOffset;
                 foreach (TableCell cell in row)
                 {
-                    cell.DrawContentsAt(graphicsContext, xCoord + xOffset, yCoord + yOffset);
-                    xOffset += cell.ComputedWidth;
+                    cell.DrawContentsAt(graphicsContext, xCoord + xOffset + ruleOffset, yCoord + yOffset + ruleOffset);
+                    xOffset += cell.ComputedWidth + RuleWidth;
                 }
                 if (row.Count > 0)
                 {
-                    yOffset += row[0].ComputedHeight;
+                    yOffset += row[0].ComputedHeight + RuleWidth;
                 }
             }
             switch (RuleStyle)
@@ -237,78 +242,109 @@ namespace Unicorn
 
         private void DrawFullGrid(IGraphicsContext graphicsContext, double x, double y)
         {
-            graphicsContext.DrawLine(x, y, x, y + ComputedHeight);
-            double xOffset = 0;
+            double lineWidthOffset = RuleWidth / 2;
+
+            // Left border.
+            graphicsContext.DrawLine(x + lineWidthOffset, y, x + lineWidthOffset, y + ComputedHeight, RuleWidth);
+
+            // Right edges of columns.
+            double xOffset = lineWidthOffset;
             foreach (TableColumn column in _columns)
             {
-                xOffset += column.ComputedWidth;
+                xOffset += column.ComputedWidth + RuleWidth;
                 graphicsContext.DrawLine(x + xOffset, y, x + xOffset, y + ComputedHeight, RuleWidth);
             }
-            graphicsContext.DrawLine(x, y, x + ComputedWidth, y, RuleWidth);
-            double yOffset = 0;
+
+            // Top border.
+            graphicsContext.DrawLine(x, y + lineWidthOffset, x + ComputedWidth, y + lineWidthOffset, RuleWidth);
+
+            // Bottom edges of rows.
+            double yOffset = lineWidthOffset;
             foreach (TableRow row in _rows)
             {
-                yOffset += row.ComputedWidth;
+                yOffset += row.ComputedHeight + RuleWidth;
                 graphicsContext.DrawLine(x, y + yOffset, x + ComputedWidth, y + yOffset, RuleWidth);
             }
         }
 
         private void DrawSolidColumnGrid(IGraphicsContext graphicsContext, double x, double y)
         {
-            graphicsContext.DrawLine(x, y, x, y + ComputedHeight, RuleWidth);
-            double xOffset = 0;
+            double lineWidthOffset = RuleWidth / 2;
+
+            // Left border.
+            graphicsContext.DrawLine(x + lineWidthOffset, y, x + lineWidthOffset, y + ComputedHeight, RuleWidth);
+
+            // Lines at right-hand edges of columns.
+            double xOffset = lineWidthOffset;
             for (int i = 0; i < _columns.Count; ++i)
             {
-                double rgs = RuleGapSize;
+                double rgs = RuleGapSize + RuleWidth;
                 if (i == _columns.Count - 1)
                 {
                     rgs = 0d;
                 }
-                xOffset += _columns[i].ComputedWidth;
+                xOffset += _columns[i].ComputedWidth + RuleWidth;
                 graphicsContext.DrawLine(x + xOffset, y + rgs, x + xOffset, y + ComputedHeight - rgs, RuleWidth);
             }
-            graphicsContext.DrawLine(x, y, x + ComputedWidth, y, RuleWidth);
-            double yOffset = 0;
+
+            // Top border
+            graphicsContext.DrawLine(x, y + lineWidthOffset, x + ComputedWidth, y + lineWidthOffset, RuleWidth);
+
+            // Lines between rows
+            double yOffset = lineWidthOffset;
             for (int i = 0; i < _rows.Count - 1; ++i)
             {
-                yOffset += _rows[i].ComputedHeight;
-                xOffset = 0;
+                yOffset += _rows[i].ComputedHeight + RuleWidth;
+                xOffset = RuleWidth;
                 foreach (TableColumn column in _columns)
                 {
-                    graphicsContext.DrawLine(x + RuleGapSize + xOffset, y + yOffset, x + column.ComputedWidth + xOffset - RuleGapSize, y + yOffset);
-                    xOffset += column.ComputedWidth;
+                    graphicsContext.DrawLine(x + xOffset + RuleGapSize, y + yOffset, x + xOffset + column.ComputedWidth - RuleGapSize, y + yOffset, RuleWidth);
+                    xOffset += column.ComputedWidth + RuleWidth;
                 }
             }
-            graphicsContext.DrawLine(x, y + ComputedHeight, x + ComputedWidth, y + ComputedHeight, RuleWidth);
+
+            // Bottom border
+            graphicsContext.DrawLine(x, y + ComputedHeight - lineWidthOffset, x + ComputedWidth, y + ComputedHeight - lineWidthOffset, RuleWidth);
         }
 
         private void DrawSolidRowGrid(IGraphicsContext graphicsContext, double x, double y)
         {
-            graphicsContext.DrawLine(x, y, x + ComputedWidth, y, RuleWidth);
-            double yOffset = 0;
+            double lineWidthOffset = RuleWidth / 2;
+
+            // Top border.
+            graphicsContext.DrawLine(x, y + lineWidthOffset, x + ComputedWidth, y + lineWidthOffset, RuleWidth);
+
+            // Lines underneath rows.
+            double yOffset = lineWidthOffset;
             for (int i = 0; i < _rows.Count; ++i)
             {
-                double rgs = RuleGapSize;
+                double rgs = RuleGapSize + RuleWidth;
                 if (i == _rows.Count - 1)
                 {
                     rgs = 0d;
                 }
-                yOffset += _rows[i].ComputedHeight;
+                yOffset += _rows[i].ComputedHeight + RuleWidth;
                 graphicsContext.DrawLine(x + rgs, y + yOffset, x + ComputedWidth - rgs, y + yOffset, RuleWidth);
             }
-            graphicsContext.DrawLine(x, y, x, y + ComputedHeight, RuleWidth);
-            double xOffset = 0;
+
+            // Left border.
+            graphicsContext.DrawLine(x + lineWidthOffset, y, x + lineWidthOffset, y + ComputedHeight, RuleWidth);
+
+            // Lines between columns.
+            double xOffset = lineWidthOffset;
             for (int i = 0; i < _columns.Count - 1; ++i)
             {
-                xOffset += _columns[i].ComputedWidth;
-                yOffset = 0;
+                xOffset += _columns[i].ComputedWidth + RuleWidth;
+                yOffset = RuleWidth;
                 foreach (TableRow row in _rows)
                 {
                     graphicsContext.DrawLine(x + xOffset, y + yOffset + RuleGapSize, x + xOffset, y + yOffset + row.ComputedHeight - RuleGapSize, RuleWidth);
-                    yOffset += row.ComputedWidth;
+                    yOffset += row.ComputedHeight + RuleWidth;
                 }
             }
-            graphicsContext.DrawLine(x + ComputedWidth, y, x + ComputedWidth, y + ComputedHeight, RuleWidth);
+
+            // Right border.
+            graphicsContext.DrawLine(x + ComputedWidth - lineWidthOffset, y, x + ComputedWidth - lineWidthOffset, y + ComputedHeight, RuleWidth);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
     [TestClass]
     public class TrainClassExtensionsUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainClassExtensionsClass_ToTrainClassModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
@@ -34,5 +36,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Xml
                 Assert.AreEqual("trainClass", ex.ParamName);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

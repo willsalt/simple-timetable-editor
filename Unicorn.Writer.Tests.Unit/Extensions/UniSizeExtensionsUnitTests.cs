@@ -17,6 +17,8 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
             return new UniSize(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000);
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void UniSizeExtensionsClass_ToPdfRectangleMethod_ThrowsNullReferenceExceptionWhenFirstParameterIsNull()
@@ -67,5 +69,8 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
 
             Assert.AreEqual((decimal)testParam0.Height, (testOutput[3] as PdfReal).Value);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

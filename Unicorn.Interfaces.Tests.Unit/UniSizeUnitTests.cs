@@ -10,10 +10,12 @@ namespace Unicorn.Interfaces.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private UniSize GetUniSize(double? width = null, double? height = null)
+        private static UniSize GetUniSize(double? width = null, double? height = null)
         {
             return new UniSize(width ?? _rnd.NextDouble() * 1000, height ?? _rnd.NextDouble() * 1000);
         }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         public void UniSizeClass_Constructor_SetsWidthPropertyToEqualFirstParameter()
@@ -265,6 +267,8 @@ namespace Unicorn.Interfaces.Tests.Unit
 
             Assert.AreNotEqual(testOutput0, testOutput1);
         }
+
+        [TestMethod]
         public void UniSizeClass_AdditionOperator_ReturnsObjectEqualToSecondOperand_IfFirstOperandIsNull()
         {
             UniSize testOp0 = null;

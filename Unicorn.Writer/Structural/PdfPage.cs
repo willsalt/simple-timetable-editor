@@ -26,13 +26,7 @@ namespace Unicorn.Writer.Structural
         /// <summary>
         /// The graphics context, for drawing.  Currently dummied out.
         /// </summary>
-        public IGraphicsContext PageGraphics
-        {
-            get
-            {
-                return new DummyPageGraphics();
-            }
-        }
+        public IGraphicsContext PageGraphics { get; private set; }
 
         /// <summary>
         /// The Y-coordinate of the top margin, in Unicorn coordinates.
@@ -63,6 +57,8 @@ namespace Unicorn.Writer.Structural
         /// A saved Y-coordinate.  This is used purely by client code when laying out a page.
         /// </summary>
         public double CurrentVerticalCursor { get; set; }
+
+        private double PageHeight { get; set; }
 
         /// <summary>
         /// The MediaBox rectangle, representing the usable area of the page (including margins) in PDF userspace coordinates.
@@ -105,6 +101,7 @@ namespace Unicorn.Writer.Structural
             PageOrientation = orientation;
 
             UniSize pagePtSize = size.ToUniSize(orientation);
+            PageHeight = pagePtSize.Height;
             TopMarginPosition = pagePtSize.Height * verticalMarginProportion;
             BottomMarginPosition = pagePtSize.Height - TopMarginPosition;
             LeftMarginPosition = pagePtSize.Width * horizontalMarginProportion;
@@ -113,7 +110,12 @@ namespace Unicorn.Writer.Structural
             CurrentVerticalCursor = TopMarginPosition;
             MediaBox = size.ToPdfRectangle(orientation);
             ContentStream = contentStream;
+            PageGraphics = new PageGraphics(contentStream, XTransformer, YTransformer);
         }
+
+        private double XTransformer(double x) => x;
+
+        private double YTransformer(double y) => PageHeight - y;
 
         /// <summary>
         /// Write this page to a <see cref="Stream" />.  This writes the page metadata, but not the content stream.

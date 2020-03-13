@@ -74,6 +74,7 @@ namespace Unicorn.Interfaces
             return Width.GetHashCode() ^ (Height * 17).GetHashCode();
         }
         
+        /// <summary>
         /// Addition operator.  Returns a <see cref="UniSize" /> whose width is the sum of its operands' widths and whose height is the sum of its operands' heights.
         /// </summary>
         /// <param name="a">A <see cref="UniSize" /> instance.</param>

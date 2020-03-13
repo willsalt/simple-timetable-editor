@@ -120,6 +120,9 @@
   <data name="Primitives_PdfDictionary_Add_Duplicate_Key_Error" xml:space="preserve">
     <value>Key already exists.</value>
   </data>
+  <data name="Primitives_PdfDictionary_Indexer_Key_Not_Found_Error" xml:space="preserve">
+    <value>Key not present.</value>
+  </data>
   <data name="Primitives_PdfIndirectObject_Invalid_Generation_Error" xml:space="preserve">
     <value>The generation number must be a non-negative integer.</value>
   </data>

@@ -70,6 +70,15 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key not present..
+        /// </summary>
+        internal static string Primitives_PdfDictionary_Indexer_Key_Not_Found_Error {
+            get {
+                return ResourceManager.GetString("Primitives_PdfDictionary_Indexer_Key_Not_Found_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The generation number must be a non-negative integer..
         /// </summary>
         internal static string Primitives_PdfIndirectObject_Invalid_Generation_Error {

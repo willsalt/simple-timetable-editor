@@ -13,6 +13,9 @@ namespace Unicorn.Writer.Primitives
     {
         private readonly List<byte> _contents = new List<byte>();
 
+        private static readonly byte[] _streamStart = new byte[] { 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
+        private static readonly byte[] _streamEnd = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
+
         /// <summary>
         /// Constructor, with indirect object parameters.
         /// </summary>
@@ -20,13 +23,40 @@ namespace Unicorn.Writer.Primitives
         /// <param name="generation">The generation number of this stream.  Defaults to 0.</param>
         public PdfStream(int objectId, int generation = 0) : base(objectId, generation)
         {
-
+            MetaDictionary = new PdfDictionary();
+            MetaDictionary.Add(CommonPdfNames.Length, PdfInteger.Zero);
         }
 
         /// <summary>
         /// A read-only copy of the stream contents.
         /// </summary>
         public List<byte> Contents => _contents.ToList();
+
+        /// <summary>
+        /// The length of this object when converted into a stream of bytes.
+        /// </summary>
+        public override int ByteLength
+        {
+            get
+            {
+                if (CachedPrologue == null)
+                {
+                    GeneratePrologueAndEpilogue();
+                }
+                UpdateMetaDictionary();
+                return CachedPrologue.Count + CachedEpilogue.Count + MetaDictionary.ByteLength + _contents.Count + _streamStart.Length + _streamEnd.Length;
+            }
+        }
+
+        private PdfDictionary MetaDictionary { get; set; }
+
+        private void UpdateMetaDictionary()
+        {
+            if ((MetaDictionary[CommonPdfNames.Length] as PdfInteger).Value != _contents.Count)
+            {
+                MetaDictionary[CommonPdfNames.Length] = new PdfInteger(_contents.Count);
+            }
+        }
 
         /// <summary>
         /// Add data to the stream.
@@ -78,14 +108,12 @@ namespace Unicorn.Writer.Primitives
             PdfDictionary dict = new PdfDictionary();
             dict.Add(CommonPdfNames.Length, new PdfInteger(_contents.Count));
             written += dictWriter(dict, dest);
-            byte[] startStream = new byte[] { 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
-            byte[] endStream = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
-            writer(dest, startStream);
+            writer(dest, _streamStart);
             writer(dest, _contents.ToArray());
-            writer(dest, endStream);
-            written += startStream.Length;
+            writer(dest, _streamEnd);
+            written += _streamStart.Length;
             written += _contents.Count;
-            written += endStream.Length;
+            written += _streamEnd.Length;
             writer(dest, CachedEpilogue.ToArray());
             written += CachedPrologue.Count + CachedEpilogue.Count;
             return written;

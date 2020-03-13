@@ -70,6 +70,11 @@ namespace Unicorn.Writer.Structural
         public PdfRectangle MediaBox { get; private set; }
 
         /// <summary>
+        /// The <see cref="PdfStream" /> containing the content of this page.
+        /// </summary>
+        public PdfStream ContentStream { get; private set; }
+
+        /// <summary>
         /// Value-setting constructor.
         /// </summary>
         /// <param name="parent">The parent node of this page in the document page tree.</param>
@@ -78,6 +83,7 @@ namespace Unicorn.Writer.Structural
         /// <param name="orientation">The orientation of this page.</param>
         /// <param name="horizontalMarginProportion">The proportion of the page taken up by each of the left and right margins.</param>
         /// <param name="verticalMarginProportion">The proportion of the page taken up by each of the top and bottom margins.</param>
+        /// <param name="contentStream">The <see cref="PdfStream" /> which will store the content of this page.</param>
         /// <param name="generation">The object generation number.  Defaults to zero.  As we do not currently support rewriting existing documents, this should not be set.</param>
         public PdfPage(
             PdfPageTreeNode parent, 
@@ -86,6 +92,7 @@ namespace Unicorn.Writer.Structural
             PageOrientation orientation, 
             double horizontalMarginProportion, 
             double verticalMarginProportion, 
+            PdfStream contentStream,
             int generation = 0) 
             : base(parent, objectId, generation)
         {
@@ -105,6 +112,7 @@ namespace Unicorn.Writer.Structural
             PageAvailableWidth = RightMarginPosition - LeftMarginPosition;
             CurrentVerticalCursor = TopMarginPosition;
             MediaBox = size.ToPdfRectangle(orientation);
+            ContentStream = contentStream;
         }
 
         /// <summary>
@@ -123,7 +131,7 @@ namespace Unicorn.Writer.Structural
         }
 
         /// <summary>
-        /// Conver the metadata for this page into an array of bytes and append them to a list.
+        /// Convert the metadata for this page into an array of bytes and append them to a list.
         /// </summary>
         /// <param name="list">The list to append to.</param>
         /// <returns>The number of bytes appended.</returns>
@@ -144,6 +152,10 @@ namespace Unicorn.Writer.Structural
             dictionary.Add(CommonPdfNames.Parent, Parent.GetReference());
             dictionary.Add(CommonPdfNames.Resources, new PdfDictionary());
             dictionary.Add(CommonPdfNames.MediaBox, MediaBox);
+            if (ContentStream != null)
+            {
+                dictionary.Add(CommonPdfNames.Contents, ContentStream.GetReference());
+            }
             return dictionary;
         }
     }

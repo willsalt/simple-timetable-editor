@@ -89,11 +89,6 @@ namespace Timetabler.PdfExport
             PassingTrainDashWidth = 0.5;
         }
 
-        private void StartPage(IDocumentDescriptor doc)
-        {
-            _currentPage = doc.AppendPage();
-        }
-
         private void StartPage(IDocumentDescriptor doc, PageOrientation orientation)
         {
             _currentPage = doc.AppendPage(orientation);

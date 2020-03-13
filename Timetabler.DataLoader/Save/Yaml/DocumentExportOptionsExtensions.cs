@@ -33,6 +33,8 @@ namespace Timetabler.DataLoader.Save.Yaml
                 FillerDashLineWidth = options.FillerDashLineWidth,
                 GraphsInOutput = options.DisplayGraph,
                 GlossaryInOutput = options.DisplayGlossary,
+                TablePageOrientation = options.TablePageOrientation,
+                GraphPageOrientation = options.GraphPageOrientation,
             };
         }
     }

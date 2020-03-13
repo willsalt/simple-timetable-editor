@@ -121,7 +121,7 @@ namespace Timetabler.PdfExport
             bool workNotFinished = true;
             while (workNotFinished)
             {
-                StartPage(doc);
+                StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
                 bool firstOnPage = true;
                 Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_PageMargins, _currentPage.TopMarginPosition, _currentPage.BottomMarginPosition, _currentPage.LeftMarginPosition, 
                     _currentPage.RightMarginPosition);
@@ -137,7 +137,7 @@ namespace Timetabler.PdfExport
                     Area footnotesForSection = LayOutFootnotesForSection(document.DownTrainsDisplay, i, columnsPerPage);
                     if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                     {
-                        StartPage(doc);
+                        StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
                         firstOnPage = true;
                         sectionMetrics = sectionMetricsWithTitle;
                     }
@@ -163,7 +163,7 @@ namespace Timetabler.PdfExport
                     Area footnotesForSection = LayOutFootnotesForSection(document.UpTrainsDisplay, i, columnsPerPage);
                     if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                     {
-                        StartPage(doc);
+                        StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
                         firstOnPage = true;
                         sectionMetrics = sectionMetricsWithTitle;
                     }
@@ -243,7 +243,7 @@ namespace Timetabler.PdfExport
 
                 if (document.ExportOptions.DisplayGraph)
                 {
-                    StartPage(doc);
+                    StartPage(doc, document.ExportOptions.GraphPageOrientation.ToPageOrientation());
                     DrawGraph(new TrainGraphModel(document.LocationList, document.TrainList) { DisplayTrainLabels = document.Options.DisplayTrainLabelsOnGraphs },
                         document.Title, document.Subtitle, document.DateDescription);
                 }
@@ -472,14 +472,14 @@ namespace Timetabler.PdfExport
             }
 
             UniRange largestEmptyBlock = FindLargestEmptyBlock(segment, sectionMetrics.MainSectionMetrics);
-            Paragraph para = new Paragraph(largestEmptyBlock.Size, sectionMetrics.ColumnWidth, Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(2));
+            Paragraph para = new Paragraph(largestEmptyBlock.Size, sectionMetrics.ColumnWidth, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(2));
             para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
             if (!para.OverspillHeight)
             {
                 return sectionMetrics.ColumnWidth;
             }
 
-            para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(0.75));
+            para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(0.75));
             para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
             return sectionMetrics.ColumnWidth + para.ComputedHeight;
         }
@@ -549,7 +549,7 @@ namespace Timetabler.PdfExport
                 largestEmptyBlock = FindLargestEmptyBlock(segment, locationDims);                
 
                 // Write the inline note into the largest empty block.
-                Paragraph para = new Paragraph(largestEmptyBlock.Size, sectionMetrics.ColumnWidth, Orientation.RotatedRight, HorizontalAlignment.Centred, 
+                Paragraph para = new Paragraph(largestEmptyBlock.Size, sectionMetrics.ColumnWidth, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, 
                     VerticalAlignment.Centred, new MarginSet(2));
                 para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
                 // If the paragraph fits within the empty block, draw it.  If not, widen the column and draw the note to the right of the train data.
@@ -563,7 +563,7 @@ namespace Timetabler.PdfExport
                 }
                 else
                 {
-                    para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Orientation.RotatedRight, HorizontalAlignment.Centred, 
+                    para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, 
                         VerticalAlignment.Centred, new MarginSet(0.75));
                     para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
                     para.DrawAt(_currentPage.PageGraphics, xCoord + sectionMetrics.ColumnWidth, currentYCoord);

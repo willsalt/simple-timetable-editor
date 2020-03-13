@@ -61,6 +61,7 @@
     <Compile Include="DocumentDescriptorFactory.cs" />
     <Compile Include="Extensions\DashStyleExtensions.cs" />
     <Compile Include="Extensions\FootnoteDisplayModelExtensions.cs" />
+    <Compile Include="Extensions\OrientationExtensions.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensions.cs" />
     <Compile Include="Interfaces\IDocumentDescriptorFactory.cs" />
     <Compile Include="LocationBoxDimensions.cs" />

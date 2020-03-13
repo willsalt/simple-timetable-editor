@@ -27,6 +27,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
                 ExportEngine = _rnd.NextBoolean() ? PdfExportEngine.External : PdfExportEngine.Unicorn,
                 FillerDashLineWidth = _rnd.NextDouble() * 5,
                 LineWidth = _rnd.NextDouble() * 5,
+                TablePageOrientation = _rnd.NextOrientation(),
+                GraphPageOrientation = _rnd.NextOrientation(),
             };
         }
 
@@ -131,6 +133,26 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
             ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayGlossary, testOutput.GlossaryInOutput);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectTablePageOrientationProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+
+            Assert.AreEqual(testParam.TablePageOrientation, testOutput.TablePageOrientation.Value);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+
+            Assert.AreEqual(testParam.GraphPageOrientation, testOutput.GraphPageOrientation.Value);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

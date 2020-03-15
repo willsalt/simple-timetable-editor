@@ -104,6 +104,98 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.AreEqual("/" + inputString + " ", testOutput);
         }
 
+        [TestMethod]
+        public void PdfNameClass_EqualsMethodWithPdfNameParameter_ReturnsTrue_IfSameObjectIsParameter()
+        {
+            string inputString = _rnd.NextString(_rnd.Next(20));
+            PdfName testObject = new PdfName(inputString);
+
+            bool testOutput = testObject.Equals(testObject);
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void PdfNameClass_EqualsMethodWithObjectParameter_ReturnsTrue_IfSameObjectIsParameter()
+        {
+            string inputString = _rnd.NextString(_rnd.Next(20));
+            PdfName testObject = new PdfName(inputString);
+
+            bool testOutput = testObject.Equals((object)testObject);
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void PdfNameClass_EqualsMethodWithPdfNameParameter_ReturnsTrue_IfObjectWithSameValueIsParameter()
+        {
+            string inputString = _rnd.NextString(_rnd.Next(20));
+            PdfName testObject = new PdfName(inputString);
+            PdfName testParam = new PdfName(inputString);
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void PdfNameClass_EqualsMethodWithObjectParameter_ReturnsTrue_IfObjectWithSameValueIsParameter()
+        {
+            string inputString = _rnd.NextString(_rnd.Next(20));
+            PdfName testObject = new PdfName(inputString);
+            object testParam = new PdfName(inputString);
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void PdfNameClass_EqualsMethodWithPdfNameParameter_ReturnsFalse_IfParameterHasDifferentValue()
+        {
+            string inputString0 = _rnd.NextString(_rnd.Next(20));
+            string inputString1;
+            do
+            {
+                inputString1 = _rnd.NextString(_rnd.Next(20));
+            } while (inputString0 == inputString1);
+            PdfName testObject = new PdfName(inputString0);
+            PdfName testParam = new PdfName(inputString1);
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void PdfNameClass_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterHasDifferentValue()
+        {
+            string inputString0 = _rnd.NextString(_rnd.Next(20));
+            string inputString1;
+            do
+            {
+                inputString1 = _rnd.NextString(_rnd.Next(20));
+            } while (inputString0 == inputString1);
+            PdfName testObject = new PdfName(inputString0);
+            object testParam = new PdfName(inputString1);
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void PdfNameClass_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterHasDifferentType()
+        {
+            string inputString = _rnd.NextString(_rnd.Next(20));
+            PdfName testObject = new PdfName(inputString);
+            PdfInteger testParam = new PdfInteger(_rnd.Next());
+
+            bool testOutput = testObject.Equals(testParam);
+
+            Assert.IsFalse(testOutput);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

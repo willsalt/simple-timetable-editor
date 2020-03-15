@@ -14,10 +14,19 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// Create a new array whose contents are the given primitives.
         /// </summary>
-        /// <param name="contents"></param>
-        public PdfArray(IEnumerable<IPdfPrimitiveObject> contents)
+        /// <param name="contents">The contents of the array.</param>
+        public PdfArray(params IPdfPrimitiveObject[] contents)
         {
-            _val = contents.ToArray();
+            _val = contents;
+        }
+
+        /// <summary>
+        /// Create a new array whose contents are the given primitives.
+        /// </summary>
+        /// <param name="contents">The contents of the array.</param>
+        public PdfArray(IEnumerable<IPdfPrimitiveObject> contents) : this(contents.ToArray())
+        {
+
         }
 
         /// <summary>

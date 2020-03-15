@@ -11,6 +11,11 @@
         public static readonly PdfName Catalog = new PdfName("Catalog");
 
         /// <summary>
+        /// The /Contents name.
+        /// </summary>
+        public static readonly PdfName Contents = new PdfName("Contents");
+
+        /// <summary>
         /// The /Count name.
         /// </summary>
         public static readonly PdfName Count = new PdfName("Count");

@@ -4,32 +4,18 @@ using System.Text;
 namespace Unicorn.Writer.Primitives
 {
     /// <summary>
-    /// Immutable class representing a PDF name object
+    /// Immutable class representing a PDF operator.  Operators are similar to names, but are not preceded by a slash when output.
     /// </summary>
-    public class PdfName : PdfSimpleObject, IEquatable<PdfName>
+    public class PdfOperator : PdfName, IEquatable<PdfOperator>
     {
-        /// <summary>
-        /// The value of this name object.
-        /// </summary>
-        public string Value { get; }
-
         /// <summary>
         /// Value-setting constructor.
         /// </summary>
-        /// <param name="name">The value of the new object.</param>
+        /// <param name="op">The value of the new object.</param>
         /// <exception cref="ArgumentNullException">Thrown if the parameter is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the parameter contains whitespace characters, or characters classed as "delimiters" by the PDF standard.</exception>
-        public PdfName(string name)
+        public PdfOperator(string op) : base(op)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (ContainsWhitespace(name) || ContainsDelimiter(name))
-            {
-                throw new ArgumentOutOfRangeException(nameof(name), $"Name {name} contains illegal characters");
-            }
-            Value = name;
         }
 
         /// <summary>
@@ -38,18 +24,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>An array of bytes representing this object.</returns>
         protected override byte[] FormatBytes()
         {
-            return Encoding.UTF8.GetBytes($"/{Value} ");
-        }
-
-        private bool ContainsWhitespace(string name)
-        {
-            return name.Contains(" ") || name.Contains("\x0") || name.Contains("\t") || name.Contains("\r") || name.Contains("\n") || name.Contains("\f");
-        }
-
-        private bool ContainsDelimiter(string name)
-        {
-            return name.Contains("(") || name.Contains(")") || name.Contains("<") || name.Contains(">") || name.Contains("[") || name.Contains("]") || name.Contains("{") ||
-                name.Contains("}") || name.Contains("/") || name.Contains("%");
+            return Encoding.UTF8.GetBytes($"{Value} ");
         }
 
         /// <summary>
@@ -57,7 +32,7 @@ namespace Unicorn.Writer.Primitives
         /// </summary>
         /// <param name="other">The object to test against.</param>
         /// <returns>True if the other object has the same value as this; false otherwise.</returns>
-        public bool Equals(PdfName other)
+        public bool Equals(PdfOperator other)
         {
             if (other is null)
             {
@@ -77,7 +52,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>True if the other object is a <see cref="PdfName" /> instance with the same value as this; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as PdfName);
+            return Equals(obj as PdfOperator);
         }
 
         /// <summary>
@@ -86,16 +61,16 @@ namespace Unicorn.Writer.Primitives
         /// <returns>The hashcode of the value of this object.</returns>
         public override int GetHashCode()
         {
-            return Value.GetHashCode();
-        }
+            return $"{Value} ".GetHashCode();
+        } 
 
         /// <summary>
         /// Equality operator.
         /// </summary>
-        /// <param name="a">A <see cref="PdfName" /> instance.</param>
-        /// <param name="b">Another <see cref="PdfName" /> instance.</param>
+        /// <param name="a">A <see cref="PdfOperator" /> instance.</param>
+        /// <param name="b">Another <see cref="PdfOperator" /> instance.</param>
         /// <returns>True if the parameters are equal; false otherwise.</returns>
-        public static bool operator ==(PdfName a, PdfName b)
+        public static bool operator ==(PdfOperator a, PdfOperator b)
         {
             if (ReferenceEquals(a, b))
             {
@@ -111,10 +86,10 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// Inequality operator.
         /// </summary>
-        /// <param name="a">A <see cref="PdfName" /> instance.</param>
-        /// <param name="b">Another <see cref="PdfName" /> instance.</param>
+        /// <param name="a">A <see cref="PdfOperator" /> instance.</param>
+        /// <param name="b">Another <see cref="PdfOperator" /> instance.</param>
         /// <returns>True if the parameters are unequal; false otherwise.</returns>
-        public static bool operator !=(PdfName a, PdfName b)
+        public static bool operator !=(PdfOperator a, PdfOperator b)
         {
             if (ReferenceEquals(a, b))
             {

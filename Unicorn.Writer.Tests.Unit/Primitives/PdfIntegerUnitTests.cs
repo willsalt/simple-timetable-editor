@@ -438,6 +438,23 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.IsTrue(testOutput);
         }
 
+        [TestMethod]
+        public void PdfIntegerClass_ZeroProperty_HasCorrectValue()
+        {
+            PdfInteger testOutput = PdfInteger.Zero;
+
+            Assert.AreEqual(0, testOutput.Value);
+        }
+
+        [TestMethod]
+        public void PdfIntegerClass_ZeroProperty_ReturnsSameObjectWhenCalledTwice()
+        {
+            PdfInteger testOutput0 = PdfInteger.Zero;
+            PdfInteger testOutput1 = PdfInteger.Zero;
+
+            Assert.AreSame(testOutput0, testOutput1);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

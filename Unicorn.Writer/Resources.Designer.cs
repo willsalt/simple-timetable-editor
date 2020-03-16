@@ -115,6 +115,15 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line dash pattern must consist of an empty array or an array of numbers..
+        /// </summary>
+        internal static string Primitives_PdfOperator_LineDashPattern_Content_Error {
+            get {
+                return ResourceManager.GetString("Primitives_PdfOperator_LineDashPattern_Content_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objects in the cross-reference table must have object IDs previously issued by the cross-reference table..
         /// </summary>
         internal static string Structural_PdfCrossRefTable_SetSlot_Invalid_ObjectId_Error {

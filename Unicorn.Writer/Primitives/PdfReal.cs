@@ -7,7 +7,7 @@ namespace Unicorn.Writer.Primitives
     /// <summary>
     /// Immutable class representing a real number.
     /// </summary>
-    public class PdfReal : PdfSimpleObject, IEquatable<PdfReal>
+    public class PdfReal : PdfNumber, IEquatable<PdfReal>
     {
         /// <summary>
         /// Value of this object.

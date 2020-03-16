@@ -19,7 +19,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void UniDashStyleExtensionsClass_ToPdfObjectsMethod_ReturnsArrayOfThreeMembers()
+        public void UniDashStyleExtensionsClass_ToPdfObjectsMethod_ReturnsArrayOfTwoMembers()
         {
             UniDashStyle testParam0 = _rnd.NextUniDashStyle();
             double testParam1 = _rnd.NextDouble() * 5;
@@ -27,7 +27,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
             IPdfPrimitiveObject[] testOutput = testParam0.ToPdfObjects(testParam1);
 
             Assert.IsNotNull(testOutput);
-            Assert.AreEqual(3, testOutput.Length);
+            Assert.AreEqual(2, testOutput.Length);
         }
 
         [TestMethod]
@@ -63,30 +63,6 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
             PdfInteger testItem = testOutput[1] as PdfInteger;
             Assert.IsNotNull(testItem);
             Assert.AreEqual(0, testItem.Value);
-        }
-
-        [TestMethod]
-        public void UniDashStyleExtensionsClass_ToPdfObjectsMethod_ReturnsArrayWhoseThirdMemberIsPdfOperator()
-        {
-            UniDashStyle testParam0 = _rnd.NextUniDashStyle();
-            double testParam1 = _rnd.NextDouble() * 5;
-
-            IPdfPrimitiveObject[] testOutput = testParam0.ToPdfObjects(testParam1);
-
-            Assert.IsTrue(testOutput[2] is PdfOperator);
-        }
-
-        [TestMethod]
-        public void UniDashStyleExtensionsClass_ToPdfObjectsMethod_ReturnsArrayWhoseThirdMemberHasValueOfLineDashPatternSettingOperator()
-        {
-            UniDashStyle testParam0 = _rnd.NextUniDashStyle();
-            double testParam1 = _rnd.NextDouble() * 5;
-
-            IPdfPrimitiveObject[] testOutput = testParam0.ToPdfObjects(testParam1);
-
-            PdfOperator testItem = testOutput[2] as PdfOperator;
-            Assert.IsNotNull(testItem);
-            Assert.AreEqual("d", testItem.Value);
         }
 
         [TestMethod]

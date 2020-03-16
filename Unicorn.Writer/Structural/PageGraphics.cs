@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unicorn.Interfaces;
 using Unicorn.Writer.Dummy;
 using Unicorn.Writer.Extensions;
+using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Structural
@@ -116,13 +117,9 @@ namespace Unicorn.Writer.Structural
         {
             ChangeLineWidth(width);
             ChangeDashStyle(style);
-            new PdfReal(_xTransformer(x1)).WriteTo(PageStream);
-            new PdfReal(_yTransformer(y1)).WriteTo(PageStream);
-            CommonPdfOperators.StartPath.WriteTo(PageStream);
-            new PdfReal(_xTransformer(x2)).WriteTo(PageStream);
-            new PdfReal(_yTransformer(y2)).WriteTo(PageStream);
-            CommonPdfOperators.AppendStraightLine.WriteTo(PageStream);
-            CommonPdfOperators.StrokePath.WriteTo(PageStream);
+            PdfOperator.StartPath(new PdfReal(_xTransformer(x1)), new PdfReal(_yTransformer(y1))).WriteTo(PageStream);
+            PdfOperator.AppendStraightLine(new PdfReal(_xTransformer(x1)), new PdfReal(_yTransformer(y1))).WriteTo(PageStream);
+            PdfOperator.StrokePath().WriteTo(PageStream);
         }
 
         /// <summary>
@@ -157,11 +154,9 @@ namespace Unicorn.Writer.Structural
         public void DrawRectangle(double xTopLeft, double yTopLeft, double rectWidth, double rectHeight, double lineWidth)
         {
             ChangeLineWidth(lineWidth);
-            new PdfReal(_xTransformer(xTopLeft)).WriteTo(PageStream);
-            new PdfReal(_yTransformer(yTopLeft + rectHeight)).WriteTo(PageStream);
-            new PdfReal(rectWidth).WriteTo(PageStream);
-            new PdfReal(rectHeight).WriteTo(PageStream);
-            CommonPdfOperators.AppendRectangle.WriteTo(PageStream);
+            PdfOperator.AppendRectangle(new PdfReal(_xTransformer(xTopLeft)), new PdfReal(_yTransformer(yTopLeft + rectHeight)), 
+                new PdfReal(rectWidth), new PdfReal(rectHeight))
+                .WriteTo(PageStream);
         }
 
         /// <summary>
@@ -205,8 +200,7 @@ namespace Unicorn.Writer.Structural
         {
             if (width != CurrentLineWidth)
             {
-                new PdfReal(width).WriteTo(PageStream);
-                CommonPdfOperators.LineWidth.WriteTo(PageStream);
+                PdfOperator.LineWidth(new PdfReal(width)).WriteTo(PageStream);
                 CurrentLineWidth = width;
             }
         }
@@ -215,10 +209,8 @@ namespace Unicorn.Writer.Structural
         {
             if (style != CurrentDashStyle)
             {
-                foreach (var obj in style.ToPdfObjects(CurrentLineWidth))
-                {
-                    obj.WriteTo(PageStream);
-                }
+                IPdfPrimitiveObject[] operands = style.ToPdfObjects(CurrentLineWidth);
+                PdfOperator.LineDashPattern(operands[0] as PdfArray, operands[1] as PdfInteger).WriteTo(PageStream);
                 CurrentDashStyle = style;
             }
         }

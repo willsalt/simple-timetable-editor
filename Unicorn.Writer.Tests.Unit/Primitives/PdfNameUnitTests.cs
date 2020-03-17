@@ -80,7 +80,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void PdfNameClass_WriteToMethodWithListParameter_ThrowsExceptionIfParameterIsNull()
+        public void PdfNameClass_WriteToMethodWithListParameter_ThrowsArgumentNullExceptionIfParameterIsNull()
         {
             string inputString = _rnd.NextString(_rnd.Next(20));
             PdfName testObject = new PdfName(inputString);

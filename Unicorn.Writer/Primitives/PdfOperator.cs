@@ -85,8 +85,12 @@ namespace Unicorn.Writer.Primitives
             {
                 if (!(pattern[i] is PdfNumber))
                 {
-                    throw new ArgumentException(Resources.Primitives_PdfOperator_LineDashPattern_Content_Error);
+                    throw new ArgumentException(Resources.Primitives_PdfOperator_LineDashPattern_Content_Error, nameof(pattern));
                 }
+            }
+            if (start.Value > pattern.Length)
+            {
+                throw new ArgumentException(Resources.Primitives_PdfOperator_LineDashPattern_Index_Too_High_Error);
             }
 
             PdfOperator op = new PdfOperator("d");

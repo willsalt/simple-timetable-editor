@@ -124,6 +124,15 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The start value of the line dash pattern operator must not be higher than the number of items in the pattern array..
+        /// </summary>
+        internal static string Primitives_PdfOperator_LineDashPattern_Index_Too_High_Error {
+            get {
+                return ResourceManager.GetString("Primitives_PdfOperator_LineDashPattern_Index_Too_High_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objects in the cross-reference table must have object IDs previously issued by the cross-reference table..
         /// </summary>
         internal static string Structural_PdfCrossRefTable_SetSlot_Invalid_ObjectId_Error {

@@ -34,6 +34,11 @@ namespace Unicorn.Writer.Structural
         private UniDashStyle CurrentDashStyle { get; set; }
 
         /// <summary>
+        /// Indicates if the line width has been changed more recently than the dash style.
+        /// </summary>
+        private bool LineWidthChanged { get; set; }
+
+        /// <summary>
         /// Constructor.  Requires methods for mapping coordinates from Unicorn-space (with the Y-origin at the top of the page, like most desktop drawing libraries)
         /// to PDF user space (with the Y-origin at the bottom of the page, like a graph).
         /// </summary>
@@ -42,9 +47,13 @@ namespace Unicorn.Writer.Structural
         /// <param name="yTransform">A transform function for converting Unicorn-space Y coordinates.</param>
         public PageGraphics(PdfStream contentStream, Func<double, double> xTransform, Func<double, double> yTransform)
         {
+            if (contentStream is null)
+            {
+                throw new ArgumentNullException(nameof(contentStream));
+            }
             PageStream = contentStream;
-            _xTransformer = xTransform;
-            _yTransformer = yTransform;
+            _xTransformer = xTransform ?? (x => x);
+            _yTransformer = yTransform ?? (x => x);
             CurrentLineWidth = -1;
             CurrentDashStyle = UniDashStyle.Solid;
         }
@@ -118,7 +127,7 @@ namespace Unicorn.Writer.Structural
             ChangeLineWidth(width);
             ChangeDashStyle(style);
             PdfOperator.StartPath(new PdfReal(_xTransformer(x1)), new PdfReal(_yTransformer(y1))).WriteTo(PageStream);
-            PdfOperator.AppendStraightLine(new PdfReal(_xTransformer(x1)), new PdfReal(_yTransformer(y1))).WriteTo(PageStream);
+            PdfOperator.AppendStraightLine(new PdfReal(_xTransformer(x2)), new PdfReal(_yTransformer(y2))).WriteTo(PageStream);
             PdfOperator.StrokePath().WriteTo(PageStream);
         }
 
@@ -202,16 +211,18 @@ namespace Unicorn.Writer.Structural
             {
                 PdfOperator.LineWidth(new PdfReal(width)).WriteTo(PageStream);
                 CurrentLineWidth = width;
+                LineWidthChanged = true;
             }
         }
 
         private void ChangeDashStyle(UniDashStyle style)
         {
-            if (style != CurrentDashStyle)
+            if (style != CurrentDashStyle || (LineWidthChanged && style != UniDashStyle.Solid))
             {
                 IPdfPrimitiveObject[] operands = style.ToPdfObjects(CurrentLineWidth);
                 PdfOperator.LineDashPattern(operands[0] as PdfArray, operands[1] as PdfInteger).WriteTo(PageStream);
                 CurrentDashStyle = style;
+                LineWidthChanged = false;
             }
         }
     }

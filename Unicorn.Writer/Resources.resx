@@ -135,6 +135,12 @@
   <data name="Primitives_PdfIndirectObject_Write_To_PdfStream_Error" xml:space="preserve">
     <value>Indirect objects may not be used as stream content.</value>
   </data>
+  <data name="Primitives_PdfOperator_LineDashPattern_Content_Error" xml:space="preserve">
+    <value>Line dash pattern must consist of an empty array or an array of numbers.</value>
+  </data>
+  <data name="Primitives_PdfOperator_LineDashPattern_Index_Too_High_Error" xml:space="preserve">
+    <value>The start value of the line dash pattern operator must not be higher than the number of items in the pattern array.</value>
+  </data>
   <data name="Structural_PdfCrossRefTable_SetSlot_Invalid_ObjectId_Error" xml:space="preserve">
     <value>Objects in the cross-reference table must have object IDs previously issued by the cross-reference table.</value>
   </data>

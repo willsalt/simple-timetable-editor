@@ -2,6 +2,7 @@
 using Unicorn.Writer.Primitives;
 using Tests.Utility.Extensions;
 using Unicorn.Writer.Interfaces;
+using System.Collections.Generic;
 
 namespace Unicorn.Writer.Tests.Unit.TestHelpers
 {
@@ -14,24 +15,59 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
                 throw new ArgumentNullException(nameof(rnd));
             }
             int selector = rnd.Next(7);
-            switch (selector)
+            return selector switch
             {
-                case 0:
-                default:
-                    return rnd.NextPdfBoolean();
-                case 1:
-                    return rnd.NextPdfInteger();
-                case 2:
-                    return rnd.NextPdfName();
-                case 3:
-                    return rnd.NextPdfNull();
-                case 4:
-                    return rnd.NextPdfReal();
-                case 5:
-                    return rnd.NextPdfRectangle();
-                case 6:
-                    return rnd.NextPdfString(rnd.Next(32) + 1);
+                1 => rnd.NextPdfInteger(),
+                2 => rnd.NextPdfName(),
+                3 => rnd.NextPdfNull(),
+                4 => rnd.NextPdfReal(),
+                5 => rnd.NextPdfRectangle(),
+                6 => rnd.NextPdfString(rnd.Next(32) + 1),
+                _ => rnd.NextPdfBoolean(),
+            };
+        }
+
+        public static PdfNumber NextPdfNumber(this Random rnd)
+        {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
             }
+            if (rnd.NextBoolean())
+            {
+                return rnd.NextPdfInteger();
+            }
+            return rnd.NextPdfReal();
+        }
+
+        public static PdfArray NextPdfArray(this Random rnd, int max = 6)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            int count = rnd.Next(max);
+            IPdfPrimitiveObject[] elements = new IPdfPrimitiveObject[count];
+            for (int i = 0; i < count; ++i)
+            {
+                elements[i] = NextPdfPrimitive(rnd);
+            }
+            return new PdfArray(elements);
+        }
+
+        public static PdfArray NextPdfArrayOfNumber(this Random rnd, int max = 6)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            int count = rnd.Next(max);
+            PdfNumber[] elements = new PdfNumber[count];
+            for (int i = 0; i < count; ++i)
+            {
+                elements[i] = NextPdfNumber(rnd);
+            }
+            return new PdfArray(elements);
         }
 
         public static PdfBoolean NextPdfBoolean(this Random rnd)

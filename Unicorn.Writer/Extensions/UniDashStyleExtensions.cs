@@ -18,9 +18,8 @@ namespace Unicorn.Writer.Extensions
         /// <returns></returns>
         public static IPdfPrimitiveObject[] ToPdfObjects(this UniDashStyle val, double scale)
         {
-            IPdfPrimitiveObject[] output = new IPdfPrimitiveObject[3];
+            IPdfPrimitiveObject[] output = new IPdfPrimitiveObject[2];
             output[1] = PdfInteger.Zero;  
-            output[2] = CommonPdfOperators.LineDashPattern;
             PdfReal square = val != UniDashStyle.Solid ? new PdfReal(scale) : null;
             switch (val)
             { 

@@ -716,6 +716,219 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             AssertionHelpers.AssertSameElements(expected, constrParam0);
         }
 
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnce()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.LineWidth(new PdfReal(1d)).WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam0), new PdfReal((testParam1 + testParam3) * 2), new PdfReal(testParam2), new PdfReal(testParam3))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam0);
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_CallsSecondParameterOfConstructorWithFirstParameter_IfCalledOnce()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.IsTrue(_transformedXParameters.Contains(testParam0));
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_CallsThirdParameterOfConstructorWithSumOfSecondAndFourthParameters_IfCalledOnce()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.IsTrue(_transformedYParameters.Contains(testParam1 + testParam3));
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwice()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+            double testParam4 = _rnd.NextDouble() * 500;
+            double testParam5 = _rnd.NextDouble() * 500;
+            double testParam6 = _rnd.NextDouble() * 500;
+            double testParam7 = _rnd.NextDouble() * 500;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3);
+            testObject.DrawRectangle(testParam4, testParam5, testParam6, testParam7);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.LineWidth(new PdfReal(1d)).WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam0), new PdfReal((testParam1 + testParam3) * 2), new PdfReal(testParam2), new PdfReal(testParam3))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam4 * 3), new PdfReal((testParam5 + testParam7) * 4), new PdfReal(testParam6), new PdfReal(testParam7))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam0);
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFiveDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnce()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+            double testParam4 = _rnd.NextDouble() * 5;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3, testParam4);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.LineWidth(new PdfReal(testParam4)).WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam0), new PdfReal((testParam1 + testParam3) * 2), new PdfReal(testParam2), new PdfReal(testParam3))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam0);
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFiveDoubleParameters_CallsSecondParameterOfConstructorWithFirstParameter_IfCalledOnce()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+            double testParam4 = _rnd.NextDouble() * 5;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3, testParam4);
+
+            Assert.IsTrue(_transformedXParameters.Contains(testParam0));
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFiveDoubleParameters_CallsThirdParameterOfConstructorWithSumOfSecondAndFourthParameters_IfCalledOnce()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+            double testParam4 = _rnd.NextDouble() * 5;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3, testParam4);
+
+            Assert.IsTrue(_transformedYParameters.Contains(testParam1 + testParam3));
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithSameFifthParameter()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+            double testParam4 = _rnd.NextDouble() * 5;
+            double testParam5 = _rnd.NextDouble() * 500;
+            double testParam6 = _rnd.NextDouble() * 500;
+            double testParam7 = _rnd.NextDouble() * 500;
+            double testParam8 = _rnd.NextDouble() * 500;
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3, testParam4);
+            testObject.DrawRectangle(testParam5, testParam6, testParam7, testParam8, testParam4);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.LineWidth(new PdfReal(testParam4)).WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam0), new PdfReal((testParam1 + testParam3) * 2), new PdfReal(testParam2), new PdfReal(testParam3))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam5 * 3), new PdfReal((testParam6 + testParam8) * 4), new PdfReal(testParam7), new PdfReal(testParam8))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam0);
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthParameter()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            double testParam0 = _rnd.NextDouble() * 500;
+            double testParam1 = _rnd.NextDouble() * 500;
+            double testParam2 = _rnd.NextDouble() * 500;
+            double testParam3 = _rnd.NextDouble() * 500;
+            double testParam4 = _rnd.NextDouble() * 5;
+            double testParam5 = _rnd.NextDouble() * 500;
+            double testParam6 = _rnd.NextDouble() * 500;
+            double testParam7 = _rnd.NextDouble() * 500;
+            double testParam8 = _rnd.NextDouble() * 500;
+            double testParam9;
+            do
+            {
+                testParam9 = _rnd.NextDouble() * 5;
+            } while (testParam9 == testParam4);
+
+            testObject.DrawRectangle(testParam0, testParam1, testParam2, testParam3, testParam4);
+            testObject.DrawRectangle(testParam5, testParam6, testParam7, testParam8, testParam9);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.LineWidth(new PdfReal(testParam4)).WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam0), new PdfReal((testParam1 + testParam3) * 2), new PdfReal(testParam2), new PdfReal(testParam3))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            PdfOperator.LineWidth(new PdfReal(testParam9)).WriteTo(expected);
+            PdfOperator.AppendRectangle(new PdfReal(testParam5 * 3), new PdfReal((testParam6 + testParam8) * 4), new PdfReal(testParam7), new PdfReal(testParam8))
+                .WriteTo(expected);
+            PdfOperator.StrokePath().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam0);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

@@ -163,9 +163,11 @@ namespace Unicorn.Writer.Structural
         public void DrawRectangle(double xTopLeft, double yTopLeft, double rectWidth, double rectHeight, double lineWidth)
         {
             ChangeLineWidth(lineWidth);
+            ChangeDashStyle(UniDashStyle.Solid);
             PdfOperator.AppendRectangle(new PdfReal(_xTransformer(xTopLeft)), new PdfReal(_yTransformer(yTopLeft + rectHeight)), 
                 new PdfReal(rectWidth), new PdfReal(rectHeight))
                 .WriteTo(PageStream);
+            PdfOperator.StrokePath().WriteTo(PageStream);
         }
 
         /// <summary>

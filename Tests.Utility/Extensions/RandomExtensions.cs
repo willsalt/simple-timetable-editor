@@ -326,5 +326,14 @@ namespace Tests.Utility.Extensions
             }
             return random.Next(5) == 0 ? (Orientation?)null : NextOrientation(random);
         }
+
+        public static decimal NextDecimal(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (decimal)random.NextDouble() * 2000m - 1000m;
+        }
     }
 }

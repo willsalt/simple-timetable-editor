@@ -335,5 +335,18 @@ namespace Tests.Utility.Extensions
             }
             return (decimal)random.NextDouble() * 2000m - 1000m;
         }
+
+        public static decimal? NextNullableDecimal(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextDecimal(random);
+        }
     }
 }

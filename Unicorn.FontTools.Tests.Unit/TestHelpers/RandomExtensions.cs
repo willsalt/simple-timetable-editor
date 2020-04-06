@@ -1,0 +1,136 @@
+﻿using System;
+using System.Collections.Generic;
+using Tests.Utility.Extensions;
+using Unicorn.FontTools.Afm;
+
+namespace Unicorn.FontTools.Tests.Unit.TestHelpers
+{
+    public static class RandomExtensions
+    {
+        public static WidthSet NextAfmWidthSet(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new WidthSet(random.NextNullableDecimal(), random.NextNullableDecimal(), random.NextNullableDecimal());
+        }
+
+        public static Vector NextAfmVector(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new Vector(random.NextDecimal(), random.NextDecimal());
+        }
+
+        public static Vector? NextNullableAfmVector(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextAfmVector(random);
+        }
+
+        public static BoundingBox NextAfmBoundingBox(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new BoundingBox(random.NextDecimal(), random.NextDecimal(), random.NextDecimal(), random.NextDecimal());
+        }
+
+        public static BoundingBox? NextNullableAfmBoundingBox(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextAfmBoundingBox(random);
+        }
+
+        public static Character NextAfmCharacter(this Random random, IList<string> existingCharacters = null)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (existingCharacters is null)
+            {
+                existingCharacters = Array.Empty<string>();
+            }
+            string name;
+            if (random.Next(10) == 0)
+            {
+                name = null;
+            }
+            else
+            {
+                do
+                {
+                    name = random.NextString(random.Next(1, 16));
+                } while (existingCharacters.Contains(name));
+            }
+            return NextAfmCharacter(random, name, existingCharacters);
+        }
+
+        public static Character NextAfmCharacter(this Random random, string name, IList<string> existingCharacters = null)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (existingCharacters is null)
+            {
+                existingCharacters = Array.Empty<string>();
+            }
+            int ligCount = random.Next(3);
+            InitialLigatureSet[] ligatures = new InitialLigatureSet[ligCount];
+            for (int i = 0; i < ligCount; ++i)
+            {
+                if (existingCharacters.Count == 0)
+                {
+                    ligatures[i] = new InitialLigatureSet(random.NextString(random.Next(1, 16)), random.NextString(random.Next(1, 16)));
+                }
+                else
+                {
+                    ligatures[i] = new InitialLigatureSet(existingCharacters[random.Next(existingCharacters.Count)],
+                        existingCharacters[random.Next(existingCharacters.Count)]);
+                }
+            }
+            return new Character(random.NextNullableShort(), name, random.NextAfmWidthSet(), random.NextAfmWidthSet(), random.NextNullableAfmVector(),
+                random.NextNullableAfmBoundingBox(), ligatures);
+        }
+
+        public static LigatureSet NextAfmLigatureSet(this Random random, IList<string> doNotUseAsSecondCharacterName)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (doNotUseAsSecondCharacterName is null)
+            {
+                doNotUseAsSecondCharacterName = Array.Empty<string>();
+            }
+            string secondName;
+            do
+            {
+                secondName = random.NextString(random.Next(1, 20));
+            } while (doNotUseAsSecondCharacterName.Contains(secondName));
+            
+            return new LigatureSet(NextAfmCharacter(random, random.NextString(random.Next(1, 16))), NextAfmCharacter(random, secondName),
+                NextAfmCharacter(random, random.NextString(random.Next(1, 16))));
+        }
+    }
+}

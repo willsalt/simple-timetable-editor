@@ -66,6 +66,20 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             {
                 throw new NullReferenceException();
             }
+            return NextAfmCharacter(random, random.NextNullableShort(), existingCharacters);
+        }
+
+        public static Character NextAfmCharacter(this Random random, string name, IList<string> existingCharacters = null)
+        {
+            return NextAfmCharacter(random, name, random.NextNullableShort(), existingCharacters);
+        }
+
+        public static Character NextAfmCharacter(this Random random, short? code, IList<string> existingCharacters = null)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
             if (existingCharacters is null)
             {
                 existingCharacters = Array.Empty<string>();
@@ -82,10 +96,10 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
                     name = random.NextString(random.Next(1, 16));
                 } while (existingCharacters.Contains(name));
             }
-            return NextAfmCharacter(random, name, existingCharacters);
+            return NextAfmCharacter(random, name, code, existingCharacters);
         }
 
-        public static Character NextAfmCharacter(this Random random, string name, IList<string> existingCharacters = null)
+        public static Character NextAfmCharacter(this Random random, string name, short? code, IList<string> existingCharacters = null)
         {
             if (random is null)
             {
@@ -109,7 +123,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
                         existingCharacters[random.Next(existingCharacters.Count)]);
                 }
             }
-            return new Character(random.NextNullableShort(), name, random.NextAfmWidthSet(), random.NextAfmWidthSet(), random.NextNullableAfmVector(),
+            return new Character(code, name, random.NextAfmWidthSet(), random.NextAfmWidthSet(), random.NextNullableAfmVector(),
                 random.NextNullableAfmBoundingBox(), ligatures);
         }
 
@@ -131,6 +145,25 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             
             return new LigatureSet(NextAfmCharacter(random, random.NextString(random.Next(1, 16))), NextAfmCharacter(random, secondName),
                 NextAfmCharacter(random, random.NextString(random.Next(1, 16))));
+        }
+
+        public static KerningPair NextAfmKerningPair(this Random random, IList<string> doNotUseAsSecondCharacterName)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (doNotUseAsSecondCharacterName is null)
+            {
+                doNotUseAsSecondCharacterName = Array.Empty<string>();
+            }
+            string secondName;
+            do
+            {
+                secondName = random.NextString(random.Next(1, 20));
+            } while (doNotUseAsSecondCharacterName.Contains(secondName));
+
+            return new KerningPair(NextAfmCharacter(random, random.NextString(random.Next(1, 16))), NextAfmCharacter(random, secondName), NextAfmVector(random));
         }
     }
 }

@@ -48,6 +48,11 @@ namespace Unicorn.FontTools.Afm
         public LigatureSetCollection Ligatures { get; private set; }
 
         /// <summary>
+        /// Kerning pairs in which this character is the first character of the pair.
+        /// </summary>
+        public KerningPairCollection KerningPairs { get; } = new KerningPairCollection();
+
+        /// <summary>
         /// This property is used to store ligature information whilst a file is being loaded.  Not populated after 
         /// <see cref="Character.ProcessLigatures(IDictionary{string, Character})" /> has been called.
         /// </summary>
@@ -293,15 +298,7 @@ namespace Unicorn.FontTools.Afm
             {
                 throw new AfmFormatException($"Vector not found in {input}");
             }
-            if (!decimal.TryParse(parts[1], out decimal valx))
-            {
-                throw new AfmFormatException($"Could not parse {parts[1]} as a number.");
-            }
-            if (!decimal.TryParse(parts[2], out decimal valy))
-            {
-                throw new AfmFormatException($"Could not parse {parts[2]} as a number.");
-            }
-            return new Vector(valx, valy);
+            return Vector.FromStrings(parts[1], parts[2]);
         }
 
         private static BoundingBox LoadBoundingBox(string input)

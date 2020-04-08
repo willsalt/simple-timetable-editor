@@ -37,15 +37,9 @@ namespace Unicorn.FontTools.Afm
         /// Get an enumerator for the set.
         /// </summary>
         /// <returns>An <see cref="IEnumerator&lt;LigatureSet&gt;" />.</returns>
-        public IEnumerator<LigatureSet> GetEnumerator()
-        {
-            return ((IEnumerable<LigatureSet>)_arr).GetEnumerator();
-        }
+        public IEnumerator<LigatureSet> GetEnumerator() => ((IEnumerable<LigatureSet>)_arr).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _arr.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => _arr.GetEnumerator();
 
         /// <summary>
         /// Get members of the set by index.
@@ -55,10 +49,7 @@ namespace Unicorn.FontTools.Afm
         /// <exception cref="IndexOutOfRangeException">Thrown if the parameter is not a valid index into the set.</exception>
         public LigatureSet this[int i]
         {
-            get
-            {
-                return _arr[i];
-            }
+            get => _arr[i];
         }
 
         /// <summary>

@@ -349,6 +349,15 @@ namespace Tests.Utility.Extensions
             return NextDecimal(random);
         }
 
+        public static short NextShort(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (short)random.Next(short.MaxValue + 1);
+        }
+
         public static short? NextNullableShort(this Random random)
         {
             if (random is null)
@@ -359,7 +368,7 @@ namespace Tests.Utility.Extensions
             {
                 return null;
             }
-            return (short?)random.Next(short.MaxValue + 1);
+            return NextShort(random);
         }
     }
 }

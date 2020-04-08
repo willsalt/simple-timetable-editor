@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.FontTools.Afm;
@@ -324,6 +325,136 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             bool testOutput = testObject0 != testObject1;
 
             Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void VectorStruct_FromStringsMethod_ReturnsValueWithCorrectXProperty_IfBothParametersAreValid()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            decimal testValue1 = _rnd.NextDecimal();
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+
+            Vector testOutput = Vector.FromStrings(testParam0, testParam1);
+
+            Assert.AreEqual(testValue0, testOutput.X);
+        }
+
+        [TestMethod]
+        public void VectorStruct_FromStringsMethod_ReturnsValueWithCorrectYProperty_IfBothParametersAreValid()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            decimal testValue1 = _rnd.NextDecimal();
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+
+            Vector testOutput = Vector.FromStrings(testParam0, testParam1);
+
+            Assert.AreEqual(testValue1, testOutput.Y);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void VectorStruct_FromStringsMethod_ThrowsAfmFormatException_IfFirstParameterIsNotANumber()
+        {
+            string testParam0 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(10));
+            decimal testValue1 = _rnd.NextDecimal();
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+
+            _ = Vector.FromStrings(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void VectorStruct_FromStringsMethod_ThrowsAfmFormatException_IfSecondParameterIsNotANumber()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(10));
+
+            _ = Vector.FromStrings(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void VectorStruct_FromStringsMethod_ThrowsAfmFormatException_IfNeitherParameterIsANumber()
+        {
+            string testParam0 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(10));
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(10));
+
+            _ = Vector.FromStrings(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void VectorStruct_FromXStringMethod_ReturnsValueWithCorrectXProperty_IfParameterIsValid()
+        {
+            decimal testValue = _rnd.NextDecimal();
+            string testParam = testValue.ToString(CultureInfo.InvariantCulture);
+
+            Vector testOutput = Vector.FromXString(testParam);
+
+            Assert.AreEqual(testValue, testOutput.X);
+        }
+
+        [TestMethod]
+        public void VectorStruct_FromXStringMethod_ReturnsValueWithCorrectYProperty_IfParameterIsValid()
+        {
+            decimal testValue = _rnd.NextDecimal();
+            string testParam = testValue.ToString(CultureInfo.InvariantCulture);
+
+            Vector testOutput = Vector.FromXString(testParam);
+
+            Assert.AreEqual(0m, testOutput.Y);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void VectorStruct_FromXStringMethod_ThrowsAfmFormatException_IfParameterIsNotANumber()
+        {
+            string testParam = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(10));
+
+            _ = Vector.FromXString(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void VectorStruct_FromYStringMethod_ReturnsValueWithCorrectXProperty_IfParameterIsValid()
+        {
+            decimal testValue = _rnd.NextDecimal();
+            string testParam = testValue.ToString(CultureInfo.InvariantCulture);
+
+            Vector testOutput = Vector.FromYString(testParam);
+
+            Assert.AreEqual(0m, testOutput.X);
+        }
+
+        [TestMethod]
+        public void VectorStruct_FromYStringMethod_ReturnsValueWithCorrectYProperty_IfParameterIsValid()
+        {
+            decimal testValue = _rnd.NextDecimal();
+            string testParam = testValue.ToString(CultureInfo.InvariantCulture);
+
+            Vector testOutput = Vector.FromYString(testParam);
+
+            Assert.AreEqual(testValue, testOutput.Y);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void VectorStruct_FromYStringMethod_ThrowsAfmFormatException_IfParameterIsNotANumber()
+        {
+            string testParam = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(10));
+
+            _ = Vector.FromYString(testParam);
+
+            Assert.Fail();
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

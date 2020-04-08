@@ -82,5 +82,55 @@ namespace Unicorn.FontTools.Afm
         {
             return a.X != b.X || a.Y != b.Y;
         }
+
+        /// <summary>
+        /// Convert two input strings into a <see cref="Vector" /> value.
+        /// </summary>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <returns>A <see cref="Vector" /> value whose components are the parameters converted to numbers.</returns>
+        /// <exception cref="AfmFormatException">Thrown if either parameter cannot be converted to a number.</exception>
+        public static Vector FromStrings(string x, string y)
+        {
+            if (!decimal.TryParse(x, out decimal valx))
+            {
+                throw new AfmFormatException($"Could not parse {x} as a number.");
+            }
+            if (!decimal.TryParse(y, out decimal valy))
+            {
+                throw new AfmFormatException($"Could not parse {y} as a number.");
+            }
+            return new Vector(valx, valy);
+        }
+
+        /// <summary>
+        /// Convert an input string into a <see cref="Vector" /> value, with the string as the vector's X component.  The Y component will be zero.
+        /// </summary>
+        /// <param name="x">The X component of the vector.</param>
+        /// <returns>A <see cref="Vector" /> whose X component is converted from the parameter, and whose Y component is zero.</returns>
+        /// <exception cref="AfmFormatException">Thrown if the parameter cannot be converted to a number.</exception>
+        public static Vector FromXString(string x)
+        {
+            if (!decimal.TryParse(x, out decimal valx))
+            {
+                throw new AfmFormatException($"Could not parse {x} as a number.");
+            }
+            return new Vector(valx, 0m);
+        }
+
+        /// <summary>
+        /// Convert an input string into a <see cref="Vector" /> value, with the string as the vector's Y component.  The X component will be zero.
+        /// </summary>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <returns>A <see cref="Vector"/> whose Y component is converted from the parameter, and whose X component is zero.</returns>
+        /// <exception cref="AfmFormatException">Thrown if the parameter cannot be converted to a number.</exception>
+        public static Vector FromYString(string y)
+        {
+            if (!decimal.TryParse(y, out decimal valy))
+            {
+                throw new AfmFormatException($"Could not parse {y} as a number.");
+            }
+            return new Vector(0m, valy);
+        }
     }
 }

@@ -173,7 +173,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
 
             testObject.Add(testParam);
 
-            Assert.AreEqual(testParam, testObject[testObject.Count - 1]);
+            Assert.AreEqual(testParam, testObject[^1]);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

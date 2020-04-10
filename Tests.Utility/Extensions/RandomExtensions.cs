@@ -370,5 +370,18 @@ namespace Tests.Utility.Extensions
             }
             return NextShort(random);
         }
+
+        public static int? NextNullableInt(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return random.Next();
+        }
     }
 }

@@ -104,6 +104,90 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadingHelpersClass_LoadKeyedIntMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
+        {
+            string testParam0 = null;
+            string testParam1 = _rnd.NextString(_rnd.Next(1, 10));
+
+            _ = LoadingHelpers.LoadKeyedInt(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadingHelpersClass_LoadKeyedIntMethod_ThrowsArgumentNullException_IfSecondParameterIsNull()
+        {
+            string testParam0 = _rnd.NextString(_rnd.Next(1, 10));
+            string testParam1 = null;
+
+            _ = LoadingHelpers.LoadKeyedInt(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedIntMethod_ThrowsAfmFormatException_IfFirstParameterIsShorterThanSecondParameter()
+        {
+            string testParam0 = _rnd.NextString(_rnd.Next(1, 10));
+            string testParam1 = _rnd.NextString(_rnd.Next(testParam0.Length + 1, testParam0.Length + 11));
+
+            _ = LoadingHelpers.LoadKeyedInt(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedIntMethod_ThrowsAfmFormatException_IfFirstParameterIsSameLengthAsSecondParameter()
+        {
+            string testParam0 = _rnd.NextString(_rnd.Next(1, 10));
+            string testParam1 = _rnd.NextString(testParam0.Length);
+
+            _ = LoadingHelpers.LoadKeyedInt(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedIntMethod_ThrowsAfmFormatException_IfFirstParameterConsistsOfSecondParameterPlusWhiteSpace()
+        {
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace();
+
+            _ = LoadingHelpers.LoadKeyedInt(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedIntMethod_ThrowsAfmFormatException_IfFirstParameterDataIsNotValidNumber()
+        {
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+
+            _ = LoadingHelpers.LoadKeyedInt(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void LoadingHelpersClass_LoadKeyedIntMethod_ReturnsExpectedValue_IfDataIsValid()
+        {
+            int expectedValue = _rnd.Next() - int.MaxValue / 2;
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + expectedValue.ToString(CultureInfo.InvariantCulture);
+
+            int testOutput = LoadingHelpers.LoadKeyedInt(testParam0, testParam1);
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void LoadingHelpersClass_LoadKeyedStringMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             string testParam0 = null;
@@ -301,6 +385,246 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Vector testOutput = LoadingHelpers.LoadKeyedVector(testParam0, testParam1);
 
             Assert.AreEqual(yVector, testOutput.Y);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
+        {
+            string testParam0 = null;
+            string testParam1 = _rnd.NextString(_rnd.Next(1, 10));
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsArgumentNullException_IfSecondParameterIsNull()
+        {
+            string testParam0 = _rnd.NextString(_rnd.Next(1, 10));
+            string testParam1 = null;
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterIsShorterThanSecondParameter()
+        {
+            string testParam0 = _rnd.NextString(_rnd.Next(1, 10));
+            string testParam1 = _rnd.NextString(_rnd.Next(testParam0.Length + 1, testParam0.Length + 11));
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterIsSameLengthAsSecondParameter()
+        {
+            string testParam0 = _rnd.NextString(_rnd.Next(1, 10));
+            string testParam1 = _rnd.NextString(testParam0.Length);
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterConsistsOfSecondParameterPlusWhiteSpace()
+        {
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace();
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterContainsSingleNumber()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture);
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterContainsTwoNumbers()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + 
+                bValue.ToString(CultureInfo.InvariantCulture);
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterContainsThreeNumbers()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture);
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterContainsDataWhereFirstPartOfBoundingBoxDataIsNotANumber()
+        {
+            decimal bValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            decimal tValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10)) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                tValue.ToString(CultureInfo.InvariantCulture);
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterContainsDataWhereSecondPartOfBoundingBoxDataIsNotANumber()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            decimal tValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10)) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                tValue.ToString(CultureInfo.InvariantCulture);
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterContainsDataWhereThirdPartOfBoundingBoxDataIsNotANumber()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            decimal tValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10)) + WhiteSpace() +
+                tValue.ToString(CultureInfo.InvariantCulture);
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ThrowsAfmFormatException_IfFirstParameterContainsDataWhereFourthPartOfBoundingBoxDataIsNotANumber()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+
+            _ = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ReturnsValueWithCorrectLeftProperty_IfDataIsValid()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            decimal tValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                tValue.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.AreEqual(lValue, testOutput.Left);
+        }
+
+        [TestMethod]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ReturnsValueWithCorrectBottomProperty_IfDataIsValid()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            decimal tValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                tValue.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.AreEqual(bValue, testOutput.Bottom);
+        }
+
+        [TestMethod]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ReturnsValueWithCorrectRightProperty_IfDataIsValid()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            decimal tValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                tValue.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.AreEqual(rValue, testOutput.Right);
+        }
+
+        [TestMethod]
+        public void LoadingHelpersClass_LoadKeyedBoundingBoxMethod_ReturnsValueWithCorrectTopProperty_IfDataIsValid()
+        {
+            decimal lValue = _rnd.NextDecimal();
+            decimal bValue = _rnd.NextDecimal();
+            decimal rValue = _rnd.NextDecimal();
+            decimal tValue = _rnd.NextDecimal();
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam0 = testParam1 + WhiteSpace() + lValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                bValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() + rValue.ToString(CultureInfo.InvariantCulture) + WhiteSpace() +
+                tValue.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = LoadingHelpers.LoadKeyedBoundingBox(testParam0, testParam1);
+
+            Assert.AreEqual(tValue, testOutput.Top);
         }
 
         [TestMethod]

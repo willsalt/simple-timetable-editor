@@ -585,6 +585,142 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.IsTrue(testOutput);
         }
 
+        [TestMethod]
+        public void BoundingBoxStruct_FromStringsMethod_ReturnsValueWithCorrectLeftProperty_IfAllParametersAreValid()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            decimal testValue1 = _rnd.NextDecimal();
+            decimal testValue2 = _rnd.NextDecimal();
+            decimal testValue3 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+            string testParam2 = testValue2.ToString(CultureInfo.InvariantCulture);
+            string testParam3 = testValue3.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testValue0, testOutput.Left);
+        }
+
+        [TestMethod]
+        public void BoundingBoxStruct_FromStringsMethod_ReturnsValueWithCorrectBottomProperty_IfAllParametersAreValid()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            decimal testValue1 = _rnd.NextDecimal();
+            decimal testValue2 = _rnd.NextDecimal();
+            decimal testValue3 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+            string testParam2 = testValue2.ToString(CultureInfo.InvariantCulture);
+            string testParam3 = testValue3.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testValue1, testOutput.Bottom);
+        }
+
+        [TestMethod]
+        public void BoundingBoxStruct_FromStringsMethod_ReturnsValueWithCorrectRightProperty_IfAllParametersAreValid()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            decimal testValue1 = _rnd.NextDecimal();
+            decimal testValue2 = _rnd.NextDecimal();
+            decimal testValue3 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+            string testParam2 = testValue2.ToString(CultureInfo.InvariantCulture);
+            string testParam3 = testValue3.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testValue2, testOutput.Right);
+        }
+
+        [TestMethod]
+        public void BoundingBoxStruct_FromStringsMethod_ReturnsValueWithCorrectTopProperty_IfAllParametersAreValid()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            decimal testValue1 = _rnd.NextDecimal();
+            decimal testValue2 = _rnd.NextDecimal();
+            decimal testValue3 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+            string testParam2 = testValue2.ToString(CultureInfo.InvariantCulture);
+            string testParam3 = testValue3.ToString(CultureInfo.InvariantCulture);
+
+            BoundingBox testOutput = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testValue3, testOutput.Top);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void BoundingBoxStruct_FromStringsMethod_ThrowsAfmFormatException_IfFirstParameterIsNotANumber()
+        {
+            decimal testValue1 = _rnd.NextDecimal();
+            decimal testValue2 = _rnd.NextDecimal();
+            decimal testValue3 = _rnd.NextDecimal();
+            string testParam0 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+            string testParam2 = testValue2.ToString(CultureInfo.InvariantCulture);
+            string testParam3 = testValue3.ToString(CultureInfo.InvariantCulture);
+
+            _ = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void BoundingBoxStruct_FromStringsMethod_ThrowsAfmFormatException_IfSecondParameterIsNotANumber()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            decimal testValue2 = _rnd.NextDecimal();
+            decimal testValue3 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam2 = testValue2.ToString(CultureInfo.InvariantCulture);
+            string testParam3 = testValue3.ToString(CultureInfo.InvariantCulture);
+
+            _ = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void BoundingBoxStruct_FromStringsMethod_ThrowsAfmFormatException_IfThirdParameterIsNotANumber()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            decimal testValue1 = _rnd.NextDecimal();
+            decimal testValue3 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+            string testParam2 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+            string testParam3 = testValue3.ToString(CultureInfo.InvariantCulture);
+
+            _ = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void BoundingBoxStruct_FromStringsMethod_ThrowsAfmFormatException_IfFourthParameterIsNotANumber()
+        {
+            decimal testValue0 = _rnd.NextDecimal();
+            decimal testValue1 = _rnd.NextDecimal();
+            decimal testValue2 = _rnd.NextDecimal();
+            string testParam0 = testValue0.ToString(CultureInfo.InvariantCulture);
+            string testParam1 = testValue1.ToString(CultureInfo.InvariantCulture);
+            string testParam2 = testValue2.ToString(CultureInfo.InvariantCulture);
+            string testParam3 = _rnd.NextString(RandomExtensions.AlphabeticalCharacters, _rnd.Next(1, 10));
+
+            _ = BoundingBox.FromStrings(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.Fail();
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

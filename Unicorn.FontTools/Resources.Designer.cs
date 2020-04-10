@@ -61,6 +61,24 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error loading font metrics: font did not start with {0}..
+        /// </summary>
+        internal static string AfmFontMetrics_FromLines_IncorrectStart {
+            get {
+                return ResourceManager.GetString("AfmFontMetrics_FromLines_IncorrectStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unexpected end of font metrics data..
+        /// </summary>
+        internal static string AfmFontMetrics_MoveNextHelper_UnexpectedEnd {
+            get {
+                return ResourceManager.GetString("AfmFontMetrics_MoveNextHelper_UnexpectedEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading direction-specific data: CharWidth and IsFixedWidth values are inconsistent..
         /// </summary>
         internal static string DirectionMetrics_FromLines_CharWidthClashesWithIsFixedWidth {

@@ -105,5 +105,34 @@ namespace Unicorn.FontTools.Afm
         {
             return a.Left != b.Left || a.Right != b.Right || a.Top != b.Top || a.Bottom != b.Bottom;
         }
+
+        /// <summary>
+        /// Convert four strings into a <see cref="BoundingBox" /> value.
+        /// </summary>
+        /// <param name="left">The string to convert into the <see cref="Left" /> property.</param>
+        /// <param name="bottom">The string to convert into the <see cref="Bottom" /> property.</param>
+        /// <param name="right">The string to convert into the <see cref="Right"/> property.</param>
+        /// <param name="top">The string to convert into the <see cref="Top"/> property.</param>
+        /// <returns></returns>
+        public static BoundingBox FromStrings(string left, string bottom, string right, string top)
+        {
+            if (!decimal.TryParse(left, out decimal lv))
+            {
+                throw new AfmFormatException($"Could not parse {left} as a number.");
+            }
+            if (!decimal.TryParse(bottom, out decimal bv))
+            {
+                throw new AfmFormatException($"Could not parse {bottom} as a number.");
+            }
+            if (!decimal.TryParse(right, out decimal rv))
+            {
+                throw new AfmFormatException($"Could not parse {right} as a number.");
+            }
+            if (!decimal.TryParse(top, out decimal tv))
+            {
+                throw new AfmFormatException($"Could not parse {top} as a number.");
+            }
+            return new BoundingBox(lv, bv, rv, tv);
+        }
     }
 }

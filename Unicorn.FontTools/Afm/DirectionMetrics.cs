@@ -118,7 +118,7 @@ namespace Unicorn.FontTools.Afm
             const string underlineStrokeKey = "UnderlineThickness";
             const string italicAngleKey = "ItalicAngle";
             const string charWidthKey = "CharWidth";
-            const string fixedWidthKey = "IsFixedWidth";
+            const string fixedWidthKey = "IsFixedPitch";
 
             decimal? underlinePos = null;
             decimal? underlineStroke = null;

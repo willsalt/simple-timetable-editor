@@ -165,5 +165,33 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
 
             return new KerningPair(NextAfmCharacter(random, random.NextString(random.Next(1, 16))), NextAfmCharacter(random, secondName), NextAfmVector(random));
         }
+
+        public static DirectionMetrics NextAfmDirectionMetrics(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            bool? fixedPitch = random.NextNullableBoolean();
+            Vector? width = null;
+            if (!fixedPitch.HasValue || fixedPitch.Value)
+            {
+                width = NextNullableAfmVector(random);
+            }
+            return new DirectionMetrics(random.NextNullableDecimal(), random.NextNullableDecimal(), random.NextNullableDecimal(), width, fixedPitch);
+        }
+
+        public static DirectionMetrics? NextNullableAfmDirectionMetrics(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextAfmDirectionMetrics(random);
+        }
     }
 }

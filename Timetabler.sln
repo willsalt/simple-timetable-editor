@@ -59,7 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.Interfaces.Tests.Ut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.FontTools", "Unicorn.FontTools\Unicorn.FontTools.csproj", "{3DCDB6EA-B97B-490A-A218-582799B15D29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.FontTools.Tests.Unit", "Unicorn.FontTools.Tests.Unit\Unicorn.FontTools.Tests.Unit.csproj", "{79F79AA0-4F12-4893-950C-007650B1971C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.FontTools.Tests.Unit", "Unicorn.FontTools.Tests.Unit\Unicorn.FontTools.Tests.Unit.csproj", "{79F79AA0-4F12-4893-950C-007650B1971C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.FontTools.Afm2Code", "Unicorn.FontTools.Afm2Code\Unicorn.FontTools.Afm2Code.csproj", "{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -277,6 +279,14 @@ Global
 		{79F79AA0-4F12-4893-950C-007650B1971C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79F79AA0-4F12-4893-950C-007650B1971C}.Release|x86.ActiveCfg = Release|Any CPU
 		{79F79AA0-4F12-4893-950C-007650B1971C}.Release|x86.Build.0 = Release|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Debug|x86.Build.0 = Debug|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Release|x86.ActiveCfg = Release|Any CPU
+		{55F53CA3-DD82-4E7E-BCBF-507C1CC7BC56}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

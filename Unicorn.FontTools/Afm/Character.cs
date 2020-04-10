@@ -308,23 +308,7 @@ namespace Unicorn.FontTools.Afm
             {
                 throw new AfmFormatException($"Bounding box vector not found in {input}");
             }
-            if (!decimal.TryParse(parts[1], out decimal xl))
-            {
-                throw new AfmFormatException($"Could not parse {parts[1]} as a number.");
-            }
-            if (!decimal.TryParse(parts[2], out decimal yb))
-            {
-                throw new AfmFormatException($"Could not parse {parts[2]} as a number.");
-            }
-            if (!decimal.TryParse(parts[3], out decimal xr))
-            {
-                throw new AfmFormatException($"Could not parse {parts[3]} as a number.");
-            }
-            if (!decimal.TryParse(parts[4], out decimal yt))
-            {
-                throw new AfmFormatException($"Could not parse {parts[4]} as a number.");
-            }
-            return new BoundingBox(xl, yb, xr, yt);
+            return Afm.BoundingBox.FromStrings(parts[1], parts[2], parts[3], parts[4]);
         }
 
         private static InitialLigatureSet LoadInitialLigatureSet(string input)

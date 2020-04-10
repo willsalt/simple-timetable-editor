@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.FontTools.Afm;
@@ -733,6 +732,228 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             bool testOutput = testObject != testParam;
 
             Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithCorrectUnderlinePositionProperty_IfDataIsValidAndIncludesUnderlinePositionKey()
+        {
+            decimal expectedValue = _rnd.NextDecimal();
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {expectedValue.ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.UnderlinePosition.Value);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithUnderlinePositionPropertyEqualToNull_IfDataIsValidAndDoesNotIncludeUnderlinePositionKey()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.UnderlinePosition);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithCorrectUnderlineThicknessProperty_IfDataIsValidAndIncludesUnderlineThicknessKey()
+        {
+            decimal expectedValue = _rnd.NextDecimal();
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {expectedValue.ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.UnderlineThickness.Value);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithUnderlineThicknessPropertyEqualToNull_IfDataIsValidAndDoesNotIncludeUnderlineThicknessKey()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.UnderlineThickness);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithCorrectItalicAngleProperty_IfDataIsValidAndIncludesItalicAngleKey()
+        {
+            decimal expectedValue = _rnd.NextDecimal();
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {expectedValue.ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.ItalicAngle.Value);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithItalicAnglePropertyEqualToNull_IfDataIsValidAndDoesNotIncludeItalicAngleKey()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.ItalicAngle);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithCharWidthPropertyWithCorrectXProperty_IfDataIsValidAndIncludesCharWidthKey()
+        {
+            decimal expectedValue = _rnd.NextDecimal();
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"CharWidth {expectedValue.ToString(CultureInfo.InvariantCulture)} {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.CharWidth.Value.X);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithCharWidthPropertyWithCorrectYProperty_IfDataIsValidAndIncludesCharWidthKey()
+        {
+            decimal expectedValue = _rnd.NextDecimal();
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"CharWidth {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)} {expectedValue.ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.CharWidth.Value.Y);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithIsFixedPitchPropertyEqualToTrue_IfDataIsValidIncludesCharWidthKeyAndDoesNotIncludeIsFixedPitchKey()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"CharWidth {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)} {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsTrue(testOutput.IsFixedPitch);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithIsFixedPitchPropertyEqualToTrue_IfDataIsValidIncludesCharWidthKeyAndIncludesIsFixedPitchKeyWithValueTrue()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"CharWidth {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)} {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                "IsFixedPitch true",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsTrue(testOutput.IsFixedPitch);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void DirectionMetricsStruct_FromLinesMethod_ThrowsAfmFormatException_IfDataIsValidIncludesCharWidthKeyAndIncludesIsFixedPitchKeyWithValueFalse()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"CharWidth {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)} {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                "IsFixedPitch false",
+            };
+
+            _ = DirectionMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithIsFixedPitchPropertyEqualToTrue_IfDataIsValidIncludesIsFixedPitchKeyWithValueTrueAndDoesNotIncludeCharWidthKey()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                "IsFixedPitch true",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsTrue(testOutput.IsFixedPitch);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithIsFixedPitchPropertyEqualToFalse_IfDataIsValidIncludesIsFixedPitchKeyWithValueFalseAndDoesNotIncludeCharWidthKey()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                "IsFixedPitch false",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsFalse(testOutput.IsFixedPitch);
+        }
+
+        [TestMethod]
+        public void DirectionMetricsStruct_FromLinesMethod_ReturnsValueWithIsFixedPitchPropertyEqualToFalse_IfDataIsValidAndDoesNotIncludeIsFixedPitchKeyOrCharWidthKey()
+        {
+            string[] testParam = new[]
+            {
+                $"UnderlinePosition {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"UnderlineThickness {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+                $"ItalicAngle {_rnd.NextDecimal().ToString(CultureInfo.InvariantCulture)}",
+            };
+
+            DirectionMetrics testOutput = DirectionMetrics.FromLines(testParam);
+
+            Assert.IsFalse(testOutput.IsFixedPitch);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

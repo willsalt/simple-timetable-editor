@@ -15,6 +15,16 @@ namespace Unicorn.FontTools.Afm
             return val;
         }
 
+        internal static int LoadKeyedInt(string input, string key)
+        {
+            string trimmedInput = GetTrimmedInput(input, key);
+            if (!int.TryParse(trimmedInput, out int val))
+            {
+                throw new AfmFormatException($"Could not parse input data {trimmedInput}");
+            }
+            return val;
+        }
+
         internal static string LoadKeyedString(string input, string key)
         {
             return GetTrimmedInput(input, key);
@@ -26,9 +36,20 @@ namespace Unicorn.FontTools.Afm
             string[] parts = trimmedInput.Split().Where(s => !string.IsNullOrEmpty(s)).ToArray();
             if (parts.Length < 2)
             {
-                throw new AfmFormatException($"Insufficient data to parse vector in {input}");
+                throw new AfmFormatException($"Insufficient data to parse vector in {input}.");
             }
             return Vector.FromStrings(parts[0], parts[1]);
+        }
+
+        internal static BoundingBox LoadKeyedBoundingBox(string input, string key)
+        {
+            string trimmedInput = GetTrimmedInput(input, key);
+            string[] parts = trimmedInput.Split().Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            if (parts.Length < 4)
+            {
+                throw new AfmFormatException($"Insufficient data to parse bounding box in {input}.");
+            }
+            return BoundingBox.FromStrings(parts[0], parts[1], parts[2], parts[3]);
         }
 
         internal static bool LoadKeyedBool(string input, string key)

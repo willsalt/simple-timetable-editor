@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Unicorn.FontTools.Afm;
 using Unicorn.FontTools.Afm2Code.Extensions;
 
@@ -8,40 +7,70 @@ namespace Unicorn.FontTools.Afm2Code
 {
     internal class FontMetricsCoder
     {
-        internal static IEnumerable<string> FontMetricsToCode(AfmFontMetrics metrics)
+        internal static IEnumerable<string> FontMetricsToCode(AfmFontMetrics metrics, int indentLen)
         {
-            yield return " AfmFontMetrics metrics = new AfmFontMetrics(";
-            yield return metrics.FontName.ToCode() + ",";
-            yield return metrics.FullName.ToCode() + ",";
-            yield return metrics.FamilyName.ToCode() + ",";
-            yield return metrics.Weight.ToCode() + ",";
-            yield return metrics.FontBoundingBox.ToCode() + ",";
-            yield return metrics.Version.ToCode() + ",";
-            yield return metrics.Notice.ToCode() + ",";
-            yield return metrics.EncodingScheme.ToCode() + ",";
-            yield return metrics.MappingScheme.ToCode() + ",";
-            yield return metrics.EscapeCharacter.ToCode() + ",";
-            yield return metrics.CharacterSet.ToCode() + ",";
-            yield return metrics.CharacterCount.ToCode() + ",";
-            yield return metrics.IsBaseFont.ToCode() + ",";
-            yield return metrics.VVector.ToCode() + ",";
-            yield return metrics.IsFixedV.ToCode() + ",";
-            yield return metrics.IsCIDFont.ToCode() + ",";
-            yield return metrics.CapHeight.ToCode() + ",";
-            yield return metrics.XHeight.ToCode() + ",";
-            yield return metrics.Ascender.ToCode() + ",";
-            yield return metrics.Descender.ToCode() + ",";
-            yield return metrics.StdHW.ToCode() + ",";
-            yield return metrics.StdVW.ToCode() + ",";
-            yield return metrics.Direction0Metrics.ToCode() + ",";
-            yield return metrics.Direction1Metrics.ToCode() + ");";
+            const string tab = "    ";
+            string indent = new string(' ', indentLen);
+
+            Func<AfmFontMetrics, string>[] constructorFuncs = new Func<AfmFontMetrics, string>[]
+            {
+                m => "AfmFontMetrics metrics = new AfmFontMetrics(",
+                m => tab + m.FontName.ToCode() + ",",
+                m => tab + m.FamilyName.ToCode() + ",",
+                m => tab + m.Weight.ToCode() + ",",
+                m => tab + m.FontBoundingBox.ToCode() + ",",
+                m => tab + m.Version.ToCode() + ",",
+                m => tab + m.Notice.ToCode() + ",",
+                m => tab + m.EncodingScheme.ToCode() + ",",
+                m => tab + m.MappingScheme.ToCode() + ",",
+                m => tab + m.EscapeCharacter.ToCode() + ",",
+                m => tab + m.CharacterSet.ToCode() + ",",
+                m => tab + m.CharacterCount.ToCode() + ",",
+                m => tab + m.IsBaseFont.ToCode() + ",",
+                m => tab + m.VVector.ToCode() + ",",
+                m => tab + m.IsFixedV.ToCode() + ",",
+                m => tab + m.IsCIDFont.ToCode() + ",",
+                m => tab + m.CapHeight.ToCode() + ",",
+                m => tab + m.XHeight.ToCode() + ",",
+                m => tab + m.Ascender.ToCode() + ",",
+                m => tab + m.Descender.ToCode() + ",",
+                m => tab + m.StdHW.ToCode() + ",",
+                m => tab + m.StdVW.ToCode() + ",",
+                m => tab + m.Direction0Metrics.ToCode() + ",",
+                m => tab + m.Direction1Metrics.ToCode() + ");",
+            };
+            foreach (Func<AfmFontMetrics, string> fn in constructorFuncs)
+            {
+                yield return indent + fn(metrics);
+            }
             foreach (Character c in metrics.Characters)
             {
-                yield return $"metrics.AddChar({c.ToCode()});";
+                yield return indent + $"metrics.AddChar({c.ToCode()});";
+            }
+            foreach (Character c in metrics.Characters)
+            { 
+                foreach (KerningPair kp in c.KerningPairs)
+                {
+                    yield return indent + $"metrics.AddKerningPair(new KerningPair({CharacterLookup(c, "metrics")}, {CharacterLookup(kp.Second, "metrics")}, " +
+                        $"{kp.KerningVector.ToCode()});";
+                }
             }
 
-            yield return "metrics.ProcessLigatures();";
-            yield return "return metrics;";
+            yield return indent + "metrics.ProcessLigatures();";
+            yield return indent + "return metrics;";
+        }
+
+        private static string CharacterLookup(Character c, string varName)
+        {
+            if (!string.IsNullOrWhiteSpace(c.Name))
+            {
+                return $" {varName}.CharactersByName[{c.Name.ToCode()}]";
+            }
+            if (c.Code.HasValue)
+            {
+                return $" {varName}.CharactersByCode[({c.Code.ToCode()}).Value]";
+            }
+            return " (Unicorn.FontTools.Afm.Character)null ";
         }
     }
 }

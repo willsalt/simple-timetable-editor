@@ -5,8 +5,22 @@ using Unicorn.FontTools.Afm2Code.Extensions;
 
 namespace Unicorn.FontTools.Afm2Code
 {
-    internal class FontMetricsCoder
+    internal static class FontMetricsCoder
     {
+        internal static IEnumerable<string> PropertyCoder(AfmFontMetrics metrics, string propertyName, int indentLen)
+        {
+            string indent = new string(' ', indentLen);
+            string internalName = InternalName(propertyName);
+            yield return indent + $"public static Unicorn.FontTools.Afm.AfmFontMetrics {propertyName} {{ get; }} => {internalName}.Value;";
+            yield return indent + $"private static System.Lazy<Unicorn.FontTools.Afm.AfmFontMetrics> {internalName} " +
+                "= new System.Lazy<Unicorn.FontTools.Afm.AfmFontMetrics>(() => {";
+            foreach (string line in FontMetricsToCode(metrics, indentLen + 8))
+            {
+                yield return line;
+            }
+            yield return indent + "    });";
+        }
+
         internal static IEnumerable<string> FontMetricsToCode(AfmFontMetrics metrics, int indentLen)
         {
             const string tab = "    ";
@@ -71,6 +85,11 @@ namespace Unicorn.FontTools.Afm2Code
                 return $" {varName}.CharactersByCode[({c.Code.ToCode()}).Value]";
             }
             return " (Unicorn.FontTools.Afm.Character)null ";
+        }
+
+        private static string InternalName(string externalName)
+        {
+            return $"_{externalName.Substring(0, 1).ToLowerInvariant()}{externalName.Substring(1)}";
         }
     }
 }

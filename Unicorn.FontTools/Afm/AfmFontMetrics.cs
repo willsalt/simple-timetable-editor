@@ -278,7 +278,8 @@ namespace Unicorn.FontTools.Afm
                 throw new AfmFormatException(string.Format(CultureInfo.InvariantCulture, Resources.AfmFontMetrics_FromLines_IncorrectStart, startKey));
             }
             MoveNextHelper(enumerator);
-            while (enumerator.Current != startDirectionMetricsKey && enumerator.Current != startCharMetricsKey && enumerator.Current != startKerningKey && 
+            while (!enumerator.Current.StartsWith(startDirectionMetricsKey, StringComparison.InvariantCulture) && 
+                !enumerator.Current.StartsWith(startCharMetricsKey, StringComparison.InvariantCulture) && enumerator.Current != startKerningKey && 
                 enumerator.Current != endKey)
             {
                 if (enumerator.Current.StartsWith(metricsSetsKey, StringComparison.InvariantCulture))
@@ -411,12 +412,13 @@ namespace Unicorn.FontTools.Afm
 
             while (enumerator.Current != endKey)
             {
-                while (enumerator.Current != startDirectionMetricsKey && enumerator.Current != startCharMetricsKey && enumerator.Current != startKerningKey 
+                while (!enumerator.Current.StartsWith(startDirectionMetricsKey, StringComparison.InvariantCulture) && 
+                    !enumerator.Current.StartsWith(startCharMetricsKey, StringComparison.InvariantCulture) && enumerator.Current != startKerningKey 
                     && enumerator.Current != endKey)
                 {
                     MoveNextHelper(enumerator);
                 }
-                if (enumerator.Current == startDirectionMetricsKey)
+                if (enumerator.Current.StartsWith(startDirectionMetricsKey, StringComparison.InvariantCulture))
                 {
                     int forDirection = LoadingHelpers.LoadKeyedInt(enumerator.Current, startDirectionMetricsKey);
                     if ((forDirection == 0 && !expectDirection0Metrics) || (forDirection == 1 && !expectDirection1Metrics))
@@ -445,7 +447,7 @@ namespace Unicorn.FontTools.Afm
                     }
                     MoveNextHelper(enumerator);
                 }
-                else if (enumerator.Current == startCharMetricsKey)
+                else if (enumerator.Current.StartsWith(startCharMetricsKey, StringComparison.InvariantCulture))
                 {
                     int charCount = LoadingHelpers.LoadKeyedInt(enumerator.Current, startCharMetricsKey);
                     for (int i = 0; i < charCount; ++i)
@@ -459,9 +461,9 @@ namespace Unicorn.FontTools.Afm
                         throw new AfmFormatException($"Unexpected data {enumerator.Current} in character metrics data");
                     }
                 }
-                else // enumerator.Current == startKerningKey
+                else if (enumerator.Current == startKerningKey)
                 {
-                    while (enumerator.Current != startKerningPairsKey)
+                    while (!enumerator.Current.StartsWith(startKerningPairsKey, StringComparison.InvariantCulture))
                     {
                         MoveNextHelper(enumerator);
                     }
@@ -487,7 +489,7 @@ namespace Unicorn.FontTools.Afm
                 inProgress.Direction0Metrics = new DirectionMetrics(direction0UnderlinePos, direction0UnderlineThickness, direction0ItalicAngle, direction0CharWidth,
                     direction0IsFixedPitch);
             }
-
+            inProgress.ProcessLigatures();
             return inProgress;
         }
 

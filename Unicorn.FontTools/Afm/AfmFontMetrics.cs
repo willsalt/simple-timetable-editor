@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Unicorn.FontTools.Afm
 {
@@ -499,6 +501,65 @@ namespace Unicorn.FontTools.Afm
             {
                 throw new AfmFormatException(Resources.AfmFontMetrics_MoveNextHelper_UnexpectedEnd);
             }
+        }
+
+        public decimal MeasureStringWidth(string str)
+        {
+            return MeasureStringWidth(Encoding.ASCII.GetBytes(str));
+        }
+
+        public decimal MeasureStringWidth(IList<byte> encodedString)
+        {
+            return MeasureStringWidth(encodedString.Select(b => (short)b).ToArray());
+        }
+
+        public decimal MeasureStringWidth(IList<short> encodedString)
+        {
+            if (encodedString is null || encodedString.Count == 0)
+            {
+                return 0m;
+            }
+            IList<Character> characters = LigaturiseString(encodedString);
+            IList<Vector> kerningAdjustments = GetKerningAdjustments(characters);
+            return characters.Sum(c => c.XWidth.General.Value) + kerningAdjustments.Sum(k => k.X);
+        }
+
+        private IList<Character> LigaturiseString(IList<short> encodedString)
+        {
+            List<Character> output = new List<Character>(encodedString.Count);
+            for (int i = 0; i < encodedString.Count; ++i)
+            {
+                Character current;
+                if (!CharactersByCode.TryGetValue(encodedString[i], out current))
+                {
+                    continue;
+                }
+                if (i < encodedString.Count - 1 && current.Ligatures != null && current.Ligatures.Count > 0)
+                {
+                    LigatureSet set = current.Ligatures.FirstOrDefault(x => x.Second.Code == encodedString[i + 1]);
+                    if (set != default)
+                    {
+                        current = set.Ligature;
+                        i++;
+                    }
+                }
+                output.Add(current);
+            }
+            return output;
+        }
+
+        private static IList<Vector> GetKerningAdjustments(IList<Character> characters)
+        {
+            List<Vector> output = new List<Vector>();
+            for (int i = 1; i < characters.Count; ++i)
+            {
+                KerningPair kp = characters[i - 1].KerningPairs.FirstOrDefault(p => p.Second == characters[i]);
+                if (kp != default)
+                {
+                    output.Add(kp.KerningVector);
+                }
+            }
+            return output;
         }
 
         internal void AddChar(Character c)

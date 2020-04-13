@@ -1,4 +1,6 @@
-﻿namespace Unicorn.FontTools.Afm2Code.Extensions
+﻿using System;
+
+namespace Unicorn.FontTools.Afm2Code.Extensions
 {
     internal static class StringExtensions
     {
@@ -9,11 +11,11 @@
                 return " (string)null ";
             }
 
-            if (!str.Contains('"'))
+            if (!str.Contains('"', StringComparison.InvariantCulture))
             {
                 return $" @\"{str}\" ";
             }
-            return $" @\"{str.Replace(@"""", @"""""")}\" ";
+            return $" @\"{str.Replace(@"""", @"""""", StringComparison.InvariantCulture)}\" ";
         }
     }
 }

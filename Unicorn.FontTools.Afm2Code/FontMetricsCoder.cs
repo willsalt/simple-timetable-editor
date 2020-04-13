@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Unicorn.FontTools.Afm;
 using Unicorn.FontTools.Afm2Code.Extensions;
 
@@ -7,11 +8,15 @@ namespace Unicorn.FontTools.Afm2Code
 {
     internal static class FontMetricsCoder
     {
-        internal static IEnumerable<string> PropertyCoder(AfmFontMetrics metrics, string propertyName, int indentLen)
+        internal static IEnumerable<string> PropertyCoder(AfmFontMetrics metrics, string propertyName, string sourceName, int indentLen)
         {
             string indent = new string(' ', indentLen);
             string internalName = InternalName(propertyName);
-            yield return indent + $"public static Unicorn.FontTools.Afm.AfmFontMetrics {propertyName} {{ get; }} => {internalName}.Value;";
+            yield return indent + "/// <summary>";
+            yield return indent + $"/// {propertyName} was generated from {sourceName}";
+            yield return indent + "/// </summary>";
+            yield return indent + $"public static Unicorn.FontTools.Afm.AfmFontMetrics {propertyName} => {internalName}.Value;";
+            yield return "";
             yield return indent + $"private static System.Lazy<Unicorn.FontTools.Afm.AfmFontMetrics> {internalName} " +
                 "= new System.Lazy<Unicorn.FontTools.Afm.AfmFontMetrics>(() => {";
             foreach (string line in FontMetricsToCode(metrics, indentLen + 8))
@@ -19,6 +24,7 @@ namespace Unicorn.FontTools.Afm2Code
                 yield return line;
             }
             yield return indent + "    });";
+            yield return "";
         }
 
         internal static IEnumerable<string> FontMetricsToCode(AfmFontMetrics metrics, int indentLen)
@@ -30,6 +36,7 @@ namespace Unicorn.FontTools.Afm2Code
             {
                 m => "AfmFontMetrics metrics = new AfmFontMetrics(",
                 m => tab + m.FontName.ToCode() + ",",
+                m => tab + m.FullName.ToCode() + ",",
                 m => tab + m.FamilyName.ToCode() + ",",
                 m => tab + m.Weight.ToCode() + ",",
                 m => tab + m.FontBoundingBox.ToCode() + ",",
@@ -66,7 +73,7 @@ namespace Unicorn.FontTools.Afm2Code
                 foreach (KerningPair kp in c.KerningPairs)
                 {
                     yield return indent + $"metrics.AddKerningPair(new KerningPair({CharacterLookup(c, "metrics")}, {CharacterLookup(kp.Second, "metrics")}, " +
-                        $"{kp.KerningVector.ToCode()});";
+                        $"{kp.KerningVector.ToCode()}));";
                 }
             }
 
@@ -89,7 +96,9 @@ namespace Unicorn.FontTools.Afm2Code
 
         private static string InternalName(string externalName)
         {
-            return $"_{externalName.Substring(0, 1).ToLowerInvariant()}{externalName.Substring(1)}";
+#pragma warning disable CA1308 // Normalize strings to uppercase
+            return $"_{externalName.Substring(0, 1).ToLower(CultureInfo.InvariantCulture)}{externalName.Substring(1)}";
+#pragma warning restore CA1308 // Normalize strings to uppercase
         }
     }
 }

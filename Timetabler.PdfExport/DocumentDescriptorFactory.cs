@@ -15,6 +15,21 @@ namespace Timetabler.PdfExport
             _engine = engine;
         }
 
+        public string ImplementationName
+        {
+            get
+            {
+                switch (_engine)
+                {
+                    case PdfExportEngine.Unicorn:
+                    default:
+                        return "Unicorn";
+                    case PdfExportEngine.External:
+                        return "External";
+                }
+            }
+        }
+
         public IDocumentDescriptor GetDocumentDescriptor(double horizontalMarginProportion, double verticalMarginProportion)
         {
             switch (_engine)

@@ -503,16 +503,31 @@ namespace Unicorn.FontTools.Afm
             }
         }
 
+        /// <summary>
+        /// Measure the width of an ASCII string, in font units.
+        /// </summary>
+        /// <param name="str">The string to be measured.</param>
+        /// <returns>The width of the string, in font units.</returns>
         public decimal MeasureStringWidth(string str)
         {
             return MeasureStringWidth(Encoding.ASCII.GetBytes(str));
         }
 
+        /// <summary>
+        /// Measures the width of a sequence of bytes that represent an encoded string, in font units.
+        /// </summary>
+        /// <param name="encodedString">The sequence of character codes to be measured.</param>
+        /// <returns>The width of the string, in font units.</returns>
         public decimal MeasureStringWidth(IList<byte> encodedString)
         {
             return MeasureStringWidth(encodedString.Select(b => (short)b).ToArray());
         }
 
+        /// <summary>
+        /// Measures the width of a sequence of 16-bit code points that represent an encoded string, in font units.
+        /// </summary>
+        /// <param name="encodedString">The sequence of character codes to be measured.</param>
+        /// <returns>The width of the string, in font units.</returns>
         public decimal MeasureStringWidth(IList<short> encodedString)
         {
             if (encodedString is null || encodedString.Count == 0)
@@ -529,8 +544,7 @@ namespace Unicorn.FontTools.Afm
             List<Character> output = new List<Character>(encodedString.Count);
             for (int i = 0; i < encodedString.Count; ++i)
             {
-                Character current;
-                if (!CharactersByCode.TryGetValue(encodedString[i], out current))
+                if (!CharactersByCode.TryGetValue(encodedString[i], out Character current))
                 {
                     continue;
                 }

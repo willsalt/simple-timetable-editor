@@ -16,7 +16,9 @@ namespace Timetabler.PdfExport.Tests.Unit
         [ExpectedException(typeof(ArgumentNullException))]
         public void PdfExporterClass_ExportMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
-            PdfExporter testObject = new PdfExporter(new Mock<IDocumentDescriptorFactory>().Object);
+            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
+            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
+            PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object);
             TimetableDocument testParam0 = null;
             Stream testParam1 = new Mock<Stream>().Object;
 
@@ -28,7 +30,9 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_ExportMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFirstParameterIsNull()
         {
-            PdfExporter testObject = new PdfExporter(new Mock<IDocumentDescriptorFactory>().Object);
+            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
+            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
+            PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object);
             TimetableDocument testParam0 = null;
             Stream testParam1 = new Mock<Stream>().Object;
 

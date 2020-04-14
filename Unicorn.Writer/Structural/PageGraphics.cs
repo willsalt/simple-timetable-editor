@@ -203,8 +203,11 @@ namespace Unicorn.Writer.Structural
         /// <returns></returns>
         public UniSize MeasureString(string text, IFontDescriptor font)
         {
-            // dummy code
-            return new UniSize((text ?? "").Length * 5, 7.2);
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
+            return font.MeasureString(text);
         }
 
         private void ChangeLineWidth(double width)

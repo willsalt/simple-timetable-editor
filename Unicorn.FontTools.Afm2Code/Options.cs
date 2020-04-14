@@ -5,7 +5,7 @@ namespace Unicorn.FontTools.Afm2Code
 {
     public class Options
     {
-        [Option('o', "output", Required = false, Default = "output.cs", HelpText = "Name of output file.")]
+        [Option('o', "output", Required = false, Default = "", HelpText = "Name of output file.")]
         public string Output { get; set; }
 
         [Option('n', "namespace", Required = false, Default = "Unicorn.FontTools.Afm", HelpText = "Namespace of generated code.")]

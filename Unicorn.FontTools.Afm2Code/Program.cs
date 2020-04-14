@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Unicorn.FontTools.Afm;
 
@@ -12,19 +13,24 @@ namespace Unicorn.FontTools.Afm2Code
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(o =>
                 {
+                    const int classContentIndent = 8;
+                    List<string> discoveredFonts = new List<string>();
                     ClassCoder coder = new ClassCoder(o.NameSpace, o.ClassName);
-                    using StreamWriter writer = new StreamWriter(o.Output);
+                    string output = string.IsNullOrWhiteSpace(o.Output) ? o.ClassName + ".cs" : o.Output;
+                    using StreamWriter writer = new StreamWriter(output);
                     writer.Write(coder.OutputStart(args));
                     foreach (string input in args)
                     {
                         using StreamReader reader = new StreamReader(input);
                         AfmFontMetrics metrics = AfmFontMetrics.FromReader(reader);
-                        foreach (string line in FontMetricsCoder.PropertyCoder(metrics, SafeFontName(metrics.FontName), input, 8))
+                        foreach (string line in FontMetricsCoder.PropertyCoder(metrics, SafeFontName(metrics.FontName), input, classContentIndent))
                         {
                             writer.WriteLine(line);
                         }
                         reader.Close();
+                        discoveredFonts.Add(metrics.FontName);
                     }
+                    writer.Write(coder.OutputSupportedFonts(discoveredFonts, classContentIndent));
                     writer.Write(coder.OutputEnd());
                     writer.Close();
                 })

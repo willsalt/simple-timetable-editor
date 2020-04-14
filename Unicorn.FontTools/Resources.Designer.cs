@@ -86,5 +86,32 @@ namespace Unicorn.FontTools {
                 return ResourceManager.GetString("DirectionMetrics_FromLines_CharWidthClashesWithIsFixedWidth", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No font name specified..
+        /// </summary>
+        internal static string PdfStandardFontDescriptor_GetByName_EmptyStringParameter {
+            get {
+                return ResourceManager.GetString("PdfStandardFontDescriptor_GetByName_EmptyStringParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Built-in font property StandardFontMetrics.{0} not found..
+        /// </summary>
+        internal static string PdfStandardFontDescriptor_GetByName_FontNotFoundByReflection {
+            get {
+                return ResourceManager.GetString("PdfStandardFontDescriptor_GetByName_FontNotFoundByReflection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  .
+        /// </summary>
+        internal static string SpaceCharacter {
+            get {
+                return ResourceManager.GetString("SpaceCharacter", resourceCulture);
+            }
+        }
     }
 }

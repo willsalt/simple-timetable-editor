@@ -924,6 +924,63 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.AreEqual(testParam23, testOutput.Direction1Metrics);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            _ = AfmFontMetrics.FromLines(null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterHasLengthZero()
+        {
+            string[] testParam = Array.Empty<string>();
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterDoesNotStartWithCorrectLine()
+        {
+            string openingLine;
+            do
+            {
+                openingLine = _rnd.NextString(_rnd.Next(50));
+            } while (openingLine == "StartFontMetrics");
+            string[] testParam = new[] { openingLine };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterDoesNotEndWithCorrectLine()
+        {
+            string[] testParam = new[] { "StartFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsNonNullObject_IfParameterIsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNotNull(testOutput);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

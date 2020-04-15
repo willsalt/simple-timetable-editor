@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
+using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.Interfaces;
 using Unicorn.Interfaces.Tests.Utility.Extensions;
@@ -927,6 +929,76 @@ namespace Unicorn.Writer.Tests.Unit.Structural
                 .WriteTo(expected);
             PdfOperator.StrokePath().WriteTo(expected);
             AssertionHelpers.AssertSameElements(expected, constrParam0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PageGraphicsClass_MeasureStringMethod_ThrowsArgumentNullException_IfSecondParameterIsNull()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = null;
+
+            _ = testObject.MeasureString(testParam0, testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_MeasureStringMethod_CallsMeasureStringMethodOfSecondParameter_IfSecondParameterIsNotNull()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.MeasureString(It.IsAny<string>())).Returns(expectedResult);
+            IFontDescriptor testParam1 = mockFont.Object;
+
+            _ = testObject.MeasureString(testParam0, testParam1);
+
+            mockFont.Verify(f => f.MeasureString(It.IsAny<string>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_MeasureStringMethod_PassesFirstParameterToMeasureStringMethodOfSecondParameter_IfSecondParameterIsNotNull()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.MeasureString(It.IsAny<string>())).Returns(expectedResult);
+            IFontDescriptor testParam1 = mockFont.Object;
+
+            _ = testObject.MeasureString(testParam0, testParam1);
+
+            mockFont.Verify(f => f.MeasureString(testParam0), Times.Once());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_MeasureStringMethod_ReturnsValueReturnedByMeasureStringMethodOfSecondParameter_IfSecondParameterIsNotNull()
+        {
+            PdfStream constrParam0 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Func<double, double> constrParam1 = TransformXParam;
+            Func<double, double> constrParam2 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.MeasureString(It.IsAny<string>())).Returns(expectedResult);
+            IFontDescriptor testParam1 = mockFont.Object;
+
+            UniSize testOutput = testObject.MeasureString(testParam0, testParam1);
+
+            Assert.AreSame(expectedResult, testOutput);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

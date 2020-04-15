@@ -8,6 +8,14 @@
     <Copyright>Copyright © 2017-2020 Will Salt</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Unicorn.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Unicorn.xml</DocumentationFile>
+  </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Shapes\" />

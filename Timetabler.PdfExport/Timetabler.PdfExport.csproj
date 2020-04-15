@@ -94,6 +94,10 @@
       <Project>{9a7e2940-50b8-4f3a-a535-ab6220e6ce3a}</Project>
       <Name>Timetabler.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Unicorn.FontTools\Unicorn.FontTools.csproj">
+      <Project>{3dcdb6ea-b97b-490a-a218-582799b15d29}</Project>
+      <Name>Unicorn.FontTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unicorn.Impl.PdfSharp\Unicorn.Impl.PdfSharp.csproj">
       <Project>{4d101015-ce74-4648-b07b-5ac806531e95}</Project>
       <Name>Unicorn.Impl.PdfSharp</Name>

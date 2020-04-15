@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unicorn.Interfaces;
 using Unicorn.Writer.Interfaces;
+using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Structural;
 
 namespace Unicorn.Writer
@@ -75,7 +76,9 @@ namespace Unicorn.Writer
         /// <returns>An <see cref="IPageDescriptor" /> describing the new page.</returns>
         public IPageDescriptor AppendPage(PhysicalPageSize size, PageOrientation orientation, double horizontalMarginProportion, double verticalMarginProportion)
         {
-            PdfPage page = new PdfPage(_pageRoot, _xrefTable.ClaimSlot(), size, orientation, horizontalMarginProportion, verticalMarginProportion);
+            PdfStream contentStream = new PdfStream(_xrefTable.ClaimSlot());
+            PdfPage page = new PdfPage(_pageRoot, _xrefTable.ClaimSlot(), size, orientation, horizontalMarginProportion, verticalMarginProportion, contentStream);
+            _bodyObjects.Add(contentStream);
             _bodyObjects.Add(page);
             _pageRoot.Add(page);
             return page;

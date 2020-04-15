@@ -18,6 +18,7 @@ using Unicorn.Interfaces;
 using Unicorn.Shapes;
 using Timetabler.PdfExport.Interfaces;
 using System.Globalization;
+using Unicorn.FontTools;
 
 namespace Timetabler.PdfExport
 {
@@ -51,12 +52,12 @@ namespace Timetabler.PdfExport
 
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
-        private readonly FontDescriptor _titleFont;
-        private readonly FontDescriptor _subtitleFont;
-        private readonly FontDescriptor _plainBodyFont;
-        private readonly FontDescriptor _italicBodyFont;
-        private readonly FontDescriptor _boldBodyFont;
-        private readonly FontDescriptor _alternativeLocationFont;
+        private readonly IFontDescriptor _titleFont;
+        private readonly IFontDescriptor _subtitleFont;
+        private readonly IFontDescriptor _plainBodyFont;
+        private readonly IFontDescriptor _italicBodyFont;
+        private readonly IFontDescriptor _boldBodyFont;
+        private readonly IFontDescriptor _alternativeLocationFont;
 
         private HorizontalArrow _leftPointingArrow;
         private HorizontalArrow _rightPointingArrow;
@@ -71,14 +72,31 @@ namespace Timetabler.PdfExport
 
         public PdfExporter(IDocumentDescriptorFactory ddf)
         {
+            if (ddf is null)
+            {
+                throw new ArgumentNullException(nameof(ddf));
+            }
+
             _engineSelector = ddf;
 
-            _titleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 16);
-            _subtitleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 14);
-            _plainBodyFont = new FontDescriptor("Serif", 7.5);
-            _italicBodyFont = new FontDescriptor("Serif", UniFontStyles.Italic, 7.5);
-            _boldBodyFont = new FontDescriptor("Serif", UniFontStyles.Bold, 7.5);
-            _alternativeLocationFont = new FontDescriptor("Sans", UniFontStyles.Bold, 7.5);
+            if (_engineSelector.ImplementationName == "External")
+            {
+                _titleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 16);
+                _subtitleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 14);
+                _plainBodyFont = new FontDescriptor("Serif", 7.5);
+                _italicBodyFont = new FontDescriptor("Serif", UniFontStyles.Italic, 7.5);
+                _boldBodyFont = new FontDescriptor("Serif", UniFontStyles.Bold, 7.5);
+                _alternativeLocationFont = new FontDescriptor("Sans", UniFontStyles.Bold, 7.5);
+            }
+            else
+            {
+                _titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
+                _subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
+                _plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
+                _italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
+                _boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
+                _alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
+            }
 
             Log.Info("Loaded fonts.");
             Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_PlainBodyOffset, _plainBodyFont.Ascent);
@@ -496,7 +514,7 @@ namespace Timetabler.PdfExport
             // Write timing points
             foreach (var timingPoint in segment.Timings)
             {
-                FontDescriptor selectedFont;
+                IFontDescriptor selectedFont;
                 if (timingPoint.EntryType == TrainLocationTimeEntryType.Time)
                 {
                     DrawTimingPoint(timingPoint as TrainLocationTimeModel, xCoord, segmentWidth, currentYCoord, locationDims);
@@ -792,7 +810,7 @@ namespace Timetabler.PdfExport
 
         private Line MakeLineForTimingPoint(TrainLocationTimeModel timingPoint)
         {
-            FontDescriptor timeFont = timingPoint.IsPassingTime ? _italicBodyFont : _boldBodyFont;
+            IFontDescriptor timeFont = timingPoint.IsPassingTime ? _italicBodyFont : _boldBodyFont;
             Line timingPointLine = new Line(new[]
             {
                 new Word(timingPoint.DisplayedTextHours, timeFont, _currentPage.PageGraphics, 0),
@@ -820,7 +838,7 @@ namespace Timetabler.PdfExport
             for (int i = 0; i < timetableSection.Locations.Count; ++i)
             {
                 LocationDisplayModel loc = timetableSection.Locations[i];
-                FontDescriptor locationFont = SwitchFont(loc);
+                IFontDescriptor locationFont = SwitchFont(loc);
                 //UniSize locationSize = _currentPage.PageGraphics.MeasureString(loc.ExportDisplayName ?? string.Empty, locationFont);
                 UniSize labelSize = _currentPage.PageGraphics.MeasureString(loc.ArrivalDepartureLabel ?? string.Empty, _plainBodyFont);
                 double locationXCoord = xCoord + _locationListMargins;
@@ -914,7 +932,7 @@ namespace Timetabler.PdfExport
             string widestId = string.Empty;
             bool parity = false;
             bool setLineAbove = false;
-            FontDescriptor locationFont;
+            IFontDescriptor locationFont;
             for (int i = 0; i < timetableSection.Locations.Count; ++i)
             {
                 LocationDisplayModel loc = timetableSection.Locations[i];
@@ -984,7 +1002,7 @@ namespace Timetabler.PdfExport
             return dimensions;
         }
 
-        private FontDescriptor SwitchFont(LocationDisplayModel loc)
+        private IFontDescriptor SwitchFont(LocationDisplayModel loc)
         {
             switch (loc.FontType)
             {

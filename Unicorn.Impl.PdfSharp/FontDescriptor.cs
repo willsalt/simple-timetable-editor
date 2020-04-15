@@ -18,6 +18,7 @@ namespace Unicorn.Impl.PdfSharp
         /// <param name="size">The font size in em-units</param>
         public FontDescriptor(string name, UniFontStyles style, double size)
         {
+            PointSize = size;
             Font = new XFont(name, size, style.ToXFontStyle());
             if (Font != null)
             {
@@ -42,6 +43,11 @@ namespace Unicorn.Impl.PdfSharp
         public XFont Font { get; }
 
         /// <summary>
+        /// The point size of this font.
+        /// </summary>
+        public double PointSize { get; }
+
+        /// <summary>
         /// The ascent value of this font - the distance from the baseline to the top of character cells.
         /// </summary>
         public double Ascent { get; }
@@ -63,6 +69,16 @@ namespace Unicorn.Impl.PdfSharp
                 throw new ArgumentNullException(nameof(graphicsContext));
             }
             return graphicsContext.MeasureString(Resources.SpaceCharacter, this).Width;
+        }
+
+        /// <summary>
+        /// Measure the size of a string.  This action is not supported in this implementation.
+        /// </summary>
+        /// <param name="str">The string to be measured.</param>
+        /// <exception cref="NotImplementedException">Always thrown.</exception>
+        public UniSize MeasureString(string str)
+        {
+            throw new NotImplementedException();
         }
     }
 }

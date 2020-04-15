@@ -1,9 +1,11 @@
-﻿namespace Unicorn.Interfaces
+﻿using System;
+
+namespace Unicorn.Interfaces
 {
     /// <summary>
     /// Immutable class which encapsulates the size of a 2D rectangle.
     /// </summary>
-    public class UniSize
+    public class UniSize : IEquatable<UniSize>
     {
         /// <summary>
         /// Width
@@ -26,6 +28,52 @@
             Height = height;
         }
 
+        /// <summary>
+        /// Equality test.
+        /// </summary>
+        /// <param name="other">Another UniSize instance to compare against.</param>
+        /// <returns>True or false according to whether or not the other instance is equal to this.</returns>
+        public bool Equals(UniSize other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+            return Width == other.Width && Height == other.Height;
+        }
+
+        /// <summary>
+        /// Equality test.
+        /// </summary>
+        /// <param name="obj">Another object to compare against.</param>
+        /// <returns>True if the obj parameter is another UniSize instance that is the same as this; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is null)
+            {
+                return false;
+            }
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+            if (!(obj is UniSize other))
+            {
+                return false;
+            }
+            return Equals(other);
+        }
+
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A 32 bit signed integer hash code.</returns>
+        public override int GetHashCode()
+        {
+            // The multiplication of the height is to avoid the generate case where all squares return a hashcode of 0.
+            return Width.GetHashCode() ^ (Height * 17).GetHashCode();
+        }
+        
         /// <summary>
         /// Addition operator.  Returns a <see cref="UniSize" /> whose width is the sum of its operands' widths and whose height is the sum of its operands' heights.
         /// </summary>

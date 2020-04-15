@@ -84,21 +84,17 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         {
             int testObjectValue = _rnd.Next(int.MinValue, int.MaxValue);
             PdfInteger testObject = new PdfInteger(testObjectValue);
-            using (MemoryStream testParam0 = new MemoryStream())
-            {
+            using MemoryStream testParam0 = new MemoryStream();
 
-                testObject.WriteTo(testParam0);
+            testObject.WriteTo(testParam0);
 
-                using (MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes(testObjectValue.ToString("d", CultureInfo.InvariantCulture) + " ")))
-                {
-                    AssertionHelpers.AssertSameElements(expected, testParam0);
-                }
-            }
+            using MemoryStream expected = new MemoryStream(Encoding.ASCII.GetBytes(testObjectValue.ToString("d", CultureInfo.InvariantCulture) + " "));
+            AssertionHelpers.AssertSameElements(expected, testParam0);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void PdfIntegerClass_WriteToMethodWithPdfStreamParameter_ThrowsExceptionIfParameterIsNull()
+        public void PdfIntegerClass_WriteToMethodWithPdfStreamParameter_ThrowsArgumentNullExceptionIfParameterIsNull()
         {
             int testObjectValue = _rnd.Next(int.MinValue, int.MaxValue);
             PdfInteger testObject = new PdfInteger(testObjectValue);
@@ -436,6 +432,23 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             bool testOutput = testObject0 != testObject1;
 
             Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void PdfIntegerClass_ZeroProperty_HasCorrectValue()
+        {
+            PdfInteger testOutput = PdfInteger.Zero;
+
+            Assert.AreEqual(0, testOutput.Value);
+        }
+
+        [TestMethod]
+        public void PdfIntegerClass_ZeroProperty_ReturnsSameObjectWhenCalledTwice()
+        {
+            PdfInteger testOutput0 = PdfInteger.Zero;
+            PdfInteger testOutput1 = PdfInteger.Zero;
+
+            Assert.AreSame(testOutput0, testOutput1);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

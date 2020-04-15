@@ -326,5 +326,62 @@ namespace Tests.Utility.Extensions
             }
             return random.Next(5) == 0 ? (Orientation?)null : NextOrientation(random);
         }
+
+        public static decimal NextDecimal(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (decimal)random.NextDouble() * 2000m - 1000m;
+        }
+
+        public static decimal? NextNullableDecimal(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextDecimal(random);
+        }
+
+        public static short NextShort(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (short)random.Next(short.MaxValue + 1);
+        }
+
+        public static short? NextNullableShort(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextShort(random);
+        }
+
+        public static int? NextNullableInt(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return random.Next();
+        }
     }
 }

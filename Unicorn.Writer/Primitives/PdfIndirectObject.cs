@@ -41,7 +41,7 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// The length of this object when converted into a stream of bytes.
         /// </summary>
-        public int ByteLength
+        public virtual int ByteLength
         {
             get
             {

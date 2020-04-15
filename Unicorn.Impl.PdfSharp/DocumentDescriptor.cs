@@ -45,6 +45,7 @@ namespace Unicorn.Impl.PdfSharp
             DefaultHorizontalMarginProportion = defaultHorizontalMargin;
             DefaultVerticalMarginProportion = defaultVerticalMargin;
             Document = new PdfDocument();
+            Document.Options.CompressContentStreams = false;
         }
 
         /// <summary>

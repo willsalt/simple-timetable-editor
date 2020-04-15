@@ -26,13 +26,7 @@ namespace Unicorn.Writer.Structural
         /// <summary>
         /// The graphics context, for drawing.  Currently dummied out.
         /// </summary>
-        public IGraphicsContext PageGraphics
-        {
-            get
-            {
-                return new DummyPageGraphics();
-            }
-        }
+        public IGraphicsContext PageGraphics { get; private set; }
 
         /// <summary>
         /// The Y-coordinate of the top margin, in Unicorn coordinates.
@@ -64,10 +58,17 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         public double CurrentVerticalCursor { get; set; }
 
+        private double PageHeight { get; set; }
+
         /// <summary>
         /// The MediaBox rectangle, representing the usable area of the page (including margins) in PDF userspace coordinates.
         /// </summary>
         public PdfRectangle MediaBox { get; private set; }
+
+        /// <summary>
+        /// The <see cref="PdfStream" /> containing the content of this page.
+        /// </summary>
+        public PdfStream ContentStream { get; private set; }
 
         /// <summary>
         /// Value-setting constructor.
@@ -78,6 +79,7 @@ namespace Unicorn.Writer.Structural
         /// <param name="orientation">The orientation of this page.</param>
         /// <param name="horizontalMarginProportion">The proportion of the page taken up by each of the left and right margins.</param>
         /// <param name="verticalMarginProportion">The proportion of the page taken up by each of the top and bottom margins.</param>
+        /// <param name="contentStream">The <see cref="PdfStream" /> which will store the content of this page.</param>
         /// <param name="generation">The object generation number.  Defaults to zero.  As we do not currently support rewriting existing documents, this should not be set.</param>
         public PdfPage(
             PdfPageTreeNode parent, 
@@ -86,6 +88,7 @@ namespace Unicorn.Writer.Structural
             PageOrientation orientation, 
             double horizontalMarginProportion, 
             double verticalMarginProportion, 
+            PdfStream contentStream,
             int generation = 0) 
             : base(parent, objectId, generation)
         {
@@ -98,6 +101,7 @@ namespace Unicorn.Writer.Structural
             PageOrientation = orientation;
 
             UniSize pagePtSize = size.ToUniSize(orientation);
+            PageHeight = pagePtSize.Height;
             TopMarginPosition = pagePtSize.Height * verticalMarginProportion;
             BottomMarginPosition = pagePtSize.Height - TopMarginPosition;
             LeftMarginPosition = pagePtSize.Width * horizontalMarginProportion;
@@ -105,7 +109,13 @@ namespace Unicorn.Writer.Structural
             PageAvailableWidth = RightMarginPosition - LeftMarginPosition;
             CurrentVerticalCursor = TopMarginPosition;
             MediaBox = size.ToPdfRectangle(orientation);
+            ContentStream = contentStream;
+            PageGraphics = new PageGraphics(contentStream, XTransformer, YTransformer);
         }
+
+        private double XTransformer(double x) => x;
+
+        private double YTransformer(double y) => PageHeight - y;
 
         /// <summary>
         /// Write this page to a <see cref="Stream" />.  This writes the page metadata, but not the content stream.
@@ -123,7 +133,7 @@ namespace Unicorn.Writer.Structural
         }
 
         /// <summary>
-        /// Conver the metadata for this page into an array of bytes and append them to a list.
+        /// Convert the metadata for this page into an array of bytes and append them to a list.
         /// </summary>
         /// <param name="list">The list to append to.</param>
         /// <returns>The number of bytes appended.</returns>
@@ -144,6 +154,10 @@ namespace Unicorn.Writer.Structural
             dictionary.Add(CommonPdfNames.Parent, Parent.GetReference());
             dictionary.Add(CommonPdfNames.Resources, new PdfDictionary());
             dictionary.Add(CommonPdfNames.MediaBox, MediaBox);
+            if (ContentStream != null)
+            {
+                dictionary.Add(CommonPdfNames.Contents, ContentStream.GetReference());
+            }
             return dictionary;
         }
     }

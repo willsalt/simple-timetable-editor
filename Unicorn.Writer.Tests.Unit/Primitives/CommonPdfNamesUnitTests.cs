@@ -17,6 +17,14 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         }
 
         [TestMethod]
+        public void CommonPdfNamesClass_ContentsField_HasCorrectValueProperty()
+        {
+            PdfName testOutput = CommonPdfNames.Contents;
+
+            Assert.AreEqual("Contents", testOutput.Value);
+        }
+
+        [TestMethod]
         public void CommonPdfNamesClass_CountField_HasCorrectValueProperty()
         {
             PdfName testOutput = CommonPdfNames.Count;

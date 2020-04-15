@@ -77,7 +77,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>True if the other object is a <see cref="PdfName" /> instance with the same value as this; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as PdfBoolean);
+            return Equals(obj as PdfName);
         }
 
         /// <summary>

@@ -135,6 +135,22 @@ namespace Timetabler.PdfExport.Tests.Unit
             Assert.AreEqual(testParam1, testOutput.DefaultVerticalMarginProportion);
         }
 
+        [TestMethod]
+        public void DocumentDescriptorFactoryClass_ImplementationNameProperty_EqualsExternal_IfConstructorParameterWasEqualToExternal()
+        {
+            DocumentDescriptorFactory testObject = new DocumentDescriptorFactory(PdfExportEngine.External);
+
+            Assert.AreEqual("External", testObject.ImplementationName);
+        }
+
+        [TestMethod]
+        public void DocumentDescriptorFactoryClass_ImplementationNameProperty_EqualsUnicorn_IfConstructorParameterWasEqualToUnicorn()
+        {
+            DocumentDescriptorFactory testObject = new DocumentDescriptorFactory(PdfExportEngine.Unicorn);
+
+            Assert.AreEqual("Unicorn", testObject.ImplementationName);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

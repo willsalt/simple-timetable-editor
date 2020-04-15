@@ -457,6 +457,19 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.Fail();
         }
 
+        [TestMethod]
+        public void VectorStruct_ToStringMethod_ReturnsCorrectResult()
+        {
+            decimal expectedX = _rnd.NextDecimal();
+            decimal expectedY = _rnd.NextDecimal();
+            string expectedValue = expectedX.ToString(CultureInfo.InvariantCulture) + " " + expectedY.ToString(CultureInfo.InvariantCulture);
+            Vector testValue = new Vector(expectedX, expectedY);
+
+            string testOutput = testValue.ToString();
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

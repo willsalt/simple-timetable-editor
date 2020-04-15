@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Unicorn.FontTools.Afm
 {
@@ -131,6 +132,15 @@ namespace Unicorn.FontTools.Afm
                 throw new AfmFormatException($"Could not parse {y} as a number.");
             }
             return new Vector(0m, valy);
+        }
+
+        /// <summary>
+        /// Convert this value to a string.
+        /// </summary>
+        /// <returns>A string containing a representation of this value.</returns>
+        public override string ToString()
+        {
+            return $"{X.ToString(CultureInfo.InvariantCulture)} {Y.ToString(CultureInfo.InvariantCulture)}";
         }
     }
 }

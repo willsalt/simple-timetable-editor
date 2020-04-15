@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.FontTools.Afm;
@@ -972,13 +973,962 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
         }
 
         [TestMethod]
-        public void AfmFontMetricsClass_FromLinesMethod_ReturnsNonNullObject_IfParameterIsMinimalValidData()
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsNonNullObject_IfParameterContainsMinimalValidData()
         {
             string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
 
             AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
 
             Assert.IsNotNull(testOutput);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithFontNamePropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.FontName);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithWeightPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.Weight);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithFamilyNamePropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.FamilyName);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithFullNamePropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.FullName);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithFontBoundingBoxPropertyEqualToDefaultValue_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(default, testOutput.FontBoundingBox);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithVersionPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.Version);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithNoticePropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.Notice);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithEncodingSchemePropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.EncodingScheme);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithMappingSchemePropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.MappingScheme);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithEscapeCharacterPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.EscapeCharacter);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCharacterSetPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.CharacterSet);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCharacterCountPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.CharacterCount);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsBaseFontPropertyEqualToTrue_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsTrue(testOutput.IsBaseFont);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithVVectorPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.VVector);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsFixedVPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.IsFixedV);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsCIDFontPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsFalse(testOutput.IsCIDFont);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCapHeightPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.CapHeight);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithXHeightPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.XHeight);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithAscenderPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.Ascender);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithDescenderPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.Descender);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithStdHWPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.StdHW);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithStdVWPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.StdVW);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithDirection0MetricsPropertyEqualToDefaultValue_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(default, testOutput.Direction0Metrics.Value);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithDirection1MetricsPropertyEqualToNull_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsNull(testOutput.Direction1Metrics);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCharactersByNamePropertyWithCountPropertyEqualToZero_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(0, testOutput.CharactersByName.Count);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCharactersByCodePropertyWithCountPropertyEqualToZero_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(0, testOutput.CharactersByCode.Count);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCharactersPropertyWithCountPropertyEqualToZero_IfParameterContainsMinimalValidData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(0, testOutput.Characters.Count);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectFontNameProperty_IfParameterContainsFontNameData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"FontName {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.FontName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteFontNameData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "FontName", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectFamilyNameProperty_IfParameterContainsFamilyNameData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"FamilyName {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.FamilyName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteFamilyNameData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "FamilyName", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectFullNameProperty_IfParameterContainsFullNameData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"FullName {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.FullName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteFullNameData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "FullName", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectWeightProperty_IfParameterContainsWeightData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"Weight {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.Weight);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteWeightData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "Weight", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectFontBoundingBoxProperty_IfParameterContainsFontBBoxData()
+        {
+            BoundingBox expectedValue = _rnd.NextAfmBoundingBox();
+            string[] testParam = new[] { "StartFontMetrics", $"FontBBox {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.FontBoundingBox);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteFontBBoxData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "FontBBox", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidFontBBoxData()
+        {
+            string invalidBoundingBox = _rnd.NextString("abcdefghijkmnopqrstuvwxyz", _rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"FontBBox {invalidBoundingBox}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectVersionProperty_IfParameterContainsVersionData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"Version {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.Version);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteVersionData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "Version", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectNoticeProperty_IfParameterContainsNoticeData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"Notice {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.Notice);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteNoticeData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "Notice", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectEncodingSchemeProperty_IfParameterContainsEncodingSchemeData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"EncodingScheme {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.EncodingScheme);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteEncodingSchemeData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EncodingScheme", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectMappingSchemeProperty_IfParameterContainsMappingSchemeData()
+        {
+            int expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"MappingScheme {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.MappingScheme.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteMappingSchemeData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "MappingScheme", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidMappingSchemeData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"MappingScheme {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectEscapeCharacterProperty_IfParameterContainsEscCharData()
+        {
+            int expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"EscChar {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.EscapeCharacter.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteEscCharData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "EscChar", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidEscCharData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"EscChar {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectCharacterSetProperty_IfParameterContainsCharacterSetData()
+        {
+            string expectedValue = _rnd.NextString(_rnd.Next(1, 20));
+            string[] testParam = new[] { "StartFontMetrics", $"CharacterSet {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.CharacterSet);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteCharacterSetData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "CharacterSet", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectCharacterCountProperty_IfParameterContainsCharactersData()
+        {
+            int expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"Characters {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.CharacterCount.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteCharactersData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "Characters", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidCharactersData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"Characters {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsBaseFontPropertyEqualToTrue_IfParameterContainsIsBaseFontTrue()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsBaseFont true", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsTrue(testOutput.IsBaseFont);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsBaseFontPropertyEqualToFalse_IfParameterContainsIsBaseFontFalse()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsBaseFont false", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsFalse(testOutput.IsBaseFont);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteIsBaseFontData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsBaseFont", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidIsBaseFontData()
+        {
+            string invalidData = _rnd.NextString("abcdfghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"IsBaseFont {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectVVectorProperty_IfParameterContainsVVectorData()
+        {
+            Vector expectedValue = _rnd.NextAfmVector();
+            string[] testParam = new[] { "StartFontMetrics", $"VVector {expectedValue}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.VVector);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteVVectorData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "VVector", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidVVectorData()
+        {
+            string invalidData = _rnd.NextString(_rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"VVector {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsFixedVPropertyEqualToTrue_IfParameterContainsIsIsFixedVTrue()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsFixedV true", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsTrue(testOutput.IsFixedV.Value);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsFixedVPropertyEqualToFalse_IfParameterContainsIsFixedVFalse()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsFixedV false", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsFalse(testOutput.IsFixedV.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteIsFixedVData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsFixedV", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidIsFixedVData()
+        {
+            string invalidData = _rnd.NextString("abcdfghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"IsFixedV {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsCIDFontPropertyEqualToTrue_IfParameterContainsIsCIDFontTrue()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsCIDFont true", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsTrue(testOutput.IsCIDFont);
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithIsCIDFontPropertyEqualToFalse_IfParameterContainsIsCIDFontFalse()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsCIDFont false", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.IsFalse(testOutput.IsCIDFont);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteIsCIDFontData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "IsCIDFont", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidIsCIDFontData()
+        {
+            string invalidData = _rnd.NextString("abcdfghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"IsCIDFont {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectCapHeightProperty_IfParameterContainsCapHeightData()
+        {
+            decimal expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"CapHeight {expectedValue.ToString(CultureInfo.InvariantCulture)}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.CapHeight.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteCapHeightData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "CapHeight", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidCapHeightData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"CapHeight {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectAscenderProperty_IfParameterContainsAscenderData()
+        {
+            decimal expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"Ascender {expectedValue.ToString(CultureInfo.InvariantCulture)}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.Ascender.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteAscenderData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "Ascender", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidAscenderData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"Ascender {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectDescenderProperty_IfParameterContainsDescenderData()
+        {
+            decimal expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"Descender {expectedValue.ToString(CultureInfo.InvariantCulture)}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.Descender.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteDescenderData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "Descender", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidDescenderData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"Descender {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectXHeightProperty_IfParameterContainsXHeightData()
+        {
+            decimal expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"XHeight {expectedValue.ToString(CultureInfo.InvariantCulture)}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.XHeight.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteXHeightData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "XHeight", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidXHeightData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"XHeight {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectStdHWProperty_IfParameterContainsStdHWData()
+        {
+            decimal expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"StdHW {expectedValue.ToString(CultureInfo.InvariantCulture)}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.StdHW.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteStdHWData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "StdHW", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidStdHWData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"StdHW {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void AfmFontMetricsClass_FromLinesMethod_ReturnsObjectWithCorrectStdVWProperty_IfParameterContainsStdVWData()
+        {
+            decimal expectedValue = _rnd.Next();
+            string[] testParam = new[] { "StartFontMetrics", $"StdVW {expectedValue.ToString(CultureInfo.InvariantCulture)}", "EndFontMetrics" };
+
+            AfmFontMetrics testOutput = AfmFontMetrics.FromLines(testParam);
+
+            Assert.AreEqual(expectedValue, testOutput.StdVW.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsIncompleteStdVWData()
+        {
+            string[] testParam = new[] { "StartFontMetrics", "StdVW", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AfmFormatException))]
+        public void AfmFontMetricsClass_FromLinesMethod_ThrowsAfmFormatException_IfParameterContainsInvalidStdVWData()
+        {
+            string invalidData = _rnd.NextString("abcdefghijklmnopqrstuvwyxz", _rnd.Next(1, 10));
+            string[] testParam = new[] { "StartFontMetrics", $"StdVW {invalidData}", "EndFontMetrics" };
+
+            _ = AfmFontMetrics.FromLines(testParam);
+
+            Assert.Fail();
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

@@ -32,7 +32,7 @@ namespace Unicorn.FontTools
         /// <summary>
         /// Constructor.
         /// </summary>
-        private PdfStandardFontDescriptor(AfmFontMetrics metrics, double pointSize)
+        internal PdfStandardFontDescriptor(AfmFontMetrics metrics, double pointSize)
         {
             _metrics = metrics;
             PointSize = pointSize;

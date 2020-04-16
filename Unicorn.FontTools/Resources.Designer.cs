@@ -88,6 +88,42 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The following data tables are missing: {0}..
+        /// </summary>
+        internal static string OpenType_OpenTypeFont_CheckTablesPresent_MissingTablesError {
+            get {
+                return ResourceManager.GetString("OpenType_OpenTypeFont_CheckTablesPresent_MissingTablesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OffsetTable not loaded..
+        /// </summary>
+        internal static string OpenType_OpenTypeFont_CheckValidity_MissingHeaderError {
+            get {
+                return ResourceManager.GetString("OpenType_OpenTypeFont_CheckValidity_MissingHeaderError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown magic number {0}..
+        /// </summary>
+        internal static string OpenType_OpenTypeFont_LoadOffsetTable_UnknownMagicError {
+            get {
+                return ResourceManager.GetString("OpenType_OpenTypeFont_LoadOffsetTable_UnknownMagicError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag values must be four characters long..
+        /// </summary>
+        internal static string OpenType_Tag_Constructor_ArrayLengthError {
+            get {
+                return ResourceManager.GetString("OpenType_Tag_Constructor_ArrayLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No font name specified..
         /// </summary>
         internal static string PdfStandardFontDescriptor_GetByName_EmptyStringParameter {

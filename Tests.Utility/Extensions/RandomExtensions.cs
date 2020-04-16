@@ -383,5 +383,40 @@ namespace Tests.Utility.Extensions
             }
             return random.Next();
         }
+
+        public static ushort NextUShort(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (ushort)random.Next(ushort.MaxValue + 1);
+        }
+
+        public static uint NextUInt(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(2) == 0)
+            {
+                return (uint)random.Next();
+            }
+            return int.MaxValue + (uint)random.Next();
+        }
+
+        public static uint? NextNullableUInt(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextUInt(random);
+        }
     }
 }

@@ -126,6 +126,18 @@
   <data name="DirectionMetrics_FromLines_CharWidthClashesWithIsFixedWidth" xml:space="preserve">
     <value>Error loading direction-specific data: CharWidth and IsFixedWidth values are inconsistent.</value>
   </data>
+  <data name="OpenType_OpenTypeFont_CheckTablesPresent_MissingTablesError" xml:space="preserve">
+    <value>The following data tables are missing: {0}.</value>
+  </data>
+  <data name="OpenType_OpenTypeFont_CheckValidity_MissingHeaderError" xml:space="preserve">
+    <value>OffsetTable not loaded.</value>
+  </data>
+  <data name="OpenType_OpenTypeFont_LoadOffsetTable_UnknownMagicError" xml:space="preserve">
+    <value>Unknown magic number {0}.</value>
+  </data>
+  <data name="OpenType_Tag_Constructor_ArrayLengthError" xml:space="preserve">
+    <value>Tag values must be four characters long.</value>
+  </data>
   <data name="PdfStandardFontDescriptor_GetByName_EmptyStringParameter" xml:space="preserve">
     <value>No font name specified.</value>
   </data>

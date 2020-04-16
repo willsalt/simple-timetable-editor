@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Tests.Utility.Extensions;
 using Unicorn.FontTools.Afm;
+using Unicorn.FontTools.OpenType;
 
 namespace Unicorn.FontTools.Tests.Unit.TestHelpers
 {
@@ -192,6 +194,26 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
                 return null;
             }
             return NextAfmDirectionMetrics(random);
+        }
+
+        private static readonly FontKind[] _validFontKindValues = new[] { FontKind.Cff, FontKind.TrueType };
+
+        public static FontKind NextOpenTypeFontKind(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return _validFontKindValues[random.Next(_validFontKindValues.Length)];
+        }
+
+        public static Tag NextOpenTypeTag(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new Tag(Encoding.ASCII.GetBytes(random.NextString(4)));
         }
     }
 }

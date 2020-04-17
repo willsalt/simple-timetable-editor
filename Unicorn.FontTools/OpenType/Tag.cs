@@ -34,6 +34,25 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
+        /// Construct a tag from a string.
+        /// </summary>
+        /// <param name="value">A four-character string containing the tag's value.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>value</c> parameter is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if the <c>value</c> parameter is not exactly four characters long.</exception>
+        public Tag(string value)
+        {
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            if (value.Length != 4)
+            {
+                throw new ArgumentException(Resources.OpenType_Tag_Constructor_ArrayLengthError, nameof(value));
+            }
+            Value = value;
+        }
+
+        /// <summary>
         /// Equality operator
         /// </summary>
         /// <param name="a">A <see cref="Tag" /> value.</param>

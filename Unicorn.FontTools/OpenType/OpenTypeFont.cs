@@ -15,7 +15,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// The header <see cref="OffsetTable" /> - the most important contents being the number of data tables in the font.
         /// </summary>
-        public OffsetTable Header { get; set; }
+        public OffsetTable OffsetHeader { get; set; }
 
         /// <summary>
         /// The index of data tables in the font.
@@ -33,7 +33,7 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         public void CheckValidity()
         {
-            if (Header is null)
+            if (OffsetHeader is null)
             {
                 throw new OpenTypeFormatException(Resources.OpenType_OpenTypeFont_CheckValidity_MissingHeaderError);
             }
@@ -46,7 +46,7 @@ namespace Unicorn.FontTools.OpenType
             string[] requiredTrueTypeTables = new[] { "glyf", "loca" };
             string[] requiredCffTables = new[] { "CFF ", "CFF2" };
             CheckTablesPresent(requiredTables);
-            switch (Header.FontKind)
+            switch (OffsetHeader.FontKind)
             {
                 case FontKind.TrueType:
                     CheckTablesPresent(requiredTrueTypeTables);
@@ -80,9 +80,9 @@ namespace Unicorn.FontTools.OpenType
             }
             OpenTypeFont font = new OpenTypeFont();
             MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
-            font.Header = LoadOffsetTable(accessor);
+            font.OffsetHeader = LoadOffsetTable(accessor);
             long offset = 12;
-            for (int i = 0; i < font.Header.TableCount; ++i)
+            for (int i = 0; i < font.OffsetHeader.TableCount; ++i)
             {
                 TableIndexRecord record = LoadTableRecord(accessor, offset + i * 16);
                 font.TableIndex.Add(record.TableTag.Value, record);

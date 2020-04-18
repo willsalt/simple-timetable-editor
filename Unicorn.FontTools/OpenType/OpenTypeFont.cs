@@ -12,20 +12,49 @@ namespace Unicorn.FontTools.OpenType
     /// </summary>
     public class OpenTypeFont
     {
+        private readonly MemoryMappedViewAccessor _accessor;
+
         /// <summary>
         /// The header <see cref="OffsetTable" /> - the most important contents being the number of data tables in the font.
         /// </summary>
         public OffsetTable OffsetHeader { get; set; }
 
         /// <summary>
+        /// The "head" table of the font, which must be present for the font to be a valid OpenType file.
+        /// </summary>
+        public HeaderTable Header
+        {
+            get
+            {
+                TableIndexRecord index = TableIndex["head"];
+                if (index.Data == null)
+                {
+                    index.Data = GetTableData(index);
+                }
+                return (HeaderTable)index.Data;
+            }
+        }
+
+        /// <summary>
+        /// The "hhea" table of the font, which must be present for the font to be a valid OpenType file.
+        /// </summary>
+        public HorizontalHeaderTable HorizontalHeader
+        {
+            get
+            {
+                TableIndexRecord index = TableIndex["hhea"];
+                if (index.Data == null)
+                {
+                    index.Data = GetTableData(index);
+                }
+                return (HorizontalHeaderTable)index.Data;
+            }
+        }
+
+        /// <summary>
         /// The index of data tables in the font.
         /// </summary>
         public Dictionary<string, TableIndexRecord> TableIndex { get; } = new Dictionary<string, TableIndexRecord>();
-
-        private OpenTypeFont()
-        {
-
-        }
 
         /// <summary>
         /// Confirm that the structure of this font is valid.  Currently checks that it has an OffsetTable and records in the index for all of the compulsary
@@ -72,22 +101,20 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="mmf">The memory-mapped file to load data from.</param>
         /// <returns>A font object.</returns>
-        public static OpenTypeFont LoadFrom(MemoryMappedFile mmf)
+        public OpenTypeFont(MemoryMappedFile mmf)
         {
             if (mmf is null)
             {
                 throw new ArgumentNullException(nameof(mmf));
             }
-            OpenTypeFont font = new OpenTypeFont();
-            MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
-            font.OffsetHeader = LoadOffsetTable(accessor);
+            _accessor = mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
+            OffsetHeader = LoadOffsetTable(_accessor);
             long offset = 12;
-            for (int i = 0; i < font.OffsetHeader.TableCount; ++i)
+            for (int i = 0; i < OffsetHeader.TableCount; ++i)
             {
-                TableIndexRecord record = LoadTableRecord(accessor, offset + i * 16);
-                font.TableIndex.Add(record.TableTag.Value, record);
+                TableIndexRecord record = LoadTableRecord(_accessor, offset + i * 16);
+                TableIndex.Add(record.TableTag.Value, record);
             }
-            return font;
         }
 
         private static OffsetTable LoadOffsetTable(MemoryMappedViewAccessor accessor)
@@ -134,7 +161,61 @@ namespace Unicorn.FontTools.OpenType
             tableOffset = buffer.ToUInt();
             accessor.ReadArray(offset + 12, buffer, 0, 4);
             len = buffer.ToUInt();
-            return new TableIndexRecord(tableTag, checksum, tableOffset, len);
+            return new TableIndexRecord(tableTag, checksum, tableOffset, len, GetLoadingMethod(tableTag));
+        }
+
+        private static Func<byte[], int, Table> GetLoadingMethod(Tag t)
+        {
+            switch (t.Value)
+            {
+                case "head":
+                    return HeaderTable.FromBytes;
+                case "hhea":
+                    return HorizontalHeaderTable.FromBytes;
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Return the contents of the table with the given index record, from a cached copy of the data if available.
+        /// </summary>
+        /// <param name="indexRecord">The index record for the table to load.</param>
+        /// <returns>A <see cref="Table" /> implementation, or <c>null</c> if the table cannot be loaded.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is null.</exception>
+        public Table GetTableData(TableIndexRecord indexRecord)
+        {
+            if (indexRecord is null)
+            {
+                throw new ArgumentNullException(nameof(indexRecord));
+            }
+            if (indexRecord.Data != null)
+            {
+                return indexRecord.Data;
+            }
+            if (indexRecord.LoadingMethod == null)
+            {
+                return null;
+            }
+
+            byte[] rawTable = new byte[indexRecord.Length];
+            _accessor.ReadArray(indexRecord.Offset.Value, rawTable, 0, (int)indexRecord.Length);
+            return indexRecord.LoadingMethod(rawTable, 0);
+        }
+
+        /// <summary>
+        /// Get the contents of the table with the given tag, if it exists.
+        /// </summary>
+        /// <param name="t">The tag of the table to attempt to load.</param>
+        /// <returns>A <see cref="Table" /> implementation, or <c>null</c> if a table with the given tag does not exist or cannot be loaded.</returns>
+        public Table GetTableData(Tag t)
+        {
+            if (!TableIndex.ContainsKey(t.Value))
+            {
+                return null;
+            }
+            TableIndexRecord indexEntry = TableIndex[t.Value];
+            return GetTableData(indexEntry);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Unicorn.FontTools.OpenType
+﻿using System;
+
+namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// A table index record.  An OpenType file consists of an <see cref="OffsetTable" />, a sequence of <see cref="TableIndexRecord" /> entries whose length 
@@ -27,18 +29,30 @@
         public uint Length { get; private set; }
 
         /// <summary>
+        /// The content of the table, if it has been loaded into memory.
+        /// </summary>
+        public Table Data { get; set; }
+
+        /// <summary>
+        /// A method that can load the table into memory from an array of bytes.
+        /// </summary>
+        public Func<byte[], int, Table> LoadingMethod { get; private set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="tag">The value of the <see cref="TableTag" /> property.</param>
         /// <param name="checksum">The value of the <see cref="Checksum" /> property.</param>
         /// <param name="offset">The value of the <see cref="Offset"/> property.</param>
         /// <param name="len">The value of the <see cref="Length"/> property.</param>
-        public TableIndexRecord(Tag tag, uint checksum, uint? offset, uint len)
+        /// <param name="loader">The loading method, which can convert an array of bytes to a <see cref="Table" /> object.</param>
+        public TableIndexRecord(Tag tag, uint checksum, uint? offset, uint len, Func<byte[], int, Table> loader)
         {
             TableTag = tag;
             Checksum = checksum;
             Offset = offset;
             Length = len;
+            LoadingMethod = loader;
         }
     }
 }

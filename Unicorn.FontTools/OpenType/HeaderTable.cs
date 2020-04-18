@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
+using Unicorn.FontTools.OpenType.Extensions;
 
-namespace Unicorn.FontTools.OpenType.Extensions
+namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The font header table.
@@ -157,20 +159,53 @@ namespace Unicorn.FontTools.OpenType.Extensions
                 data.ToUShort(offset + 2),                      // MinorVersion
                 data.ToFixed(offset + 4),                       // Revision
                 data.ToUInt(offset + 8),                        // ChecksumAdjustment
-                data.ToUInt(offset + 8),                        // Magic
-                (FontFlags)data.ToUShort(offset + 12),          // FontFlags
-                data.ToUShort(offset + 14),                     // FontUnitScale
-                data.ToDateTime(offset + 16),                   // Created
-                data.ToDateTime(offset + 24),                   // Modified
-                data.ToShort(offset + 32),                      // XMin
-                data.ToShort(offset + 34),                      // YMin
-                data.ToShort(offset + 36),                      // XMax
-                data.ToShort(offset + 38),                      // YMax
-                (MacStyleFlags)data.ToUShort(offset + 40),      // StyleFlags
-                data.ToUShort(offset + 42),                     // SmallestReadablePixelSize
-                (FontDirectionHint)data.ToShort(offset + 44),   // DirectionHint
-                data.ToShort(offset + 46) == 1,                 // UseLongOffsets
-                data.ToShort(offset + 48));                     // GlyphDataFormat
+                data.ToUInt(offset + 12),                       // Magic
+                (FontFlags)data.ToUShort(offset + 16),          // FontFlags
+                data.ToUShort(offset + 18),                     // FontUnitScale
+                data.ToDateTime(offset + 20),                   // Created
+                data.ToDateTime(offset + 28),                   // Modified
+                data.ToShort(offset + 36),                      // XMin
+                data.ToShort(offset + 38),                      // YMin
+                data.ToShort(offset + 40),                      // XMax
+                data.ToShort(offset + 42),                      // YMax
+                (MacStyleFlags)data.ToUShort(offset + 44),      // StyleFlags
+                data.ToUShort(offset + 46),                     // SmallestReadablePixelSize
+                (FontDirectionHint)data.ToShort(offset + 48),   // DirectionHint
+                data.ToShort(offset + 50) == 1,                 // UseLongOffsets
+                data.ToShort(offset + 52));                     // GlyphDataFormat
+        }
+
+        /// <summary>
+        /// Dump contents of table to a <see cref="TextWriter" />.  Returns silently if the parameter is null.
+        /// </summary>
+        /// <param name="writer">The destination to dump to.</param>
+        public override void Dump(TextWriter writer)
+        {
+            if (writer is null)
+            {
+                return;
+            }
+            writer.WriteLine("head table contents:");
+            writer.WriteLine("Field                     | Value");
+            writer.WriteLine("--------------------------|-------------------------------------------");
+            writer.WriteLine($"MajorVersion              | {MajorVersion}");
+            writer.WriteLine($"MinorVersion              | {MinorVersion}");
+            writer.WriteLine($"Revision                  | {Revision}");
+            writer.WriteLine($"ChecksumAdjustment        | {ChecksumAdjustment}");
+            writer.WriteLine($"Magic                     | {Magic}");
+            writer.WriteLine($"Flags                     | {Flags}");
+            writer.WriteLine($"FontUnitScale             | {FontUnitScale}");
+            writer.WriteLine($"Created                   | {Created}");
+            writer.WriteLine($"Modified                  | {Modified}");
+            writer.WriteLine($"XMin                      | {XMin}");
+            writer.WriteLine($"YMin                      | {YMin}");
+            writer.WriteLine($"XMax                      | {XMax}");
+            writer.WriteLine($"YMax                      | {YMax}");
+            writer.WriteLine($"StyleFlags                | {StyleFlags}");
+            writer.WriteLine($"SmallestReadablePixelSize | {SmallestReadablePixelSize}");
+            writer.WriteLine($"DirectionHint             | {DirectionHint}");
+            writer.WriteLine($"UseLongOffsets            | {UseLongOffsets}");
+            writer.WriteLine($"GlyphDataFormat           | {GlyphDataFormat}");
         }
     }
 }

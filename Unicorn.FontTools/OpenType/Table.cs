@@ -1,4 +1,6 @@
-﻿namespace Unicorn.FontTools.OpenType
+﻿using System.IO;
+
+namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// Abstract ancestor of tables - collections of data referred to by a four-character "tag".
@@ -18,5 +20,11 @@
         {
             TableTag = tag;
         }
+
+        /// <summary>
+        /// Dump this table's content to a <see cref="TextWriter" /> in whatever way is appropriate.
+        /// </summary>
+        /// <param name="writer">The destination to dump the data to.</param>
+        public abstract void Dump(TextWriter writer);
     }
 }

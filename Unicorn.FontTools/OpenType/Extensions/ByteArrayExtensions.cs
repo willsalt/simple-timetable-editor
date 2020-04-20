@@ -15,6 +15,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         /// <returns>A <see cref="ushort" /> value loaded from the first two members of the parameter.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the parameter contains less than two elements.</exception>
+        /// <exception cref="IndexOutOfRangeException">Throw if the idx parameter is less than zero.</exception>
         public static ushort ToUShort(this byte[] arr, int idx = 0)
         {
             if (arr is null)
@@ -67,7 +68,20 @@ namespace Unicorn.FontTools.OpenType.Extensions
             {
                 throw new InvalidOperationException();
             }
-            return (uint)((arr[idx] << 24) | (arr[idx + 1] << 16) | (arr[idx + 2] << 8) | arr[idx + 3]);
+            return ((uint)arr[idx] << 24) | ((uint)arr[idx + 1] << 16) | ((uint)arr[idx + 2] << 8) | arr[idx + 3];
+        }
+
+        /// <summary>
+        /// Convert four bytes into a <see cref="int" /> value.
+        /// </summary>
+        /// <param name="arr">An array of at least four bytes.</param>
+        /// <param name="idx">Starting offset of the bytes to be converted.</param>
+        /// <returns>A <see cref="int" /> value loded from the first four elements of the parameter</returns>
+        /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the parameter's length is less than four.</exception>
+        public static int ToInt(this byte[] arr, int idx = 0)
+        {
+            return unchecked((int)ToUInt(arr, idx));
         }
 
         /// <summary>

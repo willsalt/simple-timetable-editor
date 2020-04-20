@@ -52,6 +52,22 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
+        /// The "maxp" table of this font, which must be present for the font to be a valid OpenType file.
+        /// </summary>
+        public MaximumProfileTable MaximumProfile
+        {
+            get
+            {
+                TableIndexRecord index = TableIndex["maxp"];
+                if (index.Data == null)
+                {
+                    index.Data = GetTableData(index);
+                }
+                return (MaximumProfileTable)index.Data;
+            }
+        }
+
+        /// <summary>
         /// The index of data tables in the font.
         /// </summary>
         public Dictionary<string, TableIndexRecord> TableIndex { get; } = new Dictionary<string, TableIndexRecord>();
@@ -148,7 +164,7 @@ namespace Unicorn.FontTools.OpenType
             return new OffsetTable(fontKind, tableCount, searchRange, entrySelector, rangeShift);
         }
 
-        private static TableIndexRecord LoadTableRecord(MemoryMappedViewAccessor accessor, long offset)
+        private TableIndexRecord LoadTableRecord(MemoryMappedViewAccessor accessor, long offset)
         {
             byte[] buffer = new byte[4];
             Tag tableTag;
@@ -164,7 +180,7 @@ namespace Unicorn.FontTools.OpenType
             return new TableIndexRecord(tableTag, checksum, tableOffset, len, GetLoadingMethod(tableTag));
         }
 
-        private static Func<byte[], int, Table> GetLoadingMethod(Tag t)
+        private Func<byte[], int, Table> GetLoadingMethod(Tag t)
         {
             switch (t.Value)
             {
@@ -172,9 +188,18 @@ namespace Unicorn.FontTools.OpenType
                     return HeaderTable.FromBytes;
                 case "hhea":
                     return HorizontalHeaderTable.FromBytes;
+                case "maxp":
+                    return MaximumProfileTable.FromBytes;
+                case "hmtx":
+                    return LoadHmtxTable;
                 default:
                     return null;
             }
+        }
+
+        private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset)
+        {
+            return HorizontalMetricsTable.FromBytes(arr, offset, MaximumProfile.GlyphCount, HorizontalHeader.HmtxHMetricCount);
         }
 
         /// <summary>

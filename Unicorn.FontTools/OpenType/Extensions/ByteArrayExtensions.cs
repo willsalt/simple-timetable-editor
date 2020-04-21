@@ -164,5 +164,57 @@ namespace Unicorn.FontTools.OpenType.Extensions
             long offset = ToLong(arr, idx);
             return new DateTime(1904, 1, 1).AddTicks(offset * 10_000_000);
         }
+
+        /// <summary>
+        /// Convert 8 bytes to a <see cref="LowerUnicodeRangeFlags" /> value, by interpreting the first 4 bytes as an unsigned int containing the lower 32 bits
+        /// of the value and the second 4 bytes as an unsigned int containing the upper 32 bits of the value.
+        /// </summary>
+        /// <param name="arr">The array of bytes to convert.</param>
+        /// <param name="idx">Starting offset of the bytes to be converted.</param>
+        /// <returns>A <see cref="LowerUnicodeRangeFlags" /> value converted from the 8 bytes of the parameter array starting with the offset.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the array parameter is null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the offset is less than 8 bytes before the end of the array.</exception>
+        /// <exception cref="IndexOutOfRangeException">Thrown if the offset is negative.</exception>
+        public static LowerUnicodeRangeFlags ToLowerUnicodeRangeFlags(this byte[] arr, int idx = 0)
+        {
+            return (LowerUnicodeRangeFlags)ToULongBackwards(arr, idx);
+        }
+
+        /// <summary>
+        /// Convert 8 bytes to a <see cref="UpperUnicodeRangeFlags" /> value, by interpreting the first 4 bytes as an unsigned int containing the lower 32 bits
+        /// of the value and the second 4 bytes as an unsigned int containing the upper 32 bits of the value.
+        /// </summary>
+        /// <param name="arr">The array of bytes to convert.</param>
+        /// <param name="idx">Starting offset of the bytes to be converted.</param>
+        /// <returns>A <see cref="UpperUnicodeRangeFlags" /> value converted from the 8 bytes of the parameter array starting with the offset.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the array parameter is null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the offset is less than 8 bytes before the end of the array.</exception>
+        /// <exception cref="IndexOutOfRangeException">Thrown if the offset is negative.</exception>
+        public static UpperUnicodeRangeFlags ToUpperUnicodeRangeFlags(this byte[] arr, int idx = 0)
+        {
+            return (UpperUnicodeRangeFlags)ToULongBackwards(arr, idx);
+        }
+
+        /// <summary>
+        /// Convert 8 bytes to a <see cref="SupportedCodePageFlags" /> value, by interpreting the first 4 bytes as an unsigned int containing the lower 32 bits
+        /// of the value and the second 4 bytes as an unsigned int containing the upper 32 bits of the value.
+        /// </summary>
+        /// <param name="arr">The array of bytes to convert.</param>
+        /// <param name="idx">Starting offset of the bytes to be converted.</param>
+        /// <returns>A <see cref="SupportedCodePageFlags" /> value converted from the 8 bytes of the parameter array starting with the offset.</returns>
+        /// <exception cref="NullReferenceException">Thrown if the array parameter is null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the offset is less than 8 bytes before the end of the array.</exception>
+        /// <exception cref="IndexOutOfRangeException">Thrown if the offset is negative.</exception>
+        public static SupportedCodePageFlags ToSupportedCodePageFlags(this byte[] arr, int idx = 0)
+        {
+            return (SupportedCodePageFlags)ToULongBackwards(arr, idx);
+        }
+
+        private static ulong ToULongBackwards(byte[] arr, int idx)
+        {
+            uint lower = arr.ToUInt(idx);
+            uint upper = arr.ToUInt(idx + 4);
+            return lower | ((ulong)upper << 32);
+        }
     }
 }

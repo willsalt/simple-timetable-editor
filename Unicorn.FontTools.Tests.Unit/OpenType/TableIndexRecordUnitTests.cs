@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.FontTools.OpenType;
@@ -14,7 +12,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static Table MockLoader(byte[] data, int offset)
+        private static Table MockLoader(byte[] data, int offset, uint len)
         {
             return null;
         }
@@ -28,7 +26,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
             uint testParam1 = _rnd.NextUInt();
             uint? testParam2 = _rnd.NextNullableUInt();
             uint testParam3 = _rnd.NextUInt();
-            Func<byte[], int, Table> testParam4 = MockLoader;
+            TableLoadingMethod testParam4 = MockLoader;
 
             TableIndexRecord testOutput = new TableIndexRecord(testParam0, testParam1, testParam2, testParam3, testParam4);
 
@@ -42,7 +40,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
             uint testParam1 = _rnd.NextUInt();
             uint? testParam2 = _rnd.NextNullableUInt();
             uint testParam3 = _rnd.NextUInt();
-            Func<byte[], int, Table> testParam4 = MockLoader;
+            TableLoadingMethod testParam4 = MockLoader;
 
             TableIndexRecord testOutput = new TableIndexRecord(testParam0, testParam1, testParam2, testParam3, testParam4);
 
@@ -56,7 +54,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
             uint testParam1 = _rnd.NextUInt();
             uint? testParam2 = _rnd.NextNullableUInt();
             uint testParam3 = _rnd.NextUInt();
-            Func<byte[], int, Table> testParam4 = MockLoader;
+            TableLoadingMethod testParam4 = MockLoader;
 
             TableIndexRecord testOutput = new TableIndexRecord(testParam0, testParam1, testParam2, testParam3, testParam4);
 
@@ -70,7 +68,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
             uint testParam1 = _rnd.NextUInt();
             uint? testParam2 = _rnd.NextNullableUInt();
             uint testParam3 = _rnd.NextUInt();
-            Func<byte[], int, Table> testParam4 = MockLoader;
+            TableLoadingMethod testParam4 = MockLoader;
 
             TableIndexRecord testOutput = new TableIndexRecord(testParam0, testParam1, testParam2, testParam3, testParam4);
 
@@ -84,7 +82,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
             uint testParam1 = _rnd.NextUInt();
             uint? testParam2 = _rnd.NextNullableUInt();
             uint testParam3 = _rnd.NextUInt();
-            Func<byte[], int, Table> testParam4 = MockLoader;
+            TableLoadingMethod testParam4 = MockLoader;
 
             TableIndexRecord testOutput = new TableIndexRecord(testParam0, testParam1, testParam2, testParam3, testParam4);
 

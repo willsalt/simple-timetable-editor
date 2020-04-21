@@ -126,6 +126,15 @@
   <data name="DirectionMetrics_FromLines_CharWidthClashesWithIsFixedWidth" xml:space="preserve">
     <value>Error loading direction-specific data: CharWidth and IsFixedWidth values are inconsistent.</value>
   </data>
+  <data name="OpenType_HeaderTable_FromBytes_InsufficientDataError" xml:space="preserve">
+    <value>Insufficient data to load 'head' table.</value>
+  </data>
+  <data name="OpenType_HorizontalHeaderTable_FromBytes_InsufficientDataError" xml:space="preserve">
+    <value>Insufficient data to load 'hhea' table.</value>
+  </data>
+  <data name="OpenType_MaximumProfileTable_FromBytes_InsufficientDataError" xml:space="preserve">
+    <value>Insufficient data to load 'maxp' table.</value>
+  </data>
   <data name="OpenType_OpenTypeFont_CheckTablesPresent_MissingTablesError" xml:space="preserve">
     <value>The following data tables are missing: {0}.</value>
   </data>

@@ -139,17 +139,26 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="arr">The table data.</param>
         /// <param name="offset">The location in the array of the first byte of the table data.</param>
+        /// <param name="len">Table data length.</param>
         /// <returns>A <see cref="MaximumProfileTable" /> loaded from the array provided.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array contains insufficient data or has an unrecognised version number.</exception>
-        public static MaximumProfileTable FromBytes(byte[] arr, int offset = 0)
+        public static MaximumProfileTable FromBytes(byte[] arr, int offset, uint len)
         {
             int version = arr.ToInt(offset);
             if (version == 0x5000)
             {
+                if (len < 6)
+                {
+                    throw new InvalidOperationException(Resources.OpenType_MaximumProfileTable_FromBytes_InsufficientDataError);
+                }
                 return new MaximumProfileTable(arr.ToUShort(offset + 4));
             }
             if (version == 0x10000)
             {
+                if (len < 32)
+                {
+                    throw new InvalidOperationException(Resources.OpenType_MaximumProfileTable_FromBytes_InsufficientDataError);
+                }
                 return new MaximumProfileTable(
                     arr.ToUShort(offset + 4),
                     arr.ToUShort(offset + 6),

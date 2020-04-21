@@ -34,6 +34,27 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
+        /// Construct a tag from a group of bytes within an array.
+        /// </summary>
+        /// <param name="arr">An array of bytes.</param>
+        /// <param name="offset">A location within the array to be taken as the start of a four-byte tag.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>arr</c> parameter is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if the <c>offset</c> parameter is outside the bounds of the array, or less than four bytes from its 
+        /// end.</exception>
+        public Tag(byte[] arr, int offset)
+        {
+            if (arr is null)
+            {
+                throw new ArgumentNullException(nameof(arr));
+            }
+            if (arr.Length < offset + 4)
+            {
+                throw new ArgumentException(Resources.OpenType_Tag_Constructor_ArrayLengthError, nameof(arr));
+            }
+            Value = Encoding.ASCII.GetString(arr, offset, 4);
+        }
+
+        /// <summary>
         /// Construct a tag from a string.
         /// </summary>
         /// <param name="value">A four-character string containing the tag's value.</param>

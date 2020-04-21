@@ -36,7 +36,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// A method that can load the table into memory from an array of bytes.
         /// </summary>
-        public Func<byte[], int, Table> LoadingMethod { get; private set; }
+        public TableLoadingMethod LoadingMethod { get; private set; }
 
         /// <summary>
         /// Constructor.
@@ -46,7 +46,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="offset">The value of the <see cref="Offset"/> property.</param>
         /// <param name="len">The value of the <see cref="Length"/> property.</param>
         /// <param name="loader">The loading method, which can convert an array of bytes to a <see cref="Table" /> object.</param>
-        public TableIndexRecord(Tag tag, uint checksum, uint? offset, uint len, Func<byte[], int, Table> loader)
+        public TableIndexRecord(Tag tag, uint checksum, uint? offset, uint len, TableLoadingMethod loader)
         {
             TableTag = tag;
             Checksum = checksum;

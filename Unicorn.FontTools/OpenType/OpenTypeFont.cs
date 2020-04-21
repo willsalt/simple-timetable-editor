@@ -180,7 +180,7 @@ namespace Unicorn.FontTools.OpenType
             return new TableIndexRecord(tableTag, checksum, tableOffset, len, GetLoadingMethod(tableTag));
         }
 
-        private Func<byte[], int, Table> GetLoadingMethod(Tag t)
+        private TableLoadingMethod GetLoadingMethod(Tag t)
         {
             switch (t.Value)
             {
@@ -192,12 +192,14 @@ namespace Unicorn.FontTools.OpenType
                     return MaximumProfileTable.FromBytes;
                 case "hmtx":
                     return LoadHmtxTable;
+                case "OS/2":
+                    return OS2MetricsTable.FromBytes;
                 default:
                     return null;
             }
         }
 
-        private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset)
+        private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset, uint len)
         {
             return HorizontalMetricsTable.FromBytes(arr, offset, MaximumProfile.GlyphCount, HorizontalHeader.HmtxHMetricCount);
         }
@@ -225,7 +227,7 @@ namespace Unicorn.FontTools.OpenType
 
             byte[] rawTable = new byte[indexRecord.Length];
             _accessor.ReadArray(indexRecord.Offset.Value, rawTable, 0, (int)indexRecord.Length);
-            return indexRecord.LoadingMethod(rawTable, 0);
+            return indexRecord.LoadingMethod(rawTable, 0, indexRecord.Length);
         }
 
         /// <summary>

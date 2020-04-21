@@ -75,7 +75,7 @@ namespace Unicorn.FontTools.OpenType
         public short YMax { get; }
 
         /// <summary>
-        /// Font style flags (used on some platforms).
+        /// Font style flags.  Apple-style calculations use this field in preference to <see cref="OS2MetricsTable.FontSelection" />.
         /// </summary>
         public MacStyleFlags StyleFlags { get; }
 
@@ -150,10 +150,15 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="data">The array to be converted.</param>
         /// <param name="offset">The data start offset.</param>
+        /// <param name="len">Table length.</param>
         /// <returns>A <see cref="HeaderTable" /> instance.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array is insufficiently long to carry out the conversion.</exception>
-        public static HeaderTable FromBytes(byte[] data, int offset = 0)
+        public static HeaderTable FromBytes(byte[] data, int offset, uint len)
         {
+            if (len < 54)
+            {
+                throw new InvalidOperationException(Resources.OpenType_HeaderTable_FromBytes_InsufficientDataError);
+            }
             return new HeaderTable(
                 data.ToUShort(offset),                          // MajorVersion
                 data.ToUShort(offset + 2),                      // MinorVersion

@@ -88,6 +88,33 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insufficient data to load &apos;head&apos; table..
+        /// </summary>
+        internal static string OpenType_HeaderTable_FromBytes_InsufficientDataError {
+            get {
+                return ResourceManager.GetString("OpenType_HeaderTable_FromBytes_InsufficientDataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient data to load &apos;hhea&apos; table..
+        /// </summary>
+        internal static string OpenType_HorizontalHeaderTable_FromBytes_InsufficientDataError {
+            get {
+                return ResourceManager.GetString("OpenType_HorizontalHeaderTable_FromBytes_InsufficientDataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient data to load &apos;maxp&apos; table..
+        /// </summary>
+        internal static string OpenType_MaximumProfileTable_FromBytes_InsufficientDataError {
+            get {
+                return ResourceManager.GetString("OpenType_MaximumProfileTable_FromBytes_InsufficientDataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The following data tables are missing: {0}..
         /// </summary>
         internal static string OpenType_OpenTypeFont_CheckTablesPresent_MissingTablesError {

@@ -104,11 +104,16 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="arr">The array to convert.</param>
         /// <param name="offset">Offset location to start at within the array.</param>
+        /// <param name="len">Table data length.</param>
         /// <returns>A <see cref="HorizontalHeaderTable" /> object</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array does not contain enough data (if the array length is not at least 36 greater than the 
         /// offset parameter.</exception>
-        public static HorizontalHeaderTable FromBytes(byte[] arr, int offset)
+        public static HorizontalHeaderTable FromBytes(byte[] arr, int offset, uint len)
         {
+            if (len < 36)
+            {
+                throw new InvalidOperationException(Resources.OpenType_HorizontalHeaderTable_FromBytes_InsufficientDataError);
+            }
             return new HorizontalHeaderTable(
                 arr.ToUShort(offset),           // MajorVersion
                 arr.ToUShort(offset + 2),       // MinorVersion

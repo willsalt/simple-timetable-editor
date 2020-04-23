@@ -96,6 +96,15 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
+        /// Convert this structure to a string.
+        /// </summary>
+        /// <returns>A string consisting of the value of each property, separated by white space.</returns>
+        public override string ToString()
+        {
+            return $"{FamilyType} {SerifStyle} {Weight} {Proportion} {Contrast} {StrokeVariation} {ArmStyle} {Letterform} {Midline} {XHeight}";
+        }
+
+        /// <summary>
         /// Equality-test method.
         /// </summary>
         /// <param name="other">Another <see cref="PanoseFamily"/> value to compare against.</param>

@@ -424,7 +424,7 @@ namespace Unicorn.FontTools.OpenType
             short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
             short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
             UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleFlags fontSelection, ushort minCodePoint, ushort maxCodePoint)
-            : base(new Tag("OS/2"))
+            : base("OS/2")
         {
             Version = 0;
             AverageCharWidth = avgCharWidth;

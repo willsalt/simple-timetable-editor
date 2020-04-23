@@ -22,6 +22,14 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
+        /// Convenience constructor.
+        /// </summary>
+        /// <param name="tag">The name of the tag of this table.</param>
+        protected Table(string tag) : this(new Tag(tag))
+        {
+        }
+
+        /// <summary>
         /// Dump this table's content to a <see cref="TextWriter" /> in whatever way is appropriate.
         /// </summary>
         /// <param name="writer">The destination to dump the data to.</param>

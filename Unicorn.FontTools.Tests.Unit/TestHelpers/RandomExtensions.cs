@@ -215,5 +215,16 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             }
             return new Tag(Encoding.ASCII.GetBytes(random.NextString(4)));
         }
+
+        private static readonly PlatformId[] _platformIds = new[] { PlatformId.Unicode, PlatformId.Macintosh, PlatformId.Windows, PlatformId.Custom };
+
+        public static PlatformId NextOpenTypePlatformId(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return _platformIds[random.Next(_platformIds.Length)];
+        }
     }
 }

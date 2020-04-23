@@ -81,7 +81,7 @@ namespace Unicorn.FontTools.OpenType
 
         internal HorizontalHeaderTable(ushort major, ushort minor, short ascender, short descender, short lineGap, ushort maxAdvWidth, short minLsb, short minRsb,
             short xMaxExt, short caretRise, short caretRun, short caretOffset, short metricFormat, ushort hmtxCount)
-            : base(new Tag("hhea"))
+            : base("hhea")
         {
             MajorVersion = major;
             MinorVersion = minor;

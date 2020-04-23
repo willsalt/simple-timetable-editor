@@ -194,6 +194,10 @@ namespace Unicorn.FontTools.OpenType
                     return LoadHmtxTable;
                 case "OS/2":
                     return OS2MetricsTable.FromBytes;
+                case "name":
+                    return NamingTable.FromBytes;
+                case "cmap":
+                    return CharacterMappingTable.FromBytes;
                 default:
                     return null;
             }

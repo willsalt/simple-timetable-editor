@@ -115,6 +115,24 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encoding not supported..
+        /// </summary>
+        internal static string OpenType_NamingTable_FromBytes_EncodingNotSupportedMessage {
+            get {
+                return ResourceManager.GetString("OpenType_NamingTable_FromBytes_EncodingNotSupportedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient data to load &apos;name&apos; table..
+        /// </summary>
+        internal static string OpenType_NamingTable_FromBytes_InsufficientDataError {
+            get {
+                return ResourceManager.GetString("OpenType_NamingTable_FromBytes_InsufficientDataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The following data tables are missing: {0}..
         /// </summary>
         internal static string OpenType_OpenTypeFont_CheckTablesPresent_MissingTablesError {
@@ -142,11 +160,38 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Excess character mapping data provided..
+        /// </summary>
+        internal static string OpenType_PlainByteCharacterMapping_FromBytes_ArrayTooLarge {
+            get {
+                return ResourceManager.GetString("OpenType_PlainByteCharacterMapping_FromBytes_ArrayTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient character mapping data provided..
+        /// </summary>
+        internal static string OpenType_PlainByteCharacterMapping_FromBytes_ArrayTooSmall {
+            get {
+                return ResourceManager.GetString("OpenType_PlainByteCharacterMapping_FromBytes_ArrayTooSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag values must be four characters long..
         /// </summary>
         internal static string OpenType_Tag_Constructor_ArrayLengthError {
             get {
                 return ResourceManager.GetString("OpenType_Tag_Constructor_ArrayLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No character mapping data provided..
+        /// </summary>
+        internal static string OpenType_TrimmedTableCharacterMapping_FromBytes_ArrayEmpty {
+            get {
+                return ResourceManager.GetString("OpenType_TrimmedTableCharacterMapping_FromBytes_ArrayEmpty", resourceCulture);
             }
         }
         

@@ -123,7 +123,7 @@ namespace Unicorn.FontTools.OpenType
         public HeaderTable(ushort majorVersion, ushort minorVersion, decimal rev, uint checksumAdj, uint magic, FontFlags flags, ushort scale, DateTime created,
             DateTime modified, short xMin, short yMin, short xMax, short yMax, MacStyleFlags styleFlags, ushort smallestReadableSize, FontDirectionHint dirHint,
             bool useLongOffsets, short dataFormat)
-            : base(new Tag("head"))
+            : base("head")
         {
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;

@@ -18,7 +18,14 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="data">Data to create the collection from.</param>
         public HorizontalMetricRecordCollection(IEnumerable<HorizontalMetricRecord> data)
         {
-            _arr = data.ToArray();
+            if (data is null)
+            {
+                _arr = Array.Empty<HorizontalMetricRecord>();
+            }
+            else
+            {
+                _arr = data.ToArray();
+            }
         }
 
         /// <summary>
@@ -39,7 +46,7 @@ namespace Unicorn.FontTools.OpenType
         /// Get an enumerator over this collection.
         /// </summary>
         /// <returns>An <see cref="IEnumerator{HorizontalMetricRecord}" /> instance.</returns>
-        public IEnumerator<HorizontalMetricRecord> GetEnumerator() => (IEnumerator<HorizontalMetricRecord>)_arr.GetEnumerator();
+        public IEnumerator<HorizontalMetricRecord> GetEnumerator() => _arr.AsEnumerable().GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _arr.GetEnumerator();
     }

@@ -135,6 +135,12 @@
   <data name="OpenType_MaximumProfileTable_FromBytes_InsufficientDataError" xml:space="preserve">
     <value>Insufficient data to load 'maxp' table.</value>
   </data>
+  <data name="OpenType_NamingTable_FromBytes_EncodingNotSupportedMessage" xml:space="preserve">
+    <value>Encoding not supported.</value>
+  </data>
+  <data name="OpenType_NamingTable_FromBytes_InsufficientDataError" xml:space="preserve">
+    <value>Insufficient data to load 'name' table.</value>
+  </data>
   <data name="OpenType_OpenTypeFont_CheckTablesPresent_MissingTablesError" xml:space="preserve">
     <value>The following data tables are missing: {0}.</value>
   </data>
@@ -144,8 +150,17 @@
   <data name="OpenType_OpenTypeFont_LoadOffsetTable_UnknownMagicError" xml:space="preserve">
     <value>Unknown magic number {0}.</value>
   </data>
+  <data name="OpenType_PlainByteCharacterMapping_FromBytes_ArrayTooLarge" xml:space="preserve">
+    <value>Excess character mapping data provided.</value>
+  </data>
+  <data name="OpenType_PlainByteCharacterMapping_FromBytes_ArrayTooSmall" xml:space="preserve">
+    <value>Insufficient character mapping data provided.</value>
+  </data>
   <data name="OpenType_Tag_Constructor_ArrayLengthError" xml:space="preserve">
     <value>Tag values must be four characters long.</value>
+  </data>
+  <data name="OpenType_TrimmedTableCharacterMapping_FromBytes_ArrayEmpty" xml:space="preserve">
+    <value>No character mapping data provided.</value>
   </data>
   <data name="PdfStandardFontDescriptor_GetByName_EmptyStringParameter" xml:space="preserve">
     <value>No font name specified.</value>

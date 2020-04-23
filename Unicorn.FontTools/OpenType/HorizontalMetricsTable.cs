@@ -20,7 +20,7 @@ namespace Unicorn.FontTools.OpenType
         /// Constructor.
         /// </summary>
         /// <param name="data">The data contained in this table.</param>
-        public HorizontalMetricsTable(IEnumerable<HorizontalMetricRecord> data) : base(new Tag("hmtx"))
+        public HorizontalMetricsTable(IEnumerable<HorizontalMetricRecord> data) : base("hmtx")
         {
             Metrics = new HorizontalMetricRecordCollection(data);
         }

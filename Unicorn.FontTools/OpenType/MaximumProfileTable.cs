@@ -90,7 +90,7 @@ namespace Unicorn.FontTools.OpenType
         /// Constructor for CFF fonts.
         /// </summary>
         /// <param name="glyphCount">The value of the <see cref="GlyphCount" /> property.</param>
-        public MaximumProfileTable(ushort glyphCount) : base(new Tag("maxp"))
+        public MaximumProfileTable(ushort glyphCount) : base("maxp")
         {
             Kind = FontKind.Cff;
             GlyphCount = glyphCount;

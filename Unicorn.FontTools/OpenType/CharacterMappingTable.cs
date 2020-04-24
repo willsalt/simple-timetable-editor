@@ -43,13 +43,15 @@ namespace Unicorn.FontTools.OpenType
 
         private static int SubtableRecordOffset(int baseOffset, int count) => baseOffset + 4 + 8 * count;
 
-        private static Func<PlatformId, ushort, byte[], int, CharacterMapping> GetSubtableBuilderMethod(int version)
+        private static Func<PlatformId, ushort, byte[], int, CharacterMapping> GetSubtableBuilderMethod(CharacterMappingFormat version)
         {
             switch (version)
             {
-                case 0:
+                case CharacterMappingFormat.PlainByteMapping:
                     return PlainByteCharacterMapping.FromBytes;
-                case 6:
+                case CharacterMappingFormat.HighByteSubheaderMapping:
+                    return HighByteSubheaderCharacterMapping.FromBytes;
+                case CharacterMappingFormat.TrimmedTableMapping:
                     return TrimmedTableCharacterMapping.FromBytes;
                 default:
                     return null;
@@ -72,7 +74,7 @@ namespace Unicorn.FontTools.OpenType
                 PlatformId platform = (PlatformId)arr.ToUShort(SubtableRecordOffset(offset, i));
                 ushort encoding = arr.ToUShort(SubtableRecordOffset(offset, i) + 2);
                 int mappingOffset = arr.ToInt(SubtableRecordOffset(offset, i) + 4);
-                int subtableVersion = arr.ToUShort(offset + mappingOffset);
+                CharacterMappingFormat subtableVersion = (CharacterMappingFormat) arr.ToUShort(offset + mappingOffset);
                 Func<PlatformId, ushort, byte[], int, CharacterMapping> builder = GetSubtableBuilderMethod(subtableVersion);
                 if (builder is null)
                 {

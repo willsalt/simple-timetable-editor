@@ -51,6 +51,8 @@ namespace Unicorn.FontTools.OpenType
                     return PlainByteCharacterMapping.FromBytes;
                 case CharacterMappingFormat.HighByteSubheaderMapping:
                     return HighByteSubheaderCharacterMapping.FromBytes;
+                case CharacterMappingFormat.SegmentedMapping:
+                    return SegmentedCharacterMapping.FromBytes;
                 case CharacterMappingFormat.TrimmedTableMapping:
                     return TrimmedTableCharacterMapping.FromBytes;
                 default:

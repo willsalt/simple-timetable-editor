@@ -83,16 +83,32 @@ namespace Unicorn.FontTools.OpenType
             return false;
         }
 
+        /// <summary>
+        /// Hash code method.
+        /// </summary>
+        /// <returns>A hashcode for this value.</returns>
         public override int GetHashCode()
         {
             return FirstByte.GetHashCode() ^ LastByte.GetHashCode() ^ IdDelta.GetHashCode() ^ StartIndex.GetHashCode();
         }
 
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="a">A <see cref="HighByteSubheaderRecord" /> value.</param>
+        /// <param name="b">A <see cref="HighByteSubheaderRecord" /> value.</param>
+        /// <returns><c>true</c> if the operands are equal, <c>false</c> if not.</returns>
         public static bool operator ==(HighByteSubheaderRecord a, HighByteSubheaderRecord b)
         {
             return a.FirstByte == b.FirstByte && a.LastByte == b.LastByte && a.IdDelta == b.IdDelta && a.StartIndex == b.StartIndex;
         }
 
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="a">A <see cref="HighByteSubheaderRecord" /> value.</param>
+        /// <param name="b">A <see cref="HighByteSubheaderRecord" /> value.</param>
+        /// <returns><c>true</c> if the operands are not equal, <c>false</c> if they are.</returns>
         public static bool operator !=(HighByteSubheaderRecord a, HighByteSubheaderRecord b)
         {
             return a.FirstByte != b.FirstByte || a.LastByte != b.LastByte || a.IdDelta != b.IdDelta || a.StartIndex != b.StartIndex;

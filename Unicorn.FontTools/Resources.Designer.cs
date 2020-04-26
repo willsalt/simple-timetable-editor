@@ -97,6 +97,15 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to High byte array of incorrect length..
+        /// </summary>
+        internal static string OpenType_HighByteSubheaderCharacterMapping_FromBytes_ArrayLengthError {
+            get {
+                return ResourceManager.GetString("OpenType_HighByteSubheaderCharacterMapping_FromBytes_ArrayLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insufficient data to load &apos;hhea&apos; table..
         /// </summary>
         internal static string OpenType_HorizontalHeaderTable_FromBytes_InsufficientDataError {

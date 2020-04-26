@@ -129,6 +129,9 @@
   <data name="OpenType_HeaderTable_FromBytes_InsufficientDataError" xml:space="preserve">
     <value>Insufficient data to load 'head' table.</value>
   </data>
+  <data name="OpenType_HighByteSubheaderCharacterMapping_FromBytes_ArrayLengthError" xml:space="preserve">
+    <value>High byte array of incorrect length.</value>
+  </data>
   <data name="OpenType_HorizontalHeaderTable_FromBytes_InsufficientDataError" xml:space="preserve">
     <value>Insufficient data to load 'hhea' table.</value>
   </data>

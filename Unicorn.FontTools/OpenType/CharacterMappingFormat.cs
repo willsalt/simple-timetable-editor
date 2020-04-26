@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Unicorn.FontTools.OpenType
+﻿namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The different character mapping subtable formats.  These values are defined in the OpenType specification.

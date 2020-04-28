@@ -6,12 +6,25 @@ using Unicorn.FontTools.OpenType.Extensions;
 
 namespace Unicorn.FontTools.OpenType
 {
+    /// <summary>
+    /// OpenType character mapping type 4, which is one of the most common, at least for fonts in the BMP range.  It is logically similar to type 2, but has a very 
+    /// different disk layout.  The supported codepoint ranges are mapped either by specifying an offset from codepoint to glyph ID for the range, or by specifying
+    /// an offset into a table that maps code points to base glyph values to which a second offset is then added.
+    /// </summary>
     public class SegmentedCharacterMapping : CharacterMapping
     {
         private SegmentSubheaderRecordCollection Segments { get; }
 
         private readonly ushort[] _glyphData; 
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="platform">The platform that this mapping is for.</param>
+        /// <param name="encoding">The encoding that this mapping is for.</param>
+        /// <param name="lang">The language that this mapping is for (if applicable).</param>
+        /// <param name="segments">The codepoint range segments that make up this mapping.</param>
+        /// <param name="glyphData">The glyph mapping data table.</param>
         public SegmentedCharacterMapping(PlatformId platform, ushort encoding, ushort lang, IEnumerable<SegmentSubheaderRecord> segments, IEnumerable<ushort> glyphData) 
             : base(platform, encoding, lang)
         {
@@ -26,6 +39,14 @@ namespace Unicorn.FontTools.OpenType
             }
         }
 
+        /// <summary>
+        /// Construct a <see cref="SegmentedCharacterMapping" /> instance from an array of bytes.
+        /// </summary>
+        /// <param name="platform">The platform that this mapping applies to.</param>
+        /// <param name="encoding">The encoding this mapping is for.</param>
+        /// <param name="arr">Source data for the mapping.</param>
+        /// <param name="offset">The location in the source data at which the mapping data starts.</param>
+        /// <returns></returns>
         public static SegmentedCharacterMapping FromBytes(PlatformId platform, ushort encoding, byte[] arr, int offset)
         {
             ushort len = arr.ToUShort(offset + 2);
@@ -55,6 +76,11 @@ namespace Unicorn.FontTools.OpenType
             return new SegmentedCharacterMapping(platform, encoding, lang, segments, glyphData);
         }
 
+        /// <summary>
+        /// Dump the content of this subtable to a <see cref="TextWriter" />.  Returns silently if the parameter is null.  At present this only dumps the segment table,
+        /// not the glyph mapping table.
+        /// </summary>
+        /// <param name="writer">The writer to dump output to.</param>
         public override void Dump(TextWriter writer)
         {
             if (writer is null)
@@ -71,15 +97,25 @@ namespace Unicorn.FontTools.OpenType
             }
         }
 
+        /// <summary>
+        /// Convert a code point to a glyph ID.
+        /// </summary>
+        /// <param name="codePoint">The code point to convert.</param>
+        /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
         public override ushort MapCodePoint(byte codePoint)
         {
             return MapCodePoint((ushort)codePoint);
         }
 
+        /// <summary>
+        /// Convert a code point to a glyph ID.
+        /// </summary>
+        /// <param name="codePoint">The code point to convert.</param>
+        /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
         public override ushort MapCodePoint(ushort codePoint)
         {
             SegmentSubheaderRecord segment = Segments.FirstOrDefault(s => s.EndCode >= codePoint && s.StartCode <= codePoint);
-            if (segment is null)
+            if (segment == default)
             {
                 return 0;
             }
@@ -99,6 +135,11 @@ namespace Unicorn.FontTools.OpenType
             return (ushort)((glyphVal + segment.IdDelta) % 65536);
         }
 
+        /// <summary>
+        /// Convert a code point to a glyph ID.
+        /// </summary>
+        /// <param name="codePoint">The code point to convert.</param>
+        /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
         public override ushort MapCodePoint(uint codePoint)
         {
             if (codePoint > ushort.MaxValue)

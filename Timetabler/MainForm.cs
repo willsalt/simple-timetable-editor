@@ -204,13 +204,11 @@ namespace Timetabler
 
             try
             {
-                IExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine))
-                {
-                    MainLineWidth = Model.ExportOptions.LineWidth,
-                    PassingTrainDashWidth = Model.ExportOptions.FillerDashLineWidth
-                };
+                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine)))
                 using (FileStream fs = new FileStream(sfdExport.FileName, FileMode.Create, FileAccess.Write))
                 {
+                    exporter.MainLineWidth = Model.ExportOptions.LineWidth;
+                    exporter.PassingTrainDashWidth = Model.ExportOptions.FillerDashLineWidth;
                     exporter.Export(Model, fs);
                 }
                 MessageBox.Show(this, Resources.MainForm_Export_Completed);

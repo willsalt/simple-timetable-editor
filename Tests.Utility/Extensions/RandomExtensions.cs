@@ -406,6 +406,19 @@ namespace Tests.Utility.Extensions
             return int.MaxValue + (uint)random.Next();
         }
 
+        public static ulong NextULong(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(2) == 0)
+            {
+                return random.NextUInt();
+            }
+            return uint.MaxValue + (ulong)random.NextUInt();
+        }
+
         public static uint? NextNullableUInt(this Random random)
         {
             if (random is null)

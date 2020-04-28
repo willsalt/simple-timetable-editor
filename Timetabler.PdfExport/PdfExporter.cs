@@ -13,16 +13,16 @@ using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
 using Timetabler.PdfExport.Extensions;
 using Unicorn;
+using Unicorn.FontTools;
 using Unicorn.Impl.PdfSharp;
 using Unicorn.Interfaces;
 using Unicorn.Shapes;
 using Timetabler.PdfExport.Interfaces;
 using System.Globalization;
-using Unicorn.FontTools;
 
 namespace Timetabler.PdfExport
 {
-    public class PdfExporter : IExporter
+    public class PdfExporter : IExporter, IDisposable
     {
         private readonly IDocumentDescriptorFactory _engineSelector;
 
@@ -49,6 +49,8 @@ namespace Timetabler.PdfExport
             new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace) },
             new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace) },
         });
+
+        private OpenTypeFontLoader _fontLoader = new OpenTypeFontLoader();
 
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
@@ -90,12 +92,18 @@ namespace Timetabler.PdfExport
             }
             else
             {
-                _titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
-                _subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
-                _plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
-                _italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
-                _boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
-                _alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
+                //_titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
+                //_subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
+                //_plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
+                //_italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
+                //_boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
+                //_alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
+                _titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
+                _subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);
+                _plainBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace), 7.5);
+                _italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
+                _boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
+                _alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
             }
 
             Log.Info("Loaded fonts.");
@@ -1151,5 +1159,30 @@ namespace Timetabler.PdfExport
             }
             footnotesTable.DrawAt(_currentPage.PageGraphics, _currentPage.LeftMarginPosition, _currentPage.TopMarginPosition + titleHeight * 2);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _fontLoader?.Dispose();
+                    _fontLoader = null;
+                }
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

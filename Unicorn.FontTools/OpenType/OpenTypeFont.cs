@@ -10,14 +10,21 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// OpenType font data and metadata.
     /// </summary>
-    public class OpenTypeFont
+    public class OpenTypeFont : IDisposable
     {
-        private readonly MemoryMappedViewAccessor _accessor;
+        private MemoryMappedFile _mmf;
+        private MemoryMappedViewAccessor _accessor;
 
         /// <summary>
         /// The header <see cref="OffsetTable" /> - the most important contents being the number of data tables in the font.
         /// </summary>
         public OffsetTable OffsetHeader { get; set; }
+
+        /// <summary>
+        /// The ratio between font design units and em units (in other words, when the font is rendered at x points, this number of design units will measure x points.
+        /// Generally a medium-sized power of 2 such as 2048, but can be any value up to 16,384.
+        /// </summary>
+        public int DesignUnitsPerEm => Header.FontUnitScale;
 
         /// <summary>
         /// The "head" table of the font, which must be present for the font to be a valid OpenType file.
@@ -52,6 +59,22 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
+        /// The content of the font's "hmtx" table.
+        /// </summary>
+        public HorizontalMetricsTable HorizontalMetrics
+        {
+            get
+            {
+                TableIndexRecord index = TableIndex["hmtx"];
+                if (index.Data == null)
+                {
+                    index.Data = GetTableData(index);
+                }
+                return (HorizontalMetricsTable)index.Data;
+            }
+        }
+
+        /// <summary>
         /// The "maxp" table of this font, which must be present for the font to be a valid OpenType file.
         /// </summary>
         public MaximumProfileTable MaximumProfile
@@ -64,6 +87,38 @@ namespace Unicorn.FontTools.OpenType
                     index.Data = GetTableData(index);
                 }
                 return (MaximumProfileTable)index.Data;
+            }
+        }
+
+        /// <summary>
+        /// The content of the font's "OS/2" data table.
+        /// </summary>
+        public OS2MetricsTable OS2Metrics
+        {
+            get
+            {
+                TableIndexRecord index = TableIndex["OS/2"];
+                if (index.Data == null)
+                {
+                    index.Data = GetTableData(index);
+                }
+                return (OS2MetricsTable)index.Data;
+            }
+        }
+
+        /// <summary>
+        /// The content of the font's "cmap" data table.
+        /// </summary>
+        public CharacterMappingTable CharacterMapping
+        {
+            get
+            {
+                TableIndexRecord index = TableIndex["cmap"];
+                if (index.Data == null)
+                {
+                    index.Data = GetTableData(index);
+                }
+                return (CharacterMappingTable)index.Data;
             }
         }
 
@@ -123,7 +178,8 @@ namespace Unicorn.FontTools.OpenType
             {
                 throw new ArgumentNullException(nameof(mmf));
             }
-            _accessor = mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
+            _mmf = mmf;
+            _accessor = _mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
             OffsetHeader = LoadOffsetTable(_accessor);
             long offset = 12;
             for (int i = 0; i < OffsetHeader.TableCount; ++i)
@@ -248,5 +304,53 @@ namespace Unicorn.FontTools.OpenType
             TableIndexRecord indexEntry = TableIndex[t.Value];
             return GetTableData(indexEntry);
         }
+
+        /// <summary>
+        /// Return the advance width (in font design units) of the given codepoint on the given platform, using the best encoding for that platform.
+        /// </summary>
+        /// <param name="platform">The platform to measure for.</param>
+        /// <param name="codePoint">The code point to be measured.</param>
+        /// <returns>The advance width value for the bset glyph found to represent the given code point on the specified platform.</returns>
+        public int AdvanceWidth(PlatformId platform, uint codePoint)
+        {
+            CharacterMapping mapping = CharacterMapping.SelectBestMapping(platform);
+            ushort glyph = mapping.MapCodePoint(codePoint);
+            return HorizontalMetrics.Metrics[glyph].AdvanceWidth;
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="OpenTypeFont" /> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to only release unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _mmf?.Dispose();
+                    _mmf = null;
+                    _accessor?.Dispose();
+                    _accessor = null;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Releases all resources used by the <see cref="OpenTypeFont" />.
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

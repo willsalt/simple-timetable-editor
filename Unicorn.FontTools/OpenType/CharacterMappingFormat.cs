@@ -26,12 +26,12 @@
         TrimmedTableMapping = 6,
 
         /// <summary>
-        /// Subtable version 8 (mixed 16- and 32-bit coverage).
+        /// Subtable version 8 (mixed 16- and 32-bit coverage).  "The use of this format is discouraged" according to the spec.
         /// </summary>
         Mixed32BitMapping = 8,
 
         /// <summary>
-        /// Subtable version 10 (32-bit trimmed table mapping).
+        /// Subtable version 10 (32-bit trimmed table mapping).  "This format is not widely used and is not supported by Microsoft."
         /// </summary>
         Trimmed32BitTableMapping = 10,
 

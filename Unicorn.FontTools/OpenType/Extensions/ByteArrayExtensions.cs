@@ -85,7 +85,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         }
 
         /// <summary>
-        /// Convert four bytes to a "fixed" value, returned as decimal.  The fixed format is a signed 32-bit fixed-point format with 16 bits for the decimal part and 
+        /// Convert four bytes to a "fixed" value, returned as decimal.  The fixed format is a signed 32-bit fixed-point format with 16 bits for the integral part and 
         /// 16 bits for the fractional part.
         /// </summary>
         /// <param name="arr"></param>

@@ -18,12 +18,13 @@ namespace Timetabler.PdfExport.Tests.Unit
         {
             Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
             mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
-            PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object);
-            TimetableDocument testParam0 = null;
-            Stream testParam1 = new Mock<Stream>().Object;
+            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            {
+                TimetableDocument testParam0 = null;
+                Stream testParam1 = new Mock<Stream>().Object;
 
-            testObject.Export(testParam0, testParam1);
-
+                testObject.Export(testParam0, testParam1);
+            }
             Assert.Fail();
         }
 
@@ -32,18 +33,20 @@ namespace Timetabler.PdfExport.Tests.Unit
         {
             Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
             mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
-            PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object);
-            TimetableDocument testParam0 = null;
-            Stream testParam1 = new Mock<Stream>().Object;
+            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            {
+                TimetableDocument testParam0 = null;
+                Stream testParam1 = new Mock<Stream>().Object;
 
-            try
-            {
-                testObject.Export(testParam0, testParam1);
-                Assert.Fail();
-            }
-            catch (ArgumentNullException ex)
-            {
-                Assert.AreEqual("document", ex.ParamName);
+                try
+                {
+                    testObject.Export(testParam0, testParam1);
+                    Assert.Fail();
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Assert.AreEqual("document", ex.ParamName);
+                }
             }
         }
 

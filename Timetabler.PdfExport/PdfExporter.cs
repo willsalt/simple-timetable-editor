@@ -22,14 +22,23 @@ using System.Globalization;
 
 namespace Timetabler.PdfExport
 {
+    /// <summary>
+    /// Class which controls the exporting of a timetable document to PDF.
+    /// </summary>
     public class PdfExporter : IExporter, IDisposable
     {
         private readonly IDocumentDescriptorFactory _engineSelector;
 
+        /// <summary>
+        /// Width of the most important "scaffolding" lines used to draw the timetable.
+        /// </summary>
         public double MainLineWidth { get; set; }
 
         private double LineOffset => MainLineWidth / 2;
 
+        /// <summary>
+        /// Width of the lines drawn as dashes to indicate a train passes a location without stopping.
+        /// </summary>
         public double PassingTrainDashWidth { get; set; }
 
         private const double lineGapSize = 1.5;
@@ -72,6 +81,10 @@ namespace Timetabler.PdfExport
 
         private IPageDescriptor _currentPage;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="ddf">The factory used to instantiate Unicorn driver-level objects, so that the implementation can be selected.</param>
         public PdfExporter(IDocumentDescriptorFactory ddf)
         {
             if (ddf is null)
@@ -131,6 +144,11 @@ namespace Timetabler.PdfExport
             return availableWidth > 0 ? colsCounted : colsCounted - 1;
         }
 
+        /// <summary>
+        /// Render a <see cref="TimetableDocument" /> to PDF, and write the PDF data to a <see cref="Stream" />.
+        /// </summary>
+        /// <param name="document">The document to be exported.</param>
+        /// <param name="outputStream">The stream to write the output data to.</param>
         public void Export(TimetableDocument document, Stream outputStream)
         {
             if (document is null)
@@ -1163,6 +1181,10 @@ namespace Timetabler.PdfExport
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="PdfExporter" /> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to only release unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -1177,6 +1199,9 @@ namespace Timetabler.PdfExport
         }
 
         // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Releases all resources used by the <see cref="PdfExporter" />.
+        /// </summary>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

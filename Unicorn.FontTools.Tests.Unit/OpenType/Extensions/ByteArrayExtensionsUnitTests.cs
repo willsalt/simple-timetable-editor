@@ -1091,6 +1091,272 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
             Assert.AreEqual(expectedValue, testOutput);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        {
+            byte[] testParam0 = null;
+            int testParam1 = _rnd.Next();
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsZeroAndSecondParameterIsZero()
+        {
+            byte[] testParam0 = Array.Empty<byte>();
+            int testParam1 = 0;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsOneToSevenAndSecondParameterIsZero()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(1, 7)];
+            int testParam1 = 0;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsIndexOutOfRangeException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsLessThanZero()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = -_rnd.Next();
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsGreaterThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length + 1, int.MaxValue);
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsEqualToLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsOneLessThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length - 1;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsTwoLessThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length - 2;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsThreeLessThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length - 3;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsFourLessThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length - 4;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsFiveLessThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length - 5;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsSixLessThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length - 6;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsInvalidOperationException_IfFirstParameterLengthIsEightOrGreaterAndSecondParameterIsSevenLessThanLengthOfFirstParameter()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = testParam0.Length - 7;
+
+            _ = testParam0.ToLong(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void ByteArrayExtensionsClass_ToLongMethod_ReturnsZero_IfParametersAreValidAndInputDataIsZero()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length - 7);
+
+            long testOutput = testParam0.ToLong(testParam1);
+
+            Assert.AreEqual(0L, testOutput);
+        }
+
+        [TestMethod]
+        public void ByteArrayExtensionsClass_ToLongMethod_ReturnsCorrectValue_IfParametersAreValidAndExpectedValueIsWithinRangeOfByte()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length - 7);
+            long expectedValue = (long)_rnd.Next(byte.MaxValue);
+            testParam0[testParam1 + 7] = (byte)(expectedValue & 0xff);
+
+            long testOutput = testParam0.ToLong(testParam1);
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void ByteArrayExtensionsClass_ToLongMethod_ReturnsCorrectValue_IfParametersAreValidAndExpectedValueIsWithinRangeOfShort()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length - 7);
+            long expectedValue = (long)_rnd.Next(short.MaxValue);
+            testParam0[testParam1 + 6] = (byte)((expectedValue & 0xff00) >> 8);
+            testParam0[testParam1 + 7] = (byte)(expectedValue & 0xff);
+
+            long testOutput = testParam0.ToLong(testParam1);
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void ByteArrayExtensionsClass_ToLongMethod_ReturnsCorrectValue_IfParametersAreValidAndExpectedValueIsWithinRangeOfInt()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length - 7);
+            long expectedValue = (long)_rnd.Next();
+            testParam0[testParam1 + 4] = (byte)((expectedValue & 0xff000000) >> 24);
+            testParam0[testParam1 + 5] = (byte)((expectedValue & 0xff0000) >> 16);
+            testParam0[testParam1 + 6] = (byte)((expectedValue & 0xff00) >> 8);
+            testParam0[testParam1 + 7] = (byte)(expectedValue & 0xff);
+
+            long testOutput = testParam0.ToLong(testParam1);
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void ByteArrayExtensionsClass_ToLongMethod_ReturnsCorrectValue_IfParametersAreValidAndExpectedValueIsWithinRangeOfUInt()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length - 7);
+            long expectedValue = _rnd.NextUInt();
+            testParam0[testParam1 + 4] = (byte)((expectedValue & 0xff000000) >> 24);
+            testParam0[testParam1 + 5] = (byte)((expectedValue & 0xff0000) >> 16);
+            testParam0[testParam1 + 6] = (byte)((expectedValue & 0xff00) >> 8);
+            testParam0[testParam1 + 7] = (byte)(expectedValue & 0xff);
+
+            long testOutput = testParam0.ToLong(testParam1);
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void ByteArrayExtensionsClass_ToLongMethod_ReturnsCorrectValue_IfParametersAreValidAndExpectedValueIsPositiveAndWithinRangeOfLong()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length - 7);
+            long expectedValue = _rnd.NextLong();
+            testParam0[testParam1] = (byte)((expectedValue & 0xf00000000000000) >> 56);
+            testParam0[testParam1 + 1] = (byte)((expectedValue & 0xff000000000000) >> 48);
+            testParam0[testParam1 + 2] = (byte)((expectedValue & 0xff0000000000) >> 40);
+            testParam0[testParam1 + 3] = (byte)((expectedValue & 0xff00000000) >> 32);
+            testParam0[testParam1 + 4] = (byte)((expectedValue & 0xff000000) >> 24);
+            testParam0[testParam1 + 5] = (byte)((expectedValue & 0xff0000) >> 16);
+            testParam0[testParam1 + 6] = (byte)((expectedValue & 0xff00) >> 8);
+            testParam0[testParam1 + 7] = (byte)(expectedValue & 0xff);
+
+            long testOutput = testParam0.ToLong(testParam1);
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void ByteArrayExtensionsClass_ToLongMethod_ReturnsCorrectValue_IfParametersAreValidAndExpectedValueIsNegativeAndWithinRangeOfLong()
+        {
+            byte[] testParam0 = new byte[_rnd.Next(8, 64)];
+            int testParam1 = _rnd.Next(testParam0.Length - 7);
+            long expectedValue = -_rnd.NextLong();
+            testParam0[testParam1] = (byte)(unchecked((ulong)expectedValue & 0xff00000000000000) >> 56);
+            testParam0[testParam1 + 1] = (byte)((expectedValue & 0xff000000000000) >> 48);
+            testParam0[testParam1 + 2] = (byte)((expectedValue & 0xff0000000000) >> 40);
+            testParam0[testParam1 + 3] = (byte)((expectedValue & 0xff00000000) >> 32);
+            testParam0[testParam1 + 4] = (byte)((expectedValue & 0xff000000) >> 24);
+            testParam0[testParam1 + 5] = (byte)((expectedValue & 0xff0000) >> 16);
+            testParam0[testParam1 + 6] = (byte)((expectedValue & 0xff00) >> 8);
+            testParam0[testParam1 + 7] = (byte)(expectedValue & 0xff);
+
+            long testOutput = testParam0.ToLong(testParam1);
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

@@ -107,6 +107,16 @@ namespace Tests.Utility.Extensions
             return (float?)NextNullableDouble(random, scale);
         }
 
+        public static DateTime NextDateTime(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            long ticks = NextLong(random, DateTime.MaxValue.Ticks);
+            return new DateTime().AddTicks(ticks);
+        }
+
         public static TimeOfDay NextTimeOfDay(this Random random)
         {
             if (random == null)
@@ -406,6 +416,19 @@ namespace Tests.Utility.Extensions
             return int.MaxValue + (uint)random.Next();
         }
 
+        public static uint NextUInt(this Random random, uint max)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (max < int.MaxValue)
+            {
+                return (uint)random.Next((int)max);
+            }
+            return unchecked((uint)random.Next((int)(max >> 1)) << 1) | (uint)random.Next(2);
+        }
+
         public static ulong NextULong(this Random random)
         {
             if (random is null)
@@ -430,6 +453,19 @@ namespace Tests.Utility.Extensions
                 return NextUInt(random);
             }
             return NextUInt(random) | ((long)random.Next() << 32);
+        }
+
+        public static long NextLong(this Random random, long max)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (max < uint.MaxValue)
+            {
+                return random.NextUInt((uint)max);
+            }
+            return random.NextUInt() | (long)random.Next((int)(max >> 32)) << 32;
         }
 
         public static uint? NextNullableUInt(this Random random)

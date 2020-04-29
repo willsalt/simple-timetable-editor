@@ -226,5 +226,33 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             }
             return _platformIds[random.Next(_platformIds.Length)];
         }
+
+        public static FontFlags NextOpenTypeFontFlags(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (FontFlags)(random.Next(32) | (random.NextBoolean() ? 2048 : 0) | (random.NextBoolean() ? 4096 : 0) | (random.NextBoolean() ? 8192 : 0) |
+                (random.NextBoolean() ? 16384 : 0));
+        }
+
+        public static MacStyleFlags NextOpenTypeMacStyleFlags(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (MacStyleFlags)random.Next(128);
+        }
+
+        public static FontDirectionHint NextOpenTypeFontDirectionHint(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (FontDirectionHint)random.Next(-2, 3);
+        }
     }
 }

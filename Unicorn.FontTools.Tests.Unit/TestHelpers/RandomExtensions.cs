@@ -254,5 +254,62 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             }
             return (FontDirectionHint)random.Next(-2, 3);
         }
+
+        public static HorizontalMetricRecord NextOpenTypeHorizontalMetricRecord(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new HorizontalMetricRecord(random.NextUShort(), random.NextShort());
+        }
+
+        private static readonly NameField[] _nameFields = new[] 
+        { 
+            NameField.CopyrightNotice, 
+            NameField.Family, 
+            NameField.Subfamily, 
+            NameField.UniqueID, 
+            NameField.FullName, 
+            NameField.Version, 
+            NameField.PostScriptName, 
+            NameField.TrademarkNotice, 
+            NameField.Manufacturer, 
+            NameField.Description, 
+            NameField.Description, 
+            NameField.VendorURI, 
+            NameField.DesignerURI, 
+            NameField.LicenceDescription, 
+            NameField.LicenceURI, 
+            NameField.TypographicFamily, 
+            NameField.TypographicSubfamily, 
+            NameField.MacintoshMenuName, 
+            NameField.SampleText, 
+            NameField.PostScriptCIDName, 
+            NameField.WWSFamilyName, 
+            NameField.WWSSubfamilyName, 
+            NameField.LightBackgroundPalette, 
+            NameField.DarkBackgroundPalette, 
+            NameField.PostScriptFamilyPrefix, 
+        };
+
+        public static NameField NextOpenTypeNameField(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return _nameFields[random.Next(_nameFields.Length)];
+        }
+
+        public static NameRecord NextOpenTypeNameRecord(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new NameRecord(NextOpenTypePlatformId(random), random.NextUShort(), random.NextUShort(), NextOpenTypeNameField(random), 
+                random.NextString(random.Next(128)));
+        }
     }
 }

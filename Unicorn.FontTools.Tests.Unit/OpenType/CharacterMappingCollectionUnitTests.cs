@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.FontTools.OpenType;
@@ -29,7 +28,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void CharacterMappingCollection_Constructor_ReturnsObjectWithCountZero_IfParameterIsNull()
+        public void CharacterMappingCollectionClass_Constructor_ReturnsObjectWithCountZero_IfParameterIsNull()
         {
             CharacterMappingCollection testOutput = new CharacterMappingCollection(null);
 
@@ -37,7 +36,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
         }
 
         [TestMethod]
-        public void CharacterMappingCollection_Constructor_ReturnsObjectWithCountZero_IfParameterIsEmptyEnumeration()
+        public void CharacterMappingCollectionClass_Constructor_ReturnsObjectWithCountZero_IfParameterIsEmptyEnumeration()
         {
             CharacterMappingCollection testOutput = new CharacterMappingCollection(Array.Empty<CharacterMapping>());
 
@@ -45,7 +44,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
         }
 
         [TestMethod]
-        public void CharacterMappingCollection_Constructor_ReturnsObjectWithCorrectCountProperty_IfParameterIsNotNull()
+        public void CharacterMappingCollectionClass_Constructor_ReturnsObjectWithCorrectCountProperty_IfParameterIsNotNull()
         {
             CharacterMapping[] testParam = GetTestData();
 
@@ -55,7 +54,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
         }
 
         [TestMethod]
-        public void CharacterMappingCollection_Indexer_ReturnsCorrectItems()
+        public void CharacterMappingCollectionClass_Indexer_ReturnsCorrectItems()
         {
             CharacterMapping[] testData = GetTestData();
             CharacterMappingCollection testObject = new CharacterMappingCollection(testData);
@@ -67,7 +66,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
         }
 
         [TestMethod]
-        public void CharacterMappingCollection_Enumerator_EnumeratesObjectInCorrectOrder()
+        public void CharacterMappingCollectionClass_Enumerator_EnumeratesObjectInCorrectOrder()
         {
             CharacterMapping[] testData = GetTestData();
             CharacterMappingCollection testObject = new CharacterMappingCollection(testData);

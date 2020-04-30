@@ -260,9 +260,7 @@ namespace Unicorn.FontTools.OpenType
         }
 
         private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset, uint len)
-        {
-            return HorizontalMetricsTable.FromBytes(arr, offset, MaximumProfile.GlyphCount, HorizontalHeader.HmtxHMetricCount);
-        }
+            => HorizontalMetricsTable.FromBytes(arr, offset, MaximumProfile.GlyphCount, HorizontalHeader.HmtxHMetricCount);
 
         /// <summary>
         /// Return the contents of the table with the given index record, from a cached copy of the data if available.

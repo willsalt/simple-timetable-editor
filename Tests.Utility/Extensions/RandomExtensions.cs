@@ -480,5 +480,14 @@ namespace Tests.Utility.Extensions
             }
             return NextUInt(random);
         }
+
+        public static byte NextByte(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (byte)random.Next(byte.MaxValue + 1);
+        }
     }
 }

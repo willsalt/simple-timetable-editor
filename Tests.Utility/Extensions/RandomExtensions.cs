@@ -483,11 +483,16 @@ namespace Tests.Utility.Extensions
 
         public static byte NextByte(this Random random)
         {
+            return NextByte(random, byte.MaxValue + 1);
+        }
+
+        public static byte NextByte(this Random random, int max)
+        {
             if (random is null)
             {
                 throw new NullReferenceException();
             }
-            return (byte)random.Next(byte.MaxValue + 1);
+            return (byte)random.Next(max);
         }
     }
 }

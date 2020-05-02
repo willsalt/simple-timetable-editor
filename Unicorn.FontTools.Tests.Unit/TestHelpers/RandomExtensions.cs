@@ -311,5 +311,14 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             return new NameRecord(NextOpenTypePlatformId(random), random.NextUShort(), random.NextUShort(), NextOpenTypeNameField(random), 
                 random.NextString(random.Next(128)));
         }
+
+        public static HighByteSubheaderRecord NextOpenTypeHighByteSubheaderRecord(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new HighByteSubheaderRecord(random.NextByte(), random.NextByte(), random.NextShort(), random.NextUShort());
+        }
     }
 }

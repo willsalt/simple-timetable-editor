@@ -320,5 +320,14 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             }
             return new HighByteSubheaderRecord(random.NextByte(), random.NextByte(), random.NextShort(), random.NextUShort());
         }
+
+        public static SegmentSubheaderRecord NextOpenTypeSegmentSubheaderRecord(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new SegmentSubheaderRecord(random.NextUShort(), random.NextUShort(), random.NextShort(), random.Next());
+        }
     }
 }

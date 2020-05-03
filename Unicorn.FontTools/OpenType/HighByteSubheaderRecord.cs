@@ -58,6 +58,10 @@ namespace Unicorn.FontTools.OpenType
             {
                 throw new ArgumentNullException(nameof(arr));
             }
+            if (arr.Length < 8)
+            {
+                throw new InvalidOperationException();
+            }
             return new HighByteSubheaderRecord(arr[offset + 1], (byte)(arr[offset + 1] + arr[offset + 3]), arr.ToShort(offset + 4), 
                 (ushort)(arr.ToUShort(offset + 6) - rangeOffset));
         }

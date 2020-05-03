@@ -121,8 +121,8 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void HighByteSubheaderRecordStruct_FromBytesMethod_ThrowsIndexOutOfRangeException_IfFirstParameterIsLessThanEightBytesLong()
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void HighByteSubheaderRecordStruct_FromBytesMethod_ThrowsInvalidOperationException_IfFirstParameterIsLessThanEightBytesLong()
         {
             byte[] testParam0 = new byte[_rnd.Next(8)];
             int testParam1 = 0;

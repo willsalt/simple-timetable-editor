@@ -68,5 +68,14 @@ namespace Unicorn.FontTools.Tests.Unit {
                 return ResourceManager.GetString("OpenType_Mocks_MockCharacterMapping_NotImplementedError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This method is not implemented.  This mock class is provided in order to unit test its base class&apos;s constructor; other functionality is not supported..
+        /// </summary>
+        internal static string OpenType_Mocks_MockTable_NotImplementedError {
+            get {
+                return ResourceManager.GetString("OpenType_Mocks_MockTable_NotImplementedError", resourceCulture);
+            }
+        }
     }
 }

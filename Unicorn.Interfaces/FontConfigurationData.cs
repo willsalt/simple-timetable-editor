@@ -3,7 +3,7 @@
     /// <summary>
     /// A class which maps a font name and font style to a filename.
     /// </summary>
-    public class FontConfigurationData
+    public struct FontConfigurationData
     {
         /// <summary>
         /// The name of the font family.

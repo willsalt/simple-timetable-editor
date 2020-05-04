@@ -1,9 +1,11 @@
-﻿namespace Unicorn.Interfaces
+﻿using System;
+
+namespace Unicorn.Interfaces
 {
     /// <summary>
-    /// A class that describes a point in 2D Cartesian space.
+    /// A struct that describes a point in 2D Cartesian space.
     /// </summary>
-    public class UniPoint
+    public struct UniPoint : IEquatable<UniPoint>
     {
         /// <summary>
         /// The X coordinate.
@@ -16,14 +18,6 @@
         public double Y { get; set; }
 
         /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public UniPoint()
-        {
-
-        }
-
-        /// <summary>
         /// Constructor setting initial values of properties.
         /// </summary>
         /// <param name="x">Initial value of the <see cref="X" /> property.</param>
@@ -33,5 +27,25 @@
             X = x;
             Y = y;
         }
+
+        public bool Equals(UniPoint other) => this == other;
+
+        public override bool Equals(object obj)
+        {
+            if (obj is UniPoint other)
+            {
+                return Equals(other);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ (Y * 2).GetHashCode();
+        }
+
+        public static bool operator ==(UniPoint a, UniPoint b) => a.X == b.X && a.Y == b.Y;
+
+        public static bool operator !=(UniPoint a, UniPoint b) => a.X != b.X || a.Y != b.Y;
     }
 }

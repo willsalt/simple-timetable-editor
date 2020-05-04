@@ -218,7 +218,7 @@ namespace Timetabler.PdfExport
                     }
                 }
 
-                UniSize boxHoursSize = null;
+                UniSize boxHoursSize = default;
                 if ((document.ExportOptions?.DisplayBoxHours ?? true) && document.SignalboxHoursSets.Count > 0)
                 {
                     Table hoursTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
@@ -273,7 +273,7 @@ namespace Timetabler.PdfExport
                             new PlainTextTableCell(document.PublishedDate, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics));
                     }
 
-                    if (boxHoursSize != null && creditsTable.ComputedWidth + boxHoursSize.Width > _currentPage.PageAvailableWidth)
+                    if (boxHoursSize != default(UniSize) && creditsTable.ComputedWidth + boxHoursSize.Width > _currentPage.PageAvailableWidth)
                     {
                         _currentPage.CurrentVerticalCursor += boxHoursSize.Height + 1;
                     }

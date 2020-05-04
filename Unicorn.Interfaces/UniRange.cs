@@ -1,9 +1,11 @@
-﻿namespace Unicorn.Interfaces
+﻿using System;
+
+namespace Unicorn.Interfaces
 {
     /// <summary>
     ///  Immutable class which encapsulates the start and end of a range of locations along a dimension.
     /// </summary>
-    public class UniRange
+    public struct UniRange : IEquatable<UniRange>
     {
         /// <summary>
         /// Start
@@ -30,5 +32,25 @@
             Start = start;
             End = end;
         }
+
+        public bool Equals(UniRange other) => this == other;
+
+        public override bool Equals(object obj)
+        {
+            if (obj is UniRange other)
+            {
+                return Equals(other);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Start.GetHashCode() ^ (End * 2).GetHashCode();
+        }
+
+        public static bool operator ==(UniRange a, UniRange b) => a.Start == b.Start && a.End == b.End;
+
+        public static bool operator !=(UniRange a, UniRange b) => a.Start != b.Start || a.End != b.End;
     }
 }

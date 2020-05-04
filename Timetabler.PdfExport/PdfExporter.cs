@@ -13,23 +13,32 @@ using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
 using Timetabler.PdfExport.Extensions;
 using Unicorn;
+using Unicorn.FontTools;
 using Unicorn.Impl.PdfSharp;
 using Unicorn.Interfaces;
 using Unicorn.Shapes;
 using Timetabler.PdfExport.Interfaces;
 using System.Globalization;
-using Unicorn.FontTools;
 
 namespace Timetabler.PdfExport
 {
-    public class PdfExporter : IExporter
+    /// <summary>
+    /// Class which controls the exporting of a timetable document to PDF.
+    /// </summary>
+    public class PdfExporter : IExporter, IDisposable
     {
         private readonly IDocumentDescriptorFactory _engineSelector;
 
+        /// <summary>
+        /// Width of the most important "scaffolding" lines used to draw the timetable.
+        /// </summary>
         public double MainLineWidth { get; set; }
 
         private double LineOffset => MainLineWidth / 2;
 
+        /// <summary>
+        /// Width of the lines drawn as dashes to indicate a train passes a location without stopping.
+        /// </summary>
         public double PassingTrainDashWidth { get; set; }
 
         private const double lineGapSize = 1.5;
@@ -49,6 +58,8 @@ namespace Timetabler.PdfExport
             new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace) },
             new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace) },
         });
+
+        private OpenTypeFontLoader _fontLoader = new OpenTypeFontLoader();
 
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
@@ -70,6 +81,10 @@ namespace Timetabler.PdfExport
 
         private IPageDescriptor _currentPage;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="ddf">The factory used to instantiate Unicorn driver-level objects, so that the implementation can be selected.</param>
         public PdfExporter(IDocumentDescriptorFactory ddf)
         {
             if (ddf is null)
@@ -90,12 +105,18 @@ namespace Timetabler.PdfExport
             }
             else
             {
-                _titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
-                _subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
-                _plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
-                _italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
-                _boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
-                _alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
+                //_titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
+                //_subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
+                //_plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
+                //_italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
+                //_boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
+                //_alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
+                _titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
+                _subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);
+                _plainBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace), 7.5);
+                _italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
+                _boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
+                _alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
             }
 
             Log.Info("Loaded fonts.");
@@ -123,6 +144,11 @@ namespace Timetabler.PdfExport
             return availableWidth > 0 ? colsCounted : colsCounted - 1;
         }
 
+        /// <summary>
+        /// Render a <see cref="TimetableDocument" /> to PDF, and write the PDF data to a <see cref="Stream" />.
+        /// </summary>
+        /// <param name="document">The document to be exported.</param>
+        /// <param name="outputStream">The stream to write the output data to.</param>
         public void Export(TimetableDocument document, Stream outputStream)
         {
             if (document is null)
@@ -1151,5 +1177,37 @@ namespace Timetabler.PdfExport
             }
             footnotesTable.DrawAt(_currentPage.PageGraphics, _currentPage.LeftMarginPosition, _currentPage.TopMarginPosition + titleHeight * 2);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="PdfExporter" /> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to only release unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _fontLoader?.Dispose();
+                    _fontLoader = null;
+                }
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Releases all resources used by the <see cref="PdfExporter" />.
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

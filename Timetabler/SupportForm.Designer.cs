@@ -35,6 +35,9 @@
             this.cbLogLevel = new System.Windows.Forms.ComboBox();
             this.tbLogFilePath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnGC = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -73,12 +76,27 @@
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnGC);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
+            // 
+            // btnGC
+            // 
+            resources.ApplyResources(this.btnGC, "btnGC");
+            this.btnGC.Name = "btnGC";
+            this.btnGC.UseVisualStyleBackColor = true;
+            this.btnGC.Click += new System.EventHandler(this.BtnGC_Click);
+            // 
             // SupportForm
             // 
             this.AcceptButton = this.btnOk;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbLogFilePath);
             this.Controls.Add(this.cbLogLevel);
@@ -88,6 +106,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SupportForm";
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,5 +120,7 @@
         private System.Windows.Forms.ComboBox cbLogLevel;
         private System.Windows.Forms.TextBox tbLogFilePath;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnGC;
     }
 }

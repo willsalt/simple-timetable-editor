@@ -51,12 +51,13 @@ namespace Timetabler.PdfExport
         private static readonly FontConfigurator FontConfigurator = new FontConfigurator(new[]
 #pragma warning restore CA1823 // Avoid unused private fields
         {
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace) },
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace) },
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace) },
-            new FontConfigurationData { Name = "Serif", Style = UniFontStyles.Bold | UniFontStyles.Italic, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldItalicFace) },
-            new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Regular, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace) },
-            new FontConfigurationData { Name = "Sans", Style = UniFontStyles.Bold, Filename = Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace) },
+            new FontConfigurationData("Serif", UniFontStyles.Regular, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace)),
+            new FontConfigurationData("Serif", UniFontStyles.Bold, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace)),
+            new FontConfigurationData("Serif", UniFontStyles.Italic, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace)),
+            new FontConfigurationData("Serif", UniFontStyles.Bold | UniFontStyles.Italic, 
+                Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldItalicFace)),
+            new FontConfigurationData("Sans", UniFontStyles.Regular, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace)),
+            new FontConfigurationData("Sans", UniFontStyles.Bold, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace)),
         });
 
         private OpenTypeFontLoader _fontLoader = new OpenTypeFontLoader();
@@ -273,7 +274,7 @@ namespace Timetabler.PdfExport
                             new PlainTextTableCell(document.PublishedDate, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics));
                     }
 
-                    if (boxHoursSize != default(UniSize) && creditsTable.ComputedWidth + boxHoursSize.Width > _currentPage.PageAvailableWidth)
+                    if (boxHoursSize != default && creditsTable.ComputedWidth + boxHoursSize.Width > _currentPage.PageAvailableWidth)
                     {
                         _currentPage.CurrentVerticalCursor += boxHoursSize.Height + 1;
                     }

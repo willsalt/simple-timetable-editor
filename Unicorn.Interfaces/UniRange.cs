@@ -3,7 +3,7 @@
 namespace Unicorn.Interfaces
 {
     /// <summary>
-    ///  Immutable class which encapsulates the start and end of a range of locations along a dimension.
+    ///  Immutable struct which encapsulates the start and end of a range of locations along a dimension.
     /// </summary>
     public struct UniRange : IEquatable<UniRange>
     {
@@ -33,8 +33,18 @@ namespace Unicorn.Interfaces
             End = end;
         }
 
+        /// <summary>
+        /// Equality-test method.
+        /// </summary>
+        /// <param name="other">Another <see cref="UniRange" /> value.</param>
+        /// <returns><c>true</c> if the parameter is equal to this value; <c>false</c> otherwise.</returns>
         public bool Equals(UniRange other) => this == other;
 
+        /// <summary>
+        /// Equality-test method.
+        /// </summary>
+        /// <param name="obj">Another object or value.</param>
+        /// <returns><c>true</c> if the parameter is a <see cref="UniRange" /> value that is equal to this; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
             if (obj is UniRange other)
@@ -44,13 +54,29 @@ namespace Unicorn.Interfaces
             return false;
         }
 
+        /// <summary>
+        /// Hash code method.
+        /// </summary>
+        /// <returns>A hash code derived from this value.</returns>
         public override int GetHashCode()
         {
-            return Start.GetHashCode() ^ (End * 2).GetHashCode();
+            return Start.GetHashCode() ^ (End * 7).GetHashCode();
         }
 
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="a">A <see cref="UniRange" /> value.</param>
+        /// <param name="b">A <see cref="UniRange" /> value.</param>
+        /// <returns><c>true</c> if the operands are equal across both properties; <c>false</c> otherwise.</returns>
         public static bool operator ==(UniRange a, UniRange b) => a.Start == b.Start && a.End == b.End;
 
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="a">A <see cref="UniRange" /> value.</param>
+        /// <param name="b">A <see cref="UniRange" /> value.</param>
+        /// <returns><c>true></c> if the operands differ in either property; <c>false</c> if they are equal.</returns>
         public static bool operator !=(UniRange a, UniRange b) => a.Start != b.Start || a.End != b.End;
     }
 }

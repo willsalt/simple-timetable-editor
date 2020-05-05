@@ -998,7 +998,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
 
             UniSize testOutput = testObject.MeasureString(testParam0, testParam1);
 
-            Assert.AreSame(expectedResult, testOutput);
+            Assert.AreEqual(expectedResult, testOutput);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj" />
+    <ProjectReference Include="..\Unicorn.Interfaces.Tests.Utility\Unicorn.Interfaces.Tests.Utility.csproj" />
     <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj" />
   </ItemGroup>
 

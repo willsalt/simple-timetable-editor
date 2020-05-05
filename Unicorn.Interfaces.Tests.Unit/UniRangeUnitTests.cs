@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 using Tests.Utility.Extensions;
 
 namespace Unicorn.Interfaces.Tests.Unit

@@ -3,9 +3,9 @@
 namespace Unicorn.Interfaces
 {
     /// <summary>
-    /// Immutable class which encapsulates the size of a 2D rectangle.
+    /// Immutable struct which encapsulates the size of a 2D rectangle.
     /// </summary>
-    public class UniSize : IEquatable<UniSize>
+    public struct UniSize : IEquatable<UniSize>
     {
         /// <summary>
         /// Width
@@ -33,30 +33,15 @@ namespace Unicorn.Interfaces
         /// </summary>
         /// <param name="other">Another UniSize instance to compare against.</param>
         /// <returns>True or false according to whether or not the other instance is equal to this.</returns>
-        public bool Equals(UniSize other)
-        {
-            if (other is null)
-            {
-                return false;
-            }
-            return Width == other.Width && Height == other.Height;
-        }
+        public bool Equals(UniSize other) => this == other;
 
         /// <summary>
         /// Equality test.
         /// </summary>
-        /// <param name="obj">Another object to compare against.</param>
-        /// <returns>True if the obj parameter is another UniSize instance that is the same as this; false otherwise.</returns>
+        /// <param name="obj">Another object or value to compare against.</param>
+        /// <returns><c>true</c> if the obj parameter is another UniSize value that is the same as this; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is null)
-            {
-                return false;
-            }
-            if (ReferenceEquals(obj, this))
-            {
-                return true;
-            }
             if (!(obj is UniSize other))
             {
                 return false;
@@ -77,31 +62,33 @@ namespace Unicorn.Interfaces
         /// <summary>
         /// Addition operator.  Returns a <see cref="UniSize" /> whose width is the sum of its operands' widths and whose height is the sum of its operands' heights.
         /// </summary>
-        /// <param name="a">A <see cref="UniSize" /> instance.</param>
-        /// <param name="b">A <see cref="UniSize" /> instance.</param>
-        /// <returns>A <see cref="UniSize" /> instance that equals the sum of the operands.</returns>
-        public static UniSize operator +(UniSize a, UniSize b)
-        {
-            if (a is null)
-            {
-                return b;
-            }
-            if (b is null)
-            {
-                return a;
-            }
-            return new UniSize(a.Width + b.Width, a.Height + b.Height);
-        }
+        /// <param name="a">A <see cref="UniSize" /> value.</param>
+        /// <param name="b">A <see cref="UniSize" /> value.</param>
+        /// <returns>A <see cref="UniSize" /> value that equals the sum of the operands.</returns>
+        public static UniSize operator +(UniSize a, UniSize b) => new UniSize(a.Width + b.Width, a.Height + b.Height);
 
         /// <summary>
-        /// Addition method.  Returns a <see cref="UniSize" /> whsoe width is the sum of its operands' widths and whose height is the sum of its operands' heights.
+        /// Equality operator.
         /// </summary>
-        /// <param name="left">A <see cref="UniSize" /> instance.</param>
-        /// <param name="right">A <see cref="UniSize" /> instance.</param>
-        /// <returns>A new <see cref="UniSize" /> instance that equals the sum of the operands.</returns>
-        public static UniSize Add(UniSize left, UniSize right)
-        {
-            return left + right;
-        }
+        /// <param name="a">A <see cref="UniSize" /> value.</param>
+        /// <param name="b">A <see cref="UniSize" /> value.</param>
+        /// <returns><c>true</c> if the operands have equal <see cref="Width" /> and <see cref="Height" /> properties; <c>false</c> if not.</returns>
+        public static bool operator ==(UniSize a, UniSize b) => a.Width == b.Width && a.Height == b.Height;
+
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="a">A <see cref="UniSize" /> value.</param>
+        /// <param name="b">A <see cref="UniSize" /> value.</param>
+        /// <returns><c>true</c> if the values' properties are not equal, <c>false</c> if they are.</returns>
+        public static bool operator !=(UniSize a, UniSize b) => a.Width != b.Width && a.Height != b.Height;
+
+        /// <summary>
+        /// Addition method.  Returns a <see cref="UniSize" /> whsoe width is the sum of its paremeters' widths and whose height is the sum of its parameters' heights.
+        /// </summary>
+        /// <param name="left">A <see cref="UniSize" /> value.</param>
+        /// <param name="right">A <see cref="UniSize" /> value.</param>
+        /// <returns>A new <see cref="UniSize" /> value that equals the sum of the parameters.</returns>
+        public static UniSize Add(UniSize left, UniSize right) => left + right;
     }
 }

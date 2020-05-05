@@ -109,10 +109,6 @@ namespace Unicorn.Impl.PdfSharp
             {
                 throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
-            if (rect is null)
-            {
-                throw new ArgumentNullException(nameof(rect));
-            }
 
             _core.DrawString(text, ourFont.Font, XBrushes.Black, new XRect(rect.Left, rect.Top, rect.Width, rect.Height), GetStringFormat(hAlign, vAlign));
         }

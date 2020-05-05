@@ -1,9 +1,11 @@
-﻿namespace Unicorn.Interfaces
+﻿using System;
+
+namespace Unicorn.Interfaces
 {
     /// <summary>
-    /// A class that describes a point in 2D Cartesian space.
+    /// A struct that describes a point in 2D Cartesian space.
     /// </summary>
-    public class UniPoint
+    public struct UniPoint : IEquatable<UniPoint>
     {
         /// <summary>
         /// The X coordinate.
@@ -16,14 +18,6 @@
         public double Y { get; set; }
 
         /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public UniPoint()
-        {
-
-        }
-
-        /// <summary>
         /// Constructor setting initial values of properties.
         /// </summary>
         /// <param name="x">Initial value of the <see cref="X" /> property.</param>
@@ -33,5 +27,51 @@
             X = x;
             Y = y;
         }
+
+        /// <summary>
+        /// Equality-test method.
+        /// </summary>
+        /// <param name="other">Another <see cref="UniPoint" /> value.</param>
+        /// <returns><c>true</c> if the parameter is equal to this value; <c>false</c> otherwise.</returns>
+        public bool Equals(UniPoint other) => this == other;
+
+        /// <summary>
+        /// Equality-test method.
+        /// </summary>
+        /// <param name="obj">Another object or value.</param>
+        /// <returns><c>true</c> if the parameter is a <see cref="UniPoint" /> value that is equal to this; <c>false</c> otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is UniPoint other)
+            {
+                return Equals(other);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hash code method.
+        /// </summary>
+        /// <returns>A hash code derived from this value.</returns>
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ (Y * 11).GetHashCode();
+        }
+
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="a">A <see cref="UniPoint" /> value.</param>
+        /// <param name="b">A <see cref="UniPoint" /> value.</param>
+        /// <returns><c>true</c> if the operands are equal across both properties; <c>false</c> otherwise.</returns>
+        public static bool operator ==(UniPoint a, UniPoint b) => a.X == b.X && a.Y == b.Y;
+
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="a">A <see cref="UniPoint" /> value.</param>
+        /// <param name="b">A <see cref="UniPoint" /> value.</param>
+        /// <returns><c>true</c> if the operands differ in either property, <c>false</c> if they are equal across both.</returns>
+        public static bool operator !=(UniPoint a, UniPoint b) => a.X != b.X || a.Y != b.Y;
     }
 }

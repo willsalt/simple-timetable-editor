@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Unicorn.Interfaces.Tests.Utility.Extensions;
 
 namespace Unicorn.Interfaces.Tests.Unit
 {
@@ -10,15 +11,28 @@ namespace Unicorn.Interfaces.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static UniSize GetUniSize(double? width = null, double? height = null)
-        {
-            return new UniSize(width ?? _rnd.NextDouble() * 1000, height ?? _rnd.NextDouble() * 1000);
-        }
+        private static UniSize GetUniSize() => _rnd.NextUniSize();
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void UniSizeClass_Constructor_SetsWidthPropertyToEqualFirstParameter()
+        public void UniSizeStruct_ParameterlessConstructor_SetsWidthPropertyToZero()
+        {
+            UniSize testOutput = new UniSize();
+
+            Assert.AreEqual(0d, testOutput.Width);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_ParameterlessConstructor_SetsHeightPropertyToZero()
+        {
+            UniSize testOutput = new UniSize();
+
+            Assert.AreEqual(0d, testOutput.Height);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_ConstructorWithTwoDoubleParameters_SetsWidthPropertyToEqualFirstParameter()
         {
             double testParam0 = _rnd.NextDouble() * 1000;
             double testParam1 = _rnd.NextDouble() * 1000;
@@ -29,7 +43,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_Constructor_SetsHeightPropertyToEqualSecondParameter()
+        public void UniSizeStruct_ConstructorWithTwoDoubleParameters_SetsHeightPropertyToEqualSecondParameter()
         {
             double testParam0 = _rnd.NextDouble() * 1000;
             double testParam1 = _rnd.NextDouble() * 1000;
@@ -40,18 +54,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterIsNull()
-        {
-            UniSize testObject = GetUniSize();
-            UniSize testParam = null;
-
-            bool testOutput = testObject.Equals(testParam);
-
-            Assert.IsFalse(testOutput);
-        }
-
-        [TestMethod]
-        public void UniSizeClass_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasDifferentWidthAndHeightPropertiesToObject()
+        public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasDifferentWidthAndHeightPropertiesToValue()
         {
             UniSize testObject = GetUniSize();
             UniSize testParam;
@@ -66,14 +69,15 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasSameWidthAndDifferentHeightPropertiesToObject()
+        public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasSameWidthAndDifferentHeightPropertiesToValue()
         {
             UniSize testObject = GetUniSize();
-            UniSize testParam;
+            double constrParam;
             do
             {
-                testParam = GetUniSize(testObject.Width);
-            } while (testParam.Height == testObject.Height);
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testObject.Height);
+            UniSize testParam = new UniSize(testObject.Width, constrParam);
 
             bool testOutput = testObject.Equals(testParam);
 
@@ -81,14 +85,16 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasDifferentWidthAndSameHeightPropertiesToObject()
+        public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasDifferentWidthAndSameHeightPropertiesToValue()
         {
             UniSize testObject = GetUniSize();
+            double constrParam;
             UniSize testParam;
             do
             {
-                testParam = GetUniSize(null, testObject.Height);
-            } while (testParam.Width == testObject.Width);
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testObject.Width);
+            testParam = new UniSize(constrParam, testObject.Height);
 
             bool testOutput = testObject.Equals(testParam);
 
@@ -96,7 +102,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithUniSizeParameter_ReturnsTrue_IfParameterIsSameObject()
+        public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsTrue_IfParameterIsSameValue()
         {
             UniSize testObject = GetUniSize();
             UniSize testParam = testObject;
@@ -107,10 +113,10 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithUniSizeParameter_ReturnsTrue_IfParameterIsDifferentObjectWithSameWidthAndSameHeightProperties()
+        public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsTrue_IfParameterIsDifferentValueWithSameWidthAndSameHeightProperties()
         {
             UniSize testObject = GetUniSize();
-            UniSize testParam = GetUniSize(testObject.Width, testObject.Height);
+            UniSize testParam = new UniSize(testObject.Width, testObject.Height);
 
             bool testOutput = testObject.Equals(testParam);
 
@@ -118,7 +124,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsNull()
+        public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsNull()
         {
             UniSize testObject = GetUniSize();
             object testParam = null;
@@ -129,7 +135,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeObjectWithDifferentWidthAndHeightPropertiesToObject()
+        public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeValueWithDifferentWidthAndHeightPropertiesToValue()
         {
             UniSize testObject = GetUniSize();
             UniSize testParam;
@@ -145,14 +151,15 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeObjectWithSameWidthAndDifferentHeightPropertiesToObject()
+        public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeValueWithSameWidthAndDifferentHeightPropertiesToValue()
         {
             UniSize testObject = GetUniSize();
-            UniSize testParam;
+            double constrParam;
             do
             {
-                testParam = GetUniSize(testObject.Width);
-            } while (testParam.Height == testObject.Height);
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testObject.Height);
+            UniSize testParam = new UniSize(testObject.Width, constrParam);
             object testParam0 = testParam;
 
             bool testOutput = testObject.Equals(testParam0);
@@ -161,14 +168,15 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeObjectWithDifferentWidthAndSameHeightPropertiesToObject()
+        public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeValueWithDifferentWidthAndSameHeightPropertiesToValue()
         {
             UniSize testObject = GetUniSize();
-            UniSize testParam;
+            double constrParam;
             do
             {
-                testParam = GetUniSize(null, testObject.Height);
-            } while (testParam.Width == testObject.Width);
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testObject.Width);
+            UniSize testParam = new UniSize(constrParam, testObject.Height);
             object testParam0 = testParam;
 
             bool testOutput = testObject.Equals(testParam0);
@@ -177,7 +185,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithObjectParameter_ReturnsTrue_IfParameterIsSameObject()
+        public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsTrue_IfParameterIsSameValue()
         {
             UniSize testObject = GetUniSize();
             object testParam = testObject;
@@ -188,10 +196,10 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithObjectParameter_ReturnsTrue_IfParameterIsDifferentUniSizeObjectWithSameWidthAndSameHeightProperties()
+        public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsTrue_IfParameterIsDifferentUniSizeValueWithSameWidthAndSameHeightProperties()
         {
             UniSize testObject = GetUniSize();
-            object testParam = GetUniSize(testObject.Width, testObject.Height);
+            object testParam = new UniSize(testObject.Width, testObject.Height);
 
             bool testOutput = testObject.Equals(testParam);
 
@@ -199,7 +207,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsNotAUniSizeObject()
+        public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsNotAUniSizeValue()
         {
             UniSize testObject = GetUniSize();
             object testParam = _rnd.NextString(_rnd.Next(50));
@@ -210,7 +218,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_GetHashCodeMethod_ReturnsSameValueWhenCalledTwice()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsSameValueWhenCalledTwice()
         {
             UniSize testObject = GetUniSize();
 
@@ -221,10 +229,10 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_GetHashCodeMethod_ReturnsSameValueWhenCalledOnTwoObjectsWithSameWidthAndHeightProperties()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsSameValueWhenCalledOnTwoValuesWithSameWidthAndHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
-            UniSize testObject1 = GetUniSize(testObject0.Width, testObject0.Height);
+            UniSize testObject1 = new UniSize(testObject0.Width, testObject0.Height);
 
             int testOutput0 = testObject0.GetHashCode();
             int testOutput1 = testObject1.GetHashCode();
@@ -233,10 +241,10 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoObjectsWithDifferentWidthAndHeightProperties()
+        public void UniSizeSutrct_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoValuesWithDifferentWidthAndHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
-            UniSize testObject1 = GetUniSize(testObject0.Width + 100, testObject0.Height + 100);
+            UniSize testObject1 = new UniSize(testObject0.Width + 100, testObject0.Height + 100);
 
             int testOutput0 = testObject0.GetHashCode();
             int testOutput1 = testObject1.GetHashCode();
@@ -245,10 +253,10 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoObjectsWithDifferentWidthAndSameHeightProperties()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoValuesWithDifferentWidthAndSameHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
-            UniSize testObject1 = GetUniSize(testObject0.Width + 100, testObject0.Height);
+            UniSize testObject1 = new UniSize(testObject0.Width + 100, testObject0.Height);
 
             int testOutput0 = testObject0.GetHashCode();
             int testOutput1 = testObject1.GetHashCode();
@@ -257,10 +265,10 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoObjectsWithSameWidthAndDifferentHeightProperties()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoValuesWithSameWidthAndDifferentHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
-            UniSize testObject1 = GetUniSize(testObject0.Width, testObject0.Height + 100);
+            UniSize testObject1 = new UniSize(testObject0.Width, testObject0.Height + 100);
 
             int testOutput0 = testObject0.GetHashCode();
             int testOutput1 = testObject1.GetHashCode();
@@ -269,42 +277,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_AdditionOperator_ReturnsObjectEqualToSecondOperand_IfFirstOperandIsNull()
-        {
-            UniSize testOp0 = null;
-            UniSize testOp1 = GetUniSize();
-
-            UniSize testOutput = testOp0 + testOp1;
-
-            Assert.AreEqual(testOp1.Width, testOutput.Width);
-            Assert.AreEqual(testOp1.Height, testOutput.Height);
-        }
-
-        [TestMethod]
-        public void UniSizeClass_AdditionOperator_ReturnsObjectEqualToFirstOperand_IfSecondOperandIsNull()
-        {
-            UniSize testOp0 = GetUniSize();
-            UniSize testOp1 = null;
-
-            UniSize testOutput = testOp0 + testOp1;
-
-            Assert.AreEqual(testOp0.Width, testOutput.Width);
-            Assert.AreEqual(testOp0.Height, testOutput.Height);
-        }
-
-        [TestMethod]
-        public void UniSizeClass_AdditionOperator_ReturnsNull_IfBothOperandsAreNull()
-        {
-            UniSize testOp0 = null;
-            UniSize testOp1 = null;
-
-            UniSize testOutput = testOp0 + testOp1;
-
-            Assert.IsNull(testOutput);
-        }
-
-        [TestMethod]
-        public void UniSizeClass_AdditionOperator_ReturnsObjectWithWidthPropertyEqualToSumOfWidthPropertiesOfOperands_IfNeitherOperandIsNull()
+        public void UniSizeStruct_AdditionOperator_ReturnsValueWithWidthPropertyEqualToSumOfWidthPropertiesOfOperands()
         {
             UniSize testOp0 = GetUniSize();
             UniSize testOp1 = GetUniSize();
@@ -315,7 +288,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_AdditionOperator_ReturnsObjectWithHeightPropertyEqualToSumOfHeightPropertiesOfOperands_IfNeitherOperandIsNull()
+        public void UniSizeStruct_AdditionOperator_ReturnsValueWithHeightPropertyEqualToSumOfHeightPropertiesOfOperands()
         {
             UniSize testOp0 = GetUniSize();
             UniSize testOp1 = GetUniSize();
@@ -326,42 +299,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_AddMethod_ReturnsObjectEqualToSecondOperand_IfFirstOperandIsNull()
-        {
-            UniSize testParam0 = null;
-            UniSize testParam1 = GetUniSize();
-
-            UniSize testOutput = UniSize.Add(testParam0, testParam1);
-
-            Assert.AreEqual(testParam1.Width, testOutput.Width);
-            Assert.AreEqual(testParam1.Height, testOutput.Height);
-        }
-
-        [TestMethod]
-        public void UniSizeClass_AddMethod_ReturnsObjectEqualToFirstOperand_IfSecondOperandIsNull()
-        {
-            UniSize testParam0 = GetUniSize();
-            UniSize testParam1 = null;
-
-            UniSize testOutput = UniSize.Add(testParam0, testParam1);
-
-            Assert.AreEqual(testParam0.Width, testOutput.Width);
-            Assert.AreEqual(testParam0.Height, testOutput.Height);
-        }
-
-        [TestMethod]
-        public void UniSizeClass_AddMethod_ReturnsNull_IfBothOperandsAreNull()
-        {
-            UniSize testParam0 = null;
-            UniSize testParam1 = null;
-
-            UniSize testOutput = UniSize.Add(testParam0, testParam1);
-
-            Assert.IsNull(testOutput);
-        }
-
-        [TestMethod]
-        public void UniSizeClass_AddMethod_ReturnsObjectWithWidthPropertyEqualToSumOfWidthPropertiesOfOperands_IfNeitherOperandIsNull()
+        public void UniSizeStruct_AddMethod_ReturnsValueWithWidthPropertyEqualToSumOfWidthPropertiesOfOperands()
         {
             UniSize testParam0 = GetUniSize();
             UniSize testParam1 = GetUniSize();
@@ -372,7 +310,7 @@ namespace Unicorn.Interfaces.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeClass_AddMethod_ReturnsObjectWithHeightPropertyEqualToSumOfHeightPropertiesOfOperands_IfNeitherOperandIsNull()
+        public void UniSizeStruct_AddMethod_ReturnsValueWithHeightPropertyEqualToSumOfHeightPropertiesOfOperands()
         {
             UniSize testParam0 = GetUniSize();
             UniSize testParam1 = GetUniSize();
@@ -380,6 +318,116 @@ namespace Unicorn.Interfaces.Tests.Unit
             UniSize testOutput = UniSize.Add(testParam0, testParam1);
 
             Assert.AreEqual(testParam0.Height + testParam1.Height, testOutput.Height);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_EqualityOperator_ReturnsTrue_IfBothOperandsAreSameValue()
+        {
+            UniSize testParam0 = GetUniSize();
+
+#pragma warning disable CS1718 // Comparison made to same variable
+            bool testOutput = testParam0 == testParam0;
+#pragma warning restore CS1718 // Comparison made to same variable
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_EqualityOperator_ReturnsTrue_IfBothOperandsHaveSameProperties()
+        {
+            UniSize testParam0 = GetUniSize();
+            UniSize testParam1 = new UniSize(testParam0.Width, testParam0.Height);
+
+            bool testOutput = testParam0 == testParam1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_EqualityOperator_ReturnsFalse_IfOperandsDifferByWidthProperty()
+        {
+            UniSize testParam0 = GetUniSize();
+            double constrParam;
+            do
+            {
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testParam0.Width);
+            UniSize testParam1 = new UniSize(constrParam, testParam0.Height);
+
+            bool testOutput = testParam0 == testParam1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_EqualityOperator_ReturnsFalse_IfOperandsDifferByHeightProperty()
+        {
+            UniSize testParam0 = GetUniSize();
+            double constrParam;
+            do
+            {
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testParam0.Height);
+            UniSize testParam1 = new UniSize(testParam0.Width, constrParam);
+
+            bool testOutput = testParam0 == testParam1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_InequalityOperator_ReturnsFalse_IfBothOperandsAreSameValue()
+        {
+            UniSize testParam0 = GetUniSize();
+
+#pragma warning disable CS1718 // Comparison made to same variable
+            bool testOutput = testParam0 != testParam0;
+#pragma warning restore CS1718 // Comparison made to same variable
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_InequalityOperator_ReturnsFalse_IfBothOperandsHaveSameProperties()
+        {
+            UniSize testParam0 = GetUniSize();
+            UniSize testParam1 = new UniSize(testParam0.Width, testParam0.Height);
+
+            bool testOutput = testParam0 != testParam1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_InequalityOperator_ReturnsTrue_IfOperandsDifferByWidthProperty()
+        {
+            UniSize testParam0 = GetUniSize();
+            double constrParam;
+            do
+            {
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testParam0.Width);
+            UniSize testParam1 = new UniSize(constrParam, testParam0.Height);
+
+            bool testOutput = testParam0 != testParam1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_InequalityOperator_ReturnsTrue_IfOperandsDifferByHeightProperty()
+        {
+            UniSize testParam0 = GetUniSize();
+            double constrParam;
+            do
+            {
+                constrParam = _rnd.NextDouble() * 1000;
+            } while (constrParam == testParam0.Height);
+            UniSize testParam1 = new UniSize(testParam0.Width, constrParam);
+
+            bool testOutput = testParam0 != testParam1;
+
+            Assert.IsFalse(testOutput);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

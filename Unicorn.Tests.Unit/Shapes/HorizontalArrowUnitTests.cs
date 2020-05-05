@@ -305,21 +305,6 @@ namespace Unicorn.Tests.Unit.Shapes
             Assert.IsNotNull(capturedPointList);
         }
 
-        [TestMethod]
-        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodOfFirstParameterWithParameterContainingPoints()
-        {
-            List<UniPoint> capturedPointList = null;
-            Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
-            mockGraphicsContext.Setup(c => c.DrawFilledPolygon(It.IsAny<IEnumerable<UniPoint>>())).Callback<IEnumerable<UniPoint>>(e => { capturedPointList = e.ToList(); });
-            double testParam1 = _rnd.NextDouble() * 100;
-            double testParam2 = _rnd.NextDouble() * 100;
-            HorizontalArrow testObject = GetArrow();
-
-            testObject.DrawAt(mockGraphicsContext.Object, testParam1, testParam2);
-
-            Assert.IsTrue(capturedPointList.Any(p => p != null));
-        }
-
         // We probably should not constrain the implementation too much by specifying the exact drawing style of an arrow by test, but it is worth providing
         // tests to confirm the arrow does not draw outside of its own self-declared bounding box
         //

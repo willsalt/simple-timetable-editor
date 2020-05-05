@@ -20,17 +20,6 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void UniSizeExtensionsClass_ToPdfRectangleMethod_ThrowsNullReferenceExceptionWhenFirstParameterIsNull()
-        {
-            UniSize testParam0 = null;
-
-            testParam0.ToPdfRectangle();
-
-            Assert.Fail();
-        }
-
-        [TestMethod]
         public void UniSizeExtensionsClass_ToPdfRectangleMethod_ReturnsObjectWithFirstElementEqualToZero()
         {
             UniSize testParam0 = GetUniSize();

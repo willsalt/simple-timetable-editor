@@ -162,6 +162,12 @@ namespace Unicorn.FontTools.OpenType.Extensions
         public static DateTime ToDateTime(this byte[] arr, int idx = 0)
         {
             long offset = ToLong(arr, idx);
+            // This is the number of seconds from 1st January 1904 (the epoch for the OpenType format) to 31st December 1999 
+            // (the largest value representable by DateTime)
+            if (offset > 255_485_232_000)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             return new DateTime(1904, 1, 1).AddTicks(offset * 10_000_000);
         }
 

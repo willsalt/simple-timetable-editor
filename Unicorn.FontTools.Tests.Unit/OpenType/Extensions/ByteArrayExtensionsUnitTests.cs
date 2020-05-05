@@ -1552,7 +1552,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
         {
             byte[] testParam0 = new byte[_rnd.Next(8, 64)];
             int testParam1 = _rnd.Next(testParam0.Length - 7);
-            long maxSeconds = (DateTime.MaxValue - new DateTime(1904, 1, 1)).Ticks / 10_000_000;
+            long maxSeconds = 255_485_232_000;
             long valueSeconds = _rnd.NextLong(long.MaxValue - maxSeconds) + maxSeconds + 1;
             testParam0[testParam1] = (byte)(unchecked((ulong)valueSeconds & 0xff00000000000000) >> 56);
             testParam0[testParam1 + 1] = (byte)((valueSeconds & 0xff000000000000) >> 48);

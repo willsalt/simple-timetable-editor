@@ -106,18 +106,18 @@ namespace Timetabler.PdfExport
             }
             else
             {
-                //_titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
-                //_subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
-                //_plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
-                //_italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
-                //_boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
-                //_alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
-                _titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
-                _subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);
-                _plainBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace), 7.5);
-                _italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
-                _boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
-                _alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
+                _titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
+                _subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
+                _plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
+                _italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
+                _boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
+                _alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
+                //_titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
+                //_subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);
+                //_plainBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace), 7.5);
+                //_italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
+                //_boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
+                //_alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
             }
 
             Log.Info("Loaded fonts.");

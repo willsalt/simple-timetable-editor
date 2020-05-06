@@ -32,6 +32,12 @@
         public string Content { get; private set; }
 
         /// <summary>
+        /// Flag to indicate if the <see cref="Content" /> of this record is a filler message inserted because the encoding used by the actual content is not supported
+        /// on this platform.  Records with this flag set will not be returned by the <see cref="NamingTable.Search(NameField)" /> method.
+        /// </summary>
+        public bool FillerContent { get; private set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="platform">The value for the <see cref="PlatformId" /> property.</param>
@@ -39,13 +45,15 @@
         /// <param name="lang">The value for the <see cref="LanguageId" /> property.</param>
         /// <param name="nameId">The value for the <see cref="NameId" /> property.</param>
         /// <param name="content">The value for the <see cref="Content" /> property.</param>
-        public NameRecord(PlatformId platform, ushort encoding, ushort lang, NameField nameId, string content)
+        /// <param name="fillerContent">The value for the <see cref="FillerContent" /> property.</param>
+        public NameRecord(PlatformId platform, ushort encoding, ushort lang, NameField nameId, string content, bool fillerContent)
         {
             PlatformId = platform;
             EncodingId = encoding;
             LanguageId = lang;
             NameId = nameId;
             Content = content;
+            FillerContent = fillerContent;
         }
     }
 }

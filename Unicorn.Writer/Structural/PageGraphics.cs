@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Unicorn.Interfaces;
 using Unicorn.Writer.Dummy;
 using Unicorn.Writer.Extensions;
@@ -14,6 +15,11 @@ namespace Unicorn.Writer.Structural
     /// </summary>
     public class PageGraphics : IGraphicsContext
     {
+        /// <summary>
+        /// The page that this graphics context belongs to.
+        /// </summary>
+        private readonly PdfPage _page;
+
         /// <summary>
         /// The content stream for the current page.
         /// </summary>
@@ -42,15 +48,21 @@ namespace Unicorn.Writer.Structural
         /// Constructor.  Requires methods for mapping coordinates from Unicorn-space (with the Y-origin at the top of the page, like most desktop drawing libraries)
         /// to PDF user space (with the Y-origin at the bottom of the page, like a graph).
         /// </summary>
+        /// <param name="parentPage">The page that this graphics object belongs to.</param>
         /// <param name="contentStream">The stream to write content for this page to.</param>
         /// <param name="xTransform">A transform function for converting Unicorn-space X coordinates.</param>
         /// <param name="yTransform">A transform function for converting Unicorn-space Y coordinates.</param>
-        public PageGraphics(PdfStream contentStream, Func<double, double> xTransform, Func<double, double> yTransform)
+        public PageGraphics(PdfPage parentPage, PdfStream contentStream, Func<double, double> xTransform, Func<double, double> yTransform)
         {
             if (contentStream is null)
             {
                 throw new ArgumentNullException(nameof(contentStream));
             }
+            if (parentPage is null)
+            {
+                throw new ArgumentNullException(nameof(parentPage));
+            }
+            _page = parentPage;
             PageStream = contentStream;
             _xTransformer = xTransform ?? (x => x);
             _yTransformer = yTransform ?? (x => x);
@@ -179,7 +191,16 @@ namespace Unicorn.Writer.Structural
         /// <param name="y"></param>
         public void DrawString(string text, IFontDescriptor font, double x, double y)
         {
-            
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
+            PdfFont pageFont = _page.UseFont(font);
+            PdfOperator.StartText().WriteTo(PageStream);
+            PdfOperator.SetTextFont(pageFont.InternalName, new PdfReal(font.PointSize)).WriteTo(PageStream);
+            PdfOperator.SetTextLocation(new PdfReal(_xTransformer(x)), new PdfReal(_yTransformer(y))).WriteTo(PageStream);
+            PdfOperator.DrawText(new PdfByteString(font.PreferredEncoding.GetBytes(text))).WriteTo(PageStream);
+            PdfOperator.EndText().WriteTo(PageStream);
         }
 
         /// <summary>
@@ -192,7 +213,38 @@ namespace Unicorn.Writer.Structural
         /// <param name="vAlign"></param>
         public void DrawString(string text, IFontDescriptor font, UniRectangle rect, HorizontalAlignment hAlign, VerticalAlignment vAlign)
         {
-            
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
+            var stringBox = MeasureString(text, font);
+            double x;
+            double y;
+            switch (hAlign)
+            {
+                case HorizontalAlignment.Left:
+                    x = rect.Left;
+                    break;
+                case HorizontalAlignment.Right:
+                    x = rect.Left + rect.Width - stringBox.Width;
+                    break;
+                default:
+                    x = rect.Left + (rect.Width - stringBox.Width) / 2;
+                    break;
+            }
+            switch (vAlign)
+            {
+                case VerticalAlignment.Bottom:
+                    y = rect.Top + rect.Height;
+                    break;
+                case VerticalAlignment.Top:
+                    y = rect.Top + stringBox.Height;
+                    break;
+                default:
+                    y = rect.Top + (rect.Height + stringBox.Height) / 2;
+                    break;
+            }
+            DrawString(text, font, x, y);
         }
 
         /// <summary>

@@ -88,6 +88,15 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encoded value is too large to be converted to a timestamp..
+        /// </summary>
+        internal static string OpenType_Extensions_ByteArrayExtensions_ToDateTime_OutOfRangeError {
+            get {
+                return ResourceManager.GetString("OpenType_Extensions_ByteArrayExtensions_ToDateTime_OutOfRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insufficient data to load &apos;head&apos; table..
         /// </summary>
         internal static string OpenType_HeaderTable_FromBytes_InsufficientDataError {

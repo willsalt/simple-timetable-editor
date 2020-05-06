@@ -86,12 +86,28 @@ namespace Unicorn.FontTools.OpenType
                 int len = arr.ToUShort(nrOffset + 8);
                 int strOffset = arr.ToUShort(nrOffset + 10);
                 Encoding stringEncoding = GetEncoding(platform, encoding);
-                string content = stringEncoding != null ? stringEncoding.GetString(arr, offset + stringStoreOffset + strOffset, len) : 
-                    Resources.OpenType_NamingTable_FromBytes_EncodingNotSupportedMessage;
-                names.Add(new NameRecord(platform, encoding, language, nameKind, content));
+                string content = Resources.OpenType_NamingTable_FromBytes_EncodingNotSupportedMessage;
+                bool filler = true;
+                if (stringEncoding != null)
+                {
+                    content = stringEncoding.GetString(arr, offset + stringStoreOffset + strOffset, len);
+                    filler = false;
+                }
+                names.Add(new NameRecord(platform, encoding, language, nameKind, content, filler));
 
             }
             return new NamingTable(version, names);
+        }
+
+        /// <summary>
+        /// Search for all the name records in this table that match a particular <see cref="NameField" /> (if any).  Does not return any name records with the
+        /// <see cref="NameRecord.FillerContent" /> flag set to indicate they could not be loaded on this platform due to an unsupported encoding.
+        /// </summary>
+        /// <param name="field">The kind of name record to return.</param>
+        /// <returns>A sequence of <see cref="NameRecord" /> instances of the given kind (which may be an empty sequence).</returns>
+        public IEnumerable<NameRecord> Search(NameField field)
+        {
+            return Names.Where(n => !n.FillerContent && n.NameId == field);
         }
 
         private static Encoding GetEncoding(PlatformId platform, ushort encodingId)

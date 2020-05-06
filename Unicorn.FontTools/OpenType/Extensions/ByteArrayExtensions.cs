@@ -166,7 +166,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
             // (the largest value representable by DateTime)
             if (offset > 255_485_232_000)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(Resources.OpenType_Extensions_ByteArrayExtensions_ToDateTime_OutOfRangeError);
             }
             return new DateTime(1904, 1, 1).AddTicks(offset * 10_000_000);
         }

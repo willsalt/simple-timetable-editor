@@ -1,5 +1,6 @@
 ﻿using PdfSharp.Drawing;
 using System;
+using System.Text;
 using Unicorn.Impl.PdfSharp.Extensions;
 using Unicorn.Interfaces;
 
@@ -10,6 +11,21 @@ namespace Unicorn.Impl.PdfSharp
     /// </summary>
     public class FontDescriptor : IFontDescriptor
     {
+        /// <summary>
+        /// The name of the font face.
+        /// </summary>
+        public string BaseFontName => Font?.Name;
+
+        /// <summary>
+        /// A unique identifier for the font face.
+        /// </summary>
+        public string UnderlyingKey => $"PdfSharp_{BaseFontName}";
+
+        /// <summary>
+        /// Preferred text encoding when using this font.  Not used with this implementation.
+        /// </summary>
+        public Encoding PreferredEncoding => Encoding.Unicode;
+
         /// <summary>
         /// Construct a <see cref="FontDescriptor" /> for a font with a given family name, style and point size.
         /// </summary>

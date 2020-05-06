@@ -309,7 +309,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
                 throw new NullReferenceException();
             }
             return new NameRecord(NextOpenTypePlatformId(random), random.NextUShort(), random.NextUShort(), NextOpenTypeNameField(random), 
-                random.NextString(random.Next(128)));
+                random.NextString(random.Next(128)), random.NextBoolean());
         }
 
         public static HighByteSubheaderRecord NextOpenTypeHighByteSubheaderRecord(this Random random)

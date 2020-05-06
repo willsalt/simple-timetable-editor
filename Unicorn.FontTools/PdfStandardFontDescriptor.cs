@@ -4,6 +4,7 @@ using Unicorn.FontTools.Afm;
 using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Unicorn.FontTools
 {
@@ -13,6 +14,22 @@ namespace Unicorn.FontTools
     public class PdfStandardFontDescriptor : IFontDescriptor
     {
         private readonly AfmFontMetrics _metrics;
+
+        /// <summary>
+        /// The PostScript name of this font.
+        /// </summary>
+        public string BaseFontName => _metrics.FontName;
+
+        /// <summary>
+        /// Unique identifier for the underlying font.
+        /// </summary>
+        public string UnderlyingKey => $"Standard_{BaseFontName}";
+
+        /// <summary>
+        /// Preferred encoding for text using this font.  <see cref="Encoding.ASCII" /> is set here; the actual encoding of the standard fonts is an 8-bit
+        /// ASCII-compatible encoding that is not directly supported by .NET Core.
+        /// </summary>
+        public Encoding PreferredEncoding => Encoding.ASCII;
 
         /// <summary>
         /// The point size of this font.

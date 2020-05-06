@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Unicorn.FontTools.OpenType;
@@ -12,6 +13,33 @@ namespace Unicorn.FontTools
     public class OpenTypeFontDescriptor : IFontDescriptor
     {
         private readonly OpenTypeFont _underlyingFont;
+
+        /// <summary>
+        /// The PostScript font name of the underlying font.
+        /// </summary>
+        public string BaseFontName
+        {
+            get
+            {
+                NameRecord psName = _underlyingFont.Naming.Search(NameField.PostScriptName).FirstOrDefault();
+                if (psName is null)
+                {
+                    psName = _underlyingFont.Naming.Search(NameField.Family).FirstOrDefault();
+                }
+                return psName?.Content;
+            }
+        }
+
+        /// <summary>
+        /// A unique identifier for this font face, constructed from the filename of the underlying font program file.
+        /// </summary>
+        public string UnderlyingKey => "OpenType_" + _underlyingFont.Filename;
+
+        /// <summary>
+        /// Preferred text encoding when using this font.  FIXME this should be picked up from the cmap table and should match the encoding in the PDF 
+        /// font resource table
+        /// </summary>
+        public Encoding PreferredEncoding => Encoding.Unicode;
 
         /// <summary>
         /// The point size to render this font in.

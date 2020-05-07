@@ -124,7 +124,7 @@ namespace Unicorn.FontTools
         /// <returns>A <see cref="UniSize" /> instance describing the size of the rendered string.</returns>
         public UniSize MeasureString(string str)
         {
-            return new UniSize(MeasureStringWidth(str), PointSizeTransform((_metrics.Ascender ?? 0) + (_metrics.Descender ?? 0)));
+            return new UniSize(MeasureStringWidth(str), PointSizeTransform((_metrics.Ascender ?? 0) - (_metrics.Descender ?? 0)));
         }
 
         private static string NormaliseName(string fontName)

@@ -80,7 +80,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         }
 
         [TestMethod]
-        public void PdfIntegerClass_WriteToMethodWithStreamParameter_WritesCorrectValueToList()
+        public void PdfIntegerClass_WriteToMethodWithStreamParameter_WritesCorrectValueToParameter()
         {
             int testObjectValue = _rnd.Next(int.MinValue, int.MaxValue);
             PdfInteger testObject = new PdfInteger(testObjectValue);
@@ -106,7 +106,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         }
 
         [TestMethod]
-        public void PdfIntegerClass_WriteToMethodWithPdfStreamParameter_WritesCorrectValueToList()
+        public void PdfIntegerClass_WriteToMethodWithPdfStreamParameter_WritesCorrectValueToParameter()
         {
             int testObjectValue = _rnd.Next(int.MinValue, int.MaxValue);
             PdfInteger testObject = new PdfInteger(testObjectValue);

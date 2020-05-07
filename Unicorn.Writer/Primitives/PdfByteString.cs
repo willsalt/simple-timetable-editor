@@ -51,7 +51,7 @@ namespace Unicorn.Writer.Primitives
             };
             foreach (byte b in _data)
             {
-                output.AddRange(Encoding.ASCII.GetBytes($"{b,2:X}"));
+                output.AddRange(Encoding.ASCII.GetBytes($"{b:X2}"));
             }
             output.Add(0x3e); // ">" character.
             output.Add(0x20);

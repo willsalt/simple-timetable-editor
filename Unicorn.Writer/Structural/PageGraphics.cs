@@ -44,6 +44,8 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         private bool LineWidthChanged { get; set; }
 
+        private IFontDescriptor CurrentFont { get; set; } = null;
+
         /// <summary>
         /// Constructor.  Requires methods for mapping coordinates from Unicorn-space (with the Y-origin at the top of the page, like most desktop drawing libraries)
         /// to PDF user space (with the Y-origin at the bottom of the page, like a graph).
@@ -195,12 +197,21 @@ namespace Unicorn.Writer.Structural
             {
                 throw new ArgumentNullException(nameof(font));
             }
-            PdfFont pageFont = _page.UseFont(font);
             PdfOperator.StartText().WriteTo(PageStream);
-            PdfOperator.SetTextFont(pageFont.InternalName, new PdfReal(font.PointSize)).WriteTo(PageStream);
+            ChangeFont(font);
             PdfOperator.SetTextLocation(new PdfReal(_xTransformer(x)), new PdfReal(_yTransformer(y))).WriteTo(PageStream);
             PdfOperator.DrawText(new PdfByteString(font.PreferredEncoding.GetBytes(text))).WriteTo(PageStream);
             PdfOperator.EndText().WriteTo(PageStream);
+        }
+
+        private void ChangeFont(IFontDescriptor font)
+        {
+            if (font != CurrentFont)
+            {
+                PdfFont pageFont = _page.UseFont(font);
+                PdfOperator.SetTextFont(pageFont.InternalName, new PdfReal(font.PointSize)).WriteTo(PageStream);
+                CurrentFont = font;
+            }
         }
 
         /// <summary>

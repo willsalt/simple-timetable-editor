@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unicorn.Interfaces;
 using Unicorn.Writer.Extensions;
+using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Structural
@@ -10,7 +11,7 @@ namespace Unicorn.Writer.Structural
     /// <summary>
     /// Class representing a page in a PDF document.
     /// </summary>
-    public class PdfPage : PdfPageTreeItem, IPageDescriptor
+    public class PdfPage : PdfPageTreeItem, IPageDescriptor, IPdfPage
     {
         /// <summary>
         /// The <see cref="PdfDocument" /> that contains this page.

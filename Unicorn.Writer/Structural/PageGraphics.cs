@@ -17,7 +17,7 @@ namespace Unicorn.Writer.Structural
         /// <summary>
         /// The page that this graphics context belongs to.
         /// </summary>
-        private readonly PdfPage _page;
+        private readonly IPdfPage _page;
 
         /// <summary>
         /// The content stream for the current page.
@@ -53,7 +53,7 @@ namespace Unicorn.Writer.Structural
         /// <param name="contentStream">The stream to write content for this page to.</param>
         /// <param name="xTransform">A transform function for converting Unicorn-space X coordinates.</param>
         /// <param name="yTransform">A transform function for converting Unicorn-space Y coordinates.</param>
-        public PageGraphics(PdfPage parentPage, PdfStream contentStream, Func<double, double> xTransform, Func<double, double> yTransform)
+        public PageGraphics(IPdfPage parentPage, PdfStream contentStream, Func<double, double> xTransform, Func<double, double> yTransform)
         {
             if (contentStream is null)
             {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Unicorn.Interfaces;
 using Unicorn.Writer.Dummy;
 using Unicorn.Writer.Extensions;

@@ -1062,6 +1062,25 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             Assert.AreEqual(expectedResult, testOutput);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_ThrowsArgumentNullException_IfSecondParameterIsNull()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            PdfPage constrParam0 = GetPage(constrParam1);
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = null;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.Fail();
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

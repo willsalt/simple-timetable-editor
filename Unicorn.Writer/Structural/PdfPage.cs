@@ -125,7 +125,7 @@ namespace Unicorn.Writer.Structural
             CurrentVerticalCursor = TopMarginPosition;
             MediaBox = size.ToPdfRectangle(orientation);
             ContentStream = contentStream;
-            PageGraphics = new PageGraphics(this, contentStream, XTransformer, YTransformer);
+            PageGraphics = new PageGraphics(this, XTransformer, YTransformer);
         }
 
         private double XTransformer(double x) => x;

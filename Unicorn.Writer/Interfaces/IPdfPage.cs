@@ -1,4 +1,5 @@
 ﻿using Unicorn.Interfaces;
+using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Structural;
 
 namespace Unicorn.Writer.Interfaces
@@ -9,6 +10,11 @@ namespace Unicorn.Writer.Interfaces
     /// </summary>
     public interface IPdfPage
     {
+        /// <summary>
+        /// The stream which contains the page's content.
+        /// </summary>
+        PdfStream ContentStream { get; }
+
         /// <summary>
         /// Register that a font is likely to be used on this page (and should be embedded in the document if appropriate for the font type).
         /// </summary>

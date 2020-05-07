@@ -246,13 +246,13 @@ namespace Unicorn.Writer.Structural
             switch (vAlign)
             {
                 case VerticalAlignment.Bottom:
-                    y = rect.Top + rect.Height;
+                    y = rect.Top + rect.Height + font.Descent;
                     break;
                 case VerticalAlignment.Top:
-                    y = rect.Top + stringBox.Height;
+                    y = rect.Top + stringBox.Height + font.Descent;
                     break;
                 default:
-                    y = rect.Top + (rect.Height + stringBox.Height) / 2;
+                    y = rect.Top + (rect.Height + stringBox.Height) / 2 + font.Descent;
                     break;
             }
             DrawString(text, font, x, y);

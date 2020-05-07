@@ -98,6 +98,11 @@ namespace Unicorn.Writer.Primitives
         }
 
 #pragma warning restore CA1043 // Use Integral Or String Argument For Indexers
+
+        /// <summary>
+        /// The number of items (and keys) in the dictionary.
+        /// </summary>
+        public int Count => _contents.Count;
         
         /// <summary>
         /// Add a new entry to the dictionary.
@@ -124,6 +129,20 @@ namespace Unicorn.Writer.Primitives
                 }
                 _contents.Add(key, value);
             }
+        }
+
+        /// <summary>
+        /// Determine whether or not the <see cref="PdfDictionary" /> contains a value with the given key.
+        /// </summary>
+        /// <param name="key">The key to search for.</param>
+        /// <returns><c>true</c> if the dictionary contains a value with the given parameter as its key, <c>false</c> if not.</returns>
+        public bool ContainsKey(PdfName key)
+        {
+            if (key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            return _contents.ContainsKey(key);
         }
 
         /// <summary>

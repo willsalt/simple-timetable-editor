@@ -1,10 +1,29 @@
-﻿namespace Unicorn.Interfaces
+﻿using System.Text;
+
+namespace Unicorn.Interfaces
 {
     /// <summary>
     /// Wrapper object for a font, exposing its metadata.
     /// </summary>
     public interface IFontDescriptor
     {
+        /// <summary>
+        /// The PostScript name of the underlying font.
+        /// </summary>
+        string BaseFontName { get; }
+
+        /// <summary>
+        /// A string that can be used to uniquely determine the underlying font.  Two <see cref="IFontDescriptor" /> instances that refer to the same font at different
+        /// point sizes should have the same <see cref="UnderlyingKey" /> value.  Two <see cref="IFontDescriptor" /> instances that refer to different styles of the
+        /// same face, even when the style is expected to be created dynamically by the OS, should have different <see cref="UnderlyingKey" /> values.
+        /// </summary>
+        string UnderlyingKey { get; }
+
+        /// <summary>
+        /// Preferred text encoding when using this font.
+        /// </summary>
+        Encoding PreferredEncoding { get; }
+
         /// <summary>
         /// The point size of this font.
         /// </summary>

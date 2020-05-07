@@ -20,7 +20,7 @@ namespace Unicorn.FontTools.OpenTool
             OpenTypeFont font;
             using (MemoryMappedFile file = MemoryMappedFile.CreateFromFile(options.Path, FileMode.Open, null, 0, MemoryMappedFileAccess.Read))
             {
-                font = new OpenTypeFont(file);
+                font = new OpenTypeFont(file, options.Path);
             }
             Console.WriteLine($"File {options.Path} is a {font.OffsetHeader.FontKind} font.");
             if (options.ListTables)

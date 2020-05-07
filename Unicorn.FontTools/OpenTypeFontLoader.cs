@@ -33,7 +33,7 @@ namespace Unicorn.FontTools
                     try
                     {
                         mmf = MemoryMappedFile.CreateFromFile(path, FileMode.Open, null, 0, MemoryMappedFileAccess.Read);
-                        OpenTypeFont otf = new OpenTypeFont(mmf);
+                        OpenTypeFont otf = new OpenTypeFont(mmf, path);
                         mmf = null;
                         _loadedFonts.Add(path, otf);
                     }

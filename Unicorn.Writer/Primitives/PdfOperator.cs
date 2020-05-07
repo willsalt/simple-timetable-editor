@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Unicorn.Writer.Primitives
@@ -146,6 +148,88 @@ namespace Unicorn.Writer.Primitives
         public static PdfOperator StrokePath()
         {
             return _strokeOperator.Value;
+        }
+
+        private static readonly Lazy<PdfOperator> _beginTextOperator = new Lazy<PdfOperator>(() => new PdfOperator("BT"));
+
+        /// <summary>
+        /// Get an instance of the "BT" operator, for starting a text object.
+        /// </summary>
+        /// <returns>A <see cref="PdfOperator" /> instance representing the BT operator.</returns>
+        public static PdfOperator StartText()
+        {
+            return _beginTextOperator.Value;
+        }
+
+        private static readonly Lazy<PdfOperator> _endTextOperator = new Lazy<PdfOperator>(() => new PdfOperator("ET"));
+
+        /// <summary>
+        /// Get an instance of the "ET" operator, for ending a text object.
+        /// </summary>
+        /// <returns>A <see cref="PdfOperator" /> instance representing the ET operator.</returns>
+        public static PdfOperator EndText()
+        {
+            return _endTextOperator.Value;
+        }
+
+        /// <summary>
+        /// Create an instance of the "Tf" operator, for setting the current text font.
+        /// </summary>
+        /// <param name="internalFontName">The "internal name" of the font, as referenced in the resource dictionary of the current page.</param>
+        /// <param name="pointSize">The point size of the font.</param>
+        /// <returns>A <see cref="PdfOperator" /> instance representing a "Tf" operator and its operands.</returns>
+        public static PdfOperator SetTextFont(PdfName internalFontName, PdfNumber pointSize)
+        {
+            if (internalFontName is null)
+            {
+                throw new ArgumentNullException(nameof(internalFontName));
+            }
+            if (pointSize is null)
+            {
+                throw new ArgumentNullException(nameof(pointSize));
+            }
+            PdfOperator op = new PdfOperator("Tf");
+            op._operands.Add(internalFontName);
+            op._operands.Add(pointSize);
+            return op;
+        }
+
+        /// <summary>
+        /// Create an instance of the "Td" operator, for setting the origin coordinates of the start of the current line of text.
+        /// </summary>
+        /// <param name="x">The x-coordinate operand.</param>
+        /// <param name="y">The y-coordinate operand.</param>
+        /// <returns>A <see cref="PdfOperator" /> instance representing a "Td" operator and its operands.</returns>
+        public static PdfOperator SetTextLocation(PdfNumber x, PdfNumber y)
+        {
+            if (x is null)
+            {
+                throw new ArgumentNullException(nameof(x));
+            }
+            if (y is null)
+            {
+                throw new ArgumentNullException(nameof(y));
+            }
+            PdfOperator op = new PdfOperator("Td");
+            op._operands.Add(x);
+            op._operands.Add(y);
+            return op;
+        }
+
+        /// <summary>
+        /// Create an instance of the "Tj" operator, for drawing text.
+        /// </summary>
+        /// <param name="str">The text to draw.</param>
+        /// <returns>A <see cref="PdfOperator" /> instance representing a "Tj" operator and its operand.</returns>
+        public static PdfOperator DrawText(PdfByteString str)
+        {
+            if (str is null)
+            {
+                throw new ArgumentNullException(nameof(str));
+            }
+            PdfOperator op = new PdfOperator("Tj");
+            op._operands.Add(str);
+            return op;
         }
 
         /// <summary>

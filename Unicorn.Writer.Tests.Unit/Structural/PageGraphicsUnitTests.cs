@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.Interfaces;
@@ -1087,6 +1088,88 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
 
             Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructor_OnFirstCall()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f));
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            mockPage.Verify(p => p.UseFont(It.IsAny<IFontDescriptor>()), Times.AtLeastOnce());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructorWithSecondParameter_OnFirstCall()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f));
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            mockPage.Verify(p => p.UseFont(testParam1), Times.Once());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_WritesExpectedResultToContentStreamPropertyOfFirstParameterOfConstructor_OnFirstCall()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont.Setup(f => f.PointSize).Returns(fontPointSize);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.StartText().WriteTo(expected);
+            PdfOperator.SetTextFont(internalFont.InternalName, new PdfReal(fontPointSize)).WriteTo(expected);
+            PdfOperator.SetTextLocation(new PdfReal(testParam2), new PdfReal(testParam3 * 2)).WriteTo(expected);
+            PdfOperator.DrawText(new PdfByteString(Encoding.ASCII.GetBytes(testParam0))).WriteTo(expected);
+            PdfOperator.EndText().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam1);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

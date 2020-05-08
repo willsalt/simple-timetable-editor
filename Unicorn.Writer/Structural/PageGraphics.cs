@@ -19,11 +19,6 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         private readonly IPdfPage _page;
 
-        /// <summary>
-        /// The content stream for the current page.
-        /// </summary>
-        //private PdfStream PageStream { get; set; }
-
         private readonly Func<double, double> _xTransformer;
 
         private readonly Func<double, double> _yTransformer;

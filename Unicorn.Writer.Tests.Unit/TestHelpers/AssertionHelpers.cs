@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Tests.Unit.TestHelpers

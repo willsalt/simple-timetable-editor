@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.Interfaces;
@@ -42,51 +43,30 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             _transformedYParameters.Clear();
         }
 
-        private static PdfPage GetPage(PdfStream stream)
-        {
-            return new PdfPage(new PdfPageTreeNode(null, _rnd.Next(1, int.MaxValue)), _rnd.Next(1, int.MaxValue), new PdfDocument(), _rnd.NextPhysicalPageSize(),
-                _rnd.NextPageOrientation(), _rnd.NextDouble(), _rnd.NextDouble(), stream);
-        }
-
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void PageGraphicsClass_Constructor_ThrowsArgumentNullExceptionIfFirstParameterIsNull()
         {
-            PdfPage testParam0 = null;
-            PdfStream testParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            IPdfPage testParam0 = null;
             Func<double, double> testParam2 = TransformXParam;
             Func<double, double> testParam3 = TransformYParam;
 
-            PageGraphics testOutput = new PageGraphics(testParam0, testParam1, testParam2, testParam3);
+            PageGraphics testOutput = new PageGraphics(testParam0, testParam2, testParam3);
 
             Assert.Fail();
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void PageGraphicsClass_Constructor_ThrowsArgumentNullException_IfSecondParameterIsNull()
-        {
-            PdfPage testParam0 = new PdfPage(new PdfPageTreeNode(null, _rnd.Next(1, int.MaxValue)), _rnd.Next(1, int.MaxValue), new PdfDocument(),
-                _rnd.NextPhysicalPageSize(), _rnd.NextPageOrientation(), _rnd.NextDouble(), _rnd.NextDouble(), new PdfStream(_rnd.Next(1, int.MaxValue)));
-            PdfStream testParam1 = null;
-            Func<double, double> testParam2 = TransformXParam;
-            Func<double, double> testParam3 = TransformYParam;
-
-            PageGraphics testOutput = new PageGraphics(testParam0, testParam1, testParam2, testParam3);
-
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnce()
+        public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -106,10 +86,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_CallsSecondParameterOfConstructorWithFirstParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -124,10 +105,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_CallsSecondParameterOfConstructorWithThirdParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -142,10 +124,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_CallsThirdParameterOfConstructorWithSecondParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -160,10 +143,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_CallsThirdParameterOfConstructorWithFourthParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -176,13 +160,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
 
         // This test is to show that PageGraphics does not send out w operations unnecessarily.
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwice()
+        public void PageGraphicsClass_DrawLineMethodWithFourDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwice()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -207,13 +192,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnce()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -234,10 +220,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_CallsSecondParameterOfConstructorWithFirstParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -253,10 +240,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_CallsSecondParameterOfConstructorWithThirdParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -272,10 +260,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_CallsThirdParameterOfConstructorWithSecondParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -291,10 +280,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_CallsThirdParameterOfConstructorWithFourthParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -307,13 +297,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthParameters()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthParameters()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -341,13 +332,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithSameFifthParameters()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithSameFifthParameters()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -373,13 +365,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsSolid()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsSolid()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -398,13 +391,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDash()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDash()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -424,13 +418,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDot()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDot()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -450,13 +445,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDashDot()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDashDot()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -477,13 +473,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDashDotDot()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnceAndSixthParameterEqualsDashDotDot()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -507,10 +504,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_CallsSecondParameterOfConstructorWithFirstParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -527,10 +525,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_CallsSecondParameterOfConstructorWithThirdParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -547,10 +546,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_CallsThirdParameterOfConstructorWithSecondParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -567,10 +567,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_CallsThirdParameterOfConstructorWithFourthParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -584,13 +585,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithSameFifthAndSixthParameters()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithSameFifthAndSixthParameters()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -622,13 +624,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthAndSameSixthParameters()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthAndSameSixthParameters()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -671,13 +674,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithSameFifthAndDifferentSixthParameters()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithSameFifthAndDifferentSixthParameters()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -716,13 +720,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthAndSixthParameters()
+        public void PageGraphicsClass_DrawLineMethodWithFiveDoubleAndOneUniDashStyleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthAndSixthParameters()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -767,13 +772,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnce()
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -793,10 +799,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_CallsSecondParameterOfConstructorWithFirstParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -811,10 +818,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_CallsThirdParameterOfConstructorWithSumOfSecondAndFourthParameters_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -826,13 +834,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwice()
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwice()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -857,13 +866,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawRectangleMethodWithFiveDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledOnce()
+        public void PageGraphicsClass_DrawRectangleMethodWithFiveDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -884,10 +894,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawRectangleMethodWithFiveDoubleParameters_CallsSecondParameterOfConstructorWithFirstParameter_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -903,10 +914,11 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         public void PageGraphicsClass_DrawRectangleMethodWithFiveDoubleParameters_CallsThirdParameterOfConstructorWithSumOfSecondAndFourthParameters_IfCalledOnce()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -919,13 +931,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithSameFifthParameter()
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithSameFifthParameter()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -951,13 +964,14 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         }
 
         [TestMethod]
-        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthParameter()
+        public void PageGraphicsClass_DrawRectangleMethodWithFourDoubleParameters_WritesCorrectValueToContentStreamPropertyOfFirstParameterOfConstructor_IfCalledTwiceWithDifferentFifthParameter()
         {
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            Mock<IPdfPage> constrParam0Base = new Mock<IPdfPage>();
+            constrParam0Base.Setup(p => p.ContentStream).Returns(constrParam1);
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0Base.Object, constrParam2, constrParam3);
             double testParam0 = _rnd.NextDouble() * 500;
             double testParam1 = _rnd.NextDouble() * 500;
             double testParam2 = _rnd.NextDouble() * 500;
@@ -992,11 +1006,10 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         [ExpectedException(typeof(ArgumentNullException))]
         public void PageGraphicsClass_MeasureStringMethod_ThrowsArgumentNullException_IfSecondParameterIsNull()
         {
-            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            IPdfPage constrParam0 = new Mock<IPdfPage>().Object;
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
             string testParam0 = _rnd.NextString(_rnd.Next(20));
             IFontDescriptor testParam1 = null;
 
@@ -1008,11 +1021,10 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         [TestMethod]
         public void PageGraphicsClass_MeasureStringMethod_CallsMeasureStringMethodOfSecondParameter_IfSecondParameterIsNotNull()
         {
-            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            IPdfPage constrParam0 = new Mock<IPdfPage>().Object;
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
             string testParam0 = _rnd.NextString(_rnd.Next(20));
             UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
@@ -1027,11 +1039,10 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         [TestMethod]
         public void PageGraphicsClass_MeasureStringMethod_PassesFirstParameterToMeasureStringMethodOfSecondParameter_IfSecondParameterIsNotNull()
         {
-            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            IPdfPage constrParam0 = new Mock<IPdfPage>().Object;
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
             string testParam0 = _rnd.NextString(_rnd.Next(20));
             UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
@@ -1046,11 +1057,10 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         [TestMethod]
         public void PageGraphicsClass_MeasureStringMethod_ReturnsValueReturnedByMeasureStringMethodOfSecondParameter_IfSecondParameterIsNotNull()
         {
-            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
-            PdfPage constrParam0 = GetPage(constrParam1);
+            IPdfPage constrParam0 = new Mock<IPdfPage>().Object;
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
-            PageGraphics testObject = new PageGraphics(constrParam0, constrParam1, constrParam2, constrParam3);
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
             string testParam0 = _rnd.NextString(_rnd.Next(20));
             UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
@@ -1060,6 +1070,387 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             UniSize testOutput = testObject.MeasureString(testParam0, testParam1);
 
             Assert.AreEqual(expectedResult, testOutput);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_ThrowsArgumentNullException_IfSecondParameterIsNull()
+        {
+            IPdfPage constrParam0 = new Mock<IPdfPage>().Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = null;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructor_OnFirstCall()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f));
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            mockPage.Verify(p => p.UseFont(It.IsAny<IFontDescriptor>()), Times.AtLeastOnce());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructorWithSecondParameter_OnFirstCall()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f));
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            mockPage.Verify(p => p.UseFont(testParam1), Times.Once());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_WritesExpectedResultToContentStreamPropertyOfFirstParameterOfConstructor_OnFirstCall()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont.Setup(f => f.PointSize).Returns(fontPointSize);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.StartText().WriteTo(expected);
+            PdfOperator.SetTextFont(internalFont.InternalName, new PdfReal(fontPointSize)).WriteTo(expected);
+            PdfOperator.SetTextLocation(new PdfReal(testParam2), new PdfReal(testParam3 * 2)).WriteTo(expected);
+            PdfOperator.DrawText(new PdfByteString(Encoding.ASCII.GetBytes(testParam0))).WriteTo(expected);
+            PdfOperator.EndText().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam1);
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructorOnce_AfterTwoCallsWithSameSecondParameter()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont.Setup(f => f.PointSize).Returns(fontPointSize);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+            string testParam4 = _rnd.NextString(_rnd.Next(20));
+            double testParam5 = _rnd.NextDouble() * 1000;
+            double testParam6 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+            testObject.DrawString(testParam4, testParam1, testParam5, testParam6);
+
+            mockPage.Verify(p => p.UseFont(It.IsAny<IFontDescriptor>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_WritesExpectedResultToContentStreamPropertyOfFirstParameterOfConstructor_AfterTwoFirstWithSameSecondParameter()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
+            mockFont.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont.Setup(f => f.PointSize).Returns(fontPointSize);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+            string testParam4 = _rnd.NextString(_rnd.Next(20));
+            double testParam5 = _rnd.NextDouble() * 1000;
+            double testParam6 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+            testObject.DrawString(testParam4, testParam1, testParam5, testParam6);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.StartText().WriteTo(expected);
+            PdfOperator.SetTextFont(internalFont.InternalName, new PdfReal(fontPointSize)).WriteTo(expected);
+            PdfOperator.SetTextLocation(new PdfReal(testParam2), new PdfReal(testParam3 * 2)).WriteTo(expected);
+            PdfOperator.DrawText(new PdfByteString(Encoding.ASCII.GetBytes(testParam0))).WriteTo(expected);
+            PdfOperator.EndText().WriteTo(expected);
+            PdfOperator.StartText().WriteTo(expected);
+            PdfOperator.SetTextLocation(new PdfReal(testParam5 * 3), new PdfReal(testParam6 * 4)).WriteTo(expected);
+            PdfOperator.DrawText(new PdfByteString(Encoding.ASCII.GetBytes(testParam4))).WriteTo(expected);
+            PdfOperator.EndText().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam1);
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructorTwice_AfterTwoCallsWithDifferentSecondParameter()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize0 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont0 = new Mock<IFontDescriptor>();
+            mockFont0.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont0.Setup(f => f.PointSize).Returns(fontPointSize0);
+            double fontPointSize1 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont1 = new Mock<IFontDescriptor>();
+            mockFont1.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont1.Setup(f => f.PointSize).Returns(fontPointSize1);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont0 = null;
+            PdfFont internalFont1 = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                if (f == mockFont0.Object)
+                {
+                    internalFont0 = internalFont;
+                }
+                else if (f == mockFont1.Object)
+                {
+                    internalFont1 = internalFont;
+                }
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont0.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+            string testParam4 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam5 = mockFont1.Object;
+            double testParam6 = _rnd.NextDouble() * 1000;
+            double testParam7 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+            testObject.DrawString(testParam4, testParam5, testParam6, testParam7);
+
+            mockPage.Verify(p => p.UseFont(It.IsAny<IFontDescriptor>()), Times.Exactly(2));
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructorOnceWithSecondParameterOfFirstCall_AfterTwoCallsWithDifferentSecondParameter()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize0 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont0 = new Mock<IFontDescriptor>();
+            mockFont0.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont0.Setup(f => f.PointSize).Returns(fontPointSize0);
+            double fontPointSize1 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont1 = new Mock<IFontDescriptor>();
+            mockFont1.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont1.Setup(f => f.PointSize).Returns(fontPointSize1);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont0 = null;
+            PdfFont internalFont1 = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                if (f == mockFont0.Object)
+                {
+                    internalFont0 = internalFont;
+                }
+                else if (f == mockFont1.Object)
+                {
+                    internalFont1 = internalFont;
+                }
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont0.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+            string testParam4 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam5 = mockFont1.Object;
+            double testParam6 = _rnd.NextDouble() * 1000;
+            double testParam7 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+            testObject.DrawString(testParam4, testParam5, testParam6, testParam7);
+
+            mockPage.Verify(p => p.UseFont(testParam1), Times.Once());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_CallsUseFontMethodOfFirstParameterOfConstructorOnceWithSecondParameterOfSecondCall_AfterTwoCallsWithDifferentSecondParameter()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize0 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont0 = new Mock<IFontDescriptor>();
+            mockFont0.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont0.Setup(f => f.PointSize).Returns(fontPointSize0);
+            double fontPointSize1 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont1 = new Mock<IFontDescriptor>();
+            mockFont1.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont1.Setup(f => f.PointSize).Returns(fontPointSize1);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont0 = null;
+            PdfFont internalFont1 = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                if (f == mockFont0.Object)
+                {
+                    internalFont0 = internalFont;
+                }
+                else if (f == mockFont1.Object)
+                {
+                    internalFont1 = internalFont;
+                }
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont0.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+            string testParam4 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam5 = mockFont1.Object;
+            double testParam6 = _rnd.NextDouble() * 1000;
+            double testParam7 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+            testObject.DrawString(testParam4, testParam5, testParam6, testParam7);
+
+            mockPage.Verify(p => p.UseFont(testParam5), Times.Once());
+        }
+
+        [TestMethod]
+        public void PageGraphicsClass_DrawStringMethodWithStringIFontDescriptorDoubleAndDoubleParameters_WritesExpectedResultToContentStreamPropertyOfFirstParameterOfConstructor_AfterTwoFirstWithDifferentSecondParameter()
+        {
+            PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+            double fontPointSize0 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont0 = new Mock<IFontDescriptor>();
+            mockFont0.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont0.Setup(f => f.PointSize).Returns(fontPointSize0);
+            double fontPointSize1 = _rnd.NextDouble() * 20;
+            Mock<IFontDescriptor> mockFont1 = new Mock<IFontDescriptor>();
+            mockFont1.Setup(f => f.PreferredEncoding).Returns(Encoding.ASCII);
+            mockFont1.Setup(f => f.PointSize).Returns(fontPointSize1);
+            Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
+            mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
+            PdfFont internalFont0 = null;
+            PdfFont internalFont1 = null;
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
+            {
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                if (f == mockFont0.Object)
+                {
+                    internalFont0 = internalFont;
+                }
+                else if (f == mockFont1.Object)
+                {
+                    internalFont1 = internalFont;
+                }
+                return internalFont;
+            });
+            IPdfPage constrParam0 = mockPage.Object;
+            Func<double, double> constrParam2 = TransformXParam;
+            Func<double, double> constrParam3 = TransformYParam;
+            PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam1 = mockFont0.Object;
+            double testParam2 = _rnd.NextDouble() * 1000;
+            double testParam3 = _rnd.NextDouble() * 1000;
+            string testParam4 = _rnd.NextString(_rnd.Next(20));
+            IFontDescriptor testParam5 = mockFont1.Object;
+            double testParam6 = _rnd.NextDouble() * 1000;
+            double testParam7 = _rnd.NextDouble() * 1000;
+
+            testObject.DrawString(testParam0, testParam1, testParam2, testParam3);
+            testObject.DrawString(testParam4, testParam5, testParam6, testParam7);
+
+            List<byte> expected = new List<byte>();
+            PdfOperator.StartText().WriteTo(expected);
+            PdfOperator.SetTextFont(internalFont0.InternalName, new PdfReal(fontPointSize0)).WriteTo(expected);
+            PdfOperator.SetTextLocation(new PdfReal(testParam2), new PdfReal(testParam3 * 2)).WriteTo(expected);
+            PdfOperator.DrawText(new PdfByteString(Encoding.ASCII.GetBytes(testParam0))).WriteTo(expected);
+            PdfOperator.EndText().WriteTo(expected);
+            PdfOperator.StartText().WriteTo(expected);
+            PdfOperator.SetTextFont(internalFont1.InternalName, new PdfReal(fontPointSize1)).WriteTo(expected);
+            PdfOperator.SetTextLocation(new PdfReal(testParam6 * 3), new PdfReal(testParam7 * 4)).WriteTo(expected);
+            PdfOperator.DrawText(new PdfByteString(Encoding.ASCII.GetBytes(testParam4))).WriteTo(expected);
+            PdfOperator.EndText().WriteTo(expected);
+            AssertionHelpers.AssertSameElements(expected, constrParam1);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

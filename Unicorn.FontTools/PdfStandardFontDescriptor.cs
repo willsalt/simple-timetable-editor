@@ -47,6 +47,11 @@ namespace Unicorn.FontTools
         public double Descent => PointSizeTransform(_metrics.Descender ?? 0m);
 
         /// <summary>
+        /// Standard interline white space in this font.
+        /// </summary>
+        public double InterlineSpacing => PointSize - (Ascent - Descent);
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal PdfStandardFontDescriptor(AfmFontMetrics metrics, double pointSize)

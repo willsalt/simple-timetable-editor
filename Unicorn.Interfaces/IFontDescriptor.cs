@@ -40,6 +40,12 @@ namespace Unicorn.Interfaces
         double Descent { get; }
 
         /// <summary>
+        /// The amount of white space between the bottom of th descenders of one line and the top of the ascenders of the next, where the leading is zero.  Should
+        /// normally be equal to <see cref="PointSize" /><c> - (</c><see cref="Ascent" /><c> - </c><see cref="Descent" /><c>)</c>.  
+        /// </summary>
+        double InterlineSpacing { get; }
+
+        /// <summary>
         /// Measure the size of a string when rendered in this font.
         /// </summary>
         /// <param name="str">The string to be measured.</param>

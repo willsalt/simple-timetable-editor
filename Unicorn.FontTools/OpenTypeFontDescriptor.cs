@@ -88,6 +88,11 @@ namespace Unicorn.FontTools
         }
 
         /// <summary>
+        /// Standard interline white space in this font.
+        /// </summary>
+        public double InterlineSpacing => PointSize - (Ascent - Descent);
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="font">The underlying font.</param>

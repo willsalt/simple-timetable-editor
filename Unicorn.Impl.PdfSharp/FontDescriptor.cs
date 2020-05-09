@@ -74,6 +74,11 @@ namespace Unicorn.Impl.PdfSharp
         public double Descent { get; }
 
         /// <summary>
+        /// Standard interline white space in this font.
+        /// </summary>
+        public double InterlineSpacing => 0d; // FIXME
+
+        /// <summary>
         /// Returns the width of a single space character in this font, with the given context.
         /// </summary>
         /// <param name="graphicsContext"></param>

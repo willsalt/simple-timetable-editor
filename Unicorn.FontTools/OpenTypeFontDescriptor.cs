@@ -122,7 +122,7 @@ namespace Unicorn.FontTools
         /// </summary>
         /// <param name="str">The string to be measured.</param>
         /// <returns>A <see cref="UniSize" /> value describing the height and width of the rendered string.</returns>
-        public UniSize MeasureString(string str)
+        public UniTextSize MeasureString(string str)
         {
             byte[] codeBytes = Encoding.UTF32.GetBytes(str);
             List<uint> codePoints = new List<uint>(codeBytes.Length / 4);
@@ -131,7 +131,7 @@ namespace Unicorn.FontTools
                 codePoints.Add(codeBytes[i] | ((uint)codeBytes[i + 1] << 8) | ((uint)codeBytes[i + 2] << 16) | ((uint)codeBytes[i + 3] << 24));
             }
             int totWidth = codePoints.Select(p => _underlyingFont.AdvanceWidth(PlatformId.Windows, p)).Sum();
-            return new UniSize(PointScaleTransform(totWidth), Ascent - Descent);
+            return new UniTextSize(PointScaleTransform(totWidth), PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
         }
 
         private double PointScaleTransform(double distInFontUnits) => PointSize * distInFontUnits / _underlyingFont.DesignUnitsPerEm;

@@ -224,13 +224,13 @@ namespace Unicorn.Writer.Structural
             switch (vAlign)
             {
                 case VerticalAlignment.Bottom:
-                    y = rect.Top + rect.Height + font.Descent;
+                    y = rect.Top + rect.Height - stringBox.HeightBelowBaseline;
                     break;
                 case VerticalAlignment.Top:
-                    y = rect.Top + stringBox.Height + font.Descent;
+                    y = rect.Top + stringBox.HeightAboveBaseline;
                     break;
                 default:
-                    y = rect.Top + (rect.Height + stringBox.Height) / 2 + font.Descent;
+                    y = rect.Top + (rect.Height + stringBox.TotalHeight) / 2 - stringBox.HeightBelowBaseline;
                     break;
             }
             DrawString(text, font, x, y);
@@ -242,7 +242,7 @@ namespace Unicorn.Writer.Structural
         /// <param name="text"></param>
         /// <param name="font"></param>
         /// <returns></returns>
-        public UniSize MeasureString(string text, IFontDescriptor font)
+        public UniTextSize MeasureString(string text, IFontDescriptor font)
         {
             if (font is null)
             {

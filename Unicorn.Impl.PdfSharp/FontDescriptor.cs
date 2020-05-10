@@ -39,7 +39,7 @@ namespace Unicorn.Impl.PdfSharp
             if (Font != null)
             {
                 Ascent = (Font.Metrics.Ascent / (Font.Metrics.Ascent + (double)Font.Metrics.Descent)) * Font.Height;
-                Descent = (Font.Metrics.Descent / (Font.Metrics.Ascent + (double)Font.Metrics.Descent)) * Font.Height;
+                Descent = -(Font.Metrics.Descent / (Font.Metrics.Ascent + (double)Font.Metrics.Descent)) * Font.Height;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Unicorn.Impl.PdfSharp
         /// </summary>
         /// <param name="str">The string to be measured.</param>
         /// <exception cref="NotImplementedException">Always thrown.</exception>
-        public UniSize MeasureString(string str)
+        public UniTextSize MeasureString(string str)
         {
             throw new NotImplementedException();
         }

@@ -50,7 +50,7 @@ namespace Unicorn.Interfaces
         /// </summary>
         /// <param name="str">The string to be measured.</param>
         /// <returns>A <see cref="UniSize" /> instance containing the size of the string.</returns>
-        UniSize MeasureString(string str);
+        UniTextSize MeasureString(string str);
 
         /// <summary>
         /// Return the width of a "normal space" - ASCII 0x20 - in this font, using the given graphics context to render it.

@@ -58,10 +58,10 @@ namespace Unicorn
             string content = Content ?? string.Empty;
             var metrics = context.MeasureString(content, Font);
             ContentWidth = metrics.Width;
-            ContentAscent = Font.Ascent;
-            ContentDescent = metrics.Height - ContentAscent;
-            ComputedBaseline = Font.Ascent;
-            ComputedHeight = ContentAscent + ContentDescent;
+            ContentAscent = Font.Ascent + Font.InterlineSpacing / 2;
+            ContentDescent = Font.PointSize - ContentAscent;
+            ComputedBaseline = ContentAscent;
+            ComputedHeight = Font.PointSize;
             ComputedWidth = MinWidth;
         }
 
@@ -78,7 +78,7 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(context));
             }
             double xOffset = (ComputedWidth - MinWidth) / 2 + MarginLeft;
-            context.DrawString(Content, Font, x + xOffset, y + ComputedBaseline);
+            context.DrawString(Content, Font, x + xOffset, y + ComputedBaseline + MarginTop);
         }
     }
 }

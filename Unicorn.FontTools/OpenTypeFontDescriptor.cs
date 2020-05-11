@@ -51,6 +51,8 @@ namespace Unicorn.FontTools
         /// </summary>
         public CalculationStyle CalculationStyle { get; set; } = CalculationStyle.Windows;
 
+        private double? _ascent;
+
         /// <summary>
         /// The height of the ascenders of this font.
         /// </summary>
@@ -58,16 +60,22 @@ namespace Unicorn.FontTools
         {
             get
             {
-                if (CalculationStyle == CalculationStyle.Macintosh || !_underlyingFont.OS2Metrics.Ascender.HasValue)
+                if (!_ascent.HasValue)
                 {
-                    return PointScaleTransform(_underlyingFont.HorizontalHeader.Ascender);
+                    if (CalculationStyle == CalculationStyle.Macintosh || !_underlyingFont.OS2Metrics.Ascender.HasValue)
+                    {
+                        _ascent = PointScaleTransform(_underlyingFont.HorizontalHeader.Ascender);
+                    }
+                    else
+                    {
+                        _ascent = PointScaleTransform(_underlyingFont.OS2Metrics.Ascender.Value);
+                    }
                 }
-                else
-                {
-                    return PointScaleTransform(_underlyingFont.OS2Metrics.Ascender.Value);
-                }
+                return _ascent.Value;
             }
         }
+
+        private double? _descent;
 
         /// <summary>
         /// The height of the descenders of this font.
@@ -76,14 +84,18 @@ namespace Unicorn.FontTools
         {
             get
             {
-                if (CalculationStyle == CalculationStyle.Macintosh || !_underlyingFont.OS2Metrics.Descender.HasValue)
+                if (!_descent.HasValue)
                 {
-                    return PointScaleTransform(_underlyingFont.HorizontalHeader.Descender);
+                    if (CalculationStyle == CalculationStyle.Macintosh || !_underlyingFont.OS2Metrics.Descender.HasValue)
+                    {
+                        _descent = PointScaleTransform(_underlyingFont.HorizontalHeader.Descender);
+                    }
+                    else
+                    {
+                        _descent = PointScaleTransform(_underlyingFont.OS2Metrics.Descender.Value);
+                    }
                 }
-                else
-                {
-                    return PointScaleTransform(_underlyingFont.OS2Metrics.Descender.Value);
-                }
+                return _descent.Value;
             }
         }
 
@@ -91,6 +103,12 @@ namespace Unicorn.FontTools
         /// Standard interline white space in this font.
         /// </summary>
         public double InterlineSpacing => PointSize - (Ascent - Descent);
+
+        /// <summary>
+        /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics
+        /// properties populated.
+        /// </summary>
+        public UniTextSize EmptyStringMetrics => new UniTextSize(0d, PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
 
         /// <summary>
         /// Constructor.
@@ -131,7 +149,8 @@ namespace Unicorn.FontTools
                 codePoints.Add(codeBytes[i] | ((uint)codeBytes[i + 1] << 8) | ((uint)codeBytes[i + 2] << 16) | ((uint)codeBytes[i + 3] << 24));
             }
             int totWidth = codePoints.Select(p => _underlyingFont.AdvanceWidth(PlatformId.Windows, p)).Sum();
-            return new UniTextSize(PointScaleTransform(totWidth), PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
+            return new UniTextSize(PointScaleTransform(totWidth), EmptyStringMetrics.TotalHeight, EmptyStringMetrics.HeightAboveBaseline, 
+                EmptyStringMetrics.AscenderHeight, EmptyStringMetrics.DescenderHeight);
         }
 
         private double PointScaleTransform(double distInFontUnits) => PointSize * distInFontUnits / _underlyingFont.DesignUnitsPerEm;

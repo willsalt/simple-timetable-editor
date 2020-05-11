@@ -56,12 +56,12 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(context));
             }
             string content = Content ?? string.Empty;
-            var metrics = context.MeasureString(content, Font);
+            UniTextSize metrics = context.MeasureString(content, Font);
             ContentWidth = metrics.Width;
-            ContentAscent = Font.Ascent + Font.InterlineSpacing / 2;
-            ContentDescent = Font.PointSize - ContentAscent;
+            ContentAscent = metrics.HeightAboveBaseline;
+            ContentDescent = metrics.HeightBelowBaseline;
             ComputedBaseline = ContentAscent;
-            ComputedHeight = Font.PointSize;
+            ComputedHeight = MinHeight;
             ComputedWidth = MinWidth;
         }
 
@@ -78,7 +78,7 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(context));
             }
             double xOffset = (ComputedWidth - MinWidth) / 2 + MarginLeft;
-            context.DrawString(Content, Font, x + xOffset, y + ComputedBaseline + MarginTop);
+            context.DrawString(Content, Font, x + xOffset, y + ComputedBaseline); // this always top-aligns content in cells that are higher than the minimum
         }
     }
 }

@@ -87,7 +87,7 @@ namespace Unicorn
             }
             else
             {
-                var measure = graphicsContext.MeasureString(Content, Font);
+                UniTextSize measure = graphicsContext.MeasureString(Content, Font);
                 ContentWidth = measure.Width;
                 ContentAscent = measure.HeightAboveBaseline;
                 ContentDescent = measure.HeightBelowBaseline;

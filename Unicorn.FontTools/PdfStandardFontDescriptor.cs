@@ -52,6 +52,12 @@ namespace Unicorn.FontTools
         public double InterlineSpacing => PointSize - (Ascent - Descent);
 
         /// <summary>
+        /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics
+        /// properties populated.
+        /// </summary>
+        public UniTextSize EmptyStringMetrics => new UniTextSize(0d, PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal PdfStandardFontDescriptor(AfmFontMetrics metrics, double pointSize)

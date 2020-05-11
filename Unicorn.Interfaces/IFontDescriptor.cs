@@ -46,6 +46,12 @@ namespace Unicorn.Interfaces
         double InterlineSpacing { get; }
 
         /// <summary>
+        /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics
+        /// properties populated.
+        /// </summary>
+        UniTextSize EmptyStringMetrics { get; }
+
+        /// <summary>
         /// Measure the size of a string when rendered in this font.
         /// </summary>
         /// <param name="str">The string to be measured.</param>

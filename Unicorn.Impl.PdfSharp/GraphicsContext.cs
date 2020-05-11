@@ -180,7 +180,7 @@ namespace Unicorn.Impl.PdfSharp
             }
 
             var size = _core.MeasureString(text, ourFont.Font);
-            return new UniTextSize(size.Width, font.PointSize, font.Ascent + font.InterlineSpacing / 2, font.Ascent, font.Descent);
+            return new UniTextSize(size.Width, font.InterlineSpacing + font.Ascent - font.Descent, font.Ascent + font.InterlineSpacing / 2, font.Ascent, -font.Descent);
         }
 
         /// <summary>

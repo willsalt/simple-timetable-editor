@@ -79,6 +79,12 @@ namespace Unicorn.Impl.PdfSharp
         public double InterlineSpacing => 0d; // FIXME
 
         /// <summary>
+        /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics
+        /// properties populated.
+        /// </summary>
+        public UniTextSize EmptyStringMetrics => new UniTextSize(0d, Ascent + InterlineSpacing - Descent, Ascent + InterlineSpacing / 2, Ascent, -Descent);
+
+        /// <summary>
         /// Returns the width of a single space character in this font, with the given context.
         /// </summary>
         /// <param name="graphicsContext"></param>

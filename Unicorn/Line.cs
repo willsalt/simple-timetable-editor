@@ -17,62 +17,32 @@ namespace Unicorn
         /// <summary>
         /// The minimum width of this line.
         /// </summary>
-        public double MinWidth
-        {
-            get
-            {
-                return Content.Take(Content.Count - 1).Sum(w => w.MinWidth) + Content.Last().ContentWidth;
-            }
-        }
+        public double MinWidth => Content.Take(Content.Count - 1).Sum(w => w.MinWidth) + Content.Last().ContentWidth;
 
         /// <summary>
         /// The ascent of the line.
         /// </summary>
-        public double ContentAscent
-        {
-            get
-            {
-                return Content.Max(w => w.ContentAscent);
-            }
-        }
+        public double ContentAscent => Content.Max(w => w.ContentAscent);
 
         /// <summary>
         /// The descent of the line.
         /// </summary>
-        public double ContentDescent
-        {
-            get
-            {
-                return Content.Max(w => w.ContentDescent);
-            }
-        }
+        public double ContentDescent => Content.Max(w => w.ContentDescent);
 
         /// <summary>
         /// The total height of the line.
         /// </summary>
-        public double ContentHeight
-        {
-            get
-            {
-                return ContentAscent + ContentDescent;
-            }
-        }
+        public double ContentHeight => ContentAscent + ContentDescent;
 
         /// <summary>
         /// The distance from the baseline to the top of the line, equal to the ascent.
         /// </summary>
-        public double ComputedBaseline
-        {
-            get
-            {
-                return ContentAscent;
-            }
-        }
+        public double ComputedBaseline => ContentAscent;
 
         /// <summary>
         /// A flag that indicates if this line has been flagged as potentially too wide for its container.
         /// </summary>
-        public bool OverspillWidth { get; set; }
+        public bool OverspillWidth { get; private set; }
         
         /// <summary>
         /// Default constructor.
@@ -113,7 +83,8 @@ namespace Unicorn
             for (int i = 0; i < wordsArr.Length; ++i)
             {
                 curLine.Content.Add(wordsArr[i]);
-                if (curLine.MinWidth > idealMaxLineWidth || (i + 1 < wordsArr.Length && curLine.Content.Sum(w => w.MinWidth) + wordsArr[i + 1].ContentWidth > idealMaxLineWidth))
+                if (curLine.MinWidth > idealMaxLineWidth || 
+                    (i + 1 < wordsArr.Length && curLine.Content.Sum(w => w.MinWidth) + wordsArr[i + 1].ContentWidth > idealMaxLineWidth))
                 {
                     if (curLine.MinWidth > idealMaxLineWidth)
                     {
@@ -139,10 +110,9 @@ namespace Unicorn
         /// <param name="y">The Y-coordinate of the top left corner of the line.</param>
         public void DrawAt(IGraphicsContext graphicsContext, double x, double y)
         {
-            double baselineOffset = Content.Select(w => w.ContentAscent).Max();
             foreach (Word word in Content)
             {
-                word.DrawAt(graphicsContext, x, y + baselineOffset - word.ContentAscent);
+                word.DrawAt(graphicsContext, x, y + ContentAscent - word.ContentAscent);
                 x += word.MinWidth;
             }
         }

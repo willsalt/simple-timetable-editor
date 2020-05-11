@@ -80,6 +80,8 @@ namespace Timetabler.PdfExport
         private const double _defaultHorizontalMarginProportion = 0.06;
         private const double _defaultVerticalMarginProportion = 0.06;
 
+        private readonly MarginSet _tableCellStandardMargins;
+
         private IPageDescriptor _currentPage;
 
         /// <summary>
@@ -103,6 +105,7 @@ namespace Timetabler.PdfExport
                 _italicBodyFont = new FontDescriptor("Serif", UniFontStyles.Italic, 7.5);
                 _boldBodyFont = new FontDescriptor("Serif", UniFontStyles.Bold, 7.5);
                 _alternativeLocationFont = new FontDescriptor("Sans", UniFontStyles.Bold, 7.5);
+                _tableCellStandardMargins = new MarginSet(0, 3, 0, 3);
             }
             else
             {
@@ -118,6 +121,7 @@ namespace Timetabler.PdfExport
                 //_italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
                 //_boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
                 //_alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
+                _tableCellStandardMargins = new MarginSet(2, 3, 1, 3);
             }
 
             Log.Info("Loaded fonts.");
@@ -225,24 +229,23 @@ namespace Timetabler.PdfExport
                 if ((document.ExportOptions?.DisplayBoxHours ?? true) && document.SignalboxHoursSets.Count > 0)
                 {
                     Table hoursTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
-                    MarginSet hoursTableCellMargins = new MarginSet(2, 3, 1, 3);
                     List<TableCell> cells = new List<TableCell>
                     {
                         new PlainTextTableCell("", _plainBodyFont, _currentPage.PageGraphics)
                     };
                     foreach (var box in document.Signalboxes)
                     {
-                        cells.Add(new PlainTextTableCell(box.Code, _boldBodyFont, hoursTableCellMargins, _currentPage.PageGraphics));
+                        cells.Add(new PlainTextTableCell(box.Code, _boldBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                     }
                     hoursTable.AddRow(cells);
                     foreach (var hoursSet in document.SignalboxHoursSets)
                     {
                         cells.Clear();
-                        cells.Add(new PlainTextTableCell(hoursSet.Category, _plainBodyFont, hoursTableCellMargins, _currentPage.PageGraphics));
+                        cells.Add(new PlainTextTableCell(hoursSet.Category, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                         foreach (var box in document.Signalboxes)
                         {
                             string cellContent = hoursSet.Hours[box.Id].ToString(document.Options.ClockType);
-                            cells.Add(new PlainTextTableCell(cellContent, _plainBodyFont, hoursTableCellMargins, _currentPage.PageGraphics));
+                            cells.Add(new PlainTextTableCell(cellContent, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                         }
                         hoursTable.AddRow(cells);
                     }
@@ -254,26 +257,25 @@ namespace Timetabler.PdfExport
                 if (document.ExportOptions.DisplayCredits)
                 {
                     Table creditsTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
-                    MarginSet creditsTableCellMargins = new MarginSet(2, 3, 1, 3);
                     if (!string.IsNullOrWhiteSpace(document.WrittenBy))
                     {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.WrittenByCaption, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.WrittenBy, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics));
+                        creditsTable.AddRow(new PlainTextTableCell(Resources.WrittenByCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                            new PlainTextTableCell(document.WrittenBy, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                     }
                     if (!string.IsNullOrWhiteSpace(document.CheckedBy))
                     {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.CheckedByCaption, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.CheckedBy, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics));
+                        creditsTable.AddRow(new PlainTextTableCell(Resources.CheckedByCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                            new PlainTextTableCell(document.CheckedBy, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                     }
                     if (!string.IsNullOrWhiteSpace(document.TimetableVersion))
                     {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.VersionCaption, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.TimetableVersion, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics));
+                        creditsTable.AddRow(new PlainTextTableCell(Resources.VersionCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                            new PlainTextTableCell(document.TimetableVersion, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                     }
                     if (!string.IsNullOrWhiteSpace(document.PublishedDate))
                     {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.PublishedDateCaption, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.PublishedDate, _plainBodyFont, creditsTableCellMargins, _currentPage.PageGraphics));
+                        creditsTable.AddRow(new PlainTextTableCell(Resources.PublishedDateCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                            new PlainTextTableCell(document.PublishedDate, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                     }
 
                     if (boxHoursSize != default && creditsTable.ComputedWidth + boxHoursSize.Width > _currentPage.PageAvailableWidth)

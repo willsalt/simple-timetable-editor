@@ -101,6 +101,10 @@
       <Project>{4D101015-CE74-4648-B07B-5AC806531E95}</Project>
       <Name>Unicorn.Impl.PdfSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Unicorn.Interfaces.Tests.Utility\Unicorn.Interfaces.Tests.Utility.csproj">
+      <Project>{90fe0c94-30d5-4768-9929-a6cfd5b2161a}</Project>
+      <Name>Unicorn.Interfaces.Tests.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
       <Project>{f0a39340-f45e-4534-b87a-6fdf0202f4ea}</Project>
       <Name>Unicorn.Interfaces</Name>

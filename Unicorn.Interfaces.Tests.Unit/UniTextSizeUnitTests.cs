@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Unicorn.Interfaces.Tests.Utility.Extensions;
 
 namespace Unicorn.Interfaces.Tests.Unit
 {
@@ -12,7 +13,7 @@ namespace Unicorn.Interfaces.Tests.Unit
 
         private static UniTextSize GetTestValue()
         {
-            return new UniTextSize(_rnd.NextDouble() * 50, _rnd.NextDouble() * 50, _rnd.NextDouble() * 50, _rnd.NextDouble() * 50, _rnd.NextDouble() * 50);
+            return _rnd.NextUniTextSize();
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores

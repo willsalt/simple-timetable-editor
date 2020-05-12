@@ -4,13 +4,14 @@ using System.Globalization;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Interfaces;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// OpenType font data and metadata.
     /// </summary>
-    public class OpenTypeFont : IDisposable
+    public class OpenTypeFont : IDisposable, IOpenTypeFont
     {
         private MemoryMappedFile _mmf;
         private MemoryMappedViewAccessor _accessor;

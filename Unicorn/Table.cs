@@ -220,7 +220,7 @@ namespace Unicorn
                 }
                 if (row.Count > 0)
                 {
-                    yOffset += row[0].ComputedHeight + RuleWidth;
+                    yOffset += row.ComputedHeight + RuleWidth;
                 }
             }
             switch (RuleStyle)

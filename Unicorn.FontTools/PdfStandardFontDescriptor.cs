@@ -47,6 +47,17 @@ namespace Unicorn.FontTools
         public double Descent => PointSizeTransform(_metrics.Descender ?? 0m);
 
         /// <summary>
+        /// Standard interline white space in this font.
+        /// </summary>
+        public double InterlineSpacing => PointSize - (Ascent - Descent);
+
+        /// <summary>
+        /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics
+        /// properties populated.
+        /// </summary>
+        public UniTextSize EmptyStringMetrics => new UniTextSize(0d, PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal PdfStandardFontDescriptor(AfmFontMetrics metrics, double pointSize)
@@ -122,9 +133,9 @@ namespace Unicorn.FontTools
         /// </summary>
         /// <param name="str">The string to be measured.</param>
         /// <returns>A <see cref="UniSize" /> instance describing the size of the rendered string.</returns>
-        public UniSize MeasureString(string str)
+        public UniTextSize MeasureString(string str)
         {
-            return new UniSize(MeasureStringWidth(str), PointSizeTransform((_metrics.Ascender ?? 0) - (_metrics.Descender ?? 0)));
+            return new UniTextSize(MeasureStringWidth(str), PointSize, Ascent + InterlineSpacing / 2, Ascent, Descent);
         }
 
         private static string NormaliseName(string fontName)

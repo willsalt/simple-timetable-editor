@@ -108,6 +108,6 @@ namespace Unicorn.Interfaces
         /// <param name="text">Text to measure.</param>
         /// <param name="font">Font to use when measuring what size the text will be on render.</param>
         /// <returns>The dimensions of the text's bounding box.</returns>
-        UniSize MeasureString(string text, IFontDescriptor font);
+        UniTextSize MeasureString(string text, IFontDescriptor font);
     }
 }

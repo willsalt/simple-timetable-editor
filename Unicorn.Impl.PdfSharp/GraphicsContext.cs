@@ -168,15 +168,19 @@ namespace Unicorn.Impl.PdfSharp
         /// <param name="font">The font to use to render the string.  Must be a <see cref="FontDescriptor"/> object.</param>
         /// <returns>The dimensions of the string when rendered.</returns>
         /// <exception cref="ArgumentException" />Thrown if the <see cref="IFontDescriptor" /> paramter is not a <see cref="FontDescriptor" /> instance.  
-        public UniSize MeasureString(string text, IFontDescriptor font)
+        public UniTextSize MeasureString(string text, IFontDescriptor font)
         {
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
             if (!(font is FontDescriptor ourFont))
             {
                 throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
 
             var size = _core.MeasureString(text, ourFont.Font);
-            return new UniSize(size.Width, size.Height);
+            return new UniTextSize(size.Width, font.InterlineSpacing + font.Ascent - font.Descent, font.Ascent + font.InterlineSpacing / 2, font.Ascent, -font.Descent);
         }
 
         /// <summary>

@@ -17,7 +17,9 @@ namespace Unicorn.Tests.Unit
         {
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
             Mock<IGraphicsContext> mockContext = new Mock<IGraphicsContext>();
-            mockContext.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
+            mockContext.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, 
+                    _rnd.NextDouble() * 1000));
             return new Word("", mockFont.Object, mockContext.Object, _rnd.NextDouble() * 10);
         }
 

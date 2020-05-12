@@ -35,6 +35,15 @@ namespace Unicorn.Interfaces.Tests.Utility.Extensions
             return new UniSize(rnd.NextDouble() * 1000, rnd.NextDouble() * 1000);
         }
 
+        public static UniTextSize NextUniTextSize(this Random rnd)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new UniTextSize(rnd.NextDouble() * 500, rnd.NextDouble() * 500, rnd.NextDouble() * 500, rnd.NextDouble() * 500, rnd.NextDouble() * 500);
+        }
+
         private static readonly PhysicalPageSize[] _physicalPageSizes 
             = new[] { PhysicalPageSize.A1, PhysicalPageSize.A2, PhysicalPageSize.A3, PhysicalPageSize.A4, PhysicalPageSize.A5, PhysicalPageSize.A6 };
 

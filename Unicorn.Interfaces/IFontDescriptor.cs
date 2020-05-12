@@ -40,11 +40,23 @@ namespace Unicorn.Interfaces
         double Descent { get; }
 
         /// <summary>
+        /// The amount of white space between the bottom of th descenders of one line and the top of the ascenders of the next, where the leading is zero.  Should
+        /// normally be equal to <see cref="PointSize" /><c> - (</c><see cref="Ascent" /><c> - </c><see cref="Descent" /><c>)</c>.  
+        /// </summary>
+        double InterlineSpacing { get; }
+
+        /// <summary>
+        /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics
+        /// properties populated.
+        /// </summary>
+        UniTextSize EmptyStringMetrics { get; }
+
+        /// <summary>
         /// Measure the size of a string when rendered in this font.
         /// </summary>
         /// <param name="str">The string to be measured.</param>
         /// <returns>A <see cref="UniSize" /> instance containing the size of the string.</returns>
-        UniSize MeasureString(string str);
+        UniTextSize MeasureString(string str);
 
         /// <summary>
         /// Return the width of a "normal space" - ASCII 0x20 - in this font, using the given graphics context to render it.

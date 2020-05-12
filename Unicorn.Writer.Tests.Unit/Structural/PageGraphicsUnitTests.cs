@@ -1026,7 +1026,8 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             Func<double, double> constrParam3 = TransformYParam;
             PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
             string testParam0 = _rnd.NextString(_rnd.Next(20));
-            UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            UniTextSize expectedResult = new UniTextSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, 
+                _rnd.NextDouble() * 1000);
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
             mockFont.Setup(f => f.MeasureString(It.IsAny<string>())).Returns(expectedResult);
             IFontDescriptor testParam1 = mockFont.Object;
@@ -1044,7 +1045,8 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             Func<double, double> constrParam3 = TransformYParam;
             PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
             string testParam0 = _rnd.NextString(_rnd.Next(20));
-            UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            UniTextSize expectedResult = new UniTextSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, 
+                _rnd.NextDouble() * 100);
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
             mockFont.Setup(f => f.MeasureString(It.IsAny<string>())).Returns(expectedResult);
             IFontDescriptor testParam1 = mockFont.Object;
@@ -1062,12 +1064,13 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             Func<double, double> constrParam3 = TransformYParam;
             PageGraphics testObject = new PageGraphics(constrParam0, constrParam2, constrParam3);
             string testParam0 = _rnd.NextString(_rnd.Next(20));
-            UniSize expectedResult = new UniSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            UniTextSize expectedResult = new UniTextSize(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, 
+                _rnd.NextDouble() * 100);
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
             mockFont.Setup(f => f.MeasureString(It.IsAny<string>())).Returns(expectedResult);
             IFontDescriptor testParam1 = mockFont.Object;
 
-            UniSize testOutput = testObject.MeasureString(testParam0, testParam1);
+            UniTextSize testOutput = testObject.MeasureString(testParam0, testParam1);
 
             Assert.AreEqual(expectedResult, testOutput);
         }

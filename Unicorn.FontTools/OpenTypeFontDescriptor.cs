@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Unicorn.FontTools.OpenType;
+using Unicorn.FontTools.OpenType.Interfaces;
 using Unicorn.Interfaces;
 
 namespace Unicorn.FontTools
@@ -12,7 +12,7 @@ namespace Unicorn.FontTools
     /// </summary>
     public class OpenTypeFontDescriptor : IFontDescriptor
     {
-        private readonly OpenTypeFont _underlyingFont;
+        private readonly IOpenTypeFont _underlyingFont;
 
         /// <summary>
         /// The PostScript font name of the underlying font.
@@ -46,10 +46,21 @@ namespace Unicorn.FontTools
         /// </summary>
         public double PointSize { get; }
 
+        private CalculationStyle _calcStyle = CalculationStyle.Windows;
+
         /// <summary>
         /// Whether to use Windows-style or Macintosh-style calculations when doing platform-dependent metrics calculations.
         /// </summary>
-        public CalculationStyle CalculationStyle { get; set; } = CalculationStyle.Windows;
+        public CalculationStyle CalculationStyle
+        {
+            get => _calcStyle;
+            set
+            {
+                _ascent = null;
+                _descent = null;
+                _calcStyle = value;
+            }
+        }
 
         private double? _ascent;
 
@@ -115,7 +126,7 @@ namespace Unicorn.FontTools
         /// </summary>
         /// <param name="font">The underlying font.</param>
         /// <param name="pointSize">The point size the font will be rendered at.</param>
-        internal OpenTypeFontDescriptor(OpenTypeFont font, double pointSize)
+        internal OpenTypeFontDescriptor(IOpenTypeFont font, double pointSize)
         {
             PointSize = pointSize;
             _underlyingFont = font;

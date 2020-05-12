@@ -86,7 +86,7 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
-        /// Constructor which takes an array of bytes, and takes the eight consecutive byte values starting at the offset element as the property values for the struct.
+        /// Constructor which takes an array of bytes, and takes the ten consecutive byte values starting at the offset element as the property values for the struct.
         /// </summary>
         /// <param name="arr">Array of source data.</param>
         /// <param name="offset">Location of the first relevant item in the array</param>

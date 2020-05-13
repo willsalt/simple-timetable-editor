@@ -363,7 +363,7 @@ namespace Timetabler.PdfExport
                     double llY2 = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - longestLine.Vertex2.Y);
                     UniPoint longestLineMidpoint = new UniPoint((llX1 + llX2) / 2, (llY1 + llY2) / 2);
                     IGraphicsState state = _currentPage.PageGraphics.Save();
-                    _currentPage.PageGraphics.RotateAt(Math.Atan2(llY1 - llY2, llX1 - llX2) * (180.0 / Math.PI) + 180.0, longestLineMidpoint);
+                    _currentPage.PageGraphics.RotateAt(MathsHelpers.RadToDeg(Math.Atan2(llY1 - llY2, llX1 - llX2)) + 180.0, longestLineMidpoint);
                     Word headcode = new Word(info.Headcode, _plainBodyFont, _currentPage.PageGraphics, 0);
                     headcode.DrawAt(_currentPage.PageGraphics, longestLineMidpoint.X - (headcode.ContentWidth / 2), longestLineMidpoint.Y - (headcode.MinHeight + 2));
                     _currentPage.PageGraphics.Restore(state);

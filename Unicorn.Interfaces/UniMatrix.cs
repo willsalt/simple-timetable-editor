@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Unicorn.Interfaces
 {
@@ -21,11 +19,6 @@ namespace Unicorn.Interfaces
         public double R0C1 { get; private set; }
 
         /// <summary>
-        /// Matrix member row 0, column 2.  Hardcoded to 0.
-        /// </summary>
-        public double R0C2 => 0d;
-
-        /// <summary>
         /// Matrix member row 1, column 0.
         /// </summary>
         public double R1C0 { get; private set; }
@@ -36,11 +29,6 @@ namespace Unicorn.Interfaces
         public double R1C1 { get; private set; }
 
         /// <summary>
-        /// Matrix member row 1, column 2.  Hardocded to 0.
-        /// </summary>
-        public double R1C2 => 0d;
-
-        /// <summary>
         /// Matrix member row 2, column 0.
         /// </summary>
         public double R2C0 { get; private set; }
@@ -49,11 +37,6 @@ namespace Unicorn.Interfaces
         /// Matrix member row 2, column 1.
         /// </summary>
         public double R2C1 { get; private set; }
-
-        /// <summary>
-        /// Matrix member row 2, column 2.  Hardcoded to 1.
-        /// </summary>
-        public double R2C2 => 1d;
 
         /// <summary>
         /// Constructor.

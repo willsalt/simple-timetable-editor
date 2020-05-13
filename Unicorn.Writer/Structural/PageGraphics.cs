@@ -134,7 +134,7 @@ namespace Unicorn.Writer.Structural
         /// <param name="centre">The centre of rotation.</param>
         public void RotateAt(double angle, UniPoint centre)
         {
-            PdfOperator.ApplyTransformation(UniMatrix.RotationAt(-angle * Math.PI / 180, new UniPoint(_xTransformer(centre.X), _yTransformer(centre.Y))))
+            PdfOperator.ApplyTransformation(UniMatrix.RotationAt(MathsHelpers.DegToRad(-angle), new UniPoint(_xTransformer(centre.X), _yTransformer(centre.Y))))
                 .WriteTo(_page.ContentStream);
         }
 

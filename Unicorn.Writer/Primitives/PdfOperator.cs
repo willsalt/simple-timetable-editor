@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Unicorn.Interfaces;
+using Unicorn.Writer.Extensions;
 
 namespace Unicorn.Writer.Primitives
 {
@@ -231,6 +233,34 @@ namespace Unicorn.Writer.Primitives
             op._operands.Add(str);
             return op;
         }
+
+        /// <summary>
+        /// Create an instance of the "cm" operator, for applying a transformation matrix to the graphics state.
+        /// </summary>
+        /// <param name="transformationMatrix"></param>
+        /// <returns></returns>
+        public static PdfOperator ApplyTransformation(UniMatrix transformationMatrix)
+        {
+            PdfOperator op = new PdfOperator("cm");
+            op._operands.AddRange(transformationMatrix.ToPdfRealArray());
+            return op;
+        }
+
+        private static readonly Lazy<PdfOperator> _pushStateOperator = new Lazy<PdfOperator>(() => new PdfOperator("q"));
+
+        /// <summary>
+        /// Create an instance of the "q" operator, for pushing the current graphics state.
+        /// </summary>
+        /// <returns></returns>
+        public static PdfOperator PushState() => _pushStateOperator.Value;
+
+        private static readonly Lazy<PdfOperator> _popStateOperator = new Lazy<PdfOperator>(() => new PdfOperator("Q"));
+
+        /// <summary>
+        /// Create an instance of the "Q" operator, for popping the current graphics state.
+        /// </summary>
+        /// <returns></returns>
+        public static PdfOperator PopState() => _popStateOperator.Value;
 
         /// <summary>
         /// Value-setting constructor.

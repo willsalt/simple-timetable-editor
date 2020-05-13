@@ -29,7 +29,7 @@ namespace Unicorn.Writer.Structural
         public PageOrientation PageOrientation { get; private set; }
 
         /// <summary>
-        /// The graphics context, for drawing.  Currently dummied out.
+        /// The graphics context, for drawing.
         /// </summary>
         public IGraphicsContext PageGraphics { get; private set; }
 
@@ -180,6 +180,14 @@ namespace Unicorn.Writer.Structural
                 }
             }
             return fontObject;
+        }
+
+        /// <summary>
+        /// Carry out any operations needed to cleanly complete the content stream of this page, such as balancing unbalanced PDF operators.
+        /// </summary>
+        public void ClosePage()
+        {
+            PageGraphics.CloseGraphics();
         }
 
         private PdfDictionary MakeDictionary()

@@ -133,6 +133,15 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The program is trying to restore a graphics state from a different implementation library..
+        /// </summary>
+        internal static string Structural_PageGraphics_RestoreWrongTypeError {
+            get {
+                return ResourceManager.GetString("Structural_PageGraphics_RestoreWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objects in the cross-reference table must have object IDs previously issued by the cross-reference table..
         /// </summary>
         internal static string Structural_PdfCrossRefTable_SetSlot_Invalid_ObjectId_Error {

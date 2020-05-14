@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Tests.Utility.Providers;
+using Unicorn.Interfaces;
+using Unicorn.Interfaces.Tests.Utility.Extensions;
+using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Tests.Unit.TestHelpers;
 
@@ -1441,6 +1444,293 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             _ = testOutput0.WriteTo(testParam1);
 
             AssertionHelpers.AssertSameElements(expected, testParam1);
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_ApplyTransformationMethod_CreatesObjectWithCorrectValueProperty()
+        {
+            UniMatrix testParam = _rnd.NextUniMatrix();
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam);
+
+            Assert.AreEqual("cm", testOutput.Value);
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_ApplyTransformationMethod_CreatesObjectWithCorrectByteLengthProperty()
+        {
+            UniMatrix testParam = _rnd.NextUniMatrix();
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam);
+
+            // The ByteLength of a "cm" operator is the byte lengths of its parameters, two characters for the operator and one for a space.
+            Assert.AreEqual(3 + testParam.ToPdfRealArray().Sum(r => r.ByteLength), testOutput.ByteLength);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_ApplyTransformationMethod_WriteToMethodWithListParameter_ThrowsExceptionIfParameterOfSecondMethodIsNull()
+        {
+            UniMatrix testParam0 = _rnd.NextUniMatrix();
+            List<byte> testParam1 = null;
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam0);
+            _ = testOutput.WriteTo(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_ApplyTransformationMethod_WriteToMethodWithListParameter_WritesCorrectValueToList()
+        {
+            UniMatrix testParam0 = _rnd.NextUniMatrix();
+            List<byte> expected = new List<byte>();
+            _ = testParam0.ToPdfRealArray().Select(r => r.WriteTo(expected)).ToArray();
+            expected.AddRange(new byte[] { 0x63, 0x6d, 0x20 });
+            List<byte> testParam1 = new List<byte>();
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam0);
+            _ = testOutput.WriteTo(testParam1);
+
+            AssertionHelpers.AssertSameElements(expected, testParam1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_ApplyTransformationMethod_WriteToMethodWithStreamParameter_ThrowsArgumentNullException_IfParameterOfSecondMethodIsNull()
+        {
+            UniMatrix testParam0 = _rnd.NextUniMatrix();
+            Stream testParam1 = null;
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam0);
+            _ = testOutput.WriteTo(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_ApplyTransformationMethod_WriteToMethodWithStreamParameter_WritesCorrectValueToStream()
+        {
+            UniMatrix testParam0 = _rnd.NextUniMatrix();
+            using MemoryStream testParam1 = new MemoryStream();
+            using MemoryStream expected = new MemoryStream();
+            _ = testParam0.ToPdfRealArray().Select(r => r.WriteTo(expected)).ToArray();
+            expected.Write(new byte[] { 0x63, 0x6d, 0x20 }, 0, 3);
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam0);
+            _ = testOutput.WriteTo(testParam1);
+
+            AssertionHelpers.AssertSameElements(expected, testParam1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_ApplyTransformationMethod_WriteToMethodWithPdfStreamParameter_ThrowsArgumentNullException_IfParameterToSecondMethodIsNull()
+        {
+            UniMatrix testParam0 = _rnd.NextUniMatrix();
+            Stream testParam1 = null;
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam0);
+            _ = testOutput.WriteTo(testParam1);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_ApplyTransformationMethod_WriteToMethodWithPdfStreamParameter_WritesCorrectValueToStream()
+        {
+            UniMatrix testParam0 = _rnd.NextUniMatrix();
+            List<byte> expected = new List<byte>();
+            _ = testParam0.ToPdfRealArray().Select(r => r.WriteTo(expected)).ToArray();
+            expected.AddRange(new byte[] { 0x63, 0x6d, 0x20 });
+            PdfStream testParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
+
+            PdfOperator testOutput = PdfOperator.ApplyTransformation(testParam0);
+            _ = testOutput.WriteTo(testParam1);
+
+            AssertionHelpers.AssertSameElements(expected, testParam1);
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PushStateMethod_CreatesObjectWithCorrectValueProperty()
+        {
+            PdfOperator testOutput = PdfOperator.PushState();
+
+            Assert.AreEqual("q", testOutput.Value);
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PushStateMethod_CreatesObjectWithCorrectByteLengthProperty()
+        {
+            PdfOperator testOutput = PdfOperator.PushState();
+
+            // The ByteLength of a "q" operator is one character for the operator and one for a space.
+            Assert.AreEqual(2, testOutput.ByteLength);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_PushStateMethod_WriteToMethodWithListParameter_ThrowsExceptionIfParameterOfSecondMethodIsNull()
+        {
+            List<byte> testParam = null;
+
+            PdfOperator testOutput0 = PdfOperator.PushState();
+            _ = testOutput0.WriteTo(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PushStateMethod_WriteToMethodWithListParameter_WritesCorrectValueToList()
+        {
+            List<byte> testParam = new List<byte>();
+            List<byte> expected = new List<byte> { 0x71, 0x20 };
+
+            PdfOperator testOutput0 = PdfOperator.PushState();
+            _ = testOutput0.WriteTo(testParam);
+
+            AssertionHelpers.AssertSameElements(expected, testParam);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_PushStateMethod_WriteToMethodWithStreamParameter_ThrowsArgumentNullException_IfParameterOfSecondMethodIsNull()
+        {
+            Stream testParam = null;
+
+            PdfOperator testOutput0 = PdfOperator.PushState();
+            _ = testOutput0.WriteTo(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PushStateMethod_WriteToMethodWithStreamParameter_WritesCorrectValueToStream()
+        {
+            using MemoryStream testParam = new MemoryStream();
+            using MemoryStream expected = new MemoryStream();
+            expected.Write(new byte[] { 0x71, 0x20 }, 0, 2);
+
+            PdfOperator testOutput0 = PdfOperator.PushState();
+            _ = testOutput0.WriteTo(testParam);
+
+            AssertionHelpers.AssertSameElements(expected, testParam);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_PushStateMethod_WriteToMethodWithPdfStreamParameter_ThrowsArgumentNullException_IfParameterToSecondMethodIsNull()
+        {
+            PdfStream testParam = null;
+
+            PdfOperator testOutput0 = PdfOperator.PushState();
+            _ = testOutput0.WriteTo(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PushStateMethod_WriteToMethodWithPdfStreamParameter_WritesCorrectValueToStream()
+        {
+            PdfStream testParam = new PdfStream(_rnd.Next(1, int.MaxValue));
+            List<byte> expected = new List<byte>();
+            expected.AddRange(new byte[] { 0x71, 0x20 });
+
+            PdfOperator testOutput0 = PdfOperator.PushState();
+            _ = testOutput0.WriteTo(testParam);
+
+            AssertionHelpers.AssertSameElements(expected, testParam);
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PopStateMethod_CreatesObjectWithCorrectValueProperty()
+        {
+            PdfOperator testOutput = PdfOperator.PopState();
+
+            Assert.AreEqual("Q", testOutput.Value);
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PopStateMethod_CreatesObjectWithCorrectByteLengthProperty()
+        {
+            PdfOperator testOutput = PdfOperator.PopState();
+
+            // The ByteLength of a "Q" operator is one character for the operator and one for a space.
+            Assert.AreEqual(2, testOutput.ByteLength);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_PopStateMethod_WriteToMethodWithListParameter_ThrowsExceptionIfParameterOfSecondMethodIsNull()
+        {
+            List<byte> testParam = null;
+
+            PdfOperator testOutput0 = PdfOperator.PopState();
+            _ = testOutput0.WriteTo(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PopStateMethod_WriteToMethodWithListParameter_WritesCorrectValueToList()
+        {
+            List<byte> testParam = new List<byte>();
+            List<byte> expected = new List<byte> { 0x51, 0x20 };
+
+            PdfOperator testOutput0 = PdfOperator.PopState();
+            _ = testOutput0.WriteTo(testParam);
+
+            AssertionHelpers.AssertSameElements(expected, testParam);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_PopStateMethod_WriteToMethodWithStreamParameter_ThrowsArgumentNullException_IfParameterOfSecondMethodIsNull()
+        {
+            Stream testParam = null;
+
+            PdfOperator testOutput0 = PdfOperator.PopState();
+            _ = testOutput0.WriteTo(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PopStateMethod_WriteToMethodWithStreamParameter_WritesCorrectValueToStream()
+        {
+            using MemoryStream testParam = new MemoryStream();
+            using MemoryStream expected = new MemoryStream();
+            expected.Write(new byte[] { 0x51, 0x20 }, 0, 2);
+
+            PdfOperator testOutput0 = PdfOperator.PopState();
+            _ = testOutput0.WriteTo(testParam);
+
+            AssertionHelpers.AssertSameElements(expected, testParam);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void PdfOperatorClass_PopStateMethod_WriteToMethodWithPdfStreamParameter_ThrowsArgumentNullException_IfParameterToSecondMethodIsNull()
+        {
+            PdfStream testParam = null;
+
+            PdfOperator testOutput0 = PdfOperator.PopState();
+            _ = testOutput0.WriteTo(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void PdfOperatorClass_PopStateMethod_WriteToMethodWithPdfStreamParameter_WritesCorrectValueToStream()
+        {
+            PdfStream testParam = new PdfStream(_rnd.Next(1, int.MaxValue));
+            List<byte> expected = new List<byte>();
+            expected.AddRange(new byte[] { 0x51, 0x20 });
+
+            PdfOperator testOutput0 = PdfOperator.PopState();
+            _ = testOutput0.WriteTo(testParam);
+
+            AssertionHelpers.AssertSameElements(expected, testParam);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

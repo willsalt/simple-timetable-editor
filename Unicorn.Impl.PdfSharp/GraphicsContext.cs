@@ -210,6 +210,13 @@ namespace Unicorn.Impl.PdfSharp
         }
 
         /// <summary>
+        /// Rotate the context.
+        /// </summary>
+        /// <param name="angle">The angle to rotate by, in degrees.</param>
+        /// <param name="centre">The centre of rotation.</param>
+        public void RotateAt(double angle, UniPoint centre) => RotateAt(angle, centre.X, centre.Y);
+
+        /// <summary>
         /// Save the state of this context in a form that can be restored later.
         /// </summary>
         /// <returns>A <see cref="GraphicsState" /> object representing the current state of this context.</returns>
@@ -242,6 +249,13 @@ namespace Unicorn.Impl.PdfSharp
         {
             XPen pen = new XPen(XColors.Black, lineWidth);
             _core.DrawRectangle(pen, xTopLeft, yTopLeft, rectWidth, rectHeight);
+        }
+
+        /// <summary>
+        /// Carry out any operations needed to complete the output for this page.  Not required by this implementation.
+        /// </summary>
+        public void CloseGraphics()
+        {
         }
     }
 }

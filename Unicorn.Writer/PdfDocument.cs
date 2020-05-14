@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unicorn.Interfaces;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
@@ -125,6 +126,7 @@ namespace Unicorn.Writer
                 throw new ArgumentNullException(nameof(stream));
             }
             int written = PdfHeader.Value.WriteTo(stream);
+            CloseAllPages();
             foreach (IPdfIndirectObject indirectObject in _bodyObjects)
             {
                 _xrefTable.SetSlot(indirectObject, written);
@@ -161,6 +163,14 @@ namespace Unicorn.Writer
                 _fontCache.Add(font.UnderlyingKey, pdfFont);
                 _bodyObjects.Add(pdfFont);
                 return pdfFont;
+            }
+        }
+
+        private void CloseAllPages()
+        {
+            foreach (PdfPage page in _bodyObjects.Where(b => b is PdfPage))
+            {
+                page.ClosePage();
             }
         }
     }

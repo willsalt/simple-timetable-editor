@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unicorn.Interfaces;
-using Unicorn.Writer.Dummy;
 using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
@@ -22,6 +21,8 @@ namespace Unicorn.Writer.Structural
         private readonly Func<double, double> _xTransformer;
 
         private readonly Func<double, double> _yTransformer;
+
+        private readonly Stack<GraphicsState> _stateStack = new Stack<GraphicsState>();
 
         /// <summary>
         /// Current path stroking width.
@@ -66,8 +67,13 @@ namespace Unicorn.Writer.Structural
         /// <returns></returns>
         public IGraphicsState Save()
         {
-            // dummy code
-            return new DummyGraphicsState();
+            lock (_stateStack)
+            {
+                GraphicsState gs = new GraphicsState(CurrentLineWidth, CurrentDashStyle);
+                _stateStack.Push(gs);
+                PdfOperator.PushState().WriteTo(_page.ContentStream);
+                return gs;
+            } 
         }
 
         /// <summary>
@@ -76,7 +82,41 @@ namespace Unicorn.Writer.Structural
         /// <param name="state">The state to be restored.</param>
         public void Restore(IGraphicsState state)
         {
-            
+            if (!(state is GraphicsState gs))
+            {
+                throw new ArgumentException(Resources.Structural_PageGraphics_RestoreWrongTypeError);
+            }
+            lock (_stateStack)
+            {
+                if (!_stateStack.Contains(gs))
+                {
+                    return;
+                }
+                GraphicsState popped;
+                do
+                {
+                    popped = _stateStack.Pop();
+                } while (gs != popped);
+                CurrentLineWidth = gs.LineWidth;
+                CurrentDashStyle = gs.DashStyle;
+                LineWidthChanged = true;
+                PdfOperator.PopState().WriteTo(_page.ContentStream);
+            }
+        }
+
+        /// <summary>
+        /// Carry out any unfinished operations needed to complete this page, such as balancing PDF operators.
+        /// </summary>
+        public void CloseGraphics()
+        {
+            lock (_stateStack)
+            {
+                while (_stateStack.Count > 0)
+                {
+                    PdfOperator.PopState().WriteTo(_page.ContentStream);
+                    _stateStack.Pop();
+                }
+            }
         }
 
         /// <summary>
@@ -85,9 +125,17 @@ namespace Unicorn.Writer.Structural
         /// <param name="angle">The angle to rotate by.</param>
         /// <param name="x">The X coordinate of the centre of rotation.</param>
         /// <param name="y">The Y coordinate of the centre of rotation.</param>
-        public void RotateAt(double angle, double x, double y)
+        public void RotateAt(double angle, double x, double y) => RotateAt(angle, new UniPoint(x, y));
+
+        /// <summary>
+        /// Rotate the coordinate system around a point.
+        /// </summary>
+        /// <param name="angle">The angle to rotate by.</param>
+        /// <param name="centre">The centre of rotation.</param>
+        public void RotateAt(double angle, UniPoint centre)
         {
-            
+            PdfOperator.ApplyTransformation(UniMatrix.RotationAt(MathsHelpers.DegToRad(-angle), new UniPoint(_xTransformer(centre.X), _yTransformer(centre.Y))))
+                .WriteTo(_page.ContentStream);
         }
 
         /// <summary>

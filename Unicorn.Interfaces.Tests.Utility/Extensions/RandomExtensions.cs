@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace Unicorn.Interfaces.Tests.Utility.Extensions
 {
@@ -65,6 +66,25 @@ namespace Unicorn.Interfaces.Tests.Utility.Extensions
                 throw new NullReferenceException();
             }
             return _pageOrientations[rnd.Next(_pageOrientations.Length)];
+        }
+
+        public static UniPoint NextUniPoint(this Random rnd)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new UniPoint(rnd.NextDouble() * 1000, rnd.NextDouble() * 1000);
+        }
+
+        public static UniMatrix NextUniMatrix(this Random rnd)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            return new UniMatrix(rnd.NextDouble() * 100, rnd.NextDouble() * 100, rnd.NextDouble() * 100, rnd.NextDouble() * 100, rnd.NextDouble() * 100,
+                rnd.NextDouble() * 100);
         }
     }
 }

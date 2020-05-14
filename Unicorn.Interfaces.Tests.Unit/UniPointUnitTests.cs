@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Unicorn.Interfaces.Tests.Utility.Extensions;
 
 namespace Unicorn.Interfaces.Tests.Unit
 {
@@ -10,7 +11,7 @@ namespace Unicorn.Interfaces.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static UniPoint GetTestValue() => new UniPoint(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000);
+        private static UniPoint GetTestValue() => _rnd.NextUniPoint();
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
@@ -289,6 +290,90 @@ namespace Unicorn.Interfaces.Tests.Unit
             bool testOutput = testValue != testParam;
 
             Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_NegationOperator_ReturnsValueWithXPropertyThatIsEqualToXPropertyOfOperandNegated()
+        {
+            UniPoint testValue = GetTestValue();
+
+            UniPoint testOutput = -testValue;
+
+            Assert.AreEqual(-testValue.X, testOutput.X);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_NegationOperator_ReturnsValueWithYPropertyThatIsEqualToYPropertyOfOperandNegated()
+        {
+            UniPoint testValue = GetTestValue();
+
+            UniPoint testOutput = -testValue;
+
+            Assert.AreEqual(-testValue.Y, testOutput.Y);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_NegateMethod_ReturnsValueWithXPropertyThatIsEqualToXPropertyOfParameterNegated()
+        {
+            UniPoint testValue = GetTestValue();
+
+            UniPoint testOutput = UniPoint.Negate(testValue);
+
+            Assert.AreEqual(-testValue.X, testOutput.X);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_NegateMethod_ReturnsValueWithYPropertyThatIsEqualToYPropertyOfParameterNegated()
+        {
+            UniPoint testValue = GetTestValue();
+
+            UniPoint testOutput = UniPoint.Negate(testValue);
+
+            Assert.AreEqual(-testValue.Y, testOutput.Y);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_SubtractionOperator_ReturnsValueWithCorrectXProperty()
+        {
+            UniPoint testValue0 = GetTestValue();
+            UniPoint testValue1 = GetTestValue();
+
+            UniPoint testOutput = testValue0 - testValue1;
+
+            Assert.AreEqual(testValue0.X - testValue1.X, testOutput.X);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_SubtractionOperator_ReturnsValueWithCorrectYProperty()
+        {
+            UniPoint testValue0 = GetTestValue();
+            UniPoint testValue1 = GetTestValue();
+
+            UniPoint testOutput = testValue0 - testValue1;
+
+            Assert.AreEqual(testValue0.Y - testValue1.Y, testOutput.Y);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_SubtractMethod_ReturnsValueWithCorrectXProperty()
+        {
+            UniPoint testValue0 = GetTestValue();
+            UniPoint testValue1 = GetTestValue();
+
+            UniPoint testOutput = UniPoint.Subtract(testValue0, testValue1);
+
+            Assert.AreEqual(testValue0.X - testValue1.X, testOutput.X);
+        }
+
+        [TestMethod]
+        public void UniPointStruct_SubtractMethod_ReturnsValueWithCorrectYProperty()
+        {
+            UniPoint testValue0 = GetTestValue();
+            UniPoint testValue1 = GetTestValue();
+
+            UniPoint testOutput = UniPoint.Subtract(testValue0, testValue1);
+
+            Assert.AreEqual(testValue0.Y - testValue1.Y, testOutput.Y);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Unicorn.Interfaces.Tests.Utility.Extensions;
 
 namespace Unicorn.Interfaces.Tests.Unit
 {
@@ -12,9 +11,7 @@ namespace Unicorn.Interfaces.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static UniMatrix GetTestValue()
-            => new UniMatrix(_rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, 
-                _rnd.NextDouble() * 100);
+        private static UniMatrix GetTestValue() => _rnd.NextUniMatrix();
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
@@ -720,6 +717,322 @@ namespace Unicorn.Interfaces.Tests.Unit
             UniMatrix testOutput = testValue0 * testValue1;
 
             double expectedValue = testValue0.R2C0 * testValue1.R0C1 + testValue0.R2C1 * testValue1.R1C1 + testValue1.R2C1;
+            Assert.AreEqual(expectedValue, testOutput.R2C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithTwoUniMatrixParameters_ReturnsValueWithCorrectR0C0Property()
+        {
+            UniMatrix testValue0 = GetTestValue();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniMatrix testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.R0C0 * testValue1.R0C0 + testValue0.R0C1 * testValue1.R1C0;
+            Assert.AreEqual(expectedValue, testOutput.R0C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithTwoUniMatrixParameters_ReturnsValueWithCorrectR0C1Property()
+        {
+            UniMatrix testValue0 = GetTestValue();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniMatrix testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.R0C0 * testValue1.R0C1 + testValue0.R0C1 * testValue1.R1C1;
+            Assert.AreEqual(expectedValue, testOutput.R0C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithTwoUniMatrixParameters_ReturnsValueWithCorrectR1C0Property()
+        {
+            UniMatrix testValue0 = GetTestValue();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniMatrix testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.R1C0 * testValue1.R0C0 + testValue0.R1C1 * testValue1.R1C0;
+            Assert.AreEqual(expectedValue, testOutput.R1C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithTwoUniMatrixParameters_ReturnsValueWithCorrectR1C1Property()
+        {
+            UniMatrix testValue0 = GetTestValue();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniMatrix testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.R1C0 * testValue1.R0C1 + testValue0.R1C1 * testValue1.R1C1;
+            Assert.AreEqual(expectedValue, testOutput.R1C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithTwoUniMatrixParameters_ReturnsValueWithCorrectR2C0Property()
+        {
+            UniMatrix testValue0 = GetTestValue();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniMatrix testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.R2C0 * testValue1.R0C0 + testValue0.R2C1 * testValue1.R1C0 + testValue1.R2C0;
+            Assert.AreEqual(expectedValue, testOutput.R2C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithTwoUniMatrixParameters_ReturnsValueWithCorrectR2C1Property()
+        {
+            UniMatrix testValue0 = GetTestValue();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniMatrix testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.R2C0 * testValue1.R0C1 + testValue0.R2C1 * testValue1.R1C1 + testValue1.R2C1;
+            Assert.AreEqual(expectedValue, testOutput.R2C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplicationOperatorWithUniPointAndUniMatrixOperands_ReturnsValueWithCorrectXProperty()
+        {
+            UniPoint testValue0 = _rnd.NextUniPoint();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniPoint testOutput = testValue0 * testValue1;
+
+            double expectedValue = testValue0.X * testValue1.R0C0 + testValue0.Y * testValue1.R1C0 + testValue1.R2C0;
+            Assert.AreEqual(expectedValue, testOutput.X);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplicationOperatorWithUniPointAndUniMatrixOperands_ReturnsValueWithCorrectYProperty()
+        {
+            UniPoint testValue0 = _rnd.NextUniPoint();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniPoint testOutput = testValue0 * testValue1;
+
+            double expectedValue = testValue0.X * testValue1.R0C1 + testValue0.Y * testValue1.R1C1 + testValue1.R2C1;
+            Assert.AreEqual(expectedValue, testOutput.Y);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithUniPointAndUniMatrixParameters_ReturnsValueWithCorrectXProperty()
+        {
+            UniPoint testValue0 = _rnd.NextUniPoint();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniPoint testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.X * testValue1.R0C0 + testValue0.Y * testValue1.R1C0 + testValue1.R2C0;
+            Assert.AreEqual(expectedValue, testOutput.X);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_MultiplyMethodWithUniPointAndUniMatrixParameters_ReturnsValueWithCorrectYProperty()
+        {
+            UniPoint testValue0 = _rnd.NextUniPoint();
+            UniMatrix testValue1 = GetTestValue();
+
+            UniPoint testOutput = UniMatrix.Multiply(testValue0, testValue1);
+
+            double expectedValue = testValue0.X * testValue1.R0C1 + testValue0.Y * testValue1.R1C1 + testValue1.R2C1;
+            Assert.AreEqual(expectedValue, testOutput.Y);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_TranslationMethod_ReturnsValueWithR0C0PropertyEqualTo1()
+        {
+            UniPoint testParam = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.Translation(testParam);
+
+            Assert.AreEqual(1d, testOutput.R0C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_TranslationMethod_ReturnsValueWithR0C1PropertyEqualTo0()
+        {
+            UniPoint testParam = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.Translation(testParam);
+
+            Assert.AreEqual(0d, testOutput.R0C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_TranslationMethod_ReturnsValueWithR1C0PropertyEqualTo0()
+        {
+            UniPoint testParam = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.Translation(testParam);
+
+            Assert.AreEqual(0d, testOutput.R1C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_TranslationMethod_ReturnsValueWithR1C1PropertyEqualTo1()
+        {
+            UniPoint testParam = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.Translation(testParam);
+
+            Assert.AreEqual(1d, testOutput.R1C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_TranslationMethod_ReturnsValueWithR2C0PropertyEqualToXPropertyOfParameter()
+        {
+            UniPoint testParam = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.Translation(testParam);
+
+            Assert.AreEqual(testParam.X, testOutput.R2C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_TranslationMethod_ReturnsValueWithR2C1PropertyEqualToYPropertyOfParameter()
+        {
+            UniPoint testParam = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.Translation(testParam);
+
+            Assert.AreEqual(testParam.Y, testOutput.R2C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationMethod_ReturnsValueWithR0C0PropertyEqualToCosineOfParameter()
+        {
+            double testParam = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+
+            UniMatrix testOutput = UniMatrix.Rotation(testParam);
+
+            double expectedValue = Math.Cos(testParam);
+            Assert.AreEqual(expectedValue, testOutput.R0C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationMethod_ReturnsValueWithR0C1PropertyEqualToSineOfParameter()
+        {
+            double testParam = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+
+            UniMatrix testOutput = UniMatrix.Rotation(testParam);
+
+            double expectedValue = Math.Sin(testParam);
+            Assert.AreEqual(expectedValue, testOutput.R0C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationMethod_ReturnsValueWithR1C0PropertyEqualToNegativeSineOfParameter()
+        {
+            double testParam = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+
+            UniMatrix testOutput = UniMatrix.Rotation(testParam);
+
+            double expectedValue = -Math.Sin(testParam);
+            Assert.AreEqual(expectedValue, testOutput.R1C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationMethod_ReturnsValueWithR1C1PropertyEqualToCosineOfParameter()
+        {
+            double testParam = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+
+            UniMatrix testOutput = UniMatrix.Rotation(testParam);
+
+            double expectedValue = Math.Cos(testParam);
+            Assert.AreEqual(expectedValue, testOutput.R1C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationMethod_ReturnsValueWithR2C0PropertyEqualTo0()
+        {
+            double testParam = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+
+            UniMatrix testOutput = UniMatrix.Rotation(testParam);
+
+            Assert.AreEqual(0d, testOutput.R2C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationMethod_ReturnsValueWithR2C1PropertyEqualTo0()
+        {
+            double testParam = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+
+            UniMatrix testOutput = UniMatrix.Rotation(testParam);
+
+            Assert.AreEqual(0d, testOutput.R2C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationAtMethod_ReturnsValueWithR0C0PropertyEqualToCosineOfFirstParameter()
+        {
+            double testParam0 = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+            UniPoint testParam1 = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.RotationAt(testParam0, testParam1);
+
+            double expectedValue = Math.Cos(testParam0);
+            Assert.AreEqual(expectedValue, testOutput.R0C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationAtMethod_ReturnsValueWithR0C1PropertyEqualToSineOfFirstParameter()
+        {
+            double testParam0 = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+            UniPoint testParam1 = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.RotationAt(testParam0, testParam1);
+
+            double expectedValue = Math.Sin(testParam0);
+            Assert.AreEqual(expectedValue, testOutput.R0C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationAtMethod_ReturnsValueWithR1C0PropertyEqualToNegativeSineOfFirstParameter()
+        {
+            double testParam0 = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+            UniPoint testParam1 = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.RotationAt(testParam0, testParam1);
+
+            double expectedValue = -Math.Sin(testParam0);
+            Assert.AreEqual(expectedValue, testOutput.R1C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationAtMethod_ReturnsValueWithR1C1PropertyEqualToCosineOfFirstParameter()
+        {
+            double testParam0 = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+            UniPoint testParam1 = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.RotationAt(testParam0, testParam1);
+
+            double expectedValue = Math.Cos(testParam0);
+            Assert.AreEqual(expectedValue, testOutput.R1C1);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationAtMethod_ReturnsValueWithR2C0PropertyWithCorrectValue()
+        {
+            double testParam0 = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+            UniPoint testParam1 = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.RotationAt(testParam0, testParam1);
+
+            double expectedValue = testParam1.X - ((testParam1.X * Math.Cos(testParam0)) - (testParam1.Y * Math.Sin(testParam0)));
+            Assert.AreEqual(expectedValue, testOutput.R2C0);
+        }
+
+        [TestMethod]
+        public void UniMatrixStruct_RotationAtMethod_ReturnsValueWithR2C1PropertyWithCorrectValue()
+        {
+            double testParam0 = _rnd.NextDouble() * 4 * Math.PI * (_rnd.NextBoolean() ? 1 : -1);
+            UniPoint testParam1 = _rnd.NextUniPoint();
+
+            UniMatrix testOutput = UniMatrix.RotationAt(testParam0, testParam1);
+
+            double expectedValue = testParam1.Y - ((testParam1.X * Math.Sin(testParam0)) + (testParam1.Y * Math.Cos(testParam0)));
             Assert.AreEqual(expectedValue, testOutput.R2C1);
         }
 

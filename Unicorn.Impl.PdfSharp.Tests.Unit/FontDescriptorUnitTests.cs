@@ -59,7 +59,8 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);
@@ -72,7 +73,8 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);
@@ -85,7 +87,8 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);
@@ -98,7 +101,8 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             double testOutput = testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);

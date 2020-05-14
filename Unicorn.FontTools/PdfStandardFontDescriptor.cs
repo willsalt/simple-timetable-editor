@@ -4,6 +4,7 @@ using Unicorn.FontTools.Afm;
 using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Unicorn.FontTools
 {
@@ -13,6 +14,22 @@ namespace Unicorn.FontTools
     public class PdfStandardFontDescriptor : IFontDescriptor
     {
         private readonly AfmFontMetrics _metrics;
+
+        /// <summary>
+        /// The PostScript name of this font.
+        /// </summary>
+        public string BaseFontName => _metrics.FontName;
+
+        /// <summary>
+        /// Unique identifier for the underlying font.
+        /// </summary>
+        public string UnderlyingKey => $"Standard_{BaseFontName}";
+
+        /// <summary>
+        /// Preferred encoding for text using this font.  <see cref="Encoding.ASCII" /> is set here; the actual encoding of the standard fonts is an 8-bit
+        /// ASCII-compatible encoding that is not directly supported by .NET Core.
+        /// </summary>
+        public Encoding PreferredEncoding => Encoding.ASCII;
 
         /// <summary>
         /// The point size of this font.
@@ -28,6 +45,17 @@ namespace Unicorn.FontTools
         /// The depth of the largest descender below the baseline.  By convention the descender of 'p' is used.
         /// </summary>
         public double Descent => PointSizeTransform(_metrics.Descender ?? 0m);
+
+        /// <summary>
+        /// Standard interline white space in this font.
+        /// </summary>
+        public double InterlineSpacing => PointSize - (Ascent - Descent);
+
+        /// <summary>
+        /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics
+        /// properties populated.
+        /// </summary>
+        public UniTextSize EmptyStringMetrics => new UniTextSize(0d, PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
 
         /// <summary>
         /// Constructor.
@@ -105,9 +133,9 @@ namespace Unicorn.FontTools
         /// </summary>
         /// <param name="str">The string to be measured.</param>
         /// <returns>A <see cref="UniSize" /> instance describing the size of the rendered string.</returns>
-        public UniSize MeasureString(string str)
+        public UniTextSize MeasureString(string str)
         {
-            return new UniSize(MeasureStringWidth(str), PointSizeTransform((_metrics.Ascender ?? 0) + (_metrics.Descender ?? 0)));
+            return new UniTextSize(MeasureStringWidth(str), PointSize, Ascent + InterlineSpacing / 2, Ascent, Descent);
         }
 
         private static string NormaliseName(string fontName)

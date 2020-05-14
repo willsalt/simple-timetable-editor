@@ -4,16 +4,22 @@ using System.Globalization;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Interfaces;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// OpenType font data and metadata.
     /// </summary>
-    public class OpenTypeFont : IDisposable
+    public class OpenTypeFont : IDisposable, IOpenTypeFont
     {
         private MemoryMappedFile _mmf;
         private MemoryMappedViewAccessor _accessor;
+
+        /// <summary>
+        /// The full path of the file this font was loaded from.
+        /// </summary>
+        public string Filename { get; private set; }
 
         /// <summary>
         /// The header <see cref="OffsetTable" /> - the most important contents being the number of data tables in the font.
@@ -29,97 +35,50 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// The "head" table of the font, which must be present for the font to be a valid OpenType file.
         /// </summary>
-        public HeaderTable Header
-        {
-            get
-            {
-                TableIndexRecord index = TableIndex["head"];
-                if (index.Data == null)
-                {
-                    index.Data = GetTableData(index);
-                }
-                return (HeaderTable)index.Data;
-            }
-        }
+        public HeaderTable Header => GetTable<HeaderTable>("head");
 
         /// <summary>
         /// The "hhea" table of the font, which must be present for the font to be a valid OpenType file.
         /// </summary>
-        public HorizontalHeaderTable HorizontalHeader
-        {
-            get
-            {
-                TableIndexRecord index = TableIndex["hhea"];
-                if (index.Data == null)
-                {
-                    index.Data = GetTableData(index);
-                }
-                return (HorizontalHeaderTable)index.Data;
-            }
-        }
+        public HorizontalHeaderTable HorizontalHeader => GetTable<HorizontalHeaderTable>("hhea");
 
         /// <summary>
         /// The content of the font's "hmtx" table.
         /// </summary>
-        public HorizontalMetricsTable HorizontalMetrics
-        {
-            get
-            {
-                TableIndexRecord index = TableIndex["hmtx"];
-                if (index.Data == null)
-                {
-                    index.Data = GetTableData(index);
-                }
-                return (HorizontalMetricsTable)index.Data;
-            }
-        }
+        public HorizontalMetricsTable HorizontalMetrics => GetTable<HorizontalMetricsTable>("hmtx");
 
         /// <summary>
         /// The "maxp" table of this font, which must be present for the font to be a valid OpenType file.
         /// </summary>
-        public MaximumProfileTable MaximumProfile
-        {
-            get
-            {
-                TableIndexRecord index = TableIndex["maxp"];
-                if (index.Data == null)
-                {
-                    index.Data = GetTableData(index);
-                }
-                return (MaximumProfileTable)index.Data;
-            }
-        }
+        public MaximumProfileTable MaximumProfile => GetTable<MaximumProfileTable>("maxp");
 
         /// <summary>
         /// The content of the font's "OS/2" data table.
         /// </summary>
-        public OS2MetricsTable OS2Metrics
-        {
-            get
-            {
-                TableIndexRecord index = TableIndex["OS/2"];
-                if (index.Data == null)
-                {
-                    index.Data = GetTableData(index);
-                }
-                return (OS2MetricsTable)index.Data;
-            }
-        }
+        public OS2MetricsTable OS2Metrics => GetTable<OS2MetricsTable>("OS/2");
 
         /// <summary>
         /// The content of the font's "cmap" data table.
         /// </summary>
-        public CharacterMappingTable CharacterMapping
+        public CharacterMappingTable CharacterMapping => GetTable<CharacterMappingTable>("cmap");
+
+        /// <summary>
+        /// The content of the font's "name" data table.
+        /// </summary>
+        public NamingTable Naming => GetTable<NamingTable>("name");
+
+        private T GetTable<T>(string tableName) where T : Table
         {
-            get
+            if (!TableIndex.ContainsKey(tableName))
             {
-                TableIndexRecord index = TableIndex["cmap"];
-                if (index.Data == null)
-                {
-                    index.Data = GetTableData(index);
-                }
-                return (CharacterMappingTable)index.Data;
+                return null;
             }
+            TableIndexRecord index = TableIndex[tableName];
+            if (index.Data is null)
+            {
+                index.Data = GetTableData(index);
+            }
+            return (T)index.Data;
         }
 
         /// <summary>
@@ -171,13 +130,15 @@ namespace Unicorn.FontTools.OpenType
         /// Load an OpenType font from a memory-mapped file.
         /// </summary>
         /// <param name="mmf">The memory-mapped file to load data from.</param>
+        /// <param name="fn">The full path of the file this font was loaded from.</param>
         /// <returns>A font object.</returns>
-        public OpenTypeFont(MemoryMappedFile mmf)
+        public OpenTypeFont(MemoryMappedFile mmf, string fn)
         {
             if (mmf is null)
             {
                 throw new ArgumentNullException(nameof(mmf));
             }
+            Filename = fn;
             _mmf = mmf;
             _accessor = _mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
             OffsetHeader = LoadOffsetTable(_accessor);

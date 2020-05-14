@@ -309,7 +309,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
                 throw new NullReferenceException();
             }
             return new NameRecord(NextOpenTypePlatformId(random), random.NextUShort(), random.NextUShort(), NextOpenTypeNameField(random), 
-                random.NextString(random.Next(128)));
+                random.NextString(random.Next(128)), random.NextBoolean());
         }
 
         public static HighByteSubheaderRecord NextOpenTypeHighByteSubheaderRecord(this Random random)
@@ -328,6 +328,146 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
                 throw new NullReferenceException();
             }
             return new SegmentSubheaderRecord(random.NextUShort(), random.NextUShort(), random.NextShort(), random.Next());
+        }
+
+        private static readonly EmbeddingPermissionsFlags[] _exclusiveEmbeddingPermissionsFlags = new[] 
+        { 
+            EmbeddingPermissionsFlags.Installable, 
+            EmbeddingPermissionsFlags.Restricted, 
+            EmbeddingPermissionsFlags.Printing, 
+            EmbeddingPermissionsFlags.Editable, 
+        };
+
+        public static EmbeddingPermissionsFlags NextOpenTypeEmbeddingPermissionsFlags(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return _exclusiveEmbeddingPermissionsFlags[random.Next(_exclusiveEmbeddingPermissionsFlags.Length)] | 
+                (random.NextBoolean() ? EmbeddingPermissionsFlags.BitmapOnly : 0) | (random.NextBoolean() ? EmbeddingPermissionsFlags.NoSubsetting : 0);
+        }
+
+        private static readonly IBMFamily[] _validIBMFamilyValues = new[]
+        {
+            IBMFamily.None,
+            IBMFamily.OldstyleSerif_None,
+            IBMFamily.OldstyleSerif_IBMRoundedLegibility,
+            IBMFamily.OldstyleSerif_Garalde,
+            IBMFamily.OldstyleSerif_Venetian,
+            IBMFamily.OldstyleSerif_ModifiedVenetian,
+            IBMFamily.OldstyleSerif_DutchTraditional,
+            IBMFamily.OldstyleSerif_DutchModern,
+            IBMFamily.OldstyleSerif_Contemporary,
+            IBMFamily.OldstyleSerif_Calligraphic,
+            IBMFamily.OldstyleSerif_Miscellaneous,
+            IBMFamily.TransitionalSerif_None,
+            IBMFamily.TransitionalSerif_DirectLine,
+            IBMFamily.TransitionalSerif_Script,
+            IBMFamily.TransitionalSerif_Miscellaneous,
+            IBMFamily.ModernSerif_None,
+            IBMFamily.ModernSerif_Italian,
+            IBMFamily.ModernSerif_Script,
+            IBMFamily.ModernSerif_Miscellaneous,
+            IBMFamily.ClarendonSerif_None,
+            IBMFamily.ClarendonSerif_Clarendon,
+            IBMFamily.ClarendonSerif_Modern,
+            IBMFamily.ClarendonSerif_Traditional,
+            IBMFamily.ClarendonSerif_Newspaper,
+            IBMFamily.ClarendonSerif_StubSerif,
+            IBMFamily.ClarendonSerif_Monotone,
+            IBMFamily.ClarendonSerif_Typewriter,
+            IBMFamily.ClarendonSerif_Miscellaneous,
+            IBMFamily.SlabSerif_None,
+            IBMFamily.SlabSerif_Monotone,
+            IBMFamily.SlabSerif_Humanist,
+            IBMFamily.SlabSerif_Geometric,
+            IBMFamily.SlabSerif_Swiss,
+            IBMFamily.SlabSerif_Typewriter,
+            IBMFamily.SlabSerif_Miscellaneous,
+            IBMFamily.FreeformSerif_None,
+            IBMFamily.FreeformSerif_Modern,
+            IBMFamily.FreeformSerif_Miscellaneous,
+            IBMFamily.SansSerif_None,
+            IBMFamily.SansSerif_IBMNeoGrotesqueGothic,
+            IBMFamily.SansSerif_Humanist,
+            IBMFamily.SansSerif_LowXRoundGeometric,
+            IBMFamily.SansSerif_HighXRoundGeometric,
+            IBMFamily.SansSerif_NeoGrotesqueGothic,
+            IBMFamily.SansSerif_ModifiedNeoGrotesqueGothic,
+            IBMFamily.SansSerif_TypewriterGothic,
+            IBMFamily.SansSerif_Matrix,
+            IBMFamily.SansSerif_Miscellaneous,
+            IBMFamily.Ornamentals_None,
+            IBMFamily.Ornamentals_Engraver,
+            IBMFamily.Ornamentals_BlackLetter,
+            IBMFamily.Ornamentals_Decorative,
+            IBMFamily.Ornamentals_ThreeDimensional,
+            IBMFamily.Ornamentals_Miscellaneous,
+            IBMFamily.Scripts_None,
+            IBMFamily.Scripts_Uncials,
+            IBMFamily.Scripts_BrushJoined,
+            IBMFamily.Scripts_FormalJoined,
+            IBMFamily.Scripts_MonotoneJoined,
+            IBMFamily.Scripts_Calligraphic,
+            IBMFamily.Scripts_BrushUnjoined,
+            IBMFamily.Scripts_FormalUnjoined,
+            IBMFamily.Scripts_MonotoneUnjoined,
+            IBMFamily.Scripts_Miscellaneous,
+            IBMFamily.Symbolic_None,
+            IBMFamily.Symbolic_MixedSerif,
+            IBMFamily.Symbolic_OldStyleSerif,
+            IBMFamily.Symbolic_NeoGrotesqueSansSerif,
+            IBMFamily.Symbolic_Miscellaneous,
+        };
+
+        public static IBMFamily NextOpenTypeIBMFamily(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return _validIBMFamilyValues[random.Next(_validIBMFamilyValues.Length)];
+        }
+
+        public static PanoseFamily NextOpenTypePanoseFamily(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            byte[] data = new byte[10];
+            random.NextBytes(data);
+            return new PanoseFamily(data, 0);
+        }
+
+        public static LowerUnicodeRangeFlags NextOpenTypeLowerUnicodeRangeFlags(this Random random)
+        {
+            return (LowerUnicodeRangeFlags)random.NextULong();
+        }
+
+        public static UpperUnicodeRangeFlags NextOpenTypeUpperUnicodeRangeFlags(this Random random)
+        {
+            return (UpperUnicodeRangeFlags)random.NextULong();
+        }
+
+        public static OS2StyleFlags NextOpenTypeOS2StyleFlags(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (OS2StyleFlags)random.Next(1024);
+        }
+
+        public static SupportedCodePageFlags NextOpenTypeSupportedCodePageFlags(this Random random)
+        {
+            return (SupportedCodePageFlags)random.NextULong();
+        }
+
+        public static CalculationStyle NextOpenTypeCalculationStyle(this Random random)
+        {
+            return random.NextBoolean() ? CalculationStyle.Windows : CalculationStyle.Macintosh;
         }
     }
 }

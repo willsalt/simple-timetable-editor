@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Unicorn.Interfaces;
-using Unicorn.Writer.Dummy;
 using Unicorn.Writer.Extensions;
+using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Structural
@@ -11,8 +11,13 @@ namespace Unicorn.Writer.Structural
     /// <summary>
     /// Class representing a page in a PDF document.
     /// </summary>
-    public class PdfPage : PdfPageTreeItem, IPageDescriptor
+    public class PdfPage : PdfPageTreeItem, IPageDescriptor, IPdfPage
     {
+        /// <summary>
+        /// The <see cref="PdfDocument" /> that contains this page.
+        /// </summary>
+        public PdfDocument HomeDocument { get; private set; }
+
         /// <summary>
         /// The size of this page.
         /// </summary>
@@ -24,7 +29,7 @@ namespace Unicorn.Writer.Structural
         public PageOrientation PageOrientation { get; private set; }
 
         /// <summary>
-        /// The graphics context, for drawing.  Currently dummied out.
+        /// The graphics context, for drawing.
         /// </summary>
         public IGraphicsContext PageGraphics { get; private set; }
 
@@ -70,20 +75,25 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         public PdfStream ContentStream { get; private set; }
 
+        private readonly PdfDictionary _fontDictionary = new PdfDictionary();
+
         /// <summary>
         /// Value-setting constructor.
         /// </summary>
         /// <param name="parent">The parent node of this page in the document page tree.</param>
         /// <param name="objectId">The indirect object ID of this page.</param>
+        /// <param name="homeDocument">The <see cref="PdfDocument" /> that this page belongs to.</param>
         /// <param name="size">The paper size of this page.</param>
         /// <param name="orientation">The orientation of this page.</param>
         /// <param name="horizontalMarginProportion">The proportion of the page taken up by each of the left and right margins.</param>
         /// <param name="verticalMarginProportion">The proportion of the page taken up by each of the top and bottom margins.</param>
         /// <param name="contentStream">The <see cref="PdfStream" /> which will store the content of this page.</param>
-        /// <param name="generation">The object generation number.  Defaults to zero.  As we do not currently support rewriting existing documents, this should not be set.</param>
+        /// <param name="generation">The object generation number.  Defaults to zero.  As we do not currently support rewriting existing documents, 
+        /// this should not be set.</param>
         public PdfPage(
             PdfPageTreeNode parent, 
-            int objectId, 
+            int objectId,
+            PdfDocument homeDocument,
             PhysicalPageSize size, 
             PageOrientation orientation, 
             double horizontalMarginProportion, 
@@ -92,11 +102,16 @@ namespace Unicorn.Writer.Structural
             int generation = 0) 
             : base(parent, objectId, generation)
         {
-            if (parent == null)
+            if (parent is null)
             {
                 throw new ArgumentNullException(nameof(parent));
             }
+            if (homeDocument is null)
+            {
+                throw new ArgumentNullException(nameof(homeDocument));
+            }
 
+            HomeDocument = homeDocument;
             PageSize = size;
             PageOrientation = orientation;
 
@@ -110,7 +125,7 @@ namespace Unicorn.Writer.Structural
             CurrentVerticalCursor = TopMarginPosition;
             MediaBox = size.ToPdfRectangle(orientation);
             ContentStream = contentStream;
-            PageGraphics = new PageGraphics(contentStream, XTransformer, YTransformer);
+            PageGraphics = new PageGraphics(this, XTransformer, YTransformer);
         }
 
         private double XTransformer(double x) => x;
@@ -147,12 +162,45 @@ namespace Unicorn.Writer.Structural
             return Write(WriteToList, MakeDictionary().WriteTo, list);
         }
 
+        /// <summary>
+        /// Register that a font is likely to be used on this page.  If the font format supports embedding, this will register the font for embedding also.
+        /// </summary>
+        /// <param name="font">The font that is likely to be used on this page.</param>
+        /// <returns>A <see cref="PdfFont" /> object representing the font information dictionary that will be written to the output file.  This may be the 
+        /// same object returned by other calls to the <see cref="UseFont(IFontDescriptor)" /> method with the same parameter, or parameters with the same
+        /// <see cref="IFontDescriptor.UnderlyingKey" /> property, including calls on other <see cref="PdfPage" /> instances.</returns>
+        public PdfFont UseFont(IFontDescriptor font)
+        {
+            PdfFont fontObject = HomeDocument.UseFont(font);
+            lock (_fontDictionary)
+            {
+                if (!_fontDictionary.ContainsKey(fontObject.InternalName))
+                {
+                    _fontDictionary.Add(fontObject.InternalName, fontObject.GetReference());
+                }
+            }
+            return fontObject;
+        }
+
+        /// <summary>
+        /// Carry out any operations needed to cleanly complete the content stream of this page, such as balancing unbalanced PDF operators.
+        /// </summary>
+        public void ClosePage()
+        {
+            PageGraphics.CloseGraphics();
+        }
+
         private PdfDictionary MakeDictionary()
         {
             PdfDictionary dictionary = new PdfDictionary();
+            PdfDictionary resourceDictionary = new PdfDictionary();
+            if (_fontDictionary.Count > 0)
+            {
+                resourceDictionary.Add(CommonPdfNames.Font, _fontDictionary);
+            }
             dictionary.Add(CommonPdfNames.Type, CommonPdfNames.Page);
             dictionary.Add(CommonPdfNames.Parent, Parent.GetReference());
-            dictionary.Add(CommonPdfNames.Resources, new PdfDictionary());
+            dictionary.Add(CommonPdfNames.Resources, resourceDictionary);
             dictionary.Add(CommonPdfNames.MediaBox, MediaBox);
             if (ContentStream != null)
             {

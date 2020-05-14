@@ -88,6 +88,15 @@ namespace Timetabler.PdfExport {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  ..
+        /// </summary>
+        internal static string LocationFillerDotPattern {
+            get {
+                return ResourceManager.GetString("LocationFillerDotPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loco To Work.
         /// </summary>
         internal static string LocoToWorkRowCaption {

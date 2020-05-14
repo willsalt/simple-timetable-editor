@@ -126,6 +126,9 @@
   <data name="DirectionMetrics_FromLines_CharWidthClashesWithIsFixedWidth" xml:space="preserve">
     <value>Error loading direction-specific data: CharWidth and IsFixedWidth values are inconsistent.</value>
   </data>
+  <data name="OpenType_Extensions_ByteArrayExtensions_ToDateTime_OutOfRangeError" xml:space="preserve">
+    <value>Encoded value is too large to be converted to a timestamp.</value>
+  </data>
   <data name="OpenType_HeaderTable_FromBytes_InsufficientDataError" xml:space="preserve">
     <value>Insufficient data to load 'head' table.</value>
   </data>

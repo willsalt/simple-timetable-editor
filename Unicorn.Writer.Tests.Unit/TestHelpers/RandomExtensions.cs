@@ -2,7 +2,6 @@
 using Unicorn.Writer.Primitives;
 using Tests.Utility.Extensions;
 using Unicorn.Writer.Interfaces;
-using System.Collections.Generic;
 
 namespace Unicorn.Writer.Tests.Unit.TestHelpers
 {
@@ -12,9 +11,9 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
-            int selector = rnd.Next(7);
+            int selector = rnd.Next(8);
             return selector switch
             {
                 1 => rnd.NextPdfInteger(),
@@ -23,6 +22,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
                 4 => rnd.NextPdfReal(),
                 5 => rnd.NextPdfRectangle(),
                 6 => rnd.NextPdfString(rnd.Next(32) + 1),
+                7 => rnd.NextPdfByteString(rnd.Next(32)),
                 _ => rnd.NextPdfBoolean(),
             };
         }
@@ -31,7 +31,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             if (rnd.NextBoolean())
             {
@@ -79,7 +79,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfInteger(rnd.Next());
         }
@@ -88,7 +88,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfInteger(rnd.Next(maxValue));
         }
@@ -97,7 +97,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfInteger(rnd.Next(minValue, maxValue));
         }
@@ -106,7 +106,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfName(rnd.NextAlphabeticalString(rnd.Next(16) + 1));
         }
@@ -122,7 +122,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
 
             // The offset and multiplier here are arbitrary amounts that are within the range likely to be seen on a PDF - 5,000 points is just over 176cm.
@@ -133,7 +133,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
 
             // See NextPdfReal() for a note on why these multipliers and offsets were chosen.
@@ -147,6 +147,17 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         public static PdfString NextPdfString(this Random rnd, int len)
         {
             return new PdfString(rnd.NextString(len));
+        }
+
+        public static PdfByteString NextPdfByteString(this Random rnd, int len)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            byte[] data = new byte[len];
+            rnd.NextBytes(data);
+            return new PdfByteString(data);
         }
     }
 }

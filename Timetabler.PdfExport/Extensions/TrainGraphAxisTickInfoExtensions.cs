@@ -28,9 +28,9 @@ namespace Timetabler.PdfExport.Extensions
                 throw new ArgumentNullException(nameof(context));
             }
 
-            UniSize measure = context.MeasureString(tickInfo.Label, font);
+            UniTextSize measure = context.MeasureString(tickInfo.Label, font);
             tickInfo.Width = measure.Width;
-            tickInfo.Height = measure.Height;
+            tickInfo.Height = measure.TotalHeight;
         }
     }
 }

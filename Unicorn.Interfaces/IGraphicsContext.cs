@@ -8,6 +8,11 @@ namespace Unicorn.Interfaces
     public interface IGraphicsContext
     {
         /// <summary>
+        /// Carry out any operations needed to cleanly close the content stream for this graphics context, such as balancing any unbalanced PDF operators.
+        /// </summary>
+        void CloseGraphics();
+
+        /// <summary>
         /// Save the state of this context.
         /// </summary>
         /// <returns>An <see cref="IGraphicsState"/> object encapsulating the saved state.</returns>
@@ -27,6 +32,13 @@ namespace Unicorn.Interfaces
         /// <param name="x">The X-coordinate of the centre of rotation.</param>
         /// <param name="y">The Y-coordinate of the centre of rotation.</param>
         void RotateAt(double angle, double x, double y);
+
+        /// <summary>
+        /// Rotate the context.
+        /// </summary>
+        /// <param name="angle">The angle to rotate by (in degrees, clockwise positive).</param>
+        /// <param name="around">The centre of rotation.</param>
+        void RotateAt(double angle, UniPoint around);
 
         /// <summary>
         /// Draw a line between two points.
@@ -108,6 +120,6 @@ namespace Unicorn.Interfaces
         /// <param name="text">Text to measure.</param>
         /// <param name="font">Font to use when measuring what size the text will be on render.</param>
         /// <returns>The dimensions of the text's bounding box.</returns>
-        UniSize MeasureString(string text, IFontDescriptor font);
+        UniTextSize MeasureString(string text, IFontDescriptor font);
     }
 }

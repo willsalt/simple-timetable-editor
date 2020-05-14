@@ -6,6 +6,7 @@ using Tests.Utility.Providers;
 using Timetabler.Data.Display;
 using Timetabler.PdfExport.Extensions;
 using Unicorn.Interfaces;
+using Unicorn.Interfaces.Tests.Utility.Extensions;
 
 namespace Timetabler.PdfExport.Tests.Unit.Extensions
 {
@@ -81,6 +82,75 @@ namespace Timetabler.PdfExport.Tests.Unit.Extensions
             {
                 Assert.AreEqual("context", ex.ParamName);
             }
+        }
+
+        [TestMethod]
+        public void TrainGraphAxisTickInfoExtensionsClass_PopulateSizeMethod_CallsMeasureStringMethodOfSecondParameter()
+        {
+            TrainGraphAxisTickInfo testObject = GetTickInfo();
+            Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
+            IGraphicsContext testParam1 = mockGraphicsContext.Object;
+            IFontDescriptor testParam2 = new Mock<IFontDescriptor>().Object;
+
+            testObject.PopulateSize(testParam1, testParam2);
+
+            mockGraphicsContext.Verify(g => g.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void TrainGraphAxisTickInfoExtensionsClass_PopulateSizeMethod_CallsMeasureStringMethodOfSecondParameterWithLabelPropertyOfFirstParameter()
+        {
+            TrainGraphAxisTickInfo testObject = GetTickInfo();
+            Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
+            IGraphicsContext testParam1 = mockGraphicsContext.Object;
+            IFontDescriptor testParam2 = new Mock<IFontDescriptor>().Object;
+
+            testObject.PopulateSize(testParam1, testParam2);
+
+            mockGraphicsContext.Verify(g => g.MeasureString(testObject.Label, It.IsAny<IFontDescriptor>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void TrainGraphAxisTickInfoExtensionsClass_PopulateSizeMethod_CallsMeasureStringMethodOfSecondParameterWithThirdParameter()
+        {
+            TrainGraphAxisTickInfo testObject = GetTickInfo();
+            Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
+            IGraphicsContext testParam1 = mockGraphicsContext.Object;
+            IFontDescriptor testParam2 = new Mock<IFontDescriptor>().Object;
+
+            testObject.PopulateSize(testParam1, testParam2);
+
+            mockGraphicsContext.Verify(g => g.MeasureString(It.IsAny<string>(), testParam2), Times.Once());
+        }
+
+        [TestMethod]
+        public void TrainGraphAxisTickInfoExtensionsClass_PopulateSizeMethod_SetsWidthPropertyOfFirstParameterToWidthPropertyOfValueReturnedByMeasureStringMethodOfSecondParameter()
+        {
+            UniTextSize expectedData = _rnd.NextUniTextSize();
+            TrainGraphAxisTickInfo testObject = GetTickInfo();
+            Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
+            mockGraphicsContext.Setup(g => g.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(expectedData);
+            IGraphicsContext testParam1 = mockGraphicsContext.Object;
+            IFontDescriptor testParam2 = new Mock<IFontDescriptor>().Object;
+
+            testObject.PopulateSize(testParam1, testParam2);
+
+            Assert.AreEqual(expectedData.Width, testObject.Width);
+        }
+
+        [TestMethod]
+        public void TrainGraphAxisTickInfoExtensionsClass_PopulateSizeMethod_SetsHeightPropertyOfFirstParameterToTotalHeightPropertyOfValueReturnedByMeasureStringMethodOfSecondParameter()
+        {
+            UniTextSize expectedData = _rnd.NextUniTextSize();
+            TrainGraphAxisTickInfo testObject = GetTickInfo();
+            Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
+            mockGraphicsContext.Setup(g => g.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(expectedData);
+            IGraphicsContext testParam1 = mockGraphicsContext.Object;
+            IFontDescriptor testParam2 = new Mock<IFontDescriptor>().Object;
+
+            testObject.PopulateSize(testParam1, testParam2);
+
+            Assert.AreEqual(expectedData.TotalHeight, testObject.Height);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

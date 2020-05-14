@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unicorn.Interfaces;
-using Unicorn.Writer.Dummy;
 using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
@@ -15,13 +14,15 @@ namespace Unicorn.Writer.Structural
     public class PageGraphics : IGraphicsContext
     {
         /// <summary>
-        /// The content stream for the current page.
+        /// The page that this graphics context belongs to.
         /// </summary>
-        private PdfStream PageStream { get; set; }
+        private readonly IPdfPage _page;
 
         private readonly Func<double, double> _xTransformer;
 
         private readonly Func<double, double> _yTransformer;
+
+        private readonly Stack<GraphicsState> _stateStack = new Stack<GraphicsState>();
 
         /// <summary>
         /// Current path stroking width.
@@ -38,20 +39,22 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         private bool LineWidthChanged { get; set; }
 
+        private IFontDescriptor CurrentFont { get; set; } = null;
+
         /// <summary>
         /// Constructor.  Requires methods for mapping coordinates from Unicorn-space (with the Y-origin at the top of the page, like most desktop drawing libraries)
         /// to PDF user space (with the Y-origin at the bottom of the page, like a graph).
         /// </summary>
-        /// <param name="contentStream">The stream to write content for this page to.</param>
+        /// <param name="parentPage">The page that this graphics object belongs to.</param>
         /// <param name="xTransform">A transform function for converting Unicorn-space X coordinates.</param>
         /// <param name="yTransform">A transform function for converting Unicorn-space Y coordinates.</param>
-        public PageGraphics(PdfStream contentStream, Func<double, double> xTransform, Func<double, double> yTransform)
+        public PageGraphics(IPdfPage parentPage, Func<double, double> xTransform, Func<double, double> yTransform)
         {
-            if (contentStream is null)
+            if (parentPage is null)
             {
-                throw new ArgumentNullException(nameof(contentStream));
+                throw new ArgumentNullException(nameof(parentPage));
             }
-            PageStream = contentStream;
+            _page = parentPage;
             _xTransformer = xTransform ?? (x => x);
             _yTransformer = yTransform ?? (x => x);
             CurrentLineWidth = -1;
@@ -64,8 +67,13 @@ namespace Unicorn.Writer.Structural
         /// <returns></returns>
         public IGraphicsState Save()
         {
-            // dummy code
-            return new DummyGraphicsState();
+            lock (_stateStack)
+            {
+                GraphicsState gs = new GraphicsState(CurrentLineWidth, CurrentDashStyle);
+                _stateStack.Push(gs);
+                PdfOperator.PushState().WriteTo(_page.ContentStream);
+                return gs;
+            } 
         }
 
         /// <summary>
@@ -74,7 +82,41 @@ namespace Unicorn.Writer.Structural
         /// <param name="state">The state to be restored.</param>
         public void Restore(IGraphicsState state)
         {
-            
+            if (!(state is GraphicsState gs))
+            {
+                throw new ArgumentException(Resources.Structural_PageGraphics_RestoreWrongTypeError);
+            }
+            lock (_stateStack)
+            {
+                if (!_stateStack.Contains(gs))
+                {
+                    return;
+                }
+                GraphicsState popped;
+                do
+                {
+                    popped = _stateStack.Pop();
+                } while (gs != popped);
+                CurrentLineWidth = gs.LineWidth;
+                CurrentDashStyle = gs.DashStyle;
+                LineWidthChanged = true;
+                PdfOperator.PopState().WriteTo(_page.ContentStream);
+            }
+        }
+
+        /// <summary>
+        /// Carry out any unfinished operations needed to complete this page, such as balancing PDF operators.
+        /// </summary>
+        public void CloseGraphics()
+        {
+            lock (_stateStack)
+            {
+                while (_stateStack.Count > 0)
+                {
+                    PdfOperator.PopState().WriteTo(_page.ContentStream);
+                    _stateStack.Pop();
+                }
+            }
         }
 
         /// <summary>
@@ -83,9 +125,17 @@ namespace Unicorn.Writer.Structural
         /// <param name="angle">The angle to rotate by.</param>
         /// <param name="x">The X coordinate of the centre of rotation.</param>
         /// <param name="y">The Y coordinate of the centre of rotation.</param>
-        public void RotateAt(double angle, double x, double y)
+        public void RotateAt(double angle, double x, double y) => RotateAt(angle, new UniPoint(x, y));
+
+        /// <summary>
+        /// Rotate the coordinate system around a point.
+        /// </summary>
+        /// <param name="angle">The angle to rotate by.</param>
+        /// <param name="centre">The centre of rotation.</param>
+        public void RotateAt(double angle, UniPoint centre)
         {
-            
+            PdfOperator.ApplyTransformation(UniMatrix.RotationAt(MathsHelpers.DegToRad(-angle), new UniPoint(_xTransformer(centre.X), _yTransformer(centre.Y))))
+                .WriteTo(_page.ContentStream);
         }
 
         /// <summary>
@@ -126,9 +176,9 @@ namespace Unicorn.Writer.Structural
         {
             ChangeLineWidth(width);
             ChangeDashStyle(style);
-            PdfOperator.StartPath(new PdfReal(_xTransformer(x1)), new PdfReal(_yTransformer(y1))).WriteTo(PageStream);
-            PdfOperator.AppendStraightLine(new PdfReal(_xTransformer(x2)), new PdfReal(_yTransformer(y2))).WriteTo(PageStream);
-            PdfOperator.StrokePath().WriteTo(PageStream);
+            PdfOperator.StartPath(new PdfReal(_xTransformer(x1)), new PdfReal(_yTransformer(y1))).WriteTo(_page.ContentStream);
+            PdfOperator.AppendStraightLine(new PdfReal(_xTransformer(x2)), new PdfReal(_yTransformer(y2))).WriteTo(_page.ContentStream);
+            PdfOperator.StrokePath().WriteTo(_page.ContentStream);
         }
 
         /// <summary>
@@ -166,8 +216,8 @@ namespace Unicorn.Writer.Structural
             ChangeDashStyle(UniDashStyle.Solid);
             PdfOperator.AppendRectangle(new PdfReal(_xTransformer(xTopLeft)), new PdfReal(_yTransformer(yTopLeft + rectHeight)), 
                 new PdfReal(rectWidth), new PdfReal(rectHeight))
-                .WriteTo(PageStream);
-            PdfOperator.StrokePath().WriteTo(PageStream);
+                .WriteTo(_page.ContentStream);
+            PdfOperator.StrokePath().WriteTo(_page.ContentStream);
         }
 
         /// <summary>
@@ -179,7 +229,15 @@ namespace Unicorn.Writer.Structural
         /// <param name="y"></param>
         public void DrawString(string text, IFontDescriptor font, double x, double y)
         {
-            
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
+            PdfOperator.StartText().WriteTo(_page.ContentStream);
+            ChangeFont(font);
+            PdfOperator.SetTextLocation(new PdfReal(_xTransformer(x)), new PdfReal(_yTransformer(y))).WriteTo(_page.ContentStream);
+            PdfOperator.DrawText(new PdfByteString(font.PreferredEncoding.GetBytes(text))).WriteTo(_page.ContentStream);
+            PdfOperator.EndText().WriteTo(_page.ContentStream);
         }
 
         /// <summary>
@@ -192,7 +250,38 @@ namespace Unicorn.Writer.Structural
         /// <param name="vAlign"></param>
         public void DrawString(string text, IFontDescriptor font, UniRectangle rect, HorizontalAlignment hAlign, VerticalAlignment vAlign)
         {
-            
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
+            var stringBox = MeasureString(text, font);
+            double x;
+            double y;
+            switch (hAlign)
+            {
+                case HorizontalAlignment.Left:
+                    x = rect.Left;
+                    break;
+                case HorizontalAlignment.Right:
+                    x = rect.Left + rect.Width - stringBox.Width;
+                    break;
+                default:
+                    x = rect.Left + (rect.Width - stringBox.Width) / 2;
+                    break;
+            }
+            switch (vAlign)
+            {
+                case VerticalAlignment.Bottom:
+                    y = rect.Top + rect.Height - stringBox.HeightBelowBaseline;
+                    break;
+                case VerticalAlignment.Top:
+                    y = rect.Top + stringBox.HeightAboveBaseline;
+                    break;
+                default:
+                    y = rect.Top + (rect.Height + stringBox.TotalHeight) / 2 - stringBox.HeightBelowBaseline;
+                    break;
+            }
+            DrawString(text, font, x, y);
         }
 
         /// <summary>
@@ -201,7 +290,7 @@ namespace Unicorn.Writer.Structural
         /// <param name="text"></param>
         /// <param name="font"></param>
         /// <returns></returns>
-        public UniSize MeasureString(string text, IFontDescriptor font)
+        public UniTextSize MeasureString(string text, IFontDescriptor font)
         {
             if (font is null)
             {
@@ -214,7 +303,7 @@ namespace Unicorn.Writer.Structural
         {
             if (width != CurrentLineWidth)
             {
-                PdfOperator.LineWidth(new PdfReal(width)).WriteTo(PageStream);
+                PdfOperator.LineWidth(new PdfReal(width)).WriteTo(_page.ContentStream);
                 CurrentLineWidth = width;
                 LineWidthChanged = true;
             }
@@ -225,9 +314,19 @@ namespace Unicorn.Writer.Structural
             if (style != CurrentDashStyle || (LineWidthChanged && style != UniDashStyle.Solid))
             {
                 IPdfPrimitiveObject[] operands = style.ToPdfObjects(CurrentLineWidth);
-                PdfOperator.LineDashPattern(operands[0] as PdfArray, operands[1] as PdfInteger).WriteTo(PageStream);
+                PdfOperator.LineDashPattern(operands[0] as PdfArray, operands[1] as PdfInteger).WriteTo(_page.ContentStream);
                 CurrentDashStyle = style;
                 LineWidthChanged = false;
+            }
+        }
+
+        private void ChangeFont(IFontDescriptor font)
+        {
+            if (font != CurrentFont)
+            {
+                PdfFont pageFont = _page.UseFont(font);
+                PdfOperator.SetTextFont(pageFont.InternalName, new PdfReal(font.PointSize)).WriteTo(_page.ContentStream);
+                CurrentFont = font;
             }
         }
     }

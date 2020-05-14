@@ -73,5 +73,35 @@ namespace Unicorn.Interfaces
         /// <param name="b">A <see cref="UniPoint" /> value.</param>
         /// <returns><c>true</c> if the operands differ in either property, <c>false</c> if they are equal across both.</returns>
         public static bool operator !=(UniPoint a, UniPoint b) => a.X != b.X || a.Y != b.Y;
+
+        /// <summary>
+        /// Negation operator.  Returns a <see cref="UniPoint" /> value with both <see cref="X" /> and <see cref="Y" /> properties negated.
+        /// </summary>
+        /// <param name="val">A <see cref="UniPoint" /> value.</param>
+        /// <returns>The negated value of the operand.</returns>
+        public static UniPoint operator -(UniPoint val) => new UniPoint(-val.X, -val.Y);
+
+        /// <summary>
+        /// Negation method.  Returns a <see cref="UniPoint" /> value with both <see cref="X" /> and <see cref="Y" /> properties negated.
+        /// </summary>
+        /// <param name="val">A <see cref="UniPoint" /> value.</param>
+        /// <returns>The negated value of the parameter.</returns>
+        public static UniPoint Negate(UniPoint val) => -val;
+
+        /// <summary>
+        /// Subtraction operator.
+        /// </summary>
+        /// <param name="a">A <see cref="UniPoint" /> value.</param>
+        /// <param name="b">A <see cref="UniPoint" /> value.</param>
+        /// <returns>A <see cref="UniPoint" /> value which is equal to the difference between <c>a</c> and <c>b</c>.</returns>
+        public static UniPoint operator -(UniPoint a, UniPoint b) => new UniPoint(a.X - b.X, a.Y - b.Y);
+
+        /// <summary>
+        /// Subtraction method.
+        /// </summary>
+        /// <param name="a">A <see cref="UniPoint" /> value.</param>
+        /// <param name="b">A <see cref="UniPoint" /> value.</param>
+        /// <returns>A <see cref="UniPoint" /> value which is equal to the difference between <c>a</c> and <c>b</c>.</returns>
+        public static UniPoint Subtract(UniPoint a, UniPoint b) => a - b;
     }
 }

@@ -129,7 +129,7 @@ namespace Timetabler.SerialData.Xml.Legacy.V1
             reader.ReadEndElement();
         }
 
-        private void MoveToEndElement(XmlReader reader)
+        private static void MoveToEndElement(XmlReader reader)
         {
             while (reader.NodeType != XmlNodeType.EndElement)
             {

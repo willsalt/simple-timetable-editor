@@ -12,7 +12,7 @@ namespace Timetabler.Tests.Unit.Models
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private Train GetTrain()
+        private static Train GetTrain()
         {
             return new Train { Id = _rnd.NextHexString(8), Headcode = _rnd.NextString(4) };
         }

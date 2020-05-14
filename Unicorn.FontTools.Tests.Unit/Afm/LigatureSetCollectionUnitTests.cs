@@ -14,7 +14,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private IList<LigatureSet> GetTestData()
+        private static IList<LigatureSet> GetTestData()
         {
             int count = _rnd.Next(1, 20);
             LigatureSet[] output = new LigatureSet[count];

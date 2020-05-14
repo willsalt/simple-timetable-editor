@@ -12,7 +12,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private UniSize GetUniSize()
+        private static UniSize GetUniSize()
         {
             return new UniSize(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000);
         }

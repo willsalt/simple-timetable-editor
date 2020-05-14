@@ -163,7 +163,7 @@ namespace Timetabler.Data.Display
             }
         }
 
-        private GenericTimeModel CreateToWorkCell(ToWork toWork)
+        private static GenericTimeModel CreateToWorkCell(ToWork toWork)
         {
             if (toWork == null)
             {

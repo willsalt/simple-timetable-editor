@@ -13,7 +13,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private TrainLocationTimeModel GetTestObject()
+        private static TrainLocationTimeModel GetTestObject()
         {
             TrainLocationTimeModel testObject = new TrainLocationTimeModel
             {
@@ -30,7 +30,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             return testObject;
         }
 
-        private TrainTime GetRandomTrainTime()
+        private static TrainTime GetRandomTrainTime()
         {
             TrainTime tt = new TrainTime { Time = _rnd.NextTimeOfDay() };
             int footnoteCount = _rnd.Next(4);
@@ -41,7 +41,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             return tt;
         }
 
-        private TimeDisplayFormattingStrings GetRandomFormattingStrings()
+        private static TimeDisplayFormattingStrings GetRandomFormattingStrings()
         {
             if (_rnd.NextBoolean())
             {

@@ -25,7 +25,7 @@ namespace Unicorn.Tests.Unit
             internal List<FixedSizeTableCell> Cells { get; } = new List<FixedSizeTableCell>();
         }
 
-        private TableDefinition GetTestObject()
+        private static TableDefinition GetTestObject()
         {
             int columns = _rnd.Next(1, 6);
             int rows = _rnd.Next(1, 10);

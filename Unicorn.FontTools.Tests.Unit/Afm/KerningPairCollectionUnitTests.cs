@@ -14,7 +14,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private IList<KerningPair> GetTestData()
+        private static IList<KerningPair> GetTestData()
         {
             int count = _rnd.Next(1, 20);
             KerningPair[] output = new KerningPair[count];

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -122,6 +123,10 @@ namespace Unicorn.FontTools.OpenType
         /// <returns></returns>
         public static CharacterMappingTable FromBytes(byte[] arr, int offset, uint len)
         {
+            if (len < 4)
+            {
+                throw new ArgumentException(Resources.OpenType_CharacterMappingTable_FromBytes_InsufficientLength, nameof(len));
+            }
             ushort mappingCount = arr.ToUShort(offset + 2);
             List<CharacterMapping> subtables = new List<CharacterMapping>(mappingCount);
             for (int i = 0; i < mappingCount; ++i)

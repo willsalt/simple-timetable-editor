@@ -12,7 +12,7 @@ namespace Timetabler.SerialData.Xml
     /// </summary>
     public class TrainModel : IXmlSerializable
     {
-        private static Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// The unique identifier of this train.
@@ -215,7 +215,7 @@ namespace Timetabler.SerialData.Xml
             reader.ReadEndElement();
         }
 
-        private void MoveToEndElement(XmlReader reader)
+        private static void MoveToEndElement(XmlReader reader)
         {
             while (reader.NodeType != XmlNodeType.EndElement)
             {

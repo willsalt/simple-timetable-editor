@@ -15,13 +15,14 @@ namespace Unicorn.Tests.Unit.Shapes
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private HorizontalArrow GetArrow(HorizontalDirection? dir = null)
+        private static HorizontalArrow GetArrow(HorizontalDirection? dir = null)
         {
             if (!dir.HasValue)
             {
                 dir = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             }
-            return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, 
+                _rnd.NextDouble() * 100);
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores

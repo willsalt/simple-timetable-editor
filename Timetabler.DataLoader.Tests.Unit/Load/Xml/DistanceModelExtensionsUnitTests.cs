@@ -60,7 +60,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         
-        private DistanceModel GetRandomDistanceModel()
+        private static DistanceModel GetRandomDistanceModel()
         {
             Random random = new Random();
             return new DistanceModel

@@ -59,7 +59,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             return $"{code} {char1} {char2} {x}";
         }
 
-        private string HexCode(short val) => "<" + val.ToString("X4", CultureInfo.InvariantCulture) + ">";
+        private static string HexCode(short val) => "<" + val.ToString("X4", CultureInfo.InvariantCulture) + ">";
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

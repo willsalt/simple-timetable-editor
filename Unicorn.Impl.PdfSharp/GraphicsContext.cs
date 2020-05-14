@@ -113,7 +113,7 @@ namespace Unicorn.Impl.PdfSharp
             _core.DrawString(text, ourFont.Font, XBrushes.Black, new XRect(rect.Left, rect.Top, rect.Width, rect.Height), GetStringFormat(hAlign, vAlign));
         }
 
-        private XStringFormat GetStringFormat(HorizontalAlignment hAlign, VerticalAlignment vAlign)
+        private static XStringFormat GetStringFormat(HorizontalAlignment hAlign, VerticalAlignment vAlign)
         {
             switch (hAlign)
             {

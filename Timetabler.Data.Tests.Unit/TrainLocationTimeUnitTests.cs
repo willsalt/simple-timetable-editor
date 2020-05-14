@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 using Timetabler.Data.Tests.Unit.TestHelpers;
@@ -11,9 +12,9 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class TrainLocationTimeUnitTests
     {
-        private static Random _rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
 
-        private Location GetLocation()
+        private static Location GetLocation()
         {
             return new Location
             {
@@ -21,7 +22,7 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        private TimeDisplayFormattingStrings GetTimeDisplayFormattingStrings()
+        private static TimeDisplayFormattingStrings GetTimeDisplayFormattingStrings()
         {
             return new TimeDisplayFormattingStrings
             {

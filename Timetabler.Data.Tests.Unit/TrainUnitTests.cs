@@ -15,7 +15,7 @@ namespace Timetabler.Data.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private Train GetTrain(bool? withToWork = null, bool? withLocoToWork = null, int? minutesBeforeMidnight = null)
+        private static Train GetTrain(bool? withToWork = null, bool? withLocoToWork = null, int? minutesBeforeMidnight = null)
         {
             TimeOfDay beforeMidnight;
             if (!minutesBeforeMidnight.HasValue)

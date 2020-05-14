@@ -12,7 +12,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private PanoseFamily GetTestObject()
+        private static PanoseFamily GetTestObject()
         {
             byte testParam0 = _rnd.NextByte();
             byte testParam1 = _rnd.NextByte();

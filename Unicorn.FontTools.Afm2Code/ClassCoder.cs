@@ -40,7 +40,7 @@ namespace Unicorn.FontTools.Afm2Code
                 $"    public static class {ClassName}{_rn}    {{{_rn}";
         }
 
-        internal string OutputSupportedFonts(IEnumerable<string> fontNames, int indentLen)
+        internal static string OutputSupportedFonts(IEnumerable<string> fontNames, int indentLen)
         {
             string indent = new string(' ', indentLen);
             const string tab = "    ";
@@ -50,7 +50,7 @@ namespace Unicorn.FontTools.Afm2Code
                 + string.Join(", ", fontNames.Select(s => s.ToCode())) + $" }};{_rn}{indent}}}{_rn}{_rn}";
         }
 
-        internal string OutputEnd()
+        internal static string OutputEnd()
         {
             return $"    }}{_rn}}}{_rn}";
         }

@@ -30,8 +30,8 @@ namespace Unicorn.FontTools.Afm2Code
                         reader.Close();
                         discoveredFonts.Add(metrics.FontName);
                     }
-                    writer.Write(coder.OutputSupportedFonts(discoveredFonts, classContentIndent));
-                    writer.Write(coder.OutputEnd());
+                    writer.Write(ClassCoder.OutputSupportedFonts(discoveredFonts, classContentIndent));
+                    writer.Write(ClassCoder.OutputEnd());
                     writer.Close();
                 })
                 .WithNotParsed(o => Environment.Exit(1));

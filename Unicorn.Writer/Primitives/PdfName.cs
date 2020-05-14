@@ -41,12 +41,12 @@ namespace Unicorn.Writer.Primitives
             return Encoding.UTF8.GetBytes($"/{Value} ");
         }
 
-        private bool ContainsWhitespace(string name)
+        private static bool ContainsWhitespace(string name)
         {
             return name.Contains(" ") || name.Contains("\x0") || name.Contains("\t") || name.Contains("\r") || name.Contains("\n") || name.Contains("\f");
         }
 
-        private bool ContainsDelimiter(string name)
+        private static bool ContainsDelimiter(string name)
         {
             return name.Contains("(") || name.Contains(")") || name.Contains("<") || name.Contains(">") || name.Contains("[") || name.Contains("]") || name.Contains("{") ||
                 name.Contains("}") || name.Contains("/") || name.Contains("%");

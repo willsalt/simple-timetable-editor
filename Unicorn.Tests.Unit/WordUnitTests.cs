@@ -13,7 +13,7 @@ namespace Unicorn.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private Word GetTestObject()
+        private static Word GetTestObject()
         {
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
             Mock<IGraphicsContext> mockContext = new Mock<IGraphicsContext>();

@@ -18,7 +18,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
             return (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
         }
 
-        private VertexInformation GetVertexInformation(TimeOfDay time)
+        private static VertexInformation GetVertexInformation(TimeOfDay time)
         {
             return new VertexInformation(new TrainDrawingInfo { Train = new Train() }, time, GetArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
         }

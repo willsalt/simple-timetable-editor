@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Providers;
 using Unicorn.Interfaces;
 
@@ -15,7 +11,7 @@ namespace Unicorn.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private PlainTextTableCell GetTestObject()
+        private static PlainTextTableCell GetTestObject()
         {
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
             Mock<IGraphicsContext> mockContext = new Mock<IGraphicsContext>();

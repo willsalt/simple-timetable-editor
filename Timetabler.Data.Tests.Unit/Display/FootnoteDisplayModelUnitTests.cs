@@ -8,7 +8,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class FootnoteDisplayModelUnitTests
     {
-        private FootnoteDisplayModel GetTestObject()
+        private static FootnoteDisplayModel GetTestObject()
         {
             return FootnoteDisplayModelHelpers.GetFootnoteDisplayModel();
         }

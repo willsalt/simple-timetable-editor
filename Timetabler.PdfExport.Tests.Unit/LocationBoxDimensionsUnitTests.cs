@@ -11,7 +11,7 @@ namespace Timetabler.PdfExport.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private LocationBoxDimensions GetLocationBoxDimensions(int? locationMinCount = null)
+        private static LocationBoxDimensions GetLocationBoxDimensions(int? locationMinCount = null)
         {
             LocationBoxDimensions dimensions = new LocationBoxDimensions();
             int locationOffsetCount = _rnd.Next(50) + locationMinCount ?? 0;

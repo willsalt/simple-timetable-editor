@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data.Events;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
@@ -9,12 +10,7 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class SignalboxUnitTests
     {
-        private Random _random;
-
-        public SignalboxUnitTests()
-        {
-            _random = new Random();
-        }
+        private static readonly Random _random = RandomProvider.Default;
 
         [TestMethod]
         public void SignalboxClassSettingCodePropertyRaisesCodeChangedEvent()
@@ -219,7 +215,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual(sourceObject.ExportDisplayName, testObject.ExportDisplayName);
         }
 
-        private bool AreSignalboxesCompletelyDifferent(Signalbox s1, Signalbox s2)
+        private static bool AreSignalboxesCompletelyDifferent(Signalbox s1, Signalbox s2)
         {
             return s1.Id != s2.Id && s1.Code != s2.Code && s1.EditorDisplayName != s2.EditorDisplayName && s1.ExportDisplayName != s2.ExportDisplayName;
         }

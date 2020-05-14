@@ -13,7 +13,7 @@ namespace Unicorn.Writer.Structural
     /// </summary>
     public class PdfCrossRefTable : IPdfCrossRefTable
     {
-        private List<PdfCrossRefTableEntry> _contents = new List<PdfCrossRefTableEntry>() { null };
+        private readonly List<PdfCrossRefTableEntry> _contents = new List<PdfCrossRefTableEntry>() { null };
 
         /// <summary>
         /// The number of objects allocated by this object, including both free and occupied object slots.
@@ -92,7 +92,7 @@ namespace Unicorn.Writer.Structural
             }
         }
 
-        private int WriteEntry(PdfCrossRefTableEntry entry, Stream stream)
+        private static int WriteEntry(PdfCrossRefTableEntry entry, Stream stream)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(string.Format(CultureInfo.InvariantCulture, "{0:d10} {1:d5} n \xa", entry.Offset, entry.Value.Generation));
             stream.Write(bytes, 0, bytes.Length);

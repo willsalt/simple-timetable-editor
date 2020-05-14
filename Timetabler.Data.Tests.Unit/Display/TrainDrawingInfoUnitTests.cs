@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data.Display;
@@ -13,9 +11,9 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class TrainDrawingInfoUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
-        private VertexInformation GetVertexInformation(TrainDrawingInfo tdi)
+        private static VertexInformation GetVertexInformation(TrainDrawingInfo tdi)
         {
             return new VertexInformation(tdi, _rnd.NextTimeOfDay(), _rnd.NextArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
         }

@@ -13,7 +13,7 @@ namespace Timetabler.Tests.Unit.Models
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private IEnumerable<Location> GetRandomLocations()
+        private static IEnumerable<Location> GetRandomLocations()
         {
             int count = _rnd.Next(20);
             Location[] data = new Location[count];

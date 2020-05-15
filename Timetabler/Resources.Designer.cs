@@ -250,6 +250,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Embedded TrueType fonts.
+        /// </summary>
+        internal static string HumanReadableEnum_PdfFontChoice_Provided {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_PdfFontChoice_Provided", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PDF standard fonts.
+        /// </summary>
+        internal static string HumanReadableEnum_PdfFontChoice_Standard {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_PdfFontChoice_Standard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The chainage must be a number..
         /// </summary>
         internal static string LocationEditForm_Chainage_ValidationFailureNaN {

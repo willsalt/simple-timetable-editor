@@ -119,6 +119,19 @@ namespace Timetabler.Helpers
         }
 
         /// <summary>
+        /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the value of the <see cref="PdfFontChoice" /> enumeration.
+        /// </summary>
+        /// <returns>An array of <see cref="HumanReadableEnum{TEnum}" /> instances.</returns>
+        public static HumanReadableEnum<PdfFontChoice>[] GetPdfFontChoice()
+        {
+            return new[]
+            {
+                new HumanReadableEnum<PdfFontChoice> { Name = Resources.HumanReadableEnum_PdfFontChoice_Standard, Value = PdfFontChoice.Standard },
+                new HumanReadableEnum<PdfFontChoice> { Name = Resources.HumanReadableEnum_PdfFontChoice_Provided, Value = PdfFontChoice.Provided },
+            };
+        }
+
+        /// <summary>
         /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="Orientation" /> enumeration.
         /// </summary>
         /// <returns>An array of <see cref="HumanReadableEnum{TEnum}" /> instances.</returns>

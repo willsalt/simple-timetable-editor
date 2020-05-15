@@ -52,6 +52,8 @@
             this.cbPdfEngine = new System.Windows.Forms.ComboBox();
             this.lblWarning = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbFontChoice = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -204,6 +206,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.cbFontChoice);
+            this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.cbPdfEngine);
             this.tabPage2.Controls.Add(this.lblWarning);
             this.tabPage2.Controls.Add(this.label3);
@@ -227,6 +231,19 @@
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
+            // cbFontChoice
+            // 
+            this.cbFontChoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFontChoice.FormattingEnabled = true;
+            resources.ApplyResources(this.cbFontChoice, "cbFontChoice");
+            this.cbFontChoice.Name = "cbFontChoice";
+            this.cbFontChoice.SelectedIndexChanged += new System.EventHandler(this.CbFontChoice_SelectedIndexChanged);
             // 
             // DocumentExportOptionsEditForm
             // 
@@ -272,5 +289,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbGraphOrientation;
         private System.Windows.Forms.ComboBox cbTableOrientation;
+        private System.Windows.Forms.ComboBox cbFontChoice;
+        private System.Windows.Forms.Label label6;
     }
 }

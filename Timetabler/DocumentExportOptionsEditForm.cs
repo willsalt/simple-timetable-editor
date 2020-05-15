@@ -40,6 +40,7 @@ namespace Timetabler
         {
             InitializeComponent();
             cbPdfEngine.Items.AddRange(HumanReadableEnumFactory.GetPdfExportEngine());
+            cbFontChoice.Items.AddRange(HumanReadableEnumFactory.GetPdfFontChoice());
             HumanReadableEnum<CoreData.Orientation>[] orientations = HumanReadableEnumFactory.GetOrientation();
             cbTableOrientation.Items.AddRange(orientations);
             cbGraphOrientation.Items.AddRange(orientations);
@@ -53,6 +54,11 @@ namespace Timetabler
             }
 
             _inViewUpdate = true;
+            if (Model.ExportEngine == PdfExportEngine.Unicorn)
+            {
+                Model.FontChoice = PdfFontChoice.Standard;
+                cbFontChoice.Enabled = false;
+            }
             ckDisplayLocoDiagram.Checked = Model.DisplayLocoDiagramRow;
             ckDisplayToWorkRow.Checked = Model.DisplayToWorkRow;
             ckDisplayBoxHours.Checked = Model.DisplayBoxHours;
@@ -85,7 +91,20 @@ namespace Timetabler
                     break;
                 }
             }
+            SetCbFontChoice();
             _inViewUpdate = false;
+        }
+
+        private void SetCbFontChoice()
+        {
+            foreach (var item in cbFontChoice.Items)
+            {
+                if (item is HumanReadableEnum<PdfFontChoice> fontItem && fontItem.Value == Model.FontChoice)
+                {
+                    cbFontChoice.SelectedItem = fontItem;
+                    break;
+                }
+            }
         }
 
         private void CkDisplayLocoDiagram_CheckedChanged(object sender, EventArgs e)
@@ -180,6 +199,10 @@ namespace Timetabler
 
         private void CbPdfEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_inViewUpdate)
+            {
+                return;
+            }
             if (!(cbPdfEngine.SelectedItem is HumanReadableEnum<PdfExportEngine> item))
             {
                 Log.Trace("cbPdfEngine: null item selected");
@@ -192,6 +215,32 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbPdfEngineValue, item.Name);
             Model.ExportEngine = item.Value;
+            if (item.Value == PdfExportEngine.Unicorn)
+            {
+                Model.FontChoice = PdfFontChoice.Standard;
+                _inViewUpdate = true;
+                SetCbFontChoice();
+                _inViewUpdate = false;
+                cbFontChoice.Enabled = false;
+            }
+            else
+            {
+                cbFontChoice.Enabled = true;
+            }
+        }
+
+        private void CbFontChoice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate)
+            {
+                return;
+            }
+            if (!(cbFontChoice.SelectedItem is HumanReadableEnum<PdfFontChoice> item))
+            {
+                Log.Trace("cbFontChoice: null item selected.");
+                return;
+            }
+            Model.FontChoice = item.Value;
         }
 
         private void CbTableOrientation_SelectedIndexChanged(object sender, EventArgs e)
@@ -223,5 +272,7 @@ namespace Timetabler
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbGraphOrientation_Value, item.Name);
             Model.GraphPageOrientation = item.Value;
         }
+
+        
     }
 }

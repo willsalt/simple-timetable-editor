@@ -180,6 +180,12 @@
   <data name="HumanReadableEnum_PdfExportEngine_Unicorn" xml:space="preserve">
     <value>Unicorn</value>
   </data>
+  <data name="HumanReadableEnum_PdfFontChoice_Provided" xml:space="preserve">
+    <value>Embedded TrueType fonts</value>
+  </data>
+  <data name="HumanReadableEnum_PdfFontChoice_Standard" xml:space="preserve">
+    <value>PDF standard fonts</value>
+  </data>
   <data name="LocationEditForm_Chainage_ValidationFailureNaN" xml:space="preserve">
     <value>The chainage must be a number.</value>
   </data>

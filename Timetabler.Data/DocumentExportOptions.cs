@@ -58,6 +58,11 @@ namespace Timetabler.Data
         public PdfExportEngine ExportEngine { get; set; }
 
         /// <summary>
+        /// Whether to use standard or embedded fonts.
+        /// </summary>
+        public PdfFontChoice FontChoice { get; set; }
+
+        /// <summary>
         /// The output orientation of table pages.
         /// </summary>
         public Orientation TablePageOrientation { get; set; }
@@ -97,6 +102,7 @@ namespace Timetabler.Data
                 DisplayGraph = DisplayGraph,
                 DisplayGlossary = DisplayGlossary,
                 ExportEngine = ExportEngine,
+                FontChoice = FontChoice,
                 TablePageOrientation = TablePageOrientation,
                 GraphPageOrientation = GraphPageOrientation,
             };

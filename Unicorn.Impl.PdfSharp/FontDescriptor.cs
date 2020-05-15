@@ -2,7 +2,7 @@
 using System;
 using System.Text;
 using Unicorn.Impl.PdfSharp.Extensions;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Impl.PdfSharp
 {

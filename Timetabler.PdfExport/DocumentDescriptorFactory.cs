@@ -1,7 +1,7 @@
 ﻿using Timetabler.Data;
 using Timetabler.PdfExport.Interfaces;
+using Unicorn.CoreTypes;
 using Unicorn.Impl.PdfSharp;
-using Unicorn.Interfaces;
 using Unicorn.Writer;
 
 namespace Timetabler.PdfExport

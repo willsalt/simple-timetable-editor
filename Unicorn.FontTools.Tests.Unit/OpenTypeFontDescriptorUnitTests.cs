@@ -1,15 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Unicorn.CoreTypes;
 using Unicorn.FontTools.OpenType;
 using Unicorn.FontTools.OpenType.Interfaces;
 using Unicorn.FontTools.Tests.Unit.TestHelpers;
-using Unicorn.Interfaces;
 
 namespace Unicorn.FontTools.Tests.Unit
 {

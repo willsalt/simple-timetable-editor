@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Unicorn.CoreTypes;
 using Unicorn.FontTools.OpenType;
 using Unicorn.FontTools.OpenType.Interfaces;
-using Unicorn.Interfaces;
 
 namespace Unicorn.FontTools
 {

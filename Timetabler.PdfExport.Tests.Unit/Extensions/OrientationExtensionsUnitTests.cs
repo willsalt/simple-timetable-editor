@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Timetabler.CoreData;
 using Timetabler.PdfExport.Extensions;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Timetabler.PdfExport.Tests.Unit.Extensions
 {

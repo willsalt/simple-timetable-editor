@@ -1,5 +1,5 @@
 ﻿using Timetabler.CoreData;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Timetabler.PdfExport.Extensions
 {

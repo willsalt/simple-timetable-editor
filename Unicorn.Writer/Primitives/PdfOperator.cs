@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
 using System.Text;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 using Unicorn.Writer.Extensions;
 
 namespace Unicorn.Writer.Primitives

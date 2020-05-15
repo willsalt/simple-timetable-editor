@@ -97,17 +97,17 @@
       <Project>{68035ddb-1c24-407c-b6b3-32cec1d964e5}</Project>
       <Name>Timetabler.PdfExport</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Unicorn.CoreTypes.Tests.Utility\Unicorn.CoreTypes.Tests.Utility.csproj">
+      <Project>{ec3bd62e-0d22-4660-8c0f-896087cee074}</Project>
+      <Name>Unicorn.CoreTypes.Tests.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.CoreTypes\Unicorn.CoreTypes.csproj">
+      <Project>{3dd27dc2-5d3a-4f6d-bdd5-6ff02b1c933b}</Project>
+      <Name>Unicorn.CoreTypes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unicorn.Impl.PdfSharp\Unicorn.Impl.PdfSharp.csproj">
       <Project>{4D101015-CE74-4648-B07B-5AC806531E95}</Project>
       <Name>Unicorn.Impl.PdfSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Unicorn.Interfaces.Tests.Utility\Unicorn.Interfaces.Tests.Utility.csproj">
-      <Project>{90fe0c94-30d5-4768-9929-a6cfd5b2161a}</Project>
-      <Name>Unicorn.Interfaces.Tests.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
-      <Project>{f0a39340-f45e-4534-b87a-6fdf0202f4ea}</Project>
-      <Name>Unicorn.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unicorn.Writer\Unicorn.Writer.csproj">
       <Project>{7431CC05-B157-4EDD-83C5-42C2D5A79C55}</Project>

@@ -1,10 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Tests.Utility.Providers;
-using Unicorn.Interfaces;
-using Unicorn.Interfaces.Tests.Utility.Extensions;
+using Unicorn.CoreTypes;
+using Unicorn.CoreTypes.Tests.Utility.Extensions;
 using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;

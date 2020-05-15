@@ -2,8 +2,8 @@
 using System;
 using Tests.Utility.Providers;
 using Timetabler.Data;
+using Unicorn.CoreTypes;
 using Unicorn.Impl.PdfSharp;
-using Unicorn.Interfaces;
 using Unicorn.Writer;
 
 namespace Timetabler.PdfExport.Tests.Unit

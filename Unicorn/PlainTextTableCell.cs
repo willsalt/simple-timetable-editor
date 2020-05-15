@@ -1,5 +1,5 @@
 ﻿using System;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn
 {

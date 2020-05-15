@@ -1,5 +1,5 @@
 ﻿using System.Drawing.Drawing2D;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Timetabler.PdfExport.Extensions
 {

@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj" />
+    <ProjectReference Include="..\Unicorn.CoreTypes\Unicorn.CoreTypes.csproj" />
     <ProjectReference Include="..\Unicorn\Unicorn.csproj" />
   </ItemGroup>
 

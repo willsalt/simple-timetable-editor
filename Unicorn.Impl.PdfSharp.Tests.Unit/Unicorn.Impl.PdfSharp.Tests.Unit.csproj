@@ -79,13 +79,13 @@
       <Project>{746618E4-92EF-451E-ACB6-1EEF1254137A}</Project>
       <Name>Tests.Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Unicorn.CoreTypes\Unicorn.CoreTypes.csproj">
+      <Project>{3dd27dc2-5d3a-4f6d-bdd5-6ff02b1c933b}</Project>
+      <Name>Unicorn.CoreTypes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unicorn.Impl.PdfSharp\Unicorn.Impl.PdfSharp.csproj">
       <Project>{4d101015-ce74-4648-b07b-5ac806531e95}</Project>
       <Name>Unicorn.Impl.PdfSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj">
-      <Project>{f0a39340-f45e-4534-b87a-6fdf0202f4ea}</Project>
-      <Name>Unicorn.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

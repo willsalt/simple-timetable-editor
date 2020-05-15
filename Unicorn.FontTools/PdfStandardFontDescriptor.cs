@@ -1,5 +1,5 @@
 ﻿using System;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 using Unicorn.FontTools.Afm;
 using System.Reflection;
 using System.Globalization;

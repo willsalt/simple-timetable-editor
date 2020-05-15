@@ -1,6 +1,6 @@
 ﻿using PdfSharp.Pdf;
 using System.IO;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Impl.PdfSharp
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using Timetabler.Data.Display;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Timetabler.PdfExport.Extensions
 {

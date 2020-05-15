@@ -3,7 +3,7 @@ using Moq;
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Impl.PdfSharp.Tests.Unit
 {

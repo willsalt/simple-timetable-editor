@@ -4,16 +4,16 @@ namespace Unicorn.Impl.PdfSharp
 {
     internal static class PageOrientationExtensions
     {
-        internal static PageOrientation ToPdfSharpPageOrientation(this Interfaces.PageOrientation orient)
+        internal static PageOrientation ToPdfSharpPageOrientation(this CoreTypes.PageOrientation orient)
         {
             switch (orient)
             {
                 // PDFSharp does not support arbitrary page orientation.
-                case Interfaces.PageOrientation.Arbitrary:
-                case Interfaces.PageOrientation.Portrait:
+                case CoreTypes.PageOrientation.Arbitrary:
+                case CoreTypes.PageOrientation.Portrait:
                 default:
                     return PageOrientation.Portrait;
-                case Interfaces.PageOrientation.Landscape:
+                case CoreTypes.PageOrientation.Landscape:
                     return PageOrientation.Landscape;
             }
         }

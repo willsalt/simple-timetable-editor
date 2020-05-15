@@ -1,5 +1,5 @@
 ﻿using PdfSharp;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Impl.PdfSharp
 {

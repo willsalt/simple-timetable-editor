@@ -34,8 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Unicorn.CoreTypes\Unicorn.CoreTypes.csproj" />
     <ProjectReference Include="..\Unicorn.FontTools\Unicorn.FontTools.csproj" />
-    <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

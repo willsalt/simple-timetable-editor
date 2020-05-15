@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Structural;

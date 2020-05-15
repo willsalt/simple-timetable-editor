@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Unicorn.CoreTypes;
 using Unicorn.FontTools;
-using Unicorn.Interfaces;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Structural

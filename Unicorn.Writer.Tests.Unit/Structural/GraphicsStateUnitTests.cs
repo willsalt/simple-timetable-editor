@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tests.Utility.Providers;
-using Unicorn.Interfaces;
-using Unicorn.Interfaces.Tests.Utility.Extensions;
+using Unicorn.CoreTypes;
+using Unicorn.CoreTypes.Tests.Utility.Extensions;
 using Unicorn.Writer.Structural;
 
 namespace Unicorn.Writer.Tests.Unit.Structural

@@ -5,8 +5,8 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data.Display;
 using Timetabler.PdfExport.Extensions;
-using Unicorn.Interfaces;
-using Unicorn.Interfaces.Tests.Utility.Extensions;
+using Unicorn.CoreTypes;
+using Unicorn.CoreTypes.Tests.Utility.Extensions;
 
 namespace Timetabler.PdfExport.Tests.Unit.Extensions
 {

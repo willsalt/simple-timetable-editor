@@ -2,7 +2,7 @@
 using Moq;
 using System;
 using Tests.Utility.Providers;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Tests.Unit
 {

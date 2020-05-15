@@ -1,4 +1,4 @@
-﻿using Unicorn.Interfaces;
+﻿using Unicorn.CoreTypes;
 
 namespace Unicorn
 {

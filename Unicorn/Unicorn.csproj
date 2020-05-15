@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Unicorn.Interfaces\Unicorn.Interfaces.csproj" />
+    <ProjectReference Include="..\Unicorn.CoreTypes\Unicorn.CoreTypes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

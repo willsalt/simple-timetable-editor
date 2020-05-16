@@ -382,7 +382,7 @@ namespace Timetabler.PdfExport
                 IncludeToWorkRow = options.DisplayToWorkRow && section.TrainSegments.Any(s => !string.IsNullOrWhiteSpace(s.ToWorkCell?.DisplayedText)),
                 IncludeLocoToWorkRow = options.DisplayLocoToWorkRow && section.TrainSegments.Any(s => !string.IsNullOrWhiteSpace(s.LocoToWorkCell?.DisplayedText)),
                 HeaderIncludesFootnoteRow = section.TrainSegments.Any(t => !string.IsNullOrWhiteSpace(t.Footnotes)),
-                ColumnWidth = MeasureMaximumCellWidth(section, options) + MainLineWidth,
+                ColumnWidth = MeasureMaximumCellWidth(section, options),
             };
             shm.ToWorkHeight = shm.IncludeToWorkRow ? MeasureToWorkRowHeight() : 0;
             shm.LocoToWorkHeight = shm.IncludeLocoToWorkRow ? MeasureLocoToWorkRowHeight() : 0;
@@ -518,7 +518,7 @@ namespace Timetabler.PdfExport
         {
             if (string.IsNullOrWhiteSpace(segment.InlineNote))
             {
-                return sectionMetrics.ColumnWidth;
+                return sectionMetrics.ColumnWidth + MainLineWidth;
             }
 
             UniRange largestEmptyBlock = FindLargestEmptyBlock(segment, sectionMetrics.MainSectionMetrics);
@@ -526,12 +526,12 @@ namespace Timetabler.PdfExport
             para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
             if (!para.OverspillHeight)
             {
-                return sectionMetrics.ColumnWidth;
+                return sectionMetrics.ColumnWidth + MainLineWidth;
             }
 
             para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(0.75));
             para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
-            return sectionMetrics.ColumnWidth + para.ComputedHeight;
+            return sectionMetrics.ColumnWidth + para.ComputedHeight + MainLineWidth;
         }
 
         private double DrawSegment(TimetableSectionModel section, TrainSegmentModel segment, DocumentExportOptions options, SectionMetrics sectionMetrics, 

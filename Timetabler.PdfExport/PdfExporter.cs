@@ -355,7 +355,6 @@ namespace Timetabler.PdfExport
 
                 if (trainGraphModel.DisplayTrainLabels && !string.IsNullOrWhiteSpace(info.Headcode))
                 {
-                    //UniTextSize headcodeDimensions = _currentPage.PageGraphics.MeasureString(info.Headcode.Trim(), _plainBodyFont);
                     LineCoordinates longestLine = info.Lines[LineCoordinates.GetIndexOfLongestLine(info.Lines)];
                     double llX1 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex1.X);
                     double llX2 = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, longestLine.Vertex2.X);
@@ -500,13 +499,13 @@ namespace Timetabler.PdfExport
             title = title ?? string.Empty;
             subtitle = subtitle ?? string.Empty;
             dateDescription = dateDescription ?? string.Empty;
-            WritingWrapper(title, _titleFont, new UniRectangle(x, y, pageWidth, titleHeight), HorizontalAlignment.Centred, VerticalAlignment.Centred);
+            WritingWrapper(title, _titleFont, new UniRectangle(x, y, pageWidth, titleHeight), HorizontalAlignment.Centred, VerticalAlignment.Top);
             WritingWrapper(subtitle, _subtitleFont, 
                 new UniRectangle(x + subtitleXOffset + MainLineWidth, y + titleHeight, pageWidth - (MainLineWidth * 2), subtitleHeight), 
-                HorizontalAlignment.Left, VerticalAlignment.Centred);
+                HorizontalAlignment.Left, VerticalAlignment.Top);
             WritingWrapper(dateDescription, _subtitleFont, 
                 new UniRectangle(x + MainLineWidth, y + titleHeight, pageWidth - (subtitleXOffset + MainLineWidth * 2), subtitleHeight), 
-                HorizontalAlignment.Right, VerticalAlignment.Centred);
+                HorizontalAlignment.Right, VerticalAlignment.Top);
             if (drawSeparator)
             {
                 LineDrawingWrapper("subtitle-headings line", x + MainLineWidth + separatorLineGap, separatorY - LineOffset, 

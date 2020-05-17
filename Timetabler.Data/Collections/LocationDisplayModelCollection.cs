@@ -43,7 +43,7 @@ namespace Timetabler.Data.Collections
         /// <param name="item">The element which has been modified.</param>
         protected override void OnContentsModified(LocationDisplayModel item)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>

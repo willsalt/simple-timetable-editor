@@ -430,6 +430,15 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to nudGraphAxisLineWidth is {0}..
+        /// </summary>
+        internal static string LogMessage_NudGraphAxisLineWidthValue {
+            get {
+                return ResourceManager.GetString("LogMessage_NudGraphAxisLineWidthValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to nudLineWidth is {0}.
         /// </summary>
         internal static string LogMessage_NudLineWidthValue {

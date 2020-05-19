@@ -53,6 +53,11 @@ namespace Timetabler.SerialData.Yaml
         public double? LineWidth { get; set; }
 
         /// <summary>
+        /// The width of the axes and grid lines on the train graph.
+        /// </summary>
+        public double? GraphAxisLineWidth { get; set; }
+
+        /// <summary>
         /// The width of the lines used to draw "filler dashes" - the lines drawn in cells where a train passes through a location without stopping.
         /// </summary>
         public double? FillerDashLineWidth { get; set; }

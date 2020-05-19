@@ -123,6 +123,16 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_HasPublicGraphAxisLineWidthPropertyOfTypeNullableDouble()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("GraphAxisLineWidth");
+            Assert.AreEqual(typeof(double?), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicFillerDashLineWidthPropertyOfTypeNullableDouble()
         {
             Type classType = typeof(ExportOptionsModel);

@@ -48,6 +48,11 @@ namespace Timetabler.Data
         public double LineWidth { get; set; }
 
         /// <summary>
+        /// Width of axes and grid lines in the train graph output.
+        /// </summary>
+        public double GraphAxisLineWidth { get; set; }
+
+        /// <summary>
         /// Width of the lines used to indicate that a train passes through a location that is not a timing point.
         /// </summary>
         public double FillerDashLineWidth { get; set; }
@@ -68,11 +73,13 @@ namespace Timetabler.Data
         public Orientation GraphPageOrientation { get; set; }
 
         /// <summary>
-        /// Default constructor - sets the default values of the <see cref="LineWidth" /> and <see cref="FillerDashLineWidth" /> properties.
+        /// Default constructor - sets the default values of the <see cref="LineWidth" />, <see cref="GraphAxisLineWidth" /> and 
+        /// <see cref="FillerDashLineWidth" /> properties.
         /// </summary>
         public DocumentExportOptions()
         {
             LineWidth = 1.0;
+            GraphAxisLineWidth = 1.0;
             FillerDashLineWidth = 0.5;
             ExportEngine = PdfExportEngine.External;
             TablePageOrientation = Orientation.Landscape;
@@ -94,6 +101,7 @@ namespace Timetabler.Data
                 DisplayCredits = DisplayCredits,
                 LineWidth = LineWidth,
                 FillerDashLineWidth = FillerDashLineWidth,
+                GraphAxisLineWidth = GraphAxisLineWidth,
                 DisplayGraph = DisplayGraph,
                 DisplayGlossary = DisplayGlossary,
                 ExportEngine = ExportEngine,

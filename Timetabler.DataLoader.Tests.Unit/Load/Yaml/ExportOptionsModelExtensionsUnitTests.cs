@@ -27,6 +27,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
                 CreditsInOutput = _rnd.NextNullableBoolean(),
                 GlossaryInOutput = _rnd.NextNullableBoolean(),
                 LineWidth = _rnd.NextNullableDouble(3d),
+                GraphAxisLineWidth = _rnd.NextNullableDouble(3d),
                 FillerDashLineWidth = _rnd.NextNullableDouble(3d),
                 TablePageOrientation = _rnd.NextNullableOrientation(),
                 GraphPageOrientation = _rnd.NextNullableOrientation(),
@@ -297,6 +298,41 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
 
             Assert.AreEqual(1d, testOutput.LineWidth);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphAxisLineWidthProperty_IfGraphAxisLineWidthPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphAxisLineWidth = _rnd.NextDouble() * 5;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.GraphAxisLineWidth, testOutput.GraphAxisLineWidth);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithGraphAxisLineWidthPropertyEqualToLineWidthPropertyOfParameter_IfGraphAxisLineWidthPropertyOfParameterIsNullAndLineWidthParameterOfOperatorIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphAxisLineWidth = null;
+            testParam.LineWidth = _rnd.NextDouble() * 5;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.LineWidth, testOutput.GraphAxisLineWidth);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithGraphAxisLineWidthPropertyEqualTo1_IfGraphAxisLineWidthPropertyOfParameterIsNullAndLineWidthParameterOfOperatorIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphAxisLineWidth = null;
+            testParam.LineWidth = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(1d, testOutput.GraphAxisLineWidth);
         }
 
         [TestMethod]

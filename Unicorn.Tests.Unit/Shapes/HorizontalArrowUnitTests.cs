@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 using Unicorn.Shapes;
 
 namespace Unicorn.Tests.Unit.Shapes
@@ -15,13 +15,14 @@ namespace Unicorn.Tests.Unit.Shapes
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private HorizontalArrow GetArrow(HorizontalDirection? dir = null)
+        private static HorizontalArrow GetArrow(HorizontalDirection? dir = null)
         {
             if (!dir.HasValue)
             {
                 dir = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             }
-            return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100);
+            return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, 
+                _rnd.NextDouble() * 100);
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -303,21 +304,6 @@ namespace Unicorn.Tests.Unit.Shapes
             testObject.DrawAt(mockGraphicsContext.Object, testParam1, testParam2);
 
             Assert.IsNotNull(capturedPointList);
-        }
-
-        [TestMethod]
-        public void HorizontalArrowClass_DrawAtMethod_CallsDrawFilledPolygonMethodOfFirstParameterWithParameterContainingPoints()
-        {
-            List<UniPoint> capturedPointList = null;
-            Mock<IGraphicsContext> mockGraphicsContext = new Mock<IGraphicsContext>();
-            mockGraphicsContext.Setup(c => c.DrawFilledPolygon(It.IsAny<IEnumerable<UniPoint>>())).Callback<IEnumerable<UniPoint>>(e => { capturedPointList = e.ToList(); });
-            double testParam1 = _rnd.NextDouble() * 100;
-            double testParam2 = _rnd.NextDouble() * 100;
-            HorizontalArrow testObject = GetArrow();
-
-            testObject.DrawAt(mockGraphicsContext.Object, testParam1, testParam2);
-
-            Assert.IsTrue(capturedPointList.Any(p => p != null));
         }
 
         // We probably should not constrain the implementation too much by specifying the exact drawing style of an arrow by test, but it is worth providing

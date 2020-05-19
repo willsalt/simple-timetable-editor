@@ -44,15 +44,22 @@
             this.ckDisplayGlossary = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbGraphOrientation = new System.Windows.Forms.ComboBox();
+            this.cbTableOrientation = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cbPdfEngine = new System.Windows.Forms.ComboBox();
             this.lblWarning = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.nudGraphAxisLineWidth = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // ckDisplayLocoDiagram
@@ -153,6 +160,12 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.nudGraphAxisLineWidth);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.cbGraphOrientation);
+            this.tabPage1.Controls.Add(this.cbTableOrientation);
             this.tabPage1.Controls.Add(this.ckDisplayLocoDiagram);
             this.tabPage1.Controls.Add(this.ckDisplayGlossary);
             this.tabPage1.Controls.Add(this.ckDisplayToWorkRow);
@@ -166,6 +179,32 @@
             this.tabPage1.Controls.Add(this.label1);
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // cbGraphOrientation
+            // 
+            this.cbGraphOrientation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGraphOrientation.FormattingEnabled = true;
+            resources.ApplyResources(this.cbGraphOrientation, "cbGraphOrientation");
+            this.cbGraphOrientation.Name = "cbGraphOrientation";
+            this.cbGraphOrientation.SelectedIndexChanged += new System.EventHandler(this.CbGraphOrientation_SelectedIndexChanged);
+            // 
+            // cbTableOrientation
+            // 
+            this.cbTableOrientation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTableOrientation.FormattingEnabled = true;
+            resources.ApplyResources(this.cbTableOrientation, "cbTableOrientation");
+            this.cbTableOrientation.Name = "cbTableOrientation";
+            this.cbTableOrientation.SelectedIndexChanged += new System.EventHandler(this.CbTableOrientation_SelectedIndexChanged);
             // 
             // tabPage2
             // 
@@ -194,6 +233,18 @@
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // nudGraphAxisLineWidth
+            // 
+            this.nudGraphAxisLineWidth.DecimalPlaces = 2;
+            resources.ApplyResources(this.nudGraphAxisLineWidth, "nudGraphAxisLineWidth");
+            this.nudGraphAxisLineWidth.Name = "nudGraphAxisLineWidth";
+            this.nudGraphAxisLineWidth.ValueChanged += new System.EventHandler(this.NudGraphAxisLineWidth_ValueChanged);
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
             // DocumentExportOptionsEditForm
             // 
             resources.ApplyResources(this, "$this");
@@ -209,6 +260,7 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -234,5 +286,11 @@
         private System.Windows.Forms.ComboBox cbPdfEngine;
         private System.Windows.Forms.Label lblWarning;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbGraphOrientation;
+        private System.Windows.Forms.ComboBox cbTableOrientation;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown nudGraphAxisLineWidth;
     }
 }

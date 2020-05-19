@@ -3,6 +3,7 @@ using NLog;
 using System.Linq;
 using NLog.Targets;
 using NLog.Layouts;
+using System;
 
 namespace Timetabler
 {
@@ -76,6 +77,14 @@ namespace Timetabler
             }
 
             return result;
+        }
+
+        private void BtnGC_Click(object sender, EventArgs e)
+        {
+            long current = GC.GetTotalMemory(false);
+            GC.Collect();
+            long after = GC.GetTotalMemory(true);
+            MessageBox.Show($"Memory usage changed from {current} to {after}.");
         }
     }
 }

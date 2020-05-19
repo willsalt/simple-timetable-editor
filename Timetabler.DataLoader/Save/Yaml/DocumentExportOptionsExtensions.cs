@@ -30,9 +30,12 @@ namespace Timetabler.DataLoader.Save.Yaml
                 BoxHoursInOutput = options.DisplayBoxHours,
                 CreditsInOutput = options.DisplayCredits,
                 LineWidth = options.LineWidth,
+                GraphAxisLineWidth = options.GraphAxisLineWidth,
                 FillerDashLineWidth = options.FillerDashLineWidth,
                 GraphsInOutput = options.DisplayGraph,
                 GlossaryInOutput = options.DisplayGlossary,
+                TablePageOrientation = options.TablePageOrientation,
+                GraphPageOrientation = options.GraphPageOrientation,
             };
         }
     }

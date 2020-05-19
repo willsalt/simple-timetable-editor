@@ -91,6 +91,16 @@ namespace Timetabler.Data
         public event ModifiedEventHandler Modified;
 
         /// <summary>
+        /// Raises the <see cref="Modified" /> event.
+        /// </summary>
+        /// <param name="sender">The object which has modified the instance.</param>
+        /// <param name="field">The name of the modified property, if only one property has been modified.</param>
+        protected void OnModified(object sender, string field)
+        {
+            Modified?.Invoke(sender, new ModifiedEventArgs { ModifiedItem = this, ModifiedField = field });
+        }
+
+        /// <summary>
         /// Make a deep copy of this instance.
         /// </summary>
         /// <returns>A second <see cref="Location"/> instance which is a deep copy of this one.</returns>

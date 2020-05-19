@@ -9,6 +9,14 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
+        public void CommonPdfNamesClass_BaseFontField_HasCorrectValueProperty()
+        {
+            PdfName testOutput = CommonPdfNames.BaseFont;
+
+            Assert.AreEqual("BaseFont", testOutput.Value);
+        }
+
+        [TestMethod]
         public void CommonPdfNamesClass_CatalogField_HasCorrectValueProperty()
         {
             PdfName testOutput = CommonPdfNames.Catalog;
@@ -17,11 +25,27 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         }
 
         [TestMethod]
+        public void CommonPdfNamesClass_ContentsField_HasCorrectValueProperty()
+        {
+            PdfName testOutput = CommonPdfNames.Contents;
+
+            Assert.AreEqual("Contents", testOutput.Value);
+        }
+
+        [TestMethod]
         public void CommonPdfNamesClass_CountField_HasCorrectValueProperty()
         {
             PdfName testOutput = CommonPdfNames.Count;
 
             Assert.AreEqual("Count", testOutput.Value);
+        }
+
+        [TestMethod]
+        public void CommonPdfNamesClass_FontField_HasCorrectValueProperty()
+        {
+            PdfName testOutput = CommonPdfNames.Font;
+
+            Assert.AreEqual("Font", testOutput.Value);
         }
 
         [TestMethod]
@@ -94,6 +118,14 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             PdfName testOutput = CommonPdfNames.Size;
 
             Assert.AreEqual("Size", testOutput.Value);
+        }
+
+        [TestMethod]
+        public void CommonPdfNamesClass_SubtypeField_HasCorrectValueProperty()
+        {
+            PdfName testOutput = CommonPdfNames.Subtype;
+
+            Assert.AreEqual("Subtype", testOutput.Value);
         }
 
         [TestMethod]

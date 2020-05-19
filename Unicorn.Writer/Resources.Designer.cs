@@ -70,6 +70,15 @@ namespace Unicorn.Writer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key not present..
+        /// </summary>
+        internal static string Primitives_PdfDictionary_Indexer_Key_Not_Found_Error {
+            get {
+                return ResourceManager.GetString("Primitives_PdfDictionary_Indexer_Key_Not_Found_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The generation number must be a non-negative integer..
         /// </summary>
         internal static string Primitives_PdfIndirectObject_Invalid_Generation_Error {
@@ -102,6 +111,33 @@ namespace Unicorn.Writer {
         internal static string Primitives_PdfIndirectObject_Write_To_PdfStream_Error {
             get {
                 return ResourceManager.GetString("Primitives_PdfIndirectObject_Write_To_PdfStream_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line dash pattern must consist of an empty array or an array of numbers..
+        /// </summary>
+        internal static string Primitives_PdfOperator_LineDashPattern_Content_Error {
+            get {
+                return ResourceManager.GetString("Primitives_PdfOperator_LineDashPattern_Content_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The start value of the line dash pattern operator must not be higher than the number of items in the pattern array..
+        /// </summary>
+        internal static string Primitives_PdfOperator_LineDashPattern_Index_Too_High_Error {
+            get {
+                return ResourceManager.GetString("Primitives_PdfOperator_LineDashPattern_Index_Too_High_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The program is trying to restore a graphics state from a different implementation library..
+        /// </summary>
+        internal static string Structural_PageGraphics_RestoreWrongTypeError {
+            get {
+                return ResourceManager.GetString("Structural_PageGraphics_RestoreWrongTypeError", resourceCulture);
             }
         }
         

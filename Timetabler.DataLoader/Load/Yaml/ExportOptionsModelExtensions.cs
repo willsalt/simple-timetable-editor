@@ -1,4 +1,5 @@
 ﻿using System;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
@@ -31,8 +32,11 @@ namespace Timetabler.DataLoader.Load.Yaml
                 DisplayCredits = model.CreditsInOutput ?? false,
                 DisplayGlossary = model.GlossaryInOutput ?? false,
                 LineWidth = model.LineWidth ?? 1.0,
+                GraphAxisLineWidth = model.GraphAxisLineWidth ?? model.LineWidth ?? 1.0,
                 FillerDashLineWidth = model.FillerDashLineWidth ?? 0.5,
                 DisplayGraph = model.GraphsInOutput ?? true,
+                TablePageOrientation = model.TablePageOrientation ?? Orientation.Landscape,
+                GraphPageOrientation = model.GraphPageOrientation ?? Orientation.Landscape,
             };
         }
     }

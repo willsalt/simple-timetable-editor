@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load.Yaml;
 using Timetabler.SerialData.Yaml;
@@ -26,7 +27,10 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
                 CreditsInOutput = _rnd.NextNullableBoolean(),
                 GlossaryInOutput = _rnd.NextNullableBoolean(),
                 LineWidth = _rnd.NextNullableDouble(3d),
+                GraphAxisLineWidth = _rnd.NextNullableDouble(3d),
                 FillerDashLineWidth = _rnd.NextNullableDouble(3d),
+                TablePageOrientation = _rnd.NextNullableOrientation(),
+                GraphPageOrientation = _rnd.NextNullableOrientation(),
             };
         }
 
@@ -297,6 +301,41 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
         }
 
         [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphAxisLineWidthProperty_IfGraphAxisLineWidthPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphAxisLineWidth = _rnd.NextDouble() * 5;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.GraphAxisLineWidth, testOutput.GraphAxisLineWidth);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithGraphAxisLineWidthPropertyEqualToLineWidthPropertyOfParameter_IfGraphAxisLineWidthPropertyOfParameterIsNullAndLineWidthParameterOfOperatorIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphAxisLineWidth = null;
+            testParam.LineWidth = _rnd.NextDouble() * 5;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.LineWidth, testOutput.GraphAxisLineWidth);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithGraphAxisLineWidthPropertyEqualTo1_IfGraphAxisLineWidthPropertyOfParameterIsNullAndLineWidthParameterOfOperatorIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphAxisLineWidth = null;
+            testParam.LineWidth = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(1d, testOutput.GraphAxisLineWidth);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectFillerDashLineWidthProperty_IfFillerDashLineWidthPropertyOfParameterIsNotNull()
         {
             ExportOptionsModel testParam = GetModel();
@@ -316,6 +355,72 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
 
             Assert.AreEqual(0.5, testOutput.FillerDashLineWidth);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectTablePageOrientationProperty_IfTablePageOrientationPropertyOfParameterIsPortrait()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.TablePageOrientation = Orientation.Portrait;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Portrait, testOutput.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectTablePageOrientationProperty_IfTablePageOrientationPropertyOfParameterIsLandscape()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.TablePageOrientation = Orientation.Landscape;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectTablePageOrientationProperty_IfTablePageOrientationPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.TablePageOrientation = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfGraphPageOrientationPropertyOfParameterIsPortrait()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphPageOrientation = Orientation.Portrait;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Portrait, testOutput.GraphPageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfGraphPageOrientationPropertyOfParameterIsLandscape()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphPageOrientation = Orientation.Landscape;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.GraphPageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModel_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfGraphPageOrientationPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.GraphPageOrientation = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testOutput.GraphPageOrientation);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

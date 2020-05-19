@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.Helpers;
@@ -250,6 +246,24 @@ namespace Timetabler.Tests.Unit.Helpers
 
             HumanReadableEnum<PdfExportEngine> item = testOutput.Single(e => e.Value == PdfExportEngine.External);
             Assert.AreEqual(Resources.HumanReadableEnum_PdfExportEngine_External, item.Name);
+        }
+
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetOrientationMethod_ReturnsArrayContainingPortraitValueWithCorrectNameProperty()
+        {
+            HumanReadableEnum<Orientation>[] testOutput = HumanReadableEnumFactory.GetOrientation();
+
+            HumanReadableEnum<Orientation> item = testOutput.Single(e => e.Value == Orientation.Portrait);
+            Assert.AreEqual(Resources.HumanReadableEnum_Orientation_Portrait, item.Name);
+        }
+
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetOrientationMethod_ReturnsArrayContainingLandscapeValueWithCorrectNameProperty()
+        {
+            HumanReadableEnum<Orientation>[] testOutput = HumanReadableEnumFactory.GetOrientation();
+
+            HumanReadableEnum<Orientation> item = testOutput.Single(e => e.Value == Orientation.Landscape);
+            Assert.AreEqual(Resources.HumanReadableEnum_Orientation_Landscape, item.Name);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

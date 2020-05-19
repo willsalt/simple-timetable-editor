@@ -154,7 +154,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             Assert.AreEqual(testDistanceModelObject.Mileage, result.Mileage.Mileage);
         }
 
-        private DistanceModel GetRandomDistanceModel()
+        private static DistanceModel GetRandomDistanceModel()
         {
             return new DistanceModel
             {
@@ -185,7 +185,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             Assert.AreEqual(testFontType, result.FontType);
         }
 
-        private LocationFontType GetRandomLocationFontType()
+        private static LocationFontType GetRandomLocationFontType()
         {
             LocationFontType[] possibles = new[] { LocationFontType.Normal, LocationFontType.Condensed };
             return possibles[_random.Next(possibles.Length)];

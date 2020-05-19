@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
@@ -23,8 +24,11 @@ namespace Timetabler.Data.Tests.Unit
                 DisplayGraph = _rnd.NextBoolean(),
                 DisplayGlossary = _rnd.NextBoolean(),
                 LineWidth = _rnd.NextDouble() * 10,
+                GraphAxisLineWidth = _rnd.NextDouble() * 10,
                 FillerDashLineWidth = _rnd.NextDouble() * 10,
                 ExportEngine = _rnd.NextPdfExportEngine(),
+                TablePageOrientation = _rnd.NextOrientation(),
+                GraphPageOrientation = _rnd.NextOrientation(),
             };
         }
 
@@ -36,6 +40,14 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testObject = new DocumentExportOptions();
 
             Assert.AreEqual(1.0, testObject.LineWidth);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsGraphAxisLineWidthPropertyToOnePointZero()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+
+            Assert.AreEqual(1.0, testObject.GraphAxisLineWidth);
         }
 
         [TestMethod]
@@ -52,6 +64,22 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testObject = new DocumentExportOptions();
 
             Assert.AreEqual(PdfExportEngine.External, testObject.ExportEngine);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsTablePageOrientationPropertyToLandscape()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testObject.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsGraphPageOrientationPropertyToLandscape()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+
+            Assert.AreEqual(Orientation.Landscape, testObject.GraphPageOrientation);
         }
 
         [TestMethod]
@@ -145,6 +173,16 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectGraphAxisLineWidthProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.GraphAxisLineWidth, testOutput.GraphAxisLineWidth);
+        }
+
+        [TestMethod]
         public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectFillerDashLineWidthProperty()
         {
             DocumentExportOptions testObject = GetDocumentExportOptions();
@@ -162,6 +200,26 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testOutput = testObject.Copy();
 
             Assert.AreEqual(testObject.ExportEngine, testOutput.ExportEngine);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectTablePageOrientationProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.TablePageOrientation, testOutput.TablePageOrientation);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectGraphPageOrientationProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.GraphPageOrientation, testOutput.GraphPageOrientation);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

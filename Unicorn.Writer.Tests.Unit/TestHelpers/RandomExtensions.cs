@@ -11,27 +11,63 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
-            int selector = rnd.Next(7);
-            switch (selector)
+            int selector = rnd.Next(8);
+            return selector switch
             {
-                case 0:
-                default:
-                    return rnd.NextPdfBoolean();
-                case 1:
-                    return rnd.NextPdfInteger();
-                case 2:
-                    return rnd.NextPdfName();
-                case 3:
-                    return rnd.NextPdfNull();
-                case 4:
-                    return rnd.NextPdfReal();
-                case 5:
-                    return rnd.NextPdfRectangle();
-                case 6:
-                    return rnd.NextPdfString(rnd.Next(32) + 1);
+                1 => rnd.NextPdfInteger(),
+                2 => rnd.NextPdfName(),
+                3 => rnd.NextPdfNull(),
+                4 => rnd.NextPdfReal(),
+                5 => rnd.NextPdfRectangle(),
+                6 => rnd.NextPdfString(rnd.Next(32) + 1),
+                7 => rnd.NextPdfByteString(rnd.Next(32)),
+                _ => rnd.NextPdfBoolean(),
+            };
+        }
+
+        public static PdfNumber NextPdfNumber(this Random rnd)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
             }
+            if (rnd.NextBoolean())
+            {
+                return rnd.NextPdfInteger();
+            }
+            return rnd.NextPdfReal();
+        }
+
+        public static PdfArray NextPdfArray(this Random rnd, int max = 6)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            int count = rnd.Next(max);
+            IPdfPrimitiveObject[] elements = new IPdfPrimitiveObject[count];
+            for (int i = 0; i < count; ++i)
+            {
+                elements[i] = NextPdfPrimitive(rnd);
+            }
+            return new PdfArray(elements);
+        }
+
+        public static PdfArray NextPdfArrayOfNumber(this Random rnd, int max = 6)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            int count = rnd.Next(max);
+            PdfNumber[] elements = new PdfNumber[count];
+            for (int i = 0; i < count; ++i)
+            {
+                elements[i] = NextPdfNumber(rnd);
+            }
+            return new PdfArray(elements);
         }
 
         public static PdfBoolean NextPdfBoolean(this Random rnd)
@@ -43,7 +79,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfInteger(rnd.Next());
         }
@@ -52,7 +88,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfInteger(rnd.Next(maxValue));
         }
@@ -61,7 +97,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfInteger(rnd.Next(minValue, maxValue));
         }
@@ -70,7 +106,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
             return new PdfName(rnd.NextAlphabeticalString(rnd.Next(16) + 1));
         }
@@ -86,7 +122,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
 
             // The offset and multiplier here are arbitrary amounts that are within the range likely to be seen on a PDF - 5,000 points is just over 176cm.
@@ -97,7 +133,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new ArgumentNullException(nameof(rnd));
+                throw new NullReferenceException();
             }
 
             // See NextPdfReal() for a note on why these multipliers and offsets were chosen.
@@ -111,6 +147,17 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         public static PdfString NextPdfString(this Random rnd, int len)
         {
             return new PdfString(rnd.NextString(len));
+        }
+
+        public static PdfByteString NextPdfByteString(this Random rnd, int len)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            byte[] data = new byte[len];
+            rnd.NextBytes(data);
+            return new PdfByteString(data);
         }
     }
 }

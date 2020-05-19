@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn
 {
@@ -87,10 +87,10 @@ namespace Unicorn
             }
             else
             {
-                var measure = graphicsContext.MeasureString(Content, Font);
+                UniTextSize measure = graphicsContext.MeasureString(Content, Font);
                 ContentWidth = measure.Width;
-                ContentAscent = font.Ascent;
-                ContentDescent = measure.Height - ContentAscent;
+                ContentAscent = measure.HeightAboveBaseline;
+                ContentDescent = measure.HeightBelowBaseline;
             }
         }
 

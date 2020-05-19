@@ -17,7 +17,8 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning, List<ILocationEntry> additionalTimings = null)
+        private static TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning, 
+            List<ILocationEntry> additionalTimings = null)
         {
             int pageFootnoteCount = _rnd.Next(10) + 1;
             TrainSegmentModel tsm = new TrainSegmentModel(null)
@@ -83,7 +84,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             return tsm;
         }
 
-        private Note[] GetTestNotes(IList<string> noteIds)
+        private static Note[] GetTestNotes(IList<string> noteIds)
         {
             Note[] notes = new Note[noteIds.Count];
             for (int i = 0; i < noteIds.Count; ++i)
@@ -101,7 +102,8 @@ namespace Timetabler.Data.Tests.Unit.Display
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionIfFirstParameterIsNull()
         {
-            TrainSegmentModel testObject = new TrainSegmentModel(null, null);
+            _ = new TrainSegmentModel(null, null);
+
             Assert.Fail();
         }
 

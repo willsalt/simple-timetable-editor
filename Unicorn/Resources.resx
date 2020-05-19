@@ -120,4 +120,7 @@
   <data name="TableCellCollection_CopyTo_Error_InsufficientArrayLength" xml:space="preserve">
     <value>The destination array does not contain enough elements to store the collection.</value>
   </data>
+  <data name="TableCellCollection_Enumerator_Error_CollectionModified" xml:space="preserve">
+    <value>Collection has been modified.</value>
+  </data>
 </root>

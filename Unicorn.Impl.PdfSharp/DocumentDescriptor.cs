@@ -1,6 +1,6 @@
 ﻿using PdfSharp.Pdf;
 using System.IO;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Impl.PdfSharp
 {
@@ -45,6 +45,7 @@ namespace Unicorn.Impl.PdfSharp
             DefaultHorizontalMarginProportion = defaultHorizontalMargin;
             DefaultVerticalMarginProportion = defaultVerticalMargin;
             Document = new PdfDocument();
+            Document.Options.CompressContentStreams = false;
         }
 
         /// <summary>

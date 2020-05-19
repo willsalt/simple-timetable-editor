@@ -13,7 +13,6 @@ using Timetabler.Data;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Display;
 using Timetabler.Data.Events;
-using Timetabler.Data.Interfaces;
 using Timetabler.DataLoader;
 using Timetabler.Extensions;
 using Timetabler.Helpers;
@@ -124,7 +123,7 @@ namespace Timetabler
             {
                 using (FileStream fs = new FileStream(fn, FileMode.Open, FileAccess.Read))
                 {
-                    Model = Loader.LoadTimetableDocument(fs);
+                    Model = Loader.LoadTimetableDocument(fs, DisplayFileLoadWarningMessage);
                 }
             }
             catch (TimetableLoaderException ex)
@@ -204,13 +203,12 @@ namespace Timetabler
 
             try
             {
-                IExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine))
-                {
-                    MainLineWidth = Model.ExportOptions.LineWidth,
-                    PassingTrainDashWidth = Model.ExportOptions.FillerDashLineWidth
-                };
+                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine)))
                 using (FileStream fs = new FileStream(sfdExport.FileName, FileMode.Create, FileAccess.Write))
                 {
+                    exporter.MainLineWidth = Model.ExportOptions.LineWidth;
+                    exporter.GraphLineWidth = Model.ExportOptions.GraphAxisLineWidth;
+                    exporter.PassingTrainDashWidth = Model.ExportOptions.FillerDashLineWidth;
                     exporter.Export(Model, fs);
                 }
                 MessageBox.Show(this, Resources.MainForm_Export_Completed);
@@ -650,7 +648,7 @@ namespace Timetabler
                 LocationCollection locations;
                 using (FileStream fs = new FileStream(ofdLocations.FileName, FileMode.Open, FileAccess.Read))
                 {
-                    locations = Loader.LoadLocationTemplate(fs);
+                    locations = Loader.LoadLocationTemplate(fs, DisplayFileLoadWarningMessage);
                 }
                 if (locations == null)
                 {
@@ -971,7 +969,7 @@ namespace Timetabler
                 DocumentTemplate template;
                 using (FileStream fs = new FileStream(ofdTemplate.FileName, FileMode.Open, FileAccess.Read))
                 {
-                    template = Loader.LoadDocumentTemplate(fs);
+                    template = Loader.LoadDocumentTemplate(fs, DisplayFileLoadWarningMessage);
                 }
                 if (template == null)
                 {
@@ -1049,6 +1047,15 @@ namespace Timetabler
             using (AboutBox aboutBox = new AboutBox())
             {
                 aboutBox.ShowDialog();
+            }
+        }
+
+        private void DisplayFileLoadWarningMessage(LoaderWarningMessage messageType)
+        {
+            if (messageType == LoaderWarningMessage.XmlFile)
+            {
+                MessageBox.Show(this, Resources.MainForm_FileOpen_OldFileFormatWarning, Resources.MainForm_FileOpen_OldFileFormatWarningTitle, 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

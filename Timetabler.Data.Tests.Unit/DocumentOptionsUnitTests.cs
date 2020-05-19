@@ -10,7 +10,7 @@ namespace Timetabler.Data.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private DocumentOptions GetDocumentOptions()
+        private static DocumentOptions GetDocumentOptions()
         {
             return GetDocumentOptions(_rnd.NextBoolean() ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock);
         }

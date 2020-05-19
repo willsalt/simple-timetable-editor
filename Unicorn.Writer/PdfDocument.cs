@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Unicorn.Interfaces;
+using System.Linq;
+using Unicorn.CoreTypes;
 using Unicorn.Writer.Interfaces;
+using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Structural;
 
 namespace Unicorn.Writer
@@ -16,6 +18,7 @@ namespace Unicorn.Writer
         private readonly List<IPdfIndirectObject> _bodyObjects = new List<IPdfIndirectObject>();
         private readonly PdfCatalogue _root;
         private readonly PdfPageTreeNode _pageRoot;
+        private readonly Dictionary<string, PdfFont> _fontCache = new Dictionary<string, PdfFont>();
 
         /// <summary>
         /// The default size of new pages added to the document.
@@ -75,7 +78,9 @@ namespace Unicorn.Writer
         /// <returns>An <see cref="IPageDescriptor" /> describing the new page.</returns>
         public IPageDescriptor AppendPage(PhysicalPageSize size, PageOrientation orientation, double horizontalMarginProportion, double verticalMarginProportion)
         {
-            PdfPage page = new PdfPage(_pageRoot, _xrefTable.ClaimSlot(), size, orientation, horizontalMarginProportion, verticalMarginProportion);
+            PdfStream contentStream = new PdfStream(_xrefTable.ClaimSlot());
+            PdfPage page = new PdfPage(_pageRoot, _xrefTable.ClaimSlot(), this, size, orientation, horizontalMarginProportion, verticalMarginProportion, contentStream);
+            _bodyObjects.Add(contentStream);
             _bodyObjects.Add(page);
             _pageRoot.Add(page);
             return page;
@@ -121,6 +126,7 @@ namespace Unicorn.Writer
                 throw new ArgumentNullException(nameof(stream));
             }
             int written = PdfHeader.Value.WriteTo(stream);
+            CloseAllPages();
             foreach (IPdfIndirectObject indirectObject in _bodyObjects)
             {
                 _xrefTable.SetSlot(indirectObject, written);
@@ -132,6 +138,40 @@ namespace Unicorn.Writer
             written += _xrefTable.WriteTo(stream);
             written += trailer.WriteTo(stream);
             return written;
+        }
+
+        /// <summary>
+        /// Register that a font is likely to be used in the document.  If of a type that supports it, it will be embedded.
+        /// </summary>
+        /// <param name="font">The font that is to be used and/or embedded.</param>
+        /// <returns>A <see cref="PdfFont" /> wrapper object which represents the PDF font dictionary that will be written to the document for this font.  If this font
+        /// (or a font with the same <see cref="IFontDescriptor.UnderlyingKey" /> has previously been passed to this method, this may be an object returned by
+        /// prior calls.</returns>
+        public PdfFont UseFont(IFontDescriptor font)
+        {
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
+            lock (_fontCache)
+            {
+                if (_fontCache.ContainsKey(font.UnderlyingKey))
+                {
+                    return _fontCache[font.UnderlyingKey];
+                }
+                PdfFont pdfFont = new PdfFont(_xrefTable.ClaimSlot(), font);
+                _fontCache.Add(font.UnderlyingKey, pdfFont);
+                _bodyObjects.Add(pdfFont);
+                return pdfFont;
+            }
+        }
+
+        private void CloseAllPages()
+        {
+            foreach (PdfPage page in _bodyObjects.Where(b => b is PdfPage))
+            {
+                page.ClosePage();
+            }
         }
     }
 }

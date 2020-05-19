@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
@@ -17,7 +13,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private TimetableSectionModel GetTimetableSectionModel()
+        private static TimetableSectionModel GetTimetableSectionModel()
         {
             return new TimetableSectionModel(_rnd.NextBoolean() ? Direction.Down : Direction.Up, new LocationCollection());
         }

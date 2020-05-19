@@ -13,7 +13,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     {
         private static readonly Random _random = RandomProvider.Default;
 
-        private NoteModel GetRandomNoteModel()
+        private static NoteModel GetRandomNoteModel()
         {
             return new NoteModel
             {

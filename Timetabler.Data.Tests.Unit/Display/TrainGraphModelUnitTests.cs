@@ -13,7 +13,7 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private TrainGraphModel GetTrainGraphModel()
+        private static TrainGraphModel GetTrainGraphModel()
         {
             return new TrainGraphModel(null, null)
             {
@@ -23,7 +23,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             };
         }
 
-        private DocumentOptions GetDocumentOptions()
+        private static DocumentOptions GetDocumentOptions()
         {
             return new DocumentOptions
             {

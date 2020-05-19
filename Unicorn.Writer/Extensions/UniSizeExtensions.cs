@@ -1,5 +1,5 @@
 ﻿using System;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Extensions
@@ -19,10 +19,6 @@ namespace Unicorn.Writer.Extensions
         /// <exception cref="NullReferenceException">Thrown if the size parameter is null.</exception>
         public static PdfRectangle ToPdfRectangle(this UniSize size)
         {
-            if (size == null)
-            {
-                throw new NullReferenceException();
-            }
             return new PdfRectangle(_zero.Value, _zero.Value, new PdfReal(size.Width), new PdfReal(size.Height));
         }
     }

@@ -173,7 +173,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
 
         }
 
-        private TrainLocationTimeModel GetTrainLocationTimeModel(Dictionary<string, Location> locationMap, Dictionary<string, Note> notes)
+        private static TrainLocationTimeModel GetTrainLocationTimeModel(Dictionary<string, Location> locationMap, Dictionary<string, Note> notes)
         {
             return GetTrainLocationTimeModel(locationMap, notes, _random.Next(2) == 0);
         }
@@ -222,7 +222,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             return tlt;
         }
 
-        private Dictionary<string, Location> GetRandomLocationMap()
+        private static Dictionary<string, Location> GetRandomLocationMap()
         {
             int count = _random.Next(1, 20);
             Dictionary<string, Location> map = new Dictionary<string, Location>(count);
@@ -252,7 +252,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             return map;
         }
 
-        private Dictionary<string, Note> GetRandomNotes()
+        private static Dictionary<string, Note> GetRandomNotes()
         {
             int count = _random.Next(1, 50);
             Dictionary<string, Note> notes = new Dictionary<string, Note>(count);
@@ -286,7 +286,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             return notes;
         }
 
-        private DocumentOptions GetDocumentOptions()
+        private static DocumentOptions GetDocumentOptions()
         {
             return new DocumentOptions
             {

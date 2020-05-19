@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Timetabler")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Timetabler")]
+[assembly: AssemblyCompany("Will Salt")]
+[assembly: AssemblyProduct("Simple Timetable Editor")]
 [assembly: AssemblyCopyright("Copyright ©  2016-2020 Will Salt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -34,6 +34,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.*")]
+[assembly: AssemblyVersion("1.3.*")]
 
 [assembly: InternalsVisibleTo("Timetabler.Tests.Unit")]

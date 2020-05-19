@@ -7,8 +7,15 @@ namespace Unicorn.Writer.Primitives
     /// <summary>
     /// The class which represents an immutable PDF integer object.
     /// </summary>
-    public class PdfInteger : PdfSimpleObject, IEquatable<PdfInteger>
+    public class PdfInteger : PdfNumber, IEquatable<PdfInteger>
     {
+        private static readonly Lazy<PdfInteger> _zero = new Lazy<PdfInteger>(() => new PdfInteger(0));
+
+        /// <summary>
+        /// A canned <see cref="PdfInteger" /> instance for the value 0.
+        /// </summary>
+        public static PdfInteger Zero => _zero.Value;
+
         /// <summary>
         /// The integer value of the object.
         /// </summary>

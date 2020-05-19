@@ -13,7 +13,7 @@ namespace Timetabler.Data.Tests.Unit
     {
         private readonly static Random _rnd = RandomProvider.Default;
 
-        private Distance GetDistance()
+        private static Distance GetDistance()
         {
             return new Distance { Mileage = _rnd.Next(512), Chainage = _rnd.Next(80) };
         }
@@ -28,7 +28,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual(d1.Chainage, d2.Chainage);
         }
 
-        private void AssertEqual(Distance p0, Distance p1, Distance t)
+        private static void AssertEqual(Distance p0, Distance p1, Distance t)
         {
             if (p0 is null && p1 is null)
             {

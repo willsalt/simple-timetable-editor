@@ -41,12 +41,12 @@ namespace Unicorn.Writer.Primitives
             return Encoding.UTF8.GetBytes($"/{Value} ");
         }
 
-        private bool ContainsWhitespace(string name)
+        private static bool ContainsWhitespace(string name)
         {
             return name.Contains(" ") || name.Contains("\x0") || name.Contains("\t") || name.Contains("\r") || name.Contains("\n") || name.Contains("\f");
         }
 
-        private bool ContainsDelimiter(string name)
+        private static bool ContainsDelimiter(string name)
         {
             return name.Contains("(") || name.Contains(")") || name.Contains("<") || name.Contains(">") || name.Contains("[") || name.Contains("]") || name.Contains("{") ||
                 name.Contains("}") || name.Contains("/") || name.Contains("%");
@@ -77,7 +77,7 @@ namespace Unicorn.Writer.Primitives
         /// <returns>True if the other object is a <see cref="PdfName" /> instance with the same value as this; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as PdfBoolean);
+            return Equals(obj as PdfName);
         }
 
         /// <summary>

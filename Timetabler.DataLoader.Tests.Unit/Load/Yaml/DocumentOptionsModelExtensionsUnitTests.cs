@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
         private static readonly string[] _validClockTypes = { "TwelveHourClock", "TwentyFourHourClock" };
         private static readonly string[] _validGraphEditStyles = { "Free", "PreserveSectionTimes" };
 
-        private DocumentOptionsModel GetModel()
+        private static DocumentOptionsModel GetModel()
         {
             DocumentOptionsModel model = new DocumentOptionsModel
             {

@@ -1,23 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+
     /// <summary>
     /// The class which represents a PDF array object.
     /// </summary>
-    public class PdfArray : PdfSimpleObject
+    public class PdfArray : PdfSimpleObject, IEnumerable<IPdfPrimitiveObject>
     {
         private readonly IPdfPrimitiveObject[] _val;
 
         /// <summary>
         /// Create a new array whose contents are the given primitives.
         /// </summary>
-        /// <param name="contents"></param>
-        public PdfArray(IEnumerable<IPdfPrimitiveObject> contents)
+        /// <param name="contents">The contents of the array.</param>
+        public PdfArray(params IPdfPrimitiveObject[] contents)
         {
-            _val = contents.ToArray();
+            _val = contents;
+        }
+
+        /// <summary>
+        /// Create a new array whose contents are the given primitives.
+        /// </summary>
+        /// <param name="contents">The contents of the array.</param>
+        public PdfArray(IEnumerable<IPdfPrimitiveObject> contents) : this(contents.ToArray())
+        {
+
         }
 
         /// <summary>
@@ -31,6 +43,15 @@ namespace Unicorn.Writer.Primitives
         /// Length of the array.
         /// </summary>
         public int Length => _val.Length;
+
+        /// <summary>
+        /// Get the enumerator for this array.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{IPdfPrimitiveObject}" /> instance for this array.</returns>
+        public IEnumerator<IPdfPrimitiveObject> GetEnumerator()
+        {
+            return ((IEnumerable<IPdfPrimitiveObject>)_val).GetEnumerator();
+        }
 
         /// <summary>
         /// Convert the contents of the array into an array of bytes.
@@ -63,5 +84,12 @@ namespace Unicorn.Writer.Primitives
             byteList.Add(0xa);
             return byteList.ToArray();
         }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<IPdfPrimitiveObject>)_val).GetEnumerator();
+        }
     }
+
+#pragma warning restore CA1710 // Identifiers should have correct suffix
 }

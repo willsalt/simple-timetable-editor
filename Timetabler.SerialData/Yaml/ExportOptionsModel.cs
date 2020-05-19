@@ -1,4 +1,6 @@
-﻿namespace Timetabler.SerialData.Yaml
+﻿using Timetabler.CoreData;
+
+namespace Timetabler.SerialData.Yaml
 {
     /// <summary>
     /// Class that describes the settings relating to document export.
@@ -51,8 +53,23 @@
         public double? LineWidth { get; set; }
 
         /// <summary>
+        /// The width of the axes and grid lines on the train graph.
+        /// </summary>
+        public double? GraphAxisLineWidth { get; set; }
+
+        /// <summary>
         /// The width of the lines used to draw "filler dashes" - the lines drawn in cells where a train passes through a location without stopping.
         /// </summary>
         public double? FillerDashLineWidth { get; set; }
+
+        /// <summary>
+        /// The orientation of timetable section pages.
+        /// </summary>
+        public Orientation? TablePageOrientation { get; set; }
+
+        /// <summary>
+        /// The orientation of graph pages.
+        /// </summary>
+        public Orientation? GraphPageOrientation { get; set; }
     }
 }

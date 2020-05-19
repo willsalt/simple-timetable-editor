@@ -1,4 +1,6 @@
-﻿namespace Timetabler.Data
+﻿using Timetabler.CoreData;
+
+namespace Timetabler.Data
 {
     /// <summary>
     /// Export-specific document settings.
@@ -46,6 +48,11 @@
         public double LineWidth { get; set; }
 
         /// <summary>
+        /// Width of axes and grid lines in the train graph output.
+        /// </summary>
+        public double GraphAxisLineWidth { get; set; }
+
+        /// <summary>
         /// Width of the lines used to indicate that a train passes through a location that is not a timing point.
         /// </summary>
         public double FillerDashLineWidth { get; set; }
@@ -56,13 +63,27 @@
         public PdfExportEngine ExportEngine { get; set; }
 
         /// <summary>
-        /// Default constructor - sets the default values of the <see cref="LineWidth" /> and <see cref="FillerDashLineWidth" /> properties.
+        /// The output orientation of table pages.
+        /// </summary>
+        public Orientation TablePageOrientation { get; set; }
+
+        /// <summary>
+        /// The output orientation of graph pages.
+        /// </summary>
+        public Orientation GraphPageOrientation { get; set; }
+
+        /// <summary>
+        /// Default constructor - sets the default values of the <see cref="LineWidth" />, <see cref="GraphAxisLineWidth" /> and 
+        /// <see cref="FillerDashLineWidth" /> properties.
         /// </summary>
         public DocumentExportOptions()
         {
             LineWidth = 1.0;
+            GraphAxisLineWidth = 1.0;
             FillerDashLineWidth = 0.5;
             ExportEngine = PdfExportEngine.External;
+            TablePageOrientation = Orientation.Landscape;
+            GraphPageOrientation = Orientation.Landscape;
         }
 
         /// <summary>
@@ -80,9 +101,12 @@
                 DisplayCredits = DisplayCredits,
                 LineWidth = LineWidth,
                 FillerDashLineWidth = FillerDashLineWidth,
+                GraphAxisLineWidth = GraphAxisLineWidth,
                 DisplayGraph = DisplayGraph,
                 DisplayGlossary = DisplayGlossary,
                 ExportEngine = ExportEngine,
+                TablePageOrientation = TablePageOrientation,
+                GraphPageOrientation = GraphPageOrientation,
             };
         }
     }

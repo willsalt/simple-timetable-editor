@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Simple Timetable Editor" Language="1033" Version="1.2.0.0" Manufacturer="Will Salt" UpgradeCode="a7d1840d-444d-4c42-9bfb-12ebeadbdc5f">
+  <Product Id="*" Name="Simple Timetable Editor" Language="1033" Version="1.3.0.0" Manufacturer="Will Salt" UpgradeCode="a7d1840d-444d-4c42-9bfb-12ebeadbdc5f">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -74,11 +74,14 @@
       <Component Id="Unicorn.dll.comp" Guid="B982066E-7F6A-4FEE-842D-8D4592179099">
         <File Id="Unicorn.dll.file" Name="Unicorn.dll" Source="$(var.Timetabler.TargetDir)Unicorn.dll" KeyPath="yes" />
       </Component>
+      <Component Id="Unicorn.CoreTypes.dll.comp" Guid="E92F8548-6357-43C1-8930-DB8C3222FDFC">
+        <File Id="Unicorn.CoreTypes.dll.file" Name="Unicorn.CoreTypes.dll" Source="$(var.Timetabler.TargetDir)Unicorn.CoreTypes.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="Unicorn.FontTools.dll.comp" Guid="913ECEE5-643B-483E-B096-0F05806D69D6">
+        <File Id="Unicorn.FontTools.dll.file" Name="Unicorn.FontTools.dll" Source="$(var.Timetabler.TargetDir)Unicorn.FontTools.dll" KeyPath="yes" />
+      </Component>
       <Component Id="Unicorn.Impl.PdfSharp.dll.comp" Guid="B25CBCD4-3FA3-4DD4-9563-FBAAE04A54A6">
         <File Id="Unicorn.Impl.PdfSharp.dll.file" Name="Unicorn.Impl.PdfSharp.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Impl.PdfSharp.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="Unicorn.Interfaces.dll.comp" Guid="980D7B21-20E1-472B-BE00-E78794876977">
-        <File Id="Unicorn.Interfaces.dll.file" Name="Unicorn.Interfaces.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Interfaces.dll" KeyPath="yes" />
       </Component>
       <Component Id="Unicorn.Writer.dll.comp" Guid="1AD3ED0F-59C6-46D9-BD1F-8F112A9A9BCF">
         <File Id="Unicorn.Writer.dll.file" Name="Unicorn.Writer.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Writer.dll" KeyPath="yes" />

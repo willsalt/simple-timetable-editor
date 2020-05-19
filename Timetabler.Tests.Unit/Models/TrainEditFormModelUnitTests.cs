@@ -14,7 +14,7 @@ namespace Timetabler.Tests.Unit.Models
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private IEnumerable<Note> GetNotes()
+        private static IEnumerable<Note> GetNotes()
         {
             int count = _rnd.Next(20);
             List<Note> data = new List<Note>(count);

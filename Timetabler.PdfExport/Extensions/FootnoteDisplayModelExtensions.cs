@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using Timetabler.Data.Display;
 using Unicorn;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Timetabler.PdfExport.Extensions
 {
     internal static class FootnoteDisplayModelExtensions
     {
-        internal static PositionedLine ToPositionedLine(this FootnoteDisplayModel footnote, IGraphicsContext context, IFontDescriptor symbolFont, IFontDescriptor definitionFont)
+        internal static PositionedLine ToPositionedLine(this FootnoteDisplayModel footnote, IGraphicsContext context, IFontDescriptor symbolFont, 
+            IFontDescriptor definitionFont)
         {
             Word symbolWord = new Word(footnote.Symbol, symbolFont, context, 5); // FIXME that very naked-looing "5" should definitely not be hard-coded.
             List<Word> theWords = new List<Word> { symbolWord };

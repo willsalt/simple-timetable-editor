@@ -16,7 +16,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
-        private IEnumerable<IPdfPrimitiveObject> GetPdfPrimitiveObjects(int? count = null)
+        private static IEnumerable<IPdfPrimitiveObject> GetPdfPrimitiveObjects(int? count = null)
         {
             if (!count.HasValue)
             {

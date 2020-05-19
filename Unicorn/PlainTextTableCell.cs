@@ -1,5 +1,5 @@
 ﻿using System;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn
 {
@@ -56,12 +56,12 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(context));
             }
             string content = Content ?? string.Empty;
-            var metrics = context.MeasureString(content, Font);
+            UniTextSize metrics = context.MeasureString(content, Font);
             ContentWidth = metrics.Width;
-            ContentAscent = Font.Ascent;
-            ContentDescent = metrics.Height - ContentAscent;
-            ComputedBaseline = Font.Ascent;
-            ComputedHeight = ContentAscent + ContentDescent;
+            ContentAscent = metrics.HeightAboveBaseline;
+            ContentDescent = metrics.HeightBelowBaseline;
+            ComputedBaseline = ContentAscent;
+            ComputedHeight = MinHeight;
             ComputedWidth = MinWidth;
         }
 
@@ -78,7 +78,7 @@ namespace Unicorn
                 throw new ArgumentNullException(nameof(context));
             }
             double xOffset = (ComputedWidth - MinWidth) / 2 + MarginLeft;
-            context.DrawString(Content, Font, x + xOffset, y + ComputedBaseline);
+            context.DrawString(Content, Font, x + xOffset, y + ComputedBaseline); // this always top-aligns content in cells that are higher than the minimum
         }
     }
 }

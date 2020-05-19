@@ -2,6 +2,8 @@
 {
     internal class SectionMetrics
     {
+        internal double LineWidth { get; set; }
+
         internal double TitleHeight { get; set; }
 
         internal double SubtitleHeight { get; set; }
@@ -18,17 +20,17 @@
 
         internal double LocoToWorkHeight { get; set; }
 
-        internal double TotalHeight { get { return TitleHeight + SubtitleHeight + TableHeight; } }
+        internal double TotalHeight => TitleHeight + SubtitleHeight + TableHeight + LineWidth;
 
-        internal double TableHeight { get { return HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight; } }
+        internal double TableHeight => HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight;
 
-        internal double HeaderOffset { get { return TitleHeight + SubtitleHeight; } }
+        internal double HeaderOffset => TitleHeight + SubtitleHeight;
 
-        internal double MainSectionOffset { get { return TitleHeight + SubtitleHeight + HeaderHeight; } }
+        internal double MainSectionOffset => TitleHeight + SubtitleHeight + HeaderHeight;
 
-        internal double ToWorkOffset { get { return TitleHeight + SubtitleHeight + HeaderHeight + MainSectionMetrics.TotalSize.Height; } }
+        internal double ToWorkOffset => TitleHeight + SubtitleHeight + HeaderHeight + MainSectionMetrics.TotalSize.Height;
 
-        internal double MainSectionBoundingHeight { get { return SubtitleHeight + HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight; } }
+        internal double MainSectionBoundingHeight => SubtitleHeight + HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight;
 
         internal bool IncludeLocoDiagramRow { get; set; }
 
@@ -36,9 +38,14 @@
 
         internal bool IncludeLocoToWorkRow { get; set; }
 
+        internal SectionMetrics(double lineWidth)
+        {
+            LineWidth = lineWidth;
+        }
+
         internal SectionMetrics CopyWithNoTitle()
         {
-            return new SectionMetrics
+            return new SectionMetrics(LineWidth)
             {
                 TitleHeight = 0,
                 SubtitleHeight = 0,

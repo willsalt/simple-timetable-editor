@@ -126,6 +126,9 @@
   <data name="GlossaryTitle" xml:space="preserve">
     <value>Explanation Of Footnotes</value>
   </data>
+  <data name="LocationFillerDotPattern" xml:space="preserve">
+    <value> .</value>
+  </data>
   <data name="LocoToWorkRowCaption" xml:space="preserve">
     <value>Loco To Work</value>
   </data>

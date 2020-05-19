@@ -1,4 +1,4 @@
-﻿using Unicorn.Interfaces;
+﻿using Unicorn.CoreTypes;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Extensions

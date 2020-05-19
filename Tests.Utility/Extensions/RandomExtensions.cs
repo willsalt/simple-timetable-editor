@@ -107,6 +107,16 @@ namespace Tests.Utility.Extensions
             return (float?)NextNullableDouble(random, scale);
         }
 
+        public static DateTime NextDateTime(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            long ticks = NextLong(random, DateTime.MaxValue.Ticks);
+            return new DateTime().AddTicks(ticks);
+        }
+
         public static TimeOfDay NextTimeOfDay(this Random random)
         {
             if (random == null)
@@ -306,6 +316,183 @@ namespace Tests.Utility.Extensions
                 rval = random.NextAlphabeticalString(random.Next(10));
             } while (validValues.Contains(rval));
             return rval;
+        }
+
+        public static Orientation NextOrientation(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            Orientation[] allValues = new[] { Orientation.Landscape, Orientation.Portrait };
+            return allValues[random.Next(allValues.Length)];
+        }
+
+        public static Orientation? NextNullableOrientation(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return random.Next(5) == 0 ? (Orientation?)null : NextOrientation(random);
+        }
+
+        public static decimal NextDecimal(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (decimal)random.NextDouble() * 2000m - 1000m;
+        }
+
+        public static decimal? NextNullableDecimal(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextDecimal(random);
+        }
+
+        public static short NextShort(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (short)random.Next(short.MaxValue + 1);
+        }
+
+        public static short? NextNullableShort(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextShort(random);
+        }
+
+        public static int? NextNullableInt(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return random.Next();
+        }
+
+        public static ushort NextUShort(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (ushort)random.Next(ushort.MaxValue + 1);
+        }
+
+        public static uint NextUInt(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(2) == 0)
+            {
+                return (uint)random.Next();
+            }
+            return int.MaxValue + (uint)random.Next();
+        }
+
+        public static uint NextUInt(this Random random, uint max)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (max < int.MaxValue)
+            {
+                return (uint)random.Next((int)max);
+            }
+            return unchecked((uint)random.Next((int)(max >> 1)) << 1) | (uint)random.Next(2);
+        }
+
+        public static ulong NextULong(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(2) == 0)
+            {
+                return random.NextUInt();
+            }
+            return uint.MaxValue + (ulong)random.NextUInt();
+        }
+
+        public static long NextLong(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(63) < 32)
+            {
+                return NextUInt(random);
+            }
+            return NextUInt(random) | ((long)random.Next() << 32);
+        }
+
+        public static long NextLong(this Random random, long max)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (max < uint.MaxValue)
+            {
+                return random.NextUInt((uint)max);
+            }
+            return random.NextUInt() | (long)random.Next((int)(max >> 32)) << 32;
+        }
+
+        public static uint? NextNullableUInt(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(10) == 0)
+            {
+                return null;
+            }
+            return NextUInt(random);
+        }
+
+        public static byte NextByte(this Random random)
+        {
+            return NextByte(random, byte.MaxValue + 1);
+        }
+
+        public static byte NextByte(this Random random, int max)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return (byte)random.Next(max);
         }
     }
 }

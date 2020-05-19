@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Impl.PdfSharp.Tests.Unit
 {
@@ -16,6 +13,17 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         private static readonly Random _rnd = RandomProvider.Default;
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+
+        [TestMethod]
+        public void FontDescriptorClass_Constructor_SetsPointSizePropertyToValueOfSecondParameter()
+        {
+            string testParam0 = "Times";
+            double testParam1 = _rnd.NextDouble() * 20;
+
+            FontDescriptor testOutput = new FontDescriptor(testParam0, testParam1);
+
+            Assert.AreEqual(testParam1, testOutput.PointSize);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -51,7 +59,8 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);
@@ -64,7 +73,8 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);
@@ -77,7 +87,8 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);
@@ -90,12 +101,26 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
         {
             Mock<IGraphicsContext> testParam0Wrapper = new Mock<IGraphicsContext>();
             double expectedResult = _rnd.NextDouble() * 1000;
-            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>())).Returns(new UniSize(expectedResult, _rnd.NextDouble() * 1000));
+            testParam0Wrapper.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
+                .Returns(new UniTextSize(expectedResult, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000));
             FontDescriptor testObject = new FontDescriptor("Times", 10);
 
             double testOutput = testObject.GetNormalSpaceWidth(testParam0Wrapper.Object);
 
             Assert.AreEqual(expectedResult, testOutput);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void FontDescriptorClass_MeasureStringMethod_ThrowsNotImplementedException()
+        {
+            double constrParam1 = _rnd.NextDouble() * 20;
+            FontDescriptor testObject = new FontDescriptor("Times", constrParam1);
+            string testParam0 = _rnd.NextString(_rnd.Next(20));
+
+            _ = testObject.MeasureString(testParam0);
+
+            Assert.Fail();
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

@@ -30,17 +30,22 @@ namespace Timetabler.DataLoader
         /// Load a TimetableDocument class from a stream.
         /// </summary>
         /// <param name="stream">The stream to load the class data from.</param>
+        /// <param name="displayWarning">Method to use to display warning messages to the user if necessary.</param>
         /// <returns>The list of locations in the template.</returns>
-        public static TimetableDocument LoadTimetableDocument(Stream stream)
+        public static TimetableDocument LoadTimetableDocument(Stream stream, Action<LoaderWarningMessage> displayWarning)
         {
-            return LoadByFileType(stream, LoadXmlTimetableDocument, LoadYamlTimetableDocument);
+            return LoadByFileType(stream, LoadXmlTimetableDocument, LoadYamlTimetableDocument, displayWarning);
         }
 
-        private static T LoadByFileType<T>(Stream stream, Func<Stream, T> xmlLoader, Func<string, T> yamlLoader)
+        private static T LoadByFileType<T>(Stream stream, Func<Stream, T> xmlLoader, Func<string, T> yamlLoader, Action<LoaderWarningMessage> displayWarning)
         {
             if (stream is null)
             {
                 throw new NullReferenceException();
+            }
+            if (displayWarning is null)
+            {
+                throw new ArgumentNullException(nameof(displayWarning));
             }
 
             using (StreamReader reader = new StreamReader(stream))
@@ -53,7 +58,9 @@ namespace Timetabler.DataLoader
                         return yamlLoader(reader.ReadToEnd());
                     }
                     stream.Seek(0, SeekOrigin.Begin);
-                    return xmlLoader(stream);
+                    T data = xmlLoader(stream);
+                    displayWarning(LoaderWarningMessage.XmlFile);
+                    return data;
                 }
                 catch (TimetableLoaderException)
                 {
@@ -114,10 +121,11 @@ namespace Timetabler.DataLoader
         /// Load a timetable location template from a stream.
         /// </summary>
         /// <param name="str">The stream containing the template to be loaded.</param>
+        /// <param name="displayWarning">Method to use to display warning messages to the user if necessary.</param>
         /// <returns>The list of locations in the template.</returns>
-        public static LocationCollection LoadLocationTemplate(Stream str)
+        public static LocationCollection LoadLocationTemplate(Stream str, Action<LoaderWarningMessage> displayWarning)
         {
-            return LoadByFileType(str, LoadXmlLocationTemplate, LoadYamlLocationTemplate);
+            return LoadByFileType(str, LoadXmlLocationTemplate, LoadYamlLocationTemplate, displayWarning);
         }
 
         internal static LocationCollection LoadYamlLocationTemplate(string content)
@@ -194,10 +202,11 @@ namespace Timetabler.DataLoader
         /// Load a <see cref="DocumentTemplate"/> object from a <see cref="Stream"/>.
         /// </summary>
         /// <param name="str">The <see cref="Stream"/> to load data from.</param>
+        /// <param name="displayWarning">A method to call to display warning messages to the user if necessary.</param>
         /// <returns>A <see cref="DocumentTemplate"/> object.</returns>
-        public static DocumentTemplate LoadDocumentTemplate(Stream str)
+        public static DocumentTemplate LoadDocumentTemplate(Stream str, Action<LoaderWarningMessage> displayWarning)
         {
-            return LoadByFileType(str, LoadXmlDocumentTemplate, LoadYamlDocumentTemplate);
+            return LoadByFileType(str, LoadXmlDocumentTemplate, LoadYamlDocumentTemplate, displayWarning);
         }
 
         internal static DocumentTemplate LoadYamlDocumentTemplate(string content)

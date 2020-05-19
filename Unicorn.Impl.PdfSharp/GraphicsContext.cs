@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unicorn.Impl.PdfSharp.Extensions;
-using Unicorn.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Unicorn.Impl.PdfSharp
 {
@@ -109,15 +109,11 @@ namespace Unicorn.Impl.PdfSharp
             {
                 throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
-            if (rect is null)
-            {
-                throw new ArgumentNullException(nameof(rect));
-            }
 
             _core.DrawString(text, ourFont.Font, XBrushes.Black, new XRect(rect.Left, rect.Top, rect.Width, rect.Height), GetStringFormat(hAlign, vAlign));
         }
 
-        private XStringFormat GetStringFormat(HorizontalAlignment hAlign, VerticalAlignment vAlign)
+        private static XStringFormat GetStringFormat(HorizontalAlignment hAlign, VerticalAlignment vAlign)
         {
             switch (hAlign)
             {
@@ -172,15 +168,19 @@ namespace Unicorn.Impl.PdfSharp
         /// <param name="font">The font to use to render the string.  Must be a <see cref="FontDescriptor"/> object.</param>
         /// <returns>The dimensions of the string when rendered.</returns>
         /// <exception cref="ArgumentException" />Thrown if the <see cref="IFontDescriptor" /> paramter is not a <see cref="FontDescriptor" /> instance.  
-        public UniSize MeasureString(string text, IFontDescriptor font)
+        public UniTextSize MeasureString(string text, IFontDescriptor font)
         {
+            if (font is null)
+            {
+                throw new ArgumentNullException(nameof(font));
+            }
             if (!(font is FontDescriptor ourFont))
             {
                 throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
 
             var size = _core.MeasureString(text, ourFont.Font);
-            return new UniSize(size.Width, size.Height);
+            return new UniTextSize(size.Width, font.InterlineSpacing + font.Ascent - font.Descent, font.Ascent + font.InterlineSpacing / 2, font.Ascent, -font.Descent);
         }
 
         /// <summary>
@@ -208,6 +208,13 @@ namespace Unicorn.Impl.PdfSharp
         {
             _core.RotateAtTransform(angle, new XPoint(x, y));
         }
+
+        /// <summary>
+        /// Rotate the context.
+        /// </summary>
+        /// <param name="angle">The angle to rotate by, in degrees.</param>
+        /// <param name="centre">The centre of rotation.</param>
+        public void RotateAt(double angle, UniPoint centre) => RotateAt(angle, centre.X, centre.Y);
 
         /// <summary>
         /// Save the state of this context in a form that can be restored later.
@@ -242,6 +249,13 @@ namespace Unicorn.Impl.PdfSharp
         {
             XPen pen = new XPen(XColors.Black, lineWidth);
             _core.DrawRectangle(pen, xTopLeft, yTopLeft, rectWidth, rectHeight);
+        }
+
+        /// <summary>
+        /// Carry out any operations needed to complete the output for this page.  Not required by this implementation.
+        /// </summary>
+        public void CloseGraphics()
+        {
         }
     }
 }

@@ -34,6 +34,11 @@ namespace Timetabler.PdfExport
         /// </summary>
         public double MainLineWidth { get; set; }
 
+        /// <summary>
+        /// Width of the axes and gridlines on train graphs.
+        /// </summary>
+        public double GraphLineWidth { get; set; }
+
         private double LineOffset => MainLineWidth / 2;
 
         /// <summary>
@@ -130,6 +135,7 @@ namespace Timetabler.PdfExport
             Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_BoldBodyOffset, _boldBodyFont.Ascent);
 
             MainLineWidth = 1.0;
+            GraphLineWidth = 1.0;
             PassingTrainDashWidth = 0.5;
         }
 
@@ -305,8 +311,8 @@ namespace Timetabler.PdfExport
 
         private void DrawGraph(TrainGraphModel trainGraphModel, string title, string subtitle, string dateDescription)
         {
-            double titleHeight = /*title != null ? _currentPage.PageGraphics.MeasureString(title, _titleFont).Height : 0;*/ _titleFont.EmptyStringMetrics.TotalHeight;
-            double subtitleHeight = /*subtitle != null ? _currentPage.PageGraphics.MeasureString(subtitle, _subtitleFont).Height : 0;*/ _subtitleFont.EmptyStringMetrics.TotalHeight;
+            double titleHeight = _titleFont.EmptyStringMetrics.TotalHeight;
+            double subtitleHeight = _subtitleFont.EmptyStringMetrics.TotalHeight;
             DrawTitleAndSubtitle(title, subtitle, dateDescription, _currentPage.LeftMarginPosition, lineGapSize * 2, _currentPage.CurrentVerticalCursor, 
                 _currentPage.RightMarginPosition - _currentPage.LeftMarginPosition, titleHeight, subtitleHeight, false, 0, 0);
             _currentPage.CurrentVerticalCursor += titleHeight + subtitleHeight;
@@ -314,33 +320,34 @@ namespace Timetabler.PdfExport
             double bottomLimit = _currentPage.BottomMarginPosition;
             double topLimit = _currentPage.CurrentVerticalCursor;
             double leftLimit = _currentPage.LeftMarginPosition;
-            double lineWidthOffset = MainLineWidth / 2;
+            double lineWidthOffset = GraphLineWidth / 2;
             List<TrainGraphAxisTickInfo> timeAxisInfo = 
                 trainGraphModel.GetTimeAxisInformation().Select(i => { i.PopulateSize(_currentPage.PageGraphics, _plainBodyFont); return i; }).ToList();
-            bottomLimit -= (timeAxisInfo.Max(i => i.Height).Value + graphTickLength);
+            bottomLimit -= (timeAxisInfo.Max(i => i.Height).Value + graphTickLength + lineWidthOffset);
 
             List<TrainGraphAxisTickInfo> distanceAxisInfo = 
                 trainGraphModel.GetDistanceAxisInformation().Select(i => { i.PopulateSize(_currentPage.PageGraphics, _plainBodyFont); return i; }).ToList();
             topLimit += distanceAxisInfo.Last().Height.Value / 2;
-            leftLimit += distanceAxisInfo.Max(i => i.Width).Value + graphTickLength + distanceTickLabelMargin;
+            leftLimit += distanceAxisInfo.Max(i => i.Width).Value + graphTickLength + lineWidthOffset + distanceTickLabelMargin;
 
-            LineDrawingWrapper("y-axis", leftLimit, topLimit - lineWidthOffset, leftLimit, bottomLimit + lineWidthOffset, MainLineWidth);
-            LineDrawingWrapper("x-axis", leftLimit - lineWidthOffset, bottomLimit, _currentPage.RightMarginPosition + lineWidthOffset, bottomLimit, MainLineWidth);
+            LineDrawingWrapper("y-axis", leftLimit, topLimit - lineWidthOffset, leftLimit, bottomLimit + lineWidthOffset, GraphLineWidth);
+            LineDrawingWrapper("x-axis", leftLimit - lineWidthOffset, bottomLimit, _currentPage.RightMarginPosition + lineWidthOffset, bottomLimit, GraphLineWidth);
             foreach (TrainGraphAxisTickInfo tick in distanceAxisInfo)
             {
                 double y = CoordinateHelper.Stretch(topLimit, bottomLimit, 1 - tick.Coordinate);
                 LineDrawingWrapper("horizontal grid line", _currentPage.RightMarginPosition + lineWidthOffset, y, leftLimit - (graphTickLength + lineWidthOffset), y, 
-                    MainLineWidth);
+                    GraphLineWidth);
                 Word tickWord = new Word(tick.Label, _plainBodyFont, _currentPage.PageGraphics, 0);
-                tickWord.DrawAt(_currentPage.PageGraphics, leftLimit - (tick.Width.Value + graphTickLength + distanceTickLabelMargin), y - tick.Height.Value / 2);
+                tickWord.DrawAt(_currentPage.PageGraphics, leftLimit - (tick.Width.Value + graphTickLength + lineWidthOffset + distanceTickLabelMargin), 
+                    y - tick.Height.Value / 2);
             }
 
             foreach (TrainGraphAxisTickInfo tick in timeAxisInfo)
             {
                 double x = CoordinateHelper.Stretch(leftLimit, _currentPage.RightMarginPosition, tick.Coordinate);
-                LineDrawingWrapper("vertical grid line", x, topLimit - lineWidthOffset, x, bottomLimit + graphTickLength + lineWidthOffset, MainLineWidth);
+                LineDrawingWrapper("vertical grid line", x, topLimit - lineWidthOffset, x, bottomLimit + graphTickLength + lineWidthOffset, GraphLineWidth);
                 Word tickWord = new Word(tick.Label, _plainBodyFont, _currentPage.PageGraphics, 0);
-                tickWord.DrawAt(_currentPage.PageGraphics, x - tick.Width.Value / 2, bottomLimit + graphTickLength);
+                tickWord.DrawAt(_currentPage.PageGraphics, x - tick.Width.Value / 2, bottomLimit + graphTickLength + lineWidthOffset);
             }
 
             foreach (TrainDrawingInfo info in trainGraphModel.GetTrainDrawingInformation())

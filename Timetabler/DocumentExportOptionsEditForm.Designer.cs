@@ -52,11 +52,14 @@
             this.cbPdfEngine = new System.Windows.Forms.ComboBox();
             this.lblWarning = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.nudGraphAxisLineWidth = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // ckDisplayLocoDiagram
@@ -157,6 +160,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.nudGraphAxisLineWidth);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.cbGraphOrientation);
@@ -228,6 +233,18 @@
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // nudGraphAxisLineWidth
+            // 
+            this.nudGraphAxisLineWidth.DecimalPlaces = 2;
+            resources.ApplyResources(this.nudGraphAxisLineWidth, "nudGraphAxisLineWidth");
+            this.nudGraphAxisLineWidth.Name = "nudGraphAxisLineWidth";
+            this.nudGraphAxisLineWidth.ValueChanged += new System.EventHandler(this.NudGraphAxisLineWidth_ValueChanged);
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
             // DocumentExportOptionsEditForm
             // 
             resources.ApplyResources(this, "$this");
@@ -243,6 +260,7 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -272,5 +290,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbGraphOrientation;
         private System.Windows.Forms.ComboBox cbTableOrientation;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown nudGraphAxisLineWidth;
     }
 }

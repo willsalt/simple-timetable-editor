@@ -208,6 +208,7 @@ namespace Timetabler
                 using (FileStream fs = new FileStream(sfdExport.FileName, FileMode.Create, FileAccess.Write))
                 {
                     exporter.MainLineWidth = Model.ExportOptions.LineWidth;
+                    exporter.GraphLineWidth = Model.ExportOptions.GraphAxisLineWidth;
                     exporter.PassingTrainDashWidth = Model.ExportOptions.FillerDashLineWidth;
                     exporter.Export(Model, fs);
                 }

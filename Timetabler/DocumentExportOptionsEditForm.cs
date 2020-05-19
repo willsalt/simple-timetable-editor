@@ -61,6 +61,7 @@ namespace Timetabler
             ckDisplayGlossary.Checked = Model.DisplayGlossary;
             nudLineWidth.Value = (decimal)Model.LineWidth;
             nudFillerDashLineWidth.Value = (decimal)Model.FillerDashLineWidth;
+            nudGraphAxisLineWidth.Value = (decimal)Model.GraphAxisLineWidth;
             foreach (var item in cbPdfEngine.Items)
             {
                 if (item is HumanReadableEnum<PdfExportEngine> engineItem && engineItem.Value == Model.ExportEngine)
@@ -156,6 +157,16 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NudFillerDashLineWidthValue, nudFillerDashLineWidth.Value);
             Model.FillerDashLineWidth = (double)nudFillerDashLineWidth.Value;
+        }
+
+        private void NudGraphAxisLineWidth_ValueChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model == null)
+            {
+                return;
+            }
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NudGraphAxisLineWidthValue, nudGraphAxisLineWidth.Value);
+            Model.GraphAxisLineWidth = (double)nudGraphAxisLineWidth.Value;
         }
 
         private void CkDisplayGraph_CheckedChanged(object sender, EventArgs e)

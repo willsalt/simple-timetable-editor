@@ -240,6 +240,9 @@
   <data name="LogMessage_NudFillerDashLineWidthValue" xml:space="preserve">
     <value>nudFillerDashLineWidth is {0}</value>
   </data>
+  <data name="LogMessage_NudGraphAxisLineWidthValue" xml:space="preserve">
+    <value>nudGraphAxisLineWidth is {0}.</value>
+  </data>
   <data name="LogMessage_NudLineWidthValue" xml:space="preserve">
     <value>nudLineWidth is {0}</value>
   </data>

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Unicorn.Impl.PdfSharp")]
+[assembly: AssemblyProduct("Unicorn")]
 [assembly: AssemblyCopyright("Copyright ©  2017-2020 Will Salt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

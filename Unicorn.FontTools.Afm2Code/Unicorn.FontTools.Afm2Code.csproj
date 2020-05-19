@@ -8,6 +8,7 @@
     <Company>Will Salt</Company>
     <Copyright>Copyright © 2020 Will Salt</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <Product>Unicorn</Product>
   </PropertyGroup>
 
   <ItemGroup>

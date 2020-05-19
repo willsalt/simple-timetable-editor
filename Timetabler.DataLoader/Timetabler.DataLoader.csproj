@@ -106,23 +106,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Saver.cs" />
-    <Compile Include="Save\Xml\DistanceExtensions.cs" />
-    <Compile Include="Save\Xml\DocumentExportOptionsExtensions.cs" />
-    <Compile Include="Save\Xml\DocumentOptionsExtensions.cs" />
-    <Compile Include="Save\Xml\DocumentTemplateExtensions.cs" />
-    <Compile Include="Save\Xml\GraphTrainPropertiesExtensions.cs" />
-    <Compile Include="Save\Xml\LocationExtensions.cs" />
-    <Compile Include="Save\Xml\NoteExtensions.cs" />
-    <Compile Include="Save\Xml\SignalboxExtensions.cs" />
-    <Compile Include="Save\Xml\SignalboxHoursExtensions.cs" />
-    <Compile Include="Save\Xml\SignalboxHoursSetExtensions.cs" />
-    <Compile Include="Save\Xml\TimeOfDayExtensions.cs" />
-    <Compile Include="Save\Xml\TimetableDocumentExtensions.cs" />
-    <Compile Include="Save\Xml\ToWorkExtensions.cs" />
-    <Compile Include="Save\Xml\TrainClassExtensions.cs" />
-    <Compile Include="Save\Xml\TrainExtensions.cs" />
-    <Compile Include="Save\Xml\TrainLocationTimeExtensions.cs" />
-    <Compile Include="Save\Xml\TrainTimeExtensions.cs" />
     <Compile Include="Save\Yaml\DistanceExtensions.cs" />
     <Compile Include="Save\Yaml\DocumentExportOptionsExtensions.cs" />
     <Compile Include="Save\Yaml\DocumentOptionsExtensions.cs" />

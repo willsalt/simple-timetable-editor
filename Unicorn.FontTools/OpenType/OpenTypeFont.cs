@@ -215,6 +215,8 @@ namespace Unicorn.FontTools.OpenType
                     return NamingTable.FromBytes;
                 case "cmap":
                     return CharacterMappingTable.FromBytes;
+                case "post":
+                    return PostScriptTable.FromBytes;
                 default:
                     return null;
             }

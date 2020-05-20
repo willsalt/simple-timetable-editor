@@ -165,6 +165,9 @@
   <data name="OpenType_PlainByteCharacterMapping_FromBytes_ArrayTooSmall" xml:space="preserve">
     <value>Insufficient character mapping data provided.</value>
   </data>
+  <data name="OpenType_PostScriptTable_DuplicateGlyphNameError" xml:space="preserve">
+    <value>Duplicate glyph name found when loading PostScript information.</value>
+  </data>
   <data name="OpenType_Tag_Constructor_ArrayLengthError" xml:space="preserve">
     <value>Tag values must be four characters long.</value>
   </data>

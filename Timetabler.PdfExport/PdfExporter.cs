@@ -32,19 +32,19 @@ namespace Timetabler.PdfExport
         /// <summary>
         /// Width of the most important "scaffolding" lines used to draw the timetable.
         /// </summary>
-        public double MainLineWidth { get; set; }
+        public double MainLineWidth { get; private set; }
 
         /// <summary>
         /// Width of the axes and gridlines on train graphs.
         /// </summary>
-        public double GraphLineWidth { get; set; }
+        public double GraphLineWidth { get; private set; }
 
         private double LineOffset => MainLineWidth / 2;
 
         /// <summary>
         /// Width of the lines drawn as dashes to indicate a train passes a location without stopping.
         /// </summary>
-        public double PassingTrainDashWidth { get; set; }
+        public double PassingTrainDashWidth { get; private set; }
 
         private const double lineGapSize = 1.5;
         private const double interSectionGapSize = 10.0;
@@ -166,6 +166,12 @@ namespace Timetabler.PdfExport
             {
                 throw new ArgumentNullException(nameof(document));
             }
+            if (document.ExportOptions is null)
+            {
+                throw new ArgumentException(Resources.PdfExporter_Export_ExportOptionsMissingError, nameof(document));
+            }
+
+            SetLineWidths(document.ExportOptions);
 
             IDocumentDescriptor doc = _engineSelector.GetDocumentDescriptor(_defaultHorizontalMarginProportion, _defaultVerticalMarginProportion);
             bool workNotFinished = true;
@@ -307,6 +313,13 @@ namespace Timetabler.PdfExport
             }
 
             doc.Write(outputStream);
+        }
+
+        private void SetLineWidths(DocumentExportOptions exportOptions)
+        {
+            MainLineWidth = exportOptions.LineWidth;
+            GraphLineWidth = exportOptions.GraphAxisLineWidth;
+            PassingTrainDashWidth = exportOptions.FillerDashLineWidth;
         }
 
         private void DrawGraph(TrainGraphModel trainGraphModel, string title, string subtitle, string dateDescription)

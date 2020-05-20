@@ -132,6 +132,9 @@
   <data name="LocoToWorkRowCaption" xml:space="preserve">
     <value>Loco To Work</value>
   </data>
+  <data name="PdfExporter_Export_ExportOptionsMissingError" xml:space="preserve">
+    <value>The document being exported does not have any export options set, which should not happen.</value>
+  </data>
   <data name="PublishedDateCaption" xml:space="preserve">
     <value>Published</value>
   </data>

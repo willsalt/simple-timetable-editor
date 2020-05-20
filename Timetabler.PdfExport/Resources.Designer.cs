@@ -106,6 +106,15 @@ namespace Timetabler.PdfExport {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The document being exported does not have any export options set, which should not happen..
+        /// </summary>
+        internal static string PdfExporter_Export_ExportOptionsMissingError {
+            get {
+                return ResourceManager.GetString("PdfExporter_Export_ExportOptionsMissingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Published.
         /// </summary>
         internal static string PublishedDateCaption {

@@ -6,6 +6,10 @@
     <IsPackable>false</IsPackable>
 
     <Version>1.4.0</Version>
+
+    <Authors>Will Salt</Authors>
+
+    <Product>Unicorn</Product>
   </PropertyGroup>
 
   <ItemGroup>

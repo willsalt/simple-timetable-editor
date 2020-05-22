@@ -7,17 +7,17 @@ namespace Timetabler.Data
     /// This class describes a point on a railway route, in terms of its mileage from a datum point.
     /// The program assumes that mileage increases in the Down direction and decreases in the Up direction.
     /// </summary>
-    public class Distance : IEquatable<Distance>, IComparable, IComparable<Distance>, IFormattable
+    public struct Distance : IEquatable<Distance>, IComparable, IComparable<Distance>, IFormattable
     {
         /// <summary>
         /// The integer miles component of the mileage.
         /// </summary>
-        public int Mileage { get; set; }
+        public int Mileage { get; private set; }
 
         /// <summary>
         /// The sub-miles component of the mileage, in chains.  One chain is 1/80 of one mile.
         /// </summary>
-        public double Chainage { get; set; }
+        public double Chainage { get; private set; }
 
         /// <summary>
         /// The mileage figure, as a floating point number of miles.
@@ -36,6 +36,12 @@ namespace Timetabler.Data
             }
         }
 
+        public Distance(int miles, double chains)
+        {
+            Mileage = miles + ((int)chains) / 80;
+            Chainage = chains % 80;
+        }
+
         /// <summary>
         /// Return true if d1 is less than d2, false otherwise.  A null parameter is treated as the lowest possible value.
         /// </summary>
@@ -44,14 +50,14 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <(Distance d1, Distance d2)
         {
-            if (d1 is null)
-            {
-                return d2 is object;
-            }
-            if (d2 is null)
-            {
-                return false;
-            }
+            //if (d1 is null)
+            //{
+            //    return d2 is object;
+            //}
+            //if (d2 is null)
+            //{
+            //    return false;
+            //}
             return d1.Mileage < d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage < d2.Chainage);
         }
 
@@ -63,14 +69,14 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <=(Distance d1, Distance d2)
         {
-            if (d1 is null)
-            {
-                return true;
-            }
-            if (d2 is null)
-            {
-                return false;
-            }
+            //if (d1 is null)
+            //{
+            //    return true;
+            //}
+            //if (d2 is null)
+            //{
+            //    return false;
+            //}
             return d1.Mileage < d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage <= d2.Chainage);
         }
 
@@ -82,14 +88,14 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >(Distance d1, Distance d2)
         {
-            if (d1 is null)
-            {
-                return false;
-            }
-            if (d2 is null)
-            {
-                return true;
-            }
+            //if (d1 is null)
+            //{
+            //    return false;
+            //}
+            //if (d2 is null)
+            //{
+            //    return true;
+            //}
             return d1.Mileage > d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage > d2.Chainage);
         }
 
@@ -101,14 +107,14 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >=(Distance d1, Distance d2)
         {
-            if (d1 is null)
-            {
-                return d2 is null;
-            }
-            if (d2 is null)
-            {
-                return false;
-            }
+            //if (d1 is null)
+            //{
+            //    return d2 is null;
+            //}
+            //if (d2 is null)
+            //{
+            //    return false;
+            //}
             return d1.Mileage > d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage >= d2.Chainage);
         }
 
@@ -121,14 +127,14 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator ==(Distance d1, Distance d2)
         {
-            if (d1 is null)
-            {
-                return d2 is null;
-            }
-            if (d2 is null)
-            {
-                return false;
-            }
+            //if (d1 is null)
+            //{
+            //    return d2 is null;
+            //}
+            //if (d2 is null)
+            //{
+            //    return false;
+            //}
             return d1.Mileage == d2.Mileage && d1.Chainage == d2.Chainage;
         }
 
@@ -141,14 +147,14 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator !=(Distance d1, Distance d2)
         {
-            if (d1 is null)
-            {
-                return d2 is object;
-            }
-            if (d2 is null)
-            {
-                return true;
-            }
+            //if (d1 is null)
+            //{
+            //    return d2 is object;
+            //}
+            //if (d2 is null)
+            //{
+            //    return true;
+            //}
             return d1.Mileage != d2.Mileage || d2.Chainage != d1.Chainage;
         }
 
@@ -160,18 +166,18 @@ namespace Timetabler.Data
         /// <returns>A <see cref="Distance" /> instance whose value is equal to the sum of the two parameters (null being treated as zero), or null if both parameters are null.</returns>
         public static Distance operator +(Distance d1, Distance d2)
         {
-            if (d1 is null)
-            {
-                if (d2 is null)
-                {
-                    return null;
-                }
-                return new Distance { Mileage = d2.Mileage, Chainage = d2.Chainage };
-            }
-            if (d2 is null)
-            {
-                return new Distance { Mileage = d1.Mileage, Chainage = d1.Chainage };
-            }
+            //if (d1 is null)
+            //{
+            //    if (d2 is null)
+            //    {
+            //        return null;
+            //    }
+            //    return new Distance { Mileage = d2.Mileage, Chainage = d2.Chainage };
+            //}
+            //if (d2 is null)
+            //{
+            //    return new Distance { Mileage = d1.Mileage, Chainage = d1.Chainage };
+            //}
             Distance sum = new Distance { Mileage = d1.Mileage + d2.Mileage, Chainage = d1.Chainage + d2.Chainage };
             while (sum.Chainage >= 80d)
             {
@@ -229,11 +235,16 @@ namespace Timetabler.Data
                 return 1;
             }
 
-            var d = obj as Distance;
-            if (d == null)
+            if (!(obj is Distance d))
             {
                 throw new ArgumentException(Resources.Error_WrongDataType, nameof(obj));
             }
+
+            //var d = obj as Distance;
+            //if (d == null)
+            //{
+            //    throw new ArgumentException(Resources.Error_WrongDataType, nameof(obj));
+            //}
             return CompareTo(d);
         }
 
@@ -255,8 +266,8 @@ namespace Timetabler.Data
         /// <returns>True if the objects' values are equal, false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            Distance distance = obj as Distance;
-            if (distance != null)
+            //Distance distance = obj as Distance;
+            if (obj is Distance distance)
             {
                 return this == distance;
             }

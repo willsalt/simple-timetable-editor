@@ -120,16 +120,17 @@ namespace Timetabler.Data
                 FontType = FontType,
                 DisplaySeparatorAbove = DisplaySeparatorAbove,
                 DisplaySeparatorBelow = DisplaySeparatorBelow,
+                Mileage = Mileage,
             };
-            if (Mileage != null)
-            {
-                loc.Mileage.Mileage = Mileage.Mileage;
-                loc.Mileage.Chainage = Mileage.Chainage;
-            }
-            else
-            {
-                loc.Mileage = null;
-            }
+            //if (Mileage != null)
+            //{
+            //    loc.Mileage.Mileage = Mileage.Mileage;
+            //    loc.Mileage.Chainage = Mileage.Chainage;
+            //}
+            //else
+            //{
+            //    loc.Mileage = null;
+            //}
             return loc;
         }
 
@@ -167,14 +168,14 @@ namespace Timetabler.Data
         /// <returns>A boolean value indicating equality.</returns>
         public bool Equals(Distance other)
         {
-            if (other is null)
-            {
-                return false;
-            }
-            if (Mileage == null)
-            {
-                return false;
-            }
+            //if (other is null)
+            //{
+            //    return false;
+            //}
+            //if (Mileage == null)
+            //{
+            //    return false;
+            //}
             return Mileage == other;
         }
 
@@ -190,8 +191,8 @@ namespace Timetabler.Data
             {
                 return Equals(loc);
             }
-            var d = obj as Distance;
-            if (d != null)
+            //var d = obj as Distance;
+            if (obj is Distance d)
             {
                 return Equals(d);
             }
@@ -214,14 +215,14 @@ namespace Timetabler.Data
         /// <returns>An integer indicating whether the <see cref="Mileage"/> property is less than, equal to or greater than the parameter.</returns>
         public int CompareTo(Distance other)
         {
-            if (other is null)
-            {
-                return Mileage == null ? 0 : 1;
-            }
-            if (Mileage == null)
-            {
-                return -1;
-            }
+            //if (other is null)
+            //{
+            //    return Mileage == null ? 0 : 1;
+            //}
+            //if (Mileage == null)
+            //{
+            //    return -1;
+            //}
             return Mileage.CompareTo(other);
         }
 
@@ -261,8 +262,8 @@ namespace Timetabler.Data
             {
                 return CompareTo(l);
             }
-            var d = obj as Distance;
-            if (d != null)
+            //var d = obj as Distance;
+            if (obj is Distance d)
             {
                 return CompareTo(d);
             }

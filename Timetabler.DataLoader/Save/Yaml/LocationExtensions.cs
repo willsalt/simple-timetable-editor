@@ -31,7 +31,7 @@ namespace Timetabler.DataLoader.Save.Yaml
                 UpRoutingCodesAlwaysDisplayed = location.UpRoutingCodesAlwaysDisplayed,
                 DownArrivalDepartureAlwaysDisplayed = location.DownArrivalDepartureAlwaysDisplayed,
                 DownRoutingCodesAlwaysDisplayed = location.DownRoutingCodesAlwaysDisplayed,
-                Mileage = location.Mileage?.ToYamlDistanceModel(),
+                Mileage = location.Mileage.ToYamlDistanceModel(),
                 FontTypeName = location.FontType.ToString("g"),
                 DisplaySeparatorAbove = location.DisplaySeparatorAbove,
                 DisplaySeparatorBelow = location.DisplaySeparatorBelow,

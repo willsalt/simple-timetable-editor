@@ -17,11 +17,6 @@ namespace Timetabler.DataLoader.Save.Yaml
         /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
         public static DistanceModel ToYamlDistanceModel(this Distance distance)
         {
-            if (distance is null)
-            {
-                throw new NullReferenceException();
-            }
-
             return new DistanceModel { Miles = distance.Mileage, Chains = distance.Chainage };
         }
     }

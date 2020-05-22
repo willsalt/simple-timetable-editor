@@ -8,7 +8,7 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
 
         public static Distance GetDistance()
         {
-            return new Distance { Mileage = rnd.Next(short.MaxValue), Chainage = rnd.Next(80) };
+            return new Distance(rnd.Next(short.MaxValue), rnd.Next(80));
         }
 
         public static Distance GetDistanceGreaterThan(Distance d)

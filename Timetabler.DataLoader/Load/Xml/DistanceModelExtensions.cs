@@ -20,11 +20,7 @@ namespace Timetabler.DataLoader.Load.Xml
             {
                 throw new ArgumentNullException(nameof(model));
             }
-            return new Distance
-            {
-                Mileage = model.Mileage,
-                Chainage = model.Chainage
-            };
+            return new Distance(model.Mileage, model.Chainage);
         }
     }
 }

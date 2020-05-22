@@ -20,16 +20,16 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DistanceExtensionsClass_ToYamlDistanceModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
-        {
-            Distance testParam = null;
+        //[TestMethod]
+        //[ExpectedException(typeof(NullReferenceException))]
+        //public void DistanceExtensionsClass_ToYamlDistanceModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        //{
+        //    Distance testParam = null;
 
-            _ = testParam.ToYamlDistanceModel();
+        //    _ = testParam.ToYamlDistanceModel();
 
-            Assert.Fail();
-        }
+        //    Assert.Fail();
+        //}
 
         [TestMethod]
         public void DistanceExtensionsClass_ToYamlDistanceModelMethod_ReturnsObjectWithCorrectMilesProperty_IfParameterIsNotNull()

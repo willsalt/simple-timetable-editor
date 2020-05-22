@@ -205,6 +205,15 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate glyph name found when loading PostScript information..
+        /// </summary>
+        internal static string OpenType_PostScriptTable_DuplicateGlyphNameError {
+            get {
+                return ResourceManager.GetString("OpenType_PostScriptTable_DuplicateGlyphNameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag values must be four characters long..
         /// </summary>
         internal static string OpenType_Tag_Constructor_ArrayLengthError {

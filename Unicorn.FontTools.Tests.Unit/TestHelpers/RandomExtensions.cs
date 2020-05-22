@@ -469,5 +469,23 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             return random.NextBoolean() ? CalculationStyle.Windows : CalculationStyle.Macintosh;
         }
+
+        private static PostScriptTableVersion[] _validPostScriptTableVersions = new[] 
+        { 
+            PostScriptTableVersion.One, 
+            PostScriptTableVersion.Two, 
+            PostScriptTableVersion.TwoPointFive, 
+            PostScriptTableVersion.Three, 
+            PostScriptTableVersion.Four 
+        };
+
+        public static PostScriptTableVersion NextOpenTypePostScriptTableVersion(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            return _validPostScriptTableVersions[random.Next(_validPostScriptTableVersions.Length)];
+        }
     }
 }

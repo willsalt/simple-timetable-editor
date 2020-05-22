@@ -526,7 +526,7 @@ namespace Unicorn.FontTools.OpenType
                     _overriddenGlyphsByName.Add(kvp);
                 }
             }
-            catch (InvalidOperationException ex)
+            catch (ArgumentException ex)
             {
                 throw new OpenTypeFormatException(Resources.OpenType_PostScriptTable_DuplicateGlyphNameError, ex);
             }

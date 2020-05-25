@@ -79,6 +79,24 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DOWN.
+        /// </summary>
+        internal static string DocumentExportOptions_DefaultDownSectionLabel {
+            get {
+                return ResourceManager.GetString("DocumentExportOptions_DefaultDownSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UP.
+        /// </summary>
+        internal static string DocumentExportOptions_DefaultUpSectionLabel {
+            get {
+                return ResourceManager.GetString("DocumentExportOptions_DefaultUpSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wrong data type..
         /// </summary>
         internal static string Error_WrongDataType {

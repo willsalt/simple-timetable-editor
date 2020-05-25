@@ -71,5 +71,9 @@ namespace Timetabler.SerialData.Yaml
         /// The orientation of graph pages.
         /// </summary>
         public Orientation? GraphPageOrientation { get; set; }
+
+        public string UpSectionLabel { get; set; }
+
+        public string DownSectionLabel { get; set; }
     }
 }

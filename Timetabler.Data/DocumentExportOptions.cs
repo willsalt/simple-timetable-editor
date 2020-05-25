@@ -72,6 +72,10 @@ namespace Timetabler.Data
         /// </summary>
         public Orientation GraphPageOrientation { get; set; }
 
+        public string UpSectionLabel { get; set; }
+
+        public string DownSectionLabel { get; set; }
+
         /// <summary>
         /// Default constructor - sets the default values of the <see cref="LineWidth" />, <see cref="GraphAxisLineWidth" /> and 
         /// <see cref="FillerDashLineWidth" /> properties.
@@ -84,6 +88,8 @@ namespace Timetabler.Data
             ExportEngine = PdfExportEngine.External;
             TablePageOrientation = Orientation.Landscape;
             GraphPageOrientation = Orientation.Landscape;
+            UpSectionLabel = Resources.DocumentExportOptions_DefaultUpSectionLabel;
+            DownSectionLabel = Resources.DocumentExportOptions_DefaultDownSectionLabel;
         }
 
         /// <summary>
@@ -107,6 +113,8 @@ namespace Timetabler.Data
                 ExportEngine = ExportEngine,
                 TablePageOrientation = TablePageOrientation,
                 GraphPageOrientation = GraphPageOrientation,
+                UpSectionLabel = UpSectionLabel,
+                DownSectionLabel = DownSectionLabel,
             };
         }
     }

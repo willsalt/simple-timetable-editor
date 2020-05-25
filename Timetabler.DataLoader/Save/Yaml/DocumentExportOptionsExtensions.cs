@@ -36,6 +36,8 @@ namespace Timetabler.DataLoader.Save.Yaml
                 GlossaryInOutput = options.DisplayGlossary,
                 TablePageOrientation = options.TablePageOrientation,
                 GraphPageOrientation = options.GraphPageOrientation,
+                UpSectionLabel = options.UpSectionLabel,
+                DownSectionLabel = options.DownSectionLabel,
             };
         }
     }

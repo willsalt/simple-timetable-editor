@@ -37,7 +37,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType
                 _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextUInt());
         }
 
-        private List<KeyValuePair<string, int>> GetTestCharacterMap()
+        private static List<KeyValuePair<string, int>> GetTestCharacterMap()
         {
             int count = _rnd.Next(256);
             List<KeyValuePair<string, int>> testData = new List<KeyValuePair<string, int>>(count);

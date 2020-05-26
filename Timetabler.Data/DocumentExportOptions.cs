@@ -72,13 +72,20 @@ namespace Timetabler.Data
         /// </summary>
         public Orientation GraphPageOrientation { get; set; }
 
+        /// <summary>
+        /// The label used at the top-left of Up timetable sections.  Defaults to "UP" (or its internationalised equivalent).
+        /// </summary>
         public string UpSectionLabel { get; set; }
 
+        /// <summary>
+        /// The label used at the top-left of Down timetable sections.  Defaults to "DOWN" (or its internationalised equivalent).
+        /// </summary>
         public string DownSectionLabel { get; set; }
 
         /// <summary>
         /// Default constructor - sets the default values of the <see cref="LineWidth" />, <see cref="GraphAxisLineWidth" /> and 
-        /// <see cref="FillerDashLineWidth" /> properties.
+        /// <see cref="FillerDashLineWidth" /> properties, and loads the default values of the <see cref="UpSectionLabel" /> and <see cref="DownSectionLabel" />
+        /// properties from the resources file.
         /// </summary>
         public DocumentExportOptions()
         {

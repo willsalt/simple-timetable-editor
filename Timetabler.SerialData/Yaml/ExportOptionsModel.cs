@@ -72,8 +72,14 @@ namespace Timetabler.SerialData.Yaml
         /// </summary>
         public Orientation? GraphPageOrientation { get; set; }
 
+        /// <summary>
+        /// The label used at the top left of Up timetable sections.
+        /// </summary>
         public string UpSectionLabel { get; set; }
 
+        /// <summary>
+        /// The label used at the top left of Down timetable sections.
+        /// </summary>
         public string DownSectionLabel { get; set; }
     }
 }

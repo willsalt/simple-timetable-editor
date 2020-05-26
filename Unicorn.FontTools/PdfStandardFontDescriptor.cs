@@ -41,15 +41,62 @@ namespace Unicorn.FontTools
         /// </summary>
         public double Ascent => PointSizeTransform(_metrics.Ascender ?? 0m);
 
+        public double AscentGlyphUnits => (double)(_metrics.Ascender ?? 0m);
+
         /// <summary>
         /// The depth of the largest descender below the baseline.  By convention the descender of 'p' is used.
         /// </summary>
         public double Descent => PointSizeTransform(_metrics.Descender ?? 0m);
 
+        public double DescentGlyphUnits => (double)(_metrics.Descender ?? 0m);
+
         /// <summary>
         /// Standard interline white space in this font.
         /// </summary>
         public double InterlineSpacing => PointSize - (Ascent - Descent);
+
+        public UniRectangle BoundingBox
+        {
+            get
+            {
+                return new UniRectangle(_metrics.FontBoundingBox.Left, _metrics.FontBoundingBox.Bottom, _metrics.FontBoundingBox.Right - _metrics.FontBoundingBox.Left,
+                    _metrics.FontBoundingBox.Top - _metrics.FontBoundingBox.Bottom);
+            }
+        }
+
+        public decimal CapHeight => _metrics.CapHeight ?? 0m;
+
+        public FontDescriptorFlags Flags
+        {
+            get
+            {
+                bool isSymbolic = _metrics.CharacterSet == "Special" && _metrics.EncodingScheme == "FontSpecific";
+                FontDescriptorFlags output = isSymbolic ? FontDescriptorFlags.Symbolic : FontDescriptorFlags.Nonsymbolic;
+                if (_metrics.Direction0Metrics.Value.IsFixedPitch)
+                {
+                    output |= FontDescriptorFlags.FixedPitch;
+                }
+                if (_metrics.Direction0Metrics.Value.ItalicAngle != 0)
+                {
+                    output |= FontDescriptorFlags.Italic;
+                }
+                return output;
+            }
+        }
+
+        public decimal ItalicAngle => _metrics.Direction0Metrics.Value.ItalicAngle ?? 0m;
+
+        public decimal VerticalStemThickness => _metrics.StdVW ?? 0m;
+
+        public bool RequiresFullDescription => false;
+
+        public bool RequiresEmbedding => false;
+
+        public string EmbeddingKey => "";
+
+        public long EmbeddingLength => 0;
+
+        public IEnumerable<byte> EmbeddingData => Array.Empty<byte>();
 
         /// <summary>
         /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics

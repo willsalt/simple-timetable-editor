@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Text;
 
 namespace Unicorn.CoreTypes
 {
@@ -34,10 +37,14 @@ namespace Unicorn.CoreTypes
         /// </summary>
         double Ascent { get; }
 
+        double AscentGlyphUnits { get; }
+
         /// <summary>
         /// The descent of the font below the baseline.
         /// </summary>
         double Descent { get; }
+
+        double DescentGlyphUnits { get; }
 
         /// <summary>
         /// The amount of white space between the bottom of th descenders of one line and the top of the ascenders of the next, where the leading is zero.  Should
@@ -50,6 +57,26 @@ namespace Unicorn.CoreTypes
         /// properties populated.
         /// </summary>
         UniTextSize EmptyStringMetrics { get; }
+
+        UniRectangle BoundingBox { get; }
+
+        decimal ItalicAngle { get; }
+
+        decimal CapHeight { get; }
+
+        decimal VerticalStemThickness { get; }
+
+        FontDescriptorFlags Flags { get; }
+
+        bool RequiresFullDescription { get; }
+
+        bool RequiresEmbedding { get; }
+
+        long EmbeddingLength { get; }
+
+        string EmbeddingKey { get; }
+
+        IEnumerable<byte> EmbeddingData { get; }
 
         /// <summary>
         /// Measure the size of a string when rendered in this font.

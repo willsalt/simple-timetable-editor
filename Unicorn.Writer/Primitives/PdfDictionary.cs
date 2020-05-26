@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Unicorn.Writer.Interfaces;
@@ -9,7 +10,7 @@ namespace Unicorn.Writer.Primitives
     /// The class representing a PDF dictionary.  Unlike most of the classes in the Unicorn.Writer.Primitives namespace, this one is mutable.  The keys to the dictionary are 
     /// <see cref="PdfName" /> instances; the values can be any <see cref="IPdfPrimitiveObject" />.
     /// </summary>
-    public class PdfDictionary : IPdfPrimitiveObject
+    public class PdfDictionary : IPdfPrimitiveObject, IEnumerable<KeyValuePair<PdfName, IPdfPrimitiveObject>>
     {
         private readonly Dictionary<PdfName, IPdfPrimitiveObject> _contents = new Dictionary<PdfName, IPdfPrimitiveObject>();
         private byte[] cachedBytes = null;
@@ -128,6 +129,25 @@ namespace Unicorn.Writer.Primitives
                     throw new ArgumentException(Resources.Primitives_PdfDictionary_Add_Duplicate_Key_Error, nameof(key));
                 }
                 _contents.Add(key, value);
+            }
+        }
+
+        public void AddRange(IEnumerable<KeyValuePair<PdfName, IPdfPrimitiveObject>> data)
+        {
+            if (data is null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            lock (_contents)
+            {
+                foreach (KeyValuePair<PdfName, IPdfPrimitiveObject> item in data)
+                {
+                    if (_contents.ContainsKey(item.Key))
+                    {
+                        throw new ArgumentException(Resources.Primitives_PdfDictionary_Add_Duplicate_Key_Error, nameof(data));
+                    }
+                    _contents.Add(item.Key, item.Value);
+                }
             }
         }
 
@@ -265,6 +285,16 @@ namespace Unicorn.Writer.Primitives
             {
                 runningCount += objLength;
             }
+        }
+
+        public IEnumerator<KeyValuePair<PdfName, IPdfPrimitiveObject>> GetEnumerator()
+        {
+            return _contents.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _contents.GetEnumerator();
         }
     }
 }

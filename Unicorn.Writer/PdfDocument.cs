@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Unicorn.CoreTypes;
+using Unicorn.Writer.Filters;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Structural;
@@ -159,7 +160,23 @@ namespace Unicorn.Writer
                 {
                     return _fontCache[font.UnderlyingKey];
                 }
-                PdfFont pdfFont = new PdfFont(_xrefTable.ClaimSlot(), font);
+                PdfFontDescriptor fd = null;
+                if (font.RequiresFullDescription || font.RequiresEmbedding)
+                {
+                    PdfStream embed = null;
+                    string embeddingKey = "";
+                    if (font.RequiresEmbedding)
+                    {
+                        PdfDictionary meta = new PdfDictionary { { new PdfName("Length1"), new PdfInteger((int)font.EmbeddingLength) } };
+                        embed = new PdfStream(_xrefTable.ClaimSlot(), /*new IPdfFilterEncoder[] { Ascii85Encoder.Instance }*/ Array.Empty<IPdfFilterEncoder>(), meta);
+                        embed.AddBytes(font.EmbeddingData);
+                        embeddingKey = font.EmbeddingKey;
+                        _bodyObjects.Add(embed);
+                    }
+                    fd = new PdfFontDescriptor(_xrefTable.ClaimSlot(), font, embeddingKey, embed);
+                    _bodyObjects.Add(fd);
+                }
+                PdfFont pdfFont = new PdfFont(_xrefTable.ClaimSlot(), font, fd);
                 _fontCache.Add(font.UnderlyingKey, pdfFont);
                 _bodyObjects.Add(pdfFont);
                 return pdfFont;

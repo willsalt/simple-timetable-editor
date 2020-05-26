@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Text;
 using Unicorn.CoreTypes;
+using Unicorn.FontTools.CharacterEncoding;
 using Unicorn.FontTools.OpenType;
+using Unicorn.FontTools.OpenType.Extensions;
 using Unicorn.FontTools.OpenType.Interfaces;
 
 namespace Unicorn.FontTools
@@ -31,6 +33,85 @@ namespace Unicorn.FontTools
         }
 
         /// <summary>
+        /// Bounding box that will enclose any glyph in this font, in normalised "glyph units" where 1,000 units equal 1 em.
+        /// </summary>
+        public UniRectangle BoundingBox => new UniRectangle(PdfScaleTransform(_underlyingFont.Header.XMin), PdfScaleTransform(_underlyingFont.Header.YMin),
+            PdfScaleTransform(_underlyingFont.Header.XMax - _underlyingFont.Header.XMin), PdfScaleTransform(_underlyingFont.Header.YMax - _underlyingFont.Header.YMin));
+
+        /// <summary>
+        /// Height of the top of typical capital letters in this font above the baseline, in normalised "glyph units" where 1,000 units equal 1 em.
+        /// </summary>
+        public decimal CapHeight
+        {
+            get
+            {
+                if (_underlyingFont.OS2Metrics.CapHeight.HasValue)
+                {
+                    return (decimal)PdfScaleTransform(_underlyingFont.OS2Metrics.CapHeight.Value);
+                }
+                return (decimal)AscentGlyphUnits;
+            }
+        }
+
+        /// <summary>
+        /// Angle off-vertical of upright strokes in this font.
+        /// </summary>
+        public decimal ItalicAngle => _underlyingFont.PostScriptData.ItalicAngle;
+
+        /// <summary>
+        /// Typical thickness of upright strokes in this font - hardcoded to zero because this is not stored in TrueType fonts in any useful way.
+        /// </summary>
+        public decimal VerticalStemThickness => 0m;
+
+        public bool RequiresFullDescription => true;
+
+        /// <summary>
+        /// Flags describing this font's visual style.
+        /// </summary>
+        public FontDescriptorFlags Flags
+        {
+            get
+            {
+                FontDescriptorFlags output;
+                if (CalculationStyle == CalculationStyle.Windows)
+                {
+                    bool isSymbolic = _underlyingFont.CharacterMapping.SelectExactMapping(PlatformId.Windows, 0) != null;
+                    output = _underlyingFont.OS2Metrics.FontSelection.ToFontDescriptorFlags(isSymbolic,
+                        _underlyingFont.PostScriptData.IsFixedPitch);
+                    if (_underlyingFont.OS2Metrics.IBMFontFamily >= IBMFamily.OldstyleSerif_None && _underlyingFont.OS2Metrics.IBMFontFamily < IBMFamily.SansSerif_None)
+                    {
+                        output |= FontDescriptorFlags.Serif;
+                    }
+                    if (_underlyingFont.OS2Metrics.IBMFontFamily >= IBMFamily.Scripts_None && _underlyingFont.OS2Metrics.IBMFontFamily < IBMFamily.Symbolic_None)
+                    {
+                        output |= FontDescriptorFlags.Script;
+                    }
+                }
+                else
+                {
+                    output = FontDescriptorFlags.Nonsymbolic;
+                    if ((_underlyingFont.Header.StyleFlags & MacStyleFlags.Italic) == MacStyleFlags.Italic)
+                    {
+                        output |= FontDescriptorFlags.Italic;
+                    }
+                    if (_underlyingFont.PostScriptData.IsFixedPitch)
+                    {
+                        output |= FontDescriptorFlags.FixedPitch;
+                    }
+                }
+                return output;
+            }
+        }
+
+        public bool RequiresEmbedding => true;
+
+        public string EmbeddingKey => "FontFile2";
+
+        public long EmbeddingLength => _underlyingFont.Length;
+
+        public IEnumerable<byte> EmbeddingData => _underlyingFont;
+
+        /// <summary>
         /// A unique identifier for this font face, constructed from the filename of the underlying font program file.
         /// </summary>
         public string UnderlyingKey => "OpenType_" + _underlyingFont.Filename;
@@ -39,7 +120,7 @@ namespace Unicorn.FontTools
         /// Preferred text encoding when using this font.  FIXME this should be picked up from the cmap table and should match the encoding in the PDF 
         /// font resource table
         /// </summary>
-        public Encoding PreferredEncoding => Encoding.Unicode;
+        public Encoding PreferredEncoding => Encoding.GetEncoding(1252);
 
         /// <summary>
         /// The point size to render this font in.
@@ -86,6 +167,11 @@ namespace Unicorn.FontTools
             }
         }
 
+        /// <summary>
+        /// The <see cref="Ascent" /> property scaled to normalised "glyph units", with 1,000 glyph units per em.
+        /// </summary>
+        public double AscentGlyphUnits => PointToPdfScaleTransform(Ascent);
+
         private double? _descent;
 
         /// <summary>
@@ -111,6 +197,11 @@ namespace Unicorn.FontTools
         }
 
         /// <summary>
+        /// The <see cref="Descent" /> property scaled to normalised "glyph units", with 1,000 glyph units per em.
+        /// </summary>
+        public double DescentGlyphUnits => PointToPdfScaleTransform(Descent);
+
+        /// <summary>
         /// Standard interline white space in this font.
         /// </summary>
         public double InterlineSpacing => PointSize - (Ascent - Descent);
@@ -121,6 +212,8 @@ namespace Unicorn.FontTools
         /// </summary>
         public UniTextSize EmptyStringMetrics => new UniTextSize(0d, PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
 
+        private static bool _codePagesRegistered = false;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -130,6 +223,11 @@ namespace Unicorn.FontTools
         {
             PointSize = pointSize;
             _underlyingFont = font;
+            if (!_codePagesRegistered)
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                _codePagesRegistered = true;
+            }
         }
 
         /// <summary>
@@ -153,17 +251,47 @@ namespace Unicorn.FontTools
         /// <returns>A <see cref="UniSize" /> value describing the height and width of the rendered string.</returns>
         public UniTextSize MeasureString(string str)
         {
-            byte[] codeBytes = Encoding.UTF32.GetBytes(str);
-            List<uint> codePoints = new List<uint>(codeBytes.Length / 4);
-            for (int i = 0; i < codeBytes.Length - 3; i += 4)
-            {
-                codePoints.Add(codeBytes[i] | ((uint)codeBytes[i + 1] << 8) | ((uint)codeBytes[i + 2] << 16) | ((uint)codeBytes[i + 3] << 24));
-            }
-            int totWidth = codePoints.Select(p => _underlyingFont.AdvanceWidth(PlatformId.Windows, p)).Sum();
+            byte[] encodedBytes = PreferredEncoding.GetBytes(str);
+            var codePoints = encodedBytes.Select(b => PdfCharacterMapping.WinAnsiEncoding.Transform(b));
+            int totWidth = codePoints.Select(p => _underlyingFont.AdvanceWidth(PlatformId.Windows, (uint)p)).Sum();
             return new UniTextSize(PointScaleTransform(totWidth), EmptyStringMetrics.TotalHeight, EmptyStringMetrics.HeightAboveBaseline, 
                 EmptyStringMetrics.AscenderHeight, EmptyStringMetrics.DescenderHeight);
         }
 
+        public byte FirstMappedByte()
+        {
+            byte b = 0;
+            while (!_underlyingFont.HasGlyphDefined(PlatformId.Windows, (uint)PdfCharacterMapping.WinAnsiEncoding.Transform(b)))
+            {
+                ++b;
+            }
+            return b;
+        }
+
+        public byte LastMappedByte()
+        {
+            byte b = 255;
+            while (!_underlyingFont.HasGlyphDefined(PlatformId.Windows, (uint)PdfCharacterMapping.WinAnsiEncoding.Transform(b)))
+            {
+                --b;
+            }
+            return b;
+        }
+
+        public IEnumerable<double> CharWidths()
+        {
+            byte start = FirstMappedByte();
+            byte end = LastMappedByte();
+            for (int b = start; b <= end; ++b)
+            {
+                yield return PdfScaleTransform(_underlyingFont.AdvanceWidth(PlatformId.Windows, (uint)PdfCharacterMapping.WinAnsiEncoding.Transform((byte)b)));
+            }
+        }
+
         private double PointScaleTransform(double distInFontUnits) => PointSize * distInFontUnits / _underlyingFont.DesignUnitsPerEm;
+
+        private double PdfScaleTransform(double distInFontUnits) => 1000 * distInFontUnits / _underlyingFont.DesignUnitsPerEm;
+
+        private double PointToPdfScaleTransform(double distPoints) => distPoints * 1000 / PointSize;
     }
 }

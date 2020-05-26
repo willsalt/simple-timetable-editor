@@ -26,6 +26,8 @@
         /// </summary>
         public static readonly PdfName Count = new PdfName("Count");
 
+        public static readonly PdfName Filter = new PdfName("Filter");
+
         /// <summary>
         /// The /Font name.
         /// </summary>

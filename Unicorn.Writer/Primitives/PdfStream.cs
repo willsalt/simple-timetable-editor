@@ -12,6 +12,8 @@ namespace Unicorn.Writer.Primitives
     public class PdfStream : PdfIndirectObject, IPdfPrimitiveObject
     {
         private readonly List<byte> _contents = new List<byte>();
+        private readonly List<IPdfFilterEncoder> _filterEncodingChain = new List<IPdfFilterEncoder>();
+        private readonly PdfDictionary _additionalMetadata;
 
         private static readonly byte[] _streamStart = new byte[] { 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
         private static readonly byte[] _streamEnd = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
@@ -21,10 +23,23 @@ namespace Unicorn.Writer.Primitives
         /// </summary>
         /// <param name="objectId">An indirect object ID obtained from a cross-reference table.</param>
         /// <param name="generation">The generation number of this stream.  Defaults to 0.</param>
-        public PdfStream(int objectId, int generation = 0) : base(objectId, generation)
+        /// <param name="filters">The sequence of filters to apply to the stream data before output, in order.</param>
+        /// <param name="additionalMetadata">A dictionary of additional metadata to include in the stream metadata dictionary.  This must not contain any of 
+        /// the standard metadata keys that may appear in the dictionary, such as <c>/Length</c> or <c>/Filter</c>, or an exception will be thrown either in
+        /// this method or at any point later in execution.</param>
+        public PdfStream(int objectId, IEnumerable<IPdfFilterEncoder> filters = null, PdfDictionary additionalMetadata = null, int generation = 0) 
+            : base(objectId, generation)
         {
-            MetaDictionary = new PdfDictionary();
-            MetaDictionary.Add(CommonPdfNames.Length, PdfInteger.Zero);
+            _additionalMetadata = additionalMetadata;
+            MetaDictionary = new PdfDictionary { { CommonPdfNames.Length, PdfInteger.Zero } };
+            if (_additionalMetadata != null)
+            {
+                MetaDictionary.AddRange(_additionalMetadata);
+            }
+            if (filters != null)
+            {
+                _filterEncodingChain.AddRange(filters);
+            }
         }
 
         /// <summary>
@@ -43,18 +58,19 @@ namespace Unicorn.Writer.Primitives
                 {
                     GeneratePrologueAndEpilogue();
                 }
-                UpdateMetaDictionary();
-                return CachedPrologue.Count + CachedEpilogue.Count + MetaDictionary.ByteLength + _contents.Count + _streamStart.Length + _streamEnd.Length;
+                IList<byte> encodedContent = EncodeContents();
+                UpdateMetaDictionary(encodedContent);
+                return CachedPrologue.Count + CachedEpilogue.Count + MetaDictionary.ByteLength + encodedContent.Count + _streamStart.Length + _streamEnd.Length;
             }
         }
 
         private PdfDictionary MetaDictionary { get; set; }
 
-        private void UpdateMetaDictionary()
+        private void UpdateMetaDictionary(IList<byte> encodedContent)
         {
-            if ((MetaDictionary[CommonPdfNames.Length] as PdfInteger).Value != _contents.Count)
+            if ((MetaDictionary[CommonPdfNames.Length] as PdfInteger).Value != encodedContent.Count)
             {
-                MetaDictionary[CommonPdfNames.Length] = new PdfInteger(_contents.Count);
+                MetaDictionary[CommonPdfNames.Length] = new PdfInteger(encodedContent.Count);
             }
         }
 
@@ -105,18 +121,54 @@ namespace Unicorn.Writer.Primitives
             }
             writer(dest, CachedPrologue.ToArray());
             int written = CachedPrologue.Count;
-            PdfDictionary dict = new PdfDictionary();
-            dict.Add(CommonPdfNames.Length, new PdfInteger(_contents.Count));
+            IList<byte> encodedContent = EncodeContents();
+            PdfDictionary dict = new PdfDictionary { { CommonPdfNames.Length, new PdfInteger(encodedContent.Count) } };
+            PdfSimpleObject filterMetadata = FilterNames();
+            if (filterMetadata != null)
+            {
+                dict.Add(CommonPdfNames.Filter, filterMetadata);
+            }
+            if (_additionalMetadata != null)
+            {
+                dict.AddRange(_additionalMetadata);
+            }
             written += dictWriter(dict, dest);
             writer(dest, _streamStart);
-            writer(dest, _contents.ToArray());
+            writer(dest, encodedContent.ToArray());
             writer(dest, _streamEnd);
             written += _streamStart.Length;
-            written += _contents.Count;
+            written += encodedContent.Count;
             written += _streamEnd.Length;
             writer(dest, CachedEpilogue.ToArray());
             written += CachedPrologue.Count + CachedEpilogue.Count;
             return written;
+        }
+
+        private IList<byte> EncodeContents()
+        {
+            if (_filterEncodingChain.Count == 0)
+            {
+                return _contents;
+            }
+            IList<byte> current = _contents;
+            foreach (IPdfFilterEncoder encoder in _filterEncodingChain)
+            {
+                current = encoder.Encode(current);
+            }
+            return current;
+        }
+
+        private PdfSimpleObject FilterNames()
+        {
+            if (_filterEncodingChain.Count == 0)
+            {
+                return null;
+            }
+            if (_filterEncodingChain.Count == 1)
+            {
+                return _filterEncodingChain[0].FilterName;
+            }
+            return new PdfArray(_filterEncodingChain.Select(f => f.FilterName));
         }
     }
 }

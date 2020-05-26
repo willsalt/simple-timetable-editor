@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO.MemoryMappedFiles;
@@ -20,6 +21,8 @@ namespace Unicorn.FontTools.OpenType
         /// The full path of the file this font was loaded from.
         /// </summary>
         public string Filename { get; private set; }
+
+        public long Length => _accessor.Capacity;
 
         /// <summary>
         /// The header <see cref="OffsetTable" /> - the most important contents being the number of data tables in the font.
@@ -66,6 +69,11 @@ namespace Unicorn.FontTools.OpenType
         /// The content of the font's "name" data table.
         /// </summary>
         public NamingTable Naming => GetTable<NamingTable>("name");
+
+        /// <summary>
+        /// The content of the font's "post" data table.
+        /// </summary>
+        public PostScriptTable PostScriptData => GetTable<PostScriptTable>("post");
 
         private T GetTable<T>(string tableName) where T : Table
         {
@@ -274,9 +282,75 @@ namespace Unicorn.FontTools.OpenType
         /// <returns>The advance width value for the bset glyph found to represent the given code point on the specified platform.</returns>
         public int AdvanceWidth(PlatformId platform, uint codePoint)
         {
-            CharacterMapping mapping = CharacterMapping.SelectBestMapping(platform);
-            ushort glyph = mapping.MapCodePoint(codePoint);
+            ushort glyph = GetGlyphId(platform, codePoint);
             return HorizontalMetrics.Metrics[glyph].AdvanceWidth;
+        }
+
+        public bool HasGlyphDefined(PlatformId platform, uint codePoint)
+        {
+            return GetGlyphId(platform, codePoint) != 0;
+        }
+
+        private ushort GetGlyphId(PlatformId platform, uint codePoint)
+        {
+            CharacterMapping mapping = CharacterMapping.SelectBestMapping(platform);
+            return mapping.MapCodePoint(codePoint);
+        }
+
+        private class Enumerator : IEnumerator<byte>
+        {
+            long idx = -1;
+            private OpenTypeFont _font;
+
+            internal Enumerator(OpenTypeFont font)
+            {
+                _font = font;
+            }
+
+            public byte Current => _font._accessor.ReadByte(idx);
+
+            object IEnumerator.Current => _font._accessor.ReadByte(idx);
+
+            public bool MoveNext()
+            {
+                idx++;
+                return idx < _font._accessor.Capacity;
+            }
+
+            public void Reset()
+            {
+                idx = 0;
+            }
+
+            #region IDisposable Support
+            private bool disposedValue = false;
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (!disposedValue)
+                {
+                    disposedValue = true;
+                }
+            }
+
+            // This code added to correctly implement the disposable pattern.
+            public void Dispose()
+            {
+                // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+            #endregion
+        }
+
+        public IEnumerator<byte> GetEnumerator()
+        {
+            return new Enumerator(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new Enumerator(this);
         }
 
         #region IDisposable Support
@@ -312,6 +386,7 @@ namespace Unicorn.FontTools.OpenType
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

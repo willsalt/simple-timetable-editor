@@ -142,6 +142,26 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
             Assert.IsTrue(property.SetMethod.IsPublic);
         }
 
+        [TestMethod]
+        public void ExportOptionsModelClass_HasPublicUpSectionLabelPropertyOfTypeString()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("UpSectionLabel");
+            Assert.AreEqual(typeof(string), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_HasPublicDownSectionLabelPropertyOfTypeString()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("DownSectionLabel");
+            Assert.AreEqual(typeof(string), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

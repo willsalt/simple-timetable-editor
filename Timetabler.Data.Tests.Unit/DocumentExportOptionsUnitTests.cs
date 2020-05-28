@@ -29,6 +29,8 @@ namespace Timetabler.Data.Tests.Unit
                 ExportEngine = _rnd.NextPdfExportEngine(),
                 TablePageOrientation = _rnd.NextOrientation(),
                 GraphPageOrientation = _rnd.NextOrientation(),
+                UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
+                DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
             };
         }
 
@@ -80,6 +82,24 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testObject = new DocumentExportOptions();
 
             Assert.AreEqual(Orientation.Landscape, testObject.GraphPageOrientation);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsUpSectionLabelPropertyToValueFromResourcesFile()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+            string expectedValue = Resources.DocumentExportOptions_DefaultUpSectionLabel;
+
+            Assert.AreEqual(expectedValue, testObject.UpSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsDownSectionLabelPropertyToValueFromResourcesFile()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+            string expectedValue = Resources.DocumentExportOptions_DefaultDownSectionLabel;
+
+            Assert.AreEqual(expectedValue, testObject.DownSectionLabel);
         }
 
         [TestMethod]
@@ -220,6 +240,26 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testOutput = testObject.Copy();
 
             Assert.AreEqual(testObject.GraphPageOrientation, testOutput.GraphPageOrientation);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectUpSectionLabelProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.UpSectionLabel, testOutput.UpSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectDownSectionLabelProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.DownSectionLabel, testOutput.DownSectionLabel);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

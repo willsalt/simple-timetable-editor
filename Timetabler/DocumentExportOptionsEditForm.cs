@@ -62,6 +62,8 @@ namespace Timetabler
             nudLineWidth.Value = (decimal)Model.LineWidth;
             nudFillerDashLineWidth.Value = (decimal)Model.FillerDashLineWidth;
             nudGraphAxisLineWidth.Value = (decimal)Model.GraphAxisLineWidth;
+            tbUpSectionLabel.Text = Model.UpSectionLabel;
+            tbDownSectionLabel.Text = Model.DownSectionLabel;
             foreach (var item in cbPdfEngine.Items)
             {
                 if (item is HumanReadableEnum<PdfExportEngine> engineItem && engineItem.Value == Model.ExportEngine)
@@ -233,6 +235,24 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbGraphOrientation_Value, item.Name);
             Model.GraphPageOrientation = item.Value;
+        }
+
+        private void TbUpSectionLabel_TextChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Model.UpSectionLabel = tbUpSectionLabel.Text;
+        }
+
+        private void TbDownSectionLabel_TextChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Model.DownSectionLabel = tbDownSectionLabel.Text;
         }
     }
 }

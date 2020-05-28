@@ -70,15 +70,6 @@ namespace Timetabler.PdfExport {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DOWN.
-        /// </summary>
-        internal static string DownSectionName {
-            get {
-                return ResourceManager.GetString("DownSectionName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Explanation Of Footnotes.
         /// </summary>
         internal static string GlossaryTitle {
@@ -156,15 +147,6 @@ namespace Timetabler.PdfExport {
         internal static string ToWorkRowCaption {
             get {
                 return ResourceManager.GetString("ToWorkRowCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UP.
-        /// </summary>
-        internal static string UpSectionName {
-            get {
-                return ResourceManager.GetString("UpSectionName", resourceCulture);
             }
         }
         

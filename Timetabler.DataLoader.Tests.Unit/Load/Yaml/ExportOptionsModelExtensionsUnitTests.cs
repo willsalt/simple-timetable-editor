@@ -31,6 +31,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
                 FillerDashLineWidth = _rnd.NextNullableDouble(3d),
                 TablePageOrientation = _rnd.NextNullableOrientation(),
                 GraphPageOrientation = _rnd.NextNullableOrientation(),
+                UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
+                DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
             };
         }
 
@@ -421,6 +423,50 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
 
             Assert.AreEqual(Orientation.Landscape, testOutput.GraphPageOrientation);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithUpSectionLabelPropertyEqualToThatCreatedByParameterlessConstructorOfType_IfUpSectionLabelPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.UpSectionLabel = null;
+            string expectedValue = new DocumentExportOptions().UpSectionLabel;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(expectedValue, testOutput.UpSectionLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithCorrectUpSectionLabelProperty_IfUpSectionLabelPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.UpSectionLabel, testOutput.UpSectionLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithDownSectionLabelPropertyEqualToThatCreatedByParameterlessConstructorOfType_IfDownSectionLabelPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.DownSectionLabel = null;
+            string expectedValue = new DocumentExportOptions().DownSectionLabel;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(expectedValue, testOutput.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithCorrectDownSectionLabelProperty_IfDownSectionLabelPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.DownSectionLabel, testOutput.DownSectionLabel);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

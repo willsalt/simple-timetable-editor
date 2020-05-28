@@ -198,9 +198,9 @@ namespace Timetabler.PdfExport
                         sectionMetrics = sectionMetricsWithTitle;
                     }
                     _currentPage.CurrentVerticalCursor += 
-                        DrawSection(document.DownTrainsDisplay, false, document.ExportOptions, i, columnsPerPage, sectionMetrics, Resources.DownSectionName, 
-                            firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition,
-                            _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
+                        DrawSection(document.DownTrainsDisplay, false, document.ExportOptions, i, columnsPerPage, sectionMetrics, 
+                            document.ExportOptions.DownSectionLabel, firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection, 
+                            _currentPage.LeftMarginPosition, _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
                     _currentPage.CurrentVerticalCursor += interSectionGapSize;
 
                     if (firstOnPage)
@@ -225,8 +225,8 @@ namespace Timetabler.PdfExport
                         sectionMetrics = sectionMetricsWithTitle;
                     }
                     _currentPage.CurrentVerticalCursor += 
-                        DrawSection(document.UpTrainsDisplay, true, document.ExportOptions, i, columnsPerPage, sectionMetrics, Resources.UpSectionName, firstOnPage, 
-                            document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition, 
+                        DrawSection(document.UpTrainsDisplay, true, document.ExportOptions, i, columnsPerPage, sectionMetrics, document.ExportOptions.UpSectionLabel, 
+                            firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition, 
                             _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
                     _currentPage.CurrentVerticalCursor += interSectionGapSize;
 

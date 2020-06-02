@@ -63,6 +63,10 @@ namespace Unicorn.FontTools
         /// </summary>
         public decimal VerticalStemThickness => 0m;
 
+        /// <summary>
+        /// Whether or not this font requires a font descriptor dictionary (as well as a font dictionary) to be written to the PDF file.  This should normally be 
+        /// <c>true</c> for any fonts other than the built-in PDF fonts.
+        /// </summary>
         public bool RequiresFullDescription => true;
 
         /// <summary>
@@ -103,12 +107,24 @@ namespace Unicorn.FontTools
             }
         }
 
+        /// <summary>
+        /// Whether or not this font should be embedded in PDF files.
+        /// </summary>
         public bool RequiresEmbedding => true;
 
+        /// <summary>
+        /// The key used to refer to the raw data stream for this font in the PDF font descriptor dictionary (this varies according to the file type of the font).
+        /// </summary>
         public string EmbeddingKey => "FontFile2";
 
+        /// <summary>
+        /// The length of the raw data for this font.
+        /// </summary>
         public long EmbeddingLength => _underlyingFont.Length;
 
+        /// <summary>
+        /// The raw data comprising this font, as a sequence of bytes.
+        /// </summary>
         public IEnumerable<byte> EmbeddingData => _underlyingFont;
 
         /// <summary>
@@ -252,39 +268,53 @@ namespace Unicorn.FontTools
         public UniTextSize MeasureString(string str)
         {
             byte[] encodedBytes = PreferredEncoding.GetBytes(str);
-            var codePoints = encodedBytes.Select(b => PdfCharacterMapping.WinAnsiEncoding.Transform(b));
+            var codePoints = encodedBytes.Select(b => PdfCharacterMappingDictionary.WinAnsiEncoding.Transform(b));
             int totWidth = codePoints.Select(p => _underlyingFont.AdvanceWidth(PlatformId.Windows, (uint)p)).Sum();
             return new UniTextSize(PointScaleTransform(totWidth), EmptyStringMetrics.TotalHeight, EmptyStringMetrics.HeightAboveBaseline, 
                 EmptyStringMetrics.AscenderHeight, EmptyStringMetrics.DescenderHeight);
         }
 
+        /// <summary>
+        /// Returns the lowest value which, when using the PDF "WinAnsiEncoding", maps to a non-zero glyph.
+        /// </summary>
+        /// <returns></returns>
         public byte FirstMappedByte()
         {
             byte b = 0;
-            while (!_underlyingFont.HasGlyphDefined(PlatformId.Windows, (uint)PdfCharacterMapping.WinAnsiEncoding.Transform(b)))
+            while (!_underlyingFont.HasGlyphDefined(PlatformId.Windows, (uint)PdfCharacterMappingDictionary.WinAnsiEncoding.Transform(b)))
             {
                 ++b;
             }
             return b;
         }
 
+        /// <summary>
+        /// Returns the highest value which, when using the PDF "WinAnsiEncoding", maps to a non-zero glyph.
+        /// </summary>
+        /// <returns></returns>
         public byte LastMappedByte()
         {
             byte b = 255;
-            while (!_underlyingFont.HasGlyphDefined(PlatformId.Windows, (uint)PdfCharacterMapping.WinAnsiEncoding.Transform(b)))
+            while (!_underlyingFont.HasGlyphDefined(PlatformId.Windows, (uint)PdfCharacterMappingDictionary.WinAnsiEncoding.Transform(b)))
             {
                 --b;
             }
             return b;
         }
 
+        /// <summary>
+        /// Returns an enumeration of the widths of all of the characters that can be used in text encoded using the PDF "WinAnsiEncoding", in PDF-normalised font
+        /// measurement units.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{Double}" /> whose first element is the width of the character represented by the codepoint returned by the 
+        /// <see cref="FirstMappedByte" /> method.</returns>
         public IEnumerable<double> CharWidths()
         {
             byte start = FirstMappedByte();
             byte end = LastMappedByte();
             for (int b = start; b <= end; ++b)
             {
-                yield return PdfScaleTransform(_underlyingFont.AdvanceWidth(PlatformId.Windows, (uint)PdfCharacterMapping.WinAnsiEncoding.Transform((byte)b)));
+                yield return PdfScaleTransform(_underlyingFont.AdvanceWidth(PlatformId.Windows, (uint)PdfCharacterMappingDictionary.WinAnsiEncoding.Transform((byte)b)));
             }
         }
 

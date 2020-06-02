@@ -4,40 +4,112 @@ using System.Collections.Generic;
 
 namespace Unicorn.FontTools.CharacterEncoding
 {
-    public class PdfCharacterMapping : IReadOnlyDictionary<byte, int>
+    /// <summary>
+    /// Character mappings used by PDF files when handling non-CID TrueType fonts.
+    /// </summary>
+    /// <remarks>
+    /// When a PDF consumes a non-CID TrueType font, the text to display in that font must use one of two single-byte extended ASCII encodings which are defined in the 
+    /// PDF standard with the names <c>/WinAnsiEncoding</c> and <c>/MacRomanEncding</c>.  If the font contains a "Windows Unicode" character mapping subtable, a PDF 
+    /// reader should use these encodings in combination with the Adobe Glyph List - https://github.com/adobe-type-tools/agl-aglfn/ - to map the strings of text in the 
+    /// PDF file to Unicode codepoints, and use those codepoints for glyph selection.
+    /// 
+    /// If the font does not contain a "Windows Unicode" character mapping subtable, but does contain a "Macintosh Roman" character mapping subtable, the PDF reader
+    /// should use that table directly for glyph selection if the PDF file uses the <c>/MacRomanEncoding</c>.  If the PDF file uses the <c>/WinAnsiEncoding</c>
+    /// the reader should map directly from that encoding to <c>MacRomanEncoding</c> and then use the "Macintosh Roman" subtable directly.  However, Unicorn does not
+    /// currently support doing this.  At present the mappings given in this class map directly from the PDF encoding to Unicode, so can only be used with fonts
+    /// containing a "Windows Unicode" character mapping subtable.
+    /// </remarks>
+    public class PdfCharacterMappingDictionary : IReadOnlyDictionary<byte, int>
     {
+        /// <summary>
+        /// Which type of encoding this character mapping dictionary caters for. 
+        /// </summary>
         public enum DataSet
         {
+            /// <summary>
+            /// The "Windows ANSI" encoding, which is essentially as per code page 1252.
+            /// </summary>
             WinAnsiEncoding,
+
+            /// <summary>
+            /// The "Macintosh Roman" encoding.
+            /// </summary>
             MacRomanEncoding,
         };
 
-        private static Lazy<PdfCharacterMapping> _winEncoding = new Lazy<PdfCharacterMapping>(() => new PdfCharacterMapping(DataSet.WinAnsiEncoding));
-        private static Lazy<PdfCharacterMapping> _macEncoding = new Lazy<PdfCharacterMapping>(() => new PdfCharacterMapping(DataSet.MacRomanEncoding));
+        private static readonly Lazy<PdfCharacterMappingDictionary> _winEncoding = 
+            new Lazy<PdfCharacterMappingDictionary>(() => new PdfCharacterMappingDictionary(DataSet.WinAnsiEncoding));
+        private static readonly Lazy<PdfCharacterMappingDictionary> _macEncoding = 
+            new Lazy<PdfCharacterMappingDictionary>(() => new PdfCharacterMappingDictionary(DataSet.MacRomanEncoding));
 
-        public static PdfCharacterMapping WinAnsiEncoding => _winEncoding.Value;
+        /// <summary>
+        /// The instance of this class for the PDF <c>/WinAnsiEncding</c>.
+        /// </summary>
+        public static PdfCharacterMappingDictionary WinAnsiEncoding => _winEncoding.Value;
 
-        public static PdfCharacterMapping MacRomanEncoding => _macEncoding.Value;
+        /// <summary>
+        /// The instance of this class for the PDF <c>/MacRomanEncoding</c>.
+        /// </summary>
+        public static PdfCharacterMappingDictionary MacRomanEncoding => _macEncoding.Value;
 
-        private Dictionary<byte, int> _conts = new Dictionary<byte, int>();
+        private readonly Dictionary<byte, int> _conts = new Dictionary<byte, int>();
 
+#pragma warning disable CA1043 // Use Integral Or String Argument For Indexers
+
+        /// <summary>
+        /// Get the target codepoint for a given byte.
+        /// </summary>
+        /// <param name="key">The byte to look up.</param>
+        /// <returns>The codepoint mapped to by the given byte.</returns>
+        /// <exception cref="KeyNotFoundException">There is no mapping for the given byte.</exception>
         public int this[byte key] => _conts[key];
 
+#pragma warning restore CA1043 // Use Integral Or String Argument For Indexers
+
+        /// <summary>
+        /// Get all of the bytes that have a mapping.
+        /// </summary>
         public IEnumerable<byte> Keys => _conts.Keys;
 
+        /// <summary>
+        /// Get all of the target codepoints that are mapped to.
+        /// </summary>
         public IEnumerable<int> Values => _conts.Values;
 
+        /// <summary>
+        /// Get the size of the mapping.
+        /// </summary>
         public int Count => _conts.Count;
 
+        /// <summary>
+        /// Determine whether or not a given byte is mapped.
+        /// </summary>
+        /// <param name="key">The byte to be mapped.</param>
+        /// <returns><c>true</c> if a mapping exists for the given byte, <c>false</c> if not.</returns>
         public bool ContainsKey(byte key) => _conts.ContainsKey(key);
 
+        /// <summary>
+        /// Get an enumerator for this mapping.
+        /// </summary>
+        /// <returns>An enumerator over the key-value pairs that make up the mapping.</returns>
         public IEnumerator<KeyValuePair<byte, int>> GetEnumerator() => _conts.GetEnumerator();
 
+        /// <summary>
+        /// Safely map a byte.
+        /// </summary>
+        /// <param name="key">The byte to be mapped.</param>
+        /// <param name="value">The variable into which to place the mapped codepoint.</param>
+        /// <returns><c>true</c> if the byte could be mapped successfully, <c>false</c> if not.</returns>
         public bool TryGetValue(byte key, out int value)
         {
             return _conts.TryGetValue(key, out value);
         }
 
+        /// <summary>
+        /// Safely map a byte, returning zero if no mapping is available.
+        /// </summary>
+        /// <param name="b">The byte to be mapped.</param>
+        /// <returns>The codepoint that the parameter maps to, or zero if there is no mapping for the given byte.</returns>
         public int Transform(byte b)
         {
             if (_conts.TryGetValue(b, out int v))
@@ -49,7 +121,7 @@ namespace Unicorn.FontTools.CharacterEncoding
 
         IEnumerator IEnumerable.GetEnumerator() => _conts.GetEnumerator();
 
-        internal PdfCharacterMapping(DataSet set)
+        internal PdfCharacterMappingDictionary(DataSet set)
         {
             switch (set)
             {

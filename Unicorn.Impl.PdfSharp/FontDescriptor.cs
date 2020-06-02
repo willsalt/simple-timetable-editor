@@ -63,14 +63,31 @@ namespace Unicorn.Impl.PdfSharp
         /// </summary>
         public FontDescriptorFlags Flags => FontDescriptorFlags.Nonsymbolic;
 
+        /// <summary>
+        /// Whether or not this font requires a <see cref="FontDescriptor" /> dictionary to be written to the PDF file.  For use by Unicorn.Writer, this should be
+        /// <c>true</c> for all fonts except the "standard" built-in PDF fonts.
+        /// </summary>
         public bool RequiresFullDescription => false;
 
+        /// <summary>
+        /// Whether or not this font should be embedded in PDF files.
+        /// </summary>
         public bool RequiresEmbedding => false;
 
+        /// <summary>
+        /// The key used to refer to the raw data stream for this font inside its Font Descriptor dictionary - the key name varies according to the data type.
+        /// An empty string if the font is not embeddable.
+        /// </summary>
         public string EmbeddingKey => "";
 
+        /// <summary>
+        /// The length of the raw data of the font, or zero if the font is not embeddable.
+        /// </summary>
         public long EmbeddingLength => 0;
 
+        /// <summary>
+        /// The raw data of the font.
+        /// </summary>
         public IEnumerable<byte> EmbeddingData => Array.Empty<byte>();
 
         /// <summary>

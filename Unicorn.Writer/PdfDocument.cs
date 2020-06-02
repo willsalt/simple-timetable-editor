@@ -168,7 +168,7 @@ namespace Unicorn.Writer
                     if (font.RequiresEmbedding)
                     {
                         PdfDictionary meta = new PdfDictionary { { new PdfName("Length1"), new PdfInteger((int)font.EmbeddingLength) } };
-                        embed = new PdfStream(_xrefTable.ClaimSlot(), /*new IPdfFilterEncoder[] { Ascii85Encoder.Instance }*/ Array.Empty<IPdfFilterEncoder>(), meta);
+                        embed = new PdfStream(_xrefTable.ClaimSlot(), new IPdfFilterEncoder[] { Ascii85Encoder.Instance }, meta);
                         embed.AddBytes(font.EmbeddingData);
                         embeddingKey = font.EmbeddingKey;
                         _bodyObjects.Add(embed);

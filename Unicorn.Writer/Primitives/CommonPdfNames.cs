@@ -26,6 +26,9 @@
         /// </summary>
         public static readonly PdfName Count = new PdfName("Count");
 
+        /// <summary>
+        /// The /Filter name.
+        /// </summary>
         public static readonly PdfName Filter = new PdfName("Filter");
 
         /// <summary>

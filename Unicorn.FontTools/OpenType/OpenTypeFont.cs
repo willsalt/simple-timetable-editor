@@ -22,6 +22,9 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         public string Filename { get; private set; }
 
+        /// <summary>
+        /// The length of the raw data of this font, in bytes.
+        /// </summary>
         public long Length => _accessor.Capacity;
 
         /// <summary>
@@ -286,6 +289,12 @@ namespace Unicorn.FontTools.OpenType
             return HorizontalMetrics.Metrics[glyph].AdvanceWidth;
         }
 
+        /// <summary>
+        /// Determine whether or not this font defines a glyph (other than the special <c>.notdef</c> glyph) for the given platform and codepoint.
+        /// </summary>
+        /// <param name="platform">The platform </param>
+        /// <param name="codePoint"></param>
+        /// <returns></returns>
         public bool HasGlyphDefined(PlatformId platform, uint codePoint)
         {
             return GetGlyphId(platform, codePoint) != 0;
@@ -300,7 +309,7 @@ namespace Unicorn.FontTools.OpenType
         private class Enumerator : IEnumerator<byte>
         {
             long idx = -1;
-            private OpenTypeFont _font;
+            private readonly OpenTypeFont _font;
 
             internal Enumerator(OpenTypeFont font)
             {
@@ -343,6 +352,10 @@ namespace Unicorn.FontTools.OpenType
             #endregion
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates over the bytes that comprise the raw data of this font.
+        /// </summary>
+        /// <returns>An enumerator that will return the raw data of this font.</returns>
         public IEnumerator<byte> GetEnumerator()
         {
             return new Enumerator(this);

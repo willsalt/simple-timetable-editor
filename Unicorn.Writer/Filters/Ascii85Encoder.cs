@@ -71,7 +71,7 @@ namespace Unicorn.Writer.Filters
         // End-of-data marker.
         private static readonly byte[] trailer = new byte[] { 0x7e, 0x3e };
 
-        private void EncodeGroup(byte[] data, List<byte> outputTarget)
+        private static void EncodeGroup(byte[] data, List<byte> outputTarget)
         {
             // Entire groups of four zero bytes compress to a single "z" byte.
             if (data.Length == 4 && data.All(b => b == 0))

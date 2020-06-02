@@ -13,6 +13,9 @@ namespace Unicorn.FontTools.OpenType.Interfaces
         /// </summary>
         string Filename { get; }
 
+        /// <summary>
+        /// The length of the font's raw data, in bytes.
+        /// </summary>
         long Length { get; }
 
         /// <summary>
@@ -59,6 +62,12 @@ namespace Unicorn.FontTools.OpenType.Interfaces
         /// <returns>The advance width value for the bset glyph found to represent the given code point on the specified platform.</returns>
         int AdvanceWidth(PlatformId platform, uint codePoint);
 
+        /// <summary>
+        /// Determine whether or not a font defines a glyph (other than glyph 0, <c>.notdef</c>) for the given platform and codepoint.
+        /// </summary>
+        /// <param name="platform">The platform to carry out calculations for.</param>
+        /// <param name="codePoint">The codepoint to search for.</param>
+        /// <returns><c>true</c> if a non-zero glyph is defined for the given codepoint on the given platform, <c>false</c> otherwise.</returns>
         bool HasGlyphDefined(PlatformId platform, uint codePoint);
     }
 }

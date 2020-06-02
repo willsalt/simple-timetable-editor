@@ -35,12 +35,12 @@ namespace Unicorn.CoreTypes
         /// Uses the Adobe Latin character set or a subset of it.  A valid <see cref="IFontDescriptor.Flags" /> property must have either this or the 
         /// <see cref="Symbolic" /> flag set, and not both.
         /// </summary>
-        Nonsymbolic = 0x10,
+        Nonsymbolic = 0x20,
 
         /// <summary>
         /// Italic or slanted font.
         /// </summary>
-        Italic = 0x20,
+        Italic = 0x40,
 
         /// <summary>
         /// Font does not include lowercase (typically used for display fonts).

@@ -34,6 +34,8 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         /// <param name="objectId">The indirect object ID of this font resource.</param>
         /// <param name="font">The underlying font information.</param>
+        /// <param name="fd">The font descriptor dictionary which contains additional metadata and possibly a reference to the font's raw data stream, or <c>null</c>
+        /// if this font does not require a font descriptor dictionary.</param>
         /// <param name="generation">The object generation number.  Defaults to zero.  As we currently do not support rewriting existing documents, this
         /// should not be set.</param>
         internal PdfFont(int objectId, IFontDescriptor font, PdfFontDescriptor fd, int generation = 0) : base(objectId, generation)

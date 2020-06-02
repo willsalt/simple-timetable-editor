@@ -132,6 +132,12 @@ namespace Unicorn.Writer.Primitives
             }
         }
 
+        /// <summary>
+        /// Add a sequence of key-value pairs to the dictionary.
+        /// </summary>
+        /// <param name="data">The data to be added to the dictionary.</param>
+        /// <exception cref="ArgumentException">One or more of the keys in the data is already present in the dictionary.</exception>
+        /// <exception cref="ArgumentNullException">The parameter is <c>null</c>.</exception>
         public void AddRange(IEnumerable<KeyValuePair<PdfName, IPdfPrimitiveObject>> data)
         {
             if (data is null)
@@ -287,6 +293,10 @@ namespace Unicorn.Writer.Primitives
             }
         }
 
+        /// <summary>
+        /// Get an enumerator over the data in the dictionary.
+        /// </summary>
+        /// <returns>An enumeration of the key-value pairs in the dictionary.</returns>
         public IEnumerator<KeyValuePair<PdfName, IPdfPrimitiveObject>> GetEnumerator()
         {
             return _contents.GetEnumerator();

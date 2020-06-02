@@ -59,7 +59,7 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         public short XMin { get; }
 
-        /// <summary>   
+        /// <summary>
         /// Minimum y-value for all non-empty glyph bounding boxes.
         /// </summary>
         public short YMin { get; }

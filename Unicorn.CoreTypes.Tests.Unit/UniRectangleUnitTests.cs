@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.CoreTypes.Tests.Utility.Extensions;
 
@@ -113,6 +114,71 @@ namespace Unicorn.CoreTypes.Tests.Unit
             double testParam1 = _rnd.NextDouble() * 1000;
             double testParam2 = _rnd.NextDouble() * 1000;
             double testParam3 = _rnd.NextDouble() * 1000;
+
+            UniRectangle testOutput = new UniRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(new UniSize(testParam2, testParam3), testOutput.Size);
+        }
+
+        [TestMethod]
+        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsLeftPropertyToValueOfFirstParameter()
+        {
+            decimal testParam0 = _rnd.NextDecimal();
+            decimal testParam1 = _rnd.NextDecimal();
+            decimal testParam2 = _rnd.NextDecimal();
+            decimal testParam3 = _rnd.NextDecimal();
+
+            UniRectangle testOutput = new UniRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual((double)testParam0, testOutput.Left);
+        }
+
+        [TestMethod]
+        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsTopPropertyToValueOfSecondParameter()
+        {
+            decimal testParam0 = _rnd.NextDecimal();
+            decimal testParam1 = _rnd.NextDecimal();
+            decimal testParam2 = _rnd.NextDecimal();
+            decimal testParam3 = _rnd.NextDecimal();
+
+            UniRectangle testOutput = new UniRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual((double)testParam1, testOutput.Top);
+        }
+
+        [TestMethod]
+        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsWidthPropertyToValueOfThirdParameter()
+        {
+            decimal testParam0 = _rnd.NextDecimal();
+            decimal testParam1 = _rnd.NextDecimal();
+            decimal testParam2 = _rnd.NextDecimal();
+            decimal testParam3 = _rnd.NextDecimal();
+
+            UniRectangle testOutput = new UniRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual((double)testParam2, testOutput.Width);
+        }
+
+        [TestMethod]
+        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsHeightPropertyToValueOfFourthParameter()
+        {
+            decimal testParam0 = _rnd.NextDecimal();
+            decimal testParam1 = _rnd.NextDecimal();
+            decimal testParam2 = _rnd.NextDecimal();
+            decimal testParam3 = _rnd.NextDecimal();
+
+            UniRectangle testOutput = new UniRectangle(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual((double)testParam3, testOutput.Height);
+        }
+
+        [TestMethod]
+        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsSizePropertyToValueDerivedFromThirdAndFourthParameters()
+        {
+            decimal testParam0 = _rnd.NextDecimal();
+            decimal testParam1 = _rnd.NextDecimal();
+            decimal testParam2 = _rnd.NextDecimal();
+            decimal testParam3 = _rnd.NextDecimal();
 
             UniRectangle testOutput = new UniRectangle(testParam0, testParam1, testParam2, testParam3);
 

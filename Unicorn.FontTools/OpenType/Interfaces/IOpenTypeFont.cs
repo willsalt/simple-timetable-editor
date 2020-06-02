@@ -19,7 +19,7 @@ namespace Unicorn.FontTools.OpenType.Interfaces
         long Length { get; }
 
         /// <summary>
-        /// The ratio between font design units and em units (in other words, when the font is rendered at x pointC:\Users\Will\Source\Repos\simple-timetable-editor\Unicorn.FontTools\OpenType\Interfaces\IOpenTypeFont.css, this number of design units will measure x points.
+        /// The ratio between font design units and em units (in other words, when the font is rendered at x points, this number of design units will measure x points.
         /// Generally a medium-sized power of 2 such as 2048, but can be any value up to 16,384.
         /// </summary>
         int DesignUnitsPerEm { get; }

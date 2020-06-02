@@ -227,7 +227,7 @@ namespace Unicorn.FontTools.CharacterEncoding
             _conts.Add(119 /* 167 */, 0x77);
             _conts.Add(120 /* 170 */, 0x78);
             _conts.Add(121 /* 171 */, 0x79);
-            _conts.Add(122 /* 172 */, 0x80);
+            _conts.Add(122 /* 172 */, 0x7a);
             _conts.Add(123 /* 173 */, 0x7b);
             _conts.Add(124 /* 174 */, 0x7c);
             _conts.Add(125 /* 175 */, 0x7d);
@@ -455,7 +455,7 @@ namespace Unicorn.FontTools.CharacterEncoding
             _conts.Add(119 /* 167 */, 0x77);
             _conts.Add(120 /* 170 */, 0x78);
             _conts.Add(121 /* 171 */, 0x79);
-            _conts.Add(122 /* 172 */, 0x80);
+            _conts.Add(122 /* 172 */, 0x7a);
             _conts.Add(123 /* 173 */, 0x7b);
             _conts.Add(124 /* 174 */, 0x7c);
             _conts.Add(125 /* 175 */, 0x7d);
@@ -558,13 +558,13 @@ namespace Unicorn.FontTools.CharacterEncoding
             _conts.Add(237 /* 355 */, 0xcc);
             _conts.Add(238 /* 356 */, 0xd3);
             _conts.Add(239 /* 357 */, 0xd4);
-            _conts.Add(240 /* 361 */, 0xd2);
-            _conts.Add(241 /* 362 */, 0xda);
-            _conts.Add(242 /* 363 */, 0xdb);
-            _conts.Add(243 /* 364 */, 0xd9);
-            _conts.Add(244 /* 365 */, 0x131);
-            _conts.Add(245 /* 366 */, 0x2c6);
-            _conts.Add(246 /* 367 */, 0x2dc);
+            _conts.Add(241 /* 361 */, 0xd2);
+            _conts.Add(242 /* 362 */, 0xda);
+            _conts.Add(243 /* 363 */, 0xdb);
+            _conts.Add(244 /* 364 */, 0xd9);
+            _conts.Add(245 /* 365 */, 0x131);
+            _conts.Add(246 /* 366 */, 0x2c6);
+            _conts.Add(247 /* 367 */, 0x2dc);
             _conts.Add(248 /* 370 */, 0xaf);
             _conts.Add(249 /* 371 */, 0x2d8);
             _conts.Add(250 /* 372 */, 0x2d9);

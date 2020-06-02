@@ -54,6 +54,28 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
+        public void UniSizeStruct_ConstructorWithTwoDecimalParameters_SetsWidthPropertyToEqualFirstParameter()
+        {
+            decimal testParam0 = _rnd.NextDecimal() * 1000;
+            decimal testParam1 = _rnd.NextDecimal() * 1000;
+
+            UniSize testOutput = new UniSize(testParam0, testParam1);
+
+            Assert.AreEqual((double)testParam0, testOutput.Width);
+        }
+
+        [TestMethod]
+        public void UniSizeStruct_ConstructorWithTwoDecimalParameters_SetsHeightPropertyToEqualSecondParameter()
+        {
+            decimal testParam0 = _rnd.NextDecimal() * 1000;
+            decimal testParam1 = _rnd.NextDecimal() * 1000;
+
+            UniSize testOutput = new UniSize(testParam0, testParam1);
+
+            Assert.AreEqual((double)testParam1, testOutput.Height);
+        }
+
+        [TestMethod]
         public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasDifferentWidthAndHeightPropertiesToValue()
         {
             UniSize testObject = GetUniSize();

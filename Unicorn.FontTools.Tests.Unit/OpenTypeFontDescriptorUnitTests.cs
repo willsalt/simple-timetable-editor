@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Collections.Generic;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.CoreTypes;
@@ -37,6 +38,24 @@ namespace Unicorn.FontTools.Tests.Unit
                 _rnd.NextOpenTypeUpperUnicodeRangeFlags(), _rnd.NextOpenTypeTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort(), 
                 _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextOpenTypeSupportedCodePageFlags(),
                 _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort());
+        }
+
+        private static HeaderTable GetHeaderTable(short? xMin, short? xMax, short? yMin, short? yMax)
+        {
+            xMin ??= _rnd.NextShort();
+            xMax ??= _rnd.NextShort();
+            yMin ??= _rnd.NextShort();
+            yMax ??= _rnd.NextShort();
+
+            return new HeaderTable(_rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextDecimal(), _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextOpenTypeFontFlags(),
+                _rnd.NextUShort(), _rnd.NextDateTime(), _rnd.NextDateTime(), xMin.Value, yMin.Value, xMax.Value, yMax.Value, _rnd.NextOpenTypeMacStyleFlags(),
+                _rnd.NextUShort(), _rnd.NextOpenTypeFontDirectionHint(), _rnd.NextBoolean(), _rnd.NextShort());
+        }
+
+        private static PostScriptTable GetPostScriptTable()
+        {
+            return new PostScriptTable(PostScriptTableVersion.One, _rnd.NextDecimal(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextBoolean(), _rnd.NextUInt(),
+                _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextUInt());
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -677,6 +696,202 @@ namespace Unicorn.FontTools.Tests.Unit
             double testOutput = testObject.GetNormalSpaceWidth(testParam0);
 
             Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithLeftPropertyDerivedFromXMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            short mockXmin = _rnd.NextShort();
+            HeaderTable mockHeaderTable = GetHeaderTable(mockXmin, null, null, null);
+            int mockDesignUnits = _rnd.Next(1, 16384);
+            mockFont.Setup(f => f.DesignUnitsPerEm).Returns(mockDesignUnits);
+            mockFont.Setup(f => f.Header).Returns(mockHeaderTable);
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            double expectedValue = 1000 * mockXmin / (double)mockDesignUnits;
+
+            double testOutput = testObject.BoundingBox.Left;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithTopPropertyDerivedFromYMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            short mockYmin = _rnd.NextShort();
+            HeaderTable mockHeaderTable = GetHeaderTable(null, null, mockYmin, null);
+            int mockDesignUnits = _rnd.Next(1, 16384);
+            mockFont.Setup(f => f.DesignUnitsPerEm).Returns(mockDesignUnits);
+            mockFont.Setup(f => f.Header).Returns(mockHeaderTable);
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            double expectedValue = 1000 * mockYmin / (double)mockDesignUnits;
+
+            double testOutput = testObject.BoundingBox.Top;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithWidthPropertyDerivedFromXMinAndXMaxPropertiesOfHeaderPropertyOfFirstParameterOfConstructor()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            short mockXmin = _rnd.NextShort();
+            short mockXmax = _rnd.NextShort();
+            HeaderTable mockHeaderTable = GetHeaderTable(mockXmin, mockXmax, null, null);
+            int mockDesignUnits = _rnd.Next(1, 16384);
+            mockFont.Setup(f => f.DesignUnitsPerEm).Returns(mockDesignUnits);
+            mockFont.Setup(f => f.Header).Returns(mockHeaderTable);
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            double expectedValue = 1000 * (mockXmax - mockXmin) / (double)mockDesignUnits;
+
+            double testOutput = testObject.BoundingBox.Width;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithHeightPropertyDerivedFromYMinAndYMaxPropertiesOfHeaderPropertyOfFirstParameterOfConstructor()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            short mockYmin = _rnd.NextShort();
+            short mockYmax = _rnd.NextShort();
+            HeaderTable mockHeaderTable = GetHeaderTable(null, null, mockYmin, mockYmax);
+            int mockDesignUnits = _rnd.Next(1, 16384);
+            mockFont.Setup(f => f.DesignUnitsPerEm).Returns(mockDesignUnits);
+            mockFont.Setup(f => f.Header).Returns(mockHeaderTable);
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            double expectedValue = 1000 * (mockYmax - mockYmin) / (double)mockDesignUnits;
+
+            double testOutput = testObject.BoundingBox.Height;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_CapHeightProperty_HasValueDerivedFromCapHeightPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructor_IfCapHeightPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorIsPopulated()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            OS2MetricsTable mockOS2MetricsTable = GetOS2MetricsTable();
+            int mockDesignUnits = _rnd.Next(1, 16384);
+            mockFont.Setup(f => f.DesignUnitsPerEm).Returns(mockDesignUnits);
+            mockFont.Setup(f => f.OS2Metrics).Returns(mockOS2MetricsTable);
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            decimal expectedValue = (decimal)(1000 * mockOS2MetricsTable.CapHeight.Value / (double)mockDesignUnits);
+
+            decimal testOutput = testObject.CapHeight;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_ItalicAngleProperty_ReturnsValueOfItalicAnglePropertyOfPostScriptDatapropertyOfFirstParameterOfConstructor()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            PostScriptTable mockPostScriptData = GetPostScriptTable();
+            mockFont.Setup(f => f.PostScriptData).Returns(mockPostScriptData);
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            decimal expectedValue = mockPostScriptData.ItalicAngle;
+
+            decimal testOutput = testObject.ItalicAngle;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_VerticalStemThicknessProperty_ReturnsZero()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            decimal expectedValue = 0m;
+
+            decimal testOutput = testObject.VerticalStemThickness;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_RequiresFullDescriptionProperty_ReturnsTrue()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            bool expectedValue = true;
+
+            bool testOutput = testObject.RequiresFullDescription;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsTrue()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            bool expectedValue = true;
+
+            bool testOutput = testObject.RequiresEmbedding;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsFontFile2()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+            string expectedValue = "FontFile2";
+
+            string testOutput = testObject.EmbeddingKey;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsLengthPropertyOfFirstParameterOfConstructor()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            long expectedValue = _rnd.Next();
+            mockFont.Setup(f => f.Length).Returns(expectedValue);
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+
+            long testOutput = testObject.EmbeddingLength;
+
+            Assert.AreEqual(expectedValue, testOutput);
+        }
+
+        [TestMethod]
+        public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsFirstParameterOfConstructor()
+        {
+            Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
+            IOpenTypeFont constrParam0 = mockFont.Object;
+            double constrParam1 = _rnd.NextDouble() * 48;
+            OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
+
+            IEnumerable<byte> testOutput = testObject.EmbeddingData;
+
+            Assert.AreEqual(constrParam0, testOutput);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

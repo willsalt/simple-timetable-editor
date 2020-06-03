@@ -28,6 +28,10 @@ namespace Unicorn.CoreTypes
             Height = height;
         }
 
+        public UniSize(decimal width, decimal height) : this((double)width, (double)height)
+        {
+        }
+
         /// <summary>
         /// Equality test.
         /// </summary>

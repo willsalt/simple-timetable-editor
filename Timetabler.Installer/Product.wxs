@@ -42,6 +42,12 @@
       <Component Id="SharpYaml.dll.comp" Guid="0A19CED6-7C66-48AF-8D7F-AA0793B02AF3">
         <File Id="SharpYaml.dll.file" Name="SharpYaml.dll" Source="$(var.Timetabler.TargetDir)SharpYaml.dll" KeyPath="yes" />
       </Component>
+      <Component Id="System.Runtime.CompilerServices.Unsafe.dll.comp" Guid="B648FC07-2E54-4E4B-B9B1-6244AD89675E">
+        <File Id="System.Runtime.CompilerServices.Unsafe.dll.file" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.Timetabler.TargetDir)System.Runtime.CompilerServices.Unsafe.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="System.Text.Encoding.CodePages.dll.comp" Guid="5A87C45A-7779-4F61-B33B-8EF6ACA70408">
+        <File Id="System.Text.Encoding.CodePages.dll.file" Name="System.Text.Encoding.CodePages.dll" Source="$(var.Timetabler.TargetDir)System.Text.Encoding.CodePages.dll" KeyPath="yes" />
+      </Component>
       <Component Id="Timetabler.CoreData.dll.comp" Guid="B5559EF3-23AB-493B-932A-FAF173FFAFC0">
         <File Id="Timetabler.CoreData.dll.file" Name="Timetabler.CoreData.dll" Source="$(var.Timetabler.TargetDir)Timetabler.CoreData.dll" KeyPath="yes" />
       </Component>

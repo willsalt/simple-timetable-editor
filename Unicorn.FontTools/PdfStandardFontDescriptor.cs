@@ -42,14 +42,101 @@ namespace Unicorn.FontTools
         public double Ascent => PointSizeTransform(_metrics.Ascender ?? 0m);
 
         /// <summary>
+        /// The height of the largest ascender above the baseline, in glyph units.
+        /// </summary>
+        public double AscentGlyphUnits => (double)(_metrics.Ascender ?? 0m);
+
+        /// <summary>
         /// The depth of the largest descender below the baseline.  By convention the descender of 'p' is used.
         /// </summary>
         public double Descent => PointSizeTransform(_metrics.Descender ?? 0m);
 
         /// <summary>
+        /// The depth of the largest descender below the baseline, in glyph units.
+        /// </summary>
+        public double DescentGlyphUnits => (double)(_metrics.Descender ?? 0m);
+
+        /// <summary>
         /// Standard interline white space in this font.
         /// </summary>
         public double InterlineSpacing => PointSize - (Ascent - Descent);
+
+        /// <summary>
+        /// A bounding box that encloses any character in the font.
+        /// </summary>
+        public UniRectangle BoundingBox
+        {
+            get
+            {
+                return new UniRectangle(_metrics.FontBoundingBox.Left, _metrics.FontBoundingBox.Bottom, _metrics.FontBoundingBox.Right - _metrics.FontBoundingBox.Left,
+                    _metrics.FontBoundingBox.Top - _metrics.FontBoundingBox.Bottom);
+            }
+        }
+
+        /// <summary>
+        /// The height of a typical capital letter above the baseline, in glyph units.
+        /// </summary>
+        public decimal CapHeight => _metrics.CapHeight ?? 0m;
+
+        /// <summary>
+        /// Font style flags.
+        /// </summary>
+        public FontDescriptorFlags Flags
+        {
+            get
+            {
+                bool isSymbolic = _metrics.CharacterSet == "Special" && _metrics.EncodingScheme == "FontSpecific";
+                FontDescriptorFlags output = isSymbolic ? FontDescriptorFlags.Symbolic : FontDescriptorFlags.Nonsymbolic;
+                if (_metrics.Direction0Metrics.Value.IsFixedPitch)
+                {
+                    output |= FontDescriptorFlags.FixedPitch;
+                }
+                if (_metrics.Direction0Metrics.Value.ItalicAngle != 0)
+                {
+                    output |= FontDescriptorFlags.Italic;
+                }
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// The angle off-vertical of typical upright stems in this font.  This is zero for fonts that are not italic or oblique.
+        /// </summary>
+        public decimal ItalicAngle => _metrics.Direction0Metrics.Value.ItalicAngle ?? 0m;
+
+        /// <summary>
+        /// The thickness of typical upright stems in this font.
+        /// </summary>
+        public decimal VerticalStemThickness => _metrics.StdVW ?? 0m;
+
+        /// <summary>
+        /// Whether or not this font requires a font descriptor dictionary to be included in PDF files in addition to a font dictionary.  This is always <c>false</c>
+        /// for standard fonts.
+        /// </summary>
+        public bool RequiresFullDescription => false;
+
+        /// <summary>
+        /// Whether or not the font's raw data should be embedded in PDF files.  This is always <c>false</c> for standard false.
+        /// </summary>
+        public bool RequiresEmbedding => false;
+
+        /// <summary>
+        /// If the font's raw data is to be embedded in PDF files, this property is the key name used to refer to the raw data stream in the font descriptor dictionary.
+        /// For <see cref="PdfStandardFontDescriptor" /> this property is an empty string.
+        /// </summary>
+        public string EmbeddingKey => "";
+
+        /// <summary>
+        /// If the font's raw data is to be embedded in PDF files, this property is the length of the raw data in bytes, before any stream filters are applied.  For
+        /// <see cref="PdfStandardFontDescriptor" /> and other non-embeddable fonts, this property is zero.
+        /// </summary>
+        public long EmbeddingLength => 0;
+
+        /// <summary>
+        /// If the font's raw data is to be embedded in PDF files, this property is the data itself.  For <see cref="PdfStandardFontDescriptor" /> and other 
+        /// non-embeddable fonts, this property is an empty enumeration.
+        /// </summary>
+        public IEnumerable<byte> EmbeddingData => Array.Empty<byte>();
 
         /// <summary>
         /// The size of an empty string rendered in this font.  This is expected to be a zero-width <see cref="UniTextSize" /> value with its vertical metrics

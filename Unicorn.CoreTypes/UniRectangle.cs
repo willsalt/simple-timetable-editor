@@ -46,6 +46,13 @@ namespace Unicorn.CoreTypes
             Top = top;
         }
 
+        public UniRectangle(decimal left, decimal top, decimal width, decimal height)
+        {
+            Size = new UniSize(width, height);
+            Left = (double)left;
+            Top = (double)top;
+        }
+
         /// <summary>
         /// Constructor with single size parameter.
         /// </summary>

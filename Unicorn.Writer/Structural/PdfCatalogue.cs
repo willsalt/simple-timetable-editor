@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Structural
@@ -8,7 +6,7 @@ namespace Unicorn.Writer.Structural
     /// <summary>
     /// A class which represents a PDF catalogue.  This is the root object of every PDF file, referenced from the trailer.
     /// </summary>
-    public class PdfCatalogue : PdfIndirectObject
+    public class PdfCatalogue : PdfSpecialisedDictionary
     {
         /// <summary>
         /// The root of the document page tree.
@@ -28,39 +26,16 @@ namespace Unicorn.Writer.Structural
         }
 
         /// <summary>
-        /// Write this object to a <see cref="Stream" />.
+        /// Construct the dictionary which will be written to the output to represent this object.
         /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <returns></returns>
-        public override int WriteTo(Stream stream)
+        /// <returns>A <see cref="PdfDictionary" /> containing the properties of this object in the correct format.</returns>
+        protected override PdfDictionary MakeDictionary()
         {
-            if (stream == null)
+            PdfDictionary d = new PdfDictionary
             {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            return Write(WriteToStream, MakeDictionary().WriteTo, stream);
-        }
-
-        /// <summary>
-        /// Convert this object to bytes and append them to a list.
-        /// </summary>
-        /// <param name="list">The list to append to.</param>
-        /// <returns>The number of bytes appended.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
-        public override int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            return Write(WriteToList, MakeDictionary().WriteTo, list);
-        }
-
-        private PdfDictionary MakeDictionary()
-        {
-            PdfDictionary d = new PdfDictionary();
-            d.Add(CommonPdfNames.Type, CommonPdfNames.Catalog);
-            d.Add(CommonPdfNames.Pages, PageRoot.GetReference());
+                { CommonPdfNames.Type, CommonPdfNames.Catalog },
+                { CommonPdfNames.Pages, PageRoot.GetReference() }
+            };
             return d;
         }
     }

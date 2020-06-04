@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
@@ -44,36 +43,10 @@ namespace Unicorn.Writer.Structural
         }
 
         /// <summary>
-        /// Write this tree node to a <see cref="Stream" />.
+        /// Construct the dictionary which will be written to the output to represent this object.
         /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <returns>The number of bytes written.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the stream parameter is null.</exception>
-        public override int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            return Write(WriteToStream, MakeDictionary().WriteTo, stream);
-        }
-
-        /// <summary>
-        /// Convert this tree node to bytes and append them to a list.
-        /// </summary>
-        /// <param name="list">The list to append to.</param>
-        /// <returns>The number of bytes written.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
-        public override int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            return Write(WriteToList, MakeDictionary().WriteTo, list);
-        }
-
-        private PdfDictionary MakeDictionary()
+        /// <returns>A <see cref="PdfDictionary" /> containing the properties of this object in the correct format.</returns>
+        protected override PdfDictionary MakeDictionary()
         {
             PdfDictionary dictionary = new PdfDictionary();
             dictionary.Add(CommonPdfNames.Type, CommonPdfNames.Pages);

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using Unicorn.CoreTypes;
 using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
@@ -133,36 +131,6 @@ namespace Unicorn.Writer.Structural
         private double YTransformer(double y) => PageHeight - y;
 
         /// <summary>
-        /// Write this page to a <see cref="Stream" />.  This writes the page metadata, but not the content stream.
-        /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <returns>The number of bytes written.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the stream parameter is null.</exception>
-        public override int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            return Write(WriteToStream, MakeDictionary().WriteTo, stream);
-        }
-
-        /// <summary>
-        /// Convert the metadata for this page into an array of bytes and append them to a list.
-        /// </summary>
-        /// <param name="list">The list to append to.</param>
-        /// <returns>The number of bytes appended.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
-        public override int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            return Write(WriteToList, MakeDictionary().WriteTo, list);
-        }
-
-        /// <summary>
         /// Register that a font is likely to be used on this page.  If the font format supports embedding, this will register the font for embedding also.
         /// </summary>
         /// <param name="font">The font that is likely to be used on this page.</param>
@@ -190,7 +158,11 @@ namespace Unicorn.Writer.Structural
             PageGraphics.CloseGraphics();
         }
 
-        private PdfDictionary MakeDictionary()
+        /// <summary>
+        /// Construct the dictionary which will be written to the output to represent this object.
+        /// </summary>
+        /// <returns>A <see cref="PdfDictionary" /> containing the properties of this object in the correct format.</returns>
+        protected override PdfDictionary MakeDictionary()
         {
             PdfDictionary dictionary = new PdfDictionary();
             PdfDictionary resourceDictionary = new PdfDictionary();

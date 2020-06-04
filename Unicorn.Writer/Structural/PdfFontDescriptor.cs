@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using Unicorn.CoreTypes;
 using Unicorn.Writer.Primitives;
 
@@ -10,7 +8,7 @@ namespace Unicorn.Writer.Structural
     /// A specialised PDF dictionary containing font metadata and generic metrics.  Units in this dictionary are generally in normalised glyph units, where 1000
     /// units equal 1 em.
     /// </summary>
-    public class PdfFontDescriptor : PdfIndirectObject
+    public class PdfFontDescriptor : PdfSpecialisedDictionary
     {
         /// <summary>
         /// Name of the font.
@@ -97,7 +95,11 @@ namespace Unicorn.Writer.Structural
             EmbeddedData = embeddingData;
         }
 
-        private PdfDictionary MakeDictionary()
+        /// <summary>
+        /// Construct the dictionary which will be written to the output to represent this object.
+        /// </summary>
+        /// <returns>A <see cref="PdfDictionary" /> containing the properties of this object in the correct format.</returns>
+        protected override PdfDictionary MakeDictionary()
         {
             PdfDictionary d = new PdfDictionary
             {
@@ -116,34 +118,6 @@ namespace Unicorn.Writer.Structural
                 d.Add(new PdfName(_embeddingKey), EmbeddedData.GetReference());
             }
             return d;
-        }
-
-        /// <summary>
-        /// Write this font descriptor resource to a <see cref="Stream" />.
-        /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <returns>The number of bytes written.</returns>
-        public override int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            return Write(WriteToStream, MakeDictionary().WriteTo, stream);
-        }
-
-        /// <summary>
-        /// Convert this font descriptor resource into an array of bytes and append them to a list.
-        /// </summary>
-        /// <param name="list">The list to append the data to.</param>
-        /// <returns></returns>
-        public override int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            return Write(WriteToList, MakeDictionary().WriteTo, list);
         }
     }
 }

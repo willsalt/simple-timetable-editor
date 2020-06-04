@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using Unicorn.CoreTypes;
 using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Primitives;
@@ -11,7 +9,7 @@ namespace Unicorn.Writer.Structural
     /// <summary>
     /// A PDF indirect object representing a font resource.
     /// </summary>
-    public class PdfFont : PdfIndirectObject
+    public class PdfFont : PdfSpecialisedDictionary
     {
         private readonly IFontDescriptor _font;
 
@@ -47,34 +45,10 @@ namespace Unicorn.Writer.Structural
         }
 
         /// <summary>
-        /// Write this font resource to a <see cref="Stream" />.
+        /// Construct the dictionary which will be written to the output to represent this object.
         /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        /// <returns>The number of bytes written.</returns>
-        public override int WriteTo(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
-            return Write(WriteToStream, MakeDictionary().WriteTo, stream);
-        }
-
-        /// <summary>
-        /// Convert this font resource into an array of bytes and append them to a list.
-        /// </summary>
-        /// <param name="list">The list to append the data to.</param>
-        /// <returns></returns>
-        public override int WriteTo(List<byte> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-            return Write(WriteToList, MakeDictionary().WriteTo, list);
-        }
-
-        private PdfDictionary MakeDictionary()
+        /// <returns>A <see cref="PdfDictionary" /> containing the properties of this object in the correct format.</returns>
+        protected override PdfDictionary MakeDictionary()
         {
             PdfDictionary d = new PdfDictionary { { CommonPdfNames.Type, CommonPdfNames.Font } };
             if (_fontDescriptor != null)

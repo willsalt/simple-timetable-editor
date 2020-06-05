@@ -61,11 +61,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsExportEnginePropertyToExternal()
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsExportEnginePropertyToUnicorn()
         {
             DocumentExportOptions testObject = new DocumentExportOptions();
 
-            Assert.AreEqual(PdfExportEngine.External, testObject.ExportEngine);
+            Assert.AreEqual(PdfExportEngine.Unicorn, testObject.ExportEngine);
         }
 
         [TestMethod]

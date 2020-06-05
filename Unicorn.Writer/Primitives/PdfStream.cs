@@ -12,8 +12,10 @@ namespace Unicorn.Writer.Primitives
     public class PdfStream : PdfIndirectObject, IPdfPrimitiveObject
     {
         private readonly List<byte> _contents = new List<byte>();
-        private readonly List<IPdfFilterEncoder> _filterEncodingChain = new List<IPdfFilterEncoder>();
         private readonly PdfDictionary _additionalMetadata;
+
+        // Filter encoders in encoding order.
+        private readonly List<IPdfFilterEncoder> _filterEncodingChain = new List<IPdfFilterEncoder>();
 
         private static readonly byte[] _streamStart = new byte[] { 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
         private static readonly byte[] _streamEnd = new byte[] { 0xa, 0x65, 0x6e, 0x64, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0xa };
@@ -23,7 +25,7 @@ namespace Unicorn.Writer.Primitives
         /// </summary>
         /// <param name="objectId">An indirect object ID obtained from a cross-reference table.</param>
         /// <param name="generation">The generation number of this stream.  Defaults to 0.</param>
-        /// <param name="filters">The sequence of filters to apply to the stream data before output, in order.</param>
+        /// <param name="filters">The sequence of filters to apply to the stream data.  As Unicorn is focused on writing output, these are in encoding order.</param>
         /// <param name="additionalMetadata">A dictionary of additional metadata to include in the stream metadata dictionary.  This must not contain any of 
         /// the standard metadata keys that may appear in the dictionary, such as <c>/Length</c> or <c>/Filter</c>, or an exception will be thrown either in
         /// this method or at any point later in execution.</param>
@@ -168,7 +170,7 @@ namespace Unicorn.Writer.Primitives
             {
                 return _filterEncodingChain[0].FilterName;
             }
-            return new PdfArray(_filterEncodingChain.Select(f => f.FilterName));
+            return new PdfArray(((IEnumerable<IPdfFilterEncoder>)_filterEncodingChain).Reverse().Select(f => f.FilterName));
         }
     }
 }

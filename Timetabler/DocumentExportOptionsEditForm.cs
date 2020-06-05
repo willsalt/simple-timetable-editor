@@ -198,7 +198,7 @@ namespace Timetabler
                 Log.Trace("cbPdfEngine: null item selected");
                 return;
             }
-            lblWarning.Visible = item.Value == PdfExportEngine.Unicorn;
+            lblWarning.Visible = item.Value == PdfExportEngine.External;
             if (_inViewUpdate || Model == null)
             {
                 return;

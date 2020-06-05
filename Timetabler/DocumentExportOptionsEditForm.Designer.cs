@@ -40,36 +40,36 @@
             this.ckDisplayGlossary = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbGraphOrientation = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbTableOrientation = new System.Windows.Forms.ComboBox();
+            this.cbGraphOrientation = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbDownSectionLabel = new System.Windows.Forms.TextBox();
+            this.tbUpSectionLabel = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cbPdfEngine = new System.Windows.Forms.ComboBox();
-            this.lblWarning = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.nudGraphAxisLineWidth = new System.Windows.Forms.NumericUpDown();
             this.nudFillerDashLineWidth = new System.Windows.Forms.NumericUpDown();
             this.nudLineWidth = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tbUpSectionLabel = new System.Windows.Forms.TextBox();
-            this.tbDownSectionLabel = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.cbPdfEngine = new System.Windows.Forms.ComboBox();
+            this.lblWarning = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // ckDisplayLocoDiagram
@@ -152,15 +152,23 @@
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             // 
-            // label5
+            // groupBox3
             // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.cbTableOrientation);
+            this.groupBox3.Controls.Add(this.cbGraphOrientation);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
             // 
-            // label4
+            // cbTableOrientation
             // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
+            this.cbTableOrientation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTableOrientation.FormattingEnabled = true;
+            resources.ApplyResources(this.cbTableOrientation, "cbTableOrientation");
+            this.cbTableOrientation.Name = "cbTableOrientation";
+            this.cbTableOrientation.SelectedIndexChanged += new System.EventHandler(this.CbTableOrientation_SelectedIndexChanged);
             // 
             // cbGraphOrientation
             // 
@@ -170,13 +178,60 @@
             this.cbGraphOrientation.Name = "cbGraphOrientation";
             this.cbGraphOrientation.SelectedIndexChanged += new System.EventHandler(this.CbGraphOrientation_SelectedIndexChanged);
             // 
-            // cbTableOrientation
+            // label4
             // 
-            this.cbTableOrientation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTableOrientation.FormattingEnabled = true;
-            resources.ApplyResources(this.cbTableOrientation, "cbTableOrientation");
-            this.cbTableOrientation.Name = "cbTableOrientation";
-            this.cbTableOrientation.SelectedIndexChanged += new System.EventHandler(this.CbTableOrientation_SelectedIndexChanged);
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // groupBox2
+            // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.tbDownSectionLabel);
+            this.groupBox2.Controls.Add(this.tbUpSectionLabel);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // tbDownSectionLabel
+            // 
+            resources.ApplyResources(this.tbDownSectionLabel, "tbDownSectionLabel");
+            this.tbDownSectionLabel.Name = "tbDownSectionLabel";
+            this.tbDownSectionLabel.TextChanged += new System.EventHandler(this.TbDownSectionLabel_TextChanged);
+            // 
+            // tbUpSectionLabel
+            // 
+            resources.ApplyResources(this.tbUpSectionLabel, "tbUpSectionLabel");
+            this.tbUpSectionLabel.Name = "tbUpSectionLabel";
+            this.tbUpSectionLabel.TextChanged += new System.EventHandler(this.TbUpSectionLabel_TextChanged);
+            // 
+            // groupBox1
+            // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.ckDisplayLocoDiagram);
+            this.groupBox1.Controls.Add(this.ckDisplayLocoToWorkRow);
+            this.groupBox1.Controls.Add(this.ckDisplayCredits);
+            this.groupBox1.Controls.Add(this.ckDisplayBoxHours);
+            this.groupBox1.Controls.Add(this.ckDisplayGraph);
+            this.groupBox1.Controls.Add(this.ckDisplayToWorkRow);
+            this.groupBox1.Controls.Add(this.ckDisplayGlossary);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
             // 
             // tabPage2
             // 
@@ -192,24 +247,6 @@
             this.tabPage2.Controls.Add(this.label3);
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
-            // 
-            // cbPdfEngine
-            // 
-            this.cbPdfEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPdfEngine.FormattingEnabled = true;
-            resources.ApplyResources(this.cbPdfEngine, "cbPdfEngine");
-            this.cbPdfEngine.Name = "cbPdfEngine";
-            this.cbPdfEngine.SelectedIndexChanged += new System.EventHandler(this.CbPdfEngine_SelectedIndexChanged);
-            // 
-            // lblWarning
-            // 
-            resources.ApplyResources(this.lblWarning, "lblWarning");
-            this.lblWarning.Name = "lblWarning";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
             // 
             // label6
             // 
@@ -244,60 +281,23 @@
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
-            // groupBox1
+            // cbPdfEngine
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Controls.Add(this.ckDisplayLocoDiagram);
-            this.groupBox1.Controls.Add(this.ckDisplayLocoToWorkRow);
-            this.groupBox1.Controls.Add(this.ckDisplayCredits);
-            this.groupBox1.Controls.Add(this.ckDisplayBoxHours);
-            this.groupBox1.Controls.Add(this.ckDisplayGraph);
-            this.groupBox1.Controls.Add(this.ckDisplayToWorkRow);
-            this.groupBox1.Controls.Add(this.ckDisplayGlossary);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.TabStop = false;
+            this.cbPdfEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPdfEngine.FormattingEnabled = true;
+            resources.ApplyResources(this.cbPdfEngine, "cbPdfEngine");
+            this.cbPdfEngine.Name = "cbPdfEngine";
+            this.cbPdfEngine.SelectedIndexChanged += new System.EventHandler(this.CbPdfEngine_SelectedIndexChanged);
             // 
-            // groupBox2
+            // lblWarning
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.tbDownSectionLabel);
-            this.groupBox2.Controls.Add(this.tbUpSectionLabel);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
+            resources.ApplyResources(this.lblWarning, "lblWarning");
+            this.lblWarning.Name = "lblWarning";
             // 
-            // groupBox3
+            // label3
             // 
-            resources.ApplyResources(this.groupBox3, "groupBox3");
-            this.groupBox3.Controls.Add(this.cbTableOrientation);
-            this.groupBox3.Controls.Add(this.cbGraphOrientation);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.TabStop = false;
-            // 
-            // tbUpSectionLabel
-            // 
-            resources.ApplyResources(this.tbUpSectionLabel, "tbUpSectionLabel");
-            this.tbUpSectionLabel.Name = "tbUpSectionLabel";
-            this.tbUpSectionLabel.TextChanged += new System.EventHandler(this.TbUpSectionLabel_TextChanged);
-            // 
-            // tbDownSectionLabel
-            // 
-            resources.ApplyResources(this.tbDownSectionLabel, "tbDownSectionLabel");
-            this.tbDownSectionLabel.Name = "tbDownSectionLabel";
-            this.tbDownSectionLabel.TextChanged += new System.EventHandler(this.TbDownSectionLabel_TextChanged);
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.Name = "label7";
-            // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.Name = "label8";
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
             // 
             // DocumentExportOptionsEditForm
             // 
@@ -309,17 +309,17 @@
             this.Name = "DocumentExportOptionsEditForm";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }

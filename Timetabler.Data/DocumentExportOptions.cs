@@ -92,7 +92,7 @@ namespace Timetabler.Data
             LineWidth = 1.0;
             GraphAxisLineWidth = 1.0;
             FillerDashLineWidth = 0.5;
-            ExportEngine = PdfExportEngine.External;
+            ExportEngine = PdfExportEngine.Unicorn;
             TablePageOrientation = Orientation.Landscape;
             GraphPageOrientation = Orientation.Landscape;
             UpSectionLabel = Resources.DocumentExportOptions_DefaultUpSectionLabel;

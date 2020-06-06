@@ -168,7 +168,8 @@ namespace Unicorn.Writer
                     if (font.RequiresEmbedding)
                     {
                         PdfDictionary meta = new PdfDictionary { { new PdfName("Length1"), new PdfInteger((int)font.EmbeddingLength) } };
-                        embed = new PdfStream(_xrefTable.ClaimSlot(), new IPdfFilterEncoder[] { Ascii85Encoder.Instance }, meta);
+                        IEnumerable<IPdfFilterEncoder> fontEncoders = GetFontEncoders();
+                        embed = new PdfStream(_xrefTable.ClaimSlot(), fontEncoders, meta);
                         embed.AddBytes(font.EmbeddingData);
                         embeddingKey = font.EmbeddingKey;
                         _bodyObjects.Add(embed);
@@ -181,6 +182,15 @@ namespace Unicorn.Writer
                 _bodyObjects.Add(pdfFont);
                 return pdfFont;
             }
+        }
+
+        private IEnumerable<IPdfFilterEncoder> GetFontEncoders()
+        {
+            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.AsciiEncodeBinaryStreams))
+            {
+                return new IPdfFilterEncoder[] { Ascii85Encoder.Instance };
+            }
+            return Array.Empty<IPdfFilterEncoder>();
         }
 
         private void CloseAllPages()

@@ -25,7 +25,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual(FontDescriptorFlags.Symbolic, testOutput & FontDescriptorFlags.Symbolic);
+            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Symbolic));
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual((FontDescriptorFlags)0, testOutput & FontDescriptorFlags.Nonsymbolic);
+            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.Nonsymbolic));
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual(FontDescriptorFlags.Nonsymbolic, testOutput & FontDescriptorFlags.Nonsymbolic);
+            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Nonsymbolic));
         }
 
         [TestMethod]
@@ -61,7 +61,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual((FontDescriptorFlags)0, testOutput & FontDescriptorFlags.Symbolic);
+            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.Symbolic));
         }
 
         [TestMethod]
@@ -73,7 +73,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual(FontDescriptorFlags.FixedPitch, testOutput & FontDescriptorFlags.FixedPitch);
+            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.FixedPitch));
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual((FontDescriptorFlags)0, testOutput & FontDescriptorFlags.FixedPitch);
+            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.FixedPitch));
         }
 
         [TestMethod]
@@ -99,7 +99,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual(FontDescriptorFlags.Italic, testOutput & FontDescriptorFlags.Italic);
+            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Italic));
         }
 
         [TestMethod]
@@ -113,7 +113,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual(FontDescriptorFlags.Italic, testOutput & FontDescriptorFlags.Italic);
+            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Italic));
         }
 
         [TestMethod]
@@ -127,7 +127,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual(FontDescriptorFlags.Italic, testOutput & FontDescriptorFlags.Italic);
+            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Italic));
         }
 
         [TestMethod]
@@ -141,7 +141,7 @@ namespace Unicorn.FontTools.Tests.Unit.OpenType.Extensions
 
             FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.AreEqual((FontDescriptorFlags)0, testOutput & FontDescriptorFlags.Italic);
+            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.Italic));
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

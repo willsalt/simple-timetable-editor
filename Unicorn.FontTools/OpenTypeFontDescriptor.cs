@@ -94,7 +94,7 @@ namespace Unicorn.FontTools
                 else
                 {
                     output = FontDescriptorFlags.Nonsymbolic;
-                    if ((_underlyingFont.Header.StyleFlags & MacStyleFlags.Italic) == MacStyleFlags.Italic)
+                    if (_underlyingFont.Header.StyleFlags.HasFlag(MacStyleFlags.Italic))
                     {
                         output |= FontDescriptorFlags.Italic;
                     }

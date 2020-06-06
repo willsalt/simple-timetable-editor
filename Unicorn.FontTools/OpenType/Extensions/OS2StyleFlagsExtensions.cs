@@ -22,7 +22,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
             {
                 output |= FontDescriptorFlags.FixedPitch;
             }
-            if ((flags & OS2StyleFlags.Italic) == OS2StyleFlags.Italic || (flags & OS2StyleFlags.Oblique) == OS2StyleFlags.Oblique)
+            if (flags.HasFlag(OS2StyleFlags.Italic) || flags.HasFlag(OS2StyleFlags.Oblique))
             {
                 output |= FontDescriptorFlags.Italic;
             }

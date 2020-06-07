@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Unicorn.CoreTypes;
@@ -110,22 +111,22 @@ namespace Unicorn.FontTools
         /// <summary>
         /// Whether or not this font should be embedded in PDF files.
         /// </summary>
-        public bool RequiresEmbedding => true;
+        public bool RequiresEmbedding => CheckEmbeddingAllowed();
 
         /// <summary>
         /// The key used to refer to the raw data stream for this font in the PDF font descriptor dictionary (this varies according to the file type of the font).
         /// </summary>
-        public string EmbeddingKey => "FontFile2";
+        public string EmbeddingKey => CheckEmbeddingAllowed() ? "FontFile2" : "";
 
         /// <summary>
         /// The length of the raw data for this font.
         /// </summary>
-        public long EmbeddingLength => _underlyingFont.Length;
+        public long EmbeddingLength => CheckEmbeddingAllowed() ? _underlyingFont.Length : 0L;
 
         /// <summary>
         /// The raw data comprising this font, as a sequence of bytes.
         /// </summary>
-        public IEnumerable<byte> EmbeddingData => _underlyingFont;
+        public IEnumerable<byte> EmbeddingData => CheckEmbeddingAllowed() ? (IEnumerable<byte>)_underlyingFont : Array.Empty<byte>();
 
         /// <summary>
         /// A unique identifier for this font face, constructed from the filename of the underlying font program file.
@@ -323,5 +324,14 @@ namespace Unicorn.FontTools
         private double PdfScaleTransform(double distInFontUnits) => 1000 * distInFontUnits / _underlyingFont.DesignUnitsPerEm;
 
         private double PointToPdfScaleTransform(double distPoints) => distPoints * 1000 / PointSize;
+
+        private bool CheckEmbeddingAllowed()
+        {
+            EmbeddingPermissionsFlags fontFlags = _underlyingFont.OS2Metrics.EmbeddingPermissions;
+            return (fontFlags.HasFlag(EmbeddingPermissionsFlags.Installable) || 
+                    fontFlags.HasFlag(EmbeddingPermissionsFlags.Editable) ||
+                    fontFlags.HasFlag(EmbeddingPermissionsFlags.Printing)) 
+                && !fontFlags.HasFlag(EmbeddingPermissionsFlags.BitmapOnly);
+        }
     }
 }

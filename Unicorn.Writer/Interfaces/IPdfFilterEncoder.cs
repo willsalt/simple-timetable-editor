@@ -18,6 +18,6 @@ namespace Unicorn.Writer.Interfaces
         /// </summary>
         /// <param name="data">The data to be encoded.</param>
         /// <returns>The encoded stream of data.</returns>
-        IList<byte> Encode(IEnumerable<byte> data);
+        IEnumerable<byte> Encode(IEnumerable<byte> data);
     }
 }

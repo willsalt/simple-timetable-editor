@@ -36,7 +36,7 @@ namespace Unicorn.Writer.Filters
         /// </summary>
         /// <param name="data">The sequence of bytes to be encoded.</param>
         /// <returns>The encoded data.</returns>
-        public IList<byte> Encode(IEnumerable<byte> data)
+        public IEnumerable<byte> Encode(IEnumerable<byte> data)
         {
             if (data is null)
             {

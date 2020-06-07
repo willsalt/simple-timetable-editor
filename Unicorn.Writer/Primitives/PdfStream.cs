@@ -60,7 +60,7 @@ namespace Unicorn.Writer.Primitives
                 {
                     GeneratePrologueAndEpilogue();
                 }
-                IList<byte> encodedContent = EncodeContents();
+                IList<byte> encodedContent = EncodeContents().ToList();
                 UpdateMetaDictionary(encodedContent);
                 return CachedPrologue.Count + CachedEpilogue.Count + MetaDictionary.ByteLength + encodedContent.Count + _streamStart.Length + _streamEnd.Length;
             }
@@ -68,11 +68,12 @@ namespace Unicorn.Writer.Primitives
 
         private PdfDictionary MetaDictionary { get; set; }
 
-        private void UpdateMetaDictionary(IList<byte> encodedContent)
+        private void UpdateMetaDictionary(IEnumerable<byte> encodedContent)
         {
-            if ((MetaDictionary[CommonPdfNames.Length] as PdfInteger).Value != encodedContent.Count)
+            int len = encodedContent.Count();
+            if ((MetaDictionary[CommonPdfNames.Length] as PdfInteger).Value != len)
             {
-                MetaDictionary[CommonPdfNames.Length] = new PdfInteger(encodedContent.Count);
+                MetaDictionary[CommonPdfNames.Length] = new PdfInteger(len);
             }
         }
 
@@ -123,7 +124,7 @@ namespace Unicorn.Writer.Primitives
             }
             writer(dest, CachedPrologue.ToArray());
             int written = CachedPrologue.Count;
-            IList<byte> encodedContent = EncodeContents();
+            IList<byte> encodedContent = EncodeContents().ToList();
             PdfDictionary dict = new PdfDictionary { { CommonPdfNames.Length, new PdfInteger(encodedContent.Count) } };
             PdfSimpleObject filterMetadata = FilterNames();
             if (filterMetadata != null)
@@ -146,13 +147,13 @@ namespace Unicorn.Writer.Primitives
             return written;
         }
 
-        private IList<byte> EncodeContents()
+        private IEnumerable<byte> EncodeContents()
         {
             if (_filterEncodingChain.Count == 0)
             {
                 return _contents;
             }
-            IList<byte> current = _contents;
+            IEnumerable<byte> current = _contents;
             foreach (IPdfFilterEncoder encoder in _filterEncodingChain)
             {
                 current = encoder.Encode(current);

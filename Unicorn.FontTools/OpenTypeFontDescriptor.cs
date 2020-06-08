@@ -328,8 +328,11 @@ namespace Unicorn.FontTools
         private bool CheckEmbeddingAllowed()
         {
             EmbeddingPermissionsFlags fontFlags = _underlyingFont.OS2Metrics.EmbeddingPermissions;
-            return (fontFlags.HasFlag(EmbeddingPermissionsFlags.Installable) || 
-                    fontFlags.HasFlag(EmbeddingPermissionsFlags.Editable) ||
+            if (fontFlags == EmbeddingPermissionsFlags.Installable)
+            {
+                return true;
+            }
+            return (fontFlags.HasFlag(EmbeddingPermissionsFlags.Editable) ||
                     fontFlags.HasFlag(EmbeddingPermissionsFlags.Printing)) 
                 && !fontFlags.HasFlag(EmbeddingPermissionsFlags.BitmapOnly);
         }

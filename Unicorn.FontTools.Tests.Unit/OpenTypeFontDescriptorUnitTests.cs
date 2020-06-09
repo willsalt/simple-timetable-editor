@@ -701,7 +701,7 @@ namespace Unicorn.FontTools.Tests.Unit
         }
 
         [TestMethod]
-        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithLeftPropertyDerivedFromXMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithMinXPropertyDerivedFromXMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
         {
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             short mockXmin = _rnd.NextShort();
@@ -720,7 +720,7 @@ namespace Unicorn.FontTools.Tests.Unit
         }
 
         [TestMethod]
-        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithTopPropertyDerivedFromYMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithMinYPropertyDerivedFromYMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
         {
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             short mockYmin = _rnd.NextShort();

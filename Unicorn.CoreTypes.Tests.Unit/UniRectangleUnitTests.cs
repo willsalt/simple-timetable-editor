@@ -16,7 +16,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void UniRectangleStruct_ParameterlessConstructor_SetsLeftPropertyToZero()
+        public void UniRectangleStruct_ParameterlessConstructor_SetsMinXPropertyToZero()
         {
             UniRectangle testValue = new UniRectangle();
 
@@ -24,7 +24,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniRectangleStruct_ParameterlessConstructor_SetsTopPropertyToZero()
+        public void UniRectangleStruct_ParameterlessConstructor_SetsMinYPropertyToZero()
         {
             UniRectangle testValue = new UniRectangle();
 
@@ -56,7 +56,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniRectangleStruct_ConstructorWithFourDoubleParameters_SetsLeftPropertyToValueOfFirstParameter()
+        public void UniRectangleStruct_ConstructorWithFourDoubleParameters_SetsMinXPropertyToValueOfFirstParameter()
         {
             double testParam0 = _rnd.NextDouble() * 1000;
             double testParam1 = _rnd.NextDouble() * 1000;
@@ -69,7 +69,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniRectangleStruct_ConstructorWithFourDoubleParameters_SetsTopPropertyToValueOfSecondParameter()
+        public void UniRectangleStruct_ConstructorWithFourDoubleParameters_SetsMinYPropertyToValueOfSecondParameter()
         {
             double testParam0 = _rnd.NextDouble() * 1000;
             double testParam1 = _rnd.NextDouble() * 1000;
@@ -121,7 +121,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsLeftPropertyToValueOfFirstParameter()
+        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsMinXPropertyToValueOfFirstParameter()
         {
             decimal testParam0 = _rnd.NextDecimal();
             decimal testParam1 = _rnd.NextDecimal();
@@ -134,7 +134,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsTopPropertyToValueOfSecondParameter()
+        public void UniRectangleStruct_ConstructorWithFourDecimalParameters_SetsMinYPropertyToValueOfSecondParameter()
         {
             decimal testParam0 = _rnd.NextDecimal();
             decimal testParam1 = _rnd.NextDecimal();
@@ -186,7 +186,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniRectangleStruct_ConstructorWithDoubleDoubleAndUniSizeParameters_SetsLeftPropertyToValueOfFirstParameter()
+        public void UniRectangleStruct_ConstructorWithDoubleDoubleAndUniSizeParameters_SetsMinXPropertyToValueOfFirstParameter()
         {
             double testParam0 = _rnd.NextDouble() * 1000;
             double testParam1 = _rnd.NextDouble() * 1000;
@@ -198,7 +198,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniRectangleStruct_ConstructorWithDoubleDoubleAndUniSizeParameters_SetsTopPropertyToValueOfSecondParameter()
+        public void UniRectangleStruct_ConstructorWithDoubleDoubleAndUniSizeParameters_SetsMinYPropertyToValueOfSecondParameter()
         {
             double testParam0 = _rnd.NextDouble() * 1000;
             double testParam1 = _rnd.NextDouble() * 1000;

@@ -13,7 +13,7 @@ namespace Unicorn.CoreTypes
         public double MinX { get; private set; }
 
         /// <summary>
-        /// The Y-coordinate of the top edge of the rectangle.
+        /// The lowest Y-coordinate of the an edge of the rectangle (the top edge in the context of a page with Y increasing downwards).
         /// </summary>
         public double MinY { get; private set; }
 
@@ -39,18 +39,18 @@ namespace Unicorn.CoreTypes
         /// <param name="top">Y-coordinate of the top edge of the rectangle.</param>
         /// <param name="width">Width of the rectangle.</param>
         /// <param name="height">Height of the rectangle.</param>
-        public UniRectangle(double left, double top, double width, double height)
+        public UniRectangle(double minX, double minY, double width, double height)
         {
             Size = new UniSize(width, height);
-            MinX = left;
-            MinY = top;
+            MinX = minX;
+            MinY = minY;
         }
 
-        public UniRectangle(decimal left, decimal top, decimal width, decimal height)
+        public UniRectangle(decimal minX, decimal minY, decimal width, decimal height)
         {
             Size = new UniSize(width, height);
-            MinX = (double)left;
-            MinY = (double)top;
+            MinX = (double)minX;
+            MinY = (double)minY;
         }
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace Unicorn.CoreTypes
         /// <param name="left">X-coordinate of the left edge of the rectangle.</param>
         /// <param name="top">Y-coordinate of the top edge of the rectangle.</param>
         /// <param name="size">Size of the rectangle.</param>
-        public UniRectangle(double left, double top, UniSize size)
+        public UniRectangle(double minX, double minY, UniSize size)
         {
             Size = size;
-            MinX = left;
-            MinY = top;
+            MinX = minX;
+            MinY = minY;
         }
 
         /// <summary>

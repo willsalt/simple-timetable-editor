@@ -714,7 +714,7 @@ namespace Unicorn.FontTools.Tests.Unit
             OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
             double expectedValue = 1000 * mockXmin / (double)mockDesignUnits;
 
-            double testOutput = testObject.BoundingBox.Left;
+            double testOutput = testObject.BoundingBox.MinX;
 
             Assert.AreEqual(expectedValue, testOutput);
         }
@@ -733,7 +733,7 @@ namespace Unicorn.FontTools.Tests.Unit
             OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
             double expectedValue = 1000 * mockYmin / (double)mockDesignUnits;
 
-            double testOutput = testObject.BoundingBox.Top;
+            double testOutput = testObject.BoundingBox.MinY;
 
             Assert.AreEqual(expectedValue, testOutput);
         }

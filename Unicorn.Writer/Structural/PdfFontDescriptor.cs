@@ -87,8 +87,8 @@ namespace Unicorn.Writer.Structural
             BoundingBox = new PdfRectangle(font.BoundingBox.Left, font.BoundingBox.Top, font.BoundingBox.Left + font.BoundingBox.Width,
                 font.BoundingBox.Top + font.BoundingBox.Height);
             ItalicAngle = font.ItalicAngle;
-            Ascent = (decimal)font.Ascent;
-            Descent = (decimal)font.Descent;
+            Ascent = (decimal)font.AscentGlyphUnits;
+            Descent = (decimal)font.DescentGlyphUnits;
             CapHeight = font.CapHeight;
             StemV = font.VerticalStemThickness;
             _embeddingKey = embeddingKey;

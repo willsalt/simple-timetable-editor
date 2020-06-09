@@ -84,8 +84,8 @@ namespace Unicorn.Writer.Structural
             }
             Name = font.BaseFontName;
             Flags = font.Flags;
-            BoundingBox = new PdfRectangle(font.BoundingBox.Left, font.BoundingBox.Top, font.BoundingBox.Left + font.BoundingBox.Width,
-                font.BoundingBox.Top + font.BoundingBox.Height);
+            BoundingBox = new PdfRectangle(font.BoundingBox.MinX, font.BoundingBox.MinY, font.BoundingBox.MinX + font.BoundingBox.Width,
+                font.BoundingBox.MinY + font.BoundingBox.Height);
             ItalicAngle = font.ItalicAngle;
             Ascent = (decimal)font.AscentGlyphUnits;
             Descent = (decimal)font.DescentGlyphUnits;

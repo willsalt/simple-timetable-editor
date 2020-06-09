@@ -918,7 +918,7 @@ namespace Timetabler.PdfExport
 
         private void WritingWrapper(string text, IFontDescriptor font, UniRectangle boundingBox, HorizontalAlignment hAlign, VerticalAlignment vAlign)
         {
-            Log.Trace(CultureInfo.CurrentCulture, "Writing \"{0}\" within box at ({1}, {2}) dims {3}x{4}", text, boundingBox.Left, boundingBox.Top, boundingBox.Width, 
+            Log.Trace(CultureInfo.CurrentCulture, "Writing \"{0}\" within box at ({1}, {2}) dims {3}x{4}", text, boundingBox.MinX, boundingBox.MinY, boundingBox.Width, 
                 boundingBox.Height);
             _currentPage.PageGraphics.DrawString(text, font, boundingBox, hAlign, vAlign);
         }

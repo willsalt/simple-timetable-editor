@@ -701,7 +701,7 @@ namespace Unicorn.FontTools.Tests.Unit
         }
 
         [TestMethod]
-        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithLeftPropertyDerivedFromXMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithMinXPropertyDerivedFromXMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
         {
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             short mockXmin = _rnd.NextShort();
@@ -714,13 +714,13 @@ namespace Unicorn.FontTools.Tests.Unit
             OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
             double expectedValue = 1000 * mockXmin / (double)mockDesignUnits;
 
-            double testOutput = testObject.BoundingBox.Left;
+            double testOutput = testObject.BoundingBox.MinX;
 
             Assert.AreEqual(expectedValue, testOutput);
         }
 
         [TestMethod]
-        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithTopPropertyDerivedFromYMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
+        public void OpenTypeFontDescriptorClass_BoundingBoxProperty_HasValueWithMinYPropertyDerivedFromYMinPropertyOfHeaderPropertyOfFirstParameterOfConstructor()
         {
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             short mockYmin = _rnd.NextShort();
@@ -733,7 +733,7 @@ namespace Unicorn.FontTools.Tests.Unit
             OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
             double expectedValue = 1000 * mockYmin / (double)mockDesignUnits;
 
-            double testOutput = testObject.BoundingBox.Top;
+            double testOutput = testObject.BoundingBox.MinY;
 
             Assert.AreEqual(expectedValue, testOutput);
         }

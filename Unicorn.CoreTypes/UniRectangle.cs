@@ -10,12 +10,12 @@ namespace Unicorn.CoreTypes
         /// <summary>
         /// The X-coordinate of the left edge of the rectangle.
         /// </summary>
-        public double Left { get; private set; }
+        public double MinX { get; private set; }
 
         /// <summary>
-        /// The Y-coordinate of the top edge of the rectangle.
+        /// The lowest Y-coordinate of the an edge of the rectangle (the top edge in the context of a page with Y increasing downwards).
         /// </summary>
-        public double Top { get; private set; }
+        public double MinY { get; private set; }
 
         /// <summary>
         /// The size of this rectangle.
@@ -39,18 +39,18 @@ namespace Unicorn.CoreTypes
         /// <param name="top">Y-coordinate of the top edge of the rectangle.</param>
         /// <param name="width">Width of the rectangle.</param>
         /// <param name="height">Height of the rectangle.</param>
-        public UniRectangle(double left, double top, double width, double height)
+        public UniRectangle(double minX, double minY, double width, double height)
         {
             Size = new UniSize(width, height);
-            Left = left;
-            Top = top;
+            MinX = minX;
+            MinY = minY;
         }
 
-        public UniRectangle(decimal left, decimal top, decimal width, decimal height)
+        public UniRectangle(decimal minX, decimal minY, decimal width, decimal height)
         {
             Size = new UniSize(width, height);
-            Left = (double)left;
-            Top = (double)top;
+            MinX = (double)minX;
+            MinY = (double)minY;
         }
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace Unicorn.CoreTypes
         /// <param name="left">X-coordinate of the left edge of the rectangle.</param>
         /// <param name="top">Y-coordinate of the top edge of the rectangle.</param>
         /// <param name="size">Size of the rectangle.</param>
-        public UniRectangle(double left, double top, UniSize size)
+        public UniRectangle(double minX, double minY, UniSize size)
         {
             Size = size;
-            Left = left;
-            Top = top;
+            MinX = minX;
+            MinY = minY;
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Unicorn.CoreTypes
         /// <returns>A hash code derived from this value.</returns>
         public override int GetHashCode()
         {
-            return Left.GetHashCode() ^ (Top * 3).GetHashCode() ^ Size.GetHashCode();
+            return MinX.GetHashCode() ^ (MinY * 3).GetHashCode() ^ Size.GetHashCode();
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Unicorn.CoreTypes
         /// <param name="a">A <see cref="UniRectangle" /> value.</param>
         /// <param name="b">A <see cref="UniRectangle" /> value.</param>
         /// <returns><c>true</c> if the operands are equal across all properties; <c>false</c> otherwise.</returns>
-        public static bool operator ==(UniRectangle a, UniRectangle b) => a.Left == b.Left && a.Top == b.Top && a.Size == b.Size;
+        public static bool operator ==(UniRectangle a, UniRectangle b) => a.MinX == b.MinX && a.MinY == b.MinY && a.Size == b.Size;
 
         /// <summary>
         /// Inequality operator.
@@ -110,6 +110,6 @@ namespace Unicorn.CoreTypes
         /// <param name="a">A <see cref="UniRectangle" /> value.</param>
         /// <param name="b">A <see cref="UniRectangle" /> value.</param>
         /// <returns><c>true</c> if the operands differ by any property; <c>false</c> if they are equal.</returns>
-        public static bool operator !=(UniRectangle a, UniRectangle b) => a.Left != b.Left || a.Top != b.Top || a.Size != b.Size;
+        public static bool operator !=(UniRectangle a, UniRectangle b) => a.MinX != b.MinX || a.MinY != b.MinY || a.Size != b.Size;
     }
 }

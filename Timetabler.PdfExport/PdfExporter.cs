@@ -947,7 +947,7 @@ namespace Timetabler.PdfExport
         {
             LineDrawingWrapper(logMessage, xCoord + MainLineWidth + lineGapSize, yCoord - LineOffset, 
                 xCoord + MainLineWidth + metrics.MainSectionMetrics.TotalSize.Width - lineGapSize, yCoord - LineOffset, MainLineWidth);
-            yCoord += _plainBodyFont.Ascent;
+            yCoord += _plainBodyFont.EmptyStringMetrics.HeightAboveBaseline;
             double headerXCoord = xCoord + MainLineWidth + _locationListMargins;
             _currentPage.PageGraphics.DrawString(headerText, _plainBodyFont, headerXCoord, yCoord);
         }

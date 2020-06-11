@@ -11,8 +11,10 @@ namespace Timetabler.CoreData.Tests.Unit.Comparers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void ReferenceEqualityComparerClassEqualsMethodReturnsTrueWhenTheSameTimeOfDayObjectIsPassedToBothParameters()
+        public void ReferenceEqualityComparerClass_EqualsMethod_ReturnsTrue_IfTheSameTimeOfDayObjectIsPassedToBothParameters()
         {
             TimeOfDay testParam = _rnd.NextTimeOfDay();
             ReferenceEqualityComparer testObject = ReferenceEqualityComparer.Default;
@@ -23,7 +25,7 @@ namespace Timetabler.CoreData.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void ReferenceEqualityComparerClassEqualsMethodReturnsFalseWhenTwoDifferentButEqualTimeOfDayObjectsArePassedAsParameters()
+        public void ReferenceEqualityComparerClass_EqualsMethod_ReturnsFalse_IfTwoDifferentButEqualTimeOfDayObjectsArePassedAsParameters()
         {
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
             TimeOfDay testParam1 = new TimeOfDay(testParam0.AbsoluteSeconds);
@@ -35,5 +37,8 @@ namespace Timetabler.CoreData.Tests.Unit.Comparers
             // Just to double-check that the parameters do compare equal!
             Assert.AreEqual(testParam0, testParam1);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

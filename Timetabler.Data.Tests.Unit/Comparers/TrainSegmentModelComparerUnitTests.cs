@@ -11,8 +11,11 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     [TestClass]
     public class TrainSegmentModelComparerUnitTests
     {
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfBothParametersAreNull()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualToZero_IfBothParametersAreNull()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -22,7 +25,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfBothParametersAreNull()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfBothParametersAreNull()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -32,7 +35,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterIsNullAndSecondParameterHasNoTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualToZero_IfFirstParameterIsNullAndSecondParameterHasNoTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -42,7 +45,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterIsNullAndSecondParameterHasNoTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfFirstParameterIsNullAndSecondParameterHasNoTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -52,7 +55,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterHasNoTimingsAndSecondParameterIsNull()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualToZero_IfFirstParameterHasNoTimingsAndSecondParameterIsNull()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -62,7 +65,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasNoTimingsAndSecondParameterIsNull()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfFirstParameterHasNoTimingsAndSecondParameterIsNull()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -72,7 +75,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToZeroIfFirstParameterHasNoTimingsAndSecondParameterHasNoTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualToZero_IfFirstParameterHasNoTimingsAndSecondParameterHasNoTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -82,7 +85,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasNoTimingsAndSecondParameterHasNoTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfFirstParameterHasNoTimingsAndSecondParameterHasNoTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -92,7 +95,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualTo1IfFirstParameterHasTimingsAndSecondParameterIsNull()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualTo1_IfFirstParameterHasTimingsAndSecondParameterIsNull()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -102,7 +105,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasTimingsAndSecondParameterIsNull()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfFirstParameterHasTimingsAndSecondParameterIsNull()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -112,7 +115,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualTo1IfFirstParameterHasTimingsAndSecondParameterHasNoTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualTo1_IfFirstParameterHasTimingsAndSecondParameterHasNoTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -123,7 +126,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasTimingsAndSecondParameterHasNoTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfFirstParameterHasTimingsAndSecondParameterHasNoTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -134,7 +137,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToMinus1IfFirstParameterIsNullAndSecondParameterHasTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualToMinus1_IfFirstParameterIsNullAndSecondParameterHasTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -144,7 +147,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterIsNullAndSecondParameterHasTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfFirstParameterIsNullAndSecondParameterHasTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -154,7 +157,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem1EqualToMinus1IfFirstParameterHasNoTimingsAndSecondParameterHasTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem1EqualToMinus1_IfFirstParameterHasNoTimingsAndSecondParameterHasTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -165,7 +168,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodReturnsObjectWithItem2EqualToNullIfFirstParameterHasNoTimingsAndSecondParameterHasTimings()
+        public void TrainSegmentModelComparerClass_CompareMethod_ReturnsObjectWithItem2EqualToNull_IfFirstParameterHasNoTimingsAndSecondParameterHasTimings()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>());
 
@@ -185,7 +188,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (0, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase1()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase1()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel> { new LocationDisplayModel { LocationKey = "A" } });
             TrainSegmentModel testParam0 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(10, 0) } });
@@ -213,7 +216,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (0, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase2()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase2()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>
             {
@@ -257,7 +260,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (-1, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase3()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase3()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel> { new LocationDisplayModel { LocationKey = "A" } });
             TrainSegmentModel testParam0 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 59) } });
@@ -279,7 +282,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (1, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase4()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase4()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel> { new LocationDisplayModel { LocationKey = "A" } });
             TrainSegmentModel testParam0 = new TrainSegmentModel(new List<ILocationEntry> { new TrainLocationTimeModel { LocationKey = "A", ActualTime = new TimeOfDay(9, 59, 59) } });
@@ -307,7 +310,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (-1, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase5()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase5()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>
             {
@@ -357,7 +360,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (1, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase6()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase6()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>
             {
@@ -407,7 +410,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (-1, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase7()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase7()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>
             {
@@ -457,7 +460,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         //
         // Should return (1, null)
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase8()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase8()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>
             {
@@ -519,7 +522,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         // | D |   >>>>   | 10:22:59 | 10:38:15 |
         // +---+----------+----------+----------+
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase9()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase9()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>
             {
@@ -597,7 +600,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         // | D |   >>>>   | 10:22:59 | 10:38:15 |
         // +---+----------+----------+----------+
         [TestMethod]
-        public void TrainSegmentModelComparerClassCompareMethodWithCommonLocationsCase10()
+        public void TrainSegmentModelComparerClass_CompareMethod_WithCommonLocationsCase10()
         {
             TrainSegmentModelComparer testObject = new TrainSegmentModelComparer(new List<LocationDisplayModel>
             {
@@ -646,5 +649,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
             Assert.AreEqual("D", testOutput.Item2.Timings[2].LocationKey);
             Assert.IsTrue(testOutput.Item2.ContinuationFromEarlier);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

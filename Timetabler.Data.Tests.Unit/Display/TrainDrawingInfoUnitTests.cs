@@ -18,8 +18,10 @@ namespace Timetabler.Data.Tests.Unit.Display
             return new VertexInformation(tdi, _rnd.NextTimeOfDay(), _rnd.NextArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void TrainDrawingInfoClassLineVertexesPropertyGetMethodReturnsAllVertexesFromAllLines()
+        public void TrainDrawingInfoClass_LineVertexesPropertyGetMethod_ReturnsAllVertexesFromAllLines()
         {
             int lineCount = _rnd.Next(10) + 1;
             TrainDrawingInfo testObject = new TrainDrawingInfo();
@@ -43,7 +45,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainDrawingInfoClassLineVertexesPropertyGetMethodOnlyReturnsDistinctVertexesWhereVertexObjectsAreSharedBetweenLines()
+        public void TrainDrawingInfoClass_LineVertexesPropertyGetMethod_OnlyReturnsDistinctVertexes_IfVertexObjectsAreSharedBetweenLines()
         {
             TrainDrawingInfo testObject = new TrainDrawingInfo();
             int vertexCount = _rnd.Next(10) + 1;
@@ -73,5 +75,8 @@ namespace Timetabler.Data.Tests.Unit.Display
                 vertexList.Remove(vi);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

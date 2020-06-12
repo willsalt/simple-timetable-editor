@@ -6,8 +6,10 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class IndexedTrainLocationTimeModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void IndexedTrainLocationTimeModelClassModelPropertyReturnsSameObjectAsEntryPropertyIfTypeOfObjectIsTrainLocationTimeModel()
+        public void IndexedTrainLocationTimeModelClass_ModelProperty_ReturnsSameObjectAsEntryProperty_IfTypeOfObjectIsTrainLocationTimeModel()
         {
             IndexedTrainLocationTimeModel testObject = new IndexedTrainLocationTimeModel { Entry = new TrainLocationTimeModel() };
 
@@ -17,7 +19,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void IndexedTrainLocationTimeModelClassModelPropertyIsNullIfTypeOfEntryPropertyIsNotTrainLocationTimeModel()
+        public void IndexedTrainLocationTimeModelClass_ModelProperty_IsNull_IfTypeOfEntryPropertyIsNotTrainLocationTimeModel()
         {
             IndexedTrainLocationTimeModel testObject = new IndexedTrainLocationTimeModel { Entry = new LocationEntryModel() };
 
@@ -27,7 +29,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void IndexedTrainLocationTimeModelClassModelPropertyIsNullIfEntryPropertyIsNull()
+        public void IndexedTrainLocationTimeModelClass_ModelProperty_IsNull_IfEntryPropertyIsNull()
         {
             IndexedTrainLocationTimeModel testObject = new IndexedTrainLocationTimeModel { Entry = null };
 
@@ -35,5 +37,8 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             Assert.IsNull(testOutput);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -25,8 +25,10 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void DocumentOptionsClassConstructorSetsGraphEditStylePropertyToPreserveSectionTimes()
+        public void DocumentOptionsClass_Constructor_SetsGraphEditStylePropertyToPreserveSectionTimes()
         {
             DocumentOptions testObject = new DocumentOptions();
 
@@ -34,7 +36,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassFormattingStringsPropertyReturnsCorrectValuesIfClockTypeIsTwelveHourClock()
+        public void DocumentOptionsClass_FormattingStringsProperty_ReturnsCorrectValues_IfClockTypeIsTwelveHourClock()
         {
             DocumentOptions testObject = GetDocumentOptions(ClockType.TwelveHourClock);
 
@@ -48,7 +50,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassFormattingStringsPropertyReturnsCorrectValuesIfClockTypeIsTwentyFourHourClock()
+        public void DocumentOptionsClass_FormattingStringsProperty_ReturnsCorrectValues_IfClockTypeIsTwentyFourHourClock()
         {
             DocumentOptions testObject = GetDocumentOptions(ClockType.TwentyFourHourClock);
 
@@ -62,7 +64,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassClockTypePropertySetMethodUpdatesPropertiesOfFormattingStringsObjectIfClockTypeIsSetToTwentyFourHourClock()
+        public void DocumentOptionsClass_ClockTypeProperty_SetMethod_UpdatesPropertiesOfFormattingStringsObject_IfClockTypeIsSetToTwentyFourHourClock()
         {
             DocumentOptions testObject = GetDocumentOptions(ClockType.TwelveHourClock);
 
@@ -77,7 +79,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassClockTypePropertySetMethodUpdatesPropertiesOfFormattingStringsObjectIfClockTypeIsSetToTwelverHourClock()
+        public void DocumentOptionsClass_ClockTypeProperty_SetMethod_UpdatesPropertiesOfFormattingStringsObject_IfClockTypeIsSetToTwelverHourClock()
         {
             DocumentOptions testObject = GetDocumentOptions(ClockType.TwentyFourHourClock);
 
@@ -92,7 +94,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassCopyMethodReturnsNewObject()
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObject()
         {
             DocumentOptions testObject = GetDocumentOptions();
 
@@ -102,7 +104,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectClockTypeProperty()
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectClockTypeProperty()
         {
             DocumentOptions testObject = GetDocumentOptions();
 
@@ -112,7 +114,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectDisplayTrainLabelsOnGraphsProperty()
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectDisplayTrainLabelsOnGraphsProperty()
         {
             DocumentOptions testObject = GetDocumentOptions();
 
@@ -122,7 +124,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectFormattingStringsPropertiesIfClockTypeIsTwelveHourClock()
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectFormattingStringsProperties_IfClockTypeIsTwelveHourClock()
         {
             DocumentOptions testObject = GetDocumentOptions(ClockType.TwelveHourClock);
 
@@ -136,7 +138,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectFormattingStringsPropertiesIfClockTypeIsTwentyFourHourClock()
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectFormattingStringsProperties_IfClockTypeIsTwentyFourHourClock()
         {
             DocumentOptions testObject = GetDocumentOptions(ClockType.TwentyFourHourClock);
 
@@ -150,7 +152,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassCopyMethodReturnsNewObjectWithCorrectGraphEditStyleProperty()
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectGraphEditStyleProperty()
         {
             DocumentOptions testObject = GetDocumentOptions();
 
@@ -160,7 +162,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DocumentOptionsClassCopyToMethodOverwritesGraphEditStyleProperty()
+        public void DocumentOptionsClass_CopyToMethod_OverwritesGraphEditStyleProperty()
         {
             DocumentOptions testObject = GetDocumentOptions();
             DocumentOptions target = GetDocumentOptions();
@@ -169,5 +171,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(testObject.GraphEditStyle, target.GraphEditStyle);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Providers;
 
 namespace Timetabler.Data.Tests.Unit
@@ -50,7 +46,7 @@ namespace Timetabler.Data.Tests.Unit
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNullIfBothParametersAreNull()
+        public void DistanceClass_AddMethod_ReturnsNull_IfBothParametersAreNull()
         {
             Distance testParam0 = null;
             Distance testParam1 = null;
@@ -61,7 +57,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObjectIfFirstParameterIsNullAndSecondParameterIsNotNull()
+        public void DistanceClass_AddMethod_ReturnsNewObject_IfFirstParameterIsNullAndSecondParameterIsNotNull()
         {
             Distance testParam0 = null;
             Distance testParam1 = GetDistance();
@@ -72,7 +68,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsObjectEqualToSecondParameterIfFirstParameterIsNullAndSecondParameterIsNotNull()
+        public void DistanceClass_AddMethod_ReturnsObjectEqualToSecondParameter_IfFirstParameterIsNullAndSecondParameterIsNotNull()
         {
             Distance testParam0 = null;
             Distance testParam1 = GetDistance();
@@ -83,7 +79,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObjectIfFirstParameterIsNotNullAndSecondParameterIsNull()
+        public void DistanceClass_AddMethod_ReturnsNewObject_IfFirstParameterIsNotNullAndSecondParameterIsNull()
         {
             Distance testParam0 = GetDistance();
             Distance testParam1 = null;
@@ -94,7 +90,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsObjectEqualToFirstParameterIfFirstParameterIsNotNullAndSecondParameterIsNull()
+        public void DistanceClass_AddMethod_ReturnsObjectEqualToFirstParameter_IfFirstParameterIsNotNullAndSecondParameterIsNull()
         {
             Distance testParam0 = GetDistance();
             Distance testParam1 = null;
@@ -105,7 +101,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObjectIfParametersAreNotNull()
+        public void DistanceClass_AddMethod_ReturnsNewObject_IfParametersAreNotNull()
         {
             Distance testParam0 = GetDistance();
             Distance testParam1 = GetDistance();
@@ -117,7 +113,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObjectEqualToSumOfParametersIfParametersAreNotNull()
+        public void DistanceClass_AddMethod_ReturnsNewObjectEqualToSumOfParameters_IfParametersAreNotNull()
         {
             for (int i = 0; i < 100000; ++i)
             {

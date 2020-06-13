@@ -41,10 +41,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             }
         }
 
-#pragma warning restore CA1707 // Identifiers should not contain underscores
-
         [TestMethod]
-        public void TimetableFileModelExtensionsClassToTimetableDocumentMethodReturnsTimetableDocumentObjectWithExportOptionsPropertyThatIsNotNullIfExportOptionsPropertyOfParameterIsNull()
+        public void TimetableFileModelExtensionsClass_ToTimetableDocumentMethod_ReturnsTimetableDocumentObjectWithExportOptionsPropertyThatIsNotNull_IfExportOptionsPropertyOfParameterIsNull()
         {
             TimetableFileModel testSourceObject = new TimetableFileModel { ExportOptions = null };
 
@@ -54,7 +52,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void TimetableFileModelExtensionsClassToTimetableDocumentMethodReturnsTimetableDocumentObjectWithExportOptionsPropertyThatIsNotNullIfExportOptionsPropertyOfParameterIsNotNull()
+        public void TimetableFileModelExtensionsClass_ToTimetableDocumentMethod_ReturnsTimetableDocumentObjectWithExportOptionsPropertyThatIsNotNull_IfExportOptionsPropertyOfParameterIsNotNull()
         {
             TimetableFileModel testSourceObject = new TimetableFileModel { ExportOptions = new ExportOptionsModel() };
 
@@ -64,7 +62,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void TimetableFileModelExtensionsClassToTimetableDocumentMethodReturnsTimetableDocumentObjectWithExportOptionsPropertyWithCorrectDisplayLocoDiagramRowPropertyIfExportOptionsPropertyOfParameterIsNotNull()
+        public void TimetableFileModelExtensionsClass_ToTimetableDocumentMethod_ReturnsTimetableDocumentObjectWithExportOptionsPropertyWithCorrectDisplayLocoDiagramRowProperty_IfExportOptionsPropertyOfParameterIsNotNull()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)
@@ -77,5 +75,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 Assert.AreEqual(testValue, testResultObject.ExportOptions.DisplayLocoDiagramRow);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

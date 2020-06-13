@@ -111,8 +111,10 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithSameHeadcodeProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithSameHeadcodeProperty()
         {
             Train testObject = GetTrain();
 
@@ -122,7 +124,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithSameLocoDiagramProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithSameLocoDiagramProperty()
         {
             Train testObject = GetTrain();
 
@@ -132,7 +134,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithSameTrainClassProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithSameTrainClassProperty()
         {
             Train testObject = GetTrain();
 
@@ -142,7 +144,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithSameTrainClassIdProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithSameTrainClassIdProperty()
         {
             Train testObject = GetTrain();
 
@@ -152,7 +154,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithSameIncludeSeparatorAboveProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithSameIncludeSeparatorAboveProperty()
         {
             Train testObject = GetTrain();
 
@@ -162,7 +164,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithSameIncludeSeparatorBelowProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithSameIncludeSeparatorBelowProperty()
         {
             Train testObject = GetTrain();
 
@@ -172,7 +174,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithSameInlineNoteProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithSameInlineNoteProperty()
         {
             Train testObject = GetTrain();
 
@@ -182,7 +184,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithGraphPropertiesPropertyWithSameColourProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithGraphPropertiesPropertyWithSameColourProperty()
         {
             Train testObject = GetTrain();
 
@@ -192,7 +194,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithGraphPropertiesPropertyWithSameDashStyleProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithGraphPropertiesPropertyWithSameDashStyleProperty()
         {
             Train testObject = GetTrain();
 
@@ -202,7 +204,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithGraphPropertiesPropertyWithSameWidthProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithGraphPropertiesPropertyWithSameWidthProperty()
         {
             Train testObject = GetTrain();
 
@@ -212,7 +214,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithCorrectToWorkPropertyIfToWorkPropertyIsNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithCorrectToWorkProperty_IfToWorkPropertyIsNull()
         {
             Train testObject = GetTrain(false);
 
@@ -222,7 +224,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithToWorkPropertyThatIsNotTheSameObjectIfToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithToWorkPropertyThatIsNotTheSameObject_IfToWorkIsNotNull()
         {
             Train testObject = GetTrain(true);
 
@@ -232,7 +234,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithToWorkPropertyWithCorrectAtTimePropertyIfToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithToWorkPropertyWithCorrectAtTimeProperty_IfToWorkIsNotNull()
         {
             Train testObject = GetTrain(true);
 
@@ -242,7 +244,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithToWorkPropertyWithCorrectTextPropertyIfToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithToWorkPropertyWithCorrectTextProperty_IfToWorkIsNotNull()
         {
             Train testObject = GetTrain(true);
 
@@ -252,7 +254,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithCorrectLocoToWorkPropertyIfLocoToWorkPropertyIsNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithCorrectLocoToWorkProperty_IfLocoToWorkPropertyIsNull()
         {
             Train testObject = GetTrain(_rnd.NextBoolean(), false);
 
@@ -262,7 +264,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithLocoToWorkPropertyThatIsNotTheSameObjectIfLocoToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithLocoToWorkPropertyThatIsNotTheSameObject_IfLocoToWorkIsNotNull()
         {
             Train testObject = GetTrain(_rnd.NextBoolean(), true);
 
@@ -272,7 +274,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithLocoToWorkPropertyWithCorrectAtTimePropertyIfLocoToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithLocoToWorkPropertyWithCorrectAtTimeProperty_IfLocoToWorkIsNotNull()
         {
             Train testObject = GetTrain(_rnd.NextBoolean(), true);
 
@@ -282,7 +284,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithLocoToWorkPropertyWithCorrectTextPropertyIfLocoToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithLocoToWorkPropertyWithCorrectTextProperty_IfLocoToWorkIsNotNull()
         {
             Train testObject = GetTrain(_rnd.NextBoolean(), true);
 
@@ -292,7 +294,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyOfCorrectLength()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyOfCorrectLength()
         {
             Train testObject = GetTrain();
 
@@ -302,7 +304,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimeWithCorrectTimeProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimeWithCorrectTimeProperty()
         {
             Train testObject = GetTrain();
 
@@ -315,7 +317,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithCorrectNumberOfFootnotes()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithCorrectNumberOfFootnotes()
         {
             Train testObject = GetTrain();
 
@@ -328,7 +330,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithSameFootnotes()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithSameFootnotes()
         {
             Train testObject = GetTrain();
 
@@ -344,7 +346,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimeWithCorrectTimeProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimeWithCorrectTimeProperty()
         {
             Train testObject = GetTrain();
 
@@ -357,7 +359,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithCorrectNumberOfFootnotes()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithCorrectNumberOfFootnotes()
         {
             Train testObject = GetTrain();
 
@@ -370,7 +372,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithSameFootnotes()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithSameFootnotes()
         {
             Train testObject = GetTrain();
 
@@ -386,7 +388,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingSameLocationProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingSameLocationProperty()
         {
             Train testObject = GetTrain();
 
@@ -399,7 +401,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPassProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPassProperty()
         {
             Train testObject = GetTrain();
 
@@ -412,7 +414,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPathProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPathProperty()
         {
             Train testObject = GetTrain();
 
@@ -425,7 +427,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPlatformProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPlatformProperty()
         {
             Train testObject = GetTrain();
 
@@ -438,7 +440,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualLineProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualLineProperty()
         {
             Train testObject = GetTrain();
 
@@ -451,7 +453,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualFormattingStringsProperty()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualFormattingStringsProperty()
         {
             Train testObject = GetTrain();
 
@@ -464,7 +466,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithFootnotesPropertyOfCorrectLength()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithFootnotesPropertyOfCorrectLength()
         {
             Train testObject = GetTrain();
 
@@ -474,7 +476,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithNoParametersReturnsObjectWithFootnotesPropertyWithCorrectContents()
+        public void TrainClass_CopyMethodWithNoParameters_ReturnsObjectWithFootnotesPropertyWithCorrectContents()
         {
             Train testObject = GetTrain();
 
@@ -487,7 +489,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithSameHeadcodeProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithSameHeadcodeProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -498,7 +500,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithSameLocoDiagramProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithSameLocoDiagramProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -509,7 +511,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithSameTrainClassProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithSameTrainClassProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -520,7 +522,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithSameTrainClassIdProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithSameTrainClassIdProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -531,7 +533,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithSameIncludeSeparatorAboveProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithSameIncludeSeparatorAboveProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -542,7 +544,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithSameIncludeSeparatorBelowProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithSameIncludeSeparatorBelowProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -553,7 +555,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithSameInlineNoteProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithSameInlineNoteProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -564,7 +566,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithGraphPropertiesPropertyWithSameColourProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithGraphPropertiesPropertyWithSameColourProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -575,7 +577,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithGraphPropertiesPropertyWithSameDashStyleProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithGraphPropertiesPropertyWithSameDashStyleProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -586,7 +588,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithGraphPropertiesPropertyWithSameWidthProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithGraphPropertiesPropertyWithSameWidthProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -597,7 +599,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithCorrectToWorkPropertyIfToWorkPropertyIsNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithCorrectToWorkProperty_IfToWorkPropertyIsNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(false, null, offsetMinutes);
@@ -608,7 +610,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithToWorkPropertyThatIsNotTheSameObjectIfToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithToWorkPropertyThatIsNotTheSameObject_IfToWorkIsNotNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(true, null, offsetMinutes);
@@ -619,7 +621,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithToWorkPropertyWithCorrectAtTimePropertyIfToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithToWorkPropertyWithCorrectAtTimeProperty_IfToWorkIsNotNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(true, null, offsetMinutes);
@@ -630,7 +632,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithToWorkPropertyWithCorrectTextPropertyIfToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithToWorkPropertyWithCorrectTextProperty_IfToWorkIsNotNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(true, null, offsetMinutes);
@@ -641,7 +643,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithCorrectLocoToWorkPropertyIfLocoToWorkPropertyIsNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithCorrectLocoToWorkProperty_IfLocoToWorkPropertyIsNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, false, offsetMinutes);
@@ -652,7 +654,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithLocoToWorkPropertyThatIsNotTheSameObjectIfLocoToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithLocoToWorkPropertyThatIsNotTheSameObject_IfLocoToWorkIsNotNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, true, offsetMinutes);
@@ -663,7 +665,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithLocoToWorkPropertyWithCorrectAtTimePropertyIfLocoToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithLocoToWorkPropertyWithCorrectAtTimeProperty_IfLocoToWorkIsNotNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, true, offsetMinutes);
@@ -674,7 +676,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithLocoToWorkPropertyWithCorrectTextPropertyIfLocoToWorkIsNotNull()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithLocoToWorkPropertyWithCorrectTextProperty_IfLocoToWorkIsNotNull()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, true, offsetMinutes);
@@ -685,7 +687,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyOfCorrectLength()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyOfCorrectLength()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -696,7 +698,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimeWithCorrectTimeProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimeWithCorrectTimeProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -710,7 +712,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithCorrectNumberOfFootnotes()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithCorrectNumberOfFootnotes()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -724,7 +726,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithSameFootnotes()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingArrivalTimePropertyWithSameFootnotes()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -741,7 +743,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimeWithCorrectTimeProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimeWithCorrectTimeProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -755,7 +757,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithCorrectNumberOfFootnotes()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithCorrectNumberOfFootnotes()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -769,7 +771,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithSameFootnotes()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingDepartureTimePropertyWithSameFootnotes()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -786,7 +788,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingSameLocationProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingSameLocationProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -800,7 +802,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPassProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPassProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -814,7 +816,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPathProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPathProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -828,7 +830,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPlatformProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualPlatformProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -842,7 +844,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualLineProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualLineProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -856,7 +858,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualFormattingStringsProperty()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithTrainTimesPropertyWithEachObjectHavingEqualFormattingStringsProperty()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -870,7 +872,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithFootnotesPropertyOfCorrectLength()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithFootnotesPropertyOfCorrectLength()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -881,7 +883,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassCopyMethodWithIntParameterReturnsObjectWithFootnotesPropertyWithCorrectContents()
+        public void TrainClass_CopyMethodWithIntParameter_ReturnsObjectWithFootnotesPropertyWithCorrectContents()
         {
             int offsetMinutes = _rnd.Next(23 * 60);
             Train testObject = GetTrain(null, null, offsetMinutes);
@@ -895,7 +897,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassLastTrainTimePropertyIsNullIfObjectTrainTimesPropertyIsEmpty()
+        public void TrainClass_LastTrainTimeProperty_IsNull_IfObjectTrainTimesPropertyIsEmpty()
         {
             Train testObject = GetTrain();
             testObject.TrainTimes.Clear();
@@ -906,7 +908,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassLastTrainTimePropertyIsLaterThanOrEqualToAllArrivalTimes()
+        public void TrainClass_LastTrainTimeProperty_IsLaterThanOrEqualToAllArrivalTimes()
         {
             Train testObject = GetTrain();
 
@@ -919,7 +921,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassLastTrainTimePropertyIsLaterThanOrEqualToAllDepartureTimes()
+        public void TrainClass_LastTrainTimeProperty_IsLaterThanOrEqualToAllDepartureTimes()
         {
             Train testObject = GetTrain();
 
@@ -932,7 +934,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassReverseMethodDoesNotChangeNumberOfTimingPoints()
+        public void TrainClass_ReverseMethod_DoesNotChangeNumberOfTimingPoints()
         {
             Train testObject = GetTrain();
             int originalTimingPointCount = testObject.TrainTimes.Count;
@@ -943,7 +945,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassReverseMethodDoesNotChangeObjectReferencesContainedInTrainTimesProperty()
+        public void TrainClass_ReverseMethod_DoesNotChangeObjectReferencesContainedInTrainTimesProperty()
         {
             Train testObject = GetTrain();
             List<TrainLocationTime> originalTrainTimes = testObject.TrainTimes.ToList();
@@ -958,7 +960,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassReverseMethodChangesAllTrainTimesNotEqualToTheLatestTrainTime()
+        public void TrainClass_ReverseMethod_ChangesAllTrainTimesNotEqualToTheLatestTrainTime()
         {
             Train testObject = GetTrain();
             TrainTime originalLastTrainTime = testObject.LastTrainTime.Copy();
@@ -976,7 +978,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassReverseMethodChangesAllTrainTimesToBeLaterThanTheOriginallyLastTrainTime()
+        public void TrainClass_ReverseMethod_ChangesAllTrainTimesToBeLaterThanTheOriginallyLastTrainTime()
         {
             Train testObject = GetTrain();
             TrainTime originalLastTrainTime = testObject.LastTrainTime.Copy();
@@ -991,7 +993,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainClassReverseMethodLeavesAllTrainTimesOrderedByArrivalTime()
+        public void TrainClass_ReverseMethod_LeavesAllTrainTimesOrderedByArrivalTime()
         {
             Train testObject = GetTrain();
 
@@ -1002,8 +1004,6 @@ namespace Timetabler.Data.Tests.Unit
                 Assert.IsTrue(testObject.TrainTimes[i].ArrivalTime.Time >= testObject.TrainTimes[i - 1].ArrivalTime.Time);
             }
         }
-
-#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]

@@ -16,163 +16,6 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     {
         private static readonly Random _random = RandomProvider.Default;
 
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsToTrainLocationTimeMethodReturnsNonNullIfParametersAreNotNull()
-        {
-            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), GetDocumentOptions());
-
-            Assert.IsNotNull(testResult);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClassToTrainLocationTimeMethodReturnsNullIfFirstParameterIsNull()
-        {
-            TrainLocationTimeModel testObject = null;
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), GetDocumentOptions());
-
-            Assert.IsNull(testResult);
-        }
-
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullException_IfFourthParameterIsNull()
-        {
-            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
-
-            _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
-
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFourthParameterIsNull()
-        {
-            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
-
-            try
-            {
-                _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
-                Assert.Fail();
-            }
-            catch (ArgumentNullException ex)
-            {
-                Assert.AreEqual("options", ex.ParamName);
-            }
-        }
-
-#pragma warning restore CA1707 // Identifiers should not contain underscores
-        
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsToTrainLocationTimeMethodReturnsObjectWithCorrectLocationPropertyIfLocationIdPropertyOfFirstParameterIsPresentAsKeyInSecondParameter()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
-
-            Assert.AreSame(locationMap[testObject.LocationId], testResult.Location);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsToTrainLocationTimeMethodReturnsObjectWithNullLocationPropertyIfLocationIdPropertyOfFirstParameterIsNotPresentAsKeyInSecondParameter()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-            do
-            {
-                testObject.LocationId = _random.NextHexString(8);
-            } while (locationMap.ContainsKey(testObject.LocationId));
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
-
-            Assert.IsNull(testResult.Location);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClassToTrainLocationTimeMethodReturnsObjectWithNullLocationPropertyIfLocationIdPropertyOfFirstParameterIsNull()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-            testObject.LocationId = null;
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
-
-            Assert.IsNull(testResult.Location);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClassToTrainLocationTimeMethodReturnsObjectWithCorrectPassProperty()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
-
-            Assert.AreEqual(testObject.Pass, testResult.Pass);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClassToTrainLocationTimeMethodReturnsObjectWithCorrectPathProperty()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
-
-            Assert.AreEqual(testObject.Path, testResult.Path);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClassToTrainLocationTimeMethodReturnsObjectWithCorrectPlatformProperty()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
-
-            Assert.AreEqual(testObject.Platform, testResult.Platform);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClassToTrainLocationTimeMethodReturnsObjectWithCorrectLineProperty()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
-
-            Assert.AreEqual(testObject.Line, testResult.Line);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeModelExtensionsClassToTrainLocationTimeMethodReturnsObjectWithCorrectFormattingStringsProperty()
-        {
-            Dictionary<string, Location> locationMap = GetRandomLocationMap();
-            Dictionary<string, Note> noteMap = GetRandomNotes();
-            DocumentOptions options = GetDocumentOptions();
-            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
-
-            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, options);
-
-            Assert.AreEqual(options.FormattingStrings.Complete, testResult.FormattingStrings.Complete);
-            Assert.AreEqual(options.FormattingStrings.Hours, testResult.FormattingStrings.Hours);
-            Assert.AreEqual(options.FormattingStrings.Minutes, testResult.FormattingStrings.Minutes);
-            Assert.AreEqual(options.FormattingStrings.TimeWithoutFootnotes, testResult.FormattingStrings.TimeWithoutFootnotes);
-
-        }
-
         private static TrainLocationTimeModel GetTrainLocationTimeModel(Dictionary<string, Location> locationMap, Dictionary<string, Note> notes)
         {
             return GetTrainLocationTimeModel(locationMap, notes, _random.Next(2) == 0);
@@ -191,11 +34,11 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 Pass = (!hasArrivalTime) && _random.Next(2) == 0,
                 LocationId = locationKeys[_random.Next(locationKeys.Length)],
             };
-            tlt.DepartureTime = hasArrivalTime ? 
+            tlt.DepartureTime = hasArrivalTime ?
                 new TrainTimeModel
                 {
                     Time = _random.NextTimeOfDayModel(tlt.ArrivalTime.Time.Hours24 * 3600 + tlt.ArrivalTime.Time.Minutes * 60 + tlt.ArrivalTime.Time.Seconds, 0),
-                } : 
+                } :
                 new TrainTimeModel { Time = _random.NextTimeOfDayModel(0, 0) };
             int fnCount = _random.Next(2);
             for (int i = 0, j = 0; i < fnCount && j < noteKeys.Length; ++j)
@@ -294,5 +137,163 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 DisplayTrainLabelsOnGraphs = _random.NextBoolean(),
             };
         }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsNonNull_IfParametersAreNotNull()
+        {
+            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), GetDocumentOptions());
+
+            Assert.IsNotNull(testResult);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsNull_IfFirstParameterIsNull()
+        {
+            TrainLocationTimeModel testObject = null;
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), GetDocumentOptions());
+
+            Assert.IsNull(testResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullException_IfFourthParameterIsNull()
+        {
+            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
+
+            _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFourthParameterIsNull()
+        {
+            TrainLocationTimeModel testObject = new TrainLocationTimeModel();
+
+            try
+            {
+                _ = testObject.ToTrainLocationTime(new Dictionary<string, Location>(), new Dictionary<string, Note>(), null);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("options", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithCorrectLocationProperty_IfLocationIdPropertyOfFirstParameterIsPresentAsKeyInSecondParameter()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
+
+            Assert.AreSame(locationMap[testObject.LocationId], testResult.Location);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithNullLocationProperty_IfLocationIdPropertyOfFirstParameterIsNotPresentAsKeyInSecondParameter()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+            do
+            {
+                testObject.LocationId = _random.NextHexString(8);
+            } while (locationMap.ContainsKey(testObject.LocationId));
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
+
+            Assert.IsNull(testResult.Location);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithNullLocationProperty_IfLocationIdPropertyOfFirstParameterIsNull()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+            testObject.LocationId = null;
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
+
+            Assert.IsNull(testResult.Location);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithCorrectPassProperty()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
+
+            Assert.AreEqual(testObject.Pass, testResult.Pass);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithCorrectPathProperty()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
+
+            Assert.AreEqual(testObject.Path, testResult.Path);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithCorrectPlatformProperty()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
+
+            Assert.AreEqual(testObject.Platform, testResult.Platform);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithCorrectLineProperty()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, GetDocumentOptions());
+
+            Assert.AreEqual(testObject.Line, testResult.Line);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeModelExtensionsClass_ToTrainLocationTimeMethod_ReturnsObjectWithCorrectFormattingStringsProperty()
+        {
+            Dictionary<string, Location> locationMap = GetRandomLocationMap();
+            Dictionary<string, Note> noteMap = GetRandomNotes();
+            DocumentOptions options = GetDocumentOptions();
+            TrainLocationTimeModel testObject = GetTrainLocationTimeModel(locationMap, noteMap);
+
+            TrainLocationTime testResult = testObject.ToTrainLocationTime(locationMap, noteMap, options);
+
+            Assert.AreEqual(options.FormattingStrings.Complete, testResult.FormattingStrings.Complete);
+            Assert.AreEqual(options.FormattingStrings.Hours, testResult.FormattingStrings.Hours);
+            Assert.AreEqual(options.FormattingStrings.Minutes, testResult.FormattingStrings.Minutes);
+            Assert.AreEqual(options.FormattingStrings.TimeWithoutFootnotes, testResult.FormattingStrings.TimeWithoutFootnotes);
+
+        }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

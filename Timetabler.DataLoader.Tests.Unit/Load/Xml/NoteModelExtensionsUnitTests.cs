@@ -55,11 +55,9 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 Assert.AreEqual("model", ex.ParamName);
             }
         }
-
-#pragma warning restore CA1707 // Identifiers should not contain underscores
         
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectIfParameterIsNotNull()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObject_IfParameterIsNotNull()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -69,7 +67,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectWithCorrectIdProperty()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectIdProperty()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -79,7 +77,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectWithCorrectSymbolProperty()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectSymbolProperty()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -89,7 +87,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectWithCorrectDefinitionProperty()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectDefinitionProperty()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -99,7 +97,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectWithCorrectAppliesToTrainsProperty()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectAppliesToTrainsProperty()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -109,7 +107,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectWithCorrectAppliesToTimingsProperty()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectAppliesToTimingsProperty()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -119,7 +117,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectWithCorrectDefinedInGlossaryProperty()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectDefinedInGlossaryProperty()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -129,7 +127,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void NoteModelExtensionsClassToNoteMethodReturnsObjectWithCorrectDefinedOnPagesProperty()
+        public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectDefinedOnPagesProperty()
         {
             NoteModel testObject = GetRandomNoteModel();
 
@@ -137,5 +135,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
 
             Assert.AreEqual(testObject.DefinedOnPages, testResult.DefinedOnPages);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -27,8 +27,10 @@ namespace Timetabler.PdfExport.Tests.Unit
             return dimensions;
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void LocationBoxDimensionsClassLocationOffsetListPropertyContainsSameNumberOfItemsAsLocationOffsetsProperty()
+        public void LocationBoxDimensionsClass_LocationOffsetListProperty_ContainsSameNumberOfItemsAsLocationOffsetsProperty()
         {
             LocationBoxDimensions testObject = GetLocationBoxDimensions();
 
@@ -38,7 +40,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         }
         
         [TestMethod]
-        public void LocationBoxDimensionsClassLocationOffsetListPropertyContainsSameObjectsAsLocationOffsetsPropertyValues()
+        public void LocationBoxDimensionsClass_LocationOffsetListProperty_ContainsSameObjectsAsLocationOffsetsPropertyValues()
         {
             LocationBoxDimensions testObject = GetLocationBoxDimensions();
 
@@ -53,7 +55,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         }
 
         [TestMethod]
-        public void LocationBoxDimensionsClassLocationOffsetListPropertyContainsObjectsOrderedByTopProperty()
+        public void LocationBoxDimensionsClass_LocationOffsetListProperty_ContainsObjectsOrderedByTopProperty()
         {
             LocationBoxDimensions testObject = GetLocationBoxDimensions(2);
 
@@ -64,5 +66,8 @@ namespace Timetabler.PdfExport.Tests.Unit
                 Assert.IsTrue(testOutput[i].Top >= testOutput[i - 1].Top);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

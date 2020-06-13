@@ -14,8 +14,25 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     {
         private static readonly Random _random = RandomProvider.Default;
 
+        private static DistanceModel GetRandomDistanceModel()
+        {
+            return new DistanceModel
+            {
+                Mileage = _random.Next(),
+                Chainage = _random.NextDouble() * 80,
+            };
+        }
+
+        private static LocationFontType GetRandomLocationFontType()
+        {
+            LocationFontType[] possibles = new[] { LocationFontType.Normal, LocationFontType.Condensed };
+            return possibles[_random.Next(possibles.Length)];
+        }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsNonNullObjectIfParameterIsNonNull()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsNonNullObject_IfParameterIsNonNull()
         {
             LocationModel testObject = new LocationModel();
 
@@ -25,7 +42,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsNullIfParameterIsNull()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsNull_IfParameterIsNull()
         {
             LocationModel testObject = null;
 
@@ -35,7 +52,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectId()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectId()
         {
             string testId = _random.NextHexString(8);
             LocationModel testObject = new LocationModel { Id = testId };
@@ -46,7 +63,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectEditorDisplayNameProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectEditorDisplayNameProperty()
         {
             string testValue = _random.NextString(_random.Next(5, 128));
             LocationModel testObject = new LocationModel { EditorDisplayName = testValue };
@@ -57,7 +74,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectTimetableDisplayNameProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectTimetableDisplayNameProperty()
         {
             string testValue = _random.NextString(_random.Next(5, 128));
             LocationModel testObject = new LocationModel { TimetableDisplayName = testValue };
@@ -68,7 +85,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectGraphDisplayNameProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectGraphDisplayNameProperty()
         {
             string testValue = _random.NextString(_random.Next(5, 128));
             LocationModel testObject = new LocationModel { GraphDisplayName = testValue };
@@ -79,7 +96,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectTiplocProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectTiplocProperty()
         {
             string testValue = _random.NextString(_random.Next(5, 128));
             LocationModel testObject = new LocationModel { Tiploc = testValue };
@@ -90,7 +107,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectUpArrivalDepartureAlwaysDisplayedProperty()
+        public void LocationModelExtensionsClass_ToLocationMethodReturns_ObjectWithCorrectUpArrivalDepartureAlwaysDisplayedProperty()
         {
             ArrivalDepartureOptions testValue = _random.NextArrivalDepartureOptions();
             LocationModel testObject = new LocationModel { UpArrivalDepartureAlwaysDisplayed = testValue };
@@ -101,7 +118,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectUpRoutingCodesAlwaysDisplayedPropertyIfPropertyIsNotNullInParameter()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectUpRoutingCodesAlwaysDisplayedProperty_IfPropertyIsNotNullInParameter()
         {
             TrainRoutingOptions testValue = _random.NextTrainRoutingOptions();
             LocationModel testObject = new LocationModel { UpRoutingCodesAlwaysDisplayed = testValue };
@@ -112,7 +129,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithUpRoutingCodesAlwaysDisplayedPropertyEqualToZeroIfPropertyIsNullInParameter()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithUpRoutingCodesAlwaysDisplayedPropertyEqualToZero_IfPropertyIsNullInParameter()
         {
             LocationModel testObject = new LocationModel { UpRoutingCodesAlwaysDisplayed = null };
 
@@ -122,7 +139,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectDownArrivalDepartureAlwaysDisplayedProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectDownArrivalDepartureAlwaysDisplayedProperty()
         {
             ArrivalDepartureOptions testValue = _random.NextArrivalDepartureOptions();
             LocationModel testObject = new LocationModel { DownArrivalDepartureAlwaysDisplayed = testValue };
@@ -133,7 +150,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectDownRoutingCodesAlwaysDisplayedPropertyIfPropertyIsNotNullInParameter()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectDownRoutingCodesAlwaysDisplayedProperty_IfPropertyIsNotNullInParameter()
         {
             TrainRoutingOptions testValue = _random.NextTrainRoutingOptions();
             LocationModel testObject = new LocationModel { DownRoutingCodesAlwaysDisplayed = testValue };
@@ -144,7 +161,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithMileagePropertyWithCorrectMileageProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithMileagePropertyWithCorrectMileageProperty()
         {
             DistanceModel testDistanceModelObject = GetRandomDistanceModel();
             LocationModel testObject = new LocationModel { Mileage = testDistanceModelObject };
@@ -154,17 +171,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             Assert.AreEqual(testDistanceModelObject.Mileage, result.Mileage.Mileage);
         }
 
-        private static DistanceModel GetRandomDistanceModel()
-        {
-            return new DistanceModel
-            {
-                Mileage = _random.Next(),
-                Chainage = _random.NextDouble() * 80,
-            };
-        }
-
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithMileagePropertyWithCorrectChainageProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithMileagePropertyWithCorrectChainageProperty()
         {
             DistanceModel testDistanceModelObject = GetRandomDistanceModel();
             LocationModel testObject = new LocationModel { Mileage = testDistanceModelObject };
@@ -175,7 +183,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void LocationModelExtensionsClassToLocationMethodReturnsObjectWithCorrectFontTypeProperty()
+        public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectFontTypeProperty()
         {
             LocationFontType testFontType = GetRandomLocationFontType();
             LocationModel testObject = new LocationModel { FontTypeName = testFontType.ToString("g") };
@@ -185,10 +193,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
             Assert.AreEqual(testFontType, result.FontType);
         }
 
-        private static LocationFontType GetRandomLocationFontType()
-        {
-            LocationFontType[] possibles = new[] { LocationFontType.Normal, LocationFontType.Condensed };
-            return possibles[_random.Next(possibles.Length)];
-        }
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

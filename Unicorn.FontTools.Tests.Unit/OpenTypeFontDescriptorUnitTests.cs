@@ -904,6 +904,7 @@ namespace Unicorn.FontTools.Tests.Unit
             Assert.AreEqual(expectedValue, testOutput);
         }
 
+        [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsTrue_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrinting()
         {
             OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing);

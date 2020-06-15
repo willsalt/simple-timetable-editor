@@ -62,8 +62,10 @@ namespace Timetabler.Data.Tests.Unit.Display
             };
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsNewObject()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsNewObject()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -73,7 +75,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithActualTimePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithActualTimePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -83,7 +85,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithDisplayedTextPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithDisplayedTextPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -93,7 +95,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithDisplayedTextFootnotePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithDisplayedTextFootnotePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -103,7 +105,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithDisplayedTextHoursPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithDisplayedTextHoursPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -113,7 +115,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithDisplayedTextMinutesPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithDisplayedTextMinutesPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -123,7 +125,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithEntryTypePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithEntryTypePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -133,7 +135,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithLocationKeyPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithLocationKeyPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -143,7 +145,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithLocationIdPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithLocationIdPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -153,7 +155,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassCopyMethodReturnsObjectWithIsPassingTimePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_CopyMethod_ReturnsObjectWithIsPassingTimePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -163,7 +165,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsNewObject()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsNewObject()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -173,7 +175,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithActualTimePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithActualTimePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -183,7 +185,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithDisplayedTextPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithDisplayedTextPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -193,7 +195,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithDisplayedTextFootnotePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithDisplayedTextFootnotePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -203,7 +205,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithDisplayedTextHoursPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithDisplayedTextHoursPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -213,7 +215,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithDisplayedTextMinutesPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithDisplayedTextMinutesPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -223,7 +225,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithEntryTypePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithEntryTypePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -233,7 +235,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithLocationKeyPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithLocationKeyPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -243,7 +245,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithLocationIdPropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithLocationIdPropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -253,7 +255,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassILocationEntryCopyMethodReturnsObjectWithIsPassingTimePropertyWithSameValue()
+        public void TrainLocationTimeModelClass_ILocationEntryCopyMethod_ReturnsObjectWithIsPassingTimePropertyWithSameValue()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -263,7 +265,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodDoesNotFailIfFirstParameterIsNull()
+        public void TrainLocationTimeModelClass_PopulateMethod_DoesNotFail_IfFirstParameterIsNull()
         {
             TrainLocationTimeModel testObject = GetTestObject();
 
@@ -271,7 +273,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodDoesNotFailIfFirstParameterTimePropertyIsNull()
+        public void TrainLocationTimeModelClass_PopulateMethod_DoesNotFail_IfFirstParameterTimePropertyIsNull()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = new TrainTime { Time = null };
@@ -280,7 +282,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodDoesNotFailIfSecondParameterIsNull()
+        public void TrainLocationTimeModelClass_PopulateMethod_DoesNotFail_IfSecondParameterIsNull()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = GetRandomTrainTime();
@@ -289,7 +291,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodSetsActualTimePropertyIfParametersAreProvided()
+        public void TrainLocationTimeModelClass_PopulateMethod_SetsActualTimeProperty_IfParametersAreProvided()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = GetRandomTrainTime();
@@ -301,7 +303,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodSetsEntryTypePropertyIfParametersAreProvided()
+        public void TrainLocationTimeModelClass_PopulateMethod_SetsEntryTypeProperty_IfParametersAreProvided()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = GetRandomTrainTime();
@@ -313,7 +315,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodSetsDisplayedTextPropertyIfParametersAreProvided()
+        public void TrainLocationTimeModelClass_PopulateMethod_SetsDisplayedTextProperty_IfParametersAreProvided()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = GetRandomTrainTime();
@@ -325,7 +327,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodSetsDisplayedTextHoursPropertyIfParametersAreProvided()
+        public void TrainLocationTimeModelClass_PopulateMethod_SetsDisplayedTextHoursProperty_IfParametersAreProvided()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = GetRandomTrainTime();
@@ -337,7 +339,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodSetsDisplayedTextMinutesPropertyIfParametersAreProvided()
+        public void TrainLocationTimeModelClass_PopulateMethod_SetsDisplayedTextMinutesProperty_IfParametersAreProvided()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = GetRandomTrainTime();
@@ -349,7 +351,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainLocationTimeModelClassPopulateMethodSetsDisplayedTextFootnotePropertyIfParametersAreProvided()
+        public void TrainLocationTimeModelClass_PopulateMethod_SetsDisplayedTextFootnoteProperty_IfParametersAreProvided()
         {
             TrainLocationTimeModel testObject = GetTestObject();
             TrainTime param0 = GetRandomTrainTime();
@@ -359,5 +361,8 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             Assert.AreEqual(param0.FootnoteSymbols, testObject.DisplayedTextFootnote);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

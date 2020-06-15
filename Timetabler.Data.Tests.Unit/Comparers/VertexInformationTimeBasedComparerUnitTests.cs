@@ -23,8 +23,10 @@ namespace Timetabler.Data.Tests.Unit.Comparers
             return new VertexInformation(new TrainDrawingInfo { Train = new Train() }, time, GetArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsMinusOneIfTimePropertyOfFirstParameterIsBeforeTimePropertyOfSecondParameter()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsMinusOne_IfTimePropertyOfFirstParameterIsBeforeTimePropertyOfSecondParameter()
         {
             VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDayBefore(86398)); // make sure there are a couple of seconds left in the day
             VertexInformation testParam1 = GetVertexInformation(_rnd.NextTimeOfDayAfter(testParam0.Time));
@@ -36,7 +38,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsZeroIfTImePropertyOfFirstParameterIsEqualToTimePropertyOfSecondParameter()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsZero_IfTImePropertyOfFirstParameterIsEqualToTimePropertyOfSecondParameter()
         {
             VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDay());
             VertexInformation testParam1 = GetVertexInformation(testParam0.Time.Copy());
@@ -48,7 +50,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsZeroIfTImePropertyOfFirstParameterIsSameAsTimePropertyOfSecondParameter()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsZero_IfTImePropertyOfFirstParameterIsSameAsTimePropertyOfSecondParameter()
         {
             VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDay());
             VertexInformation testParam1 = GetVertexInformation(testParam0.Time);
@@ -60,7 +62,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsOneIfTimePropertyOfFirstParameterIsAfterTimePropertyOfSecondParameter()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsOne_IfTimePropertyOfFirstParameterIsAfterTimePropertyOfSecondParameter()
         {
             VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDayAfter(1));
             VertexInformation testParam1 = GetVertexInformation(_rnd.NextTimeOfDayBefore(testParam0.Time));
@@ -72,7 +74,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsMinusOneIfFirstParameterIsNullAndSecondParameterIsNotNullAndHasNonNullTimeProperty()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsMinusOne_IfFirstParameterIsNullAndSecondParameterIsNotNullAndHasNonNullTimeProperty()
         {
             VertexInformation testParam0 = null;
             VertexInformation testParam1 = GetVertexInformation(_rnd.NextTimeOfDay());
@@ -84,7 +86,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsMinusOneIfFirstParameterHasNullTimePropertyAndSecondParameterIsNotNullAndHasNonNullTimeProperty()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsMinusOne_IfFirstParameterHasNullTimePropertyAndSecondParameterIsNotNullAndHasNonNullTimeProperty()
         {
             VertexInformation testParam0 = GetVertexInformation(null);
             VertexInformation testParam1 = GetVertexInformation(_rnd.NextTimeOfDay());
@@ -96,7 +98,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsOneIfFirstParameterIsNotNullAndHasNonNullTimePropertyAndSecondParameterIsNull()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsOne_IfFirstParameterIsNotNullAndHasNonNullTimePropertyAndSecondParameterIsNull()
         {
             VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDay());
             VertexInformation testParam1 = null;
@@ -108,7 +110,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsOneIfFirstParameterIsNotNullAndHasNonNullTimePropertyAndSecondParameterHasNullTimeProperty()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsOne_IfFirstParameterIsNotNullAndHasNonNullTimePropertyAndSecondParameterHasNullTimeProperty()
         {
             VertexInformation testParam0 = GetVertexInformation(_rnd.NextTimeOfDay());
             VertexInformation testParam1 = GetVertexInformation(null);
@@ -120,7 +122,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsZeroIfBothParametersAreNull()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsZero_IfBothParametersAreNull()
         {
             VertexInformationTimeBasedComparer testObject = new VertexInformationTimeBasedComparer();
 
@@ -130,7 +132,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsZeroIfFirstParameterIsNullAndSecondParameterHasNullTimeProperty()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsZero_IfFirstParameterIsNullAndSecondParameterHasNullTimeProperty()
         {
             VertexInformation testParam = GetVertexInformation(null);
             VertexInformationTimeBasedComparer testObject = new VertexInformationTimeBasedComparer();
@@ -141,7 +143,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsZeroIfFirstParameterHasNullTimePropertyAndSecondParameterIsNull()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsZero_IfFirstParameterHasNullTimePropertyAndSecondParameterIsNull()
         {
             VertexInformation testParam = GetVertexInformation(null);
             VertexInformationTimeBasedComparer testObject = new VertexInformationTimeBasedComparer();
@@ -152,7 +154,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void VertexInformationTimeBasedComparerClassCompareMethodReturnsZeroIfBothParametersHaveNullTimeProperty()
+        public void VertexInformationTimeBasedComparerClass_CompareMethod_ReturnsZero_IfBothParametersHaveNullTimeProperty()
         {
             VertexInformation testParam0 = GetVertexInformation(null);
             VertexInformation testParam1 = GetVertexInformation(null);
@@ -162,5 +164,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
 
             Assert.AreEqual(0, testOutput);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

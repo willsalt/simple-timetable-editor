@@ -575,7 +575,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniTextSizeClass_IneEqualityOperator_ReturnsTrue_IfOperandsDifferByDescenderHeightProperty()
+        public void UniTextSizeClass_InequalityOperator_ReturnsTrue_IfOperandsDifferByDescenderHeightProperty()
         {
             UniTextSize testValue = GetTestValue();
             double constrParam;

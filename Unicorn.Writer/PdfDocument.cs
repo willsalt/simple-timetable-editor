@@ -184,7 +184,7 @@ namespace Unicorn.Writer
             }
         }
 
-        private IEnumerable<IPdfFilterEncoder> GetFontEncoders()
+        private static IEnumerable<IPdfFilterEncoder> GetFontEncoders()
         {
             if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.AsciiEncodeBinaryStreams))
             {

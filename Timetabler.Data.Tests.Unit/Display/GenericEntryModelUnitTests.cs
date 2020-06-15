@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
 
@@ -10,10 +11,12 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class GenericEntryModelUnitTests
     {
-        private static Random _rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void GenericEntryModelClassDisplayAdapterPropertyDisplayChangedMethodIsCalledWhenSetMethodIsCalled()
+        public void GenericEntryModelClass_DisplayAdapterPropertyDisplayChangedMethod_IsCalledWhenSetMethodIsCalled()
         {
             Mock<ILocationEntryDisplayAdapter> mockDisplayAdapter = new Mock<ILocationEntryDisplayAdapter>();
             GenericEntryModel testObject = new GenericEntryModel();
@@ -24,7 +27,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void GenericEntryModelClassDisplayAdapterPropertyDisplayChangedMethodIsCalledWithCorrectParameterWhenSetMethodIsCalled()
+        public void GenericEntryModelClass_DisplayAdapterPropertyDisplayChangedMethod_IsCalledWithCorrectParameterWhenSetMethodIsCalled()
         {
             Mock<ILocationEntryDisplayAdapter> mockDisplayAdapter = new Mock<ILocationEntryDisplayAdapter>();
             string testValue = _rnd.NextString(_rnd.Next(20) + 1);
@@ -36,7 +39,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void GenericEntryModelClassDisplayAdapterPropertyDisplayChangedMethodIsCalledWhenDisplayedTextPropertySetMethodIsCalled()
+        public void GenericEntryModelClass_DisplayAdapterPropertyDisplayChangedMethod_IsCalledWhenDisplayedTextPropertySetMethodIsCalled()
         {
             Mock<ILocationEntryDisplayAdapter> mockDisplayAdapter = new Mock<ILocationEntryDisplayAdapter>();
             string testValue = _rnd.NextString(_rnd.Next(20) + 1);
@@ -49,7 +52,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void GenericEntryModelClassDisplayAdapterPropertyDisplayChangedMethodIsCalledWithCorrectParameterWHenDisplayedTextPropertySetMethodIsCalled()
+        public void GenericEntryModelClass_DisplayAdapterPropertyDisplayChangedMethod_IsCalledWithCorrectParameterWhenDisplayedTextPropertySetMethodIsCalled()
         {
             Mock<ILocationEntryDisplayAdapter> mockDisplayAdapter = new Mock<ILocationEntryDisplayAdapter>();
             string testValue = _rnd.NextString(_rnd.Next(20) + 1);
@@ -60,5 +63,8 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             mockDisplayAdapter.Verify(m => m.DisplayedTextChanged(testValue), Times.Once());
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

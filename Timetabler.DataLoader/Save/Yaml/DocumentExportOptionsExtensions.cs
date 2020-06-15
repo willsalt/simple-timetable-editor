@@ -38,6 +38,7 @@ namespace Timetabler.DataLoader.Save.Yaml
                 GraphPageOrientation = options.GraphPageOrientation,
                 UpSectionLabel = options.UpSectionLabel,
                 DownSectionLabel = options.DownSectionLabel,
+                DistancesInOutput = options.DistancesInOutput,
             };
         }
     }

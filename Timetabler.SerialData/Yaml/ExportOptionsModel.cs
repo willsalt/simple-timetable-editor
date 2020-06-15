@@ -81,5 +81,10 @@ namespace Timetabler.SerialData.Yaml
         /// The label used at the top left of Down timetable sections.
         /// </summary>
         public string DownSectionLabel { get; set; }
+
+        /// <summary>
+        /// Whether or not to show a table of distances in the output.
+        /// </summary>
+        public SectionSelection? DistancesInOutput { get; set; }
     }
 }

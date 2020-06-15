@@ -37,6 +37,7 @@ namespace Timetabler.DataLoader.Load.Yaml
                 DisplayGraph = model.GraphsInOutput ?? true,
                 TablePageOrientation = model.TablePageOrientation ?? Orientation.Landscape,
                 GraphPageOrientation = model.GraphPageOrientation ?? Orientation.Landscape,
+                DistancesInOutput = model.DistancesInOutput ?? SectionSelection.None,
             };
             if (!(model.UpSectionLabel is null))
             {

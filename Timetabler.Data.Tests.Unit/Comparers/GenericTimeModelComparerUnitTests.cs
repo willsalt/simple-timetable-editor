@@ -10,10 +10,12 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     [TestClass]
     public class GenericTimeModelComparerUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsZeroWhenBothParametersAreNull()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsZeroWhenBothParametersAreNull()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = null;
@@ -25,7 +27,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsZeroWhenFirstParameterIsNullAndSecondParameterIsObjectWithActualTimePropertyEqualToNull()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsZero_IfFirstParameterIsNullAndSecondParameterIsObjectWithActualTimePropertyEqualToNull()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = null;
@@ -37,7 +39,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsZeroWhenFirstParameterIsObjectWithActualTimePropertyEqualToNullAndSecondParameterIsNull()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsZero_IfFirstParameterIsObjectWithActualTimePropertyEqualToNullAndSecondParameterIsNull()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = null };
@@ -49,7 +51,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsZeroWhenBothParametersAreObjectsWithActualTimePropertyEqualToNull()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsZero_IfBothParametersAreObjectsWithActualTimePropertyEqualToNull()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = null };
@@ -61,7 +63,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsMinusOneWhenFirstParameterIsNullAndSecondParameterIsValidObject()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsMinusOne_IfFirstParameterIsNullAndSecondParameterIsValidObject()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = null;
@@ -73,7 +75,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsMinusOneWhenFirstParameterHasNullActualTimePropertyAndSecondParameterIsValidObject()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsMinusOne_IfFirstParameterHasNullActualTimePropertyAndSecondParameterIsValidObject()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = null };
@@ -85,7 +87,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsOneWhenFirstParameterIsValidObjectAndSecondParameterIsNull()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsOne_IfFirstParameterIsValidObjectAndSecondParameterIsNull()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay() };
@@ -97,7 +99,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsOneWhenFirstParameterIsValidObjectAndSecondParameterHasNullActualTimeProperty()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsOne_IfFirstParameterIsValidObjectAndSecondParameterHasNullActualTimeProperty()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay() };
@@ -109,7 +111,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsZeroWhenFirstParameterActualTimePropertyIsEqualToSecondParameterActualTimeProperty()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsZero_IfFirstParameterActualTimePropertyIsEqualToSecondParameterActualTimeProperty()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay() };
@@ -121,7 +123,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsZeroWhenFirstParameterActualTimePropertyIsSameAsSecondParameterActualTimeProperty()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsZero_IfFirstParameterActualTimePropertyIsSameAsSecondParameterActualTimeProperty()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay() };
@@ -133,7 +135,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsMinusOneWhenFirstParameterActualTimePropertyIsBeforeSecondParameterActualTimeProperty()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsMinusOne_IfFirstParameterActualTimePropertyIsBeforeSecondParameterActualTimeProperty()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDayBefore(86398) };
@@ -145,7 +147,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void GenericTimeModelComparerClassCompareMethodReturnsOneWhenFirstParameterActualTimePropertyIsAfterSecondParameterActualTimeProperty()
+        public void GenericTimeModelComparerClass_CompareMethod_ReturnsOne_IfFirstParameterActualTimePropertyIsAfterSecondParameterActualTimeProperty()
         {
             GenericTimeModelComparer testObject = GenericTimeModelComparer.Default;
             GenericTimeModel testParam0 = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDayAfter(2) };
@@ -155,5 +157,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
 
             Assert.AreEqual(1, testOutput);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

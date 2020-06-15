@@ -15,8 +15,10 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     {
         private static readonly Random _random = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void GraphTrainPropertiesModelExtensionsClassToGraphTrainPropertiesMethodDoesNotReturnNullIfParameterIsNull()
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesMethod_DoesNotReturnNull_IfParameterIsNull()
         {
             GraphTrainPropertiesModel testObject = new GraphTrainPropertiesModel();
 
@@ -26,7 +28,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void GraphTrainPropertiesModelExtensionsClassToGraphTrainPropertiesMethodReturnsNullIfParameterIsNull()
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesMethod_ReturnsNull_IfParameterIsNull()
         {
             GraphTrainPropertiesModel testObject = null;
 
@@ -36,7 +38,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void GraphTrainPropertiesModelExtensionsClassToGraphTrainPropertiesMethodReturnsObjectWithCorrectColourProperty()
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesMethod_ReturnsObjectWithCorrectColourProperty()
         {
             Color testColour = Color.FromArgb(_random.Next());
             GraphTrainPropertiesModel testObject = new GraphTrainPropertiesModel { ColourCode = testColour.ToArgb().ToString("X8", CultureInfo.InvariantCulture) };
@@ -47,7 +49,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void GraphTrainPropertiesModelExtensionsClassToGraphTrainPropertiesMethodReturnsObjectWithCorrectDashStyleProperty()
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesMethod_ReturnsObjectWithCorrectDashStyleProperty()
         {
             DashStyle[] validDashStyles = new[] { DashStyle.Dash, DashStyle.DashDot, DashStyle.DashDotDot, DashStyle.Dot, DashStyle.Solid };
             DashStyle testDashStyle = validDashStyles[_random.Next(validDashStyles.Length)];
@@ -59,7 +61,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void GraphTrainPropertiesModelExtensionsClassToGraphTrainPropertiesMethodReturnsObjectWithCorrectWidthProperty()
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesMethod_ReturnsObjectWithCorrectWidthProperty()
         {
             float testWidth = (float)(_random.NextDouble() * 10);
             GraphTrainPropertiesModel testObject = new GraphTrainPropertiesModel { Width = testWidth };
@@ -68,5 +70,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
 
             Assert.AreEqual(testWidth, testResult.Width);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

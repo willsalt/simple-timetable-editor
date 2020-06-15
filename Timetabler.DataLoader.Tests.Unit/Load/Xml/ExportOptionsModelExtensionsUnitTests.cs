@@ -12,8 +12,10 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
     {
         private const int TestMultipleRuns = 10;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void ExportOptionsModelExtensionsClassToDocumentExportOptionsMethodReturnsObjectThatIsNotNullIfParameterIsNotNull()
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ReturnsObjectThatIsNotNull_IfParameterIsNotNull()
         {
             ExportOptionsModel testSourceObject = new ExportOptionsModel();
 
@@ -23,7 +25,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelExtensionsClassToDocumentExportOptionsMethodReturnsObjectWithCorrectDisplayLocoDiagramRowPropertyIfParameterIsNotNull()
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ReturnsObjectWithCorrectDisplayLocoDiagramRowProperty_IfParameterIsNotNull()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)
@@ -38,7 +40,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelExtensionsClassToDocumentExportOptionsMethodReturnsObjectWithCorrectDisplayToWorkRowPropertyIfParameterIsNotNull()
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ReturnsObjectWithCorrectDisplayToWorkRowProperty_IfParameterIsNotNull()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)
@@ -53,7 +55,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelExtensionsClassToDocumentExportOptionsMethodReturnsObjectWithCorrectDisplayLocoToWorkRowPropertyIfParameterIsNotNull()
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ReturnsObjectWithCorrectDisplayLocoToWorkRowProperty_IfParameterIsNotNull()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)
@@ -68,7 +70,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelExtensionsClassToDocumentExportOptionsMethodReturnsObjectWithCorrectDisplayBoxHoursPropertyIfParameterIsNotNull()
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ReturnsObjectWithCorrectDisplayBoxHoursProperty_IfParameterIsNotNull()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)
@@ -83,7 +85,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelExtensionsClassToDocumentExportOptionsMethodReturnsObjectWithCorrectDisplayCreditsPropertyIfParameterIsNotNull()
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ReturnsObjectWithCorrectDisplayCreditsProperty_IfParameterIsNotNull()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)
@@ -98,7 +100,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelExtensionsClassToDocumentExportOptionsMethodReturnsObjectWithCorrectDisplayGlossaryPropertyIfParameterIsNotNull()
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ReturnsObjectWithCorrectDisplayGlossaryProperty_IfParameterIsNotNull()
         {
             Random random = new Random();
             for (int i = 0; i < TestMultipleRuns; ++i)
@@ -111,5 +113,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Xml
                 Assert.AreEqual(testValue, testResultObject.DisplayGlossary);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

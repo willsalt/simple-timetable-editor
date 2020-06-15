@@ -240,7 +240,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeStruct_GetHashCodeMethod_ReturnsSameValueWhenCalledTwice()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsSameValue_IfCalledTwice()
         {
             UniSize testObject = GetUniSize();
 
@@ -251,7 +251,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeStruct_GetHashCodeMethod_ReturnsSameValueWhenCalledOnTwoValuesWithSameWidthAndHeightProperties()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsSameValue_IfCalledOnTwoValuesWithSameWidthAndHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
             UniSize testObject1 = new UniSize(testObject0.Width, testObject0.Height);
@@ -263,7 +263,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeSutrct_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoValuesWithDifferentWidthAndHeightProperties()
+        public void UniSizeSutrct_GetHashCodeMethod_ReturnsDifferentValue_IfCalledOnTwoValuesWithDifferentWidthAndHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
             UniSize testObject1 = new UniSize(testObject0.Width + 100, testObject0.Height + 100);
@@ -275,7 +275,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeStruct_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoValuesWithDifferentWidthAndSameHeightProperties()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsDifferentValue_IfCalledOnTwoValuesWithDifferentWidthAndSameHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
             UniSize testObject1 = new UniSize(testObject0.Width + 100, testObject0.Height);
@@ -287,7 +287,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniSizeStruct_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnTwoValuesWithSameWidthAndDifferentHeightProperties()
+        public void UniSizeStruct_GetHashCodeMethod_ReturnsDifferentValue_IfCalledOnTwoValuesWithSameWidthAndDifferentHeightProperties()
         {
             UniSize testObject0 = GetUniSize();
             UniSize testObject1 = new UniSize(testObject0.Width, testObject0.Height + 100);

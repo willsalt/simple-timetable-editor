@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.SerialData.Tests.Unit.Yaml
@@ -105,7 +103,6 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
-
 
     }
 }

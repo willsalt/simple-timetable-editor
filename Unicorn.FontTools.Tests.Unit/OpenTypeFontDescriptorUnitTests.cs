@@ -872,6 +872,7 @@ namespace Unicorn.FontTools.Tests.Unit
             Assert.AreEqual(expectedValue, testOutput);
         }
 
+        [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsFalse_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestricted()
         {
             OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted);
@@ -903,6 +904,7 @@ namespace Unicorn.FontTools.Tests.Unit
             Assert.AreEqual(expectedValue, testOutput);
         }
 
+        [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsTrue_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrinting()
         {
             OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing);
@@ -934,6 +936,7 @@ namespace Unicorn.FontTools.Tests.Unit
             Assert.AreEqual(expectedValue, testOutput);
         }
 
+        [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsTrue_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditable()
         {
             OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable);

@@ -9,10 +9,12 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class VertexInformationUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void VertexInformationClassConstructorSetsTrainDrawingInfoPropertyToValueOfFirstParameter()
+        public void VertexInformationClass_Constructor_SetsTrainDrawingInfoPropertyToValueOfFirstParameter()
         {
             TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
@@ -26,7 +28,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void VertexInformationClassConstructorSetsTrainPropertyToValueOfTrainPropertyOfFirstParameter()
+        public void VertexInformationClass_Constructor_SetsTrainPropertyToValueOfTrainPropertyOfFirstParameter()
         {
             TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
@@ -40,7 +42,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void VertexInformationClassConstructorSetsTimePropertyToValueOfSecondParameter()
+        public void VertexInformationClass_Constructor_SetsTimePropertyToValueOfSecondParameter()
         {
             TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
@@ -54,7 +56,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void VertexInformationClassConstructorSetsArrivalDeparturePropertyToValueOfThirdParameter()
+        public void VertexInformationClass_Constructor_SetsArrivalDeparturePropertyToValueOfThirdParameter()
         {
             TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
@@ -68,7 +70,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void VertexInformationClassConstructorSetsXPropertyToValueOfFourthParameter()
+        public void VertexInformationClass_Constructor_SetsXPropertyToValueOfFourthParameter()
         {
             TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
@@ -77,10 +79,12 @@ namespace Timetabler.Data.Tests.Unit.Display
             double testParam4 = _rnd.NextDouble();
 
             VertexInformation testOutput = new VertexInformation(testParam0, testParam1, testParam2, testParam3, testParam4);
+
+            Assert.AreEqual(testParam3, testOutput.X);
         }
 
         [TestMethod]
-        public void VertexInformationClassConstructorSetsYPropertyToValueOfFifthParameter()
+        public void VertexInformationClass_Constructor_SetsYPropertyToValueOfFifthParameter()
         {
             TrainDrawingInfo testParam0 = new TrainDrawingInfo { Train = new Train() };
             TimeOfDay testParam1 = new TimeOfDay(_rnd.Next(86400));
@@ -92,5 +96,8 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             Assert.AreEqual(testParam4, testOutput.Y);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

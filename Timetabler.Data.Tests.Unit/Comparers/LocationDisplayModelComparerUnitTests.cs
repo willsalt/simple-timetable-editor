@@ -14,8 +14,10 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsZeroIfConstructedForUpAndBothParametersAreNull()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsZero_IfConstructedForUpAndBothParametersAreNull()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
 
@@ -25,7 +27,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsZeroIfConstructedForDownAndBothParametersAreNull()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsZero_IfConstructedForDownAndBothParametersAreNull()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
 
@@ -35,7 +37,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForUpFirstParameterIsNullAndSecondParameterIsNotNull()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsMinusOne_IfConstructedForUpFirstParameterIsNullAndSecondParameterIsNotNull()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
             LocationDisplayModel location = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -46,7 +48,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForDownFirstParameterIsNullAndSecondParameterIsNotNull()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsMinusOne_IfConstructedForDownFirstParameterIsNullAndSecondParameterIsNotNull()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
             LocationDisplayModel location = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -57,7 +59,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsOneIfConstructedForUpFirstParameterIsNotNullAndSecondParameterIsNull()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsOne_IfConstructedForUpFirstParameterIsNotNullAndSecondParameterIsNull()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
             LocationDisplayModel location = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -68,7 +70,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsOneIfConstructedForDownFirstParameterIsNotNullAndSecondParameterIsNull()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsOne_IfConstructedForDownFirstParameterIsNotNullAndSecondParameterIsNull()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
             LocationDisplayModel location = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -79,7 +81,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsOneIfConstructedForUpAndFirstParameterHasLowerMileageThanSecondParameter()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsOne_IfConstructedForUpAndFirstParameterHasLowerMileageThanSecondParameter()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
             LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -91,7 +93,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForDownAndFirstParameterHasLowerMileageThanSecondParameter()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsMinusOne_IfConstructedForDownAndFirstParameterHasLowerMileageThanSecondParameter()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
             LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -103,7 +105,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForUpAndFirstParameterHasGreaterMileageThanSecondParameter()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsMinusOne_IfConstructedForUpAndFirstParameterHasGreaterMileageThanSecondParameter()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
             LocationDisplayModel y = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -115,7 +117,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsOneIfConstructedForDownAndFirstParameterHasGreaterMileageThanSecondParameter()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsOne_IfConstructedForDownAndFirstParameterHasGreaterMileageThanSecondParameter()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
             LocationDisplayModel y = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance() };
@@ -127,7 +129,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForUpAndParametersHaveSameMileageAndFirstParameterIsArrivalRowAndSecondParameterIsDepartureRow()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsMinusOne_IfConstructedForUpAndParametersHaveSameMileageAndFirstParameterIsArrivalRowAndSecondParameterIsDepartureRow()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
             LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = _rnd.NextHexString(8) + "-a" };
@@ -139,7 +141,7 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         }
 
         [TestMethod]
-        public void LocationDisplayModelComparerClassCompareMethodReturnsMinusOneIfConstructedForDownAndParametersHaveSameMileageAndFirstParameterIsArrivalRowAndSecondParameterIsDepartureRow()
+        public void LocationDisplayModelComparerClass_CompareMethod_ReturnsMinusOne_IfConstructedForDownAndParametersHaveSameMileageAndFirstParameterIsArrivalRowAndSecondParameterIsDepartureRow()
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
             LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = _rnd.NextHexString(8) + "-a" };
@@ -149,5 +151,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
 
             Assert.AreEqual(-1, result);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
@@ -10,10 +11,12 @@ namespace Timetabler.Data.Tests.Unit
     [TestClass]
     public class ToWorkUnitTests
     {
-        private static Random _rnd = new Random();
+        private static readonly Random _rnd = RandomProvider.Default;
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void ToWorkClassCopyMethodReturnsCorrectTextProperty()
+        public void ToWorkClass_CopyMethod_ReturnsCorrectTextProperty()
         {
             string testText = _rnd.NextString(_rnd.Next(256));
             ToWork testObject = new ToWork { Text = testText };
@@ -24,7 +27,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassCopyMethodReturnsCorrectAtTimePropertyIfAtTimeIsNull()
+        public void ToWorkClass_CopyMethod_ReturnsCorrectAtTimeProperty_IfAtTimeIsNull()
         {
             ToWork testObject = new ToWork { AtTime = null };
 
@@ -34,7 +37,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassCopyMethodReturnsCorrectAtTimePropertyIfAtTimeIsNotNull()
+        public void ToWorkClass_CopyMethod_ReturnsCorrectAtTimeProperty_IfAtTimeIsNotNull()
         {
             TimeOfDay testTime = _rnd.NextTimeOfDay();
             ToWork testObject = new ToWork { AtTime = testTime };
@@ -46,7 +49,7 @@ namespace Timetabler.Data.Tests.Unit
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ToWorkClassCopyToMethodThrowsArgumentNullExceptionIfParameterIsNull()
+        public void ToWorkClass_CopyToMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay() };
 
@@ -56,7 +59,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassCopyToMethodSetsAtTimePropertyOfParameter()
+        public void ToWorkClass_CopyToMethod_SetsAtTimePropertyOfParameter()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = _rnd.NextString(_rnd.Next(64)) };
             ToWork testTarget = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = _rnd.NextString(_rnd.Next(64)) };
@@ -67,7 +70,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassCopyToMethodSetsTextPropertyOfParameter()
+        public void ToWorkClass_CopyToMethod_SetsTextPropertyOfParameter()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = _rnd.NextString(_rnd.Next(64)) };
             ToWork testTarget = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = _rnd.NextString(_rnd.Next(64)) };
@@ -78,7 +81,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodDoesNotThrowExceptionIfFirstParameterIsNull()
+        public void ToWorkClass_UpdateModelMethod_DoesNotThrowException_IfFirstParameterIsNull()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = _rnd.NextString(_rnd.Next(64)) };
 
@@ -86,7 +89,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsActualTimePropertyOfTargetToNullIfTextPropertyIsSet()
+        public void ToWorkClass_UpdateModelMethod_SetsActualTimePropertyOfTargetToNull_IfTextPropertyIsSet()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = _rnd.NextString(_rnd.Next(64) + 1) };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -97,7 +100,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsDisplayedTextPropertyOfTargetIfTextPropertyIsSet()
+        public void ToWorkClass_UpdateModelMethod_SetsDisplayedTextPropertyOfTarget_IfTextPropertyIsSet()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = _rnd.NextString(_rnd.Next(64) + 1) };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -108,7 +111,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsActualTimePropertyOfTargetIfTextPropertyIsEmptyString()
+        public void ToWorkClass_UpdateModelMethod_SetsActualTimePropertyOfTarget_IfTextPropertyIsEmptyString()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = "" };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -119,7 +122,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsDisplayedTextPropertyOfTargetCorrectlyIfTextPropertyIsEmptyStringAndSecondParameterIsNull()
+        public void ToWorkClass_UpdateModelMethod_SetsDisplayedTextPropertyOfTargetCorrectly_IfTextPropertyIsEmptyStringAndSecondParameterIsNull()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = "" };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -130,7 +133,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsDisplayedTextPropertyOfTargetCorrectlyIfTextPropertyIsEmptyStringAndSecondParameterIsNotNull()
+        public void ToWorkClass_UpdateModelMethod_SetsDisplayedTextPropertyOfTargetCorrectly_IfTextPropertyIsEmptyStringAndSecondParameterIsNotNull()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = "" };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -141,7 +144,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsActualTimePropertyOfTargetIfTextPropertyIsNull()
+        public void ToWorkClass_UpdateModelMethod_SetsActualTimePropertyOfTarget_IfTextPropertyIsNull()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = null };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -152,7 +155,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsDisplayedTextPropertyOfTargetCorrectlyIfTextPropertyIsNullAndSecondParameterIsNull()
+        public void ToWorkClass_UpdateModelMethod_SetsDisplayedTextPropertyOfTargetCorrectly_IfTextPropertyIsNullAndSecondParameterIsNull()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = null };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -163,7 +166,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsDisplayedTextPropertyOfTargetCorrectlyIfTextPropertyIsNullAndSecondParameterIsNotNull()
+        public void ToWorkClass_UpdateModelMethod_SetsDisplayedTextPropertyOfTargetCorrectly_IfTextPropertyIsNullAndSecondParameterIsNotNull()
         {
             ToWork testObject = new ToWork { AtTime = _rnd.NextTimeOfDay(), Text = null };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -174,7 +177,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsActualTimePropertyOfTargetToNullIfAtTimePropertyIsNullAndTextPropertyIsEmptyString()
+        public void ToWorkClass_UpdateModelMethod_SetsActualTimePropertyOfTargetToNull_IfAtTimePropertyIsNullAndTextPropertyIsEmptyString()
         {
             ToWork testObject = new ToWork { AtTime = null, Text = "" };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -185,7 +188,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsDisplayedTextPropertyOfTargetToEmptyStringIfAtTimePropertyIsNullAndTextPropertyIsEmptyString()
+        public void ToWorkClass_UpdateModelMethod_SetsDisplayedTextPropertyOfTargetToEmptyString_IfAtTimePropertyIsNullAndTextPropertyIsEmptyString()
         {
             ToWork testObject = new ToWork { AtTime = null, Text = "" };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -196,7 +199,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsActualTimePropertyOfTargetToNullIfAtTimePropertyIsNullAndTextPropertyIsNull()
+        public void ToWorkClass_UpdateModelMethod_SetsActualTimePropertyOfTargetToNull_IfAtTimePropertyIsNullAndTextPropertyIsNull()
         {
             ToWork testObject = new ToWork { AtTime = null, Text = null };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -207,7 +210,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void ToWorkClassUpdateModelMethodSetsDisplayedTextPropertyOfTargetToEmptyStringIfAtTimePropertyIsNullAndTextPropertyIsNull()
+        public void ToWorkClass_UpdateModelMethod_SetsDisplayedTextPropertyOfTargetToEmptyString_IfAtTimePropertyIsNullAndTextPropertyIsNull()
         {
             ToWork testObject = new ToWork { AtTime = null, Text = null };
             GenericTimeModel testTarget = new GenericTimeModel { ActualTime = _rnd.NextTimeOfDay(), DisplayedText = _rnd.NextString(_rnd.Next(64)) };
@@ -216,5 +219,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual("", testTarget.DisplayedText);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -13,8 +13,10 @@ namespace Timetabler.Data.Tests.Unit.Display
             return FootnoteDisplayModelHelpers.GetFootnoteDisplayModel();
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyMethodReturnsDifferentObject()
+        public void FootnoteDisplayModelClass_CopyMethod_ReturnsDifferentObject()
         {
             FootnoteDisplayModel testObject = GetTestObject();
 
@@ -24,7 +26,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyMethodReturnsObjectWithSameNoteIdProperty()
+        public void FootnoteDisplayModelClass_CopyMethod_ReturnsObjectWithSameNoteIdProperty()
         {
             FootnoteDisplayModel testObject = GetTestObject();
 
@@ -34,7 +36,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyMethodReturnsObjectWithSameSymbolProperty()
+        public void FootnoteDisplayModelClass_CopyMethod_ReturnsObjectWithSameSymbolProperty()
         {
             FootnoteDisplayModel testObject = GetTestObject();
 
@@ -44,7 +46,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyMethodReturnsObjectWithSameDefinitionProperty()
+        public void FootnoteDisplayModelClass_CopyMethod_ReturnsObjectWithSameDefinitionProperty()
         {
             FootnoteDisplayModel testObject = GetTestObject();
 
@@ -54,7 +56,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyMethodReturnsObjectWithSameDisplayOnPageProperty()
+        public void FootnoteDisplayModelClass_CopyMethod_ReturnsObjectWithSameDisplayOnPageProperty()
         {
             FootnoteDisplayModel testObject = GetTestObject();
 
@@ -65,7 +67,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void FootnoteDisplayModelClassCopyToMethodThrowsArgumentNullExceptionIfParameterIsNull()
+        public void FootnoteDisplayModelClass_CopyToMethod_ThrowsArgumentNullExceptionIfParameterIsNull()
         {
             FootnoteDisplayModel testObject = GetTestObject();
 
@@ -75,7 +77,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyToMethodSetsNoteIdPropertyOfTarget()
+        public void FootnoteDisplayModelClass_CopyToMethod_SetsNoteIdPropertyOfTarget()
         {
             FootnoteDisplayModel testObject = GetTestObject();
             FootnoteDisplayModel targetObject = GetTestObject();
@@ -86,7 +88,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyToMethodSetsSymbolPropertyOfTarget()
+        public void FootnoteDisplayModelClass_CopyToMethod_SetsSymbolPropertyOfTarget()
         {
             FootnoteDisplayModel testObject = GetTestObject();
             FootnoteDisplayModel targetObject = GetTestObject();
@@ -97,7 +99,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyToMethodSetsDefinitionPropertyOfTarget()
+        public void FootnoteDisplayModelClass_CopyToMethod_SetsDefinitionPropertyOfTarget()
         {
             FootnoteDisplayModel testObject = GetTestObject();
             FootnoteDisplayModel targetObject = GetTestObject();
@@ -108,7 +110,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void FootnoteDisplayModelClassCopyToMethodSetsDisplayOnPagePropertyOfTarget()
+        public void FootnoteDisplayModelClass_CopyToMethod_SetsDisplayOnPagePropertyOfTarget()
         {
             FootnoteDisplayModel testObject = GetTestObject();
             FootnoteDisplayModel targetObject = GetTestObject();
@@ -117,5 +119,8 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             Assert.AreEqual(testObject.DisplayOnPage, targetObject.DisplayOnPage);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

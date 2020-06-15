@@ -13,10 +13,12 @@ namespace Timetabler.Data.Tests.Unit.Extensions
     [TestClass]
     public class IEnumerableExtensionsUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void IEnumerableExtensionsClassLaterThanMethodReturnsCorrectNumberOfItems()
+        public void IEnumerableExtensionsClass_LaterThanMethod_ReturnsCorrectNumberOfItems()
         {
             int listLen = _rnd.Next(100) + 2;
             List<VertexInformation> rawData = new List<VertexInformation>(listLen);
@@ -41,7 +43,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        public void IEnumerableExtensionsClassLaterThanMethodReturnsCorrectItems()
+        public void IEnumerableExtensionsClass_LaterThanMethod_ReturnsCorrectItems()
         {
             int listLen = _rnd.Next(100) + 2;
             List<VertexInformation> rawData = new List<VertexInformation>(listLen);
@@ -72,7 +74,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        public void IEnumerableExtensionsClassEarlierThanMethodReturnsCorrectNumberOfItems()
+        public void IEnumerableExtensionsClass_EarlierThanMethod_ReturnsCorrectNumberOfItems()
         {
             int listLen = _rnd.Next(100) + 2;
             List<VertexInformation> rawData = new List<VertexInformation>(listLen);
@@ -97,7 +99,7 @@ namespace Timetabler.Data.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        public void IEnumerableExtensionsClassEarlierThanMethodReturnsCorrectItems()
+        public void IEnumerableExtensionsClass_EarlierThanMethod_ReturnsCorrectItems()
         {
             int listLen = _rnd.Next(100) + 2;
             List<VertexInformation> rawData = new List<VertexInformation>(listLen);
@@ -126,5 +128,8 @@ namespace Timetabler.Data.Tests.Unit.Extensions
                 Assert.IsTrue(unfiltered.Time > cut.Time);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

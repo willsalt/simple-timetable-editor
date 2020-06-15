@@ -10,21 +10,23 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     [TestClass]
     public class SignalboxHoursModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void SignalboxHoursModelClassIsPublic()
+        public void SignalboxHoursModelClass_IsPublic()
         {
             Assert.IsTrue(typeof(SignalboxHoursModel).IsPublic);
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassHasPublicParameterlessConstructor()
+        public void SignalboxHoursModelClass_HasPublicParameterlessConstructor()
         {
             ConstructorInfo cInfo = typeof(SignalboxHoursModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassHasPublicSignalboxIdPropertyOfTypeString()
+        public void SignalboxHoursModelClass_HasPublicSignalboxIdPropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(SignalboxHoursModel).GetProperty("SignalboxId");
             Assert.IsNotNull(pInfo);
@@ -34,13 +36,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassSignalboxIdPropertyIsDecoratedWithXmlElementAttribute()
+        public void SignalboxHoursModelClass_SignalboxIdProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(SignalboxHoursModel).GetProperty("SignalboxId").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassHasPublicStartTimePropertyOfTypeTimeOfDayModel()
+        public void SignalboxHoursModelClass_HasPublicStartTimePropertyOfTypeTimeOfDayModel()
         {
             PropertyInfo pInfo = typeof(SignalboxHoursModel).GetProperty("StartTime");
             Assert.IsNotNull(pInfo);
@@ -50,13 +52,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassStartTimePropertyIsDecoratedWithXmlElementAttribute()
+        public void SignalboxHoursModelClass_StartTimeProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(SignalboxHoursModel).GetProperty("StartTime").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassHasPublicFinishTimePropertyOfTypeTimeOfDayModel()
+        public void SignalboxHoursModelClass_HasPublicFinishTimePropertyOfTypeTimeOfDayModel()
         {
             PropertyInfo pInfo = typeof(SignalboxHoursModel).GetProperty("FinishTime");
             Assert.IsNotNull(pInfo);
@@ -66,13 +68,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassFinishTimePropertyIsDecoratedWithXmlElementAttribute()
+        public void SignalboxHoursModelClass_FinishTimeProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(SignalboxHoursModel).GetProperty("FinishTime").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassHasPublicTokenBalanceWarningPropertyOfTypeBool()
+        public void SignalboxHoursModelClass_HasPublicTokenBalanceWarningPropertyOfTypeBool()
         {
             PropertyInfo pInfo = typeof(SignalboxHoursModel).GetProperty("TokenBalanceWarning");
             Assert.IsNotNull(pInfo);
@@ -82,9 +84,12 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void SignalboxHoursModelClassTokenBalanceWarningPropertyIsDecoratedWithXmlElementAttribute()
+        public void SignalboxHoursModelClass_TokenBalanceWarningProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(SignalboxHoursModel).GetProperty("TokenBalanceWarning").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

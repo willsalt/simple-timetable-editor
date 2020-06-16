@@ -33,6 +33,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
                 GraphPageOrientation = _rnd.NextNullableOrientation(),
                 UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
                 DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+                DistancesInOutput = _rnd.NextNullableSectionSelection(),
             };
         }
 
@@ -467,6 +468,28 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
 
             Assert.AreEqual(testParam.DownSectionLabel, testOutput.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithDistancesInOutputPropertyEqualToNone_IfDistancesInOutputPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.DistancesInOutput = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(SectionSelection.None, testOutput.DistancesInOutput);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithCorrectDistancesInOutputProperty_IfDistancesInOutputPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.DistancesInOutput = _rnd.NextSectionSelection();
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.DistancesInOutput.Value, testOutput.DistancesInOutput);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

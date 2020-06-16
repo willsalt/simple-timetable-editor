@@ -180,6 +180,15 @@
   <data name="HumanReadableEnum_PdfExportEngine_Unicorn" xml:space="preserve">
     <value>Unicorn</value>
   </data>
+  <data name="HumanReadableEnum_SectionSelection_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="HumanReadableEnum_SectionSelection_First" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="HumanReadableEnum_SectionSelection_None" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="LocationEditForm_Chainage_ValidationFailureNaN" xml:space="preserve">
     <value>The chainage must be a number.</value>
   </data>
@@ -191,6 +200,9 @@
   </data>
   <data name="LogMessage_CbClockTypeValue" xml:space="preserve">
     <value>cbClockType: value is {0}</value>
+  </data>
+  <data name="LogMessage_CbDistanceInOutput_Value" xml:space="preserve">
+    <value>cbDistanceInOutput is {0}</value>
   </data>
   <data name="LogMessage_CbGraphEditStyleValue" xml:space="preserve">
     <value>cbGraphEditStyle: value is {0}</value>

@@ -8,6 +8,8 @@ namespace Timetabler.PdfExport
     {
         internal UniSize TotalSize { get; set; }
 
+        internal double LeftOffset { get; set; }
+
         internal Dictionary<string, TextVerticalLocation> LocationOffsets { get; set; }
 
         internal List<TextVerticalLocation> LocationOffsetList

@@ -39,7 +39,7 @@ namespace Timetabler.PdfExport.Tests.Unit
                 LocoToWorkHeight = locoToWorkHeight,
                 TitleHeight = titleHeight,
                 SubtitleHeight = subTitleHeight,
-                MainSectionMetrics = new LocationBoxDimensions
+                LocationMetrics = new LocationBoxDimensions
                 {
                     TotalSize = new UniSize(_rnd.NextDouble() * 500, mainSectionMetricsHeight)
                 }
@@ -68,7 +68,7 @@ namespace Timetabler.PdfExport.Tests.Unit
                 LocoToWorkHeight = locoToWorkHeight,
                 TitleHeight = titleHeight,
                 SubtitleHeight = subTitleHeight,
-                MainSectionMetrics = new LocationBoxDimensions
+                LocationMetrics = new LocationBoxDimensions
                 {
                     TotalSize = new UniSize(_rnd.NextDouble() * 500, mainSectionMetricsHeight)
                 }
@@ -97,7 +97,7 @@ namespace Timetabler.PdfExport.Tests.Unit
                 LocoToWorkHeight = locoToWorkHeight,
                 TitleHeight = titleHeight,
                 SubtitleHeight = subTitleHeight,
-                MainSectionMetrics = new LocationBoxDimensions
+                LocationMetrics = new LocationBoxDimensions
                 {
                     TotalSize = new UniSize(_rnd.NextDouble() * 500, mainSectionMetricsHeight)
                 }
@@ -126,7 +126,7 @@ namespace Timetabler.PdfExport.Tests.Unit
                 LocoToWorkHeight = locoToWorkHeight,
                 TitleHeight = titleHeight,
                 SubtitleHeight = subTitleHeight,
-                MainSectionMetrics = new LocationBoxDimensions
+                LocationMetrics = new LocationBoxDimensions
                 {
                     TotalSize = new UniSize(_rnd.NextDouble() * 500, mainSectionMetricsHeight)
                 }
@@ -155,7 +155,7 @@ namespace Timetabler.PdfExport.Tests.Unit
                 LocoToWorkHeight = locoToWorkHeight,
                 TitleHeight = titleHeight,
                 SubtitleHeight = subTitleHeight,
-                MainSectionMetrics = new LocationBoxDimensions
+                LocationMetrics = new LocationBoxDimensions
                 {
                     TotalSize = new UniSize(_rnd.NextDouble() * 500, mainSectionMetricsHeight)
                 }
@@ -184,7 +184,7 @@ namespace Timetabler.PdfExport.Tests.Unit
                 LocoToWorkHeight = locoToWorkHeight,
                 TitleHeight = titleHeight,
                 SubtitleHeight = subTitleHeight,
-                MainSectionMetrics = new LocationBoxDimensions
+                LocationMetrics = new LocationBoxDimensions
                 {
                     TotalSize = new UniSize(_rnd.NextDouble() * 500, mainSectionMetricsHeight)
                 }

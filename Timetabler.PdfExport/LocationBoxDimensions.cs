@@ -8,7 +8,11 @@ namespace Timetabler.PdfExport
     {
         internal UniSize TotalSize { get; set; }
 
-        internal double LeftOffset { get; set; }
+        internal double LeftOffset => MajorDistanceColumnWidth + MinorDistanceColumnWidth;
+
+        internal double MajorDistanceColumnWidth { get; set; }
+
+        internal double MinorDistanceColumnWidth { get; set; }
 
         internal Dictionary<string, TextVerticalLocation> LocationOffsets { get; set; }
 

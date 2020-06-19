@@ -510,8 +510,11 @@ namespace Timetabler.PdfExport
                 (sectionMetrics.LocationMetrics.TotalSize.Width - sectionNameDims.Width) / 2,
                 headerTop + sectionNameDims.HeightAboveBaseline + (sectionMetrics.HeaderHeight - sectionNameDims.TotalHeight) / 2);
 
-            DrawLocationList(section, sectionMetrics.LocationMetrics, 
-                leftCoord + MainLineWidth + dimensionColumnShift, mainSectionTop);
+            DrawLocationList(section, sectionMetrics.LocationMetrics, leftCoord + MainLineWidth + dimensionColumnShift, mainSectionTop);
+            if (sectionMetrics.DisplayDistanceColumn)
+            {
+                DrawLocationDistanceColumn(section, sectionMetrics.LocationMetrics, leftCoord + MainLineWidth, mainSectionTop);
+            }
             DrawLocoToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.LocationMetrics.TotalSize.Height + MainLineWidth);
             DrawToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.LocationMetrics.TotalSize.Height + sectionMetrics.LocoToWorkHeight);
             double columnLeft = leftCoord + sectionMetrics.LocationMetrics.TotalSize.Width + MainLineWidth * 2 + dimensionColumnShift;
@@ -918,6 +921,32 @@ namespace Timetabler.PdfExport
             }
         }
 
+        private void DrawLocationDistanceColumn(TimetableSectionModel timetableSection, LocationBoxDimensions locationDims, double xCoord, double yCoord)
+        {
+            IEnumerable<string> locationIds = timetableSection.Locations.Select(c => c.LocationId).Distinct();
+            Distance baseDistance = null;
+            foreach (string locationId in locationIds)
+            {
+                LocationDisplayModel location = timetableSection.Locations.First(loc => loc.LocationId == locationId);
+                if (baseDistance is null)
+                {
+                    baseDistance = location.Mileage;
+                }
+                Distance locationDistance = Distance.Difference(baseDistance, location.Mileage);
+                double yc = yCoord + locationDims.LocationOffsets[location.LocationKey].Baseline;
+                DrawLocationDistance(locationDistance.Mileage, xCoord, yc, locationDims.MajorDistanceColumnWidth);
+                DrawLocationDistance((int)locationDistance.Chainage, xCoord + locationDims.MajorDistanceColumnWidth, yc, locationDims.MinorDistanceColumnWidth);
+            }
+        }
+
+        private void DrawLocationDistance(int value, double xc, double yc, double columnWidth)
+        {
+            string distance = value.ToString(CultureInfo.InvariantCulture);
+            UniTextSize distanceSize = _currentPage.PageGraphics.MeasureString(distance, _plainBodyFont);
+            double xAdj = xc + (columnWidth - distanceSize.Width) / 2;
+            WritingWrapper(distance, _plainBodyFont, xAdj, yc);
+        }
+
         private void LineDrawingWrapper(string descr, double x1, double y1, double x2, double y2, double width)
         {
             Log.Trace(CultureInfo.CurrentCulture, "Drawing {0} from {1}, {2} to {3}, {4} (width {5})", descr, x1, y1, x2, y2, width);
@@ -959,7 +988,6 @@ namespace Timetabler.PdfExport
 
         private void DrawRowHeader(SectionMetrics metrics, double xCoord, double yCoord, string headerText, string logMessage)
         {
-            //bool hasDistanceColumn = true; // temporary
             LineDrawingWrapper(logMessage, xCoord + MainLineWidth + lineGapSize, yCoord - LineOffset, 
                 xCoord + MainLineWidth + metrics.LocationMetrics.TotalSize.Width + 
                 (metrics.DisplayDistanceColumn ? metrics.LocationMetrics.LeftOffset + MainLineWidth : 0) - lineGapSize, yCoord - LineOffset, MainLineWidth);
@@ -981,13 +1009,13 @@ namespace Timetabler.PdfExport
         private LocationBoxDimensions MeasureLocationList(TimetableSectionModel timetableSection)
         {
             var dimensions = new LocationBoxDimensions();
-            dimensions.LeftOffset = 72; // temporarily hardcoded.
             double totalHeight = 0;
             double maxWidth = 0;
             string widestId = string.Empty;
             bool parity = false;
             bool setLineAbove = false;
             IFontDescriptor locationFont;
+            Distance baseDistance = timetableSection.Locations.Select(loc => loc.Mileage).Min();
             for (int i = 0; i < timetableSection.Locations.Count; ++i)
             {
                 LocationDisplayModel loc = timetableSection.Locations[i];
@@ -997,6 +1025,18 @@ namespace Timetabler.PdfExport
                 if (loc.DisplaySeparatorAbove && !setLineAbove)
                 {
                     totalHeight += MainLineWidth;
+                }
+
+                Distance distanceOffset = Distance.Difference(baseDistance, loc.Mileage);
+                double distanceWidth = MeasureDistanceColumnWidth(distanceOffset.Mileage);
+                if (dimensions.MajorDistanceColumnWidth < distanceWidth)
+                {
+                    dimensions.MajorDistanceColumnWidth = distanceWidth;
+                }
+                distanceWidth = MeasureDistanceColumnWidth((int)Math.Round(distanceOffset.Chainage));
+                if (dimensions.MinorDistanceColumnWidth < distanceWidth)
+                {
+                    dimensions.MinorDistanceColumnWidth = distanceWidth;
                 }
 
                 UniTextSize locationSize = _currentPage.PageGraphics.MeasureString(loc.ExportDisplayName ?? "", locationFont);
@@ -1056,6 +1096,11 @@ namespace Timetabler.PdfExport
 
             dimensions.TotalSize = new UniSize(maxWidth + _locationListMargins * 2 + _locationListMinimumColumnGap, totalHeight);
             return dimensions;
+        }
+
+        private double MeasureDistanceColumnWidth(int d)
+        {
+            return _currentPage.PageGraphics.MeasureString($"0{d}0", _plainBodyFont).Width;
         }
 
         private IFontDescriptor SwitchFont(LocationDisplayModel loc)

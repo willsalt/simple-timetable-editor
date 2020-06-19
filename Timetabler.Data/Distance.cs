@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace Timetabler.Data
 {
@@ -190,6 +191,33 @@ namespace Timetabler.Data
         public static Distance Add(Distance d1, Distance d2)
         {
             return d1 + d2;
+        }
+
+        public static Distance Difference(Distance d1, Distance d2)
+        {
+            if (d1 == d2)
+            {
+                return new Distance { Mileage = 0, Chainage = 0 };
+            }
+            if (d1 > d2)
+            {
+                return Subtract(d1, d2);
+            }
+            else
+            {
+                return Subtract(d2, d1);
+            }
+        }
+
+        private static Distance Subtract(Distance d1, Distance d2)
+        {
+            int miles = d1.Mileage - d2.Mileage;
+            double chains = d1.Chainage - d2.Chainage;
+            if (chains >= 0)
+            {
+                return new Distance { Mileage = miles, Chainage = chains };
+            }
+            return new Distance { Mileage = miles - 1, Chainage = 80 + chains };
         }
 
         /// <summary>

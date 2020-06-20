@@ -13,7 +13,11 @@ namespace Timetabler.PdfExport.Tests.Unit
 
         private static LocationBoxDimensions GetLocationBoxDimensions(int? locationMinCount = null)
         {
-            LocationBoxDimensions dimensions = new LocationBoxDimensions();
+            LocationBoxDimensions dimensions = new LocationBoxDimensions
+            {
+                MajorDistanceColumnWidth = _rnd.NextDouble() * 20,
+                MinorDistanceColumnWidth = _rnd.NextDouble() * 20,
+            };
             int locationOffsetCount = _rnd.Next(50) + locationMinCount ?? 0;
             for (int i = 0; i < locationOffsetCount; ++i)
             {
@@ -28,6 +32,17 @@ namespace Timetabler.PdfExport.Tests.Unit
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+
+        [TestMethod]
+        public void LocationBoxDimensionsClass_LeftOffsetProperty_EqualsSumOfMajorDistanceColumnWidthAndMinorDistanceColumnWidthProperties()
+        {
+            LocationBoxDimensions testObject = GetLocationBoxDimensions();
+            double expectedOutput = testObject.MajorDistanceColumnWidth + testObject.MinorDistanceColumnWidth;
+
+            double testOutput = testObject.LeftOffset;
+
+            Assert.AreEqual(expectedOutput, testOutput);
+        }
 
         [TestMethod]
         public void LocationBoxDimensionsClass_LocationOffsetListProperty_ContainsSameNumberOfItemsAsLocationOffsetsProperty()

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace Timetabler.Data
 {
@@ -10,8 +9,14 @@ namespace Timetabler.Data
     /// </summary>
     public class Distance : IEquatable<Distance>, IComparable, IComparable<Distance>, IFormattable
     {
+        /// <summary>
+        /// Label used to describe the major part of the distance (such as "M" or "Miles")
+        /// </summary>
         public static string MajorLabel => Resources.Distance_MileageLabel;
 
+        /// <summary>
+        /// Label used to describe the minor part of the distance (such as "C" or "Chains")
+        /// </summary>
         public static string MinorLabel => Resources.Distance_ChainageLabel;
 
         /// <summary>
@@ -197,8 +202,19 @@ namespace Timetabler.Data
             return d1 + d2;
         }
 
+        /// <summary>
+        /// Compute the absolute difference between two <see cref="Distance" /> instances.
+        /// </summary>
+        /// <param name="d1">A <see cref="Distance" /> instance.</param>
+        /// <param name="d2">A <see cref="Distance" /> instance.</param>
+        /// <returns>A <see cref="Distance" /> instance whose value is equal to the difference between the two parameters, or <c>null</c> if either parameter is 
+        /// null.</returns>
         public static Distance Difference(Distance d1, Distance d2)
         {
+            if (d1 is null || d2 is null)
+            {
+                return null;
+            }
             if (d1 == d2)
             {
                 return new Distance { Mileage = 0, Chainage = 0 };

@@ -70,6 +70,24 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ch..
+        /// </summary>
+        internal static string Distance_ChainageLabel {
+            get {
+                return ResourceManager.GetString("Distance_ChainageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to M..
+        /// </summary>
+        internal static string Distance_MileageLabel {
+            get {
+                return ResourceManager.GetString("Distance_MileageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format string {0} is not supported..
         /// </summary>
         internal static string Distance_ToString_FormatExceptionMessage {

@@ -130,5 +130,19 @@ namespace Timetabler.Helpers
                 new HumanReadableEnum<Orientation> { Name = Resources.HumanReadableEnum_Orientation_Portrait, Value = Orientation.Portrait },
             };
         }
+
+        /// <summary>
+        /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="SectionSelection" /> enumeration.
+        /// </summary>
+        /// <returns></returns>
+        public static HumanReadableEnum<SectionSelection>[] GetSectionSelection()
+        {
+            return new[]
+            {
+                new HumanReadableEnum<SectionSelection> { Name = Resources.HumanReadableEnum_SectionSelection_None, Value = SectionSelection.None },
+                new HumanReadableEnum<SectionSelection> { Name = Resources.HumanReadableEnum_SectionSelection_First, Value = SectionSelection.First },
+                new HumanReadableEnum<SectionSelection> { Name = Resources.HumanReadableEnum_SectionSelection_All, Value = SectionSelection.All },
+            };
+        }
     }
 }

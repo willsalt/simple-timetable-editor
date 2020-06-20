@@ -2,6 +2,8 @@
 {
     internal class SectionMetrics
     {
+        internal bool DisplayDistanceColumn { get; set; }
+
         internal double LineWidth { get; set; }
 
         internal double TitleHeight { get; set; }
@@ -14,7 +16,7 @@
 
         internal double ColumnWidth { get; set; }
 
-        internal LocationBoxDimensions MainSectionMetrics { get; set; }
+        internal LocationBoxDimensions LocationMetrics { get; set; }
 
         internal double ToWorkHeight { get; set; }
 
@@ -22,15 +24,15 @@
 
         internal double TotalHeight => TitleHeight + SubtitleHeight + TableHeight + LineWidth;
 
-        internal double TableHeight => HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight;
+        internal double TableHeight => HeaderHeight + LocationMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight;
 
         internal double HeaderOffset => TitleHeight + SubtitleHeight;
 
         internal double MainSectionOffset => TitleHeight + SubtitleHeight + HeaderHeight;
 
-        internal double ToWorkOffset => TitleHeight + SubtitleHeight + HeaderHeight + MainSectionMetrics.TotalSize.Height;
+        internal double ToWorkOffset => TitleHeight + SubtitleHeight + HeaderHeight + LocationMetrics.TotalSize.Height;
 
-        internal double MainSectionBoundingHeight => SubtitleHeight + HeaderHeight + MainSectionMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight;
+        internal double MainSectionBoundingHeight => SubtitleHeight + HeaderHeight + LocationMetrics.TotalSize.Height + ToWorkHeight + LocoToWorkHeight;
 
         internal bool IncludeLocoDiagramRow { get; set; }
 
@@ -43,7 +45,7 @@
             LineWidth = lineWidth;
         }
 
-        internal SectionMetrics CopyWithNoTitle()
+        internal SectionMetrics CopyWithNoTitle(bool copyDisplayDistance)
         {
             return new SectionMetrics(LineWidth)
             {
@@ -51,13 +53,14 @@
                 SubtitleHeight = 0,
                 HeaderHeight = HeaderHeight,
                 ColumnWidth = ColumnWidth,
-                MainSectionMetrics = MainSectionMetrics,
+                LocationMetrics = LocationMetrics,
                 IncludeLocoDiagramRow = IncludeLocoDiagramRow,
                 IncludeToWorkRow = IncludeToWorkRow,
                 ToWorkHeight = ToWorkHeight,
                 IncludeLocoToWorkRow = IncludeLocoToWorkRow,
                 LocoToWorkHeight = LocoToWorkHeight,
                 HeaderIncludesFootnoteRow = HeaderIncludesFootnoteRow,
+                DisplayDistanceColumn = copyDisplayDistance ? DisplayDistanceColumn : false,
             };
         }
     }

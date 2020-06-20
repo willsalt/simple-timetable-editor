@@ -83,6 +83,11 @@ namespace Timetabler.Data
         public string DownSectionLabel { get; set; }
 
         /// <summary>
+        /// Whether to show a table of location distances in the output.
+        /// </summary>
+        public SectionSelection DistancesInOutput { get; set; }
+
+        /// <summary>
         /// Default constructor - sets the default values of the <see cref="LineWidth" />, <see cref="GraphAxisLineWidth" /> and 
         /// <see cref="FillerDashLineWidth" /> properties, and loads the default values of the <see cref="UpSectionLabel" /> and <see cref="DownSectionLabel" />
         /// properties from the resources file.
@@ -122,6 +127,7 @@ namespace Timetabler.Data
                 GraphPageOrientation = GraphPageOrientation,
                 UpSectionLabel = UpSectionLabel,
                 DownSectionLabel = DownSectionLabel,
+                DistancesInOutput = DistancesInOutput,
             };
         }
     }

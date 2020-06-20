@@ -31,6 +31,7 @@ namespace Timetabler.Data.Tests.Unit
                 GraphPageOrientation = _rnd.NextOrientation(),
                 UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
                 DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+                DistancesInOutput = _rnd.NextSectionSelection(),
             };
         }
 
@@ -100,6 +101,14 @@ namespace Timetabler.Data.Tests.Unit
             string expectedValue = Resources.DocumentExportOptions_DefaultDownSectionLabel;
 
             Assert.AreEqual(expectedValue, testObject.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsDistancesInOutputPropertyToNone()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+
+            Assert.AreEqual(SectionSelection.None, testObject.DistancesInOutput);
         }
 
         [TestMethod]
@@ -260,6 +269,16 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testOutput = testObject.Copy();
 
             Assert.AreEqual(testObject.DownSectionLabel, testOutput.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectDistancesInOutputProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.DistancesInOutput, testOutput.DistancesInOutput);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

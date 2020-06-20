@@ -146,7 +146,11 @@ namespace Timetabler.PdfExport
 
         private int ComputeColumnsForSection(TimetableSectionModel entireSection, int startingColumn, SectionMetrics sectionMetrics)
         {
-            double availableWidth = _currentPage.PageAvailableWidth - (sectionMetrics.MainSectionMetrics.TotalSize.Width + MainLineWidth * 3);
+            double availableWidth = _currentPage.PageAvailableWidth - (sectionMetrics.LocationMetrics.TotalSize.Width + MainLineWidth * 3);
+            if (sectionMetrics.DisplayDistanceColumn)
+            {
+                availableWidth -= (sectionMetrics.LocationMetrics.LeftOffset + MainLineWidth);
+            }
             int colsCounted = 0;
             while (availableWidth > 0 && startingColumn + colsCounted < entireSection.TrainSegments.Count)
             {
@@ -183,7 +187,7 @@ namespace Timetabler.PdfExport
                     _currentPage.LeftMarginPosition, _currentPage.RightMarginPosition);
                             
                 SectionMetrics sectionMetricsWithTitle = MeasureSectionMetrics(document.DownTrainsDisplay, document.ExportOptions);
-                SectionMetrics sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle();
+                SectionMetrics sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(document.ExportOptions.DistancesInOutput == SectionSelection.All);
                 SectionMetrics sectionMetrics = sectionMetricsWithTitle;
 
                 int columnsPerPage;
@@ -211,7 +215,7 @@ namespace Timetabler.PdfExport
                 }
 
                 sectionMetricsWithTitle = MeasureSectionMetrics(document.UpTrainsDisplay, document.ExportOptions);
-                sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle();
+                sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(true);
                 sectionMetrics = firstOnPage ? sectionMetricsWithTitle : sectionMetricsWithNoTitle;
                 
                 for (int i = 0; i < document.UpTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
@@ -234,6 +238,10 @@ namespace Timetabler.PdfExport
                     {
                         firstOnPage = false;
                         sectionMetrics = sectionMetricsWithNoTitle;
+                    }
+                    if (document.ExportOptions.DistancesInOutput != SectionSelection.All)
+                    {
+                        sectionMetricsWithNoTitle.DisplayDistanceColumn = false;
                     }
                 }
 
@@ -396,17 +404,18 @@ namespace Timetabler.PdfExport
             {
                 TitleHeight = _titleFont.EmptyStringMetrics.TotalHeight + MainLineWidth,
                 SubtitleHeight = _subtitleFont.EmptyStringMetrics.TotalHeight + MainLineWidth,
-                MainSectionMetrics = MeasureLocationList(section),
+                LocationMetrics = MeasureLocationList(section),
                 IncludeLocoDiagramRow = options.DisplayLocoDiagramRow && section.TrainSegments.Any(s => !string.IsNullOrWhiteSpace(s.LocoDiagram)),
                 IncludeToWorkRow = options.DisplayToWorkRow && section.TrainSegments.Any(s => !string.IsNullOrWhiteSpace(s.ToWorkCell?.DisplayedText)),
                 IncludeLocoToWorkRow = options.DisplayLocoToWorkRow && section.TrainSegments.Any(s => !string.IsNullOrWhiteSpace(s.LocoToWorkCell?.DisplayedText)),
                 HeaderIncludesFootnoteRow = section.TrainSegments.Any(t => !string.IsNullOrWhiteSpace(t.Footnotes)),
                 ColumnWidth = MeasureMaximumCellWidth(section, options),
+                DisplayDistanceColumn = options.DistancesInOutput != SectionSelection.None,
             };
             shm.ToWorkHeight = shm.IncludeToWorkRow ? MeasureToWorkRowHeight() : 0;
             shm.LocoToWorkHeight = shm.IncludeLocoToWorkRow ? MeasureLocoToWorkRowHeight() : 0;
             shm.HeaderHeight = MeasureHeaderHeight(section, shm.IncludeLocoDiagramRow);
-            MeasureArrows(shm.ColumnWidth - cellTotalMargins, shm.MainSectionMetrics.LocationOffsetList.Max(t => t.Bottom - t.Top));
+            MeasureArrows(shm.ColumnWidth - cellTotalMargins, shm.LocationMetrics.LocationOffsetList.Max(t => t.Bottom - t.Top));
             Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_IsLocoDiagramRowIncluded, shm.IncludeLocoDiagramRow);
             return shm;
         }
@@ -489,18 +498,26 @@ namespace Timetabler.PdfExport
             _currentPage.PageGraphics.DrawRectangle(leftCoord + LineOffset, subtitleTop - LineOffset, maxWidth - MainLineWidth, 
                 sectionMetrics.MainSectionBoundingHeight + MainLineWidth, MainLineWidth);
 
-            LineDrawingWrapper("top border of location list", leftCoord + MainLineWidth + lineGapSize * 2, mainSectionTop - LineOffset, 
-                leftCoord + MainLineWidth + sectionMetrics.MainSectionMetrics.TotalSize.Width - lineGapSize * 2, mainSectionTop - LineOffset,
+            double dimensionColumnShift = sectionMetrics.DisplayDistanceColumn ? sectionMetrics.LocationMetrics.LeftOffset + MainLineWidth : 0;
+
+            LineDrawingWrapper("top border of location list", leftCoord + MainLineWidth + dimensionColumnShift + lineGapSize * 2, mainSectionTop - LineOffset, 
+                leftCoord + MainLineWidth + dimensionColumnShift + sectionMetrics.LocationMetrics.TotalSize.Width - lineGapSize * 2, mainSectionTop - LineOffset,
                 MainLineWidth);
 
             UniTextSize sectionNameDims = _currentPage.PageGraphics.MeasureString(sectionName, _subtitleFont);
-            WritingWrapper(sectionName, _subtitleFont, leftCoord + MainLineWidth + (sectionMetrics.MainSectionMetrics.TotalSize.Width - sectionNameDims.Width) / 2,
+            
+            WritingWrapper(sectionName, _subtitleFont, leftCoord + dimensionColumnShift + MainLineWidth + 
+                (sectionMetrics.LocationMetrics.TotalSize.Width - sectionNameDims.Width) / 2,
                 headerTop + sectionNameDims.HeightAboveBaseline + (sectionMetrics.HeaderHeight - sectionNameDims.TotalHeight) / 2);
 
-            DrawLocationList(section, sectionMetrics.MainSectionMetrics, leftCoord + MainLineWidth, mainSectionTop);
-            DrawLocoToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.MainSectionMetrics.TotalSize.Height + MainLineWidth);
-            DrawToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.MainSectionMetrics.TotalSize.Height + sectionMetrics.LocoToWorkHeight);
-            double columnLeft = leftCoord + sectionMetrics.MainSectionMetrics.TotalSize.Width + MainLineWidth * 2;
+            DrawLocationList(section, sectionMetrics.LocationMetrics, leftCoord + MainLineWidth + dimensionColumnShift, mainSectionTop);
+            if (sectionMetrics.DisplayDistanceColumn)
+            {
+                DrawLocationDistanceColumn(section, sectionMetrics.LocationMetrics, leftCoord + MainLineWidth, mainSectionTop, headerTop);
+            }
+            DrawLocoToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.LocationMetrics.TotalSize.Height + MainLineWidth);
+            DrawToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.LocationMetrics.TotalSize.Height + sectionMetrics.LocoToWorkHeight);
+            double columnLeft = leftCoord + sectionMetrics.LocationMetrics.TotalSize.Width + MainLineWidth * 2 + dimensionColumnShift;
             LineDrawingWrapper("initial separator", columnLeft - LineOffset, headerTop + lineGapSize, columnLeft - LineOffset, 
                 headerTop + sectionMetrics.TableHeight - lineGapSize, MainLineWidth);
             for (int i = 0; i < columnCount && i + startingColumn < section.TrainSegments.Count; i++)
@@ -540,7 +557,7 @@ namespace Timetabler.PdfExport
                 return sectionMetrics.ColumnWidth + MainLineWidth;
             }
 
-            UniRange largestEmptyBlock = FindLargestEmptyBlock(segment, sectionMetrics.MainSectionMetrics);
+            UniRange largestEmptyBlock = FindLargestEmptyBlock(segment, sectionMetrics.LocationMetrics);
             Paragraph para = new Paragraph(largestEmptyBlock.Size, sectionMetrics.ColumnWidth, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(2));
             para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
             if (!para.OverspillHeight)
@@ -548,7 +565,7 @@ namespace Timetabler.PdfExport
                 return sectionMetrics.ColumnWidth + MainLineWidth;
             }
 
-            para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(0.75));
+            para = new Paragraph(sectionMetrics.LocationMetrics.TotalSize.Height, null, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, VerticalAlignment.Centred, new MarginSet(0.75));
             para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
             return sectionMetrics.ColumnWidth + para.ComputedHeight + MainLineWidth;
         }
@@ -563,7 +580,7 @@ namespace Timetabler.PdfExport
 
             UniTextSize currentDims;
             LocationCollection locationMap = section.LocationMap;
-            LocationBoxDimensions locationDims = sectionMetrics.MainSectionMetrics;
+            LocationBoxDimensions locationDims = sectionMetrics.LocationMetrics;
             double currentYCoord = yCoord + sectionMetrics.HeaderHeight;
             double segmentWidth = sectionMetrics.ColumnWidth;
 
@@ -596,17 +613,17 @@ namespace Timetabler.PdfExport
             List<TextVerticalLocation> offsetList = null;
             if (segment.ContinuationFromEarlier)
             {
-                offsetList = sectionMetrics.MainSectionMetrics.LocationOffsetList;
-                DrawContinuationArrow(segment.Timings.First(), offsetList, sectionMetrics.MainSectionMetrics.LocationOffsets, locationsInSegment, _leftPointingArrow, 
+                offsetList = sectionMetrics.LocationMetrics.LocationOffsetList;
+                DrawContinuationArrow(segment.Timings.First(), offsetList, sectionMetrics.LocationMetrics.LocationOffsets, locationsInSegment, _leftPointingArrow, 
                     xCoord, currentYCoord);
             }
             if (segment.ContinuesLater)
             {
                 if (offsetList == null)
                 {
-                    offsetList = sectionMetrics.MainSectionMetrics.LocationOffsetList;
+                    offsetList = sectionMetrics.LocationMetrics.LocationOffsetList;
                 }
-                DrawContinuationArrow(segment.Timings.Last(), offsetList, sectionMetrics.MainSectionMetrics.LocationOffsets, locationsInSegment, _rightPointingArrow,
+                DrawContinuationArrow(segment.Timings.Last(), offsetList, sectionMetrics.LocationMetrics.LocationOffsets, locationsInSegment, _rightPointingArrow,
                     xCoord, currentYCoord);
             }
 
@@ -631,7 +648,7 @@ namespace Timetabler.PdfExport
                 }
                 else
                 {
-                    para = new Paragraph(sectionMetrics.MainSectionMetrics.TotalSize.Height, null, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, 
+                    para = new Paragraph(sectionMetrics.LocationMetrics.TotalSize.Height, null, Unicorn.Orientation.RotatedRight, HorizontalAlignment.Centred, 
                         VerticalAlignment.Centred, new MarginSet(0.75));
                     para.AddText(segment.InlineNote, _plainBodyFont, _currentPage.PageGraphics);
                     para.DrawAt(_currentPage.PageGraphics, xCoord + sectionMetrics.ColumnWidth, currentYCoord);
@@ -904,6 +921,52 @@ namespace Timetabler.PdfExport
             }
         }
 
+        private void DrawLocationDistanceColumn(TimetableSectionModel timetableSection, LocationBoxDimensions locationDims, double xCoord, double yCoord, double yTop)
+        {
+            double xLeft = xCoord + lineGapSize;
+            double xRight = xCoord + locationDims.LeftOffset - lineGapSize;
+            LineDrawingWrapper("Top of mileage column values", xLeft, yCoord - MainLineWidth / 2, xRight, yCoord - MainLineWidth / 2, MainLineWidth);
+            double yTopLine = yCoord - (_plainBodyFont.EmptyStringMetrics.TotalHeight + MainLineWidth * 1.5);
+            LineDrawingWrapper("Top of mileage column", xLeft, yTopLine, xRight, yTopLine, MainLineWidth);
+            foreach (double separatorOffset in locationDims.LocationSeparatorOffsets)
+            {
+                LineDrawingWrapper("location mileage separator", xLeft, yCoord + separatorOffset, xRight, yCoord + separatorOffset, MainLineWidth);
+            }
+            IEnumerable<string> locationIds = timetableSection.Locations.Select(c => c.LocationId).Distinct();
+            Distance baseDistance = null;
+            foreach (string locationId in locationIds)
+            {
+                LocationDisplayModel location = timetableSection.Locations.First(loc => loc.LocationId == locationId);
+                if (baseDistance is null)
+                {
+                    baseDistance = location.Mileage;
+                }
+                Distance locationDistance = Distance.Difference(baseDistance, location.Mileage);
+                double yc = yCoord + locationDims.LocationOffsets[location.LocationKey].Baseline;
+                DrawLocationDistance(locationDistance.Mileage, xCoord, yc, locationDims.MajorDistanceColumnWidth);
+                DrawLocationDistance((int)locationDistance.Chainage, xCoord + locationDims.MajorDistanceColumnWidth, yc, locationDims.MinorDistanceColumnWidth);
+            }
+
+            DrawLocationDistanceLabel(Distance.MajorLabel, xCoord, yCoord, locationDims.MajorDistanceColumnWidth);
+            DrawLocationDistanceLabel(Distance.MinorLabel, xCoord + locationDims.MajorDistanceColumnWidth, yCoord, locationDims.MinorDistanceColumnWidth);
+            xRight = xCoord + locationDims.LeftOffset + MainLineWidth / 2;
+            LineDrawingWrapper("distance column right edge", xRight, yTop + lineGapSize, xRight, yCoord + locationDims.TotalSize.Height - lineGapSize, MainLineWidth);
+        }
+
+        private void DrawLocationDistanceLabel(string label, double xc, double yc, double columnWidth)
+        {
+            UniTextSize labelSize = _currentPage.PageGraphics.MeasureString(label, _plainBodyFont);
+            WritingWrapper(label, _plainBodyFont, xc + (columnWidth - labelSize.Width) / 2, yc - (MainLineWidth + labelSize.HeightBelowBaseline));
+        }
+
+        private void DrawLocationDistance(int value, double xc, double yc, double columnWidth)
+        {
+            string distance = value.ToString(CultureInfo.InvariantCulture);
+            UniTextSize distanceSize = _currentPage.PageGraphics.MeasureString(distance, _plainBodyFont);
+            double xAdj = xc + (columnWidth - distanceSize.Width) / 2;
+            WritingWrapper(distance, _plainBodyFont, xAdj, yc);
+        }
+
         private void LineDrawingWrapper(string descr, double x1, double y1, double x2, double y2, double width)
         {
             Log.Trace(CultureInfo.CurrentCulture, "Drawing {0} from {1}, {2} to {3}, {4} (width {5})", descr, x1, y1, x2, y2, width);
@@ -946,7 +1009,8 @@ namespace Timetabler.PdfExport
         private void DrawRowHeader(SectionMetrics metrics, double xCoord, double yCoord, string headerText, string logMessage)
         {
             LineDrawingWrapper(logMessage, xCoord + MainLineWidth + lineGapSize, yCoord - LineOffset, 
-                xCoord + MainLineWidth + metrics.MainSectionMetrics.TotalSize.Width - lineGapSize, yCoord - LineOffset, MainLineWidth);
+                xCoord + MainLineWidth + metrics.LocationMetrics.TotalSize.Width + 
+                (metrics.DisplayDistanceColumn ? metrics.LocationMetrics.LeftOffset + MainLineWidth : 0) - lineGapSize, yCoord - LineOffset, MainLineWidth);
             yCoord += _plainBodyFont.EmptyStringMetrics.HeightAboveBaseline;
             double headerXCoord = xCoord + MainLineWidth + _locationListMargins;
             _currentPage.PageGraphics.DrawString(headerText, _plainBodyFont, headerXCoord, yCoord);
@@ -971,6 +1035,7 @@ namespace Timetabler.PdfExport
             bool parity = false;
             bool setLineAbove = false;
             IFontDescriptor locationFont;
+            Distance baseDistance = timetableSection.Locations.Select(loc => loc.Mileage).Min();
             for (int i = 0; i < timetableSection.Locations.Count; ++i)
             {
                 LocationDisplayModel loc = timetableSection.Locations[i];
@@ -980,6 +1045,18 @@ namespace Timetabler.PdfExport
                 if (loc.DisplaySeparatorAbove && !setLineAbove)
                 {
                     totalHeight += MainLineWidth;
+                }
+
+                Distance distanceOffset = Distance.Difference(baseDistance, loc.Mileage);
+                double distanceWidth = MeasureDistanceColumnWidth(distanceOffset.Mileage);
+                if (dimensions.MajorDistanceColumnWidth < distanceWidth)
+                {
+                    dimensions.MajorDistanceColumnWidth = distanceWidth;
+                }
+                distanceWidth = MeasureDistanceColumnWidth((int)Math.Round(distanceOffset.Chainage));
+                if (dimensions.MinorDistanceColumnWidth < distanceWidth)
+                {
+                    dimensions.MinorDistanceColumnWidth = distanceWidth;
                 }
 
                 UniTextSize locationSize = _currentPage.PageGraphics.MeasureString(loc.ExportDisplayName ?? "", locationFont);
@@ -1039,6 +1116,11 @@ namespace Timetabler.PdfExport
 
             dimensions.TotalSize = new UniSize(maxWidth + _locationListMargins * 2 + _locationListMinimumColumnGap, totalHeight);
             return dimensions;
+        }
+
+        private double MeasureDistanceColumnWidth(int d)
+        {
+            return _currentPage.PageGraphics.MeasureString($"0{d}0", _plainBodyFont).Width;
         }
 
         private IFontDescriptor SwitchFont(LocationDisplayModel loc)
@@ -1129,7 +1211,7 @@ namespace Timetabler.PdfExport
             double maxHeight = 0;
             foreach (var segment in timetableSection.TrainSegments)
             {
-                // This accounts for the liines always present: train class, headcode and AM/PM.
+                // This accounts for the lines always present: train class, headcode and AM/PM.
                 double height = _boldBodyFont.EmptyStringMetrics.TotalHeight * 2 + _plainBodyFont.EmptyStringMetrics.TotalHeight + MainLineWidth * 3;
                 if (!string.IsNullOrWhiteSpace(segment.Footnotes))
                 {
@@ -1163,7 +1245,7 @@ namespace Timetabler.PdfExport
         private void ExportGlossary(IDocumentDescriptor doc, NoteCollection noteDefinitions)
         {
             StartPage(doc, PageOrientation.Portrait);
-            double titleHeight = /*_currentPage.PageGraphics.MeasureString(Resources.GlossaryTitle, _subtitleFont).Height;*/ _subtitleFont.EmptyStringMetrics.TotalHeight;
+            double titleHeight = _subtitleFont.EmptyStringMetrics.TotalHeight;
             WritingWrapper(Resources.GlossaryTitle, _subtitleFont, 
                 new UniRectangle(_currentPage.LeftMarginPosition, _currentPage.TopMarginPosition, _currentPage.PageAvailableWidth, titleHeight),
                 HorizontalAlignment.Centred, VerticalAlignment.Centred);

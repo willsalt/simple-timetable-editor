@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Forms;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.Helpers;
 
@@ -43,6 +44,7 @@ namespace Timetabler
             HumanReadableEnum<CoreData.Orientation>[] orientations = HumanReadableEnumFactory.GetOrientation();
             cbTableOrientation.Items.AddRange(orientations);
             cbGraphOrientation.Items.AddRange(orientations);
+            cbDistanceInfoInOutput.Items.AddRange(HumanReadableEnumFactory.GetSectionSelection());
         }
 
         private void UpdateViewFromModel()
@@ -85,6 +87,14 @@ namespace Timetabler
                 if (item is HumanReadableEnum<CoreData.Orientation> orientItem && orientItem.Value == Model.GraphPageOrientation)
                 {
                     cbGraphOrientation.SelectedItem = orientItem;
+                    break;
+                }
+            }
+            foreach (var item in cbDistanceInfoInOutput.Items)
+            {
+                if (item is HumanReadableEnum<SectionSelection> sectionItem && sectionItem.Value == Model.DistancesInOutput)
+                {
+                    cbDistanceInfoInOutput.SelectedItem = sectionItem;
                     break;
                 }
             }
@@ -235,6 +245,21 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbGraphOrientation_Value, item.Name);
             Model.GraphPageOrientation = item.Value;
+        }
+
+        private void CbDistanceInfoInOutput_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cbDistanceInfoInOutput.SelectedItem is HumanReadableEnum<CoreData.SectionSelection> item))
+            {
+                Log.Trace("cbDistanceInfoInOutput: null item selected.");
+                return;
+            }
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbDistanceInOutput_Value, item.Name);
+            Model.DistancesInOutput = item.Value;
         }
 
         private void TbUpSectionLabel_TextChanged(object sender, EventArgs e)

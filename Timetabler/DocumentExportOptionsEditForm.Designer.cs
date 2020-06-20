@@ -61,6 +61,8 @@
             this.cbPdfEngine = new System.Windows.Forms.ComboBox();
             this.lblWarning = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbDistanceInfoInOutput = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -223,6 +225,8 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.cbDistanceInfoInOutput);
+            this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.ckDisplayLocoDiagram);
             this.groupBox1.Controls.Add(this.ckDisplayLocoToWorkRow);
             this.groupBox1.Controls.Add(this.ckDisplayCredits);
@@ -299,6 +303,18 @@
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // cbDistanceInfoInOutput
+            // 
+            this.cbDistanceInfoInOutput.FormattingEnabled = true;
+            resources.ApplyResources(this.cbDistanceInfoInOutput, "cbDistanceInfoInOutput");
+            this.cbDistanceInfoInOutput.Name = "cbDistanceInfoInOutput";
+            this.cbDistanceInfoInOutput.SelectedIndexChanged += new System.EventHandler(this.CbDistanceInfoInOutput_SelectedIndexChanged);
+            // 
             // DocumentExportOptionsEditForm
             // 
             resources.ApplyResources(this, "$this");
@@ -358,5 +374,7 @@
         private System.Windows.Forms.NumericUpDown nudLineWidth;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbDistanceInfoInOutput;
+        private System.Windows.Forms.Label label9;
     }
 }

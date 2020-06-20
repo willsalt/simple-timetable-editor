@@ -250,6 +250,33 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string HumanReadableEnum_SectionSelection_All {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_SectionSelection_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First.
+        /// </summary>
+        internal static string HumanReadableEnum_SectionSelection_First {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_SectionSelection_First", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string HumanReadableEnum_SectionSelection_None {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_SectionSelection_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The chainage must be a number..
         /// </summary>
         internal static string LocationEditForm_Chainage_ValidationFailureNaN {
@@ -282,6 +309,15 @@ namespace Timetabler {
         internal static string LogMessage_CbClockTypeValue {
             get {
                 return ResourceManager.GetString("LogMessage_CbClockTypeValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cbDistanceInOutput is {0}.
+        /// </summary>
+        internal static string LogMessage_CbDistanceInOutput_Value {
+            get {
+                return ResourceManager.GetString("LogMessage_CbDistanceInOutput_Value", resourceCulture);
             }
         }
         

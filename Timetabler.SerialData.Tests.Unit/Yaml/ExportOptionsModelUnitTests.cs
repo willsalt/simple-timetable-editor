@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
+using Timetabler.CoreData;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.SerialData.Tests.Unit.Yaml
@@ -158,6 +159,16 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
             Type classType = typeof(ExportOptionsModel);
             PropertyInfo property = classType.GetProperty("DownSectionLabel");
             Assert.AreEqual(typeof(string), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_HasPublicDistancesInOutputPropertyOfTypeNullableSectionSelection()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("DistancesInOutput");
+            Assert.AreEqual(typeof(SectionSelection?), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
         }

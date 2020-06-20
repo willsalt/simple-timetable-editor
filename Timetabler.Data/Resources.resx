@@ -120,6 +120,12 @@
   <data name="BaseCollection_CopyTo_Error_InsufficientArrayLength" xml:space="preserve">
     <value>The destination array does not contain enough elements to store the collection.</value>
   </data>
+  <data name="Distance_ChainageLabel" xml:space="preserve">
+    <value>Ch.</value>
+  </data>
+  <data name="Distance_MileageLabel" xml:space="preserve">
+    <value>M.</value>
+  </data>
   <data name="Distance_ToString_FormatExceptionMessage" xml:space="preserve">
     <value>Format string {0} is not supported.</value>
     <comment>Exception message for FormatException instances thrown by Distance.ToString(string) and Distance.ToString(string, IFormatProvider).</comment>

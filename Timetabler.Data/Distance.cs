@@ -10,6 +10,10 @@ namespace Timetabler.Data
     /// </summary>
     public class Distance : IEquatable<Distance>, IComparable, IComparable<Distance>, IFormattable
     {
+        public static string MajorLabel => Resources.Distance_MileageLabel;
+
+        public static string MinorLabel => Resources.Distance_ChainageLabel;
+
         /// <summary>
         /// The integer miles component of the mileage.
         /// </summary>

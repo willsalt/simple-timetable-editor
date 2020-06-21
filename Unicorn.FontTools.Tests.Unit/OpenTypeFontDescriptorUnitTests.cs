@@ -8,6 +8,7 @@ using Tests.Utility.Providers;
 using Unicorn.CoreTypes;
 using Unicorn.FontTools.OpenType;
 using Unicorn.FontTools.OpenType.Interfaces;
+using Unicorn.FontTools.OpenType.Tests.Utility.Extensions;
 using Unicorn.FontTools.Tests.Unit.TestHelpers;
 
 namespace Unicorn.FontTools.Tests.Unit
@@ -28,7 +29,7 @@ namespace Unicorn.FontTools.Tests.Unit
             return new OS2MetricsTable(_rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextOpenTypeEmbeddingPermissionsFlags(), _rnd.NextShort(),
                 _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(),
                 _rnd.NextShort(), _rnd.NextOpenTypeIBMFamily(), _rnd.NextOpenTypePanoseFamily(), _rnd.NextOpenTypeLowerUnicodeRangeFlags(),
-                _rnd.NextOpenTypeUpperUnicodeRangeFlags(), _rnd.NextOpenTypeTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort());
+                _rnd.NextOpenTypeUpperUnicodeRangeFlags(), _rnd.NextTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort());
         }
 
         private static OS2MetricsTable GetOS2MetricsTable(EmbeddingPermissionsFlags? embeddingPermissions = null)
@@ -37,7 +38,7 @@ namespace Unicorn.FontTools.Tests.Unit
             return new OS2MetricsTable(_rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), embeddingPermissions.Value, _rnd.NextShort(), _rnd.NextShort(), 
                 _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), 
                 _rnd.NextOpenTypeIBMFamily(), _rnd.NextOpenTypePanoseFamily(), _rnd.NextOpenTypeLowerUnicodeRangeFlags(), _rnd.NextOpenTypeUpperUnicodeRangeFlags(), 
-                _rnd.NextOpenTypeTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), 
+                _rnd.NextTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), 
                 _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextOpenTypeSupportedCodePageFlags(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort(), 
                 _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort());
         }
@@ -49,9 +50,9 @@ namespace Unicorn.FontTools.Tests.Unit
             yMin ??= _rnd.NextShort();
             yMax ??= _rnd.NextShort();
 
-            return new HeaderTable(_rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextDecimal(), _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextOpenTypeFontFlags(),
-                _rnd.NextUShort(), _rnd.NextDateTime(), _rnd.NextDateTime(), xMin.Value, yMin.Value, xMax.Value, yMax.Value, _rnd.NextOpenTypeMacStyleFlags(),
-                _rnd.NextUShort(), _rnd.NextOpenTypeFontDirectionHint(), _rnd.NextBoolean(), _rnd.NextShort());
+            return new HeaderTable(_rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextDecimal(), _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextFontFlags(),
+                _rnd.NextUShort(), _rnd.NextDateTime(), _rnd.NextDateTime(), xMin.Value, yMin.Value, xMax.Value, yMax.Value, _rnd.NextMacStyleFlags(),
+                _rnd.NextUShort(), _rnd.NextFontDirectionHint(), _rnd.NextBoolean(), _rnd.NextShort());
         }
 
         private static PostScriptTable GetPostScriptTable()

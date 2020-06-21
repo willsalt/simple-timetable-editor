@@ -11,30 +11,20 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\Unicorn.FontTools.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Unicorn.FontTools.OpenType.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\Unicorn.FontTools.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Unicorn.FontTools.OpenType.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>$(AssemblyName).Tests.Unit</_Parameter1>
     </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Unicorn.CoreTypes\Unicorn.CoreTypes.csproj" />
-    <ProjectReference Include="..\Unicorn.FontTools.OpenType\Unicorn.FontTools.OpenType.csproj" />
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Unicorn.FontTools.Tests.Unit</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <ItemGroup>

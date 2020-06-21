@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Unicorn.CoreTypes;
 using Unicorn.FontTools.CharacterEncoding;
+using Unicorn.FontTools.Extensions;
 using Unicorn.FontTools.OpenType;
 using Unicorn.FontTools.OpenType.Extensions;
 using Unicorn.FontTools.OpenType.Interfaces;
@@ -81,8 +82,7 @@ namespace Unicorn.FontTools
                 if (CalculationStyle == CalculationStyle.Windows)
                 {
                     bool isSymbolic = _underlyingFont.CharacterMapping.SelectExactMapping(PlatformId.Windows, 0) != null;
-                    output = _underlyingFont.OS2Metrics.FontSelection.ToFontDescriptorFlags(isSymbolic,
-                        _underlyingFont.PostScriptData.IsFixedPitch);
+                    output = _underlyingFont.OS2Metrics.FontSelection.ToFontDescriptorFlags(isSymbolic, _underlyingFont.PostScriptData.IsFixedPitch);
                     if (_underlyingFont.OS2Metrics.IBMFontFamily >= IBMFamily.OldstyleSerif_None && _underlyingFont.OS2Metrics.IBMFontFamily < IBMFamily.SansSerif_None)
                     {
                         output |= FontDescriptorFlags.Serif;

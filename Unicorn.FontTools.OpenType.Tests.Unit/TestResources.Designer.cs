@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Unicorn.FontTools {
+namespace Unicorn.FontTools.OpenType.Tests.Unit {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Unicorn.FontTools {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class TestResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal TestResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Unicorn.FontTools {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Unicorn.FontTools.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Unicorn.FontTools.OpenType.Tests.Unit.TestResources", typeof(TestResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,20 @@ namespace Unicorn.FontTools {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error loading font metrics: font did not start with {0}..
+        ///   Looks up a localized string similar to This method is not implemented.  This mock class is provided in order to unit test its base class&apos;s constructor; other functionality is not supported..
         /// </summary>
-        internal static string AfmFontMetrics_FromLines_IncorrectStart {
+        internal static string Mocks_MockCharacterMapping_NotImplementedError {
             get {
-                return ResourceManager.GetString("AfmFontMetrics_FromLines_IncorrectStart", resourceCulture);
+                return ResourceManager.GetString("Mocks_MockCharacterMapping_NotImplementedError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unexpected end of font metrics data..
+        ///   Looks up a localized string similar to This method is not implemented.  This mock class is provided in order to unit test its base class&apos;s constructor; other functionality is not supported..
         /// </summary>
-        internal static string AfmFontMetrics_MoveNextHelper_UnexpectedEnd {
+        internal static string Mocks_MockTable_NotImplementedError {
             get {
-                return ResourceManager.GetString("AfmFontMetrics_MoveNextHelper_UnexpectedEnd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error loading direction-specific data: CharWidth and IsFixedWidth values are inconsistent..
-        /// </summary>
-        internal static string DirectionMetrics_FromLines_CharWidthClashesWithIsFixedWidth {
-            get {
-                return ResourceManager.GetString("DirectionMetrics_FromLines_CharWidthClashesWithIsFixedWidth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No font name specified..
-        /// </summary>
-        internal static string PdfStandardFontDescriptor_GetByName_EmptyStringParameter {
-            get {
-                return ResourceManager.GetString("PdfStandardFontDescriptor_GetByName_EmptyStringParameter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Built-in font property StandardFontMetrics.{0} not found..
-        /// </summary>
-        internal static string PdfStandardFontDescriptor_GetByName_FontNotFoundByReflection {
-            get {
-                return ResourceManager.GetString("PdfStandardFontDescriptor_GetByName_FontNotFoundByReflection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  .
-        /// </summary>
-        internal static string SpaceCharacter {
-            get {
-                return ResourceManager.GetString("SpaceCharacter", resourceCulture);
+                return ResourceManager.GetString("Mocks_MockTable_NotImplementedError", resourceCulture);
             }
         }
     }

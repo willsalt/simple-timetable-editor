@@ -59,11 +59,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.FontTools.Afm2Code"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.FontTools.OpenTool", "Unicorn.FontTools.OpenTool\Unicorn.FontTools.OpenTool.csproj", "{BE8E75C5-4D5E-40DF-A858-F6D8C5764002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.CoreTypes", "Unicorn.CoreTypes\Unicorn.CoreTypes.csproj", "{3DD27DC2-5D3A-4F6D-BDD5-6FF02B1C933B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.CoreTypes", "Unicorn.CoreTypes\Unicorn.CoreTypes.csproj", "{3DD27DC2-5D3A-4F6D-BDD5-6FF02B1C933B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.CoreTypes.Tests.Unit", "Unicorn.CoreTypes.Tests.Unit\Unicorn.CoreTypes.Tests.Unit.csproj", "{D05704C3-19B4-46B8-A494-2A1CE04A57F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.CoreTypes.Tests.Unit", "Unicorn.CoreTypes.Tests.Unit\Unicorn.CoreTypes.Tests.Unit.csproj", "{D05704C3-19B4-46B8-A494-2A1CE04A57F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.CoreTypes.Tests.Utility", "Unicorn.CoreTypes.Tests.Utility\Unicorn.CoreTypes.Tests.Utility.csproj", "{EC3BD62E-0D22-4660-8C0F-896087CEE074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.CoreTypes.Tests.Utility", "Unicorn.CoreTypes.Tests.Utility\Unicorn.CoreTypes.Tests.Utility.csproj", "{EC3BD62E-0D22-4660-8C0F-896087CEE074}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.FontTools.OpenType", "Unicorn.FontTools.OpenType\Unicorn.FontTools.OpenType.csproj", "{D127110A-B1AF-4748-93AE-6B723B799AEC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unicorn.FontTools.OpenType.Tests.Unit", "Unicorn.FontTools.OpenType.Tests.Unit\Unicorn.FontTools.OpenType.Tests.Unit.csproj", "{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicorn.FontTools.OpenType.Tests.Utility", "Unicorn.FontTools.OpenType.Tests.Utility\Unicorn.FontTools.OpenType.Tests.Utility.csproj", "{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -297,6 +303,30 @@ Global
 		{EC3BD62E-0D22-4660-8C0F-896087CEE074}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC3BD62E-0D22-4660-8C0F-896087CEE074}.Release|x86.ActiveCfg = Release|Any CPU
 		{EC3BD62E-0D22-4660-8C0F-896087CEE074}.Release|x86.Build.0 = Release|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Debug|x86.Build.0 = Debug|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Release|x86.ActiveCfg = Release|Any CPU
+		{D127110A-B1AF-4748-93AE-6B723B799AEC}.Release|x86.Build.0 = Release|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Debug|x86.Build.0 = Debug|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Release|x86.ActiveCfg = Release|Any CPU
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8}.Release|x86.Build.0 = Release|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Debug|x86.Build.0 = Debug|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -318,6 +348,8 @@ Global
 		{79F79AA0-4F12-4893-950C-007650B1971C} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 		{D05704C3-19B4-46B8-A494-2A1CE04A57F8} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
 		{EC3BD62E-0D22-4660-8C0F-896087CEE074} = {F6B55A5E-8934-403F-9471-D3FE80B7F7F5}
+		{9D5E4009-85F3-4DD6-B596-228D4A3E02C8} = {3A9D325B-1368-4C23-BC54-009548AF82B5}
+		{1A627D5D-1101-4E78-BCEF-1BC11E57B0EB} = {F6B55A5E-8934-403F-9471-D3FE80B7F7F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EA1C6B0-D8A1-4000-A5F0-FFC1B39482AC}

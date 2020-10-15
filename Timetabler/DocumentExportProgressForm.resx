@@ -117,55 +117,72 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CheckedByCaption" xml:space="preserve">
-    <value>Checked By</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pbExport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="GlossaryTitle" xml:space="preserve">
-    <value>Explanation Of Footnotes</value>
+  <data name="pbExport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>259, 23</value>
   </data>
-  <data name="LocationFillerDotPattern" xml:space="preserve">
-    <value> .</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="pbExport.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="LocoToWorkRowCaption" xml:space="preserve">
-    <value>Loco To Work</value>
+  <data name="&gt;&gt;pbExport.Name" xml:space="preserve">
+    <value>pbExport</value>
   </data>
-  <data name="PdfExporter_Export_AdditionalMessage" xml:space="preserve">
-    <value>Exporting graphs and footnotes.</value>
+  <data name="&gt;&gt;pbExport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="PdfExporter_Export_CompleteMessage" xml:space="preserve">
-    <value>Export complete.</value>
+  <data name="&gt;&gt;pbExport.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="PdfExporter_Export_DownTrainsMessage" xml:space="preserve">
-    <value>Exporting Down trains.</value>
+  <data name="&gt;&gt;pbExport.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="PdfExporter_Export_ExportOptionsMissingError" xml:space="preserve">
-    <value>The document being exported does not have any export options set, which should not happen.</value>
+  <data name="lblProgress.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="PdfExporter_Export_StartMessage" xml:space="preserve">
-    <value>Starting export.</value>
+  <data name="lblProgress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 46</value>
   </data>
-  <data name="PdfExporter_Export_UpTrainsMessage" xml:space="preserve">
-    <value>Exporting Up trains.</value>
+  <data name="lblProgress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>16, 13</value>
   </data>
-  <data name="PublishedDateCaption" xml:space="preserve">
-    <value>Published</value>
+  <data name="lblProgress.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="RowEmptyCellAlternateFiller" xml:space="preserve">
-    <value>. .</value>
+  <data name="lblProgress.Text" xml:space="preserve">
+    <value>...</value>
   </data>
-  <data name="RowEmptyCellFiller" xml:space="preserve">
-    <value>. . . .</value>
+  <data name="&gt;&gt;lblProgress.Name" xml:space="preserve">
+    <value>lblProgress</value>
   </data>
-  <data name="SetToWorkRowCaption" xml:space="preserve">
-    <value>Set To Work</value>
+  <data name="&gt;&gt;lblProgress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ToWorkRowCaption" xml:space="preserve">
-    <value>To Work</value>
+  <data name="&gt;&gt;lblProgress.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="VersionCaption" xml:space="preserve">
-    <value>Version</value>
+  <data name="&gt;&gt;lblProgress.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="WrittenByCaption" xml:space="preserve">
-    <value>Written By</value>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>283, 68</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Export Progress</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>DocumentExportProgressForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

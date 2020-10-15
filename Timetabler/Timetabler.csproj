@@ -93,6 +93,12 @@
     <Compile Include="DocumentExportOptionsEditForm.Designer.cs">
       <DependentUpon>DocumentExportOptionsEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DocumentExportProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentExportProgressForm.Designer.cs">
+      <DependentUpon>DocumentExportProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DocumentOptionsEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DocumentExportOptionsEditForm.resx">
       <DependentUpon>DocumentExportOptionsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DocumentExportProgressForm.resx">
+      <DependentUpon>DocumentExportProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DocumentOptionsEditForm.resx">
       <DependentUpon>DocumentOptionsEditForm.cs</DependentUpon>

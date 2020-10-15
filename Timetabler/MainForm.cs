@@ -201,25 +201,45 @@ namespace Timetabler
                 return;
             }
 
-            try
+            using (DocumentExportProgressForm progressForm = new DocumentExportProgressForm())
             {
-                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine)))
-                using (FileStream fs = new FileStream(sfdExport.FileName, FileMode.Create, FileAccess.Write))
+                try
                 {
-                    exporter.Export(Model, fs);
+                    using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine)))
+                    using (FileStream fs = new FileStream(sfdExport.FileName, FileMode.Create, FileAccess.Write))
+                    {
+                        exporter.StatusUpdate += (s, evt) =>
+                        {
+                            if (!evt.InProgress)
+                            {
+                                progressForm.Close();
+                            }
+                            else
+                            {
+                                progressForm.ProgessPct = evt.Progress;
+                                progressForm.StatusMessage = evt.Status;
+                            }
+                        };
+                        progressForm.Show();
+                        exporter.Export(Model, fs);
+                    }
+                    MessageBox.Show(this, Resources.MainForm_Export_Completed);
                 }
-                MessageBox.Show(this, Resources.MainForm_Export_Completed);
-            }
-            catch (IOException ex)
-            {
-                bool showSecondMessage = true;
-                if ((ex.HResult & 0xffff) == 0x20)
+                catch (IOException ex)
                 {
-                    MessageBox.Show(this, string.Format(CultureInfo.CurrentCulture, Resources.MainForm_FileExport_SharingViolation, sfdExport.FileName), 
-                        Resources.MainForm_FileExport_SharingViolationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    showSecondMessage = false;
+                    bool showSecondMessage = true;
+                    if ((ex.HResult & 0xffff) == 0x20)
+                    {
+                        MessageBox.Show(this, string.Format(CultureInfo.CurrentCulture, Resources.MainForm_FileExport_SharingViolation, sfdExport.FileName),
+                            Resources.MainForm_FileExport_SharingViolationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        showSecondMessage = false;
+                    }
+                    LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, showSecondMessage, Resources.MainForm_FileExport_Failure, sfdExport.FileName, ex.GetType().Name, ex.Message);
                 }
-                LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, showSecondMessage, Resources.MainForm_FileExport_Failure, sfdExport.FileName, ex.GetType().Name, ex.Message);
+                finally
+                {
+                    progressForm.Close();
+                }
             }
         }
 

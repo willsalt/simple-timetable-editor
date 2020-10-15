@@ -27,6 +27,18 @@ namespace Timetabler.PdfExport
     /// </summary>
     public class PdfExporter : IExporter, IDisposable
     {
+        /// <summary>
+        /// Delegate type for event handlers for status update events.
+        /// </summary>
+        /// <param name="sender">The object raising the event.</param>
+        /// <param name="e">The event arguments.</param>
+        public delegate void StatusUpdateEventHandler(object sender, StatusUpdateEventArgs e);
+
+        /// <summary>
+        /// Event raised when the exporter status changes.
+        /// </summary>
+        public event StatusUpdateEventHandler StatusUpdate;
+
         private readonly IDocumentDescriptorFactory _engineSelector;
 
         /// <summary>
@@ -139,6 +151,17 @@ namespace Timetabler.PdfExport
             PassingTrainDashWidth = 0.5;
         }
 
+        /// <summary>
+        /// Raises the <see cref="StatusUpdate" /> event.
+        /// </summary>
+        /// <param name="isInProgress">Whether or not exporting is currently in progress.</param>
+        /// <param name="progress">The completeness of the export process (as a fraction between 0 and 1).</param>
+        /// <param name="status">A status message, potentially to display.</param>
+        protected void OnStatusUpdate(bool isInProgress, double progress, string status)
+        {
+            StatusUpdate?.Invoke(this, new StatusUpdateEventArgs(isInProgress, progress, status));
+        }
+
         private void StartPage(IDocumentDescriptor doc, PageOrientation orientation)
         {
             _currentPage = doc.AppendPage(orientation);
@@ -175,144 +198,144 @@ namespace Timetabler.PdfExport
                 throw new ArgumentException(Resources.PdfExporter_Export_ExportOptionsMissingError, nameof(document));
             }
 
+            OnStatusUpdate(true, 0d, Resources.PdfExporter_Export_StartMessage);
+
             SetLineWidths(document.ExportOptions);
 
             IDocumentDescriptor doc = _engineSelector.GetDocumentDescriptor(_defaultHorizontalMarginProportion, _defaultVerticalMarginProportion);
-            bool workNotFinished = true;
-            while (workNotFinished)
+            StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
+            bool firstOnPage = true;
+            Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_PageMargins, _currentPage.TopMarginPosition, _currentPage.BottomMarginPosition,
+                _currentPage.LeftMarginPosition, _currentPage.RightMarginPosition);
+
+            SectionMetrics sectionMetricsWithTitle = MeasureSectionMetrics(document.DownTrainsDisplay, document.ExportOptions);
+            SectionMetrics sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(document.ExportOptions.DistancesInOutput == SectionSelection.All);
+            SectionMetrics sectionMetrics = sectionMetricsWithTitle;
+
+            int columnsPerPage;
+            for (int i = 0; i < document.DownTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
             {
-                StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
-                bool firstOnPage = true;
-                Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_PageMargins, _currentPage.TopMarginPosition, _currentPage.BottomMarginPosition, 
-                    _currentPage.LeftMarginPosition, _currentPage.RightMarginPosition);
-                            
-                SectionMetrics sectionMetricsWithTitle = MeasureSectionMetrics(document.DownTrainsDisplay, document.ExportOptions);
-                SectionMetrics sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(document.ExportOptions.DistancesInOutput == SectionSelection.All);
-                SectionMetrics sectionMetrics = sectionMetricsWithTitle;
-
-                int columnsPerPage;
-                for (int i = 0; i < document.DownTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
+                OnStatusUpdate(true, 0.1 + 0.4 * ((double)i / document.DownTrainsDisplay.TrainSegments.Count), Resources.PdfExporter_Export_DownTrainsMessage);
+                columnsPerPage = ComputeColumnsForSection(document.DownTrainsDisplay, i, sectionMetrics);
+                Area footnotesForSection = LayOutFootnotesForSection(document.DownTrainsDisplay, i, columnsPerPage);
+                if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                 {
-                    columnsPerPage = ComputeColumnsForSection(document.DownTrainsDisplay, i, sectionMetrics);
-                    Area footnotesForSection = LayOutFootnotesForSection(document.DownTrainsDisplay, i, columnsPerPage);
-                    if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
-                    {
-                        StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
-                        firstOnPage = true;
-                        sectionMetrics = sectionMetricsWithTitle;
-                    }
-                    _currentPage.CurrentVerticalCursor += 
-                        DrawSection(document.DownTrainsDisplay, false, document.ExportOptions, i, columnsPerPage, sectionMetrics, 
-                            document.ExportOptions.DownSectionLabel, firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection, 
-                            _currentPage.LeftMarginPosition, _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
-                    _currentPage.CurrentVerticalCursor += interSectionGapSize;
-
-                    if (firstOnPage)
-                    {
-                        firstOnPage = false;
-                        sectionMetrics = sectionMetricsWithNoTitle;
-                    }
+                    StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
+                    firstOnPage = true;
+                    sectionMetrics = sectionMetricsWithTitle;
                 }
+                _currentPage.CurrentVerticalCursor +=
+                    DrawSection(document.DownTrainsDisplay, false, document.ExportOptions, i, columnsPerPage, sectionMetrics,
+                        document.ExportOptions.DownSectionLabel, firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection,
+                        _currentPage.LeftMarginPosition, _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
+                _currentPage.CurrentVerticalCursor += interSectionGapSize;
 
-                sectionMetricsWithTitle = MeasureSectionMetrics(document.UpTrainsDisplay, document.ExportOptions);
-                sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(true);
-                sectionMetrics = firstOnPage ? sectionMetricsWithTitle : sectionMetricsWithNoTitle;
-                
-                for (int i = 0; i < document.UpTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
+                if (firstOnPage)
                 {
-                    columnsPerPage = ComputeColumnsForSection(document.UpTrainsDisplay, i, sectionMetrics);
-                    Area footnotesForSection = LayOutFootnotesForSection(document.UpTrainsDisplay, i, columnsPerPage);
-                    if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
-                    {
-                        StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
-                        firstOnPage = true;
-                        sectionMetrics = sectionMetricsWithTitle;
-                    }
-                    _currentPage.CurrentVerticalCursor += 
-                        DrawSection(document.UpTrainsDisplay, true, document.ExportOptions, i, columnsPerPage, sectionMetrics, document.ExportOptions.UpSectionLabel, 
-                            firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition, 
-                            _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
-                    _currentPage.CurrentVerticalCursor += interSectionGapSize;
-
-                    if (!firstOnPage)
-                    {
-                        firstOnPage = false;
-                        sectionMetrics = sectionMetricsWithNoTitle;
-                    }
-                    if (document.ExportOptions.DistancesInOutput != SectionSelection.All)
-                    {
-                        sectionMetricsWithNoTitle.DisplayDistanceColumn = false;
-                    }
+                    firstOnPage = false;
+                    sectionMetrics = sectionMetricsWithNoTitle;
                 }
+            }
 
-                UniSize boxHoursSize = default;
-                if ((document.ExportOptions?.DisplayBoxHours ?? true) && document.SignalboxHoursSets.Count > 0)
+            sectionMetricsWithTitle = MeasureSectionMetrics(document.UpTrainsDisplay, document.ExportOptions);
+            sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(true);
+            sectionMetrics = firstOnPage ? sectionMetricsWithTitle : sectionMetricsWithNoTitle;
+
+            for (int i = 0; i < document.UpTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
+            {
+                OnStatusUpdate(true, 0.5 + 0.4 * ((double)i / document.UpTrainsDisplay.TrainSegments.Count), Resources.PdfExporter_Export_UpTrainsMessage);
+                columnsPerPage = ComputeColumnsForSection(document.UpTrainsDisplay, i, sectionMetrics);
+                Area footnotesForSection = LayOutFootnotesForSection(document.UpTrainsDisplay, i, columnsPerPage);
+                if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                 {
-                    Table hoursTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
-                    List<TableCell> cells = new List<TableCell>
+                    StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
+                    firstOnPage = true;
+                    sectionMetrics = sectionMetricsWithTitle;
+                }
+                _currentPage.CurrentVerticalCursor +=
+                    DrawSection(document.UpTrainsDisplay, true, document.ExportOptions, i, columnsPerPage, sectionMetrics, document.ExportOptions.UpSectionLabel,
+                        firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition,
+                        _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
+                _currentPage.CurrentVerticalCursor += interSectionGapSize;
+
+                if (!firstOnPage)
+                {
+                    firstOnPage = false;
+                    sectionMetrics = sectionMetricsWithNoTitle;
+                }
+                if (document.ExportOptions.DistancesInOutput != SectionSelection.All)
+                {
+                    sectionMetricsWithNoTitle.DisplayDistanceColumn = false;
+                }
+            }
+
+            OnStatusUpdate(true, 0.9, Resources.PdfExporter_Export_AdditionalMessage);
+
+            UniSize boxHoursSize = default;
+            if ((document.ExportOptions?.DisplayBoxHours ?? true) && document.SignalboxHoursSets.Count > 0)
+            {
+                Table hoursTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
+                List<TableCell> cells = new List<TableCell>
                     {
                         new PlainTextTableCell("", _plainBodyFont, _currentPage.PageGraphics)
                     };
+                foreach (var box in document.Signalboxes)
+                {
+                    cells.Add(new PlainTextTableCell(box.Code, _boldBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
+                }
+                hoursTable.AddRow(cells);
+                foreach (var hoursSet in document.SignalboxHoursSets)
+                {
+                    cells.Clear();
+                    cells.Add(new PlainTextTableCell(hoursSet.Category, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                     foreach (var box in document.Signalboxes)
                     {
-                        cells.Add(new PlainTextTableCell(box.Code, _boldBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
+                        string cellContent = hoursSet.Hours[box.Id].ToString(document.Options.ClockType);
+                        cells.Add(new PlainTextTableCell(cellContent, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                     }
                     hoursTable.AddRow(cells);
-                    foreach (var hoursSet in document.SignalboxHoursSets)
-                    {
-                        cells.Clear();
-                        cells.Add(new PlainTextTableCell(hoursSet.Category, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
-                        foreach (var box in document.Signalboxes)
-                        {
-                            string cellContent = hoursSet.Hours[box.Id].ToString(document.Options.ClockType);
-                            cells.Add(new PlainTextTableCell(cellContent, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
-                        }
-                        hoursTable.AddRow(cells);
-                    }
-
-                    boxHoursSize = new UniSize(hoursTable.ComputedWidth, hoursTable.ComputedHeight);
-                    hoursTable.DrawAt(_currentPage.PageGraphics, _currentPage.LeftMarginPosition, _currentPage.CurrentVerticalCursor);
                 }
 
-                if (document.ExportOptions.DisplayCredits)
+                boxHoursSize = new UniSize(hoursTable.ComputedWidth, hoursTable.ComputedHeight);
+                hoursTable.DrawAt(_currentPage.PageGraphics, _currentPage.LeftMarginPosition, _currentPage.CurrentVerticalCursor);
+            }
+
+            if (document.ExportOptions.DisplayCredits)
+            {
+                Table creditsTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
+                if (!string.IsNullOrWhiteSpace(document.WrittenBy))
                 {
-                    Table creditsTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
-                    if (!string.IsNullOrWhiteSpace(document.WrittenBy))
-                    {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.WrittenByCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.WrittenBy, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
-                    }
-                    if (!string.IsNullOrWhiteSpace(document.CheckedBy))
-                    {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.CheckedByCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.CheckedBy, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
-                    }
-                    if (!string.IsNullOrWhiteSpace(document.TimetableVersion))
-                    {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.VersionCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.TimetableVersion, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
-                    }
-                    if (!string.IsNullOrWhiteSpace(document.PublishedDate))
-                    {
-                        creditsTable.AddRow(new PlainTextTableCell(Resources.PublishedDateCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
-                            new PlainTextTableCell(document.PublishedDate, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
-                    }
-
-                    if (boxHoursSize != default && creditsTable.ComputedWidth + boxHoursSize.Width > _currentPage.PageAvailableWidth)
-                    {
-                        _currentPage.CurrentVerticalCursor += boxHoursSize.Height + 1;
-                    }
-                    creditsTable.DrawAt(_currentPage.PageGraphics, _currentPage.RightMarginPosition - creditsTable.ComputedWidth, _currentPage.CurrentVerticalCursor);
+                    creditsTable.AddRow(new PlainTextTableCell(Resources.WrittenByCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                        new PlainTextTableCell(document.WrittenBy, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                 }
-
-                if (document.ExportOptions.DisplayGraph)
+                if (!string.IsNullOrWhiteSpace(document.CheckedBy))
                 {
-                    StartPage(doc, document.ExportOptions.GraphPageOrientation.ToPageOrientation());
-                    DrawGraph(new TrainGraphModel(document.LocationList, document.TrainList) { DisplayTrainLabels = document.Options.DisplayTrainLabelsOnGraphs },
-                        document.Title, document.Subtitle, document.DateDescription);
+                    creditsTable.AddRow(new PlainTextTableCell(Resources.CheckedByCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                        new PlainTextTableCell(document.CheckedBy, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
+                }
+                if (!string.IsNullOrWhiteSpace(document.TimetableVersion))
+                {
+                    creditsTable.AddRow(new PlainTextTableCell(Resources.VersionCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                        new PlainTextTableCell(document.TimetableVersion, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
+                }
+                if (!string.IsNullOrWhiteSpace(document.PublishedDate))
+                {
+                    creditsTable.AddRow(new PlainTextTableCell(Resources.PublishedDateCaption, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics),
+                        new PlainTextTableCell(document.PublishedDate, _plainBodyFont, _tableCellStandardMargins, _currentPage.PageGraphics));
                 }
 
-                workNotFinished = false;
+                if (boxHoursSize != default && creditsTable.ComputedWidth + boxHoursSize.Width > _currentPage.PageAvailableWidth)
+                {
+                    _currentPage.CurrentVerticalCursor += boxHoursSize.Height + 1;
+                }
+                creditsTable.DrawAt(_currentPage.PageGraphics, _currentPage.RightMarginPosition - creditsTable.ComputedWidth, _currentPage.CurrentVerticalCursor);
+            }
+
+            if (document.ExportOptions.DisplayGraph)
+            {
+                StartPage(doc, document.ExportOptions.GraphPageOrientation.ToPageOrientation());
+                DrawGraph(new TrainGraphModel(document.LocationList, document.TrainList) { DisplayTrainLabels = document.Options.DisplayTrainLabelsOnGraphs },
+                    document.Title, document.Subtitle, document.DateDescription);
             }
 
             if (document.ExportOptions.DisplayGlossary)
@@ -321,6 +344,7 @@ namespace Timetabler.PdfExport
             }
 
             doc.Write(outputStream);
+            OnStatusUpdate(false, 1d, Resources.PdfExporter_Export_CompleteMessage);
         }
 
         private void SetLineWidths(DocumentExportOptions exportOptions)

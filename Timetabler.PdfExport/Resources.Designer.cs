@@ -97,11 +97,56 @@ namespace Timetabler.PdfExport {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exporting graphs and footnotes..
+        /// </summary>
+        internal static string PdfExporter_Export_AdditionalMessage {
+            get {
+                return ResourceManager.GetString("PdfExporter_Export_AdditionalMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export complete..
+        /// </summary>
+        internal static string PdfExporter_Export_CompleteMessage {
+            get {
+                return ResourceManager.GetString("PdfExporter_Export_CompleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting Down trains..
+        /// </summary>
+        internal static string PdfExporter_Export_DownTrainsMessage {
+            get {
+                return ResourceManager.GetString("PdfExporter_Export_DownTrainsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The document being exported does not have any export options set, which should not happen..
         /// </summary>
         internal static string PdfExporter_Export_ExportOptionsMissingError {
             get {
                 return ResourceManager.GetString("PdfExporter_Export_ExportOptionsMissingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting export..
+        /// </summary>
+        internal static string PdfExporter_Export_StartMessage {
+            get {
+                return ResourceManager.GetString("PdfExporter_Export_StartMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting Up trains..
+        /// </summary>
+        internal static string PdfExporter_Export_UpTrainsMessage {
+            get {
+                return ResourceManager.GetString("PdfExporter_Export_UpTrainsMessage", resourceCulture);
             }
         }
         

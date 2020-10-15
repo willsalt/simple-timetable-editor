@@ -215,7 +215,7 @@ namespace Timetabler.PdfExport
             int columnsPerPage;
             for (int i = 0; i < document.DownTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
             {
-                OnStatusUpdate(true, 0.1 + 0.4 * (document.DownTrainsDisplay.TrainSegments.Count / (double)i), Resources.PdfExporter_Export_DownTrainsMessage);
+                OnStatusUpdate(true, 0.1 + 0.4 * ((double)i / document.DownTrainsDisplay.TrainSegments.Count), Resources.PdfExporter_Export_DownTrainsMessage);
                 columnsPerPage = ComputeColumnsForSection(document.DownTrainsDisplay, i, sectionMetrics);
                 Area footnotesForSection = LayOutFootnotesForSection(document.DownTrainsDisplay, i, columnsPerPage);
                 if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
@@ -243,7 +243,7 @@ namespace Timetabler.PdfExport
 
             for (int i = 0; i < document.UpTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
             {
-                OnStatusUpdate(true, 0.5 + 0.4 * (document.UpTrainsDisplay.TrainSegments.Count / (double)i), Resources.PdfExporter_Export_UpTrainsMessage);
+                OnStatusUpdate(true, 0.5 + 0.4 * ((double)i / document.UpTrainsDisplay.TrainSegments.Count), Resources.PdfExporter_Export_UpTrainsMessage);
                 columnsPerPage = ComputeColumnsForSection(document.UpTrainsDisplay, i, sectionMetrics);
                 Area footnotesForSection = LayOutFootnotesForSection(document.UpTrainsDisplay, i, columnsPerPage);
                 if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)

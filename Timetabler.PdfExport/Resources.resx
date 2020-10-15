@@ -129,8 +129,23 @@
   <data name="LocoToWorkRowCaption" xml:space="preserve">
     <value>Loco To Work</value>
   </data>
+  <data name="PdfExporter_Export_AdditionalMessage" xml:space="preserve">
+    <value>Exporting graphs and footnotes.</value>
+  </data>
+  <data name="PdfExporter_Export_CompleteMessage" xml:space="preserve">
+    <value>Export complete.</value>
+  </data>
+  <data name="PdfExporter_Export_DownTrainsMessage" xml:space="preserve">
+    <value>Exporting Down trains.</value>
+  </data>
   <data name="PdfExporter_Export_ExportOptionsMissingError" xml:space="preserve">
     <value>The document being exported does not have any export options set, which should not happen.</value>
+  </data>
+  <data name="PdfExporter_Export_StartMessage" xml:space="preserve">
+    <value>Starting export.</value>
+  </data>
+  <data name="PdfExporter_Export_UpTrainsMessage" xml:space="preserve">
+    <value>Exporting Up trains.</value>
   </data>
   <data name="PublishedDateCaption" xml:space="preserve">
     <value>Published</value>

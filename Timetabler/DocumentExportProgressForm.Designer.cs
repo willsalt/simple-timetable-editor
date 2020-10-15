@@ -1,5 +1,8 @@
 ﻿namespace Timetabler
 {
+    /// <summary>
+    /// A form to display the progress of an export.
+    /// </summary>
     partial class DocumentExportProgressForm
     {
         /// <summary>

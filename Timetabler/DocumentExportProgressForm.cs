@@ -3,8 +3,14 @@ using Timetabler.PdfExport;
 
 namespace Timetabler
 {
+    /// <summary>
+    /// A form to display the progress of an export.
+    /// </summary>
     public partial class DocumentExportProgressForm : Form
     {
+        /// <summary>
+        /// The progress of the current export, as a value between 0 (not started) and 1 (complete).
+        /// </summary>
         public double ProgessPct
         {
             get => pbExport.Value / 100d;
@@ -14,6 +20,9 @@ namespace Timetabler
             }
         }
 
+        /// <summary>
+        /// The latest export status message that is being displayed.
+        /// </summary>
         public string StatusMessage
         {
             get => lblProgress.Text;
@@ -23,6 +32,9 @@ namespace Timetabler
             }
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public DocumentExportProgressForm()
         {
             InitializeComponent();

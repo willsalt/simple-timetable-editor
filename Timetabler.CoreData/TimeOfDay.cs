@@ -33,9 +33,8 @@ namespace Timetabler.CoreData
         /// </summary>
         /// <param name="hours">Number of hours.</param>
         /// <param name="minutes">Number of minutes.</param>
-        public TimeOfDay(int hours, int minutes)
+        public TimeOfDay(int hours, int minutes) : this(hours, minutes, 0)
         {
-            AbsoluteSeconds = (hours * 3600 + minutes * 60) % 86400;
         }
 
         /// <summary>
@@ -47,7 +46,17 @@ namespace Timetabler.CoreData
         /// <param name="half">AM or PM.</param>
         public TimeOfDay(int hours, int minutes, int seconds, HalfOfDay half)
         {
-            AbsoluteSeconds = (hours * 3600 + minutes * 60 + seconds + half == HalfOfDay.PM ? 43200 : 0) % 86400;
+            AbsoluteSeconds = ((hours == 12 ? 0 : hours * 3600) + minutes * 60 + seconds + (half != HalfOfDay.AM ? 43200 : 0)) % 86400;
+        }
+
+        /// <summary>
+        /// Construct from components to the nearest minute, using the twelve-hour clock.
+        /// </summary>
+        /// <param name="hours">Number of hours.</param>
+        /// <param name="minutes">Number of minutes.</param>
+        /// <param name="half">AM or PM.</param>
+        public TimeOfDay(int hours, int minutes, HalfOfDay half) : this(hours, minutes, 0, half)
+        {
         }
 
         /// <summary>
@@ -66,17 +75,6 @@ namespace Timetabler.CoreData
 
             int newSeconds = AbsoluteSeconds - ((AbsoluteSeconds - aroundTime.AbsoluteSeconds) * 2);
             return new TimeOfDay(newSeconds);
-        }
-
-        /// <summary>
-        /// Construct from components to the nearest minute, using the twelve-hour clock.
-        /// </summary>
-        /// <param name="hours">Number of hours.</param>
-        /// <param name="minutes">Number of minutes.</param>
-        /// <param name="half">AM or PM.</param>
-        public TimeOfDay(int hours, int minutes, HalfOfDay half)
-        {
-            AbsoluteSeconds = (hours * 3600 + minutes * 60 + half == HalfOfDay.PM ? 43200 : 0) % 86400;
         }
 
         /// <summary>
@@ -129,13 +127,14 @@ namespace Timetabler.CoreData
             }
             set
             {
+                int hrs = value == 12 ? 0 : value;
                 if (HalfOfDay == HalfOfDay.AM)
                 {
-                    AbsoluteSeconds = (value * 3600 + Minutes * 60 + Seconds) % 86400;
+                    AbsoluteSeconds = (hrs * 3600 + Minutes * 60 + Seconds) % 86400;
                 }
                 else
                 {
-                    AbsoluteSeconds = (value * 3600 + Minutes * 60 + Seconds + 43200) % 86400;
+                    AbsoluteSeconds = (hrs * 3600 + Minutes * 60 + Seconds + 43200) % 86400;
                 }
             }
         }
@@ -253,7 +252,7 @@ namespace Timetabler.CoreData
         /// </summary>
         /// <param name="obj">Another object to compare to.</param>
         /// <exception cref="ArgumentException">Thrown if the obj parameter is not a <see cref="TimeOfDay"/> instance.</exception>
-        /// <returns>-1, 0 or 1 according to whether the other object's value is less than, equal to or greater than this instance.</returns>
+        /// <returns>1, 0 or -1 according to whether the other object's value is less than, equal to or greater than this instance.</returns>
         public int CompareTo(object obj)
         {
             var t = obj as TimeOfDay;

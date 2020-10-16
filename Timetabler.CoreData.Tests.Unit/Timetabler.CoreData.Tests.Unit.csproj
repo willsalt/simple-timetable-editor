@@ -41,7 +41,6 @@
     <Folder Include="Comparers\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Mocks\" />
   </ItemGroup>
 
 </Project>

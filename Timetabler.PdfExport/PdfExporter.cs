@@ -528,11 +528,10 @@ namespace Timetabler.PdfExport
                 leftCoord + MainLineWidth + dimensionColumnShift + sectionMetrics.LocationMetrics.TotalSize.Width - lineGapSize * 2, mainSectionTop - LineOffset,
                 MainLineWidth);
 
-            UniTextSize sectionNameDims = _currentPage.PageGraphics.MeasureString(sectionName, _subtitleFont);
-            
-            WritingWrapper(sectionName, _subtitleFont, leftCoord + dimensionColumnShift + MainLineWidth + 
-                (sectionMetrics.LocationMetrics.TotalSize.Width - sectionNameDims.Width) / 2,
-                headerTop + sectionNameDims.HeightAboveBaseline + (sectionMetrics.HeaderHeight - sectionNameDims.TotalHeight) / 2);
+            Paragraph sectionNameParagraph = new Paragraph(sectionMetrics.LocationMetrics.TotalSize.Width, sectionMetrics.HeaderHeight, Unicorn.Orientation.Normal,
+                HorizontalAlignment.Centred, VerticalAlignment.Centred);
+            sectionNameParagraph.AddText(sectionName, _subtitleFont, _currentPage.PageGraphics);
+            sectionNameParagraph.DrawAt(_currentPage.PageGraphics, leftCoord + dimensionColumnShift + MainLineWidth, headerTop);
 
             DrawLocationList(section, sectionMetrics.LocationMetrics, leftCoord + MainLineWidth + dimensionColumnShift, mainSectionTop);
             if (sectionMetrics.DisplayDistanceColumn)

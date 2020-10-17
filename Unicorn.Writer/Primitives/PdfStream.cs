@@ -7,7 +7,8 @@ using Unicorn.Writer.Interfaces;
 namespace Unicorn.Writer.Primitives
 {
     /// <summary>
-    /// A class to represent a PDF stream.  These have to be stored as indirect objects, and consist of a dictionary containing stream metadata followed by the stream content itself.
+    /// A class to represent a PDF stream.  These have to be stored as indirect objects, and consist of a dictionary containing stream metadata followed by the 
+    /// stream content itself.
     /// </summary>
     public class PdfStream : PdfIndirectObject, IPdfPrimitiveObject
     {
@@ -41,6 +42,10 @@ namespace Unicorn.Writer.Primitives
             if (filters != null)
             {
                 _filterEncodingChain.AddRange(filters);
+                if (_filterEncodingChain.Any())
+                {
+                    MetaDictionary.Add(CommonPdfNames.Filter, FilterNames());
+                }
             }
         }
 
@@ -125,17 +130,8 @@ namespace Unicorn.Writer.Primitives
             writer(dest, CachedPrologue.ToArray());
             int written = CachedPrologue.Count;
             IList<byte> encodedContent = EncodeContents().ToList();
-            PdfDictionary dict = new PdfDictionary { { CommonPdfNames.Length, new PdfInteger(encodedContent.Count) } };
-            PdfSimpleObject filterMetadata = FilterNames();
-            if (filterMetadata != null)
-            {
-                dict.Add(CommonPdfNames.Filter, filterMetadata);
-            }
-            if (_additionalMetadata != null)
-            {
-                dict.AddRange(_additionalMetadata);
-            }
-            written += dictWriter(dict, dest);
+            UpdateMetaDictionary(encodedContent);
+            written += dictWriter(MetaDictionary, dest);
             writer(dest, _streamStart);
             writer(dest, encodedContent.ToArray());
             writer(dest, _streamEnd);

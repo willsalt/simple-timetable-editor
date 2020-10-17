@@ -49,7 +49,7 @@ namespace Unicorn.FontTools
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="OpenTypeFontLoader" /> and optionally releases the managed resources.

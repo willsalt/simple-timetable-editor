@@ -332,7 +332,7 @@ namespace Unicorn.FontTools.OpenType
             }
 
             #region IDisposable Support
-            private bool disposedValue = false;
+            private bool disposedValue;
 
             protected virtual void Dispose(bool disposing)
             {
@@ -367,7 +367,7 @@ namespace Unicorn.FontTools.OpenType
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="OpenTypeFont" /> and optionally releases the managed resources.

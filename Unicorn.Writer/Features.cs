@@ -23,6 +23,6 @@ namespace Unicorn.Writer
         /// <summary>
         /// Feature toggles for writing PDF streams.
         /// </summary>
-        public static StreamFeatureFlags StreamFeatures { get; set; } = 0;
+        public static StreamFeatureFlags StreamFeatures { get; set; }
     }
 }

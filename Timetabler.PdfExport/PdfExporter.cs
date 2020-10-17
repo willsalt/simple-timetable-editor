@@ -1287,7 +1287,7 @@ namespace Timetabler.PdfExport
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="PdfExporter" /> and optionally releases the managed resources.

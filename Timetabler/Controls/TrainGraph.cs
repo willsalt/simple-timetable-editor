@@ -117,7 +117,7 @@ namespace Timetabler.Controls
 
         private SortedDictionary<int, SortedDictionary<int, VertexInformation>> TrainCoordinates { get; set; }
 
-        private VertexInformation _nearestVertex = null;
+        private VertexInformation _nearestVertex;
 
         private readonly ToolTip _tooltip;
 

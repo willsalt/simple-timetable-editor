@@ -391,7 +391,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsPopulatedAndTimePropertyOfSecondOperandIsNotPopulated()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsPopulatedAndTimePropertyOfSecondOperandIsNotPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -399,18 +399,18 @@ namespace Timetabler.Data.Tests.Unit
 
             bool testOutput = testParam0 >= testParam1;
 
-            Assert.IsFalse(testOutput);
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
-        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsFalse_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfFirstOperandIsNotNullAndSecondOperandIsNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = null;
 
             bool testOutput = testParam0 >= testParam1;
 
-            Assert.IsFalse(testOutput);
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]

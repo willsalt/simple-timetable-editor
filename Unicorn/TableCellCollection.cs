@@ -11,7 +11,7 @@ namespace Unicorn
     public class TableCellCollection : IList<TableCell>
     {
         private readonly List<TableCell> _theList;
-        private uint _version = 0;
+        private uint _version;
 
         /// <summary>
         /// The table containing this row or column (if any).

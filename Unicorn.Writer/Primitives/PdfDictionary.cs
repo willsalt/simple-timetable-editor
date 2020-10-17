@@ -13,7 +13,7 @@ namespace Unicorn.Writer.Primitives
     public class PdfDictionary : IPdfPrimitiveObject, IEnumerable<KeyValuePair<PdfName, IPdfPrimitiveObject>>
     {
         private readonly Dictionary<PdfName, IPdfPrimitiveObject> _contents = new Dictionary<PdfName, IPdfPrimitiveObject>();
-        private byte[] cachedBytes = null;
+        private byte[] cachedBytes;
 
         /// <summary>
         /// The length of the object when converted into bytes.

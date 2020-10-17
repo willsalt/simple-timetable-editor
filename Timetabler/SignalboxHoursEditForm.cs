@@ -14,7 +14,7 @@ namespace Timetabler
     public partial class SignalboxHoursEditForm : Form
     {
         private SignalboxHoursEditFormModel _model;
-        private bool _inViewUpdate = false;
+        private bool _inViewUpdate;
 
         /// <summary>
         /// The data to be edited by the form.

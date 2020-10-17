@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Timetabler.CoreData;
 
 namespace Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
         public const string AlphanumericCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

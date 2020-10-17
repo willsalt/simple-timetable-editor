@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Runtime.CompilerServices;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData.Comparers;
@@ -36,6 +37,18 @@ namespace Timetabler.CoreData.Tests.Unit.Comparers
             Assert.IsFalse(testOutput);
             // Just to double-check that the parameters do compare equal!
             Assert.AreEqual(testParam0, testParam1);
+        }
+
+        [TestMethod]
+        public void ReferenceEqualityComparerClass_GetHashCodeMethod_ReturnsSameResultAsRuntimeHelpersGetHashCodeMethod()
+        {
+            TimeOfDay testParam0 = _rnd.NextTimeOfDay();
+            ReferenceEqualityComparer testObject = ReferenceEqualityComparer.Default;
+            int expectedOutput = RuntimeHelpers.GetHashCode(testParam0);
+
+            int testOutput = testObject.GetHashCode(testParam0);
+
+            Assert.AreEqual(expectedOutput, testOutput);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

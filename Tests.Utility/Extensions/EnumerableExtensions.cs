@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class EnumerableExtensions
     {
         public static int MaxIndex<T>(this IEnumerable<T> sequence) where T : IComparable<T>

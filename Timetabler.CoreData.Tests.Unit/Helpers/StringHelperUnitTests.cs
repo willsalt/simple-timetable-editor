@@ -25,13 +25,17 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         }
 
         [TestMethod]
-        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentIfFirstArgumentDoesNotEndInDashDOrDashA()
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentIfFirstArgumentDoesNotEndALocationIdSuffix()
         {
             string testString;
             do
             {
                 testString = _rnd.NextString(_rnd.Next(MaxTestStringLength));
-            } while (testString.EndsWith("-a", StringComparison.InvariantCulture) || testString.EndsWith("-d", StringComparison.InvariantCulture));
+            } while (testString.EndsWith(LocationIdSuffixes.Arrival, StringComparison.InvariantCulture) || 
+                testString.EndsWith(LocationIdSuffixes.Departure, StringComparison.InvariantCulture) ||
+                testString.EndsWith(LocationIdSuffixes.Path, StringComparison.InvariantCulture) ||
+                testString.EndsWith(LocationIdSuffixes.Platform, StringComparison.InvariantCulture) ||
+                testString.EndsWith(LocationIdSuffixes.Line, StringComparison.InvariantCulture));
 
             string result = testString.StripArrivalDepartureSuffix();
 
@@ -54,6 +58,39 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         {
             string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
             string testString = expectedResult + LocationIdSuffixes.Departure;
+
+            string result = testString.StripArrivalDepartureSuffix();
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInPathSuffix()
+        {
+            string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
+            string testString = expectedResult + LocationIdSuffixes.Path;
+
+            string result = testString.StripArrivalDepartureSuffix();
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInPlatformSuffix()
+        {
+            string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
+            string testString = expectedResult + LocationIdSuffixes.Platform;
+
+            string result = testString.StripArrivalDepartureSuffix();
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void StringHelperClass_StripArrivalDepartureSuffixMethod_ReturnsFirstArgumentWithoutLastThreeCharactersIfFirstArgumentEndsInLineSuffix()
+        {
+            string expectedResult = _rnd.NextString(_rnd.Next(MaxTestStringLength));
+            string testString = expectedResult + LocationIdSuffixes.Line;
 
             string result = testString.StripArrivalDepartureSuffix();
 

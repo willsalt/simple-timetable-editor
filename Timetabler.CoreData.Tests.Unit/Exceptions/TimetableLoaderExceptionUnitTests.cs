@@ -19,6 +19,14 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         }
 
         [TestMethod]
+        public void TimetableLoaderExceptionClass_ConstructorWithNoParameters_SetsMessagePropertyToNonEmptyString()
+        {
+            TimetableLoaderException testException = new TimetableLoaderException();
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(testException.Message));
+        }
+
+        [TestMethod]
         public void TimetableLoaderExceptionClass_ConstructorWithOneParameter_SetsMessagePropertyToParameter()
         {
             string testMessage = _rnd.NextString(_rnd.Next(1, 100));

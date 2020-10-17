@@ -27,8 +27,8 @@ namespace Timetabler
     public partial class MainForm : Form
     {
         private TimetableDocument _model;
-        private TimetableSectionModelDataAdapter _upTrainsAdapter = null;
-        private TimetableSectionModelDataAdapter _downTrainsAdapter = null;
+        private TimetableSectionModelDataAdapter _upTrainsAdapter;
+        private TimetableSectionModelDataAdapter _downTrainsAdapter;
 
         /// <summary>
         /// The open document.
@@ -58,7 +58,7 @@ namespace Timetabler
             }
         }
 
-        private bool _documentChanged = false;
+        private bool _documentChanged;
 
         private readonly Dictionary<string, int> _signalboxHoursColumnMap = new Dictionary<string, int>();
 

@@ -11,7 +11,7 @@ namespace Unicorn.Writer.Primitives
     /// </summary>
     public abstract class PdfSimpleObject : IPdfPrimitiveObject
     {
-        private byte[] _cachedBytes = null;
+        private byte[] _cachedBytes;
 
         /// <summary>
         /// The number of bytes needed to represent this object.

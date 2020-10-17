@@ -23,7 +23,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         private readonly List<double> _transformedXParameters = new List<double>();
         private readonly List<double> _transformedYParameters = new List<double>();
 
-        private int _transformerCalls = 0;
+        private int _transformerCalls;
 
         private double TransformParam(double val, List<double> store)
         {

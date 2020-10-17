@@ -40,8 +40,8 @@ namespace Timetabler.Adapters
         private const int _trainToWorkRowIdx = -1; // This index is from the end, not the start.
 
         // Varying row indexes
-        private int? _trainLocoDiagramRowIdx = null;
-        private int? _trainLocoToWorkRowIdx = null;
+        private int? _trainLocoDiagramRowIdx;
+        private int? _trainLocoToWorkRowIdx;
         private int _trainFootnotesRowIdx = 2;
         
         private int TrainClassRowIdx { get { return _trainFootnotesRowIdx + 1; } }

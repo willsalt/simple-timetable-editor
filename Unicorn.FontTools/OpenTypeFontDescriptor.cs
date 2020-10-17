@@ -229,7 +229,7 @@ namespace Unicorn.FontTools
         /// </summary>
         public UniTextSize EmptyStringMetrics => new UniTextSize(0d, PointSize, Ascent + InterlineSpacing / 2, Ascent, -Descent);
 
-        private static bool _codePagesRegistered = false;
+        private static bool _codePagesRegistered;
 
         /// <summary>
         /// Constructor.

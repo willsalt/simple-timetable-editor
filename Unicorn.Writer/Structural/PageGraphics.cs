@@ -39,7 +39,7 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         private bool LineWidthChanged { get; set; }
 
-        private IFontDescriptor CurrentFont { get; set; } = null;
+        private IFontDescriptor CurrentFont { get; set; }
 
         /// <summary>
         /// Constructor.  Requires methods for mapping coordinates from Unicorn-space (with the Y-origin at the top of the page, like most desktop drawing libraries)

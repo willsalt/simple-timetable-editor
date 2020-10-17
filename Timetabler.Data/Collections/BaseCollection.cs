@@ -281,6 +281,10 @@ namespace Timetabler.Data.Collections
         /// <returns>The number of elements removed from the collection.</returns>
         public int RemoveAll(Func<T, bool> predicate)
         {
+            if (predicate is null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
             int count = 0;
             for (int i = 0; i < Count; ++i)
             {

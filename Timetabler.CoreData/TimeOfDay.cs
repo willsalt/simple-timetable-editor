@@ -521,7 +521,7 @@ namespace Timetabler.CoreData
             }
             if (t2 is null)
             {
-                return false;
+                return true;
             }
             return t1.AbsoluteSeconds >= t2.AbsoluteSeconds;
         }

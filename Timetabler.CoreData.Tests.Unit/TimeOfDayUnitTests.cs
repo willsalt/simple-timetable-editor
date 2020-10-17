@@ -1781,6 +1781,390 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
+        public void TimeOfDayClass_EqualityOperator_ReturnsTrue_IfBothOperandsAreNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 == operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_EqualityOperator_ReturnsFalse_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(86400));
+
+            bool testOutput = operand0 == operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_EqualityOperator_ReturnsFalse_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 == operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_EqualityOperator_ReturnsTrue_IfOperandsAreNotNullAndAreEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = new TimeOfDay(operand0.AbsoluteSeconds);
+
+            bool testOutput = operand0 == operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_EqualityOperator_ReturnsFalse_IfOperandsAreNotNullAndAreNotEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            int operand1Value;
+            do
+            {
+                operand1Value = _rnd.Next(86400);
+            } while (operand1Value == operand0.AbsoluteSeconds);
+            TimeOfDay operand1 = new TimeOfDay(operand1Value);
+
+            bool testOutput = operand0 == operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_InequalityOperator_ReturnsFalse_IfBothOperandsAreNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 != operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_InequalityOperator_ReturnsTrue_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(86400));
+
+            bool testOutput = operand0 != operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_InequalityOperator_ReturnsTrue_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 != operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_InequalityOperator_ReturnsFalse_IfOperandsAreNotNullAndAreEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = new TimeOfDay(operand0.AbsoluteSeconds);
+
+            bool testOutput = operand0 != operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_InequalityOperator_ReturnsTrue_IfOperandsAreNotNullAndAreNotEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            int operand1Value;
+            do
+            {
+                operand1Value = _rnd.Next(86400);
+            } while (operand1Value == operand0.AbsoluteSeconds);
+            TimeOfDay operand1 = new TimeOfDay(operand1Value);
+
+            bool testOutput = operand0 != operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOperator_ReturnsFalse_IfOperandsAreNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 < operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOperator_ReturnsTrue_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(86400));
+
+            bool testOutput = operand0 < operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOperator_ReturnsFalse_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 < operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOperator_ReturnsFalse_IfOperandsAreNotNullAndAreEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = new TimeOfDay(operand0.AbsoluteSeconds);
+
+            bool testOutput = operand0 < operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOperator_ReturnsTrue_IfOperandsAreNotNullAndFirstOperandIsBeforeSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86399));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds, 86400));
+
+            bool testOutput = operand0 < operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOperator_ReturnsFalse_IfOperandsAreNotNullAndFirstOperandIsAfterSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(1, 86400));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds));
+
+            bool testOutput = operand0 < operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOrEqualToOperator_ReturnsTrue_IfOperandsAreNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 <= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOrEqualToOperator_ReturnsTrue_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(86400));
+
+            bool testOutput = operand0 <= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOrEqualToOperator_ReturnsFalse_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 <= operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOrEqualToOperator_ReturnsTrue_IfOperandsAreNotNullAndAreEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = new TimeOfDay(operand0.AbsoluteSeconds);
+
+            bool testOutput = operand0 <= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOrEqualToOperator_ReturnsTrue_IfOperandsAreNotNullAndFirstOperandIsBeforeSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86399));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds, 86400));
+
+            bool testOutput = operand0 <= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_LessThanOrEqualToOperator_ReturnsFalse_IfOperandsAreNotNullAndFirstOperandIsAfterSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(1, 86400));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds));
+
+            bool testOutput = operand0 <= operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOperator_ReturnsFalse_IfOperandsAreNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 > operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOperator_ReturnsFalse_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(86400));
+
+            bool testOutput = operand0 > operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOperator_ReturnsTrue_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 > operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOperator_ReturnsFalse_IfOperandsAreNotNullAndAreEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = new TimeOfDay(operand0.AbsoluteSeconds);
+
+            bool testOutput = operand0 > operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOperator_ReturnsFalse_IfOperandsAreNotNullAndFirstOperandIsBeforeSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86399));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds, 86400));
+
+            bool testOutput = operand0 > operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOperator_ReturnsTrue_IfOperandsAreNotNullAndFirstOperandIsAfterSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(1, 86400));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds));
+
+            bool testOutput = operand0 > operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfOperandsAreNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 >= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOrEqualToOperator_ReturnsFalse_IfFirstOperandIsNullAndSecondOperandIsNotNull()
+        {
+            TimeOfDay operand0 = null;
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(86400));
+
+            bool testOutput = operand0 >= operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfFirstOperandIsNotNullAndSecondOperandIsNull()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = null;
+
+            bool testOutput = operand0 >= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfOperandsAreNotNullAndAreEqual()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay operand1 = new TimeOfDay(operand0.AbsoluteSeconds);
+
+            bool testOutput = operand0 >= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOrEqualToOperator_ReturnsFalse_IfOperandsAreNotNullAndFirstOperandIsBeforeSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(86399));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds, 86400));
+
+            bool testOutput = operand0 >= operand1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfOperandsAreNotNullAndFirstOperandIsAfterSecondOperand()
+        {
+            TimeOfDay operand0 = new TimeOfDay(_rnd.Next(1, 86400));
+            TimeOfDay operand1 = new TimeOfDay(_rnd.Next(operand0.AbsoluteSeconds));
+
+            bool testOutput = operand0 >= operand1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
         public void TimeOfDayClass_SubtractOperatorWithTimeOfDayAndTimeOfDayParameter_ReturnsTimeSpanWithCorrectValueIfFirstParameterIsBeforeSecondParameter()
         {
             int testSeconds0 = _rnd.Next(86399);
@@ -2489,6 +2873,80 @@ namespace Timetabler.CoreData.Tests.Unit
             {
                 Assert.AreEqual("format", ex.ParamName);
             }
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_AddMinutesMethod_IncreasesTimeByExpectedAmount_IfParameterIsPositive()
+        {
+            int originalValue = _rnd.Next(86400);
+            int testParam = _rnd.Next(60);
+            int expectedSeconds = originalValue + testParam * 60;
+            TimeOfDay testObject = new TimeOfDay(originalValue);
+
+            testObject.AddMinutes(testParam);
+
+            Assert.AreEqual(expectedSeconds, testObject.AbsoluteSeconds);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_AddMinutesMethod_IncreasesTimeByExpectedAmount_IfParameterIsNegative()
+        {
+            int originalValue = _rnd.Next(86400);
+            int testParam = _rnd.Next(60);
+            int expectedSeconds = originalValue - testParam * 60;
+            TimeOfDay testObject = new TimeOfDay(originalValue);
+
+            testObject.AddMinutes(-testParam);
+
+            Assert.AreEqual(expectedSeconds, testObject.AbsoluteSeconds);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_CopyMethod_ReturnsDifferentObject()
+        {
+            TimeOfDay testObject = new TimeOfDay(_rnd.Next(86400));
+
+            TimeOfDay testOutput = testObject.Copy();
+
+            Assert.AreNotSame(testObject, testOutput);
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_CopyMethod_ReturnsObjectWithSameValue()
+        {
+            TimeOfDay testObject = new TimeOfDay(_rnd.Next(86400));
+
+            TimeOfDay testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.AbsoluteSeconds, testOutput.AbsoluteSeconds);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TimeOfDayClass_CopyToMethod_ThrowsArgumentNullException_IfParameterIsNull()
+        {
+            TimeOfDay testObject = new TimeOfDay(_rnd.Next(86400));
+            TimeOfDay testParam = null;
+
+            testObject.CopyTo(testParam);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void TimeOfDayClass_CopyToMethod_ChangesAbsoluteSecondsPropertyOfParameterToEqualAbsoluteSecondsPropertyOfObject()
+        {
+            TimeOfDay testObject = new TimeOfDay(_rnd.Next(8640));
+            int paramOriginalValue;
+            do
+            {
+                paramOriginalValue = _rnd.Next(86400);
+            } while (paramOriginalValue == testObject.AbsoluteSeconds);
+            TimeOfDay testParam = new TimeOfDay(paramOriginalValue);
+
+            testObject.CopyTo(testParam);
+
+            Assert.AreEqual(testObject.AbsoluteSeconds, testParam.AbsoluteSeconds);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

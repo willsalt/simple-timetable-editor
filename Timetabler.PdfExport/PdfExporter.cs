@@ -538,7 +538,7 @@ namespace Timetabler.PdfExport
             {
                 DrawLocationDistanceColumn(section, sectionMetrics.LocationMetrics, leftCoord + MainLineWidth, mainSectionTop, headerTop);
             }
-            DrawLocoToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.LocationMetrics.TotalSize.Height + MainLineWidth);
+            DrawLocoToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.LocationMetrics.TotalSize.Height);
             DrawToWorkRowHeader(sectionMetrics, leftCoord, mainSectionTop + sectionMetrics.LocationMetrics.TotalSize.Height + sectionMetrics.LocoToWorkHeight);
             double columnLeft = leftCoord + sectionMetrics.LocationMetrics.TotalSize.Width + MainLineWidth * 2 + dimensionColumnShift;
             LineDrawingWrapper("initial separator", columnLeft - LineOffset, headerTop + lineGapSize, columnLeft - LineOffset, 

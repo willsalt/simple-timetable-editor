@@ -25,7 +25,7 @@ namespace Timetabler.CoreData.Helpers
             {
                 throw new ArgumentNullException(nameof(existingItems));
             }
-            Dictionary<string, T> map = existingItems.ToDictionary(i => i.Id);
+            Dictionary<string, T> map = existingItems.Where(i => i.Id != null).ToDictionary(i => i.Id);
             string id;
             do
             {

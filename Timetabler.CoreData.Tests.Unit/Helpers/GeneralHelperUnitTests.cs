@@ -56,6 +56,16 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
             }
         }
 
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethod_DoesNotThrowException_IfParameterContainsElementsWhoseIdPropertyIsNull()
+        {
+            List<MockUniqueItem> testParam = new List<MockUniqueItem> { new MockUniqueItem { Id = null } };
+
+            string testOutput = GeneralHelper.GetNewId(testParam);
+
+            Assert.IsNotNull(testOutput);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

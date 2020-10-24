@@ -1,11 +1,11 @@
-﻿using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+﻿using ICSharpCode.SharpZipLib.Zip.Compression;
+using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Utility;
-using static ICSharpCode.SharpZipLib.Zip.Compression.Deflater;
 
 namespace Unicorn.Writer.Filters
 {
@@ -21,14 +21,14 @@ namespace Unicorn.Writer.Filters
         /// <summary>
         /// The compression level used by this encoder.
         /// </summary>
-        public CompressionLevel CompressionLevel { get; private set; }
+        public Deflater.CompressionLevel CompressionLevel { get; private set; }
 
         /// <summary>
         /// The name of this filter, <c>/FlateDecode</c>.
         /// </summary>
         public PdfName FilterName => _name.Value;
 
-        private static readonly Lazy<FlateEncoder> _instance = new Lazy<FlateEncoder>(() => new FlateEncoder(CompressionLevel.BEST_COMPRESSION));
+        private static readonly Lazy<FlateEncoder> _instance = new Lazy<FlateEncoder>(() => new FlateEncoder(Deflater.CompressionLevel.BEST_COMPRESSION));
 
         /// <summary>
         /// Pseudo-singleton instance.
@@ -39,7 +39,7 @@ namespace Unicorn.Writer.Filters
         /// Constructor.
         /// </summary>
         /// <param name="compressionLevel">The compression level to use.  The valid values are defined by the SharpZipLib library.</param>
-        public FlateEncoder(CompressionLevel compressionLevel)
+        public FlateEncoder(Deflater.CompressionLevel compressionLevel)
         {
             CompressionLevel = compressionLevel;
         }

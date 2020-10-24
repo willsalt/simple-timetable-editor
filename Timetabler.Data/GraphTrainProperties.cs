@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace Timetabler.Data
@@ -45,6 +46,17 @@ namespace Timetabler.Data
                 Colour = Colour,
                 DashStyle = DashStyle,
             };
+        }
+
+        public void CopyTo(GraphTrainProperties target)
+        {
+            if (target is null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+            target.Width = Width;
+            target.Colour = Colour;
+            target.DashStyle = DashStyle;
         }
     }
 }

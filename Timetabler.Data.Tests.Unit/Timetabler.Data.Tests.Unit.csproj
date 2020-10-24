@@ -95,6 +95,7 @@
     <Compile Include="DocumentOptionsUnitTests.cs" />
     <Compile Include="DocumentTemplateUnitTests.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsUnitTests.cs" />
+    <Compile Include="GraphTrainPropertiesUnitTests.cs" />
     <Compile Include="NoteUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalboxHoursUnitTests.cs" />

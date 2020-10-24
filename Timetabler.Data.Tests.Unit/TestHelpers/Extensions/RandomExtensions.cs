@@ -46,5 +46,20 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers.Extensions
             };
             return allValues[random.Next(allValues.Length)];
         }
+
+        public static GraphTrainProperties NextGraphTrainProperties(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            return new GraphTrainProperties
+            {
+                Colour = random.NextColor(),
+                DashStyle = random.NextDashStyle(),
+                Width = (float)(random.NextDouble() * random.Next(1, 4)),
+            };
+        }
     }
 }

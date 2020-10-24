@@ -34,6 +34,26 @@
         public GraphEditStyle GraphEditStyle { get; set; }
 
         /// <summary>
+        /// Whether or not to display speed guides on graphs.
+        /// </summary>
+        public bool DisplaySpeedLinesOnGraphs { get; set; }
+
+        /// <summary>
+        /// If speed guides are displayed on graphs, what speed should they indicate.
+        /// </summary>
+        public int SpeedLineSpeed { get; set; }
+
+        /// <summary>
+        /// If speed guides are displayed on graphs, what should their horizontal spacing be.
+        /// </summary>
+        public int SpeedLineSpacingMinutes { get; set; }
+
+        /// <summary>
+        /// If speed guides are displayed on graphs, what should their visual appearance be.
+        /// </summary>
+        public GraphTrainProperties SpeedLineAppearance { get; set; }
+
+        /// <summary>
         /// The correct formatting strings to use for time output, given the current value of the <see cref="ClockType" /> property.  Note that subsequent calls to the get method of this property
         /// may return the same object.  That object's properties are tied to the this object's <see cref="ClockType" /> property and will change if the <see cref="ClockType" /> property 
         /// of this object is changed.
@@ -54,7 +74,16 @@
         /// <returns>A copy of this instance.</returns>
         public DocumentOptions Copy()
         {
-            return new DocumentOptions { ClockType = ClockType, DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs, GraphEditStyle = GraphEditStyle };
+            return new DocumentOptions 
+            { 
+                ClockType = ClockType, 
+                DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs, 
+                GraphEditStyle = GraphEditStyle,
+                DisplaySpeedLinesOnGraphs = DisplaySpeedLinesOnGraphs,
+                SpeedLineSpeed = SpeedLineSpeed,
+                SpeedLineSpacingMinutes = SpeedLineSpacingMinutes,
+                SpeedLineAppearance = SpeedLineAppearance.Copy(),
+            };
         }
 
         /// <summary>
@@ -75,6 +104,10 @@
             }
             options.DisplayTrainLabelsOnGraphs = DisplayTrainLabelsOnGraphs;
             options.GraphEditStyle = GraphEditStyle;
+            options.DisplaySpeedLinesOnGraphs = DisplaySpeedLinesOnGraphs;
+            options.SpeedLineSpacingMinutes = SpeedLineSpacingMinutes;
+            options.SpeedLineSpeed = SpeedLineSpeed;
+            SpeedLineAppearance.CopyTo(options.SpeedLineAppearance);
         }
 
         /// <summary>

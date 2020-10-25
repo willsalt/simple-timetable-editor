@@ -1,13 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Providers;
-using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
+using Timetabler.Data.Tests.Utility.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {

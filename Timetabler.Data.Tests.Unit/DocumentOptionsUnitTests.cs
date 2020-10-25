@@ -2,7 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
-using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
+using Timetabler.Data.Tests.Utility.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {

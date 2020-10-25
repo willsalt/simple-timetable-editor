@@ -21,6 +21,10 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
                 ClockType = _rnd.NextClockType(),
                 DisplayTrainLabelsOnGraphs = _rnd.NextBoolean(),
                 GraphEditStyle = _rnd.NextGraphEditStyle(),
+                DisplaySpeedLinesOnGraphs = _rnd.NextBoolean(),
+                SpeedLineSpeed = _rnd.Next(),
+                SpeedLineSpacingMinutes = _rnd.Next(),
+                SpeedLineAppearance = _rnd.NextGraphTrainProperties()
             };
         }
 
@@ -65,6 +69,36 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
             DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
 
             Assert.AreEqual(testParam.GraphEditStyle.ToString("g"), testOutput.GraphEditStyle);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectDisplaySpeedLinesOnGraphsProperty_IfParameterIsNotNull()
+        {
+            DocumentOptions testParam = GetTestObject();
+
+            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+
+            Assert.AreEqual(testParam.DisplaySpeedLinesOnGraphs, testOutput.DisplaySpeedLinesOnGraphs);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectSpeedLineSpeedProperty_IfParameterIsNotNull()
+        {
+            DocumentOptions testParam = GetTestObject();
+
+            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+
+            Assert.AreEqual(testParam.SpeedLineSpeed, testOutput.SpeedLineSpeed);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectSpeedLineSpacingMinutesProperty_IfParameterIsNotNull()
+        {
+            DocumentOptions testParam = GetTestObject();
+
+            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+
+            Assert.AreEqual(testParam.SpeedLineSpacingMinutes, testOutput.SpeedLineSpacingMinutes);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

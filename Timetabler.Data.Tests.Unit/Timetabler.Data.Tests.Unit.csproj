@@ -123,6 +123,10 @@
       <Project>{ddc29237-18c5-40a7-bccc-2a51fa8c5f9f}</Project>
       <Name>Timetabler.CoreData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Timetabler.Data.Tests.Utility\Timetabler.Data.Tests.Utility.csproj">
+      <Project>{29375882-f201-482a-aab6-ac7fb95f15cf}</Project>
+      <Name>Timetabler.Data.Tests.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
       <Project>{9A7E2940-50B8-4F3A-A535-AB6220E6CE3A}</Project>
       <Name>Timetabler.Data</Name>

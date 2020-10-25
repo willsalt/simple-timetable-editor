@@ -6,7 +6,7 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data.Tests.Unit.TestHelpers;
-using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
+using Timetabler.Data.Tests.Utility.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {

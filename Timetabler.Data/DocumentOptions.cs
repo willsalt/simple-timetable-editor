@@ -1,10 +1,28 @@
-﻿namespace Timetabler.Data
+﻿using System.Drawing;
+
+namespace Timetabler.Data
 {
     /// <summary>
     /// Timetable-level configurable options.
     /// </summary>
     public class DocumentOptions
     {
+        /// <summary>
+        /// The default speed of graph speed lines.
+        /// </summary>
+        public const int DefaultSpeedLineSpeed = 20;
+
+        /// <summary>
+        /// The default spacing of graph speed lines (in minutes).
+        /// </summary>
+        public const int DefaultSpeedLineSpacing = 60;
+
+        /// <summary>
+        /// The default appearance of graph speed lines.
+        /// </summary>
+        public static GraphTrainProperties DefaultSpeedLineAppearence =>
+            new GraphTrainProperties { Colour = Color.LightGray, DashStyle = System.Drawing.Drawing2D.DashStyle.Dot, Width = 1f };
+
         private ClockType _clockType;
 
         /// <summary>
@@ -66,6 +84,9 @@
         public DocumentOptions()
         {
             GraphEditStyle = GraphEditStyle.PreserveSectionTimes;
+            SpeedLineAppearance = DefaultSpeedLineAppearence;
+            SpeedLineSpeed = DefaultSpeedLineSpeed;
+            SpeedLineSpacingMinutes = DefaultSpeedLineSpacing;
         }
 
         /// <summary>

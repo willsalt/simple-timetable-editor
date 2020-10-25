@@ -27,6 +27,10 @@ namespace Timetabler.DataLoader.Save.Yaml
                 ClockTypeName = Enum.GetName(typeof(ClockType), options.ClockType),
                 DisplayTrainLabelsOnGraphs = options.DisplayTrainLabelsOnGraphs,
                 GraphEditStyle = Enum.GetName(typeof(GraphEditStyle), options.GraphEditStyle),
+                DisplaySpeedLinesOnGraphs = options.DisplaySpeedLinesOnGraphs,
+                SpeedLineSpeed = options.SpeedLineSpeed,
+                SpeedLineSpacingMinutes = options.SpeedLineSpacingMinutes,
+                SpeedLineAppearance = options.SpeedLineAppearance?.ToYamlGraphTrainPropertiesModel(),
             };
         }
     }

@@ -48,6 +48,11 @@ namespace Timetabler.Data
             };
         }
 
+        /// <summary>
+        /// Copy this instance's properties to the properties of another instance.
+        /// </summary>
+        /// <param name="target">The instance to be overwritten.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public void CopyTo(GraphTrainProperties target)
         {
             if (target is null)

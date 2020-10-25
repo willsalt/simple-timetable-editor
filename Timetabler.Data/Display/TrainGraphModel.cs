@@ -48,6 +48,10 @@ namespace Timetabler.Data.Display
             DisplayTrainLabels = source.DisplayTrainLabelsOnGraphs;
             GraphEditStyle = source.GraphEditStyle;
             TooltipFormattingString = source.FormattingStrings.Tooltip;
+            DisplaySpeedLines = source.DisplaySpeedLinesOnGraphs;
+            SpeedLineSpeed = source.SpeedLineSpeed;
+            SpeedLineSpacing = source.SpeedLineSpacingMinutes;
+            SpeedLineAppearance = source.SpeedLineAppearance;
         }
 
         /// <summary>
@@ -64,6 +68,14 @@ namespace Timetabler.Data.Display
         /// The format string to use when converting times to strings to display in tooltips.
         /// </summary>
         public string TooltipFormattingString { get; set; }
+
+        public bool DisplaySpeedLines { get; set; }
+
+        public int SpeedLineSpeed { get; set; }
+
+        public int SpeedLineSpacing { get; set; }
+
+        public GraphTrainProperties SpeedLineAppearance { get; set; }
 
         /// <summary>
         /// A method to be called when a train on the graph is double-clicked.

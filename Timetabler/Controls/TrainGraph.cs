@@ -196,6 +196,7 @@ namespace Timetabler.Controls
                 {
                     e.Graphics.FillRectangle(backColourBrush, leftLimit, topLimit, MaximumXCoordinate - leftLimit, bottomLimit - topLimit);
                 }
+                
                 e.Graphics.DrawLine(axisPen, leftLimit, bottomLimit, leftLimit, topLimit);
                 e.Graphics.DrawLine(axisPen, MaximumXCoordinate, bottomLimit, MaximumXCoordinate, topLimit);
                 using (SolidBrush blackBrush = new SolidBrush(Color.Black))

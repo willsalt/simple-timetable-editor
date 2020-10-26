@@ -117,6 +117,7 @@
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\TimeHelpers.cs" />
     <Compile Include="Extensions\TimeOfDayExtensions.cs" />
+    <Compile Include="Helpers\UIHelpers.cs" />
     <Compile Include="Helpers\XCoordinateHelper.cs" />
     <Compile Include="LocationEditForm.cs">
       <SubType>Form</SubType>

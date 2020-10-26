@@ -130,7 +130,7 @@ namespace Timetabler
 
         private void TextBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
         {
-            TimeHelpers.ValidateTimeTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
+            UIHelpers.ValidateIntegerTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
         }
 
         private void StoreArrivalTime()

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timetabler.Adapters;
 using Timetabler.CoreData.Exceptions;
@@ -29,6 +30,8 @@ namespace Timetabler
         private TimetableDocument _model;
         private TimetableSectionModelDataAdapter _upTrainsAdapter;
         private TimetableSectionModelDataAdapter _downTrainsAdapter;
+
+        private readonly DocumentExportProgressForm _exportProgressForm = new DocumentExportProgressForm();
 
         /// <summary>
         /// The open document.
@@ -201,46 +204,71 @@ namespace Timetabler
                 return;
             }
 
-            using (DocumentExportProgressForm progressForm = new DocumentExportProgressForm())
+            Task.Run(() => ExportToPdf(sfdExport.FileName, _exportProgressForm));
+        }
+
+        private void ShowMessageBox(string msg)
+        {
+            if (InvokeRequired)
             {
-                try
-                {
-                    using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine)))
-                    using (FileStream fs = new FileStream(sfdExport.FileName, FileMode.Create, FileAccess.Write))
-                    {
-                        exporter.StatusUpdate += (s, evt) =>
-                        {
-                            if (!evt.InProgress)
-                            {
-                                progressForm.Close();
-                            }
-                            else
-                            {
-                                progressForm.ProgessPct = evt.Progress;
-                                progressForm.StatusMessage = evt.Status;
-                            }
-                        };
-                        progressForm.Show();
-                        exporter.Export(Model, fs);
-                    }
-                    MessageBox.Show(this, Resources.MainForm_Export_Completed);
-                }
-                catch (IOException ex)
-                {
-                    bool showSecondMessage = true;
-                    if ((ex.HResult & 0xffff) == 0x20)
-                    {
-                        MessageBox.Show(this, string.Format(CultureInfo.CurrentCulture, Resources.MainForm_FileExport_SharingViolation, sfdExport.FileName),
-                            Resources.MainForm_FileExport_SharingViolationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        showSecondMessage = false;
-                    }
-                    LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, showSecondMessage, Resources.MainForm_FileExport_Failure, sfdExport.FileName, ex.GetType().Name, ex.Message);
-                }
-                finally
-                {
-                    progressForm.Close();
-                }
+                Invoke(new Action(() => ShowMessageBox(msg)));
             }
+            else
+            {
+                MessageBox.Show(this, msg);
+            }
+        }
+
+        private void ExportToPdf(string fn, DocumentExportProgressForm progressForm)
+        {
+            try
+            {
+                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine)))
+                using (FileStream fs = new FileStream(fn, FileMode.Create, FileAccess.Write))
+                {
+                    exporter.StatusUpdate += (s, evt) =>
+                    {
+                        if (!evt.InProgress)
+                        {
+                            progressForm.HideSafe();
+                        }
+                        else
+                        {
+                            progressForm.ProgessPct = evt.Progress;
+                            progressForm.StatusMessage = evt.Status;
+                        }
+                    };
+                    progressForm.ShowSafe();
+                    exporter.Export(Model, fs);
+                }
+                ShowMessageBox(Resources.MainForm_Export_Completed);
+            }
+            catch (IOException ex)
+            {
+                HandleExportErrors(ex, fn);
+            }
+            finally
+            {
+                progressForm.HideSafe();
+            }
+        }
+
+        private void HandleExportErrors(IOException ex, string fn)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => HandleExportErrors(ex, fn)));
+                return;
+            }
+            bool showSecondMessage = true;
+            if ((ex.HResult & 0xffff) == 0x20)
+            {
+                MessageBox.Show(this, string.Format(CultureInfo.CurrentCulture, Resources.MainForm_FileExport_SharingViolation, fn),
+                    Resources.MainForm_FileExport_SharingViolationTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                showSecondMessage = false;
+            }
+            LogHelper.LogWithMessageBox(Log, LogLevel.Error, ex, this, showSecondMessage, Resources.MainForm_FileExport_Failure, fn, ex.GetType().Name, ex.Message);
+
         }
 
         private TrainEditFormModel GetBaseTrainEditFormModel()

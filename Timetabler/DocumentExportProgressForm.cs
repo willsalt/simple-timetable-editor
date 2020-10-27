@@ -1,5 +1,5 @@
-﻿using System.Windows.Forms;
-using Timetabler.PdfExport;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Timetabler
 {
@@ -16,9 +16,11 @@ namespace Timetabler
             get => pbExport.Value / 100d;
             set
             {
-                pbExport.Value = (int)(value * 100);
+                SetExportValue((int)(value * 100));
             }
         }
+
+        
 
         /// <summary>
         /// The latest export status message that is being displayed.
@@ -28,7 +30,7 @@ namespace Timetabler
             get => lblProgress.Text;
             set
             {
-                lblProgress.Text = value;
+                SetStatusMessage(value);
             }
         }
 
@@ -38,6 +40,54 @@ namespace Timetabler
         public DocumentExportProgressForm()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Wraps the <see cref="Control.Show" /> method to make it safe to call from other threads.
+        /// </summary>
+        public void ShowSafe()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => ShowSafe()));
+                return;
+            }
+            Show();
+        }
+
+        /// <summary>
+        /// Wraps the <see cref="Control.Hide" /> method to make it safe to call from other threads.
+        /// </summary>
+        public void HideSafe()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => HideSafe()));
+                return;
+            }
+            Hide();
+        }
+
+        private void SetExportValue(int val)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => SetExportValue(val)));
+                return;
+            }
+            pbExport.Value = val;
+            Application.DoEvents();
+        }
+
+        private void SetStatusMessage(string status)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => SetStatusMessage(status)));
+                return;
+            }
+            lblProgress.Text = status;
+            Application.DoEvents();
         }
     }
 }

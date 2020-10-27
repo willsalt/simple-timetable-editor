@@ -69,14 +69,29 @@ namespace Timetabler.Data.Display
         /// </summary>
         public string TooltipFormattingString { get; set; }
 
+        /// <summary>
+        /// Whether or not "speed guidelines" will be displayed on the graph.
+        /// </summary>
         public bool DisplaySpeedLines { get; set; }
 
+        /// <summary>
+        /// If speed guidelines are displayed on the graph, what should their slope be.
+        /// </summary>
         public int SpeedLineSpeed { get; set; }
 
+        /// <summary>
+        /// If speed guidelines are displayed on the graph, what should their horizontal spacing be (in minutes).
+        /// </summary>
         public int SpeedLineSpacingMinutes { get; set; }
 
+        /// <summary>
+        /// If speed guidelines are displayed on the graph, what should their horizontal spacing be (as a fraction of the width of the plottable area of the graph).
+        /// </summary>
         public double SpeedLineSpacing => SpeedLineSpacingMinutes * 60 * LengthPerSecond ?? 0;
 
+        /// <summary>
+        /// If speed guidelines are displayed on the graph, what should their appearance be?
+        /// </summary>
         public GraphTrainProperties SpeedLineAppearance { get; set; }
 
         /// <summary>
@@ -111,6 +126,10 @@ namespace Timetabler.Data.Display
 
         private double _routeDistanceMiles;
 
+        /// <summary>
+        /// The proportion of the plottable width of the graph that represents 1 second of time.  For example, if the graph covers 1 hour of time, this property
+        /// will be 1/3600.
+        /// </summary>
         public double? LengthPerSecond
         {
             get

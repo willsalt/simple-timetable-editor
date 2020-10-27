@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace Timetabler.Data
@@ -45,6 +46,22 @@ namespace Timetabler.Data
                 Colour = Colour,
                 DashStyle = DashStyle,
             };
+        }
+
+        /// <summary>
+        /// Copy this instance's properties to the properties of another instance.
+        /// </summary>
+        /// <param name="target">The instance to be overwritten.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
+        public void CopyTo(GraphTrainProperties target)
+        {
+            if (target is null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+            target.Width = Width;
+            target.Colour = Colour;
+            target.DashStyle = DashStyle;
         }
     }
 }

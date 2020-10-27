@@ -2,6 +2,7 @@
 using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.Data.Tests.Utility.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {
@@ -22,6 +23,10 @@ namespace Timetabler.Data.Tests.Unit
                 ClockType = clockType,
                 DisplayTrainLabelsOnGraphs = _rnd.NextBoolean(),
                 GraphEditStyle = _rnd.NextBoolean() ? GraphEditStyle.Free : GraphEditStyle.PreserveSectionTimes,
+                DisplaySpeedLinesOnGraphs = _rnd.NextBoolean(),
+                SpeedLineSpeed = _rnd.Next(100),
+                SpeedLineSpacingMinutes = _rnd.Next(240),
+                SpeedLineAppearance = _rnd.NextGraphTrainProperties(),
             };
         }
 
@@ -162,6 +167,48 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectDisplaySpeedLinesOnGraphsProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+
+            DocumentOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.DisplaySpeedLinesOnGraphs, testOutput.DisplaySpeedLinesOnGraphs);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectSpeedLineSpeedProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+
+            DocumentOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.SpeedLineSpeed, testOutput.SpeedLineSpeed);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectSpeedLineSpacingMinutesProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+
+            DocumentOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.SpeedLineSpacingMinutes, testOutput.SpeedLineSpacingMinutes);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClass_CopyMethod_ReturnsNewObjectWithCorrectSpeedLineAppearanceProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+
+            DocumentOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.SpeedLineAppearance.Colour, testOutput.SpeedLineAppearance.Colour);
+            Assert.AreEqual(testObject.SpeedLineAppearance.DashStyle, testOutput.SpeedLineAppearance.DashStyle);
+            Assert.AreEqual(testObject.SpeedLineAppearance.Width, testOutput.SpeedLineAppearance.Width);
+        }
+
+        [TestMethod]
         public void DocumentOptionsClass_CopyToMethod_OverwritesGraphEditStyleProperty()
         {
             DocumentOptions testObject = GetDocumentOptions();
@@ -170,6 +217,52 @@ namespace Timetabler.Data.Tests.Unit
             testObject.CopyTo(target);
 
             Assert.AreEqual(testObject.GraphEditStyle, target.GraphEditStyle);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClass_CopyToMethod_OverwritesDisplaySpeedLinesOnGraphsProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+            DocumentOptions target = GetDocumentOptions();
+
+            testObject.CopyTo(target);
+
+            Assert.AreEqual(testObject.DisplaySpeedLinesOnGraphs, target.DisplaySpeedLinesOnGraphs);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClass_CopyToMethod_OverwritesSpeedLineSpeedProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+            DocumentOptions target = GetDocumentOptions();
+
+            testObject.CopyTo(target);
+
+            Assert.AreEqual(testObject.SpeedLineSpeed, target.SpeedLineSpeed);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClass_CopyToMethod_OverwritesSpeedLineSpacingMinutesProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+            DocumentOptions target = GetDocumentOptions();
+
+            testObject.CopyTo(target);
+
+            Assert.AreEqual(testObject.SpeedLineSpacingMinutes, target.SpeedLineSpacingMinutes);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsClass_CopyToMethod_OverwritesSpeedLineAppearanceProperty()
+        {
+            DocumentOptions testObject = GetDocumentOptions();
+            DocumentOptions target = GetDocumentOptions();
+
+            testObject.CopyTo(target);
+
+            Assert.AreEqual(testObject.SpeedLineAppearance.Colour, target.SpeedLineAppearance.Colour);
+            Assert.AreEqual(testObject.SpeedLineAppearance.DashStyle, target.SpeedLineAppearance.DashStyle);
+            Assert.AreEqual(testObject.SpeedLineAppearance.Width, target.SpeedLineAppearance.Width);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

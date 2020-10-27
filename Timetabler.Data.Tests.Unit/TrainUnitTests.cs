@@ -6,7 +6,7 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data.Tests.Unit.TestHelpers;
-using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
+using Timetabler.Data.Tests.Utility.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {
@@ -34,7 +34,7 @@ namespace Timetabler.Data.Tests.Unit
                 IncludeSeparatorAbove = _rnd.NextBoolean(),
                 IncludeSeparatorBelow = _rnd.NextBoolean(),
                 InlineNote = _rnd.NextString(_rnd.Next(100)),
-                GraphProperties = GetGraphTrainProperties(),
+                GraphProperties = _rnd.NextGraphTrainProperties(),
             };
             t.TrainTimes.AddRange(GetTrainLocationTimeList(2, 20, beforeMidnight));
             t.TrainClassId = t.TrainClass.Id;
@@ -65,16 +65,6 @@ namespace Timetabler.Data.Tests.Unit
             {
                 AtTime = _rnd.NextTimeOfDay(),
                 Text = _rnd.NextBoolean() ? _rnd.NextString(_rnd.Next(4)) : null,
-            };
-        }
-
-        private static GraphTrainProperties GetGraphTrainProperties()
-        {
-            return new GraphTrainProperties
-            {
-                Colour = _rnd.NextColor(),
-                DashStyle = _rnd.NextDashStyle(),
-                Width = (float)(_rnd.NextDouble() * _rnd.Next(1, 4)),
             };
         }
 

@@ -4,6 +4,7 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load.Yaml;
+using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
@@ -22,6 +23,10 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
                 DisplayTrainLabelsOnGraphs = _rnd.NextNullableBoolean(),
                 ClockTypeName = _rnd.NextPotentiallyValidString(_validClockTypes),
                 GraphEditStyle = _rnd.NextPotentiallyValidString(_validGraphEditStyles),
+                DisplaySpeedLinesOnGraphs = _rnd.NextNullableBoolean(),
+                SpeedLineSpeed = _rnd.NextNullableInt(),
+                SpeedLineSpacingMinutes = _rnd.NextNullableInt(),
+                SpeedLineAppearance = _rnd.Next(5) != 0 ? _rnd.NextGraphTrainPropertiesModel() : null,
             };
             
             return model;
@@ -159,6 +164,93 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             DocumentOptions testOutput = testParam.ToDocumentOptions();
 
             Assert.AreEqual(GraphEditStyle.PreserveSectionTimes, testOutput.GraphEditStyle);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithDisplaySpeedLinesOnGraphsPropertyEqualToFalse_IfParameterHasDisplaySpeedLinesOnGraphsPropertyEqualToNull()
+        {
+            DocumentOptionsModel testParam = GetModel();
+            testParam.DisplaySpeedLinesOnGraphs = null;
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.IsFalse(testOutput.DisplaySpeedLinesOnGraphs);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithDisplaySpeedLinesOnGraphsPropertyEqualToFalse_IfParameterHasDisplaySpeedLinesOnGraphsPropertyEqualToFalse()
+        {
+            DocumentOptionsModel testParam = GetModel();
+            testParam.DisplaySpeedLinesOnGraphs = false;
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.IsFalse(testOutput.DisplaySpeedLinesOnGraphs);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithDisplaySpeedLinesOnGraphsPropertyEqualToTrue_IfParameterHasDisplaySpeedLinesOnGraphsPropertyEqualToTrue()
+        {
+            DocumentOptionsModel testParam = GetModel();
+            testParam.DisplaySpeedLinesOnGraphs = true;
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.IsTrue(testOutput.DisplaySpeedLinesOnGraphs);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithSpeedLineSpeedPropertyEqualToDefaultValue_IfParameterHasSpeedLineSpeedPropertyEqualToNull()
+        {
+            DocumentOptionsModel testParam = GetModel();
+            testParam.SpeedLineSpeed = null;
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.AreEqual(DocumentOptions.DefaultSpeedLineSpeed, testOutput.SpeedLineSpeed);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithSpeedLineSpeedPropertyEqualToSpeedLineSpeedPropertyOfParameter_IfParameterHasSpeedLineSpeedPropertyThatIsNotNull()
+        {
+            DocumentOptionsModel testParam = GetModel();
+            testParam.SpeedLineSpeed = _rnd.Next();
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.AreEqual(testParam.SpeedLineSpeed, testOutput.SpeedLineSpeed);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithSpeedLineSpacingMinutesPropertyEqualToDefaultValue_IfParameterHasSpeedLineSpacingMinutesPropertyEqualToNull()
+        {
+            DocumentOptionsModel testParam = GetModel();
+            testParam.SpeedLineSpacingMinutes = null;
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.AreEqual(DocumentOptions.DefaultSpeedLineSpacing, testOutput.SpeedLineSpacingMinutes);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithSpeedLineSpacingMinutesPropertyEqualToSpeedLineSpacingMinutesPropertyOfParameter_IfParameterHasSpeedLineSpacingMinutesPropertyThatIsNotNull()
+        {
+            DocumentOptionsModel testParam = GetModel();
+            testParam.SpeedLineSpacingMinutes = _rnd.Next();
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.AreEqual(testParam.SpeedLineSpacingMinutes, testOutput.SpeedLineSpacingMinutes);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ReturnsObjectWithSpeedLineAppearancePropertyThatIsNotNull()
+        {
+            DocumentOptionsModel testParam = GetModel();
+
+            DocumentOptions testOutput = testParam.ToDocumentOptions();
+
+            Assert.IsNotNull(testOutput.SpeedLineAppearance);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

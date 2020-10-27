@@ -61,6 +61,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The speed guideline spacing must be the number of minutes between speed guidelines..
+        /// </summary>
+        internal static string DocumentOptionsEditForm_ValidateSpeedLineSpacing_Error {
+            get {
+                return ResourceManager.GetString("DocumentOptionsEditForm_ValidateSpeedLineSpacing_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed guideline speed must be a number..
+        /// </summary>
+        internal static string DocumentOptionsEditForm_ValidateSpeedLineSpeed_Error {
+            get {
+                return ResourceManager.GetString("DocumentOptionsEditForm_ValidateSpeedLineSpeed_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         internal static string HumanReadableEnum_AddSubtract_Add {

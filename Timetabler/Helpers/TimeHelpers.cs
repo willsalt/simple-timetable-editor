@@ -50,35 +50,6 @@ namespace Timetabler.Helpers
         }
 
         /// <summary>
-        /// Validate whether or not a value in a text box can be parsed as a number.
-        /// </summary>
-        /// <param name="tb">The <see cref="TextBox" /> to check.</param>
-        /// <param name="ep">The <see cref="ErrorProvider" /> to use to display error messages, if validation fails.</param>
-        /// <param name="errorMsg">The error message to display if validation fails.</param>
-        /// <param name="e">The event to cancel if validation fails.</param>
-        public static void ValidateTimeTextBox(TextBox tb, ErrorProvider ep, string errorMsg, CancelEventArgs e)
-        { 
-            if (tb is null || e is null)
-            {
-                return;
-            }
-            if (ep is null)
-            {
-                throw new ArgumentNullException(nameof(ep));
-            }
-
-            if (tb.Text.Length != 0 && !int.TryParse(tb.Text, out _))
-            {
-                ep.SetError(tb, errorMsg);
-                e.Cancel = true;
-            }
-            else
-            {
-                ep.SetError(tb, string.Empty);
-            }
-        }
-
-        /// <summary>
         /// Set the value of a named property of an object to a <see cref="TimeOfDay" /> instance created from the contents of a set of <see cref="TextBox" /> instances and optionally a 
         /// <see cref="ComboBox" /> instance.
         /// </summary>

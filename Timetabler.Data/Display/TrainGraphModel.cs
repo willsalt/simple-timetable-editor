@@ -50,7 +50,7 @@ namespace Timetabler.Data.Display
             TooltipFormattingString = source.FormattingStrings.Tooltip;
             DisplaySpeedLines = source.DisplaySpeedLinesOnGraphs;
             SpeedLineSpeed = source.SpeedLineSpeed;
-            SpeedLineSpacing = source.SpeedLineSpacingMinutes;
+            SpeedLineSpacingMinutes = source.SpeedLineSpacingMinutes;
             SpeedLineAppearance = source.SpeedLineAppearance;
         }
 
@@ -73,7 +73,9 @@ namespace Timetabler.Data.Display
 
         public int SpeedLineSpeed { get; set; }
 
-        public int SpeedLineSpacing { get; set; }
+        public int SpeedLineSpacingMinutes { get; set; }
+
+        public double SpeedLineSpacing => SpeedLineSpacingMinutes * 60 * LengthPerSecond ?? 0;
 
         public GraphTrainProperties SpeedLineAppearance { get; set; }
 
@@ -106,6 +108,20 @@ namespace Timetabler.Data.Display
         private int? _baseTimeSeconds;
 
         private int? _maxTimeSeconds;
+
+        private double _routeDistanceMiles;
+
+        public double? LengthPerSecond
+        {
+            get
+            {
+                if (((_maxTimeSeconds ?? 0) - (_baseTimeSeconds ?? 0)) != 0)
+                {
+                    return 1.0 / ((_maxTimeSeconds ?? 0) - (_baseTimeSeconds ?? 0));
+                }
+                return null;
+            }
+        }
 
         private Dictionary<string, double> _locationCoordinates = new Dictionary<string, double>();
 
@@ -209,10 +225,10 @@ namespace Timetabler.Data.Display
         {
             _locationCoordinates.Clear();
             double baseDistance = LocationList.First().Mileage.AbsoluteDistance;
-            double length = LocationList.Last().Mileage.AbsoluteDistance - baseDistance;
+            _routeDistanceMiles = LocationList.Last().Mileage.AbsoluteDistance - baseDistance;
             foreach (Location loc in LocationList)
             {
-                _locationCoordinates.Add(loc.Id, (loc.Mileage.AbsoluteDistance - baseDistance) / length);
+                _locationCoordinates.Add(loc.Id, (loc.Mileage.AbsoluteDistance - baseDistance) / _routeDistanceMiles);
             }
         }
 
@@ -309,6 +325,19 @@ namespace Timetabler.Data.Display
             }
             double offsetSeconds = x * (double)(_maxTimeSeconds - _baseTimeSeconds);
             return new TimeOfDay(_baseTimeSeconds.Value + offsetSeconds);
+        }
+
+        /// <summary>
+        /// Compute the horizontal difference between the top and bottom of a speed guideline, as a proportion of the horizontal size of the graph
+        /// </summary>
+        /// <returns></returns>
+        public double GetSpeedGuidelineHorizontalOffset()
+        {
+            RecomputeTimeBase();
+            RecomputeLocationCoordinates();
+
+            double offsetSeconds = 3600 * _routeDistanceMiles / SpeedLineSpeed;
+            return offsetSeconds * LengthPerSecond ?? 0;
         }
     }
 }

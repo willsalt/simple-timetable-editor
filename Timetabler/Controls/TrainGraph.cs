@@ -14,6 +14,8 @@ using Timetabler.CoreData.Helpers;
 using Timetabler.CoreData;
 using Timetabler.Data.Extensions;
 using System.Globalization;
+using System.IO;
+using NLog.Time;
 
 namespace Timetabler.Controls
 {
@@ -195,6 +197,28 @@ namespace Timetabler.Controls
                 using (SolidBrush backColourBrush = new SolidBrush(GraphBackColour))
                 {
                     e.Graphics.FillRectangle(backColourBrush, leftLimit, topLimit, MaximumXCoordinate - leftLimit, bottomLimit - topLimit);
+                }
+
+                // Draw speed guidelines if required
+                if (Model.DisplaySpeedLines && Model.SpeedLineSpacing > 0)
+                {
+                    double hOffset = Model.GetSpeedGuidelineHorizontalOffset();
+                    double hStart = 0;
+                    using (Pen guidelinePen = new Pen(Model.SpeedLineAppearance.Colour, Model.SpeedLineAppearance.Width))
+                    {
+                        guidelinePen.DashStyle = Model.SpeedLineAppearance.DashStyle;
+                        bool flip = false;
+                        while (hStart + hOffset < 1)
+                        {
+                            float startX = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, hStart);
+                            float endX = CoordinateHelper.Stretch(leftLimit, MaximumXCoordinate, hStart + hOffset);
+                            float startY = flip ? topLimit : bottomLimit;
+                            float endY = flip ? bottomLimit : topLimit;
+                            e.Graphics.DrawLine(guidelinePen, startX, startY, endX, endY); 
+                            hStart += Model.SpeedLineSpacing;
+                            flip = !flip;
+                        }
+                    }
                 }
                 
                 e.Graphics.DrawLine(axisPen, leftLimit, bottomLimit, leftLimit, topLimit);

@@ -136,6 +136,7 @@ namespace Timetabler.DataLoader
             {
                 return null;
             }
+            SerialData.Yaml.UniqueItemModel.PopulateMissingIds(templateModel.Maps[0].LocationList);
             return new LocationCollection(templateModel.Maps[0].LocationList.Select(l => l.ToLocation()));
         }
 

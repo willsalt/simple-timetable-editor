@@ -34,5 +34,38 @@ namespace Timetabler.CoreData.Helpers
 
             return id;
         }
+
+        /// <summary>
+        /// Given an enumeration of existing IDs, return an enumeration of random IDs taht are not duplicated and are not in the set of existing IDs.
+        /// </summary>
+        /// <param name="existingItems">The set of existing IDs.</param>
+        /// <param name="count">The number of new IDs to return.</param>
+        /// <returns>An enumeration of strings suitable for use as an ID string and that do not duplicate any in the existing set or in the output set.</returns>
+        public static IEnumerable<string> GetNewId(IEnumerable<string> existingItems, int count)
+        {
+            if (count == 0)
+            {
+                yield break;
+            }
+            Dictionary<string, string> map;
+            if (existingItems != null)
+            {
+                map = existingItems.Where(i => !string.IsNullOrWhiteSpace(i)).ToDictionary(i => i);
+            }
+            else
+            {
+                map = new Dictionary<string, string>();
+            }
+            for (int i = 0; i < count; ++i)
+            {
+                string id;
+                do
+                {
+                    id = _random.Next().ToString("x8", CultureInfo.InvariantCulture);
+                } while (map != null && map.ContainsKey(id));
+                map.Add(id, id);
+                yield return id;
+            }
+        }
     }
 }

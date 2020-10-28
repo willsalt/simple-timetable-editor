@@ -3,13 +3,8 @@
     /// <summary>
     /// A class describing a signalbox in serialisable form.
     /// </summary>
-    public class SignalboxModel
+    public class SignalboxModel : UniqueItemModel
     {
-        /// <summary>
-        /// The unique ID of this signalbox.
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// A code used to refere to this signalbox.
         /// </summary>

@@ -61,6 +61,18 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void LocationModelExtensionsClass_ToLocationMethod_ThrowsArgumentException_IfParameterHasNullIdProperty()
+        {
+            LocationModel testParam = GetModel();
+            testParam.Id = null;
+
+            Location testOutput = testParam.ToLocation();
+
+            Assert.IsNotNull(testOutput.Id);
+        }
+
+        [TestMethod]
         public void LocationModelExtensionsClass_ToLocationMethod_ReturnsObjectWithCorrectEditorDisplayNameProperty_IfParameterIsNotNull()
         {
             LocationModel testParam = GetModel();

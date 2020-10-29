@@ -3,13 +3,8 @@
     /// <summary>
     /// A footnote in serialisable form.
     /// </summary>
-    public class NoteModel
+    public class NoteModel : UniqueItemModel
     {
-        /// <summary>
-        /// The unique ID of this note.
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// The symbol used to represent this note when references are made to it.
         /// </summary>

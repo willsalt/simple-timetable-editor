@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Timetabler.CoreData;
+using Timetabler.CoreData.Helpers;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
@@ -20,6 +22,10 @@ namespace Timetabler.DataLoader.Load.Yaml
             if (model is null)
             {
                 throw new NullReferenceException();
+            }
+            if (string.IsNullOrWhiteSpace(model.Id))
+            {
+                throw new ArgumentException("ID missing");
             }
 
             Location loc = new Location

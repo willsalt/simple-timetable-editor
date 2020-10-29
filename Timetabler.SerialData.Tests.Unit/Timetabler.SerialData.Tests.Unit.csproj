@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj" />
     <ProjectReference Include="..\Timetabler.SerialData\Timetabler.SerialData.csproj" />
   </ItemGroup>
 

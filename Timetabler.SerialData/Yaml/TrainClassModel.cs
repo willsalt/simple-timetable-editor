@@ -3,13 +3,8 @@
     /// <summary>
     /// Class representing a type of train, in serialisable form.
     /// </summary>
-    public class TrainClassModel
+    public class TrainClassModel : UniqueItemModel
     {
-        /// <summary>
-        /// Unique ID of this train class.
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// Code used to refer to this class, such as "B" or "5".
         /// </summary>

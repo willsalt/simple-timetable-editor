@@ -47,14 +47,15 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
         }
 
         [TestMethod]
-        public void TrainClassModelExtensionsClass_ToTrainClassMethod_ReturnsObjectWithIdPropertyEqualToNull_IfParameterHasIdPropertyThatIsNull()
+        [ExpectedException(typeof(ArgumentException))]
+        public void TrainClassModelExtensionsClass_ToTrainClassMethod_ThrowsArgumentException_IfParameterHasIdPropertyThatIsNull()
         {
             TrainClassModel testParam = GetModel();
             testParam.Id = null;
 
-            TrainClass testOutput = testParam.ToTrainClass();
+            _ = testParam.ToTrainClass();
 
-            Assert.IsNull(testOutput.Id);
+            Assert.Fail();
         }
 
         [TestMethod]

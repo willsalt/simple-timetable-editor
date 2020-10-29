@@ -5,13 +5,8 @@ namespace Timetabler.SerialData.Yaml
     /// <summary>
     /// Class representing a location, in serialisable form.
     /// </summary>
-    public class LocationModel
+    public class LocationModel : UniqueItemModel
     {
-        /// <summary>
-        /// The unique ID of this location.
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// The name of the location as displayed in the editor grid.
         /// </summary>

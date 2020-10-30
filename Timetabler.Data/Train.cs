@@ -168,7 +168,7 @@ namespace Timetabler.Data
             {
                 t.TrainTimes.Add(tlt.Copy());
             }
-            foreach (Note fn in Footnotes as IEnumerable<Note>)
+            foreach (Note fn in Footnotes)
             {
                 t.Footnotes.Add(fn);
             }

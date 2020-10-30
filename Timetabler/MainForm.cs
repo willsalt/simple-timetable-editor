@@ -1227,6 +1227,7 @@ namespace Timetabler
 
                 int offset = model.AddSubtract == AddSubtract.Add ? model.Offset : -model.Offset;
                 Train copy = selectedTrain.Copy(offset);
+                copy.Id = GeneralHelper.GetNewId(Model.TrainList);
                 if (model.ClearInlineNotes)
                 {
                     copy.InlineNote = "";

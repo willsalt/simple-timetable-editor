@@ -10,14 +10,16 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     [TestClass]
     public class ExportOptionsModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void ExportOptionsModelClassIsPublic()
+        public void ExportOptionsModelClass_IsPublic()
         {
             Assert.IsTrue(typeof(ExportOptionsModel).IsPublic);
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicParameterlessConstructor()
+        public void ExportOptionsModelClass_HasPublicParameterlessConstructor()
         {
             ConstructorInfo cInfo = typeof(ExportOptionsModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
@@ -25,7 +27,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicDisplayLocoDiagramRowPropertyOfTypeBool()
+        public void ExportOptionsModelClass_HasPublicDisplayLocoDiagramRowPropertyOfTypeBool()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("DisplayLocoDiagramRow");
             Assert.IsNotNull(pInfo);
@@ -35,13 +37,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassDisplayLocoDiagramRowPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClass_DisplayLocoDiagramRowProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("DisplayLocoDiagramRow").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicFontSetPropertyOfTypeString()
+        public void ExportOptionsModelClass_HasPublicFontSetPropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("FontSet");
             Assert.IsNotNull(pInfo);
@@ -51,13 +53,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassFontSetPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClass_FontSetProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("FontSet").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicGraphsInOutputPropertyOfTypeBool()
+        public void ExportOptionsModelClass_HasPublicGraphsInOutputPropertyOfTypeBool()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("GraphsInOutput");
             Assert.IsNotNull(pInfo);
@@ -67,13 +69,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassGraphsInOutputPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClassGraphs_InOutputProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("GraphsInOutput").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicToWorkRowInOutputPropertyOfTypeNullableBool()
+        public void ExportOptionsModelClass_HasPublicToWorkRowInOutputPropertyOfTypeNullableBool()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("ToWorkRowInOutput");
             Assert.IsNotNull(pInfo);
@@ -83,13 +85,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassToWorkRowInOutputPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClass_ToWorkRowInOutputProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("ToWorkRowInOutput").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicLocoToWorkRowInOutputPropertyOfTypeNullableBool()
+        public void ExportOptionsModelClass_HasPublicLocoToWorkRowInOutputPropertyOfTypeNullableBool()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("LocoToWorkRowInOutput");
             Assert.IsNotNull(pInfo);
@@ -99,13 +101,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassLocoToWorkRowInOutputPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClass_LocoToWorkRowInOutputProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("LocoToWorkRowInOutput").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicBoxHoursInOutputPropertyOfTypeNullableBool()
+        public void ExportOptionsModelClass_HasPublicBoxHoursInOutputPropertyOfTypeNullableBool()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("BoxHoursInOutput");
             Assert.IsNotNull(pInfo);
@@ -115,13 +117,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassBoxHoursInOutputPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClass_BoxHoursInOutputProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("BoxHoursInOutput").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicCreditsInOutputPropertyOfTypeNullableBool()
+        public void ExportOptionsModelClass_HasPublicCreditsInOutputPropertyOfTypeNullableBool()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("CreditsInOutput");
             Assert.IsNotNull(pInfo);
@@ -131,13 +133,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassCreditsInOutputPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClass_CreditsInOutputProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("CreditsInOutput").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassHasPublicGlossaryInOutputPropertyOfTypeNullableBool()
+        public void ExportOptionsModelClass_HasPublicGlossaryInOutputPropertyOfTypeNullableBool()
         {
             PropertyInfo pInfo = typeof(ExportOptionsModel).GetProperty("GlossaryInOutput");
             Assert.IsNotNull(pInfo);
@@ -147,9 +149,12 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void ExportOptionsModelClassGlossaryInOutputPropertyIsDecoratedWithXmlElementAttribute()
+        public void ExportOptionsModelClass_GlossaryInOutputProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(ExportOptionsModel).GetProperty("GlossaryInOutput").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

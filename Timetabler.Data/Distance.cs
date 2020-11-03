@@ -10,6 +10,16 @@ namespace Timetabler.Data
     public struct Distance : IEquatable<Distance>, IComparable, IComparable<Distance>, IFormattable
     {
         /// <summary>
+        /// Label used to describe the major part of the distance (such as "M" or "Miles")
+        /// </summary>
+        public static string MajorLabel => Resources.Distance_MileageLabel;
+
+        /// <summary>
+        /// Label used to describe the minor part of the distance (such as "C" or "Chains")
+        /// </summary>
+        public static string MinorLabel => Resources.Distance_ChainageLabel;
+
+        /// <summary>
         /// The integer miles component of the mileage.
         /// </summary>
         public int Mileage { get; private set; }
@@ -196,6 +206,40 @@ namespace Timetabler.Data
         public static Distance Add(Distance d1, Distance d2)
         {
             return d1 + d2;
+        }
+
+        /// <summary>
+        /// Compute the absolute difference between two <see cref="Distance" /> instances.
+        /// </summary>
+        /// <param name="d1">A <see cref="Distance" /> instance.</param>
+        /// <param name="d2">A <see cref="Distance" /> instance.</param>
+        /// <returns>A <see cref="Distance" /> instance whose value is equal to the difference between the two parameters, or <c>null</c> if either parameter is 
+        /// null.</returns>
+        public static Distance Difference(Distance d1, Distance d2)
+        {
+            if (d1 == d2)
+            {
+                return new Distance { Mileage = 0, Chainage = 0 };
+            }
+            if (d1 > d2)
+            {
+                return Subtract(d1, d2);
+            }
+            else
+            {
+                return Subtract(d2, d1);
+            }
+        }
+
+        private static Distance Subtract(Distance d1, Distance d2)
+        {
+            int miles = d1.Mileage - d2.Mileage;
+            double chains = d1.Chainage - d2.Chainage;
+            if (chains >= 0)
+            {
+                return new Distance { Mileage = miles, Chainage = chains };
+            }
+            return new Distance { Mileage = miles - 1, Chainage = 80 + chains };
         }
 
         /// <summary>

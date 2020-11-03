@@ -12,8 +12,15 @@ namespace Timetabler.Data.Tests.Unit
     {
         private static readonly Random _random = RandomProvider.Default;
 
+        private static bool AreSignalboxesCompletelyDifferent(Signalbox s1, Signalbox s2)
+        {
+            return s1.Id != s2.Id && s1.Code != s2.Code && s1.EditorDisplayName != s2.EditorDisplayName && s1.ExportDisplayName != s2.ExportDisplayName;
+        }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void SignalboxClassSettingCodePropertyRaisesCodeChangedEvent()
+        public void SignalboxClass_CodeProperty_SetMethodRaisesCodeChangedEvent()
         {
             string firstCode = _random.NextString(_random.Next(1, 4));
             string secondCode;
@@ -31,7 +38,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingCodePropertyRaisesCodeChangedEventWithCorrectArguments()
+        public void SignalboxClass_CodeProperty_SetMethodRaisesCodeChangedEventWithCorrectArguments()
         {
             string firstCode = _random.NextString(_random.Next(1, 4));
             string secondCode;
@@ -51,7 +58,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingCodePropertyToExistingValueDoesNotRaiseCodeChangedEvent()
+        public void SignalboxClass_CodeProperty_SettingToExistingValueDoesNotRaiseCodeChangedEvent()
         {
             string code = _random.NextString(_random.Next(1, 4));
             int invocations = 0;
@@ -64,7 +71,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingEditorDisplayNamePropertyRaisesEditorDisplayNameChangedEvent()
+        public void SignalboxClass_EditorDisplayNameProperty_SettingRaisesEditorDisplayNameChangedEvent()
         {
             string firstName = _random.NextString(_random.Next(128));
             string secondName;
@@ -82,7 +89,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingEditorDisplayNamePropertyRaisesEditorDisplayNameChangedEventWithCorrectSenderAndArguments()
+        public void SignalboxClass_EditorDisplayNameProperty_SetMethodRaisesEditorDisplayNameChangedEventWithCorrectSenderAndArguments()
         {
             string firstName = _random.NextString(_random.Next(128));
             string secondName;
@@ -102,7 +109,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingEditorDisplayNamePropertyToExistingValueDoesNotRaiseEditorDisplayNameChangedEvent()
+        public void SignalboxClass_EditorDisplayNameProperty_SettingToExistingValueDoesNotRaiseEditorDisplayNameChangedEvent()
         {
             string name = _random.NextString(_random.Next(128));
             int invocations = 0;
@@ -115,7 +122,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingExportDisplayNamePropertyRaisesExportDisplayNameChangedEvent()
+        public void SignalboxClass_ExportDisplayNameProperty_SetMethodRaisesExportDisplayNameChangedEvent()
         {
             string firstName = _random.NextString(_random.Next(128));
             string secondName;
@@ -133,7 +140,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingExportDisplayNamePropertyRaisesExportDisplayNameChangedEventWithCorrectSenderAndArguments()
+        public void SignalboxClass_ExportDisplayNameProperty_SetMethodRaisesExportDisplayNameChangedEventWithCorrectSenderAndArguments()
         {
             string firstName = _random.NextString(_random.Next(128));
             string secondName;
@@ -153,7 +160,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassSettingExportDisplayNamePropertyToExistingVaueDoesNotRaiseExportDisplayNameChangedEvent()
+        public void SignalboxClass_ExportDisplayNameProperty_SettingToExistingVaueDoesNotRaiseExportDisplayNameChangedEvent()
         {
             string name = _random.NextString(_random.Next(128));
             int invocations = 0;
@@ -166,7 +173,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyMethodReturnsDifferentObject()
+        public void SignalboxClass_CopyMethod_ReturnsDifferentObject()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
 
@@ -176,7 +183,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyMethodReturnsObjectWithCorrectIdProperty()
+        public void SignalboxClass_CopyMethod_ReturnsObjectWithCorrectIdProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
 
@@ -186,7 +193,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyMethodReturnsObjectWithCorrectCodeProperty()
+        public void SignalboxClass_CopyMethod_ReturnsObjectWithCorrectCodeProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
 
@@ -196,7 +203,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyMethodReturnsObjectWithCorrectEditorDisplayNameProperty()
+        public void SignalboxClass_CopyMethod_ReturnsObjectWithCorrectEditorDisplayNameProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
 
@@ -206,7 +213,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void SignalboxClassCopyMethodReturnsObjectWithCorrectExportDisplayNameProperty()
+        public void SignalboxClass_CopyMethod_ReturnsObjectWithCorrectExportDisplayNameProperty()
         {
             Signalbox sourceObject = SignalboxHelpers.GetSignalbox();
 
@@ -214,13 +221,6 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.AreEqual(sourceObject.ExportDisplayName, testObject.ExportDisplayName);
         }
-
-        private static bool AreSignalboxesCompletelyDifferent(Signalbox s1, Signalbox s2)
-        {
-            return s1.Id != s2.Id && s1.Code != s2.Code && s1.EditorDisplayName != s2.EditorDisplayName && s1.ExportDisplayName != s2.ExportDisplayName;
-        }
-
-#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]

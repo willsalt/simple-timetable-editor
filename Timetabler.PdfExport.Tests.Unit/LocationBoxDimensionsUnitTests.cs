@@ -11,24 +11,42 @@ namespace Timetabler.PdfExport.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+        private static TextVerticalLocation GetTVL()
+        {
+            return new TextVerticalLocation(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, 
+                _rnd.NextDouble() * 1000);
+        }
+
         private static LocationBoxDimensions GetLocationBoxDimensions(int? locationMinCount = null)
         {
-            LocationBoxDimensions dimensions = new LocationBoxDimensions();
+            LocationBoxDimensions dimensions = new LocationBoxDimensions
+            {
+                MajorDistanceColumnWidth = _rnd.NextDouble() * 20,
+                MinorDistanceColumnWidth = _rnd.NextDouble() * 20,
+            };
             int locationOffsetCount = _rnd.Next(50) + locationMinCount ?? 0;
             for (int i = 0; i < locationOffsetCount; ++i)
             {
-                dimensions.LocationOffsets.Add(i.ToString(CultureInfo.CurrentCulture), new TextVerticalLocation
-                {
-                    Baseline = _rnd.NextDouble() * 1000,
-                    Bottom = _rnd.NextDouble() * 1000,
-                    Top = _rnd.NextDouble() * 1000,
-                });
+                dimensions.LocationOffsets.Add(i.ToString(CultureInfo.CurrentCulture), GetTVL());
             }
             return dimensions;
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void LocationBoxDimensionsClassLocationOffsetListPropertyContainsSameNumberOfItemsAsLocationOffsetsProperty()
+        public void LocationBoxDimensionsClass_LeftOffsetProperty_EqualsSumOfMajorDistanceColumnWidthAndMinorDistanceColumnWidthProperties()
+        {
+            LocationBoxDimensions testObject = GetLocationBoxDimensions();
+            double expectedOutput = testObject.MajorDistanceColumnWidth + testObject.MinorDistanceColumnWidth;
+
+            double testOutput = testObject.LeftOffset;
+
+            Assert.AreEqual(expectedOutput, testOutput);
+        }
+
+        [TestMethod]
+        public void LocationBoxDimensionsClass_LocationOffsetListProperty_ContainsSameNumberOfItemsAsLocationOffsetsProperty()
         {
             LocationBoxDimensions testObject = GetLocationBoxDimensions();
 
@@ -38,7 +56,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         }
         
         [TestMethod]
-        public void LocationBoxDimensionsClassLocationOffsetListPropertyContainsSameObjectsAsLocationOffsetsPropertyValues()
+        public void LocationBoxDimensionsClass_LocationOffsetListProperty_ContainsSameObjectsAsLocationOffsetsPropertyValues()
         {
             LocationBoxDimensions testObject = GetLocationBoxDimensions();
 
@@ -53,7 +71,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         }
 
         [TestMethod]
-        public void LocationBoxDimensionsClassLocationOffsetListPropertyContainsObjectsOrderedByTopProperty()
+        public void LocationBoxDimensionsClass_LocationOffsetListProperty_ContainsObjectsOrderedByTopProperty()
         {
             LocationBoxDimensions testObject = GetLocationBoxDimensions(2);
 
@@ -64,5 +82,8 @@ namespace Timetabler.PdfExport.Tests.Unit
                 Assert.IsTrue(testOutput[i].Top >= testOutput[i - 1].Top);
             }
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

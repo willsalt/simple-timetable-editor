@@ -13,8 +13,10 @@ namespace Timetabler.Data.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void TrainTimeClassFootnoteSymbolsPropertyHasCorrectValueIfThereAreFootnotes()
+        public void TrainTimeClass_FootnoteSymbolsProperty_HasCorrectValue_IfThereAreFootnotes()
         {
             int footnoteCount = _rnd.Next(4) + 1;
             TrainTime testObject = TrainTimeHelpers.GetTrainTime(footnoteCount);
@@ -28,7 +30,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassFootnoteSymbolsPropertyEqualsTwoSpacesIfThereAreNoFootnotes()
+        public void TrainTimeClass_FootnoteSymbolsProperty_EqualsTwoSpaces_IfThereAreNoFootnotes()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime(0);
 
@@ -38,7 +40,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyMethodReturnsDifferentObject()
+        public void TrainTimeClass_CopyMethod_ReturnsDifferentObject()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
 
@@ -48,7 +50,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyMethodReturnsObjectIfTimePropertyIsNull()
+        public void TrainTimeClass_CopyMethod_ReturnsObject_IfTimePropertyIsNull()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
             testObject.Time = null;
@@ -59,7 +61,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyMethodReturnsObjectWithTimePropertyThatIsDifferentObjectIfTimePropertyIsNotNull()
+        public void TrainTimeClass_CopyMethod_ReturnsObjectWithTimePropertyThatIsDifferentObject_IfTimePropertyIsNotNull()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
 
@@ -69,7 +71,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyMethodReturnsObjectWithTimePropertyWithCorrectValueIfTimePropertyIsNotNull()
+        public void TrainTimeClass_CopyMethod_ReturnsObjectWithTimePropertyWithCorrectValue_IfTimePropertyIsNotNull()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
 
@@ -79,7 +81,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyMethodReturnsObjectWithCorrectNumberOfFootnotes()
+        public void TrainTimeClass_CopyMethod_ReturnsObjectWithCorrectNumberOfFootnotes()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
 
@@ -89,7 +91,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyMethodReturnsObjectWithFootnotesPropertyWithSameContents()
+        public void TrainTimeClass_CopyMethod_ReturnsObjectWithFootnotesPropertyWithSameContents()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
 
@@ -102,7 +104,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyAndReflectMethodReturnsDifferentObject()
+        public void TrainTimeClass_CopyAndReflectMethod_ReturnsDifferentObject()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -113,7 +115,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyAndReflectMethodReturnsObjectIfTimePropertyIsNull()
+        public void TrainTimeClass_CopyAndReflectMethod_ReturnsObject_IfTimePropertyIsNull()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
             testObject.Time = null;
@@ -125,7 +127,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyAndReflectMethodReturnsObjectWithTimePropertyThatIsDifferentObjectIfTimePropertyIsNotNull()
+        public void TrainTimeClass_CopyAndReflectMethod_ReturnsObjectWithTimePropertyThatIsDifferentObject_IfTimePropertyIsNotNull()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -136,7 +138,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyAndReflectMethodReturnsObjectWithTimePropertyWithExpectedValueIfTimePropertyIsNotNull()
+        public void TrainTimeClass_CopyAndReflectMethod_ReturnsObjectWithTimePropertyWithExpectedValue_IfTimePropertyIsNotNull()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -147,7 +149,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyAndReflectMethodReturnsObjectWithCorrectNumberOfFootnotes()
+        public void TrainTimeClass_CopyAndReflectMethod_ReturnsObjectWithCorrectNumberOfFootnotes()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -158,7 +160,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassCopyAndReflectMethodReturnsObjectWithFootnotesPropertyWithSameContents()
+        public void TrainTimeClass_CopyAndReflectMethod_ReturnsObjectWithFootnotesPropertyWithSameContents()
         {
             TrainTime testObject = TrainTimeHelpers.GetTrainTime();
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -172,7 +174,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsTrueIfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeBefore(testParam0.Time);
@@ -183,7 +185,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsTrueIfTimePropertyOfFirstOperandIsPopulatedAndTimePropertyOfSecondOperandIsNotPopulated()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsPopulatedAndTimePropertyOfSecondOperandIsNotPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -195,7 +197,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsTrueIfFirstOperandIsNotNullAndSecondOperandIsNull()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsTrue_IfFirstOperandIsNotNullAndSecondOperandIsNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = null;
@@ -206,7 +208,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsFalseIfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAfter(testParam0.Time);
@@ -217,7 +219,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsFalseIfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAt(testParam0.Time);
@@ -228,7 +230,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsFalseIfTimePropertyOfFirstOperandIsNullAndTimePropertOfSecondOperandIsNotNull()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsNullAndTimePropertOfSecondOperandIsNotNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             testParam0.Time = null;
@@ -240,7 +242,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsFalseIfFirstOperandIsNullAndSecondOperandIsNotNull()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsFalse_IfFirstOperandIsNullAndSecondOperandIsNotNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -251,7 +253,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsFalseIfTimePropertiesOfBothOperandsAreNotPopulated()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsFalse_IfTimePropertiesOfBothOperandsAreNotPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             testParam0.Time = null;
@@ -264,7 +266,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOperatorReturnsFalseIfBothOperandsAreNull()
+        public void TrainTimeClass_GreaterThanOperator_ReturnsFalse_IfBothOperandsAreNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = null;
@@ -275,7 +277,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsTrueIfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
+        public void TrainTimeClass_LessThanOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAfter(testParam0.Time);
@@ -286,7 +288,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsTrueIfTimePropertyOfFirstOperandIsNotPopulatedAndTimePropertyOfSecondOperandIsPopulated()
+        public void TrainTimeClass_LessThanOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsNotPopulatedAndTimePropertyOfSecondOperandIsPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -298,7 +300,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsTrueIfFirstOperandIsNullAndSecondOperandIsNotNull()
+        public void TrainTimeClass_LessThanOperator_ReturnsTrue_IfFirstOperandIsNullAndSecondOperandIsNotNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -309,7 +311,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsFalseIfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
+        public void TrainTimeClass_LessThanOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeBefore(testParam0.Time);
@@ -320,7 +322,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsFalseIfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
+        public void TrainTimeClass_LessThanOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAt(testParam0.Time);
@@ -331,7 +333,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsFalseIfTimePropertyOfFirstOperandIsNotNullAndTimePropertOfSecondOperandIsNull()
+        public void TrainTimeClass_LessThanOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsNotNullAndTimePropertOfSecondOperandIsNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -343,7 +345,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsFalseIfFirstOperandIsNotNullAndSecondOperandIsNull()
+        public void TrainTimeClass_LessThanOperator_ReturnsFalse_IfFirstOperandIsNotNullAndSecondOperandIsNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime(); ;
             TrainTime testParam1 = null;
@@ -354,7 +356,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsFalseIfTimePropertiesOfBothOperandsAreNotPopulated()
+        public void TrainTimeClass_LessThanOperator_ReturnsFalse_IfTimePropertiesOfBothOperandsAreNotPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             testParam0.Time = null;
@@ -367,7 +369,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOperatorReturnsFalseIfBothOperandsAreNull()
+        public void TrainTimeClass_LessThanOperator_ReturnsFalse_IfBothOperandsAreNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = null;
@@ -378,7 +380,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsTrueIfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeBefore(testParam0.Time);
@@ -389,7 +391,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsFalseIfTimePropertyOfFirstOperandIsPopulatedAndTimePropertyOfSecondOperandIsNotPopulated()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsPopulatedAndTimePropertyOfSecondOperandIsNotPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -397,22 +399,22 @@ namespace Timetabler.Data.Tests.Unit
 
             bool testOutput = testParam0 >= testParam1;
 
-            Assert.IsFalse(testOutput);
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsFalseIfFirstOperandIsNotNullAndSecondOperandIsNull()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfFirstOperandIsNotNullAndSecondOperandIsNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = null;
 
             bool testOutput = testParam0 >= testParam1;
 
-            Assert.IsFalse(testOutput);
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsFalseIfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAfter(testParam0.Time);
@@ -423,7 +425,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsTrueIfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAt(testParam0.Time);
@@ -434,7 +436,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsFalseIfTimePropertyOfFirstOperandIsNullAndTimePropertOfSecondOperandIsNotNull()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsNullAndTimePropertOfSecondOperandIsNotNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             testParam0.Time = null;
@@ -446,7 +448,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsFalseIfFirstOperandIsNullAndSecondOperandIsNotNull()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsFalse_IfFirstOperandIsNullAndSecondOperandIsNotNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -457,7 +459,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsTrueIfTimePropertiesOfBothOperandsAreNotPopulated()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfTimePropertiesOfBothOperandsAreNotPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             testParam0.Time = null;
@@ -470,7 +472,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassGreaterThanOrEqualToOperatorReturnsTrueIfBothOperandsAreNull()
+        public void TrainTimeClass_GreaterThanOrEqualToOperator_ReturnsTrue_IfBothOperandsAreNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = null;
@@ -481,7 +483,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsTrueIfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsBeforeTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAfter(testParam0.Time);
@@ -492,7 +494,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsTrueIfTimePropertyOfFirstOperandIsNotPopulatedAndTimePropertyOfSecondOperandIsPopulated()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsNotPopulatedAndTimePropertyOfSecondOperandIsPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -504,7 +506,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsTrueIfFirstOperandIsNullAndSecondOperandIsNotNull()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsTrue_IfFirstOperandIsNullAndSecondOperandIsNotNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -515,7 +517,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsFalseIfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsAfterTimePropertyOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeBefore(testParam0.Time);
@@ -526,7 +528,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsTrueIfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsTrue_IfTimePropertyOfFirstOperandIsEqualToTimePropertOfSecondOperand()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTimeAt(testParam0.Time);
@@ -537,7 +539,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsFalseIfTimePropertyOfFirstOperandIsNotNullAndTimePropertOfSecondOperandIsNull()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsFalse_IfTimePropertyOfFirstOperandIsNotNullAndTimePropertOfSecondOperandIsNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testParam1 = TrainTimeHelpers.GetTrainTime();
@@ -549,7 +551,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsFalseIfFirstOperandIsNotNullAndSecondOperandIsNull()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsFalse_IfFirstOperandIsNotNullAndSecondOperandIsNull()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime(); ;
             TrainTime testParam1 = null;
@@ -560,7 +562,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsTrueIfTimePropertiesOfBothOperandsAreNotPopulated()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsTrue_IfTimePropertiesOfBothOperandsAreNotPopulated()
         {
             TrainTime testParam0 = TrainTimeHelpers.GetTrainTime();
             testParam0.Time = null;
@@ -573,7 +575,7 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainTimeClassLessThanOrEqualToOperatorReturnsTrueIfBothOperandsAreNull()
+        public void TrainTimeClass_LessThanOrEqualToOperator_ReturnsTrue_IfBothOperandsAreNull()
         {
             TrainTime testParam0 = null;
             TrainTime testParam1 = null;
@@ -583,8 +585,6 @@ namespace Timetabler.Data.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-        
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainTimeClass_ResolveFootnotesMethod_ThrowsArgumentNullException_IfParameterIsNull()

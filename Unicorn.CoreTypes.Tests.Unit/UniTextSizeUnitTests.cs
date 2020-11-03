@@ -31,7 +31,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         {
             UniTextSize testOutput = new UniTextSize();
 
-            Assert.AreEqual(0d, testOutput.TotalHeight);
+            Assert.AreEqual(0d, testOutput.LineHeight);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
             UniTextSize testOutput = new UniTextSize(testParam0, testParam1, testParam2, testParam3, testParam4);
 
-            Assert.AreEqual(testParam1, testOutput.TotalHeight);
+            Assert.AreEqual(testParam1, testOutput.LineHeight);
         }
 
         [TestMethod]
@@ -151,6 +151,97 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
+        public void UniTextSizeClass_MaxHeightAboveBaselineProperty_EqualsAscenderHeightProperty_IfAscenderHeightPropertyIsGreaterThanHeightAboveBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam3 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam4 = _rnd.NextDouble() * 500;  
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.AscenderHeight, testObject.MaxHeightAboveBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightAboveBaselineProperty_EqualsHeightAboveBaselineProperty_IfAscenderHeightPropertyIsLessThanHeightAboveBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam2 = constrParam3 + _rnd.NextDouble() * 500;
+            double constrParam4 = _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.HeightAboveBaseline, testObject.MaxHeightAboveBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightAboveBaselineProperty_EqualsAscenderHeightProperty_IfAscenderHeightPropertyIsEqualToHeightAboveBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam3 = constrParam2;
+            double constrParam4 = _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.AscenderHeight, testObject.MaxHeightAboveBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightBelowBaselineProperty_EqualsDescenderHeightProperty_IfDescenderHeightPropertyIsGreaterThanHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam1 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = (constrParam1 - constrParam2) + _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.DescenderHeight, testObject.MaxHeightBelowBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightBelowBaselineProperty_EqualsHeightBelowBaselineProperty_IfDescenderHeightPropertyIsLessThanHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam1 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = (constrParam1 - constrParam2) - _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.HeightBelowBaseline, testObject.MaxHeightBelowBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightBelowBaselineProperty_EqualsDescenderHeightProperty_IfDescenderHeightPropertyIsEqualToHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam1 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = constrParam1 - constrParam2;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.DescenderHeight, testObject.MaxHeightBelowBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightProperty_EqualsMaxHeightAboveBaselinePropertyPlusMaxHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.MaxHeightAboveBaseline + testObject.MaxHeightBelowBaseline, testObject.MaxHeight);
+        }
+
+        [TestMethod]
         public void UniTextSizeClass_EqualsMethodWithUniTextSizeParameter_ReturnsTrue_IfParameterIsSameValue()
         {
             UniTextSize testValue = GetTestValue();
@@ -164,7 +255,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         public void UniTextSizeClass_EqualsMethodWithUniTextSizeParameter_ReturnsTrue_IfParameterIsConstructedFromSameData()
         {
             UniTextSize testValue = GetTestValue();
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, 
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, 
                 testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals(testParam);
@@ -181,7 +272,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.Width);
-            UniTextSize testParam = new UniTextSize(constrParam, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, 
+            UniTextSize testParam = new UniTextSize(constrParam, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, 
                 testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals(testParam);
@@ -197,7 +288,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             do
             {
                 constrParam = _rnd.NextDouble() * 50;
-            } while (constrParam == testValue.TotalHeight);
+            } while (constrParam == testValue.LineHeight);
             UniTextSize testParam = new UniTextSize(testValue.Width, constrParam, testValue.HeightAboveBaseline, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals(testParam);
@@ -214,7 +305,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.HeightAboveBaseline);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals(testParam);
 
@@ -230,7 +321,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.AscenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals(testParam);
 
@@ -246,7 +337,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.DescenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
 
             bool testOutput = testValue.Equals(testParam);
 
@@ -267,7 +358,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         public void UniTextSizeClass_EqualsMethodWithObjectParameter_ReturnsTrue_IfParameterIsConstructedFromSameData()
         {
             UniTextSize testValue = GetTestValue();
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
                 testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals((object)testParam);
@@ -284,7 +375,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.Width);
-            UniTextSize testParam = new UniTextSize(constrParam, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
+            UniTextSize testParam = new UniTextSize(constrParam, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
                 testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals((object)testParam);
@@ -300,7 +391,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             do
             {
                 constrParam = _rnd.NextDouble() * 50;
-            } while (constrParam == testValue.TotalHeight);
+            } while (constrParam == testValue.LineHeight);
             UniTextSize testParam = new UniTextSize(testValue.Width, constrParam, testValue.HeightAboveBaseline, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals((object)testParam);
@@ -317,7 +408,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.HeightAboveBaseline);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals((object)testParam);
 
@@ -333,7 +424,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.AscenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
 
             bool testOutput = testValue.Equals((object)testParam);
 
@@ -349,7 +440,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.DescenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
 
             bool testOutput = testValue.Equals((object)testParam);
 
@@ -371,7 +462,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         public void UniTextSizeClass_GetHashCodeMethod_ReturnsSameValue_IfCalledTwiceOnSameValue()
         {
             UniTextSize testValue0 = GetTestValue();
-            UniTextSize testValue1 = new UniTextSize(testValue0.Width, testValue0.TotalHeight, testValue0.HeightAboveBaseline, testValue0.AscenderHeight,
+            UniTextSize testValue1 = new UniTextSize(testValue0.Width, testValue0.LineHeight, testValue0.HeightAboveBaseline, testValue0.AscenderHeight,
                 testValue0.DescenderHeight);
 
             int testOutput0 = testValue0.GetHashCode();
@@ -396,7 +487,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         public void UniTextSizeClass_EqualityOperator_ReturnsTrue_IfOperandsAreConstructedFromSameData()
         {
             UniTextSize testValue = GetTestValue();
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
                 testValue.DescenderHeight);
 
             bool testOutput = testValue == testParam;
@@ -413,7 +504,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.Width);
-            UniTextSize testParam = new UniTextSize(constrParam, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
+            UniTextSize testParam = new UniTextSize(constrParam, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
                 testValue.DescenderHeight);
 
             bool testOutput = testValue == testParam;
@@ -429,7 +520,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             do
             {
                 constrParam = _rnd.NextDouble() * 50;
-            } while (constrParam == testValue.TotalHeight);
+            } while (constrParam == testValue.LineHeight);
             UniTextSize testParam = new UniTextSize(testValue.Width, constrParam, testValue.HeightAboveBaseline, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue == testParam;
@@ -446,7 +537,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.HeightAboveBaseline);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue == testParam;
 
@@ -462,7 +553,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.AscenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
 
             bool testOutput = testValue == testParam;
 
@@ -478,7 +569,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.DescenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
 
             bool testOutput = testValue == testParam;
 
@@ -501,7 +592,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         public void UniTextSizeClass_InequalityOperator_ReturnsFalse_IfOperandsAreConstructedFromSameData()
         {
             UniTextSize testValue = GetTestValue();
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
                 testValue.DescenderHeight);
 
             bool testOutput = testValue != testParam;
@@ -518,7 +609,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.Width);
-            UniTextSize testParam = new UniTextSize(constrParam, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
+            UniTextSize testParam = new UniTextSize(constrParam, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight,
                 testValue.DescenderHeight);
 
             bool testOutput = testValue != testParam;
@@ -534,7 +625,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             do
             {
                 constrParam = _rnd.NextDouble() * 50;
-            } while (constrParam == testValue.TotalHeight);
+            } while (constrParam == testValue.LineHeight);
             UniTextSize testParam = new UniTextSize(testValue.Width, constrParam, testValue.HeightAboveBaseline, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue != testParam;
@@ -551,7 +642,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.HeightAboveBaseline);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, constrParam, testValue.AscenderHeight, testValue.DescenderHeight);
 
             bool testOutput = testValue != testParam;
 
@@ -567,7 +658,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.AscenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, constrParam, testValue.DescenderHeight);
 
             bool testOutput = testValue != testParam;
 
@@ -575,7 +666,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
-        public void UniTextSizeClass_IneEqualityOperator_ReturnsTrue_IfOperandsDifferByDescenderHeightProperty()
+        public void UniTextSizeClass_InequalityOperator_ReturnsTrue_IfOperandsDifferByDescenderHeightProperty()
         {
             UniTextSize testValue = GetTestValue();
             double constrParam;
@@ -583,7 +674,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             {
                 constrParam = _rnd.NextDouble() * 50;
             } while (constrParam == testValue.DescenderHeight);
-            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.TotalHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
+            UniTextSize testParam = new UniTextSize(testValue.Width, testValue.LineHeight, testValue.HeightAboveBaseline, testValue.AscenderHeight, constrParam);
 
             bool testOutput = testValue != testParam;
 

@@ -61,6 +61,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The speed guideline spacing must be the number of minutes between speed guidelines..
+        /// </summary>
+        internal static string DocumentOptionsEditForm_ValidateSpeedLineSpacing_Error {
+            get {
+                return ResourceManager.GetString("DocumentOptionsEditForm_ValidateSpeedLineSpacing_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed guideline speed must be a number..
+        /// </summary>
+        internal static string DocumentOptionsEditForm_ValidateSpeedLineSpeed_Error {
+            get {
+                return ResourceManager.GetString("DocumentOptionsEditForm_ValidateSpeedLineSpeed_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         internal static string HumanReadableEnum_AddSubtract_Add {
@@ -250,6 +268,33 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string HumanReadableEnum_SectionSelection_All {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_SectionSelection_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First.
+        /// </summary>
+        internal static string HumanReadableEnum_SectionSelection_First {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_SectionSelection_First", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string HumanReadableEnum_SectionSelection_None {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_SectionSelection_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The chainage must be a number..
         /// </summary>
         internal static string LocationEditForm_Chainage_ValidationFailureNaN {
@@ -282,6 +327,15 @@ namespace Timetabler {
         internal static string LogMessage_CbClockTypeValue {
             get {
                 return ResourceManager.GetString("LogMessage_CbClockTypeValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cbDistanceInOutput is {0}.
+        /// </summary>
+        internal static string LogMessage_CbDistanceInOutput_Value {
+            get {
+                return ResourceManager.GetString("LogMessage_CbDistanceInOutput_Value", resourceCulture);
             }
         }
         

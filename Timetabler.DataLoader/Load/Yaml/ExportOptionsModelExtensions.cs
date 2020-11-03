@@ -23,7 +23,7 @@ namespace Timetabler.DataLoader.Load.Yaml
                 throw new NullReferenceException();
             }
 
-            return new DocumentExportOptions
+            DocumentExportOptions deo = new DocumentExportOptions
             {
                 DisplayLocoDiagramRow = model.DisplayLocoDiagramRow ?? false,
                 DisplayToWorkRow = model.SetToWorkRowInOutput ?? false,
@@ -37,7 +37,18 @@ namespace Timetabler.DataLoader.Load.Yaml
                 DisplayGraph = model.GraphsInOutput ?? true,
                 TablePageOrientation = model.TablePageOrientation ?? Orientation.Landscape,
                 GraphPageOrientation = model.GraphPageOrientation ?? Orientation.Landscape,
+                DistancesInOutput = model.DistancesInOutput ?? SectionSelection.None,
             };
+            if (!(model.UpSectionLabel is null))
+            {
+                deo.UpSectionLabel = model.UpSectionLabel;
+            }
+            if (!(model.DownSectionLabel is null))
+            {
+                deo.DownSectionLabel = model.DownSectionLabel;
+            }
+
+            return deo;
         }
     }
 }

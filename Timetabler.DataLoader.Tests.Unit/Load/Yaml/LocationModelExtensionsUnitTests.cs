@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
@@ -62,6 +58,18 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
             Location testOutput = testParam.ToLocation();
 
             Assert.AreEqual(testParam.Id, testOutput.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void LocationModelExtensionsClass_ToLocationMethod_ThrowsArgumentException_IfParameterHasNullIdProperty()
+        {
+            LocationModel testParam = GetModel();
+            testParam.Id = null;
+
+            Location testOutput = testParam.ToLocation();
+
+            Assert.IsNotNull(testOutput.Id);
         }
 
         [TestMethod]

@@ -1,6 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Unicorn.CoreTypes;
@@ -11,6 +15,11 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
     public class FontDescriptorUnitTests
     {
         private static readonly Random _rnd = RandomProvider.Default;
+
+        private static FontDescriptor GetTestObject()
+        {
+            return new FontDescriptor("Times", _rnd.NextDouble() * 20);
+        }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
@@ -23,6 +32,106 @@ namespace Unicorn.Impl.PdfSharp.Tests.Unit
             FontDescriptor testOutput = new FontDescriptor(testParam0, testParam1);
 
             Assert.AreEqual(testParam1, testOutput.PointSize);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_PreferredEncodingProperty_HasValueEqualToEncodingUnicode()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            Encoding testOutput = testObject.PreferredEncoding;
+
+            Assert.AreEqual(Encoding.Unicode, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_BoundingBoxProperty_HasValueEqualToDefaultUniRectangle()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            UniRectangle testOutput = testObject.BoundingBox;
+
+            Assert.AreEqual(default, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_ItalicAngleProperty_IsEqualToZero()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            decimal testOutput = testObject.ItalicAngle;
+
+            Assert.AreEqual(0m, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_CapHeightProperty_IsEqualToZero()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            decimal testOutput = testObject.CapHeight;
+
+            Assert.AreEqual(0m, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_VerticalStemThicknessProperty_IsEqualToZero()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            decimal testOutput = testObject.VerticalStemThickness;
+
+            Assert.AreEqual(0m, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_RequiresFullDescriptionProperty_IsEqualToFalse()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            bool testOutput = testObject.RequiresFullDescription;
+
+            Assert.AreEqual(false, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_RequiresEmbeddingProperty_IsEqualToFalse()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            bool testOutput = testObject.RequiresEmbedding;
+
+            Assert.AreEqual(false, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_EmbeddingKeyProperty_IsEqualToEmptyString()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            string testOutput = testObject.EmbeddingKey;
+
+            Assert.AreEqual("", testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_EmbeddingLengthProperty_IsEqualToZero()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            long testOutput = testObject.EmbeddingLength;
+
+            Assert.AreEqual(0L, testOutput);
+        }
+
+        [TestMethod]
+        public void FontDescriptorClass_EmbeddingDataProperty_HasLengthZero()
+        {
+            FontDescriptor testObject = GetTestObject();
+
+            IEnumerable<byte> testOutput = testObject.EmbeddingData;
+
+            Assert.AreEqual(0, testOutput.Count());
         }
 
         [TestMethod]

@@ -14,7 +14,7 @@ namespace Unicorn.Writer.Structural
     {
         private readonly PdfCatalogue _root;
         private readonly PdfCrossRefTable _xrefs;
-        private int? _xrefLocation = null;
+        private int? _xrefLocation;
 
         /// <summary>
         /// Value-setting constructor

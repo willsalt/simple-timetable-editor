@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Unicorn.CoreTypes;
+using Unicorn.Writer.Filters;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Structural;
@@ -78,7 +79,7 @@ namespace Unicorn.Writer
         /// <returns>An <see cref="IPageDescriptor" /> describing the new page.</returns>
         public IPageDescriptor AppendPage(PhysicalPageSize size, PageOrientation orientation, double horizontalMarginProportion, double verticalMarginProportion)
         {
-            PdfStream contentStream = new PdfStream(_xrefTable.ClaimSlot());
+            PdfStream contentStream = new PdfStream(_xrefTable.ClaimSlot(), GetPageEncoders());
             PdfPage page = new PdfPage(_pageRoot, _xrefTable.ClaimSlot(), this, size, orientation, horizontalMarginProportion, verticalMarginProportion, contentStream);
             _bodyObjects.Add(contentStream);
             _bodyObjects.Add(page);
@@ -159,11 +160,58 @@ namespace Unicorn.Writer
                 {
                     return _fontCache[font.UnderlyingKey];
                 }
-                PdfFont pdfFont = new PdfFont(_xrefTable.ClaimSlot(), font);
+                PdfFontDescriptor fd = null;
+                if (font.RequiresFullDescription || font.RequiresEmbedding)
+                {
+                    PdfStream embed = null;
+                    string embeddingKey = "";
+                    if (font.RequiresEmbedding)
+                    {
+                        PdfDictionary meta = new PdfDictionary { { new PdfName("Length1"), new PdfInteger((int)font.EmbeddingLength) } };
+                        embed = new PdfStream(_xrefTable.ClaimSlot(), GetFontEncoders(), meta);
+                        embed.AddBytes(font.EmbeddingData);
+                        embeddingKey = font.EmbeddingKey;
+                        _bodyObjects.Add(embed);
+                    }
+                    fd = new PdfFontDescriptor(_xrefTable.ClaimSlot(), font, embeddingKey, embed);
+                    _bodyObjects.Add(fd);
+                }
+                PdfFont pdfFont = new PdfFont(_xrefTable.ClaimSlot(), font, fd);
                 _fontCache.Add(font.UnderlyingKey, pdfFont);
                 _bodyObjects.Add(pdfFont);
                 return pdfFont;
             }
+        }
+
+        private static IEnumerable<IPdfFilterEncoder> GetFontEncoders()
+        {
+            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.CompressBinaryStreams))
+            {
+                return GetStreamCompressionEncoders();
+            }
+            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.AsciiEncodeBinaryStreams))
+            {
+                return new IPdfFilterEncoder[] { Ascii85Encoder.Instance };
+            }
+            return Array.Empty<IPdfFilterEncoder>();
+        }
+
+        private static IEnumerable<IPdfFilterEncoder> GetPageEncoders()
+        {
+            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.CompressPageContentStreams))
+            {
+                return GetStreamCompressionEncoders();
+            }
+            return Array.Empty<IPdfFilterEncoder>();
+        }
+
+        private static IEnumerable<IPdfFilterEncoder> GetStreamCompressionEncoders()
+        {
+            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.AsciiEncodeBinaryStreams))
+            {
+                return new IPdfFilterEncoder[] { FlateEncoder.Instance, Ascii85Encoder.Instance };
+            }
+            return new IPdfFilterEncoder[] { FlateEncoder.Instance };
         }
 
         private void CloseAllPages()

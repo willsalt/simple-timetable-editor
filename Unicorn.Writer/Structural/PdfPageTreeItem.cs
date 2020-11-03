@@ -5,7 +5,7 @@ namespace Unicorn.Writer.Structural
     /// <summary>
     /// Represents the items in a PDF page tree, whether they be nodes or pages.
     /// </summary>
-    public abstract class PdfPageTreeItem : PdfIndirectObject
+    public abstract class PdfPageTreeItem : PdfSpecialisedDictionary
     {
         /// <summary>
         /// The parent of this tree item.  Null if this object is the root of the tree.

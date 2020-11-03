@@ -153,7 +153,7 @@ namespace Timetabler.Data
         /// </summary>
         protected void OnModified()
         {
-            Modified?.Invoke(this, new ModifiedEventArgs { ModifiedItem = this });
+            Modified?.Invoke(this, new ModifiedEventArgs(this, ""));
         }
 
         /// <summary>

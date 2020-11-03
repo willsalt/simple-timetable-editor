@@ -41,8 +41,20 @@ namespace Timetabler.Data.Tests.Unit
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         
+        [TestMethod]
+        public void DistanceClass_MajorLabelProperty_HasCorrectValue()
+        {
+            Assert.AreEqual(Resources.Distance_MileageLabel, Distance.MajorLabel);
+        }
+
+        [TestMethod]
+        public void DistanceClass_MinorLabelProperty_HasCorrectValue()
+        {
+            Assert.AreEqual(Resources.Distance_ChainageLabel, Distance.MinorLabel);
+        }
+
         //[TestMethod]
-        //public void DistanceClass_AddMethod_ReturnsNullIfBothParametersAreNull()
+        //public void DistanceClass_AddMethod_ReturnsNull_IfBothParametersAreNull()
         //{
         //    Distance testParam0 = null;
         //    Distance testParam1 = null;
@@ -96,31 +108,97 @@ namespace Timetabler.Data.Tests.Unit
         //    AssertEqual(testParam0, testOutput);
         //}
 
-        [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObjectIfParametersAreNotNull()
-        {
-            Distance testParam0 = DistanceHelpers.GetDistance();
-            Distance testParam1 = DistanceHelpers.GetDistance();
+        //[TestMethod]
+        //public void DistanceClass_AddMethod_ReturnsNewObject_IfParametersAreNotNull()
+        //{
+        //    Distance testParam0 = DistanceHelpers.GetDistance();
+        //    Distance testParam1 = DistanceHelpers.GetDistance();
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
+        //    Distance testOutput = Distance.Add(testParam0, testParam1);
 
-            Assert.AreNotSame(testParam0, testOutput);
-            Assert.AreNotSame(testParam1, testOutput);
-        }
+        //    Assert.AreNotSame(testParam0, testOutput);
+        //    Assert.AreNotSame(testParam1, testOutput);
+        //}
 
-        [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObjectEqualToSumOfParametersIfParametersAreNotNull()
-        {
-            for (int i = 0; i < 100000; ++i)
-            {
-                Distance testParam0 = DistanceHelpers.GetDistance();
-                Distance testParam1 = DistanceHelpers.GetDistance();
+        //[TestMethod]
+        //public void DistanceClass_AddMethod_ReturnsNewObjectEqualToSumOfParameters_IfParametersAreNotNull()
+        //{
+        //    Distance testParam0 = GetDistance();
+        //    Distance testParam1 = GetDistance();
 
-                Distance testOutput = Distance.Add(testParam0, testParam1);
+        //    Distance testOutput = Distance.Add(testParam0, testParam1);
 
-                AssertEqual(testParam0, testParam1, testOutput);
-            }
-        }
+        //    AssertEqual(testParam0, testParam1, testOutput);
+        //}
+
+        //[TestMethod]
+        //public void DistanceClass_DifferenceMethod_ReturnsNull_IfBothParametersAreNull()
+        //{
+        //    Distance testParam0 = null;
+        //    Distance testParam1 = null;
+
+        //    Distance testOutput = Distance.Difference(testParam0, testParam1);
+
+        //    Assert.IsNull(testOutput);
+        //}
+
+        //[TestMethod]
+        //public void DistanceClass_DifferenceMethod_ReturnsNull_IfFirstParameterIsNull()
+        //{
+        //    Distance testParam0 = null;
+        //    Distance testParam1 = GetDistance();
+
+        //    Distance testOutput = Distance.Difference(testParam0, testParam1);
+
+        //    Assert.IsNull(testOutput);
+        //}
+
+        //[TestMethod]
+        //public void DistanceClass_DifferenceMethod_ReturnsNull_IfSecondParameterIsNull()
+        //{
+        //    Distance testParam0 = GetDistance();
+        //    Distance testParam1 = null;
+
+        //    Distance testOutput = Distance.Difference(testParam0, testParam1);
+
+        //    Assert.IsNull(testOutput);
+        //}
+
+        //[TestMethod]
+        //public void DistanceClass_DifferenceMethod_ReturnsDistanceEqualToZero_IfParametersAreEqual()
+        //{
+        //    Distance testParam0 = GetDistance();
+        //    Distance testParam1 = new Distance { Mileage = testParam0.Mileage, Chainage = testParam0.Chainage };
+        //    Distance expectedResult = new Distance { Mileage = 0, Chainage = 0 };
+
+        //    Distance testOutput = Distance.Difference(testParam0, testParam1);
+
+        //    AssertEqual(expectedResult, testOutput);
+        //}
+
+        //[TestMethod]
+        //public void DistanceClass_DifferenceMethod_ReturnsCorrectResult_IfSecondParameterIsGreaterThanFirstParameter()
+        //{
+        //    Distance testParam0 = GetDistance();
+        //    Distance expectedResult = GetDistance();
+        //    Distance testParam1 = testParam0 + expectedResult;
+
+        //    Distance testOutput = Distance.Difference(testParam0, testParam1);
+
+        //    AssertEqual(expectedResult, testOutput);
+        //}
+
+        //[TestMethod]
+        //public void DistanceClass_DifferenceMethod_ReturnsCorrectResult_IfFirstParameterIsGreaterThanSecondParameter()
+        //{
+        //    Distance testParam1 = GetDistance();
+        //    Distance expectedResult = GetDistance();
+        //    Distance testParam0 = testParam1 + expectedResult;
+
+        //    Distance testOutput = Distance.Difference(testParam0, testParam1);
+
+        //    AssertEqual(expectedResult, testOutput);
+        //}
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 

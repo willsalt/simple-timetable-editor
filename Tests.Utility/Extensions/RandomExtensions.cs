@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Timetabler.CoreData;
 
 namespace Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
         public const string AlphanumericCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -493,6 +495,30 @@ namespace Tests.Utility.Extensions
                 throw new NullReferenceException();
             }
             return (byte)random.Next(max);
+        }
+
+        public static SectionSelection NextSectionSelection(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            SectionSelection[] values = new[] { SectionSelection.None, SectionSelection.First, SectionSelection.All };
+            return values[random.Next(values.Length)];
+        }
+
+        public static SectionSelection? NextNullableSectionSelection(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (random.Next(4) == 0)
+            {
+                return null;
+            }
+            return NextSectionSelection(random);
         }
     }
 }

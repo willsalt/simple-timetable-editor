@@ -18,6 +18,7 @@
                 if (components != null)
                 {
                     components.Dispose();
+                    _exportProgressForm.Dispose();
                 }
             }
             base.Dispose(disposing);

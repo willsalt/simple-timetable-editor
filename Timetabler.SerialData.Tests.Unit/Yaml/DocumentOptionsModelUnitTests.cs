@@ -62,6 +62,46 @@ namespace Timetabler.SerialData.Tests.Unit.Yaml
             Assert.IsTrue(property.SetMethod.IsPublic);
         }
 
+        [TestMethod]
+        public void DocumentOptionsModelClass_HasPublicDisplaySpeedLinesOnGraphsPropertyOfTypeNullableBool()
+        {
+            Type classType = typeof(DocumentOptionsModel);
+            PropertyInfo property = classType.GetProperty("DisplaySpeedLinesOnGraphs");
+            Assert.AreEqual(typeof(bool?), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelClass_HasPublicSpeedLineSpeedPropertyOfTypeNullableInt()
+        {
+            Type classType = typeof(DocumentOptionsModel);
+            PropertyInfo property = classType.GetProperty("SpeedLineSpeed");
+            Assert.AreEqual(typeof(int?), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelClass_HasPublicDisplaySpeedLineSpacingMinutesPropertyOfTypeNullableInt()
+        {
+            Type classType = typeof(DocumentOptionsModel);
+            PropertyInfo property = classType.GetProperty("SpeedLineSpacingMinutes");
+            Assert.AreEqual(typeof(int?), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void DocumentOptionsModelClass_HasPublicSpeedLineAppearancePropertyOfTypeGraphTrainPropertiesModel()
+        {
+            Type classType = typeof(DocumentOptionsModel);
+            PropertyInfo property = classType.GetProperty("SpeedLineAppearance");
+            Assert.AreEqual(typeof(GraphTrainPropertiesModel), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

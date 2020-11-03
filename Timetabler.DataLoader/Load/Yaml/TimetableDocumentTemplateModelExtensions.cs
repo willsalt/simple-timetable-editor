@@ -27,6 +27,7 @@ namespace Timetabler.DataLoader.Load.Yaml
             IEnumerable<Location> locationSource;
             if (model.Maps != null && model.Maps.Count > 0 && model.Maps[0] != null)
             {
+                UniqueItemModel.PopulateMissingIds(model.Maps[0].LocationList);
                 locationSource = model.Maps[0].LocationList.Select(l => l.ToLocation());
             }
             else
@@ -34,6 +35,9 @@ namespace Timetabler.DataLoader.Load.Yaml
                 locationSource = Array.Empty<Location>();
             }
 
+            UniqueItemModel.PopulateMissingIds(model.NoteDefinitions);
+            UniqueItemModel.PopulateMissingIds(model.Maps[0].Signalboxes);
+            UniqueItemModel.PopulateMissingIds(model.TrainClasses);
             DocumentTemplate template = new DocumentTemplate(
                 locationSource,
                 model.NoteDefinitions.Select(n => n.ToNote()),

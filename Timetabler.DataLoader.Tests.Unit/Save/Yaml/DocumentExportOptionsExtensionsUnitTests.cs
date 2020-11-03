@@ -30,6 +30,9 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
                 GraphAxisLineWidth = _rnd.NextDouble() * 5,
                 TablePageOrientation = _rnd.NextOrientation(),
                 GraphPageOrientation = _rnd.NextOrientation(),
+                UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
+                DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+                DistancesInOutput = _rnd.NextSectionSelection(),
             };
         }
 
@@ -164,6 +167,36 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
             ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
 
             Assert.AreEqual(testParam.GraphPageOrientation, testOutput.GraphPageOrientation.Value);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectUpSectionLabelProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+
+            Assert.AreEqual(testParam.UpSectionLabel, testOutput.UpSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectDownSectionLabelProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+
+            Assert.AreEqual(testParam.DownSectionLabel, testOutput.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectDistancesInOutputProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+
+            Assert.AreEqual(testParam.DistancesInOutput, testOutput.DistancesInOutput.Value);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

@@ -50,6 +50,7 @@ namespace Timetabler.DataLoader.Load.Yaml
                 if (model.Maps[0].LocationList != null)
                 {
                     Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_LocationCount, model.Maps[0].LocationList.Count);
+                    LocationModel.PopulateMissingIds(model.Maps[0].LocationList);
                     foreach (LocationModel loc in model.Maps[0].LocationList)
                     {
                         document.LocationList.Add(loc.ToLocation());
@@ -64,6 +65,7 @@ namespace Timetabler.DataLoader.Load.Yaml
                 if (model.Maps[0].Signalboxes != null)
                 {
                     Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_SignalboxCount, model.Maps[0].Signalboxes.Count);
+                    UniqueItemModel.PopulateMissingIds(model.Maps[0].Signalboxes);
                     foreach (SignalboxModel box in model.Maps[0].Signalboxes)
                     {
                         Signalbox b = box.ToSignalbox();
@@ -98,6 +100,7 @@ namespace Timetabler.DataLoader.Load.Yaml
             if (model.NoteDefinitions != null)
             {
                 Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_NoteDefinitionCount, model.NoteDefinitions.Count);
+                UniqueItemModel.PopulateMissingIds(model.NoteDefinitions);
                 foreach (NoteModel note in model.NoteDefinitions)
                 {
                     document.NoteDefinitions.Add(note.ToNote());
@@ -112,6 +115,7 @@ namespace Timetabler.DataLoader.Load.Yaml
             if (model.TrainClassList != null)
             {
                 Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_TrainClassCount, model.TrainClassList.Count);
+                UniqueItemModel.PopulateMissingIds(model.TrainClassList);
                 foreach (TrainClassModel tc in model.TrainClassList)
                 {
                     document.TrainClassList.Add(tc.ToTrainClass());
@@ -129,6 +133,7 @@ namespace Timetabler.DataLoader.Load.Yaml
             if (model.TrainList != null)
             {
                 Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_TrainCount, model.TrainList.Count);
+                UniqueItemModel.PopulateMissingIds(model.TrainList);
                 foreach (TrainModel trn in model.TrainList)
                 {
                     document.TrainList.Add(trn.ToTrain(locationMap, classMap, noteMap, document.Options));

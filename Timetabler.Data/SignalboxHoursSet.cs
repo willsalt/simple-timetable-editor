@@ -137,7 +137,7 @@ namespace Timetabler.Data
         protected virtual void OnSignalboxHoursModified(SignalboxHours signalboxHours)
         {
             SignalboxHoursModified?.Invoke(this, new SignalboxHoursEventArgs { SignalboxHours = signalboxHours });
-            Modified?.Invoke(this, new ModifiedEventArgs { ModifiedItem = this });
+            Modified?.Invoke(this, new ModifiedEventArgs(this, nameof(SignalboxHours)));
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Timetabler.Data
         /// </summary>
         protected virtual void OnModified()
         {
-            Modified?.Invoke(this, new ModifiedEventArgs { ModifiedItem = this });
+            Modified?.Invoke(this, new ModifiedEventArgs(this, ""));
         }
 
         /// <summary>

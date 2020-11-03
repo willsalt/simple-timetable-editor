@@ -33,8 +33,10 @@ namespace Timetabler.Data.Tests.Unit.Display
             };
         }
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void TrainGraphModelClassSetPropertiesFromDocumentOptionsMethodSetsDisplayTrainLabelsPropertyToEqualDisplayTrainLabelsOnGraphsPropertyOfParameter()
+        public void TrainGraphModelClass_SetPropertiesFromDocumentOptionsMethod_SetsDisplayTrainLabelsPropertyToEqualDisplayTrainLabelsOnGraphsPropertyOfParameter()
         {
             DocumentOptions testSource = GetDocumentOptions();
             TrainGraphModel testObject = GetTrainGraphModel();
@@ -45,7 +47,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSetPropertiesFromDocumentOptionsMethodDoesNotCrashIfParameterIsNull()
+        public void TrainGraphModelClass_SetPropertiesFromDocumentOptionsMethod_DoesNotCrash_IfParameterIsNull()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
 
@@ -53,7 +55,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSetPropertiesFromDocumentOptionsMethodDoesNotChangeDisplayTrainLabelsPropertyIfParameterIsNull()
+        public void TrainGraphModelClass_SetPropertiesFromDocumentOptionsMethod_DoesNotChangeDisplayTrainLabelsProperty_IfParameterIsNull()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             bool displayLabels = testObject.DisplayTrainLabels;
@@ -64,7 +66,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSetPropertiesFromDocumentOptionsMethodDoesNotChangeGraphEditStylePropertyIfParameterIsNull()
+        public void TrainGraphModelClass_SetPropertiesFromDocumentOptionsMethod_DoesNotChangeGraphEditStyleProperty_IfParameterIsNull()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             GraphEditStyle graphEditStyle = testObject.GraphEditStyle;
@@ -75,7 +77,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSetPropertiesFromDocumentOptionsMethodDoesNotChangeTooltipFormattingStringPropertyIfParameterIsNull()
+        public void TrainGraphModelClass_SetPropertiesFromDocumentOptionsMethod_DoesNotChangeTooltipFormattingStringProperty_IfParameterIsNull()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             string ttf = testObject.TooltipFormattingString;
@@ -86,7 +88,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSetPropertiesFromDocumentOptionsMethodSetsGraphEditStylePropertyToEqualGraphEditStylePropertyOfParameter()
+        public void TrainGraphModelClass_SetPropertiesFromDocumentOptionsMethod_SetsGraphEditStylePropertyToEqualGraphEditStylePropertyOfParameter()
         {
             DocumentOptions testSource = GetDocumentOptions();
             TrainGraphModel testObject = GetTrainGraphModel();
@@ -97,7 +99,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSetPropertiesFromDocumentOptionsMethodSetsTooltipFormattingStringPropertyToEqualTooltipPropertyOfFormattingStringsPropertyOfParameter()
+        public void TrainGraphModelClass_SetPropertiesFromDocumentOptionsMethod_SetsTooltipFormattingStringPropertyToEqualTooltipPropertyOfFormattingStringsPropertyOfParameter()
         {
             DocumentOptions testSource = GetDocumentOptions();
             TrainGraphModel testObject = GetTrainGraphModel();
@@ -108,7 +110,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSelectedTrainPropertyHasConventionalPersistence()
+        public void TrainGraphModelClass_SelectedTrainProperty_HasConventionalPersistence()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             Train testSelection = new Train();
@@ -120,7 +122,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSelectedTrainPropertySetMethodFiresEventWhenPropertyIsSetToDifferentValue()
+        public void TrainGraphModelClass_SelectedTrainPropertySetMethod_FiresEvent_IfPropertyIsSetToDifferentValue()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
@@ -137,7 +139,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSelectedTrainPropertySetMethodDoesNotFireEventWhenPropertyIsSetToSameValue()
+        public void TrainGraphModelClass_SelectedTrainPropertySetMethod_DoesNotFireEvent_IfPropertyIsSetToSameValue()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
@@ -153,7 +155,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSelectedTrainPropertySetMethodFiresEventWhenPropertyIsNotNullAndIsSetToNull()
+        public void TrainGraphModelClass_SelectedTrainPropertySetMethod_FiresEvent_IfPropertyIsNotNullAndIsSetToNull()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
@@ -171,7 +173,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainGraphModelClassSelectedTrainPropertySetMethodDoesNotFireEventWhenPropertyIsNullAndIsSetToNull()
+        public void TrainGraphModelClass_SelectedTrainPropertySetMethod_DoesNotFireEvent_IfPropertyIsNullAndIsSetToNull()
         {
             TrainGraphModel testObject = GetTrainGraphModel();
             List<TrainEventArgs> capturedEventArgs = new List<TrainEventArgs>();
@@ -183,5 +185,8 @@ namespace Timetabler.Data.Tests.Unit.Display
             Assert.AreEqual(0, capturedSenders.Count);
             Assert.AreEqual(0, capturedEventArgs.Count);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

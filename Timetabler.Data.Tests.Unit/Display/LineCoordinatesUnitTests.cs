@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
-using Timetabler.CoreData;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Tests.Unit.Display
@@ -11,10 +10,12 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class LineCoordinatesUnitTests
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void LineCoordinatesClassConstructorSetsVertex1PropertyToValueOfFirstParameter()
+        public void LineCoordinatesClass_Constructor_SetsVertex1PropertyToValueOfFirstParameter()
         {
             VertexInformation testParam0 = new VertexInformation(new TrainDrawingInfo(), _rnd.NextTimeOfDay(), _rnd.NextArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
             VertexInformation testParam1 = new VertexInformation(new TrainDrawingInfo(), _rnd.NextTimeOfDay(), _rnd.NextArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
@@ -25,7 +26,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void LineCoordinatesClassConstructorSetsVertex2PropertyToValueOfSecondParameter()
+        public void LineCoordinatesClass_Constructor_SetsVertex2PropertyToValueOfSecondParameter()
         {
             VertexInformation testParam0 = new VertexInformation(new TrainDrawingInfo(), _rnd.NextTimeOfDay(), _rnd.NextArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
             VertexInformation testParam1 = new VertexInformation(new TrainDrawingInfo(), _rnd.NextTimeOfDay(), _rnd.NextArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
@@ -36,7 +37,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void LineCoordinatesClassGetIndexOfLongestLineMethodReturnsMinusOneIfParameterIsNull()
+        public void LineCoordinatesClass_GetIndexOfLongestLineMethod_ReturnsMinusOne_IfParameterIsNull()
         {
             int testOutput = LineCoordinates.GetIndexOfLongestLine(null);
 
@@ -44,7 +45,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void LineCoordinatesClassGetIndexOfLongestLineMethodReturnsMinusOneIfParameterIsEmptyList()
+        public void LineCoordinatesClass_GetIndexOfLongestLineMethod_ReturnsMinusOne_IfParameterIsEmptyList()
         {
             int testOutput = LineCoordinates.GetIndexOfLongestLine(new List<LineCoordinates>());
 
@@ -52,7 +53,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void LineCoordinatesClassGetIndexOfLongestLineMethodReturnsMinusOneIfEveryItemInParameterIsNull()
+        public void LineCoordinatesClass_GetIndexOfLongestLineMethod_ReturnsMinusOne_IfEveryItemInParameterIsNull()
         {
             List<LineCoordinates> testInput = new List<LineCoordinates>();
             int count = _rnd.Next(20) + 1;
@@ -67,7 +68,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void LineCoordinatesClassGetIndexOfLongestLineMethodReturnsZeroIfParameterContainsOneItem()
+        public void LineCoordinatesClass_GetIndexOfLongestLineMethod_ReturnsZero_IfParameterContainsOneItem()
         {
             List<LineCoordinates> testInput = new List<LineCoordinates>
             {
@@ -81,7 +82,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void LineCoordinatesClassGetIndexOfLongestLineMethodReturnsIndexOfNonNullItemIfParameterOnlyContainsOneNonNullItem()
+        public void LineCoordinatesClass_GetIndexOfLongestLineMethod_ReturnsIndexOfNonNullItem_IfParameterOnlyContainsOneNonNullItem()
         {
             List<LineCoordinates> testInput = new List<LineCoordinates>();
             LineCoordinates testItem = 
@@ -100,7 +101,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void LineCoordinatesClassGetIndexOfLongestLineMethodReturnsCorrectValueIfThereAreMultipleNonNullItemsInList()
+        public void LineCoordinatesClass_GetIndexOfLongestLineMethod_ReturnsCorrectValue_IfThereAreMultipleNonNullItemsInList()
         {
             int count = _rnd.Next(20) + 2;
             double[] lengths = new double[count];
@@ -124,5 +125,8 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             Assert.AreEqual(answer, testOutput);
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

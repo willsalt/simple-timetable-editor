@@ -21,6 +21,10 @@ namespace Timetabler.DataLoader.Load.Yaml
             {
                 throw new NullReferenceException();
             }
+            if (string.IsNullOrWhiteSpace(model.Id))
+            {
+                throw new ArgumentException("ID missing");
+            }
 
             return new TrainClass
             {

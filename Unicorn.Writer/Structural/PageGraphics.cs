@@ -39,7 +39,7 @@ namespace Unicorn.Writer.Structural
         /// </summary>
         private bool LineWidthChanged { get; set; }
 
-        private IFontDescriptor CurrentFont { get; set; } = null;
+        private IFontDescriptor CurrentFont { get; set; }
 
         /// <summary>
         /// Constructor.  Requires methods for mapping coordinates from Unicorn-space (with the Y-origin at the top of the page, like most desktop drawing libraries)
@@ -260,25 +260,25 @@ namespace Unicorn.Writer.Structural
             switch (hAlign)
             {
                 case HorizontalAlignment.Left:
-                    x = rect.Left;
+                    x = rect.MinX;
                     break;
                 case HorizontalAlignment.Right:
-                    x = rect.Left + rect.Width - stringBox.Width;
+                    x = rect.MinX + rect.Width - stringBox.Width;
                     break;
                 default:
-                    x = rect.Left + (rect.Width - stringBox.Width) / 2;
+                    x = rect.MinX + (rect.Width - stringBox.Width) / 2;
                     break;
             }
             switch (vAlign)
             {
                 case VerticalAlignment.Bottom:
-                    y = rect.Top + rect.Height - stringBox.HeightBelowBaseline;
+                    y = rect.MinY + rect.Height - stringBox.MaxHeightBelowBaseline;
                     break;
                 case VerticalAlignment.Top:
-                    y = rect.Top + stringBox.HeightAboveBaseline;
+                    y = rect.MinY + stringBox.MaxHeightAboveBaseline;
                     break;
                 default:
-                    y = rect.Top + (rect.Height + stringBox.TotalHeight) / 2 - stringBox.HeightBelowBaseline;
+                    y = rect.MinY + (rect.Height + stringBox.MaxHeight) / 2 - stringBox.MaxHeightBelowBaseline;
                     break;
             }
             DrawString(text, font, x, y);

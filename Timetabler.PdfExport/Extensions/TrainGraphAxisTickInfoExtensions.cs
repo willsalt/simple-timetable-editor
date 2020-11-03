@@ -30,7 +30,7 @@ namespace Timetabler.PdfExport.Extensions
 
             UniTextSize measure = context.MeasureString(tickInfo.Label, font);
             tickInfo.Width = measure.Width;
-            tickInfo.Height = measure.TotalHeight;
+            tickInfo.Height = measure.LineHeight;
         }
     }
 }

@@ -33,6 +33,9 @@
 
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ICSharpCode.SharpZipLib.dll.comp" Guid="272B2FE6-CDB0-4123-8DCE-BE11AF7183C1">
+        <File Id="ICSharpCode.SharpZipLib.dll.file" Name="ICSharpCode.SharpZipLib.dll" Source="$(var.Timetabler.TargetDir)ICSharpCode.SharpZipLib.dll" KeyPath="yes" />
+      </Component>
       <Component Id="NLog.dll.comp" Guid="72E5E541-11EE-440B-B028-DFA0CF13F50A">
         <File Id="NLog.dll.file" Name="NLog.dll" Source="$(var.Timetabler.TargetDir)NLog.dll" KeyPath="yes" />
       </Component>

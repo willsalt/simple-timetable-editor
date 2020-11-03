@@ -342,7 +342,7 @@ namespace Unicorn.FontTools.Tests.Unit
                 CalculationStyle = _rnd.NextOpenTypeCalculationStyle(),
             };
 
-            double testOutput = testObject.EmptyStringMetrics.TotalHeight;
+            double testOutput = testObject.EmptyStringMetrics.LineHeight;
 
             Assert.AreEqual(testParam1, testOutput);
         }

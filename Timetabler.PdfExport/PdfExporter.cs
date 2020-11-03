@@ -356,8 +356,8 @@ namespace Timetabler.PdfExport
 
         private void DrawGraph(TrainGraphModel trainGraphModel, string title, string subtitle, string dateDescription)
         {
-            double titleHeight = _titleFont.EmptyStringMetrics.TotalHeight;
-            double subtitleHeight = _subtitleFont.EmptyStringMetrics.TotalHeight;
+            double titleHeight = _titleFont.EmptyStringMetrics.LineHeight;
+            double subtitleHeight = _subtitleFont.EmptyStringMetrics.LineHeight;
             DrawTitleAndSubtitle(title, subtitle, dateDescription, _currentPage.LeftMarginPosition, lineGapSize * 2, _currentPage.CurrentVerticalCursor, 
                 _currentPage.RightMarginPosition - _currentPage.LeftMarginPosition, titleHeight, subtitleHeight, false, 0, 0);
             _currentPage.CurrentVerticalCursor += titleHeight + subtitleHeight;
@@ -424,10 +424,16 @@ namespace Timetabler.PdfExport
 
         private SectionMetrics MeasureSectionMetrics(TimetableSectionModel section, DocumentExportOptions options)
         {
+            Log.Trace(CultureInfo.InvariantCulture, "Title font metrics: Total {0} Baseline {1} Ascent {2} Descent {3} MaxHeight {4}", 
+                _titleFont.EmptyStringMetrics.LineHeight, _titleFont.EmptyStringMetrics.HeightAboveBaseline, _titleFont.EmptyStringMetrics.AscenderHeight, 
+                _titleFont.EmptyStringMetrics.DescenderHeight, _titleFont.EmptyStringMetrics.MaxHeight);
+            Log.Trace(CultureInfo.InvariantCulture, "Subtitle font metrics: Total {0} Baseline {1} Ascent {2} Descent {3} MaxHeight {4}", 
+                _subtitleFont.EmptyStringMetrics.LineHeight, _subtitleFont.EmptyStringMetrics.HeightAboveBaseline, _subtitleFont.EmptyStringMetrics.AscenderHeight, 
+                _subtitleFont.EmptyStringMetrics.DescenderHeight, _subtitleFont.EmptyStringMetrics.MaxHeight);
             var shm = new SectionMetrics(MainLineWidth)
             {
-                TitleHeight = _titleFont.EmptyStringMetrics.TotalHeight + MainLineWidth,
-                SubtitleHeight = _subtitleFont.EmptyStringMetrics.TotalHeight + MainLineWidth,
+                TitleHeight = _titleFont.EmptyStringMetrics.MaxHeight + MainLineWidth,
+                SubtitleHeight = _subtitleFont.EmptyStringMetrics.MaxHeight + MainLineWidth,
                 LocationMetrics = MeasureLocationList(section),
                 IncludeLocoDiagramRow = options.DisplayLocoDiagramRow && section.TrainSegments.Any(s => !string.IsNullOrWhiteSpace(s.LocoDiagram)),
                 IncludeToWorkRow = options.DisplayToWorkRow && section.TrainSegments.Any(s => !string.IsNullOrWhiteSpace(s.ToWorkCell?.DisplayedText)),
@@ -760,21 +766,21 @@ namespace Timetabler.PdfExport
             currentYCoord = yCoord;
             currentDims = _currentPage.PageGraphics.MeasureString(segment.TrainClass, _boldBodyFont);
             WritingWrapper(segment.TrainClass, _boldBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + currentDims.HeightAboveBaseline);
-            currentYCoord += currentDims.TotalHeight + MainLineWidth;
+            currentYCoord += currentDims.LineHeight + MainLineWidth;
 
             // Write diagram/headcode
             LineDrawingWrapper("separator", xCoord + lineGapSize, currentYCoord - LineOffset, (xCoord + segmentWidth) - lineGapSize, currentYCoord - LineOffset, 
                 MainLineWidth);
             currentDims = _currentPage.PageGraphics.MeasureString(segment.Headcode, _boldBodyFont);
             WritingWrapper(segment.Headcode, _boldBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + currentDims.HeightAboveBaseline);
-            currentYCoord += currentDims.TotalHeight;
+            currentYCoord += currentDims.LineHeight;
 
             // Write loco diagram
             if (sectionMetrics.IncludeLocoDiagramRow)
             {
                 currentDims = _currentPage.PageGraphics.MeasureString(segment.LocoDiagram, _boldBodyFont);
                 WritingWrapper(segment.LocoDiagram, _boldBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + currentDims.HeightAboveBaseline);
-                currentYCoord += currentDims.TotalHeight;
+                currentYCoord += currentDims.LineHeight;
             }
             else
             {
@@ -786,7 +792,7 @@ namespace Timetabler.PdfExport
             {
                 currentDims = _currentPage.PageGraphics.MeasureString(segment.Footnotes, _boldBodyFont);
                 WritingWrapper(segment.Footnotes, _boldBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + currentDims.HeightAboveBaseline);
-                currentYCoord += currentDims.TotalHeight + MainLineWidth;
+                currentYCoord += currentDims.LineHeight + MainLineWidth;
             }
 
             // Write am/pm indicator
@@ -794,7 +800,7 @@ namespace Timetabler.PdfExport
                 (xCoord + segmentWidth) - lineGapSize, currentYCoord - LineOffset, MainLineWidth);
             currentDims = _currentPage.PageGraphics.MeasureString(segment.HalfOfDay, _plainBodyFont);
             WritingWrapper(segment.HalfOfDay, _plainBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + currentDims.HeightAboveBaseline);
-            currentYCoord += currentDims.TotalHeight + MainLineWidth;
+            currentYCoord += currentDims.LineHeight + MainLineWidth;
 
             // Draw separator line between header and timing points.
             LineDrawingWrapper("separator", xCoord + lineGapSize, currentYCoord - LineOffset, (xCoord + segmentWidth) - lineGapSize, currentYCoord - LineOffset, 
@@ -949,7 +955,7 @@ namespace Timetabler.PdfExport
             double xLeft = xCoord + lineGapSize;
             double xRight = xCoord + locationDims.LeftOffset - lineGapSize;
             LineDrawingWrapper("Top of mileage column values", xLeft, yCoord - MainLineWidth / 2, xRight, yCoord - MainLineWidth / 2, MainLineWidth);
-            double yTopLine = yCoord - (_plainBodyFont.EmptyStringMetrics.TotalHeight + MainLineWidth * 1.5);
+            double yTopLine = yCoord - (_plainBodyFont.EmptyStringMetrics.LineHeight + MainLineWidth * 1.5);
             LineDrawingWrapper("Top of mileage column", xLeft, yTopLine, xRight, yTopLine, MainLineWidth);
             foreach (double separatorOffset in locationDims.LocationSeparatorOffsets)
             {
@@ -1235,14 +1241,14 @@ namespace Timetabler.PdfExport
             foreach (var segment in timetableSection.TrainSegments)
             {
                 // This accounts for the lines always present: train class, headcode and AM/PM.
-                double height = _boldBodyFont.EmptyStringMetrics.TotalHeight * 2 + _plainBodyFont.EmptyStringMetrics.TotalHeight + MainLineWidth * 3;
+                double height = _boldBodyFont.EmptyStringMetrics.LineHeight * 2 + _plainBodyFont.EmptyStringMetrics.LineHeight + MainLineWidth * 3;
                 if (!string.IsNullOrWhiteSpace(segment.Footnotes))
                 {
-                    height += _boldBodyFont.EmptyStringMetrics.TotalHeight;
+                    height += _boldBodyFont.EmptyStringMetrics.LineHeight;
                 }
                 if (includeLocoDiagramRow)
                 {
-                    height += _boldBodyFont.EmptyStringMetrics.TotalHeight;
+                    height += _boldBodyFont.EmptyStringMetrics.LineHeight;
                 }
                 if (height > maxHeight)
                 {
@@ -1263,12 +1269,12 @@ namespace Timetabler.PdfExport
             return MeasureRowHeight() + MainLineWidth;
         }
 
-        private double MeasureRowHeight() => _plainBodyFont.EmptyStringMetrics.TotalHeight;
+        private double MeasureRowHeight() => _plainBodyFont.EmptyStringMetrics.LineHeight;
 
         private void ExportGlossary(IDocumentDescriptor doc, NoteCollection noteDefinitions)
         {
             StartPage(doc, PageOrientation.Portrait);
-            double titleHeight = _subtitleFont.EmptyStringMetrics.TotalHeight;
+            double titleHeight = _subtitleFont.EmptyStringMetrics.LineHeight;
             WritingWrapper(Resources.GlossaryTitle, _subtitleFont, 
                 new UniRectangle(_currentPage.LeftMarginPosition, _currentPage.TopMarginPosition, _currentPage.PageAvailableWidth, titleHeight),
                 HorizontalAlignment.Centred, VerticalAlignment.Centred);

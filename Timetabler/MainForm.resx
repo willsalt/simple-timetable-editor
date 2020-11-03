@@ -122,55 +122,55 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="newEmptyFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="newEmptyFileToolStripMenuItem.Text" xml:space="preserve">
     <value>New Empty File</value>
   </data>
   <data name="newFromTemplateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 22</value>
+    <value>189, 22</value>
   </data>
   <data name="newFromTemplateToolStripMenuItem.Text" xml:space="preserve">
     <value>New From Template...</value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>New</value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>Open...</value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save...</value>
   </data>
   <data name="saveAsTemplateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
+    <value>174, 22</value>
   </data>
   <data name="saveAsTemplateToolStripMenuItem.Text" xml:space="preserve">
     <value>Save As Template...</value>
   </data>
   <data name="templateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="templateToolStripMenuItem.Text" xml:space="preserve">
     <value>Template</value>
   </data>
   <data name="exportToPDFToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="exportToPDFToolStripMenuItem.Text" xml:space="preserve">
     <value>Export to PDF...</value>
   </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 22</value>
+    <value>155, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
@@ -188,19 +188,19 @@
     <value>Train Classes...</value>
   </data>
   <data name="editToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 22</value>
+    <value>163, 22</value>
   </data>
   <data name="editToolStripMenuItem1.Text" xml:space="preserve">
     <value>Edit...</value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 22</value>
+    <value>163, 22</value>
   </data>
   <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
     <value>Save Template...</value>
   </data>
   <data name="openTemplateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 22</value>
+    <value>163, 22</value>
   </data>
   <data name="openTemplateToolStripMenuItem.Text" xml:space="preserve">
     <value>Open Template...</value>
@@ -508,7 +508,7 @@
     <value>trainGraph</value>
   </data>
   <data name="&gt;&gt;trainGraph.Type" xml:space="preserve">
-    <value>Timetabler.Controls.TrainGraph, Timetabler, Version=1.2.7171.22363, Culture=neutral, PublicKeyToken=null</value>
+    <value>Timetabler.Controls.TrainGraph, Timetabler, Version=1.4.7612.26301, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;trainGraph.Parent" xml:space="preserve">
     <value>tabGraph</value>
@@ -1332,6 +1332,9 @@
   <data name="ofdTemplate.Title" xml:space="preserve">
     <value>Load Template</value>
   </data>
+  <data name="btnCopy.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="btnCopy.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -1361,6 +1364,9 @@
   </data>
   <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="btnReverse.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btnReverse.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>

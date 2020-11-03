@@ -271,7 +271,7 @@ namespace Unicorn.FontTools
             byte[] encodedBytes = PreferredEncoding.GetBytes(str);
             var codePoints = encodedBytes.Select(b => PdfCharacterMappingDictionary.WinAnsiEncoding.Transform(b));
             int totWidth = codePoints.Select(p => _underlyingFont.AdvanceWidth(PlatformId.Windows, (uint)p)).Sum();
-            return new UniTextSize(PointScaleTransform(totWidth), EmptyStringMetrics.TotalHeight, EmptyStringMetrics.HeightAboveBaseline, 
+            return new UniTextSize(PointScaleTransform(totWidth), EmptyStringMetrics.LineHeight, EmptyStringMetrics.HeightAboveBaseline, 
                 EmptyStringMetrics.AscenderHeight, EmptyStringMetrics.DescenderHeight);
         }
 

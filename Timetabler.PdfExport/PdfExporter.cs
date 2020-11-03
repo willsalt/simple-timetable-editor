@@ -445,7 +445,7 @@ namespace Timetabler.PdfExport
             shm.ToWorkHeight = shm.IncludeToWorkRow ? MeasureToWorkRowHeight() : 0;
             shm.LocoToWorkHeight = shm.IncludeLocoToWorkRow ? MeasureLocoToWorkRowHeight() : 0;
             shm.HeaderHeight = MeasureHeaderHeight(section, shm.IncludeLocoDiagramRow);
-            MeasureArrows(shm.ColumnWidth - cellTotalMargins, shm.LocationMetrics.LocationOffsetList.Max(t => t.Bottom - t.Top));
+            MeasureArrows(shm.ColumnWidth - cellTotalMargins, shm.LocationMetrics.LocationOffsetList.Max(t => t.ClearanceHeight));
             Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_IsLocoDiagramRowIncluded, shm.IncludeLocoDiagramRow);
             return shm;
         }
@@ -714,8 +714,8 @@ namespace Timetabler.PdfExport
 
                 Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_RowIsNotARoutingCodeRow, loc.LocationKey);
                 if (string.IsNullOrWhiteSpace(segment.InlineNote) ||
-                    locationDims.LocationOffsets[loc.LocationKey].Bottom < largestEmptyBlock.Start ||
-                    locationDims.LocationOffsets[loc.LocationKey].Top >= largestEmptyBlock.End)
+                    locationDims.LocationOffsets[loc.LocationKey].ClearanceBottom < largestEmptyBlock.Start ||
+                    locationDims.LocationOffsets[loc.LocationKey].ClearanceTop >= largestEmptyBlock.End)
                 {
                     if (i < firstIndex || i > lastIndex)
                     {
@@ -749,7 +749,7 @@ namespace Timetabler.PdfExport
             if (segment.IncludeSeparatorAbove && 
                 segment.Timings[0].LocationKey.StripArrivalDepartureSuffix() != locationMap[reverseLocationOrder ? locationMap.Count - 1 : 0].Id)
             {
-                double separatorY = currentYCoord + locationDims.LocationOffsets[segment.Timings[0].LocationKey].Top - LineOffset;
+                double separatorY = currentYCoord + locationDims.LocationOffsets[segment.Timings[0].LocationKey].ClearanceTop - LineOffset;
                 LineDrawingWrapper("segment start separator", xCoord + lineGapSize, separatorY, xCoord + sectionMetrics.ColumnWidth - lineGapSize, separatorY, 
                     MainLineWidth);
             }
@@ -847,7 +847,7 @@ namespace Timetabler.PdfExport
                 return;
             }
             tpIndex += dir;
-            arrow.DrawAt(_currentPage.PageGraphics, xc + _arrowHOffset, yc + (offsetList[tpIndex].Top + (offsetList[tpIndex].Baseline - offsetList[tpIndex].Top) / 2));
+            arrow.DrawAt(_currentPage.PageGraphics, xc + _arrowHOffset, yc + offsetList[tpIndex].TextBodyMidLine);
             keyList.Add(offsetDict.First(o => o.Value == offsetList[tpIndex]).Key);
         }
 
@@ -878,7 +878,7 @@ namespace Timetabler.PdfExport
                 {
                     if (!inEmptyBlock)
                     {
-                        startCurrentEmptyBlock = item.Value.Top;
+                        startCurrentEmptyBlock = item.Value.ClearanceTop;
                         inEmptyBlock = true;
                     }
                     endCurrentEmptyBlock = item.Value.Bottom;
@@ -1092,12 +1092,20 @@ namespace Timetabler.PdfExport
                 UniTextSize labelSize = _currentPage.PageGraphics.MeasureString(loc.ArrivalDepartureLabel ?? "", _plainBodyFont);
                 UniTextSize locationSizeInPlainFont = 
                     (locationFont == _plainBodyFont) ? locationSize : _currentPage.PageGraphics.MeasureString(loc.ExportDisplayName, _plainBodyFont);
+                Log.Trace(CultureInfo.InvariantCulture, "Location dimensions for {0}: Width {1}, HAB {2}, MHAB {3}, HBB {4}, MHBB {5}", loc.ExportDisplayName,
+                    locationSize.Width, locationSize.HeightAboveBaseline, locationSize.MaxHeightAboveBaseline, locationSize.HeightBelowBaseline,
+                    locationSize.MaxHeightBelowBaseline);
                 double baselineOffset = 
+                    labelSize.MaxHeightAboveBaseline > locationSize.MaxHeightAboveBaseline ? labelSize.MaxHeightAboveBaseline : locationSize.MaxHeightAboveBaseline;
+                double lineTopOffset = 
                     labelSize.HeightAboveBaseline > locationSize.HeightAboveBaseline ? labelSize.HeightAboveBaseline : locationSize.HeightAboveBaseline;
-                double descenderHeight = 
+                double lineDescenderHeight =
                     labelSize.HeightBelowBaseline > locationSize.HeightBelowBaseline ? labelSize.HeightBelowBaseline : locationSize.HeightBelowBaseline;
+                double descenderHeight = 
+                    labelSize.MaxHeightBelowBaseline > locationSize.MaxHeightBelowBaseline ? labelSize.MaxHeightBelowBaseline : locationSize.MaxHeightBelowBaseline;
                 double locationHeight = baselineOffset + descenderHeight;
-                TextVerticalLocation tvl = new TextVerticalLocation { Baseline = totalHeight + baselineOffset, Top = totalHeight, Bottom = totalHeight + locationHeight };
+                TextVerticalLocation tvl = new TextVerticalLocation(totalHeight, totalHeight + (baselineOffset - lineTopOffset), totalHeight + baselineOffset, 
+                    totalHeight + baselineOffset + lineDescenderHeight, totalHeight + locationHeight);
                 dimensions.LocationOffsets.Add(loc.LocationKey, tvl);
                 dimensions.LocationParity.Add(loc.LocationKey, parity);
                 parity = !parity;
@@ -1122,7 +1130,7 @@ namespace Timetabler.PdfExport
                 }
                 if (i > 0 && loc.DisplaySeparatorAbove)
                 {
-                    dimensions.LocationSeparatorOffsets.Add(tvl.Top - LineOffset);
+                    dimensions.LocationSeparatorOffsets.Add(tvl.ClearanceTop - LineOffset);
                 }
                 if (i < timetableSection.Locations.Count - 1 && loc.DisplaySeparatorBelow && !timetableSection.Locations[i + 1].DisplaySeparatorAbove)
                 {

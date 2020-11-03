@@ -3,6 +3,8 @@ using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unicorn.CoreTypes;
+using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
 using Unicorn.Writer.Primitives;
 using Unicorn.Writer.Utility;
@@ -21,14 +23,14 @@ namespace Unicorn.Writer.Filters
         /// <summary>
         /// The compression level used by this encoder.
         /// </summary>
-        public Deflater.CompressionLevel CompressionLevel { get; private set; }
+        public FlateCompressionLevel CompressionLevel { get; private set; }
 
         /// <summary>
         /// The name of this filter, <c>/FlateDecode</c>.
         /// </summary>
         public PdfName FilterName => _name.Value;
 
-        private static readonly Lazy<FlateEncoder> _instance = new Lazy<FlateEncoder>(() => new FlateEncoder(Deflater.CompressionLevel.BEST_COMPRESSION));
+        private static readonly Lazy<FlateEncoder> _instance = new Lazy<FlateEncoder>(() => new FlateEncoder(FlateCompressionLevel.Best));
 
         /// <summary>
         /// Pseudo-singleton instance.
@@ -39,7 +41,7 @@ namespace Unicorn.Writer.Filters
         /// Constructor.
         /// </summary>
         /// <param name="compressionLevel">The compression level to use.  The valid values are defined by the SharpZipLib library.</param>
-        public FlateEncoder(Deflater.CompressionLevel compressionLevel)
+        public FlateEncoder(FlateCompressionLevel compressionLevel)
         {
             CompressionLevel = compressionLevel;
         }
@@ -54,8 +56,7 @@ namespace Unicorn.Writer.Filters
             byte[] outputData;
             using (EnumerableStream inputStream = new EnumerableStream(data))
             using (MemoryStream outputStream = new MemoryStream())
-            using (DeflaterOutputStream flateStream = 
-                new DeflaterOutputStream(outputStream, new ICSharpCode.SharpZipLib.Zip.Compression.Deflater((int)CompressionLevel)))
+            using (DeflaterOutputStream flateStream = new DeflaterOutputStream(outputStream, new Deflater(CompressionLevel.ToSharpZipLibInt())))
             {
                 inputStream.CopyTo(flateStream);
                 flateStream.Finish();

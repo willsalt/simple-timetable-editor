@@ -470,7 +470,11 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             uint testParam6 = _rnd.NextUInt();
             uint testParam7 = _rnd.NextUInt();
             uint testParam8 = _rnd.NextUInt();
-            List<KeyValuePair<string, int>> testParam9 = GetTestCharacterMap();
+            List<KeyValuePair<string, int>> testParam9;
+            do
+            {
+                testParam9 = GetTestCharacterMap();
+            } while (!testParam9.Any());
             testParam9.Add(new KeyValuePair<string, int>(testParam9[_rnd.Next(testParam9.Count)].Key, _rnd.Next(ushort.MaxValue)));
 
             _ = new PostScriptTable(testParam0, testParam1, testParam2, testParam3, testParam4, testParam5, testParam6, testParam7, testParam8, testParam9);

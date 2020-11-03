@@ -37,6 +37,9 @@ namespace Unicorn.CoreTypes
         /// </summary>
         double Ascent { get; }
 
+        /// <summary>
+        /// The ascent of the font above the baseline, in glyph units.
+        /// </summary>
         double AscentGlyphUnits { get; }
 
         /// <summary>
@@ -44,6 +47,9 @@ namespace Unicorn.CoreTypes
         /// </summary>
         double Descent { get; }
 
+        /// <summary>
+        /// The descent of the font below the baseline, in glyph units.
+        /// </summary>
         double DescentGlyphUnits { get; }
 
         /// <summary>
@@ -58,24 +64,56 @@ namespace Unicorn.CoreTypes
         /// </summary>
         UniTextSize EmptyStringMetrics { get; }
 
+        /// <summary>
+        /// The maximal bounding box of all characters in this font.
+        /// </summary>
         UniRectangle BoundingBox { get; }
 
+        /// <summary>
+        /// The angle off-vertical of italic stems in this font.
+        /// </summary>
         decimal ItalicAngle { get; }
 
+        /// <summary>
+        /// The height of a typical capital letter in this font, in glyph units.
+        /// </summary>
         decimal CapHeight { get; }
 
+        /// <summary>
+        /// The thickness of a typical vertical stem in this font.
+        /// </summary>
         decimal VerticalStemThickness { get; }
 
+        /// <summary>
+        /// Flags describing this font's visual style.
+        /// </summary>
         FontDescriptorFlags Flags { get; }
 
+        /// <summary>
+        /// Whether or not this font requires a font descriptor dictionary to be written to the PDF output.  This is true for most fonts other than those that
+        /// all PDF readers are required to support, including all fonts that are embeddable.
+        /// </summary>
         bool RequiresFullDescription { get; }
 
+        /// <summary>
+        /// Whether or not this font should be embedded in PDF files
+        /// </summary>
         bool RequiresEmbedding { get; }
 
+        /// <summary>
+        /// The length of the raw data of this font, if it is embeddable.
+        /// </summary>
         long EmbeddingLength { get; }
 
+        /// <summary>
+        /// If the font is embedded in a PDF file, this property contains the name of key in the font descriptor dictionary which refers to the embedded data 
+        /// (the name of this key varies according to the font type).
+        /// </summary>
         string EmbeddingKey { get; }
 
+        /// <summary>
+        /// If the font is embeddable, this property contains the raw data which should be embedded.
+        /// </summary>
         IEnumerable<byte> EmbeddingData { get; }
 
         /// <summary>

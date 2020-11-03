@@ -151,6 +151,97 @@ namespace Unicorn.CoreTypes.Tests.Unit
         }
 
         [TestMethod]
+        public void UniTextSizeClass_MaxHeightAboveBaselineProperty_EqualsAscenderHeightProperty_IfAscenderHeightPropertyIsGreaterThanHeightAboveBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam3 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam4 = _rnd.NextDouble() * 500;  
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.AscenderHeight, testObject.MaxHeightAboveBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightAboveBaselineProperty_EqualsHeightAboveBaselineProperty_IfAscenderHeightPropertyIsLessThanHeightAboveBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam2 = constrParam3 + _rnd.NextDouble() * 500;
+            double constrParam4 = _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.HeightAboveBaseline, testObject.MaxHeightAboveBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightAboveBaselineProperty_EqualsAscenderHeightProperty_IfAscenderHeightPropertyIsEqualToHeightAboveBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam3 = constrParam2;
+            double constrParam4 = _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.AscenderHeight, testObject.MaxHeightAboveBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightBelowBaselineProperty_EqualsDescenderHeightProperty_IfDescenderHeightPropertyIsGreaterThanHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam1 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = (constrParam1 - constrParam2) + _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.DescenderHeight, testObject.MaxHeightBelowBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightBelowBaselineProperty_EqualsHeightBelowBaselineProperty_IfDescenderHeightPropertyIsLessThanHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam1 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = (constrParam1 - constrParam2) - _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.HeightBelowBaseline, testObject.MaxHeightBelowBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightBelowBaselineProperty_EqualsDescenderHeightProperty_IfDescenderHeightPropertyIsEqualToHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam1 = constrParam2 + _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = constrParam1 - constrParam2;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.DescenderHeight, testObject.MaxHeightBelowBaseline);
+        }
+
+        [TestMethod]
+        public void UniTextSizeClass_MaxHeightProperty_EqualsMaxHeightAboveBaselinePropertyPlusMaxHeightBelowBaselineProperty()
+        {
+            double constrParam0 = _rnd.NextDouble() * 500;
+            double constrParam1 = _rnd.NextDouble() * 500;
+            double constrParam2 = _rnd.NextDouble() * 500;
+            double constrParam3 = _rnd.NextDouble() * 500;
+            double constrParam4 = _rnd.NextDouble() * 500;
+            UniTextSize testObject = new UniTextSize(constrParam0, constrParam1, constrParam2, constrParam3, constrParam4);
+
+            Assert.AreEqual(testObject.MaxHeightAboveBaseline + testObject.MaxHeightBelowBaseline, testObject.MaxHeight);
+        }
+
+        [TestMethod]
         public void UniTextSizeClass_EqualsMethodWithUniTextSizeParameter_ReturnsTrue_IfParameterIsSameValue()
         {
             UniTextSize testValue = GetTestValue();

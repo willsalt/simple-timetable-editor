@@ -35,8 +35,8 @@ namespace Unicorn.CoreTypes
         /// <summary>
         /// Constructor with separate width and height parameters.
         /// </summary>
-        /// <param name="left">X-coordinate of the left edge of the rectangle.</param>
-        /// <param name="top">Y-coordinate of the top edge of the rectangle.</param>
+        /// <param name="minX">Lowest X-coordinate of an edge of the rectangle.</param>
+        /// <param name="minY">Lowest Y-coordinate of an edge of the rectangle.</param>
         /// <param name="width">Width of the rectangle.</param>
         /// <param name="height">Height of the rectangle.</param>
         public UniRectangle(double minX, double minY, double width, double height)
@@ -46,6 +46,13 @@ namespace Unicorn.CoreTypes
             MinY = minY;
         }
 
+        /// <summary>
+        /// Constructor with separate width and height decimal parameters.
+        /// </summary>
+        /// <param name="minX">Lowest X-coordinate of an edge of the rectangle.</param>
+        /// <param name="minY">Lowest Y-coordinate of an edge of the rectangle.</param>
+        /// <param name="width">Width of the rectangle.</param>
+        /// <param name="height">Height of the rectangle.</param>
         public UniRectangle(decimal minX, decimal minY, decimal width, decimal height)
         {
             Size = new UniSize(width, height);
@@ -56,8 +63,8 @@ namespace Unicorn.CoreTypes
         /// <summary>
         /// Constructor with single size parameter.
         /// </summary>
-        /// <param name="left">X-coordinate of the left edge of the rectangle.</param>
-        /// <param name="top">Y-coordinate of the top edge of the rectangle.</param>
+        /// <param name="minX">Lowest X-coordinate of an edge of the rectangle.</param>
+        /// <param name="minY">Lowest Y-coordinate of an edge of the rectangle.</param>
         /// <param name="size">Size of the rectangle.</param>
         public UniRectangle(double minX, double minY, UniSize size)
         {

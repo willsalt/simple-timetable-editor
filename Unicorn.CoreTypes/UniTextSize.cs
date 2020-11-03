@@ -41,10 +41,22 @@ namespace Unicorn.CoreTypes
         /// </summary>
         public double DescenderHeight { get; private set; }
 
+        /// <summary>
+        /// Maximum height that can be taken up by this line of text.  This property is at least as large as <see cref="LineHeight" />, but can be larger if the font
+        /// has ascenders and/or descenders that can extend over the lines of text above or below.
+        /// </summary>
         public double MaxHeight => MaxHeightAboveBaseline + MaxHeightBelowBaseline;
 
+        /// <summary>
+        /// Maximum height of this text above the baseline.  This property is equal to either <see cref="AscenderHeight" /> or <see cref="HeightAboveBaseline" />,
+        /// whichever is larger.
+        /// </summary>
         public double MaxHeightAboveBaseline => AscenderHeight > HeightAboveBaseline ? AscenderHeight : HeightAboveBaseline;
 
+        /// <summary>
+        /// Maximum depth of this text below the baseline.  This property is equal to either <see cref="DescenderHeight" /> or <see cref="HeightBelowBaseline" />,
+        /// whichever is larger.
+        /// </summary>
         public double MaxHeightBelowBaseline => DescenderHeight > HeightBelowBaseline ? DescenderHeight : HeightBelowBaseline;
 
         /// <summary>

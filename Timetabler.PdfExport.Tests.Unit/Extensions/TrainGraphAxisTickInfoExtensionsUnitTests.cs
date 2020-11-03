@@ -150,7 +150,7 @@ namespace Timetabler.PdfExport.Tests.Unit.Extensions
 
             testObject.PopulateSize(testParam1, testParam2);
 
-            Assert.AreEqual(expectedData.TotalHeight, testObject.Height);
+            Assert.AreEqual(expectedData.LineHeight, testObject.Height);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

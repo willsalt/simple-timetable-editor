@@ -11,6 +11,12 @@ namespace Timetabler.PdfExport.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+        private static TextVerticalLocation GetTVL()
+        {
+            return new TextVerticalLocation(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, 
+                _rnd.NextDouble() * 1000);
+        }
+
         private static LocationBoxDimensions GetLocationBoxDimensions(int? locationMinCount = null)
         {
             LocationBoxDimensions dimensions = new LocationBoxDimensions
@@ -21,12 +27,7 @@ namespace Timetabler.PdfExport.Tests.Unit
             int locationOffsetCount = _rnd.Next(50) + locationMinCount ?? 0;
             for (int i = 0; i < locationOffsetCount; ++i)
             {
-                dimensions.LocationOffsets.Add(i.ToString(CultureInfo.CurrentCulture), new TextVerticalLocation
-                {
-                    Baseline = _rnd.NextDouble() * 1000,
-                    Bottom = _rnd.NextDouble() * 1000,
-                    Top = _rnd.NextDouble() * 1000,
-                });
+                dimensions.LocationOffsets.Add(i.ToString(CultureInfo.CurrentCulture), GetTVL());
             }
             return dimensions;
         }

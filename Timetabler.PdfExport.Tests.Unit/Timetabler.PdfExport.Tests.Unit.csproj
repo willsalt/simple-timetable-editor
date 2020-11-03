@@ -76,6 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SectionMetricsUnitTests.cs" />
     <Compile Include="StatusUpdateEventArgsUnitTests.cs" />
+    <Compile Include="TextVerticalLocationUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

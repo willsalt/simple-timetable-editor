@@ -10,7 +10,7 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// The drawing info for the train to which this vertex applies.
         /// </summary>
-        public TrainDrawingInfo TrainDrawingInfo { get; set; }
+        public TrainDrawingInfo TrainDrawingInfo { get; private set; }
 
         /// <summary>
         /// The train to which this vertex applies.
@@ -26,12 +26,12 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// The time of the vertex.
         /// </summary>
-        public TimeOfDay Time { get; set; }
+        public TimeOfDay Time { get; private set; }
 
         /// <summary>
         /// Whether this vertex applies to arrivals, departures, or both.
         /// </summary>
-        public ArrivalDepartureOptions ArrivalDeparture { get; set; }
+        public ArrivalDepartureOptions ArrivalDeparture { get; private set; }
 
         /// <summary>
         /// The X-position

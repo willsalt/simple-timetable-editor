@@ -157,17 +157,6 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithNullMileageProperty_IfParameterHasMileagePropertyThatIsNull()
-        {
-            Location testParam = GetTestObject();
-            testParam.Mileage = null;
-
-            LocationModel testOutput = testParam.ToYamlLocationModel();
-
-            Assert.IsNull(testOutput.Mileage);
-        }
-
-        [TestMethod]
         public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithMileagePropertyWithCorrectMilesProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();

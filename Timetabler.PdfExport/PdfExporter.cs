@@ -962,14 +962,10 @@ namespace Timetabler.PdfExport
                 LineDrawingWrapper("location mileage separator", xLeft, yCoord + separatorOffset, xRight, yCoord + separatorOffset, MainLineWidth);
             }
             IEnumerable<string> locationIds = timetableSection.Locations.Select(c => c.LocationId).Distinct();
-            Distance baseDistance = null;
+            Distance baseDistance = timetableSection.Locations.First(loc => loc.LocationId == locationIds.First()).Mileage;
             foreach (string locationId in locationIds)
             {
                 LocationDisplayModel location = timetableSection.Locations.First(loc => loc.LocationId == locationId);
-                if (baseDistance is null)
-                {
-                    baseDistance = location.Mileage;
-                }
                 Distance locationDistance = Distance.Difference(baseDistance, location.Mileage);
                 double yc = yCoord + locationDims.LocationOffsets[location.LocationKey].Baseline;
                 DrawLocationDistance(locationDistance.Mileage, xCoord, yc, locationDims.MajorDistanceColumnWidth);

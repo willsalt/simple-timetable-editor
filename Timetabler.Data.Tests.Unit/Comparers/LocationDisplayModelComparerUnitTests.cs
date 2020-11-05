@@ -133,7 +133,11 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Up);
             LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = _rnd.NextHexString(8) + "-a" };
-            LocationDisplayModel y = new LocationDisplayModel { Mileage = new Distance { Mileage = x.Mileage.Mileage, Chainage = x.Mileage.Chainage }, LocationKey = _rnd.NextHexString(8) + "-d" };
+            LocationDisplayModel y = new LocationDisplayModel 
+            { 
+                Mileage = new Distance(x.Mileage.Mileage, x.Mileage.Chainage), 
+                LocationKey = _rnd.NextHexString(8) + "-d" 
+            };
 
             int result = comparer.Compare(x, y);
 
@@ -145,7 +149,11 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             LocationDisplayModelComparer comparer = new LocationDisplayModelComparer(Direction.Down);
             LocationDisplayModel x = new LocationDisplayModel { Mileage = DistanceHelpers.GetDistance(), LocationKey = _rnd.NextHexString(8) + "-a" };
-            LocationDisplayModel y = new LocationDisplayModel { Mileage = new Distance { Mileage = x.Mileage.Mileage, Chainage = x.Mileage.Chainage }, LocationKey = _rnd.NextHexString(8) + "-d" };
+            LocationDisplayModel y = new LocationDisplayModel 
+            { 
+                Mileage = new Distance(x.Mileage.Mileage, x.Mileage.Chainage), 
+                LocationKey = _rnd.NextHexString(8) + "-d" 
+            };
 
             int result = comparer.Compare(x, y);
 

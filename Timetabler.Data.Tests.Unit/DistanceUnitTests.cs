@@ -9,199 +9,646 @@ namespace Timetabler.Data.Tests.Unit
     {
         private readonly static Random _rnd = RandomProvider.Default;
 
-        private static Distance GetDistance()
-        {
-            return new Distance { Mileage = _rnd.Next(512), Chainage = _rnd.Next(80) };
-        }
-
-        private static void AssertEqual(Distance d1, Distance d2)
-        {
-            if (d1 is null)
-            {
-                Assert.IsNull(d2);
-            }
-            Assert.AreEqual(d1.Mileage, d2.Mileage);
-            Assert.AreEqual(d1.Chainage, d2.Chainage);
-        }
-
-        private static void AssertEqual(Distance p0, Distance p1, Distance t)
-        {
-            if (p0 is null && p1 is null)
-            {
-                Assert.IsNull(t);
-            }
-            if (p0 is null)
-            {
-                AssertEqual(p1, t);
-            }
-            if (p1 is null)
-            {
-                AssertEqual(p0, t);
-            }
-
-            Assert.AreEqual(p0.Mileage + p1.Mileage + ((int)(p0.Chainage + p1.Chainage) / 80), t.Mileage);
-            Assert.AreEqual((p0.Chainage + p1.Chainage) % 80, t.Chainage);
-        }
-
 #pragma warning disable CA1707 // Identifiers should not contain underscores
         
         [TestMethod]
-        public void DistanceClass_MajorLabelProperty_HasCorrectValue()
+        public void DistanceStruct_MajorLabelProperty_HasCorrectValue()
         {
             Assert.AreEqual(Resources.Distance_MileageLabel, Distance.MajorLabel);
         }
 
         [TestMethod]
-        public void DistanceClass_MinorLabelProperty_HasCorrectValue()
+        public void DistanceStruct_MinorLabelProperty_HasCorrectValue()
         {
             Assert.AreEqual(Resources.Distance_ChainageLabel, Distance.MinorLabel);
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNull_IfBothParametersAreNull()
+        public void DistanceStruct_ConstructorWithNoParameters_SetsMileagePropertyToZero()
         {
-            Distance testParam0 = null;
-            Distance testParam1 = null;
+            Distance testOutput = new Distance();
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
-
-            Assert.IsNull(testOutput);
+            Assert.AreEqual(0, testOutput.Mileage);
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObject_IfFirstParameterIsNullAndSecondParameterIsNotNull()
+        public void DistanceStruct_ConstructorWithNoParameters_SetsChainagePropertyToZero()
         {
-            Distance testParam0 = null;
-            Distance testParam1 = GetDistance();
+            Distance testOutput = new Distance();
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
-
-            Assert.AreNotSame(testParam1, testOutput);
+            Assert.AreEqual(0d, testOutput.Chainage);
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsObjectEqualToSecondParameter_IfFirstParameterIsNullAndSecondParameterIsNotNull()
+        public void DistanceStruct_ConstructorWithNoParameters_SetsAbsoluteDistancePropertyToZero()
         {
-            Distance testParam0 = null;
-            Distance testParam1 = GetDistance();
+            Distance testOutput = new Distance();
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
-
-            AssertEqual(testParam1, testOutput);
+            Assert.AreEqual(0d, testOutput.AbsoluteDistance);
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObject_IfFirstParameterIsNotNullAndSecondParameterIsNull()
+        public void DistanceStruct_ConstructorWithIntAndDoubleParameters_SetsMileagePropertyToFirstParameter_WhenParametersAreNormalised()
         {
-            Distance testParam0 = GetDistance();
-            Distance testParam1 = null;
+            int testParam0 = _rnd.Next(200);
+            double testParam1 = _rnd.NextDouble() * 80;
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
+            Distance testOutput = new Distance(testParam0, testParam1);
 
-            Assert.AreNotSame(testParam0, testOutput);
+            Assert.AreEqual(testParam0, testOutput.Mileage);
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsObjectEqualToFirstParameter_IfFirstParameterIsNotNullAndSecondParameterIsNull()
+        public void DistanceStruct_ConstructorWithIntAndDoubleParameters_SetsChainagePropertyToFirstParameter_WhenParametersAreNormalised()
         {
-            Distance testParam0 = GetDistance();
-            Distance testParam1 = null;
+            int testParam0 = _rnd.Next(200);
+            double testParam1 = _rnd.NextDouble() * 80;
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
+            Distance testOutput = new Distance(testParam0, testParam1);
 
-            AssertEqual(testParam0, testOutput);
+            Assert.AreEqual(testParam1, testOutput.Chainage);
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObject_IfParametersAreNotNull()
+        public void DistanceStruct_ConstructorWithIntAndDoubleParameters_SetsAbsoluteDistancePropertyToCorrectValue_WhenParametersAreNormalised()
         {
-            Distance testParam0 = GetDistance();
-            Distance testParam1 = GetDistance();
+            int testParam0 = _rnd.Next(200);
+            double testParam1 = _rnd.NextDouble() * 80;
+            double expectedOutput = testParam0 + testParam1 / 80;
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
+            Distance testOutput = new Distance(testParam0, testParam1);
 
-            Assert.AreNotSame(testParam0, testOutput);
-            Assert.AreNotSame(testParam1, testOutput);
+            Assert.AreEqual(expectedOutput, testOutput.AbsoluteDistance);
         }
 
         [TestMethod]
-        public void DistanceClass_AddMethod_ReturnsNewObjectEqualToSumOfParameters_IfParametersAreNotNull()
+        public void DistanceStruct_ConstructorWithIntAndDoubleParameters_SetsMileagePropertyToFirstParameter_WhenParametersAreNotNormalised()
         {
-            Distance testParam0 = GetDistance();
-            Distance testParam1 = GetDistance();
+            int testParam0 = _rnd.Next(200);
+            double testParam1 = 80 + _rnd.NextDouble() * 8000;
+            int expectedResult = testParam0 + (int)(testParam1 / 80);
 
-            Distance testOutput = Distance.Add(testParam0, testParam1);
+            Distance testOutput = new Distance(testParam0, testParam1);
 
-            AssertEqual(testParam0, testParam1, testOutput);
+            Assert.AreEqual(expectedResult, testOutput.Mileage);
         }
 
         [TestMethod]
-        public void DistanceClass_DifferenceMethod_ReturnsNull_IfBothParametersAreNull()
+        public void DistanceStruct_ConstructorWithIntAndDoubleParameters_SetsChainagePropertyToFirstParameter_WhenParametersAreNotNormalised()
         {
-            Distance testParam0 = null;
-            Distance testParam1 = null;
+            int testParam0 = _rnd.Next(200);
+            double testParam1 = 80 + _rnd.NextDouble() * 8000;
+            double expectedResult = testParam1 - ((int)(testParam1 / 80)) * 80;
 
-            Distance testOutput = Distance.Difference(testParam0, testParam1);
+            Distance testOutput = new Distance(testParam0, testParam1);
 
-            Assert.IsNull(testOutput);
+            Assert.AreEqual(expectedResult, testOutput.Chainage);
         }
 
         [TestMethod]
-        public void DistanceClass_DifferenceMethod_ReturnsNull_IfFirstParameterIsNull()
+        public void DistanceStruct_ConstructorWithIntAndDoubleParameters_SetsAbsoluteDistancePropertyToCorrectValue_WhenParametersAreNotNormalised()
         {
-            Distance testParam0 = null;
-            Distance testParam1 = GetDistance();
+            int testParam0 = _rnd.Next(200);
+            double testParam1 = 80 + _rnd.NextDouble() * 8000;
+            double expectedOutput = testParam0 + testParam1 / 80;
 
-            Distance testOutput = Distance.Difference(testParam0, testParam1);
+            Distance testOutput = new Distance(testParam0, testParam1);
 
-            Assert.IsNull(testOutput);
+            Assert.AreEqual(expectedOutput, testOutput.AbsoluteDistance, 0.00000001);
         }
 
         [TestMethod]
-        public void DistanceClass_DifferenceMethod_ReturnsNull_IfSecondParameterIsNull()
+        public void DistanceStruct_LessThanOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsLessThanMileagePropertyOfSecondOperand()
         {
-            Distance testParam0 = GetDistance();
-            Distance testParam1 = null;
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0 + _rnd.Next(1, 200);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
 
-            Distance testOutput = Distance.Difference(testParam0, testParam1);
+            bool testOutput = testValue0 < testValue1;
 
-            Assert.IsNull(testOutput);
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
-        public void DistanceClass_DifferenceMethod_ReturnsDistanceEqualToZero_IfParametersAreEqual()
+        public void DistanceStruct_LessThanOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyOfSecondOperandAndChainagePropertyOfFirstOperandIsLessThanChainagePropertyOfSecondOperand()
         {
-            Distance testParam0 = GetDistance();
-            Distance testParam1 = new Distance { Mileage = testParam0.Mileage, Chainage = testParam0.Chainage };
-            Distance expectedResult = new Distance { Mileage = 0, Chainage = 0 };
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1 + _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
 
-            Distance testOutput = Distance.Difference(testParam0, testParam1);
+            bool testOutput = testValue0 < testValue1;
 
-            AssertEqual(expectedResult, testOutput);
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
-        public void DistanceClass_DifferenceMethod_ReturnsCorrectResult_IfSecondParameterIsGreaterThanFirstParameter()
+        public void DistanceStruct_LessThanOperator_ReturnsFalse_IfOperandsAreEqual()
         {
-            Distance testParam0 = GetDistance();
-            Distance expectedResult = GetDistance();
-            Distance testParam1 = testParam0 + expectedResult;
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
 
-            Distance testOutput = Distance.Difference(testParam0, testParam1);
+            bool testOutput = testValue0 < testValue1;
 
-            AssertEqual(expectedResult, testOutput);
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
-        public void DistanceClass_DifferenceMethod_ReturnsCorrectResult_IfFirstParameterIsGreaterThanSecondParameter()
+        public void DistanceStruct_LessThanOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyofSecondOperandAndChainagePropertyOfFirstOperandIsGreaterThanChainagePropertyOfSecondOperand()
         {
-            Distance testParam1 = GetDistance();
-            Distance expectedResult = GetDistance();
-            Distance testParam0 = testParam1 + expectedResult;
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
 
-            Distance testOutput = Distance.Difference(testParam0, testParam1);
+            bool testOutput = testValue0 < testValue1;
 
-            AssertEqual(expectedResult, testOutput);
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_LessThanOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsGreaterThanMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(testValue0Param0);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 < testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_LessThanOrEqualToOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsLessThanMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0 + _rnd.Next(1, 200);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 <= testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_LessThanOrEqualToOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyOfSecondOperandAndChainagePropertyOfFirstOperandIsLessThanChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1 + _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 <= testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_LessThanOrEqualToOperator_ReturnsTrue_IfOperandsAreEqual()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 <= testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_LessThanOrEqualToOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyofSecondOperandAndChainagePropertyOfFirstOperandIsGreaterThanChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 <= testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_LessThanOrEqualToOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsGreaterThanMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(testValue0Param0);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 <= testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsLessThanMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0 + _rnd.Next(1, 200);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 > testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyOfSecondOperandAndChainagePropertyOfFirstOperandIsLessThanChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1 + _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 > testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOperator_ReturnsFalse_IfOperandsAreEqual()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 > testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyofSecondOperandAndChainagePropertyOfFirstOperandIsGreaterThanChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 > testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsGreaterThanMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(testValue0Param0);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 > testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOrEqualToOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsLessThanMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0 + _rnd.Next(1, 200);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 >= testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOrEqualToOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyOfSecondOperandAndChainagePropertyOfFirstOperandIsLessThanChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1 + _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 >= testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOrEqualToOperator_ReturnsTrue_IfOperandsAreEqual()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 >= testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOrEqualToOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsEqualToMileagePropertyofSecondOperandAndChainagePropertyOfFirstOperandIsGreaterThanChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 >= testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_GreaterThanOrEqualToOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandIsGreaterThanMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(testValue0Param0);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 >= testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_EqualityOperator_ReturnsTrue_IfOperandsAreEqual()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 == testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_EqualityOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandEqualsMileagePropertyOfSecondOperandAndChainagePropertyOfFirstOperandDoesNotEqualChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1;
+            do
+            {
+                testValue1Param1 = _rnd.NextDouble() * 80;
+            } while (testValue0Param1 == testValue1Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 == testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_EqualityOperator_ReturnsFalse_IfMileagePropertyOfFirstOperandDoesNotEqualMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0;
+            do
+            {
+                testValue1Param0 = _rnd.Next(200);
+            } while (testValue1Param0 == testValue0Param0);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 == testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_InequalityOperator_ReturnsFalse_IfOperandsAreEqual()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1 = testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 != testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_InequalityOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandEqualsMileagePropertyOfSecondOperandAndChainagePropertyOfFirstOperandDoesNotEqualChainagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(1, 200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = testValue0Param0;
+            double testValue1Param1;
+            do
+            {
+                testValue1Param1 = _rnd.NextDouble() * 80;
+            } while (testValue0Param1 == testValue1Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 != testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_InequalityOperator_ReturnsTrue_IfMileagePropertyOfFirstOperandDoesNotEqualMileagePropertyOfSecondOperand()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0;
+            do
+            {
+                testValue1Param0 = _rnd.Next(200);
+            } while (testValue1Param0 == testValue0Param0);
+            double testValue1Param1 = _rnd.NextDouble() * 80;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+
+            bool testOutput = testValue0 != testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddOperator_ReturnsValueWithMileagePropertyEqualToSumOfMileagePropertiesOfOperands_IfSumOfChainagePropertiesOfOperandsIsLessThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            int expectedResult = testValue0Param0 + testValue1Param0;
+
+            Distance testOutput = testValue0 + testValue1;
+
+            Assert.AreEqual(expectedResult, testOutput.Mileage);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddOperator_ReturnsValueWithChainagePropertyEqualToSumOfChainagePropertiesOfOperands_IfSumOfChainagePropertiesOfOperandsIsLessThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            double expectedResult = testValue0Param1 + testValue1Param1;
+
+            Distance testOutput = testValue0 + testValue1;
+
+            Assert.AreEqual(expectedResult, testOutput.Chainage);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddOperator_ReturnsValueWithMileagePropertyEqualToSumOfMileagePropertiesOfOperandsPlus1_IfSumOfChainagePropertiesOfOperandsIsGreaterThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = (80 - testValue0Param1) + _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            int expectedResult = testValue0Param0 + testValue1Param0 + 1;
+
+            Distance testOutput = testValue0 + testValue1;
+
+            Assert.AreEqual(expectedResult, testOutput.Mileage);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddOperator_ReturnsValueWithChainagePropertyEqualToSumOfChainagePropertiesOfOperandsMinus80_IfSumOfChainagePropertiesOfOperandsIsGreaterThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = (80 - testValue0Param1) + _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            double expectedResult = testValue0Param1 + testValue1Param1 - 80;
+
+            Distance testOutput = testValue0 + testValue1;
+
+            Assert.AreEqual(expectedResult, testOutput.Chainage);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddMethod_ReturnsValueWithMileagePropertyEqualToSumOfMileagePropertiesOfParameters_IfSumOfChainagePropertiesOfParametersIsLessThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            int expectedResult = testValue0Param0 + testValue1Param0;
+
+            Distance testOutput = Distance.Add(testValue0, testValue1);
+
+            Assert.AreEqual(expectedResult, testOutput.Mileage);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddMethod_ReturnsValueWithChainagePropertyEqualToSumOfChainagePropertiesOfParameters_IfSumOfChainagePropertiesOfParametersIsLessThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = _rnd.NextDouble() * (80 - testValue0Param1);
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            double expectedResult = testValue0Param1 + testValue1Param1;
+
+            Distance testOutput = Distance.Add(testValue0, testValue1);
+
+            Assert.AreEqual(expectedResult, testOutput.Chainage);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddMethod_ReturnsValueWithMileagePropertyEqualToSumOfMileagePropertiesOfParametersPlus1_IfSumOfChainagePropertiesOfParametersIsGreaterThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = (80 - testValue0Param1) + _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            int expectedResult = testValue0Param0 + testValue1Param0 + 1;
+
+            Distance testOutput = Distance.Add(testValue0, testValue1);
+
+            Assert.AreEqual(expectedResult, testOutput.Mileage);
+        }
+
+        [TestMethod]
+        public void DistanceStruct_AddMethod_ReturnsValueWithChainagePropertyEqualToSumOfChainagePropertiesOfParametersMinus80_IfSumOfChainagePropertiesOfParametersIsGreaterThan80()
+        {
+            int testValue0Param0 = _rnd.Next(200);
+            double testValue0Param1 = _rnd.NextDouble() * 80;
+            Distance testValue0 = new Distance(testValue0Param0, testValue0Param1);
+            int testValue1Param0 = _rnd.Next(200);
+            double testValue1Param1 = (80 - testValue0Param1) + _rnd.NextDouble() * testValue0Param1;
+            Distance testValue1 = new Distance(testValue1Param0, testValue1Param1);
+            double expectedResult = testValue0Param1 + testValue1Param1 - 80;
+
+            Distance testOutput = Distance.Add(testValue0, testValue1);
+
+            Assert.AreEqual(expectedResult, testOutput.Chainage);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

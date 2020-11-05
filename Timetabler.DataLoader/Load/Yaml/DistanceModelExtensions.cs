@@ -22,11 +22,7 @@ namespace Timetabler.DataLoader.Load.Yaml
                 throw new NullReferenceException();
             }
 
-            return new Distance
-            {
-                Mileage = model.Miles,
-                Chainage = model.Chains,
-            };
+            return new Distance(model.Miles, model.Chains);
         }
     }
 }

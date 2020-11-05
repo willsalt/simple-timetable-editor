@@ -235,16 +235,16 @@ namespace Timetabler
             }
             if (string.IsNullOrWhiteSpace(tbMileage.Text))
             {
-                _model.Mileage.Mileage = 0;
+                _model.Mileage = new Distance(0, _model.Mileage.Chainage);
             }
 
             if (!int.TryParse(tbMileage.Text, out int val))
             {
-                _model.Mileage.Mileage = 0;
+                _model.Mileage = new Distance(0, _model.Mileage.Chainage);
             }
             else
             {
-                _model.Mileage.Mileage = val;
+                _model.Mileage = new Distance(val, _model.Mileage.Chainage);
             }
         }
 
@@ -256,10 +256,13 @@ namespace Timetabler
             }
             if (string.IsNullOrWhiteSpace(tbChainage.Text))
             {
-                _model.Mileage.Chainage = 0;
+                _model.Mileage = new Distance(_model.Mileage.Mileage, 0);
             }
 
-            _model.Mileage.Chainage = int.TryParse(tbChainage.Text, out int val) ? val : 0;
+            if (int.TryParse(tbChainage.Text, out int val))
+            {
+                _model.Mileage = new Distance(_model.Mileage.Mileage, val);
+            }
         }
 
         private void CbFontType_SelectedIndexChanged(object sender, EventArgs e)

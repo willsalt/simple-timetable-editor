@@ -209,7 +209,7 @@ namespace Timetabler.Data
         /// <returns>A <see cref="FootnoteDisplayModel" /> instance which can be used to display this note to a user.</returns>
         public FootnoteDisplayModel ToFootnoteDisplayModel()
         {
-            FootnoteDisplayModel fdm = new FootnoteDisplayModel { NoteId = Id, Definition = Definition, Symbol = Symbol, DisplayOnPage = DefinedOnPages };
+            FootnoteDisplayModel fdm = new FootnoteDisplayModel(Id, Symbol, Definition, DefinedOnPages);
             Modified += fdm.ParentModified;
             return fdm;
         }

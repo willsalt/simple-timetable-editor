@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data.Display;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
@@ -8,12 +10,67 @@ namespace Timetabler.Data.Tests.Unit.Display
     [TestClass]
     public class FootnoteDisplayModelUnitTests
     {
+        private static readonly Random _rnd = RandomProvider.Default;
+
         private static FootnoteDisplayModel GetTestObject()
         {
             return FootnoteDisplayModelHelpers.GetFootnoteDisplayModel();
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+
+        [TestMethod]
+        public void FootnoteDisplayModelClass_Constructor_SetsNoteIdPropertyToEqualFirstParameter()
+        {
+            string testParam0 = _rnd.NextHexString(8);
+            string testParam1 = _rnd.NextString(1);
+            string testParam2 = _rnd.NextString(_rnd.Next(50));
+            bool testParam3 = _rnd.NextBoolean();
+
+            FootnoteDisplayModel testOutput = new FootnoteDisplayModel(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testParam0, testOutput.NoteId);
+        }
+
+        [TestMethod]
+        public void FootnoteDisplayModelClass_Constructor_SetsSymbolPropertyToEqualSecondParameter()
+        {
+            string testParam0 = _rnd.NextHexString(8);
+            string testParam1 = _rnd.NextString(1);
+            string testParam2 = _rnd.NextString(_rnd.Next(50));
+            bool testParam3 = _rnd.NextBoolean();
+
+            FootnoteDisplayModel testOutput = new FootnoteDisplayModel(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testParam1, testOutput.Symbol);
+        }
+
+        [TestMethod]
+        public void FootnoteDisplayModelClass_Constructor_SetsDefinitionPropertyToEqualThirdParameter()
+        {
+            string testParam0 = _rnd.NextHexString(8);
+            string testParam1 = _rnd.NextString(1);
+            string testParam2 = _rnd.NextString(_rnd.Next(50));
+            bool testParam3 = _rnd.NextBoolean();
+
+            FootnoteDisplayModel testOutput = new FootnoteDisplayModel(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testParam2, testOutput.Definition);
+        }
+
+
+        [TestMethod]
+        public void FootnoteDisplayModelClass_Constructor_SetsDisplayOnPagePropertyToEqualFourthParameter()
+        {
+            string testParam0 = _rnd.NextHexString(8);
+            string testParam1 = _rnd.NextString(1);
+            string testParam2 = _rnd.NextString(_rnd.Next(50));
+            bool testParam3 = _rnd.NextBoolean();
+
+            FootnoteDisplayModel testOutput = new FootnoteDisplayModel(testParam0, testParam1, testParam2, testParam3);
+
+            Assert.AreEqual(testParam3, testOutput.DisplayOnPage);
+        }
 
         [TestMethod]
         public void FootnoteDisplayModelClass_CopyMethod_ReturnsDifferentObject()

@@ -12,13 +12,7 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
 
         public static FootnoteDisplayModel GetFootnoteDisplayModel()
         {
-            return new FootnoteDisplayModel
-            {
-                NoteId = _rnd.NextHexString(8),
-                Definition = _rnd.NextString(_rnd.Next(50)),
-                DisplayOnPage = _rnd.NextBoolean(),
-                Symbol = _rnd.NextString(1),
-            };
+            return new FootnoteDisplayModel(_rnd.NextHexString(8), _rnd.NextString(_rnd.Next(50)), _rnd.NextString(1), _rnd.NextBoolean());
         }
 
         public static void FullEqualityTest(FootnoteDisplayModel a, FootnoteDisplayModel b)

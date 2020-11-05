@@ -41,10 +41,6 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
             {
                 throw new ArgumentNullException(nameof(random));
             }
-            //if (max is null)
-            //{
-            //    throw new ArgumentNullException(nameof(max));
-            //}
 
             if (max.Mileage > 0)
             {

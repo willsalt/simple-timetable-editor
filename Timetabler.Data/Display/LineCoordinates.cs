@@ -11,12 +11,12 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// The vertex that marks the start of the line.
         /// </summary>
-        public VertexInformation Vertex1 { get; set; }
+        public VertexInformation Vertex1 { get; private set; }
 
         /// <summary>
         /// The vertex that marks the end of the line.
         /// </summary>
-        public VertexInformation Vertex2 { get; set; }
+        public VertexInformation Vertex2 { get; private set; }
 
         /// <summary>
         /// Constructor which sets the vertex properties.

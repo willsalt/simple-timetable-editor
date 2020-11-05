@@ -13,22 +13,37 @@ namespace Timetabler.Data.Display
         /// The unique ID of the parent <see cref="Note" /> object.  If two <see cref="FootnoteDisplayModel" /> objects have the same ID we assume they refer to the same <see cref="Note" />
         /// and that therefore their other properties will be the same.
         /// </summary>
-        public string NoteId { get; set; }
+        public string NoteId { get; private set; }
 
         /// <summary>
         /// The symbol that represents this footnote.
         /// </summary>
-        public string Symbol { get; set; }
+        public string Symbol { get; private set; }
 
         /// <summary>
         /// The definition of this footnote.
         /// </summary>
-        public string Definition { get; set; }
+        public string Definition { get; private set; }
 
         /// <summary>
         /// Whether or not this footnote should be displayed as a footnote on timetable pages.
         /// </summary>
-        public bool DisplayOnPage { get; set; }
+        public bool DisplayOnPage { get; private set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="noteId">Value of the <see cref="NoteId" /> property.</param>
+        /// <param name="symbol">Value of the <see cref="Symbol" /> property.</param>
+        /// <param name="defn">Value of the <see cref="Definition" /> property.</param>
+        /// <param name="onPage">Value of the <see cref="DisplayOnPage" /> property.</param>
+        public FootnoteDisplayModel(string noteId, string symbol, string defn, bool onPage)
+        {
+            NoteId = noteId;
+            Symbol = symbol;
+            Definition = defn;
+            DisplayOnPage = onPage;
+        }
 
         /// <summary>
         /// Create a copy of this footnote with the same properties.  As the properties are all strings, there is no deep/shallow distinction to worry about.
@@ -36,7 +51,7 @@ namespace Timetabler.Data.Display
         /// <returns>A <see cref="FootnoteDisplayModel" /> object which is a copy of this one.</returns>
         public FootnoteDisplayModel Copy()
         {
-            return new FootnoteDisplayModel { NoteId = NoteId, Symbol = Symbol, Definition = Definition, DisplayOnPage = DisplayOnPage };
+            return new FootnoteDisplayModel(NoteId, Symbol, Definition, DisplayOnPage);
         }
 
         /// <summary>

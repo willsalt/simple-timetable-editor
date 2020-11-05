@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Timetabler.Data.Display;
 using Timetabler.Data.Events;
@@ -107,7 +108,24 @@ namespace Timetabler.Adapters
         private void ResetAllColumnAutoSizeModes()
         {
             View.AutoSizeColumnsMode = _newColumnAutoSizeColumnMode;
+            TouchAllViewRows();
             View.AutoSizeRowsMode = _newRowAutoSizeRowMode;
+        }
+
+        /// <summary>
+        /// This apparent no-op method is a workaround for an apparent bug in WinForms where changing the value of <see cref="DataGridView.AutoSizeRowsMode" /> throws
+        /// an <see cref="ArgumentOutOfRangeException" /> due to lazy row instantiation. This was causing issue https://github.com/willsalt/simple-timetable-editor/issues/335 
+        /// where the program was crashing if the user already had a file open, and opened a second file which required more data to be displayed in one of the train 
+        /// grid.  This workaround comes from https://stackoverflow.com/questions/32508999/datagridview-changing-autosizerowsmode-throws-exception
+        /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
+        private void TouchAllViewRows()
+        {
+            DataGridViewRowCollection rows = View.Rows;
+            for (int i = rows.Count - 1; i >= 0; i--)
+            {
+                _ = rows[i];
+            }
         }
 
         private void PopulateInitialData()

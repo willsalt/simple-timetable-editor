@@ -356,8 +356,8 @@ namespace Timetabler.PdfExport
 
         private void DrawGraph(TrainGraphModel trainGraphModel, string title, string subtitle, string dateDescription)
         {
-            double titleHeight = _titleFont.EmptyStringMetrics.LineHeight;
-            double subtitleHeight = _subtitleFont.EmptyStringMetrics.LineHeight;
+            double titleHeight = _titleFont.EmptyStringMetrics.MaxHeight;
+            double subtitleHeight = _subtitleFont.EmptyStringMetrics.MaxHeight;
             DrawTitleAndSubtitle(title, subtitle, dateDescription, _currentPage.LeftMarginPosition, lineGapSize * 2, _currentPage.CurrentVerticalCursor, 
                 _currentPage.RightMarginPosition - _currentPage.LeftMarginPosition, titleHeight, subtitleHeight, false, 0, 0);
             _currentPage.CurrentVerticalCursor += titleHeight + subtitleHeight;

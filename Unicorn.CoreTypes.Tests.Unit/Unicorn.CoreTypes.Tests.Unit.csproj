@@ -10,6 +10,10 @@
     <Authors>Will Salt</Authors>
 
     <Product>Unicorn</Product>
+
+    <Copyright>Copyright © 2020 Will Salt</Copyright>
+
+    <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

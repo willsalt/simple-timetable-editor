@@ -9,9 +9,11 @@
 
     <Authors>Will Salt</Authors>
 
-    <Product>Simple Timetable Editor</Product>
+    <Product>Unicorn</Product>
 
     <Copyright>Copyright © 2019-2020 Will Salt</Copyright>
+
+    <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

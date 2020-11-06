@@ -11,13 +11,15 @@
 
     <Company>Will Salt</Company>
 
-    <Product>Simple Timetable Editor</Product>
+    <Product>Unicorn</Product>
 
     <Copyright>Copyright © 2019-2020 Will Salt</Copyright>
 
     <AssemblyVersion>1.4.0.0</AssemblyVersion>
 
     <FileVersion>1.4.0.0</FileVersion>
+
+    <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

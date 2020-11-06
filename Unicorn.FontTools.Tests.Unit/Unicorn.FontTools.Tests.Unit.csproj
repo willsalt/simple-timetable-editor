@@ -8,6 +8,7 @@
     <Copyright>Copyright © 2020 Will Salt</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <IsPackable>false</IsPackable>
+    <Product>Unicorn</Product>
   </PropertyGroup>
 
   <ItemGroup>

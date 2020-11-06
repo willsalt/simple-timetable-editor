@@ -7,6 +7,7 @@
     <Company>Will Salt</Company>
     <Product>Unicorn</Product>
     <Copyright>Copyright ©  2017-2020 Will Salt</Copyright>
+    <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

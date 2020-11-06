@@ -16,6 +16,8 @@
     <Copyright>Copyright © 2016-2020 Will Salt</Copyright>
 
     <AssemblyVersion>1.4.0.0</AssemblyVersion>
+
+    <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,6 +6,16 @@
     <IsPackable>false</IsPackable>
 
     <NeutralLanguage>en-GB</NeutralLanguage>
+
+    <Version>1.4.0</Version>
+
+    <Authors>Will Salt</Authors>
+
+    <Company>Will Salt</Company>
+
+    <Product>Unicorn</Product>
+
+    <Copyright>Copyright © 2020 Will Salt</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

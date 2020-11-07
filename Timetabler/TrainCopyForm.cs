@@ -14,7 +14,7 @@ namespace Timetabler
     {
         private TrainCopyFormModel _model;
 
-        private bool _inUpdate = false;
+        private bool _inUpdate;
 
         /// <summary>
         /// The model object containing the form data.

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using Tests.Utility.Extensions;
 using Timetabler.Data;
 using Timetabler.SerialData.Xml;
 
@@ -39,10 +41,6 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
             {
                 throw new ArgumentNullException(nameof(random));
             }
-            if (max is null)
-            {
-                throw new ArgumentNullException(nameof(max));
-            }
 
             if (max.Mileage > 0)
             {
@@ -60,12 +58,12 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
             {
                 chainagePart = random.NextDouble() * max.Chainage;
             }
-            return new Distance { Mileage = mileagePart, Chainage = chainagePart };
+            return new Distance(mileagePart, chainagePart);
         }
 
         public static Distance NextDistance(this Random random)
         {
-            return random.NextDistance(new Distance { Mileage = 32768, Chainage = 0 });
+            return random.NextDistance(new Distance(32768, 0));
         }
 
         public static SerialData.Yaml.DistanceModel NextDistanceModel(this Random random)
@@ -76,6 +74,24 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
             }
 
             return new SerialData.Yaml.DistanceModel { Miles = random.Next(32768), Chains = random.NextDouble() * 80 };
+        }
+
+        private static readonly string[] _validDashStyles = { "Solid", "Dash", "Dot", "DashDot", "DashDotDot", "Custom" };
+
+        public static SerialData.Yaml.GraphTrainPropertiesModel NextGraphTrainPropertiesModel(this Random random)
+        {
+            if (random is null)
+            {
+                throw new NullReferenceException();
+            }
+
+            int colour = random.Next();
+            return new SerialData.Yaml.GraphTrainPropertiesModel
+            {
+                Colour = colour.ToString("X8", CultureInfo.InvariantCulture),
+                Width = random.NextNullableFloat(5f),
+                DashStyleName = random.NextPotentiallyValidString(_validDashStyles),
+            };
         }
     }
 }

@@ -7,6 +7,7 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load.Yaml;
+using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
 using Timetabler.SerialData.Yaml;
 
 namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
@@ -20,13 +21,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
 
         private static GraphTrainPropertiesModel GetModel()
         {
-            int colour = _rnd.Next();
-            return new GraphTrainPropertiesModel
-            {
-                Colour = colour.ToString("X8", CultureInfo.InvariantCulture),
-                Width = _rnd.NextNullableFloat(5f),
-                DashStyleName = _rnd.NextPotentiallyValidString(_validDashStyles),
-            };
+            return _rnd.NextGraphTrainPropertiesModel();
         }
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores

@@ -14,7 +14,7 @@ namespace Timetabler
     public partial class SignalboxHoursEditForm : Form
     {
         private SignalboxHoursEditFormModel _model;
-        private bool _inViewUpdate = false;
+        private bool _inViewUpdate;
 
         /// <summary>
         /// The data to be edited by the form.
@@ -72,7 +72,7 @@ namespace Timetabler
 
         private void TextBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
         {
-            TimeHelpers.ValidateTimeTextBox(sender as TextBox, errorProvider, Resources.SignalboxHoursEditForm_ValidateTimes_Error, e);
+            UIHelpers.ValidateIntegerTextBox(sender as TextBox, errorProvider, Resources.SignalboxHoursEditForm_ValidateTimes_Error, e);
         }
 
         private void StoreStartTime()

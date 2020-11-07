@@ -154,7 +154,7 @@ namespace Timetabler.Data
         /// <param name="field">The name of the modified property, if only one property has been modified.</param>
         protected void OnModified(object sender, string field)
         {
-            Modified?.Invoke(sender, new ModifiedEventArgs { ModifiedItem = this, ModifiedField = field });
+            Modified?.Invoke(sender, new ModifiedEventArgs(this, field));
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Timetabler.Data
         /// <returns>A <see cref="FootnoteDisplayModel" /> instance which can be used to display this note to a user.</returns>
         public FootnoteDisplayModel ToFootnoteDisplayModel()
         {
-            FootnoteDisplayModel fdm = new FootnoteDisplayModel { NoteId = Id, Definition = Definition, Symbol = Symbol, DisplayOnPage = DefinedOnPages };
+            FootnoteDisplayModel fdm = new FootnoteDisplayModel(Id, Symbol, Definition, DefinedOnPages);
             Modified += fdm.ParentModified;
             return fdm;
         }

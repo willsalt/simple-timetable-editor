@@ -10,14 +10,16 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     [TestClass]
     public class DocumentOptionsModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void DocumentOptionsModelClassIsPublic()
+        public void DocumentOptionsModelClass_IsPublic()
         {
             Assert.IsTrue(typeof(DocumentOptionsModel).IsPublic);
         }
 
         [TestMethod]
-        public void DocumentOptionsModelClassHasPublicParameterlessConstructor()
+        public void DocumentOptionsModelClass_HasPublicParameterlessConstructor()
         {
             ConstructorInfo cInfo = typeof(DocumentOptionsModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
@@ -25,7 +27,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void DocumentOptionsModelClassHasPublicClockTypeNamePropertyOfTypeString()
+        public void DocumentOptionsModelClass_HasPublicClockTypeNamePropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(DocumentOptionsModel).GetProperty("ClockTypeName");
             Assert.IsNotNull(pInfo);
@@ -35,13 +37,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void DocumentOptionsModelClassClockTypeNamePropertyIsDecoratedWithXmlElementAttribute()
+        public void DocumentOptionsModelClass_ClockTypeNameProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(DocumentOptionsModel).GetProperty("ClockTypeName").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void DocumentOptionsModelClassHasPublicDisplayTrainLabelsOnGraphsPropertyOfTypeNullableBool()
+        public void DocumentOptionsModelClass_HasPublicDisplayTrainLabelsOnGraphsPropertyOfTypeNullableBool()
         {
             PropertyInfo pInfo = typeof(DocumentOptionsModel).GetProperty("DisplayTrainLabelsOnGraphs");
             Assert.IsNotNull(pInfo);
@@ -51,9 +53,12 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void DoucmentOptionsModelClassDisplayTrainLabelsOnGraphsPropertyIsDecoratedWithXmlElementAttribute()
+        public void DoucmentOptionsModelClass_DisplayTrainLabelsOnGraphsProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(DocumentOptionsModel).GetProperty("DisplayTrainLabelsOnGraphs").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

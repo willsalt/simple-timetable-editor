@@ -33,35 +33,28 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
-        [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyIsNullIfArrivalTimePropertyIsNull()
+        private static TrainLocationTime GetTestObject()
         {
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = null, FormattingStrings = GetTimeDisplayFormattingStrings(), Location = GetLocation(), Pass = _rnd.NextBoolean() };
-
-            TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
-
-            Assert.IsNull(testOutput);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyIsNullIfFormattingStringsPropertyIsNull()
-        {
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = TrainTimeHelpers.GetTrainTime(), FormattingStrings = null, Location = GetLocation(), Pass = _rnd.NextBoolean() };
-
-            TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
-
-            Assert.IsNull(testOutput);
-        }
-
-        [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyIsNullIfLocationPropertyIsNull()
-        {
-            TrainLocationTime testObject = new TrainLocationTime
+            return new TrainLocationTime
             {
                 ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                FormattingStrings = new TimeDisplayFormattingStrings(),
-                Location = null, Pass = _rnd.NextBoolean()
+                DepartureTime = TrainTimeHelpers.GetTrainTime(),
+                Location = GetLocation(),
+                Pass = _rnd.NextBoolean(),
+                Path = _rnd.NextString(_rnd.Next(2)),
+                Platform = _rnd.NextString(_rnd.Next(2)),
+                Line = _rnd.NextString(_rnd.Next(2)),
+                FormattingStrings = GetTimeDisplayFormattingStrings(),
             };
+        }
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
+        [TestMethod]
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_IsNull_IfArrivalTimePropertyIsNull()
+        {
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -69,12 +62,33 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectLocationIdPropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_IsNull_IfFormattingStringsPropertyIsNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = null;
+
+            TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_IsNull_IfLocationPropertyIsNull()
+        {
+            TrainLocationTime testObject = GetTestObject();
+            testObject.Location = null;
+
+            TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectLocationIdProperty_IfNotNull()
+        {
             Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.Location = testLocation;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -82,12 +96,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectLocationKeyPropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectLocationKeyProperty_IfNotNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
             Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.Location = testLocation;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -95,12 +108,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectEntryTypePropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectEntryTypeProperty_IfNotNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -108,12 +118,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectIsPassingTimePropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectIsPassingTimeProperty_IfNotNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -121,12 +128,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectActualTimePropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectActualTimeProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = testTime;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -134,26 +140,26 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectDisplayedTextPropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectDisplayedTextProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = testTime;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
-            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime.Time.ToString(formattingStrings.Complete, CultureInfo.CurrentCulture), testTime.FootnoteSymbols), 
-                testOutput.DisplayedText);
+            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime.Time.ToString(testObject.FormattingStrings.Complete, CultureInfo.CurrentCulture), 
+                testTime.FootnoteSymbols), testOutput.DisplayedText);
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectDisplayedTextHoursPropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectDisplayedTextHoursProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = testTime;
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -161,12 +167,13 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectDisplayedTextMinutesPropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectDisplayedTextMinutesProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = testTime;
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -174,12 +181,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassArrivalTimeModelPropertyHasCorrectDisplayedTextFootnotePropertyIfNotNull()
+        public void TrainLocationTimeClass_ArrivalTimeModelProperty_HasCorrectDisplayedTextFootnoteProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = testTime;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -187,9 +193,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyIsNullIfDepartureTimePropertyIsNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_IsNull_IfDepartureTimePropertyIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = null, FormattingStrings = GetTimeDisplayFormattingStrings(), Location = GetLocation(), Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = null;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -197,9 +204,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyIsNullIfFormattingStringsPropertyIsNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_IsNull_IfFormattingStringsPropertyIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = TrainTimeHelpers.GetTrainTime(), FormattingStrings = null, Location = GetLocation(), Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = null;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -207,15 +215,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyIsNullIfLocationPropertyIsNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_IsNull_IfLocationPropertyIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                FormattingStrings = new TimeDisplayFormattingStrings(),
-                Location = null,
-                Pass = _rnd.NextBoolean()
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.Location = null;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
 
@@ -223,12 +226,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectLocationIdPropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectLocationIdProperty_IfNotNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
             Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.Location = testLocation;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -236,12 +238,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectLocationKeyPropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectLocationKeyProperty_IfNotNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
             Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.Location = testLocation;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -249,12 +250,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectEntryTypePropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectEntryTypeProperty_IfNotNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -262,12 +260,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectIsPassingTimePropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectIsPassingTimeProperty_IfNotNull()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -275,12 +270,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectActualTimePropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectActualTimeProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = testTime;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -288,12 +282,13 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectDisplayedTextPropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectDisplayedTextProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = testTime;
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -302,12 +297,13 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectDisplayedTextHoursPropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectDisplayedTextHoursProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = testTime;
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -315,12 +311,13 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectDisplayedTextMinutesPropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectDisplayedTextMinutesProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = testTime;
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -328,12 +325,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassDepartureTimeModelPropertyHasCorrectDisplayedTextFootnotePropertyIfNotNull()
+        public void TrainLocationTimeClass_DepartureTimeModelProperty_HasCorrectDisplayedTextFootnoteProperty_IfNotNull()
         {
             TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = testTime;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
 
@@ -341,12 +337,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesArrivalTimeModelPropertyIsPassingTimeProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesArrivalTimeModelPropertyIsPassingTimeProperty()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
             testObject.Pass = !testObject.Pass;
@@ -356,78 +349,69 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesArrivalTimeModelPropertyActualTimeProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesArrivalTimeModelPropertyActualTimeProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
-            TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
-            testObject.ArrivalTime = testTime1;
+            testObject.ArrivalTime = testTime;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(testTime1.Time, testOutput.ActualTime);
+            Assert.AreEqual(testTime.Time, testOutput.ActualTime);
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesArrivalTimeModelPropertyDisplayedTextProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesArrivalTimeModelPropertyDisplayedTextProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
-            TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
+            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
-            testObject.ArrivalTime = testTime1;
+            testObject.ArrivalTime = testTime;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime1.Time.ToString(formattingStrings.Complete, CultureInfo.CurrentCulture), testTime1.FootnoteSymbols), 
-                testOutput.DisplayedText);
+            Assert.AreEqual(string.Format(CultureInfo.CurrentCulture, testTime.Time.ToString(formattingStrings.Complete, CultureInfo.CurrentCulture), 
+                testTime.FootnoteSymbols), testOutput.DisplayedText);
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesArrivalTimeModelPropertyDisplayedTextHoursProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesArrivalTimeModelPropertyDisplayedTextHoursProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
-            TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
+            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
-            testObject.ArrivalTime = testTime1;
+            testObject.ArrivalTime = testTime;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Hours, CultureInfo.CurrentCulture), testOutput.DisplayedTextHours);
+            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Hours, CultureInfo.CurrentCulture), testOutput.DisplayedTextHours);
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesArrivalTimeModelPropertyDisplayedTextMinutesProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesArrivalTimeModelPropertyDisplayedTextMinutesProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
-            TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
+            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
-            testObject.ArrivalTime = testTime1;
+            testObject.ArrivalTime = testTime;
             testObject.RefreshTimeModels();
 
-            Assert.AreEqual(testTime1.Time.ToString(formattingStrings.Minutes, CultureInfo.CurrentCulture), testOutput.DisplayedTextMinutes);
+            Assert.AreEqual(testTime.Time.ToString(formattingStrings.Minutes, CultureInfo.CurrentCulture), testOutput.DisplayedTextMinutes);
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesArrivalTimeModelPropertyDisplayedTextFootnoteProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesArrivalTimeModelPropertyDisplayedTextFootnoteProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { ArrivalTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.ArrivalTimeModel;
             testObject.ArrivalTime = testTime1;
@@ -437,12 +421,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesDepartureTimeModelPropertyIsPassingTimeProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesDepartureTimeModelPropertyIsPassingTimeProperty()
         {
-            TrainTime testTime = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
             testObject.Pass = !testObject.Pass;
@@ -452,13 +433,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesDepartureTimeModelPropertyActualTimeProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesDepartureTimeModelPropertyActualTimeProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
             testObject.DepartureTime = testTime1;
@@ -468,13 +446,12 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesDepartureTimeModelPropertyDisplayedTextProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesDepartureTimeModelPropertyDisplayedTextProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
             testObject.DepartureTime = testTime1;
@@ -485,13 +462,12 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesDepartureTimeModelPropertyDisplayedTextHoursProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesDepartureTimeModelPropertyDisplayedTextHoursProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
             testObject.DepartureTime = testTime1;
@@ -501,13 +477,12 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesDepartureTimeModelPropertyDisplayedTextMinutesProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesDepartureTimeModelPropertyDisplayedTextMinutesProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
             TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.FormattingStrings = formattingStrings;
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
             testObject.DepartureTime = testTime1;
@@ -517,13 +492,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassRefreshTimeModelsMethodUpdatesDepartureTimeModelPropertyDisplayedTextFootnoteProperty()
+        public void TrainLocationTimeClass_RefreshTimeModelsMethod_UpdatesDepartureTimeModelPropertyDisplayedTextFootnoteProperty()
         {
-            TrainTime testTime0 = TrainTimeHelpers.GetTrainTime();
             TrainTime testTime1 = TrainTimeHelpers.GetTrainTime();
-            TimeDisplayFormattingStrings formattingStrings = GetTimeDisplayFormattingStrings();
-            Location testLocation = GetLocation();
-            TrainLocationTime testObject = new TrainLocationTime { DepartureTime = testTime0, FormattingStrings = formattingStrings, Location = testLocation, Pass = _rnd.NextBoolean() };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTimeModel testOutput = testObject.DepartureTimeModel;
             testObject.DepartureTime = testTime1;
@@ -533,19 +505,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsDifferentObject()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsDifferentObject()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -553,19 +515,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithEquivalentArrivalTime()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithEquivalentArrivalTime()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -574,19 +526,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithEquivalentDepartureTime()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithEquivalentDepartureTime()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -595,19 +537,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithSameLocation()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithSameLocation()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -615,19 +547,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithSameFormattingStrings()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithSameFormattingStrings()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -635,19 +557,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithSamePassProperty()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithSamePassProperty()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -655,19 +567,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithSamePathProperty()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithSamePathProperty()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -675,19 +577,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithSamePlatformProperty()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithSamePlatformProperty()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -695,19 +587,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassCopyMethodReturnsObjectWithSameLineProperty()
+        public void TrainLocationTimeClass_CopyMethod_ReturnsObjectWithSameLineProperty()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             TrainLocationTime testOutput = testObject.Copy();
 
@@ -715,19 +597,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameArrivalTimePropertyIfArrivalTimeIsNull()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ReturnsObjectWithSameArrivalTimeProperty_IfArrivalTimeIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
             int offsetAmount = _rnd.Next(320) - 160;
 
             testObject.OffsetTimes(offsetAmount);
@@ -736,19 +609,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameArrivalTimePropertyIfArrivalTimePropertyTimePropertyIsNull()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ReturnsObjectWithSameArrivalTimeProperty_IfArrivalTimePropertyTimePropertyIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             testObject.ArrivalTime.Time = null;
             int offsetAmount = _rnd.Next(320) - 160;
 
@@ -758,19 +621,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameDepartureTimePropertyIfDepartureTimeIsNull()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ReturnsObjectWithSameDepartureTimeProperty_IfDepartureTimeIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = null,
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = null;
             int offsetAmount = _rnd.Next(320) - 160;
 
             testObject.OffsetTimes(offsetAmount);
@@ -779,19 +633,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodReturnsObjectWithSameDepartureTimePropertyIfDepartureTimePropertyTimePropertyIsNull()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ReturnsObjectWithSameDepartureTimeProperty_IfDepartureTimePropertyTimePropertyIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             testObject.DepartureTime.Time = null;
             int offsetAmount = _rnd.Next(320) - 160;
 
@@ -801,19 +645,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodDoesNotModifyTimePropertyOfArrivalTimePropertyIfOffsetIsZero()
+        public void TrainLocationTimeClass_OffsetTimesMethod_DoesNotModifyTimePropertyOfArrivalTimeProperty_IfOffsetIsZero()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             TimeOfDay originalArrivalTime = testObject.ArrivalTime.Time.Copy();
 
             testObject.OffsetTimes(0);
@@ -822,19 +656,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodDoesNotModifyTimePropertyOfDepartureTimePropertyIfOffsetIsZero()
+        public void TrainLocationTimeClass_OffsetTimesMethod_DoesNotModifyTimePropertyOfDepartureTimeProperty_IfOffsetIsZero()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             TimeOfDay originalDepartureTime = testObject.DepartureTime.Time.Copy();
 
             testObject.OffsetTimes(0);
@@ -843,21 +667,12 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodModifiesArrivalTimeCorrectlyIfOffsetIsPositive()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ModifiesArrivalTimeCorrectly_IfOffsetIsPositive()
         {
             int offset = _rnd.Next(23 * 60);
             TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeOfDay(86399) - new TimeSpan(0, offset, 0));
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTimeBefore(timeLimit),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = TrainTimeHelpers.GetTrainTimeBefore(timeLimit);
             TimeOfDay originalArrivalTime = testObject.ArrivalTime.Time.Copy();
 
             testObject.OffsetTimes(offset);
@@ -866,21 +681,12 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodModifiesDepartureTimeCorrectlyIfOffsetIsPositive()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ModifiesDepartureTimeCorrectly_IfOffsetIsPositive()
         {
             int offset = _rnd.Next(23 * 60);
             TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeOfDay(86399) - new TimeSpan(0, offset, 0));
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTimeBefore(timeLimit),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = TrainTimeHelpers.GetTrainTimeBefore(timeLimit);
             TimeOfDay originalDepartureTime = testObject.DepartureTime.Time.Copy();
 
             testObject.OffsetTimes(offset);
@@ -889,21 +695,12 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodModifiesArrivalTimeCorrectlyIfOffsetIsNegative()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ModifiesArrivalTimeCorrectly_IfOffsetIsNegative()
         {
             int offset = -_rnd.Next(23 * 60);
             TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeSpan(0, -offset, 0));
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTimeAfter(timeLimit),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = TrainTimeHelpers.GetTrainTimeAfter(timeLimit);
             TimeOfDay originalArrivalTime = testObject.ArrivalTime.Time.Copy();
 
             testObject.OffsetTimes(offset);
@@ -912,21 +709,12 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassOffsetTimesMethodModifiesDepartureTimeCorrectlyIfOffsetIsNegative()
+        public void TrainLocationTimeClass_OffsetTimesMethod_ModifiesDepartureTimeCorrectly_IfOffsetIsNegative()
         {
             int offset = -_rnd.Next(23 * 60);
             TimeOfDay timeLimit = TimeOfDay.FromTimeSpan(new TimeSpan(0, -offset, 0));
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTimeAfter(timeLimit),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = TrainTimeHelpers.GetTrainTimeAfter(timeLimit);
             TimeOfDay originalDepartureTime = testObject.DepartureTime.Time.Copy();
 
             testObject.OffsetTimes(offset);
@@ -935,19 +723,11 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassLastTimePropertyIsNullIfBothArrivalTimeAndDepartureTimePropertiesAreNull()
+        public void TrainLocationTimeClass_LastTimeProperty_IsNull_IfBothArrivalTimeAndDepartureTimePropertiesAreNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = null,
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
+            testObject.DepartureTime = null;
 
             TrainTime testOutput = testObject.LastTime;
 
@@ -955,19 +735,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassLastTimePropertyEqualsArrivalTimeIfDepartureTimeIsNull()
+        public void TrainLocationTimeClass_LastTimeProperty_EqualsArrivalTime_IfDepartureTimeIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = null,
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = null;
 
             TrainTime testOutput = testObject.LastTime;
 
@@ -975,19 +746,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassLastTimePropertyEqualsDepartureTimeIfArrivalTimeIsNull()
+        public void TrainLocationTimeClass_LastTimeProperty_EqualsDepartureTime_IfArrivalTimeIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
 
             TrainTime testOutput = testObject.LastTime;
 
@@ -995,18 +757,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassLastTimePropertyEqualsArrivalTimeIfArrivalTimeIsAfterDepartureTime()
+        public void TrainLocationTimeClass_LastTimeProperty_EqualsArrivalTime_IfArrivalTimeIsAfterDepartureTime()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             testObject.DepartureTime = TrainTimeHelpers.GetTrainTimeBefore(testObject.ArrivalTime.Time);
 
             TrainTime testOutput = testObject.LastTime;
@@ -1015,18 +768,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassLastTimePropertyEqualsDepartureTimeIfArrivalTimeIsBeforeDepartureTime()
+        public void TrainLocationTimeClass_LastTimeProperty_EqualsDepartureTime_IfArrivalTimeIsBeforeDepartureTime()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             testObject.DepartureTime = TrainTimeHelpers.GetTrainTimeAfter(testObject.ArrivalTime.Time);
 
             TrainTime testOutput = testObject.LastTime;
@@ -1035,18 +779,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassLastTimePropertyEqualsDepartureTimeIArrivalTimeAndDepartureTimeAreAtSameTime()
+        public void TrainLocationTimeClass_LastTimeProperty_EqualsDepartureTime_IfArrivalTimeAndDepartureTimeAreAtSameTime()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             testObject.DepartureTime = TrainTimeHelpers.GetTrainTimeAt(testObject.ArrivalTime.Time);
 
             TrainTime testOutput = testObject.LastTime;
@@ -1055,19 +790,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodSwapsArrivalTimeAndDepartureTimeFootnotesIfBothArePopulatedAndSecondParameterIsTrue()
+        public void TrainLocationTimeClass_ReflectMethod_SwapsArrivalTimeAndDepartureTimeFootnotes_IfBothArePopulatedAndSecondParameterIsTrue()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -1087,19 +812,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwappingIfBothArePopulatedAndSecondParameterIsTrue()
+        public void TrainLocationTimeClass_ReflectMethod_ModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwapping_IfBothArePopulatedAndSecondParameterIsTrue()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -1111,19 +826,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodSwapsArrivalTimeAndDepartureTimeFootnotesIfBothArePopulatedAndSecondParameterIsFalse()
+        public void TrainLocationTimeClass_ReflectMethod_SwapsArrivalTimeAndDepartureTimeFootnotes_IfBothArePopulatedAndSecondParameterIsFalse()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -1143,19 +848,9 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwappingIfBothArePopulatedAndSecondParameterIsFalse()
+        public void TrainLocationTimeClass_ReflectMethod_ModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwapping_IfBothArePopulatedAndSecondParameterIsFalse()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
@@ -1167,19 +862,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodSwapsArrivalTimeAndDepartureTimeFootnotesIfArrivalTimeOnlyIsPopulatedAndSecondParameterIsTrue()
+        public void TrainLocationTimeClass_ReflectMethod_SwapsArrivalTimeAndDepartureTimeFootnotes_IfArrivalTimeOnlyIsPopulatedAndSecondParameterIsTrue()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = null,
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = null;
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1194,19 +880,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwappingIfArrivalTimeOnlyPopulatedAndSecondParameterIsTrue()
+        public void TrainLocationTimeClass_ReflectMethod_ModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwapping_IfArrivalTimeOnlyPopulatedAndSecondParameterIsTrue()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = null,
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = null;
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1217,19 +894,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodSwapsArrivalTimeAndDepartureTimeFootnotesIfArrivalTimeOnlyIsPopulatedAndSecondParameterIsFalse()
+        public void TrainLocationTimeClass_ReflectMethod_SwapsArrivalTimeAndDepartureTimeFootnotes_IfArrivalTimeOnlyIsPopulatedAndSecondParameterIsFalse()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = null,
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = null;
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1244,19 +912,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwappingIfArrivalTimeOnlyPopulatedAndSecondParameterIsFalse()
+        public void TrainLocationTimeClass_ReflectMethod_ModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwapping_IfArrivalTimeOnlyPopulatedAndSecondParameterIsFalse()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = TrainTimeHelpers.GetTrainTime(),
-                DepartureTime = null,
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.DepartureTime = null;
             TrainTime originalArrivalTime = testObject.ArrivalTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1267,19 +926,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodSwapsArrivalTimeAndDepartureTimeFootnotesIfDepartureTimeOnlyIsPopulatedAndSecondParameterIsTrue()
+        public void TrainLocationTimeClass_ReflectMethod_SwapsArrivalTimeAndDepartureTimeFootnotes_IfDepartureTimeOnlyIsPopulatedAndSecondParameterIsTrue()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1294,19 +944,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwappingIfDepartureTimeOnlyPopulatedAndSecondParameterIsTrue()
+        public void TrainLocationTimeClass_ReflectMethod_ModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayWhilstSwapping_IfDepartureTimeOnlyPopulatedAndSecondParameterIsTrue()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1317,19 +958,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodDoesNotSwapArrivalTimeAndDepartureTimeFootnotesIfDepartureTimeOnlyIsPopulatedAndSecondParameterIsFalse()
+        public void TrainLocationTimeClass_ReflectMethod_DoesNotSwapArrivalTimeAndDepartureTimeFootnotes_IfDepartureTimeOnlyIsPopulatedAndSecondParameterIsFalse()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1344,19 +976,10 @@ namespace Timetabler.Data.Tests.Unit
         }
 
         [TestMethod]
-        public void TrainLocationTimeClassReflectMethodModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayButDoesNotSwapIfDepartureTimeOnlyPopulatedAndSecondParameterIsFalse()
+        public void TrainLocationTimeClass_ReflectMethod_ModifiesArrivalTimeAndDepartureTimeTimesInExpectedWayButDoesNotSwap_IfDepartureTimeOnlyPopulatedAndSecondParameterIsFalse()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
+            testObject.ArrivalTime = null;
             TrainTime originalDepartureTime = testObject.DepartureTime;
             TimeOfDay testParam0 = _rnd.NextTimeOfDay();
 
@@ -1366,23 +989,11 @@ namespace Timetabler.Data.Tests.Unit
             Assert.IsNull(testObject.ArrivalTime);
         }
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainLocationTimeClass_ResolveLocationMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             testObject.ResolveLocation(null);
 
@@ -1392,17 +1003,7 @@ namespace Timetabler.Data.Tests.Unit
         [TestMethod]
         public void TrainLocationTimeClass_ResolveLocationMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfParameterIsNull()
         {
-            TrainLocationTime testObject = new TrainLocationTime
-            {
-                ArrivalTime = null,
-                DepartureTime = TrainTimeHelpers.GetTrainTime(),
-                Location = GetLocation(),
-                Pass = _rnd.NextBoolean(),
-                Path = _rnd.NextString(_rnd.Next(2)),
-                Platform = _rnd.NextString(_rnd.Next(2)),
-                Line = _rnd.NextString(_rnd.Next(2)),
-                FormattingStrings = GetTimeDisplayFormattingStrings(),
-            };
+            TrainLocationTime testObject = GetTestObject();
 
             try
             {

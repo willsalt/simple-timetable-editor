@@ -24,8 +24,16 @@ namespace Timetabler.DataLoader.Load.Yaml
 
             DocumentOptions options = new DocumentOptions
             {
-                DisplayTrainLabelsOnGraphs = model.DisplayTrainLabelsOnGraphs ?? true
+                DisplayTrainLabelsOnGraphs = model.DisplayTrainLabelsOnGraphs ?? true,
+                DisplaySpeedLinesOnGraphs = model.DisplaySpeedLinesOnGraphs ?? false,
+                SpeedLineSpeed = model.SpeedLineSpeed ?? DocumentOptions.DefaultSpeedLineSpeed,
+                SpeedLineSpacingMinutes = model.SpeedLineSpacingMinutes ?? DocumentOptions.DefaultSpeedLineSpacing,
             };
+
+            if (model.SpeedLineAppearance != null)
+            {
+                options.SpeedLineAppearance = model.SpeedLineAppearance.ToGraphTrainProperties();
+            }
 
             if (Enum.TryParse(model.ClockTypeName, out ClockType ct))
             {

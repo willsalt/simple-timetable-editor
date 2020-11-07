@@ -19,5 +19,25 @@
         /// The name of the editing style used by the graph tab, such as "PreserveSectionTimes".
         /// </summary>
         public string GraphEditStyle { get; set; }
+
+        /// <summary>
+        /// Whether or not to display "speed lines" on the on-screen train graph to show the progress of a train at a nominal speed.
+        /// </summary>
+        public bool? DisplaySpeedLinesOnGraphs { get; set; }
+
+        /// <summary>
+        /// If "speed lines" are shown on the on-screen train graph, what speed should they be displayed at.
+        /// </summary>
+        public int? SpeedLineSpeed { get; set; }
+
+        /// <summary>
+        /// If "speed lines" are shown on the on-screen train graph, what spacing should they be displayed at.
+        /// </summary>
+        public int? SpeedLineSpacingMinutes { get; set; }
+
+        /// <summary>
+        /// If "speed lines" are shown on the on-screen train graph, what visual properties (colour, thickness, dash style) should they have.
+        /// </summary>
+        public GraphTrainPropertiesModel SpeedLineAppearance { get; set; }
     }
 }

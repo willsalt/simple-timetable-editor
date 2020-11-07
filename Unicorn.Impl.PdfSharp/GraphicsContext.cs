@@ -110,7 +110,7 @@ namespace Unicorn.Impl.PdfSharp
                 throw new ArgumentException(Resources.Error_FontDescriptorOfWrongSpecificType, nameof(font));
             }
 
-            _core.DrawString(text, ourFont.Font, XBrushes.Black, new XRect(rect.Left, rect.Top, rect.Width, rect.Height), GetStringFormat(hAlign, vAlign));
+            _core.DrawString(text, ourFont.Font, XBrushes.Black, new XRect(rect.MinX, rect.MinY, rect.Width, rect.Height), GetStringFormat(hAlign, vAlign));
         }
 
         private static XStringFormat GetStringFormat(HorizontalAlignment hAlign, VerticalAlignment vAlign)

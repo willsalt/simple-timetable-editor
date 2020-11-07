@@ -196,139 +196,26 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             return NextAfmDirectionMetrics(random);
         }
 
-        private static readonly FontKind[] _validFontKindValues = new[] { FontKind.Cff, FontKind.TrueType };
+        
 
-        public static FontKind NextOpenTypeFontKind(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return _validFontKindValues[random.Next(_validFontKindValues.Length)];
-        }
+        
 
-        public static Tag NextOpenTypeTag(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return new Tag(Encoding.ASCII.GetBytes(random.NextString(4)));
-        }
+        
+        
 
-        private static readonly PlatformId[] _platformIds = new[] { PlatformId.Unicode, PlatformId.Macintosh, PlatformId.Windows, PlatformId.Custom };
+        
 
-        public static PlatformId NextOpenTypePlatformId(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return _platformIds[random.Next(_platformIds.Length)];
-        }
+        
 
-        public static FontFlags NextOpenTypeFontFlags(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return (FontFlags)(random.Next(32) | (random.NextBoolean() ? 2048 : 0) | (random.NextBoolean() ? 4096 : 0) | (random.NextBoolean() ? 8192 : 0) |
-                (random.NextBoolean() ? 16384 : 0));
-        }
+        
 
-        public static MacStyleFlags NextOpenTypeMacStyleFlags(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return (MacStyleFlags)random.Next(128);
-        }
+        
 
-        public static FontDirectionHint NextOpenTypeFontDirectionHint(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return (FontDirectionHint)random.Next(-2, 3);
-        }
+        
 
-        public static HorizontalMetricRecord NextOpenTypeHorizontalMetricRecord(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return new HorizontalMetricRecord(random.NextUShort(), random.NextShort());
-        }
+        
 
-        private static readonly NameField[] _nameFields = new[] 
-        { 
-            NameField.CopyrightNotice, 
-            NameField.Family, 
-            NameField.Subfamily, 
-            NameField.UniqueID, 
-            NameField.FullName, 
-            NameField.Version, 
-            NameField.PostScriptName, 
-            NameField.TrademarkNotice, 
-            NameField.Manufacturer, 
-            NameField.Description, 
-            NameField.Description, 
-            NameField.VendorURI, 
-            NameField.DesignerURI, 
-            NameField.LicenceDescription, 
-            NameField.LicenceURI, 
-            NameField.TypographicFamily, 
-            NameField.TypographicSubfamily, 
-            NameField.MacintoshMenuName, 
-            NameField.SampleText, 
-            NameField.PostScriptCIDName, 
-            NameField.WWSFamilyName, 
-            NameField.WWSSubfamilyName, 
-            NameField.LightBackgroundPalette, 
-            NameField.DarkBackgroundPalette, 
-            NameField.PostScriptFamilyPrefix, 
-        };
-
-        public static NameField NextOpenTypeNameField(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return _nameFields[random.Next(_nameFields.Length)];
-        }
-
-        public static NameRecord NextOpenTypeNameRecord(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return new NameRecord(NextOpenTypePlatformId(random), random.NextUShort(), random.NextUShort(), NextOpenTypeNameField(random), 
-                random.NextString(random.Next(128)), random.NextBoolean());
-        }
-
-        public static HighByteSubheaderRecord NextOpenTypeHighByteSubheaderRecord(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return new HighByteSubheaderRecord(random.NextByte(), random.NextByte(), random.NextShort(), random.NextUShort());
-        }
-
-        public static SegmentSubheaderRecord NextOpenTypeSegmentSubheaderRecord(this Random random)
-        {
-            if (random is null)
-            {
-                throw new NullReferenceException();
-            }
-            return new SegmentSubheaderRecord(random.NextUShort(), random.NextUShort(), random.NextShort(), random.Next());
-        }
+        
 
         private static readonly EmbeddingPermissionsFlags[] _exclusiveEmbeddingPermissionsFlags = new[] 
         { 
@@ -469,5 +356,9 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             return random.NextBoolean() ? CalculationStyle.Windows : CalculationStyle.Macintosh;
         }
+
+        
+
+        
     }
 }

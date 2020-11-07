@@ -97,7 +97,7 @@ namespace Timetabler.Data
         /// <param name="field">The name of the modified property, if only one property has been modified.</param>
         protected void OnModified(object sender, string field)
         {
-            Modified?.Invoke(sender, new ModifiedEventArgs { ModifiedItem = this, ModifiedField = field });
+            Modified?.Invoke(sender, new ModifiedEventArgs(this, field));
         }
 
         /// <summary>
@@ -120,16 +120,8 @@ namespace Timetabler.Data
                 FontType = FontType,
                 DisplaySeparatorAbove = DisplaySeparatorAbove,
                 DisplaySeparatorBelow = DisplaySeparatorBelow,
+                Mileage = Mileage,
             };
-            if (Mileage != null)
-            {
-                loc.Mileage.Mileage = Mileage.Mileage;
-                loc.Mileage.Chainage = Mileage.Chainage;
-            }
-            else
-            {
-                loc.Mileage = null;
-            }
             return loc;
         }
 
@@ -161,20 +153,12 @@ namespace Timetabler.Data
         }
 
         /// <summary>
-        /// Compare for equality with a <see cref="Distance"/> instance.  Compares the <see cref="Mileage"/> property of this instance against the parameter.
+        /// Compare for equality with a <see cref="Distance"/> value.  Compares the <see cref="Mileage"/> property of this instance against the parameter.
         /// </summary>
-        /// <param name="other">A <see cref="Distance"/> object.</param>
+        /// <param name="other">A <see cref="Distance"/> value.</param>
         /// <returns>A boolean value indicating equality.</returns>
         public bool Equals(Distance other)
         {
-            if (other is null)
-            {
-                return false;
-            }
-            if (Mileage == null)
-            {
-                return false;
-            }
             return Mileage == other;
         }
 
@@ -190,8 +174,7 @@ namespace Timetabler.Data
             {
                 return Equals(loc);
             }
-            var d = obj as Distance;
-            if (d != null)
+            if (obj is Distance d)
             {
                 return Equals(d);
             }
@@ -214,14 +197,6 @@ namespace Timetabler.Data
         /// <returns>An integer indicating whether the <see cref="Mileage"/> property is less than, equal to or greater than the parameter.</returns>
         public int CompareTo(Distance other)
         {
-            if (other is null)
-            {
-                return Mileage == null ? 0 : 1;
-            }
-            if (Mileage == null)
-            {
-                return -1;
-            }
             return Mileage.CompareTo(other);
         }
 
@@ -244,8 +219,8 @@ namespace Timetabler.Data
         }
 
         /// <summary>
-        /// Compare the <see cref="Mileage"/> property of this object against another object.  Throws an exception if the other object is not a <see cref="Location"/> or 
-        /// <see cref="Distance"/> instance.
+        /// Compare the <see cref="Mileage"/> property of this object against another object.  Throws an exception if the other object is not a <see cref="Location"/> 
+        /// instance or <see cref="Distance"/> value.
         /// </summary>
         /// <param name="obj">The object to compare.</param>
         /// <returns>An integer indicating whether this object is less than, equal to or greater than the other object.</returns>
@@ -253,7 +228,7 @@ namespace Timetabler.Data
         {
             if (obj == null)
             {
-                return Mileage == null ? 0 : 1;
+                return 1;
             }
 
             var l = obj as Location;
@@ -261,8 +236,7 @@ namespace Timetabler.Data
             {
                 return CompareTo(l);
             }
-            var d = obj as Distance;
-            if (d != null)
+            if (obj is Distance d)
             {
                 return CompareTo(d);
             }
@@ -278,11 +252,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <(Location l1, Location l2)
         {
-            if (l1 is null || l1.Mileage == null)
+            if (l1 is null)
             {
-                return !(l2 is null || l2.Mileage == null);
+                return !(l2 is null);
             }
-            if (l2 is null || l2.Mileage == null)
+            if (l2 is null)
             {
                 return false;
             }
@@ -298,11 +272,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator <=(Location l1, Location l2)
         {
-            if (l1 is null || l1.Mileage == null)
+            if (l1 is null)
             {
                 return true;
             }
-            if (l2 is null || l2.Mileage == null)
+            if (l2 is null)
             {
                 return false;
             }
@@ -318,11 +292,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >(Location l1, Location l2)
         {
-            if (l1 is null || l1.Mileage == null)
+            if (l1 is null)
             {
                 return false;
             }
-            if (l2 is null || l2.Mileage == null)
+            if (l2 is null)
             {
                 return true;
             }
@@ -338,11 +312,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator >=(Location l1, Location l2)
         {
-            if (l1 is null || l1.Mileage == null)
+            if (l1 is null)
             {
-                return l2 is null || l2.Mileage == null;
+                return l2 is null;
             }
-            if (l2 is null || l2.Mileage == null)
+            if (l2 is null)
             {
                 return false;
             }
@@ -358,11 +332,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator ==(Location l1, Location l2)
         {
-            if (l1 is null || l1.Mileage == null)
+            if (l1 is null)
             {
-                return l2 is null || l2.Mileage == null;
+                return l2 is null;
             }
-            if (l2 is null || l2.Mileage == null)
+            if (l2 is null)
             {
                 return false;
             }
@@ -378,11 +352,11 @@ namespace Timetabler.Data
         /// <returns>A boolean value.</returns>
         public static bool operator !=(Location l1, Location l2)
         {
-            if (l1 is null || l1.Mileage == null)
+            if (l1 is null)
             {
-                return !(l2 is null || l2.Mileage == null);
+                return !(l2 is null);
             }
-            if (l2 is null || l2.Mileage == null)
+            if (l2 is null)
             {
                 return true;
             }

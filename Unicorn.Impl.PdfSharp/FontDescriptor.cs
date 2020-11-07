@@ -3,6 +3,8 @@ using System;
 using System.Text;
 using Unicorn.Impl.PdfSharp.Extensions;
 using Unicorn.CoreTypes;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Unicorn.Impl.PdfSharp
 {
@@ -25,6 +27,68 @@ namespace Unicorn.Impl.PdfSharp
         /// Preferred text encoding when using this font.  Not used with this implementation.
         /// </summary>
         public Encoding PreferredEncoding => Encoding.Unicode;
+
+        /// <summary>
+        /// Bounding box that encloses all glyphs in this font, in normalised "glyph units" such that 1,000 glyph units equals the point size of the font.
+        /// </summary>
+        public UniRectangle BoundingBox => new UniRectangle();
+
+        /// <summary>
+        /// Angle that uprights in this font are off the vertical.
+        /// </summary>
+        public decimal ItalicAngle => 0m;
+
+        /// <summary>
+        /// Height of capital characters above the baseline, in normalised "glyph units" such that 1,000 glyph units equals the point size of the font.
+        /// </summary>
+        public decimal CapHeight => 0m;
+
+        /// <summary>
+        /// Typical vertical stem thickness of characters in this font.
+        /// </summary>
+        public decimal VerticalStemThickness => 0m;
+
+        /// <summary>
+        /// Ascent of characters above the baseline, in normalised "glyph units" sich that 1,000 glyph units equals the point size of the font.
+        /// </summary>
+        public double AscentGlyphUnits => Font.Metrics.Ascent;
+
+        /// <summary>
+        /// Descent of characters below the baseline, in normalised "glyph units" sich that 1,000 glyph units equals the point size of the font.
+        /// </summary>
+        public double DescentGlyphUnits => Font.Metrics.Descent;
+
+        /// <summary>
+        /// Font style flags.
+        /// </summary>
+        public FontDescriptorFlags Flags => FontDescriptorFlags.Nonsymbolic;
+
+        /// <summary>
+        /// Whether or not this font requires a <see cref="FontDescriptor" /> dictionary to be written to the PDF file.  For use by Unicorn.Writer, this should be
+        /// <c>true</c> for all fonts except the "standard" built-in PDF fonts.
+        /// </summary>
+        public bool RequiresFullDescription => false;
+
+        /// <summary>
+        /// Whether or not this font should be embedded in PDF files.
+        /// </summary>
+        public bool RequiresEmbedding => false;
+
+        /// <summary>
+        /// The key used to refer to the raw data stream for this font inside its Font Descriptor dictionary - the key name varies according to the data type.
+        /// An empty string if the font is not embeddable.
+        /// </summary>
+        public string EmbeddingKey => "";
+
+        /// <summary>
+        /// The length of the raw data of the font, or zero if the font is not embeddable.
+        /// </summary>
+        public long EmbeddingLength => 0;
+
+        /// <summary>
+        /// The raw data of the font.
+        /// </summary>
+        public IEnumerable<byte> EmbeddingData => Array.Empty<byte>();
 
         /// <summary>
         /// Construct a <see cref="FontDescriptor" /> for a font with a given family name, style and point size.

@@ -48,6 +48,18 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SignalboxModelExtensionsClass_ToSignalboxMethod_ThrowsArgumentException_IfParameterIsNotNullAndIdPropertyOfParameterIsNull()
+        {
+            SignalboxModel testParam = GetModel();
+            testParam.Id = null;
+
+            _ = testParam.ToSignalbox();
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
         public void SignalboxModelExtensionsClass_ToSignalboxMethod_ReturnsObjectWithCorrectCodeProperty_IfParameterIsNotNull()
         {
             SignalboxModel testParam = GetModel();

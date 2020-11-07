@@ -41,7 +41,7 @@ namespace Unicorn.Writer.Primitives
                 sb.Replace(")", @"\)");
             }
             sb.Insert(0, "(");
-            sb.Append(")");
+            sb.Append(')');
             for (int i = 253; i < sb.Length; i += 253)
             {
                 sb.Insert(i, "\\\n");

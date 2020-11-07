@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NeutralLanguage>en-GB</NeutralLanguage>
-    <Version>1.3.0</Version>
+    <Version>1.4.0</Version>
     <Authors>Will Salt</Authors>
     <Product>Unicorn</Product>
     <Copyright>Copyright © 2020 Will Salt</Copyright>
@@ -12,14 +12,14 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Unicorn.FontTools\Unicorn.FontTools.csproj" />
+    <ProjectReference Include="..\Unicorn.FontTools.OpenType\Unicorn.FontTools.OpenType.csproj" />
   </ItemGroup>
 
   <ItemGroup>

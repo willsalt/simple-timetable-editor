@@ -89,7 +89,7 @@ namespace Timetabler
                 }
             }
             btnColour.BackColor = _model.Data.GraphProperties.Colour;
-            btnColour.ForeColor = ComputeButtonForeColour(_model.Data.GraphProperties.Colour);
+            btnColour.ForeColor = UIHelpers.ComputeButtonForeColour(_model.Data.GraphProperties.Colour);
             ckSeparatorAbove.Checked = _model.Data.IncludeSeparatorAbove;
             ckSeparatorBelow.Checked = _model.Data.IncludeSeparatorBelow;
             tbInlineNote.Text = _model.Data.InlineNote ?? string.Empty;
@@ -299,25 +299,7 @@ namespace Timetabler
             {
                 return;
             }
-            using (ColorDialog cd = new ColorDialog() { AllowFullOpen = true, AnyColor = true, Color = _model.Data.GraphProperties.Colour, FullOpen = true, })
-            {
-                if (cd.ShowDialog() == DialogResult.OK)
-                {
-                    _model.Data.GraphProperties.Colour = cd.Color;
-                    btnColour.BackColor = cd.Color;
-                    btnColour.ForeColor = ComputeButtonForeColour(cd.Color);
-                }
-            }
-        }
-
-        private static Color ComputeButtonForeColour(Color backColour)
-        {
-            int sumVals = backColour.R + backColour.G + backColour.B;
-            if (sumVals > 128 * 3)
-            {
-                return Color.Black;
-            }
-            return Color.White;
+            UIHelpers.ColourDialogueHelper(_model.Data.GraphProperties.Colour, c => _model.Data.GraphProperties.Colour = c, btnColour);
         }
 
         private void BtnAdjust_Click(object sender, EventArgs e)
@@ -418,7 +400,7 @@ namespace Timetabler
 
         private void TextBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
         {
-            TimeHelpers.ValidateTimeTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
+            UIHelpers.ValidateIntegerTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
         }
 
         private void TextBoxToWorkHoursMinutes_Validated(object sender, EventArgs e)

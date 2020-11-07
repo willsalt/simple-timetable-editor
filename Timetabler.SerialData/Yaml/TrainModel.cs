@@ -5,13 +5,8 @@ namespace Timetabler.SerialData.Yaml
     /// <summary>
     /// Class representing a train, in serialisable form.
     /// </summary>
-    public class TrainModel
+    public class TrainModel : UniqueItemModel
     {
-        /// <summary>
-        /// The unique ID of this train.
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// The headcode, diagram or reporting number of this train.
         /// </summary>

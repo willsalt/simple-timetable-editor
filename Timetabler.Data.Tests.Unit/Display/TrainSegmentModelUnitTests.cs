@@ -100,7 +100,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionIfFirstParameterIsNull()
+        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             _ = new TrainSegmentModel(null, null);
 
@@ -108,7 +108,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionWithCorrectParamNamePropertyIfFirstParameterIsNull()
+        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFirstParameterIsNull()
         {
             try
             {
@@ -122,7 +122,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassHalfOfDayPropertyHasCorrectValueIfFirstTimingPointIsInMorning()
+        public void TrainSegmentModelClass_HalfOfDayProperty_HasCorrectValue_IfFirstTimingPointIsInMorning()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.AM);
 
@@ -132,7 +132,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassHalfOfDayPropertyHasCorrectValueIfFirstTimingPointIsInAfternoon()
+        public void TrainSegmentModelClass_HalfOfDayProperty_HasCorrectValue_IfFirstTimingPointIsInAfternoon()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.PM);
 
@@ -142,7 +142,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassHalfOfDayPropertyHasCorrectValueIfFirstTimingPointIsAtNoon()
+        public void TrainSegmentModelClass_HalfOfDayProperty_HasCorrectValue_IfFirstTimingPointIsAtNoon()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.Noon);
 
@@ -152,7 +152,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassUpdatePageFootnotesMethodDoesNotChangePageFootnotesPropertyIfParameterIsNull()
+        public void TrainSegmentModelClass_UpdatePageFootnotesMethod_DoesNotChangePageFootnotesProperty_IfParameterIsNull()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
@@ -168,7 +168,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassUpdatePageFootnotesMethodDoesNotChangePageFootnotesPropertyIfParameterIsEmpty()
+        public void TrainSegmentModelClass_UpdatePageFootnotesMethod_DoesNotChangePageFootnotesProperty_IfParameterIsEmpty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
@@ -184,7 +184,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassUpdatePageFootnotesMethodChangesPageFootnotesElementsWithIdsThatAppearInParameter()
+        public void TrainSegmentModelClass_UpdatePageFootnotesMethod_ChangesPageFootnotesElementsWithIdsThatAppearInParameter()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
@@ -216,7 +216,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassUpdatePageFootnotesMethodSetsPageFootnotesElementsDefinitionPropertiesIfIdAppearsInParameter()
+        public void TrainSegmentModelClass_UpdatePageFootnotesMethod_SetsPageFootnotesElementsDefinitionProperties_IfIdAppearsInParameter()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
@@ -243,7 +243,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassUpdatePageFootnotesMethodSetsPageFootnotesElementsSymbolPropertiesIfIdAppearsInParameter()
+        public void TrainSegmentModelClass_UpdatePageFootnotesMethod_SetsPageFootnotesElementsSymbolProperties_IfIdAppearsInParameter()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
@@ -270,7 +270,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassUpdatePageFootnotesMethodSetsPageFootnotesElementsDisplayOnPagePropertiesIfIdAppearsInParameter()
+        public void TrainSegmentModelClass_UpdatePageFootnotesMethod_SetsPageFootnotesElementsDisplayOnPageProperties_IfIdAppearsInParameter()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testFootnoteCount = testObject.PageFootnotes.Count;
@@ -297,7 +297,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectFootnotesProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectFootnotesProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -307,7 +307,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectHalfOfDayProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectHalfOfDayProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -317,7 +317,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectHeadcodeProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectHeadcodeProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -327,7 +327,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectIncludeSeparatorAboveProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectIncludeSeparatorAboveProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             
@@ -337,7 +337,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectIncludeSeparatorBelowProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectIncludeSeparatorBelowProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -347,7 +347,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectInlineNoteProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectInlineNoteProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -357,7 +357,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectLocoDiagramProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectLocoDiagramProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -367,7 +367,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectTrainClassProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectTrainClassProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -377,7 +377,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectTrainIdProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectTrainIdProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -387,7 +387,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectContinuationFromEarlierProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectContinuationFromEarlierProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -397,7 +397,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithCorrectContinuesLaterProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithCorrectContinuesLaterProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -407,7 +407,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithTimingsPropertyOfCorrectLength()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithTimingsPropertyOfCorrectLength()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -417,7 +417,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithTimingsPropertyWithContentsWithCorrectLocationKeyProperties()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithTimingsPropertyWithContentsWithCorrectLocationKeyProperties()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -430,7 +430,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithToWorkCellPropertyWithCorrectActualTimeProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithToWorkCellPropertyWithCorrectActualTimeProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -440,7 +440,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithToWorkCellPropertyWithCorrectDisplayedTextProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithToWorkCellPropertyWithCorrectDisplayedTextProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -450,7 +450,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyOfCorrectLength()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithPageFootnotesPropertyOfCorrectLength()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -460,7 +460,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectNoteIdProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectNoteIdProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -473,7 +473,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectSymbolProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectSymbolProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -486,7 +486,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDefinitionProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDefinitionProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -499,7 +499,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassCopyMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDisplayOnPageProperty()
+        public void TrainSegmentModelClass_CopyMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDisplayOnPageProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -512,7 +512,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsLessThanZero()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsNull_IfParameterIsLessThanZero()
         {
             int testParam0 = _rnd.Next(int.MaxValue - 1) * -1 - 1;
             int testParam1 = _rnd.Next();
@@ -524,7 +524,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsZero()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsNull_IfParameterIsZero()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -534,7 +534,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsSameAsIndexOfLastTimingEntry()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsNull_IfParameterIsSameAsIndexOfLastTimingEntry()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -544,7 +544,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsEqualToTimingsPropertyCountProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsNull_IfParameterIsEqualToTimingsPropertyCountProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
 
@@ -554,7 +554,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNullIfParameterIsEqualToOrGreaterThanTimingsPropertyCountProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsNull_IfParameterIsEqualToOrGreaterThanTimingsPropertyCountProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(int.MaxValue - testObject.Timings.Count) + testObject.Timings.Count;
@@ -565,7 +565,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsNonNullResultIfParameterIsGreaterThanZeroAndLessThanFinalIndexOfTimingsProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsNonNullResult_IfParameterIsGreaterThanZeroAndLessThanFinalIndexOfTimingsProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -576,7 +576,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodDoesNotReduceNumberOfTimingsInOriginalSegmentIfOverlapIsEqualToNumberOfTimingsBetweenSplitPointAndEnd()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_DoesNotReduceNumberOfTimingsInOriginalSegment_IfOverlapIsEqualToNumberOfTimingsBetweenSplitPointAndEnd()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -589,7 +589,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodDoesNotReduceNumberOfTimingsInOriginalSegmentIfOverlapIsGreaterThanNumberOfTimingsBetweenSplitPointAndEnd()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_DoesNotReduceNumberOfTimingsInOriginalSegmentIfOverlapIsGreaterThanNumberOfTimingsBetweenSplitPointAndEnd()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -602,7 +602,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReducesNumberOfTimingsInOriginalSegmentIfSplitPointPlusOverlapIsLessThanTotalNumberOfTimings()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReducesNumberOfTimingsInOriginalSegment_IfSplitPointPlusOverlapIsLessThanTotalNumberOfTimings()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -615,7 +615,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReducesNumberOfTimingsInOriginalSegmentToSplitPointPlusOverlap()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReducesNumberOfTimingsInOriginalSegmentToSplitPointPlusOverlap()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -627,7 +627,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodKeepsCorrectTimingsInOriginalSegment()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_KeepsCorrectTimingsInOriginalSegment()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -643,7 +643,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodSetsContinuesLaterPropertyOfOriginalSegmentToTrue()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_SetsContinuesLaterPropertyOfOriginalSegmentToTrue()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, false, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -655,7 +655,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectFootnotesProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectFootnotesProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -667,7 +667,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectHeadcodeProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectHeadcodeProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -679,7 +679,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectIncludeSeparatorBelowProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectIncludeSeparatorBelowProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -691,7 +691,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectInlineNoteProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectInlineNoteProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -704,7 +704,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodSetsInlineNotePropertyOfParameterToEmptyString()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_SetsInlineNotePropertyOfParameterToEmptyString()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -716,7 +716,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectLocoDiagramProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectLocoDiagramProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -728,7 +728,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectTrainClassProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectTrainClassProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -740,7 +740,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectTrainIdProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectTrainIdProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -752,7 +752,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectContinuesLaterProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectContinuesLaterProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -765,7 +765,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithContinuationFromEarlierPropertyEqualToTrue()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithContinuationFromEarlierPropertyEqualToTrue()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -780,7 +780,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         // See GitHub issue #87
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyOfCorrectLength()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithPageFootnotesPropertyOfCorrectLength()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -792,7 +792,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectNoteIdProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectNoteIdProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -807,7 +807,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectSymbolProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectSymbolProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -822,7 +822,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDefinitionProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDefinitionProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -837,7 +837,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDisplayOnPageProperty()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithPageFootnotesPropertyContainingObjectsWithCorrectDisplayOnPageProperty()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -852,7 +852,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectNumberOfTimings()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectNumberOfTimings()
         {
             // The correct number of timings is: the number of elements from the split point to the end.
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
@@ -866,7 +866,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithTimingsPropertyWithObjectsContainingCorrectLocationKeys()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithTimingsPropertyWithObjectsContainingCorrectLocationKeys()
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, null);
             int testParam0 = _rnd.Next(testObject.Timings.Count - 2) + 1;
@@ -883,7 +883,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
         // Exercises GitHub issue #84.
         [TestMethod]
-        public void TrainSegmentModelClassSplitAtIndexMethodReturnsObjectWithCorrectHalfOfDayPropertyIfSplitIsAfterMidday()
+        public void TrainSegmentModelClass_SplitAtIndexMethod_ReturnsObjectWithCorrectHalfOfDayProperty_IfSplitIsAfterMidday()
         {
             TrainSegmentModel testObject = GetTestObject(0, null, null, null, new List<ILocationEntry>
             {

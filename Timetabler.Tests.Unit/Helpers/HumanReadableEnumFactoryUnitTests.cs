@@ -266,6 +266,33 @@ namespace Timetabler.Tests.Unit.Helpers
             Assert.AreEqual(Resources.HumanReadableEnum_Orientation_Landscape, item.Name);
         }
 
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetSectionSelectionMethod_ReturnsArrayContainingNoneValueWithCorrectNameProperty()
+        {
+            HumanReadableEnum<SectionSelection>[] testOutput = HumanReadableEnumFactory.GetSectionSelection();
+
+            HumanReadableEnum<SectionSelection> item = testOutput.Single(e => e.Value == SectionSelection.None);
+            Assert.AreEqual(Resources.HumanReadableEnum_SectionSelection_None, item.Name);
+        }
+
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetSectionSelectionMethod_ReturnsArrayContainingFirstValueWithCorrectNameProperty()
+        {
+            HumanReadableEnum<SectionSelection>[] testOutput = HumanReadableEnumFactory.GetSectionSelection();
+
+            HumanReadableEnum<SectionSelection> item = testOutput.Single(e => e.Value == SectionSelection.First);
+            Assert.AreEqual(Resources.HumanReadableEnum_SectionSelection_First, item.Name);
+        }
+
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetSectionSelectionMethod_ReturnsArrayContainingAllValueWithCorrectNameProperty()
+        {
+            HumanReadableEnum<SectionSelection>[] testOutput = HumanReadableEnumFactory.GetSectionSelection();
+
+            HumanReadableEnum<SectionSelection> item = testOutput.Single(e => e.Value == SectionSelection.All);
+            Assert.AreEqual(Resources.HumanReadableEnum_SectionSelection_All, item.Name);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

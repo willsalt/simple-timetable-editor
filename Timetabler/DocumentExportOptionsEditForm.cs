@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Forms;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.Helpers;
 
@@ -43,6 +44,7 @@ namespace Timetabler
             HumanReadableEnum<CoreData.Orientation>[] orientations = HumanReadableEnumFactory.GetOrientation();
             cbTableOrientation.Items.AddRange(orientations);
             cbGraphOrientation.Items.AddRange(orientations);
+            cbDistanceInfoInOutput.Items.AddRange(HumanReadableEnumFactory.GetSectionSelection());
         }
 
         private void UpdateViewFromModel()
@@ -62,6 +64,8 @@ namespace Timetabler
             nudLineWidth.Value = (decimal)Model.LineWidth;
             nudFillerDashLineWidth.Value = (decimal)Model.FillerDashLineWidth;
             nudGraphAxisLineWidth.Value = (decimal)Model.GraphAxisLineWidth;
+            tbUpSectionLabel.Text = Model.UpSectionLabel;
+            tbDownSectionLabel.Text = Model.DownSectionLabel;
             foreach (var item in cbPdfEngine.Items)
             {
                 if (item is HumanReadableEnum<PdfExportEngine> engineItem && engineItem.Value == Model.ExportEngine)
@@ -83,6 +87,14 @@ namespace Timetabler
                 if (item is HumanReadableEnum<CoreData.Orientation> orientItem && orientItem.Value == Model.GraphPageOrientation)
                 {
                     cbGraphOrientation.SelectedItem = orientItem;
+                    break;
+                }
+            }
+            foreach (var item in cbDistanceInfoInOutput.Items)
+            {
+                if (item is HumanReadableEnum<SectionSelection> sectionItem && sectionItem.Value == Model.DistancesInOutput)
+                {
+                    cbDistanceInfoInOutput.SelectedItem = sectionItem;
                     break;
                 }
             }
@@ -196,7 +208,7 @@ namespace Timetabler
                 Log.Trace("cbPdfEngine: null item selected");
                 return;
             }
-            lblWarning.Visible = item.Value == PdfExportEngine.Unicorn;
+            lblWarning.Visible = item.Value == PdfExportEngine.External;
             if (_inViewUpdate || Model == null)
             {
                 return;
@@ -233,6 +245,39 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbGraphOrientation_Value, item.Name);
             Model.GraphPageOrientation = item.Value;
+        }
+
+        private void CbDistanceInfoInOutput_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cbDistanceInfoInOutput.SelectedItem is HumanReadableEnum<CoreData.SectionSelection> item))
+            {
+                Log.Trace("cbDistanceInfoInOutput: null item selected.");
+                return;
+            }
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbDistanceInOutput_Value, item.Name);
+            Model.DistancesInOutput = item.Value;
+        }
+
+        private void TbUpSectionLabel_TextChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Model.UpSectionLabel = tbUpSectionLabel.Text;
+        }
+
+        private void TbDownSectionLabel_TextChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Model.DownSectionLabel = tbDownSectionLabel.Text;
         }
     }
 }

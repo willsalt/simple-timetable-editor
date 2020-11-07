@@ -16,7 +16,7 @@ namespace Unicorn.Writer.Primitives
     {
         private readonly IPdfPrimitiveObject _contents;
         private readonly bool _nonCacheable;
-        private PdfReference _reference = null;
+        private PdfReference _reference;
 
         /// <summary>
         /// The indirect object prologue as a list of bytes.
@@ -158,6 +158,10 @@ namespace Unicorn.Writer.Primitives
             if (writer == null)
             {
                 throw new ArgumentNullException(nameof(writer));
+            }
+            if (contentWriter is null)
+            {
+                throw new ArgumentNullException(nameof(contentWriter));
             }
             if (CachedPrologue == null)
             {

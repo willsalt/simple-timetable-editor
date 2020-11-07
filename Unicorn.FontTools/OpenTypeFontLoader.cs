@@ -32,7 +32,9 @@ namespace Unicorn.FontTools
                     MemoryMappedFile mmf = null;
                     try
                     {
+#pragma warning disable CA2000 // Dispose objects before losing scope - the OpenTypeFont object becomes responsible for the memory-maped file.
                         mmf = MemoryMappedFile.CreateFromFile(path, FileMode.Open, null, 0, MemoryMappedFileAccess.Read);
+#pragma warning restore CA2000 // Dispose objects before losing scope
                         OpenTypeFont otf = new OpenTypeFont(mmf, path);
                         mmf = null;
                         _loadedFonts.Add(path, otf);
@@ -47,7 +49,7 @@ namespace Unicorn.FontTools
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="OpenTypeFontLoader" /> and optionally releases the managed resources.

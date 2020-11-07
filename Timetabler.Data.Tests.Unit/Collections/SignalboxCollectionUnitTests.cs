@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using Tests.Utility.Providers;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Tests.Unit.TestHelpers;
 
@@ -9,10 +10,12 @@ namespace Timetabler.Data.Tests.Unit.Collections
     [TestClass]
     public class SignalboxCollectionUnitTests
     {
-        private static Random _random = new Random();
+        private static readonly Random _random = RandomProvider.Default;
+
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void SignalboxCollectionClassParameterlessConstructorReturnsEmptyCollection()
+        public void SignalboxCollectionClass_ParameterlessConstructor_ReturnsEmptyCollection()
         {
             SignalboxCollection collection = new SignalboxCollection();
 
@@ -20,7 +23,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassConstructorWithIEnumerableParameterReturnsCollectionOfCorrectSize()
+        public void SignalboxCollectionClass_ConstructorWithIEnumerableParameter_ReturnsCollectionOfCorrectSize()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
 
@@ -30,7 +33,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassConstructorWithIEnumerableParameterReturnsCollectionWithCorrectContents()
+        public void SignalboxCollectionClass_ConstructorWithIEnumerableParameter_ReturnsCollectionWithCorrectContents()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
 
@@ -43,7 +46,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassCopyMethodReturnsCollectionOfCorrectSize()
+        public void SignalboxCollectionClass_CopyMethod_ReturnsCollectionOfCorrectSize()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
             SignalboxCollection sourceCollection = new SignalboxCollection(testData);
@@ -54,7 +57,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassCopyMethodReturnsDifferentObject()
+        public void SignalboxCollectionClass_CopyMethod_ReturnsDifferentObject()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
             SignalboxCollection sourceCollection = new SignalboxCollection(testData);
@@ -65,7 +68,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassCopyMethodReturnsCollectionWhoseContentsAreDifferentObjects()
+        public void SignalboxCollectionClass_CopyMethod_ReturnsCollectionWhoseContentsAreDifferentObjects()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
             SignalboxCollection sourceCollection = new SignalboxCollection(testData);
@@ -79,7 +82,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassCopyMethodReturnsCollectionWhoseContentsHaveCorrectIdProperties()
+        public void SignalboxCollectionClass_CopyMethod_ReturnsCollectionWhoseContentsHaveCorrectIdProperties()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
             SignalboxCollection sourceCollection = new SignalboxCollection(testData);
@@ -93,7 +96,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassCopyMethodReturnsCollectionWhoseContentsHaveCorrectCodeProperties()
+        public void SignalboxCollectionClass_CopyMethod_ReturnsCollectionWhoseContentsHaveCorrectCodeProperties()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
             SignalboxCollection sourceCollection = new SignalboxCollection(testData);
@@ -107,7 +110,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassCopyMethodReturnsCollectionWhoseContentsHaveCorrectEditorDisplayNameProperties()
+        public void SignalboxCollectionClass_CopyMethod_ReturnsCollectionWhoseContentsHaveCorrectEditorDisplayNameProperties()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
             SignalboxCollection sourceCollection = new SignalboxCollection(testData);
@@ -121,7 +124,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassCopyMethodReturnsCollectionWhoseContentsHaveCorrectExportDisplayNameProperties()
+        public void SignalboxCollectionClass_CopyMethod_ReturnsCollectionWhoseContentsHaveCorrectExportDisplayNameProperties()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(0, 64);
             SignalboxCollection sourceCollection = new SignalboxCollection(testData);
@@ -135,7 +138,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassIndexerWithIntParameterReturnsCorrectObject()
+        public void SignalboxCollectionClass_IndexerWithIntParameter_ReturnsCorrectObject()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(1, 64);
             SignalboxCollection testCollection = new SignalboxCollection(testData);
@@ -147,7 +150,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassIndexerWithIntParameterSetsCorrectObject()
+        public void SignalboxCollectionClass_IndexerWithIntParameter_SetsCorrectObject()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(1, 64);
             SignalboxCollection testCollection = new SignalboxCollection(testData);
@@ -160,7 +163,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassIndexerWithIntParameterRaisesSignalboxRemoveEventIfSetIsCalledWithDifferentObject()
+        public void SignalboxCollectionClass_IndexerWithIntParameter_RaisesSignalboxRemoveEvent_IfSetIsCalledWithDifferentObject()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(1, 64);
             SignalboxCollection testCollection = new SignalboxCollection(testData);
@@ -175,7 +178,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassIndexerWithIntParameterDoesNotRaiseSignalboxRemoveEventIfSetIsCalledWithSameObject()
+        public void SignalboxCollectionClass_IndexerWithIntParameter_DoesNotRaiseSignalboxRemoveEvent_IfSetIsCalledWithSameObject()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(1, 64);
             SignalboxCollection testCollection = new SignalboxCollection(testData);
@@ -189,7 +192,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassIndexerWithIntParameterRaisesSignalboxRemoveEventWithCorrectSenderIfSetIsCalledWithDifferentObject()
+        public void SignalboxCollectionClass_IndexerWithIntParameter_RaisesSignalboxRemoveEventWithCorrectSender_IfSetIsCalledWithDifferentObject()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(1, 64);
             SignalboxCollection testCollection = new SignalboxCollection(testData);
@@ -204,7 +207,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         }
 
         [TestMethod]
-        public void SignalboxCollectionClassIndexerWithIntParameterRaisesSignalboxRemoveEventWithCorrectEventArgsIfSetIsCalledWithDifferenObject()
+        public void SignalboxCollectionClass_IndexerWithIntParameter_RaisesSignalboxRemoveEventWithCorrectEventArgs_IfSetIsCalledWithDifferenObject()
         {
             List<Signalbox> testData = SignalboxHelpers.GetSignalboxList(1, 64);
             SignalboxCollection testCollection = new SignalboxCollection(testData);
@@ -216,6 +219,9 @@ namespace Timetabler.Data.Tests.Unit.Collections
             testCollection[idx] = testObject;
 
             Assert.AreSame(testData[idx], capturedBox);
-        }        
+        }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

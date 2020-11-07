@@ -29,6 +29,15 @@ namespace Unicorn.CoreTypes
         }
 
         /// <summary>
+        /// Constructor with width and height parameters, as decimals.
+        /// </summary>
+        /// <param name="width">The value of the <see cref="Width" /> property.</param>
+        /// <param name="height">The value of the <see cref="Height" /> property.</param>
+        public UniSize(decimal width, decimal height) : this((double)width, (double)height)
+        {
+        }
+
+        /// <summary>
         /// Equality test.
         /// </summary>
         /// <param name="other">Another UniSize instance to compare against.</param>

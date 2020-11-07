@@ -23,7 +23,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
         private readonly List<double> _transformedXParameters = new List<double>();
         private readonly List<double> _transformedYParameters = new List<double>();
 
-        private int _transformerCalls = 0;
+        private int _transformerCalls;
 
         private double TransformParam(double val, List<double> store)
         {
@@ -1099,7 +1099,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
             Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
             mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
-            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f));
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f, null));
             IPdfPage constrParam0 = mockPage.Object;
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
@@ -1122,7 +1122,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfStream constrParam1 = new PdfStream(_rnd.Next(1, int.MaxValue));
             Mock<IPdfPage> mockPage = new Mock<IPdfPage>();
             mockPage.Setup(p => p.ContentStream).Returns(constrParam1);
-            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f));
+            mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f => new PdfFont(_rnd.Next(1, int.MaxValue), f, null));
             IPdfPage constrParam0 = mockPage.Object;
             Func<double, double> constrParam2 = TransformXParam;
             Func<double, double> constrParam3 = TransformYParam;
@@ -1152,7 +1152,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfFont internalFont = null;
             mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
             {
-                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f, null);
                 return internalFont;
             });
             IPdfPage constrParam0 = mockPage.Object;
@@ -1188,7 +1188,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfFont internalFont = null;
             mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
             {
-                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f, null);
                 return internalFont;
             });
             IPdfPage constrParam0 = mockPage.Object;
@@ -1222,7 +1222,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfFont internalFont = null;
             mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
             {
-                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f, null);
                 return internalFont;
             });
             IPdfPage constrParam0 = mockPage.Object;
@@ -1271,7 +1271,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfFont internalFont1 = null;
             mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
             {
-                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f, null);
                 if (f == mockFont0.Object)
                 {
                     internalFont0 = internalFont;
@@ -1319,7 +1319,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfFont internalFont1 = null;
             mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
             {
-                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f, null);
                 if (f == mockFont0.Object)
                 {
                     internalFont0 = internalFont;
@@ -1367,7 +1367,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfFont internalFont1 = null;
             mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
             {
-                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f, null);
                 if (f == mockFont0.Object)
                 {
                     internalFont0 = internalFont;
@@ -1415,7 +1415,7 @@ namespace Unicorn.Writer.Tests.Unit.Structural
             PdfFont internalFont1 = null;
             mockPage.Setup(p => p.UseFont(It.IsAny<IFontDescriptor>())).Returns<IFontDescriptor>(f =>
             {
-                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f);
+                PdfFont internalFont = new PdfFont(_rnd.Next(1, int.MaxValue), f, null);
                 if (f == mockFont0.Object)
                 {
                     internalFont0 = internalFont;

@@ -51,6 +51,18 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NoteModelExtensionsClass_ToNoteMethod_ThrowsArgumentException_IfParameterIsNotNullAndIdPropertyOfParameterIsNull()
+        {
+            NoteModel testParam = GetModel();
+            testParam.Id = null;
+
+            _ = testParam.ToNote();
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
         public void NoteModelExtensionsClass_ToNoteMethod_ReturnsObjectWithCorrectSymbolProperty_IfParameterIsNotNull()
         {
             NoteModel testParam = GetModel();

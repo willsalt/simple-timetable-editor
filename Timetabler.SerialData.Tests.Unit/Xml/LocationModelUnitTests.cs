@@ -11,14 +11,16 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
     [TestClass]
     public class LocationModelUnitTests
     {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
         [TestMethod]
-        public void LocationModelClassIsPublic()
+        public void LocationModelClass_IsPublic()
         {
             Assert.IsTrue(typeof(LocationModel).IsPublic);
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicParameterlessConstructor()
+        public void LocationModelClass_HasPublicParameterlessConstructor()
         {
             ConstructorInfo cInfo = typeof(LocationModel).GetConstructor(Array.Empty<Type>());
             Assert.IsNotNull(cInfo);
@@ -26,7 +28,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassParameterlessConstructorReturnsObjectWithMileagePropertyThatIsNotNull()
+        public void LocationModelClass_ParameterlessConstructor_ReturnsObjectWithMileagePropertyThatIsNotNull()
         {
             LocationModel model = new LocationModel();
 
@@ -34,7 +36,7 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicIdPropertyOfTypeString()
+        public void LocationModelClass_HasPublicIdPropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("Id");
             Assert.IsNotNull(pInfo);
@@ -44,13 +46,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassIdPropertyIsDecoratedWithXmlAttributeAttribute()
+        public void LocationModelClass_IdProperty_IsDecoratedWithXmlAttributeAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("Id").GetCustomAttributes<XmlAttributeAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicEditorDisplayNamePropertyOfTypeString()
+        public void LocationModelClass_HasPublicEditorDisplayNamePropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("EditorDisplayName");
             Assert.IsNotNull(pInfo);
@@ -60,13 +62,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassEditorDisplayNamePropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_EditorDisplayNameProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("EditorDisplayName").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicTimetableDisplayNamePropertyOfTypeString()
+        public void LocationModelClass_HasPublicTimetableDisplayNamePropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("TimetableDisplayName");
             Assert.IsNotNull(pInfo);
@@ -76,13 +78,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassGraphDisplayNamePropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_GraphDisplayNameProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("GraphDisplayName").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicTiplocPropertyOfTypeString()
+        public void LocationModelClass_HasPublicTiplocPropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("Tiploc");
             Assert.IsNotNull(pInfo);
@@ -92,13 +94,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassTiplocPropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_TiplocProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("Tiploc").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicUpArrivalDepartureAlwaysDisplayedPropertyOfTypeArrivalDepartureOptions()
+        public void LocationModelClass_HasPublicUpArrivalDepartureAlwaysDisplayedPropertyOfTypeArrivalDepartureOptions()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("UpArrivalDepartureAlwaysDisplayed");
             Assert.IsNotNull(pInfo);
@@ -108,13 +110,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassUpArrivalDepartureAlwaysDisplayedPropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_UpArrivalDepartureAlwaysDisplayedProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("UpArrivalDepartureAlwaysDisplayed").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicUpRoutingCodesAlwaysDisplayedPropertyOfTypeNullableTrainRoutingOptions()
+        public void LocationModelClass_HasPublicUpRoutingCodesAlwaysDisplayedPropertyOfTypeNullableTrainRoutingOptions()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("UpRoutingCodesAlwaysDisplayed");
             Assert.IsNotNull(pInfo);
@@ -124,13 +126,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassUpRoutingCodesAlwaysDisplayedPropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_UpRoutingCodesAlwaysDisplayedProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("UpRoutingCodesAlwaysDisplayed").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicDownArrivalDepartureAlwaysDisplayedPropertyOfTypeArrivalDepartureOptions()
+        public void LocationModelClass_HasPublicDownArrivalDepartureAlwaysDisplayedPropertyOfTypeArrivalDepartureOptions()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("DownArrivalDepartureAlwaysDisplayed");
             Assert.IsNotNull(pInfo);
@@ -140,13 +142,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassDownArrivalDepartureAlwaysDisplayedPropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_DownArrivalDepartureAlwaysDisplayedProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("DownArrivalDepartureAlwaysDisplayed").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicDownRoutingCodesAlwaysDisplayedPropertyOfTypeNullableTrainRoutingOptions()
+        public void LocationModelClass_HasPublicDownRoutingCodesAlwaysDisplayedPropertyOfTypeNullableTrainRoutingOptions()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("DownRoutingCodesAlwaysDisplayed");
             Assert.IsNotNull(pInfo);
@@ -156,13 +158,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassDownRoutingCodesAlwaysDisplayedPropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_DownRoutingCodesAlwaysDisplayedProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("DownRoutingCodesAlwaysDisplayed").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicMileagePropertyOfTypeDistanceModel()
+        public void LocationModelClass_HasPublicMileagePropertyOfTypeDistanceModel()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("Mileage");
             Assert.IsNotNull(pInfo);
@@ -172,13 +174,13 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassMileagePropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_MileageProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("Mileage").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
 
         [TestMethod]
-        public void LocationModelClassHasPublicFontTypeNamePropertyOfTypeString()
+        public void LocationModelClass_HasPublicFontTypeNamePropertyOfTypeString()
         {
             PropertyInfo pInfo = typeof(LocationModel).GetProperty("FontTypeName");
             Assert.IsNotNull(pInfo);
@@ -188,9 +190,12 @@ namespace Timetabler.SerialData.Tests.Unit.Xml
         }
 
         [TestMethod]
-        public void LocationModelClassFontTypeNamePropertyIsDecoratedWithXmlElementAttribute()
+        public void LocationModelClass_FontTypeNameProperty_IsDecoratedWithXmlElementAttribute()
         {
             Assert.IsNotNull(typeof(LocationModel).GetProperty("FontTypeName").GetCustomAttributes<XmlElementAttribute>(false).First());
         }
+
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

@@ -13,7 +13,7 @@ namespace Timetabler
     {
         private TrainLocationTimeEditFormModel _model;
 
-        private bool _inViewUpdate = false;
+        private bool _inViewUpdate;
 
         /// <summary>
         /// The data to be edited by this form.
@@ -130,7 +130,7 @@ namespace Timetabler
 
         private void TextBoxHoursMinutes_Validating(object sender, CancelEventArgs e)
         {
-            TimeHelpers.ValidateTimeTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
+            UIHelpers.ValidateIntegerTextBox(sender as TextBox, errorProvider, Resources.TrainLocationTimeEditForm_ValidateTimes_Error, e);
         }
 
         private void StoreArrivalTime()

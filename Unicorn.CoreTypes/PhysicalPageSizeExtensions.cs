@@ -7,18 +7,18 @@ namespace Unicorn.CoreTypes
     /// </summary>
     public static class PhysicalPageSizeExtensions
     {
-        private static Lazy<UniSize> _a1Portrait = new Lazy<UniSize>(() => new UniSize(1683, 2383));
-        private static Lazy<UniSize> _a2Portrait = new Lazy<UniSize>(() => new UniSize(1190, 1683));
-        private static Lazy<UniSize> _a3Portrait = new Lazy<UniSize>(() => new UniSize(841, 1190));
-        private static Lazy<UniSize> _a4Portrait = new Lazy<UniSize>(() => new UniSize(595, 841));
-        private static Lazy<UniSize> _a5Portrait = new Lazy<UniSize>(() => new UniSize(419, 595));
-        private static Lazy<UniSize> _a6Portrait = new Lazy<UniSize>(() => new UniSize(297, 419));
-        private static Lazy<UniSize> _a1Landscape = new Lazy<UniSize>(() => new UniSize(2383, 1683));
-        private static Lazy<UniSize> _a2Landscape = new Lazy<UniSize>(() => new UniSize(1683, 1190));
-        private static Lazy<UniSize> _a3Landscape = new Lazy<UniSize>(() => new UniSize(1190, 841));
-        private static Lazy<UniSize> _a4Landscape = new Lazy<UniSize>(() => new UniSize(841, 595));
-        private static Lazy<UniSize> _a5Landscape = new Lazy<UniSize>(() => new UniSize(595, 419));
-        private static Lazy<UniSize> _a6Landscape = new Lazy<UniSize>(() => new UniSize(419, 297));
+        private static readonly Lazy<UniSize> _a1Portrait = new Lazy<UniSize>(() => new UniSize(1683d, 2383));
+        private static readonly Lazy<UniSize> _a2Portrait = new Lazy<UniSize>(() => new UniSize(1190d, 1683));
+        private static readonly Lazy<UniSize> _a3Portrait = new Lazy<UniSize>(() => new UniSize(841d, 1190));
+        private static readonly Lazy<UniSize> _a4Portrait = new Lazy<UniSize>(() => new UniSize(595d, 841));
+        private static readonly Lazy<UniSize> _a5Portrait = new Lazy<UniSize>(() => new UniSize(419d, 595));
+        private static readonly Lazy<UniSize> _a6Portrait = new Lazy<UniSize>(() => new UniSize(297d, 419));
+        private static readonly Lazy<UniSize> _a1Landscape = new Lazy<UniSize>(() => new UniSize(2383d, 1683));
+        private static readonly Lazy<UniSize> _a2Landscape = new Lazy<UniSize>(() => new UniSize(1683d, 1190));
+        private static readonly Lazy<UniSize> _a3Landscape = new Lazy<UniSize>(() => new UniSize(1190d, 841));
+        private static readonly Lazy<UniSize> _a4Landscape = new Lazy<UniSize>(() => new UniSize(841d, 595));
+        private static readonly Lazy<UniSize> _a5Landscape = new Lazy<UniSize>(() => new UniSize(595d, 419));
+        private static readonly Lazy<UniSize> _a6Landscape = new Lazy<UniSize>(() => new UniSize(419d, 297));
 
         /// <summary>
         /// Convert a standard page size to its dimensions, in portrait orientation.

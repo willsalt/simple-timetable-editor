@@ -41,6 +41,14 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
         }
 
         [TestMethod]
+        public void CommonPdfNamesClass_FilterField_HasCorrectValueProperty()
+        {
+            PdfName testOutput = CommonPdfNames.Filter;
+
+            Assert.AreEqual("Filter", testOutput.Value);
+        }
+
+        [TestMethod]
         public void CommonPdfNamesClass_FontField_HasCorrectValueProperty()
         {
             PdfName testOutput = CommonPdfNames.Font;

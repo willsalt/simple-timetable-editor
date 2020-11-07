@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Tests.Utility.Providers;
 using Timetabler.CoreData.Helpers;
@@ -13,10 +14,26 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+        private static List<string> GetTestStrings()
+        {
+            int count = _rnd.Next(25);
+            List<string> data = new List<string>();
+            for (int i = 0; i < count; ++i)
+            {
+                string n;
+                do
+                {
+                    n = _rnd.Next().ToString("x8", CultureInfo.InvariantCulture);
+                } while (data.Contains(n));
+                data.Add(n);
+            }
+            return data;
+        }
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void GeneralHelperClass_GetNewIdMethod_ReturnsIdNotAlreadyInParameterContent()
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfTParameter_ReturnsIdNotAlreadyInParameterContent()
         {
             int itemCount = _rnd.Next(1, 500);
             List<MockUniqueItem> testData = new List<MockUniqueItem>(itemCount);
@@ -31,7 +48,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void GeneralHelperClass_GetNewIdMethod_ThrowsArgumentNullExceptionIfParameterIsNull()
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfTParameter_ThrowsArgumentNullExceptionIfParameterIsNull()
         {
             List<MockUniqueItem> testParam = null;
 
@@ -41,7 +58,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         }
 
         [TestMethod]
-        public void GeneralHelperClass_GetNewIdMethod_ThrowsArgumentNullExceptionWithCorrectParamNamePropertyIfParameterIsNull()
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfTParameter_ThrowsArgumentNullExceptionWithCorrectParamNamePropertyIfParameterIsNull()
         {
             List<MockUniqueItem> testParam = null;
 
@@ -53,6 +70,94 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
             catch (ArgumentNullException ex)
             {
                 Assert.AreEqual("existingItems", ex.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfTParameter_DoesNotThrowException_IfParameterContainsElementsWhoseIdPropertyIsNull()
+        {
+            List<MockUniqueItem> testParam = new List<MockUniqueItem> { new MockUniqueItem { Id = null } };
+
+            string testOutput = GeneralHelper.GetNewId(testParam);
+
+            Assert.IsNotNull(testOutput);
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfStringAndIntParameters_ReturnsCorrectNumberOfItemsInEnumeration_IfFirstParameterIsNull()
+        {
+            List<string> testParam0 = null;
+            int testParam1 = _rnd.Next(25);
+
+            IEnumerable<string> testOutput = GeneralHelper.GetNewId(testParam0, testParam1);
+
+            Assert.AreEqual(testParam1, testOutput.Count());
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfStringAndIntParameters_ReturnsEmptyEnumeration_IfFirstParameterIsNullAndSecondParameterIsZero()
+        {
+            List<string> testParam0 = null;
+            int testParam1 = 0;
+
+            IEnumerable<string> testOutput = GeneralHelper.GetNewId(testParam0, testParam1);
+
+            Assert.AreEqual(0, testOutput.Count());
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfStringAndIntParameters_ReturnsUniqueItems_IfFirstParameterIsNull()
+        {
+            List<string> testParam0 = null;
+            int testParam1 = _rnd.Next(25);
+
+            IEnumerable<string> testOutput = GeneralHelper.GetNewId(testParam0, testParam1);
+            List<string> testOutputList = testOutput.ToList();
+
+            foreach (string outputItem in testOutputList)
+            {
+                Assert.AreEqual(1, testOutputList.Count(s => s == outputItem));
+            }
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfStringAndIntParameters_ReturnsCorrectNumberOfItemsInEnumeration_IfFirstParameterIsNotNull()
+        {
+            List<string> testParam0 = GetTestStrings();
+            int testParam1 = _rnd.Next(25);
+
+            IEnumerable<string> testOutput = GeneralHelper.GetNewId(testParam0, testParam1);
+
+            Assert.AreEqual(testParam1, testOutput.Count());
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfStringAndIntParameters_ReturnsUniqueItems_IfFirstParameterIsNotNull()
+        {
+            List<string> testParam0 = GetTestStrings();
+            int testParam1 = _rnd.Next(25);
+
+            IEnumerable<string> testOutput = GeneralHelper.GetNewId(testParam0, testParam1);
+            List<string> testOutputList = testOutput.ToList();
+
+            foreach (string outputItem in testOutputList)
+            {
+                Assert.AreEqual(1, testOutputList.Count(s => s == outputItem));
+            }
+        }
+
+        [TestMethod]
+        public void GeneralHelperClass_GetNewIdMethodWithIEnumerableOfStringAndIntParameters_ReturnsItemsNotInFirstParameter_IfFirstParameterIsNotNull()
+        {
+            List<string> testParam0 = GetTestStrings();
+            int testParam1 = _rnd.Next(25);
+
+            IEnumerable<string> testOutput = GeneralHelper.GetNewId(testParam0, testParam1);
+            List<string> testOutputList = testOutput.ToList();
+
+            foreach (string outputItem in testOutputList)
+            {
+                Assert.IsFalse(testParam0.Contains(outputItem));
             }
         }
 

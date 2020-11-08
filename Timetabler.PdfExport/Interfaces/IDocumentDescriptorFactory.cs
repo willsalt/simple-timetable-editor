@@ -19,5 +19,11 @@ namespace Timetabler.PdfExport.Interfaces
         /// <param name="verticalMarginProportion">The default vertical margin proportion for the new document.</param>
         /// <returns>An <see cref="IDocumentDescriptor" /> object for a particular Unicorn driver implementation.</returns>
         IDocumentDescriptor GetDocumentDescriptor(double horizontalMarginProportion, double verticalMarginProportion);
+
+        /// <summary>
+        /// Create an <see cref="IFontLoader" /> object for this factory's Unicorn implementation
+        /// </summary>
+        /// <returns></returns>
+        IFontLoader GetFontLoader();
     }
 }

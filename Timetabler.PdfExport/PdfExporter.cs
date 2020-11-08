@@ -63,7 +63,7 @@ namespace Timetabler.PdfExport
         private const double distanceTickLabelMargin = 2.0;
         private const double cellTotalMargins = 5.0;
 
-        private OpenTypeFontLoader _fontLoader = new OpenTypeFontLoader();
+        private IFontLoader _fontLoader;
 
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
@@ -99,6 +99,7 @@ namespace Timetabler.PdfExport
             }
 
             _engineSelector = ddf;
+            _fontLoader = ddf.GetFontLoader();
 
             _titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
             _subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);

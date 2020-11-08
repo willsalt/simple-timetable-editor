@@ -9,10 +9,5 @@
         /// The "pure Unicorn" export library, Unicorn.Writer
         /// </summary>
         Unicorn,
-
-        /// <summary>
-        /// The original PDFSharp-based Unicorn output library
-        /// </summary>
-        External
     }
 }

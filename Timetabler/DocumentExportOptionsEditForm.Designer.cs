@@ -51,6 +51,8 @@
             this.tbDownSectionLabel = new System.Windows.Forms.TextBox();
             this.tbUpSectionLabel = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbDistanceInfoInOutput = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.nudGraphAxisLineWidth = new System.Windows.Forms.NumericUpDown();
@@ -58,11 +60,6 @@
             this.nudLineWidth = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbPdfEngine = new System.Windows.Forms.ComboBox();
-            this.lblWarning = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.cbDistanceInfoInOutput = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -237,6 +234,18 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
+            // cbDistanceInfoInOutput
+            // 
+            this.cbDistanceInfoInOutput.FormattingEnabled = true;
+            resources.ApplyResources(this.cbDistanceInfoInOutput, "cbDistanceInfoInOutput");
+            this.cbDistanceInfoInOutput.Name = "cbDistanceInfoInOutput";
+            this.cbDistanceInfoInOutput.SelectedIndexChanged += new System.EventHandler(this.CbDistanceInfoInOutput_SelectedIndexChanged);
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
@@ -246,9 +255,6 @@
             this.tabPage2.Controls.Add(this.nudLineWidth);
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.cbPdfEngine);
-            this.tabPage2.Controls.Add(this.lblWarning);
-            this.tabPage2.Controls.Add(this.label3);
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             // 
@@ -284,36 +290,6 @@
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            // 
-            // cbPdfEngine
-            // 
-            this.cbPdfEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPdfEngine.FormattingEnabled = true;
-            resources.ApplyResources(this.cbPdfEngine, "cbPdfEngine");
-            this.cbPdfEngine.Name = "cbPdfEngine";
-            this.cbPdfEngine.SelectedIndexChanged += new System.EventHandler(this.CbPdfEngine_SelectedIndexChanged);
-            // 
-            // lblWarning
-            // 
-            resources.ApplyResources(this.lblWarning, "lblWarning");
-            this.lblWarning.Name = "lblWarning";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            // 
-            // label9
-            // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.Name = "label9";
-            // 
-            // cbDistanceInfoInOutput
-            // 
-            this.cbDistanceInfoInOutput.FormattingEnabled = true;
-            resources.ApplyResources(this.cbDistanceInfoInOutput, "cbDistanceInfoInOutput");
-            this.cbDistanceInfoInOutput.Name = "cbDistanceInfoInOutput";
-            this.cbDistanceInfoInOutput.SelectedIndexChanged += new System.EventHandler(this.CbDistanceInfoInOutput_SelectedIndexChanged);
             // 
             // DocumentExportOptionsEditForm
             // 
@@ -354,9 +330,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ComboBox cbPdfEngine;
-        private System.Windows.Forms.Label lblWarning;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbGraphOrientation;

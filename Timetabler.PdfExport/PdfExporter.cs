@@ -15,7 +15,6 @@ using Timetabler.PdfExport.Extensions;
 using Unicorn;
 using Unicorn.CoreTypes;
 using Unicorn.FontTools;
-using Unicorn.Impl.PdfSharp;
 using Unicorn.Shapes;
 using Timetabler.PdfExport.Interfaces;
 using System.Globalization;
@@ -64,19 +63,6 @@ namespace Timetabler.PdfExport
         private const double distanceTickLabelMargin = 2.0;
         private const double cellTotalMargins = 5.0;
 
-#pragma warning disable CA1823 // Avoid unused private fields - this is done this way because of how the PdfSharp library likes to configure its fonts
-        private static readonly FontConfigurator FontConfigurator = new FontConfigurator(new[]
-#pragma warning restore CA1823 // Avoid unused private fields
-        {
-            new FontConfigurationData("Serif", UniFontStyles.Regular, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace)),
-            new FontConfigurationData("Serif", UniFontStyles.Bold, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace)),
-            new FontConfigurationData("Serif", UniFontStyles.Italic, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace)),
-            new FontConfigurationData("Serif", UniFontStyles.Bold | UniFontStyles.Italic, 
-                Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldItalicFace)),
-            new FontConfigurationData("Sans", UniFontStyles.Regular, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansRomanFace)),
-            new FontConfigurationData("Sans", UniFontStyles.Bold, Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace)),
-        });
-
         private OpenTypeFontLoader _fontLoader = new OpenTypeFontLoader();
 
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
@@ -114,32 +100,13 @@ namespace Timetabler.PdfExport
 
             _engineSelector = ddf;
 
-            if (_engineSelector.ImplementationName == "External")
-            {
-                _titleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 16);
-                _subtitleFont = new FontDescriptor("Serif", UniFontStyles.Bold, 14);
-                _plainBodyFont = new FontDescriptor("Serif", 7.5);
-                _italicBodyFont = new FontDescriptor("Serif", UniFontStyles.Italic, 7.5);
-                _boldBodyFont = new FontDescriptor("Serif", UniFontStyles.Bold, 7.5);
-                _alternativeLocationFont = new FontDescriptor("Sans", UniFontStyles.Bold, 7.5);
-                _tableCellStandardMargins = new MarginSet(0, 3, 0, 3);
-            }
-            else
-            {
-                //_titleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 16);
-                //_subtitleFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 14);
-                //_plainBodyFont = PdfStandardFontDescriptor.GetByName("Times-Roman", 7.5);
-                //_italicBodyFont = PdfStandardFontDescriptor.GetByName("Times-Italic", 7.5);
-                //_boldBodyFont = PdfStandardFontDescriptor.GetByName("Times-Bold", 7.5);
-                //_alternativeLocationFont = PdfStandardFontDescriptor.GetByName("Helvetica-Bold", 7.5);
-                _titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
-                _subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);
-                _plainBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace), 7.5);
-                _italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
-                _boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
-                _alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
-                _tableCellStandardMargins = new MarginSet(2, 3, 1, 3);
-            }
+            _titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
+            _subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);
+            _plainBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace), 7.5);
+            _italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
+            _boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
+            _alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
+            _tableCellStandardMargins = new MarginSet(2, 3, 1, 3);
 
             Log.Info("Loaded fonts.");
             Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_PlainBodyOffset, _plainBodyFont.Ascent);

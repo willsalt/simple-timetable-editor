@@ -106,19 +106,6 @@ namespace Timetabler.Helpers
         }
 
         /// <summary>
-        /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="PdfExportEngine" /> enumeration.
-        /// </summary>
-        /// <returns>An array of <see cref="HumanReadableEnum{TEnum}" /> instances.</returns>
-        public static HumanReadableEnum<PdfExportEngine>[] GetPdfExportEngine()
-        {
-            return new[]
-            {
-                new HumanReadableEnum<PdfExportEngine> { Name = Resources.HumanReadableEnum_PdfExportEngine_External, Value = PdfExportEngine.External },
-                new HumanReadableEnum<PdfExportEngine> { Name = Resources.HumanReadableEnum_PdfExportEngine_Unicorn, Value = PdfExportEngine.Unicorn },
-            };
-        }
-
-        /// <summary>
         /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="Orientation" /> enumeration.
         /// </summary>
         /// <returns>An array of <see cref="HumanReadableEnum{TEnum}" /> instances.</returns>

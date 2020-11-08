@@ -40,7 +40,6 @@ namespace Timetabler
         public DocumentExportOptionsEditForm()
         {
             InitializeComponent();
-            cbPdfEngine.Items.AddRange(HumanReadableEnumFactory.GetPdfExportEngine());
             HumanReadableEnum<CoreData.Orientation>[] orientations = HumanReadableEnumFactory.GetOrientation();
             cbTableOrientation.Items.AddRange(orientations);
             cbGraphOrientation.Items.AddRange(orientations);
@@ -66,14 +65,6 @@ namespace Timetabler
             nudGraphAxisLineWidth.Value = (decimal)Model.GraphAxisLineWidth;
             tbUpSectionLabel.Text = Model.UpSectionLabel;
             tbDownSectionLabel.Text = Model.DownSectionLabel;
-            foreach (var item in cbPdfEngine.Items)
-            {
-                if (item is HumanReadableEnum<PdfExportEngine> engineItem && engineItem.Value == Model.ExportEngine)
-                {
-                    cbPdfEngine.SelectedItem = engineItem;
-                    break;
-                }
-            }
             foreach (var item in cbTableOrientation.Items)
             {
                 if (item is HumanReadableEnum<CoreData.Orientation> orientItem && orientItem.Value == Model.TablePageOrientation)
@@ -199,22 +190,6 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CkDisplayGlossaryValue, ckDisplayGlossary.Checked);
             Model.DisplayGlossary = ckDisplayGlossary.Checked;
-        }
-
-        private void CbPdfEngine_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!(cbPdfEngine.SelectedItem is HumanReadableEnum<PdfExportEngine> item))
-            {
-                Log.Trace("cbPdfEngine: null item selected");
-                return;
-            }
-            lblWarning.Visible = item.Value == PdfExportEngine.External;
-            if (_inViewUpdate || Model == null)
-            {
-                return;
-            }
-            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbPdfEngineValue, item.Name);
-            Model.ExportEngine = item.Value;
         }
 
         private void CbTableOrientation_SelectedIndexChanged(object sender, EventArgs e)

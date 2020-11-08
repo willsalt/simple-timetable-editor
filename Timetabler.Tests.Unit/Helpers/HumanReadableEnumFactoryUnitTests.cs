@@ -223,32 +223,6 @@ namespace Timetabler.Tests.Unit.Helpers
         }
 
         [TestMethod]
-        public void HumanReadableEnumFactoryClass_GetPdfExportEngineMethod_ReturnsArrayOfLength2()
-        {
-            HumanReadableEnum<PdfExportEngine>[] testOutput = HumanReadableEnumFactory.GetPdfExportEngine();
-
-            Assert.AreEqual(2, testOutput.Length);
-        }
-
-        [TestMethod]
-        public void HumanReadableEnumFactoryClass_GetPdfExportEngineMethod_ReturnsArrayContainingPdfExportEngineUnicornValueWithCorrectNameProperty()
-        {
-            HumanReadableEnum<PdfExportEngine>[] testOutput = HumanReadableEnumFactory.GetPdfExportEngine();
-
-            HumanReadableEnum<PdfExportEngine> item = testOutput.Single(e => e.Value == PdfExportEngine.Unicorn);
-            Assert.AreEqual(Resources.HumanReadableEnum_PdfExportEngine_Unicorn, item.Name);
-        }
-
-        [TestMethod]
-        public void HumanReadableEnumFactoryClass_GetPdfExportEngineMethod_ReturnsArrayContainingPdfExportEngineExternalValueWithCorrectNameProperty()
-        {
-            HumanReadableEnum<PdfExportEngine>[] testOutput = HumanReadableEnumFactory.GetPdfExportEngine();
-
-            HumanReadableEnum<PdfExportEngine> item = testOutput.Single(e => e.Value == PdfExportEngine.External);
-            Assert.AreEqual(Resources.HumanReadableEnum_PdfExportEngine_External, item.Name);
-        }
-
-        [TestMethod]
         public void HumanReadableEnumFactoryClass_GetOrientationMethod_ReturnsArrayContainingPortraitValueWithCorrectNameProperty()
         {
             HumanReadableEnum<Orientation>[] testOutput = HumanReadableEnumFactory.GetOrientation();

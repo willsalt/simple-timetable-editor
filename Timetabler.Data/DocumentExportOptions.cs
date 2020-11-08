@@ -58,11 +58,6 @@ namespace Timetabler.Data
         public double FillerDashLineWidth { get; set; }
 
         /// <summary>
-        /// The PDF export engine to use.
-        /// </summary>
-        public PdfExportEngine ExportEngine { get; set; }
-
-        /// <summary>
         /// The output orientation of table pages.
         /// </summary>
         public Orientation TablePageOrientation { get; set; }
@@ -97,7 +92,6 @@ namespace Timetabler.Data
             LineWidth = 1.0;
             GraphAxisLineWidth = 1.0;
             FillerDashLineWidth = 0.5;
-            ExportEngine = PdfExportEngine.Unicorn;
             TablePageOrientation = Orientation.Landscape;
             GraphPageOrientation = Orientation.Landscape;
             UpSectionLabel = Resources.DocumentExportOptions_DefaultUpSectionLabel;
@@ -122,7 +116,6 @@ namespace Timetabler.Data
                 GraphAxisLineWidth = GraphAxisLineWidth,
                 DisplayGraph = DisplayGraph,
                 DisplayGlossary = DisplayGlossary,
-                ExportEngine = ExportEngine,
                 TablePageOrientation = TablePageOrientation,
                 GraphPageOrientation = GraphPageOrientation,
                 UpSectionLabel = UpSectionLabel,

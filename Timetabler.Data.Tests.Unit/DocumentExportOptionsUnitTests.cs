@@ -26,7 +26,6 @@ namespace Timetabler.Data.Tests.Unit
                 LineWidth = _rnd.NextDouble() * 10,
                 GraphAxisLineWidth = _rnd.NextDouble() * 10,
                 FillerDashLineWidth = _rnd.NextDouble() * 10,
-                ExportEngine = _rnd.NextPdfExportEngine(),
                 TablePageOrientation = _rnd.NextOrientation(),
                 GraphPageOrientation = _rnd.NextOrientation(),
                 UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
@@ -59,14 +58,6 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testObject = new DocumentExportOptions();
 
             Assert.AreEqual(0.5, testObject.FillerDashLineWidth);
-        }
-
-        [TestMethod]
-        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsExportEnginePropertyToUnicorn()
-        {
-            DocumentExportOptions testObject = new DocumentExportOptions();
-
-            Assert.AreEqual(PdfExportEngine.Unicorn, testObject.ExportEngine);
         }
 
         [TestMethod]
@@ -219,16 +210,6 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testOutput = testObject.Copy();
 
             Assert.AreEqual(testObject.FillerDashLineWidth, testOutput.FillerDashLineWidth);
-        }
-
-        [TestMethod]
-        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectExportEngineProperty()
-        {
-            DocumentExportOptions testObject = GetDocumentExportOptions();
-
-            DocumentExportOptions testOutput = testObject.Copy();
-
-            Assert.AreEqual(testObject.ExportEngine, testOutput.ExportEngine);
         }
 
         [TestMethod]

@@ -223,7 +223,7 @@ namespace Timetabler
         {
             try
             {
-                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(Model.ExportOptions.ExportEngine)))
+                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(PdfExportEngine.Unicorn)))
                 using (FileStream fs = new FileStream(fn, FileMode.Create, FileAccess.Write))
                 {
                     exporter.StatusUpdate += (s, evt) =>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using Unicorn.CoreTypes;
 using Unicorn.FontTools.OpenType;
 
 namespace Unicorn.FontTools
@@ -10,7 +11,7 @@ namespace Unicorn.FontTools
     /// Loader for <see cref="OpenTypeFontDescriptor" /> instances.  Maintains a cache of open OpenType fonts, so that if an application requests the same font at
     /// multiple different point sizes we can avoid loading the same file's metrics multiple times.
     /// </summary>
-    public class OpenTypeFontLoader : IDisposable
+    public class OpenTypeFontLoader : IFontLoader
     {
         private readonly Dictionary<string, OpenTypeFont> _loadedFonts = new Dictionary<string, OpenTypeFont>();
 
@@ -23,7 +24,7 @@ namespace Unicorn.FontTools
         /// <remarks>Note that the class maintains a cache of loaded fonts, keyed by the path.  Because of this, if an application requests the same font using
         /// paths that are equivalent but not textually equal, such as <c>.\content\font.ttf</c> and <c>.\content\fonts\subdir\..\..\font.ttf</c> the
         /// file will be loaded twice, rather than being loaded from the cache the second time.</remarks>
-        public OpenTypeFontDescriptor LoadFont(string path, double pointSize)
+        public IFontDescriptor LoadFont(string path, double pointSize)
         {
             lock (_loadedFonts)
             {
@@ -41,7 +42,9 @@ namespace Unicorn.FontTools
                     }
                     finally
                     {
+#pragma warning disable CA1508 // Avoid dead conditional code - this is misdetected.  The mmf variable may not be null, if an exception is thrown in the otf constructor.
                         mmf?.Dispose();
+#pragma warning restore CA1508 // Avoid dead conditional code
                     }
                 }
             }

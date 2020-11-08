@@ -107,10 +107,6 @@
       <Project>{3dd27dc2-5d3a-4f6d-bdd5-6ff02b1c933b}</Project>
       <Name>Unicorn.CoreTypes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unicorn.Impl.PdfSharp\Unicorn.Impl.PdfSharp.csproj">
-      <Project>{4D101015-CE74-4648-B07B-5AC806531E95}</Project>
-      <Name>Unicorn.Impl.PdfSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Unicorn.Writer\Unicorn.Writer.csproj">
       <Project>{7431CC05-B157-4EDD-83C5-42C2D5A79C55}</Project>
       <Name>Unicorn.Writer</Name>

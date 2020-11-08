@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace Timetabler.Data.Tests.Unit.TestHelpers.Extensions
 {
@@ -14,7 +12,6 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers.Extensions
             }
             PdfExportEngine[] allValues = new PdfExportEngine[]
             {
-                PdfExportEngine.External,
                 PdfExportEngine.Unicorn,
             };
             return allValues[random.Next(allValues.Length)];

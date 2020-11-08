@@ -7,6 +7,7 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.PdfExport.Interfaces;
+using Unicorn.CoreTypes;
 
 namespace Timetabler.PdfExport.Tests.Unit
 {
@@ -15,15 +16,25 @@ namespace Timetabler.PdfExport.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+        private Mock<IDocumentDescriptorFactory> _mockDescriptorFactory;
+
+        [TestInitialize]
+        public void SetUpTest()
+        {
+            Mock<IFontLoader> mockFontLoader = new Mock<IFontLoader>();
+            mockFontLoader.Setup(m => m.LoadFont(It.IsAny<string>(), It.IsAny<double>())).Returns(() => new Mock<IFontDescriptor>().Object);
+            _mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
+            _mockDescriptorFactory.Setup(m => m.ImplementationName).Returns("Unicorn");
+            _mockDescriptorFactory.Setup(m => m.GetFontLoader()).Returns(mockFontLoader.Object);
+        }
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void PdfExporterClass_ExportMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
-            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
-            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
-            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
             {
                 TimetableDocument testParam0 = null;
                 Stream testParam1 = new Mock<Stream>().Object;
@@ -36,9 +47,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_ExportMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFirstParameterIsNull()
         {
-            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
-            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
-            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
             {
                 TimetableDocument testParam0 = null;
                 Stream testParam1 = new Mock<Stream>().Object;
@@ -58,10 +67,8 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_OnStatusUpdateMethod_RaisesStatusUpdateEvent()
         {
-            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
-            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
             int eventCount = 0;
-            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
             {
                 testObject.StatusUpdate += (s, e) => { eventCount++; };
 
@@ -75,10 +82,8 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_OnStatusUpdateMethod_RaisesStatusUpdateEventWithCorrectSender()
         {
-            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
-            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
             object testSender = null;
-            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
             {
                 testObject.StatusUpdate += (s, e) => { testSender = s; };
 
@@ -92,11 +97,9 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_OnStatusUpdateMethod_RaisesStatusUpdateEventWithEventArgsWithCorrectProgressProperty()
         {
-            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
-            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
             double expectedArg = _rnd.NextDouble();
             double capturedArg = -1d;
-            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
             {
                 testObject.StatusUpdate += (s, e) => { capturedArg = e.Progress; };
 
@@ -110,11 +113,9 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_OnStatusUpdateMethod_RaisesStatusUpdateEventWithEventArgsWithCorrectStatusProperty()
         {
-            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
-            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
             string expectedArg = _rnd.NextString(_rnd.Next(100));
             string capturedArg = null;
-            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
             {
                 testObject.StatusUpdate += (s, e) => { capturedArg = e.Status; };
 
@@ -128,11 +129,9 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_OnStatusUpdateMethod_RaisesStatusUpdateEventWithEventArgsWithCorrectInProgressProperty()
         {
-            Mock<IDocumentDescriptorFactory> mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
-            mockDescriptorFactory.Setup(f => f.ImplementationName).Returns("External");
             bool expectedArg = _rnd.NextBoolean();
             bool capturedArg = !expectedArg;
-            using (PdfExporter testObject = new PdfExporter(mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
             {
                 testObject.StatusUpdate += (s, e) => { capturedArg = e.InProgress; };
 

@@ -24,7 +24,6 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
                 DisplayLocoDiagramRow = _rnd.NextBoolean(),
                 DisplayLocoToWorkRow = _rnd.NextBoolean(),
                 DisplayToWorkRow = _rnd.NextBoolean(),
-                ExportEngine = _rnd.NextBoolean() ? PdfExportEngine.External : PdfExportEngine.Unicorn,
                 FillerDashLineWidth = _rnd.NextDouble() * 5,
                 LineWidth = _rnd.NextDouble() * 5,
                 GraphAxisLineWidth = _rnd.NextDouble() * 5,

@@ -1,7 +1,7 @@
 ﻿using Timetabler.Data;
 using Timetabler.PdfExport.Interfaces;
 using Unicorn.CoreTypes;
-using Unicorn.Impl.PdfSharp;
+using Unicorn.FontTools;
 using Unicorn.Writer;
 
 namespace Timetabler.PdfExport
@@ -34,8 +34,6 @@ namespace Timetabler.PdfExport
                     case PdfExportEngine.Unicorn:
                     default:
                         return "Unicorn";
-                    case PdfExportEngine.External:
-                        return "External";
                 }
             }
         }
@@ -56,8 +54,20 @@ namespace Timetabler.PdfExport
                 case PdfExportEngine.Unicorn:
                 default:
                     return new PdfDocument(PhysicalPageSize.A4, PageOrientation.Landscape, horizontalMarginProportion, verticalMarginProportion);
-                case PdfExportEngine.External:
-                    return new DocumentDescriptor(PhysicalPageSize.A4, PageOrientation.Landscape, horizontalMarginProportion, verticalMarginProportion);
+            }
+        }
+
+        /// <summary>
+        /// Create an <see cref="IFontLoader" />, selecting the appropriate implementation for this factory's configuration.
+        /// </summary>
+        /// <returns>An <see cref="IFontLoader" /> implementation configured appropriately.</returns>
+        public IFontLoader GetFontLoader()
+        {
+            switch (_engine)
+            {
+                case PdfExportEngine.Unicorn:
+                default:
+                    return new OpenTypeFontLoader();
             }
         }
     }

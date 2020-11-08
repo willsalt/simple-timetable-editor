@@ -10,7 +10,6 @@
     <Feature Id="ProductFeature" Title="Timetabler.Installer" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ProductFonts" />
-      <ComponentGroupRef Id="ProductResourcesDe" />
     </Feature>
     <WixVariable Id="WixUILicenseRtf" Value="$(var.Timetabler.ProjectDir)Licence.rtf"/>
   </Product>
@@ -22,7 +21,6 @@
           <Directory Id="ContentFolder" Name="Content">
             <Directory Id="LocalFontsFolder" Name="Fonts" />
           </Directory>
-          <Directory Id="deFolder" Name="de" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -38,9 +36,6 @@
       </Component>
       <Component Id="NLog.dll.comp" Guid="72E5E541-11EE-440B-B028-DFA0CF13F50A">
         <File Id="NLog.dll.file" Name="NLog.dll" Source="$(var.Timetabler.TargetDir)NLog.dll" KeyPath="yes" />
-      </Component>
-      <Component Id="PdfSharp.dll.comp" Guid="5D8072CA-2568-445D-A966-8818A522A031">
-        <File Id="PdfSharp.dll.file" Name="PdfSharp.dll" Source="$(var.Timetabler.TargetDir)PdfSharp.dll" KeyPath="yes" />
       </Component>
       <Component Id="SharpYaml.dll.comp" Guid="0A19CED6-7C66-48AF-8D7F-AA0793B02AF3">
         <File Id="SharpYaml.dll.file" Name="SharpYaml.dll" Source="$(var.Timetabler.TargetDir)SharpYaml.dll" KeyPath="yes" />
@@ -92,9 +87,6 @@
       <Component Id="Unicorn.FontTools.OpenType.dll.comp" Guid="6577B4DB-3A24-4E55-BCEE-C5287DCB46B6">
         <File Id="Unicorn.FontTools.OpenType.dll.file" Name="Unicorn.FontTools.OpenType.dll" Source="$(var.Timetabler.TargetDir)Unicorn.FontTools.OpenType.dll" KeyPath="yes" />
       </Component>
-      <Component Id="Unicorn.Impl.PdfSharp.dll.comp" Guid="B25CBCD4-3FA3-4DD4-9563-FBAAE04A54A6">
-        <File Id="Unicorn.Impl.PdfSharp.dll.file" Name="Unicorn.Impl.PdfSharp.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Impl.PdfSharp.dll" KeyPath="yes" />
-      </Component>
       <Component Id="Unicorn.Writer.dll.comp" Guid="1AD3ED0F-59C6-46D9-BD1F-8F112A9A9BCF">
         <File Id="Unicorn.Writer.dll.file" Name="Unicorn.Writer.dll" Source="$(var.Timetabler.TargetDir)Unicorn.Writer.dll" KeyPath="yes" />
       </Component>
@@ -129,11 +121,6 @@
       </Component>
       <Component Id="Heebo_Regular.ttf.comp" Guid="64322C72-20E3-4C30-BA43-F38F5EDE31F5">
         <File Id="Heebo_Regular.ttf.file" Name="Heebo-Regular.ttf" Source="$(var.Timetabler.TargetDir)Content\Fonts\Heebo-Regular.ttf" KeyPath="yes" TrueType="no" />
-      </Component>
-    </ComponentGroup>
-    <ComponentGroup Id="ProductResourcesDe" Directory="deFolder">
-      <Component Id="de.PdfSharp.Resources.dll.comp" Guid="9200A694-F939-45C5-BECE-4DA48DCABD22">
-        <File Id="de.PdfSharp.Resources.dll.file" Name="PdfSharp.Resources.dll" Source="$(var.Timetabler.TargetDir)de\PdfSharp.Resources.dll" KeyPath="yes" />
       </Component>
     </ComponentGroup>
   </Fragment>

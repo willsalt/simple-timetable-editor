@@ -133,6 +133,15 @@ namespace Timetabler.DataLoader {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to XML files are no longer supported..
+        /// </summary>
+        internal static string Error_XmlLoaderError {
+            get {
+                return ResourceManager.GetString("Error_XmlLoaderError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;LocationTemplateModel&gt; element does not specify version number..
         /// </summary>
         internal static string Error_XmlLocationTemplateDoesNotSpecifyVersion {

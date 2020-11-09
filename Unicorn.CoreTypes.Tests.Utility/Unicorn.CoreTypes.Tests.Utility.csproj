@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
     <Product>Unicorn</Product>
     <Authors>Will Salt</Authors>
     <Company>Will Salt</Company>
     <NeutralLanguage>en-GB</NeutralLanguage>
-    <Copyright>Copyright © 2020 Will Salt</Copyright>
+    <Copyright>Copyright © 2020-2021 Will Salt</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Timetabler.Tests.Unit")]
-[assembly: AssemblyCopyright("Copyright © 2019-2020 Will Salt")]
+[assembly: AssemblyCopyright("Copyright © 2019-2021 Will Salt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,4 +15,4 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("84c858e8-be40-471d-a1d4-6659ad4cf7e6")]
 
-[assembly: AssemblyVersion("1.4.*")]
+[assembly: AssemblyVersion("1.5.*")]

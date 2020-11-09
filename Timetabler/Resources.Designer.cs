@@ -580,9 +580,9 @@ namespace Timetabler {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file you are opening is in the format used by version 1.1 (and older) of the program.  Although it will work for now, future versions of the program may refuse to open the file.
+        ///   Looks up a localized string similar to The file you are opening is in a format that is no longer supported.
         ///
-        ///You can get rid of this warning by re-saving the file using this version of the program..
+        ///To open this file, use version 1.4 or earlier of this program to open it and resave it.  This will automatically convert it to a file that you can open in this version of the program.  You can download version 1.4 from https://github.com/willsalt/simple-timetable-editor/releases/tag/v1.4.0.
         /// </summary>
         internal static string MainForm_FileOpen_OldFileFormatWarning {
             get {

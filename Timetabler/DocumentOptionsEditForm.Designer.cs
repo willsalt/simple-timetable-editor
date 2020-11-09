@@ -190,7 +190,7 @@
             resources.ApplyResources(this.ckDisplaySpeedLines, "ckDisplaySpeedLines");
             this.ckDisplaySpeedLines.Name = "ckDisplaySpeedLines";
             this.ckDisplaySpeedLines.UseVisualStyleBackColor = true;
-            this.ckDisplaySpeedLines.CheckedChanged += new System.EventHandler(this.ckDisplaySpeedLines_CheckedChanged);
+            this.ckDisplaySpeedLines.CheckedChanged += new System.EventHandler(this.CkDisplaySpeedLines_CheckedChanged);
             // 
             // errorProvider
             // 

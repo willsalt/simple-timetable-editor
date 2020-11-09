@@ -1,4 +1,4 @@
-﻿using System.Drawing.Drawing2D;
+﻿using Timetabler.CoreData;
 using Unicorn.CoreTypes;
 
 namespace Timetabler.PdfExport.Extensions

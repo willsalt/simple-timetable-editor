@@ -2,19 +2,21 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using Timetabler.CoreData;
+using Timetabler.Extensions;
 
 namespace Timetabler.Helpers
 {
     internal class UIHelpers
     {
-        internal static Color ComputeButtonForeColour(Color backColour)
+        internal static Colour ComputeButtonForeColour(Colour backColour)
         {
             int sumVals = backColour.R + backColour.G + backColour.B;
             if (sumVals > 128 * 3)
             {
-                return Color.Black;
+                return Colour.Black;
             }
-            return Color.White;
+            return Colour.White;
         }
 
         /// <summary>
@@ -46,17 +48,18 @@ namespace Timetabler.Helpers
             }
         }
 
-        internal static  void ColourDialogueHelper(Color existingColour, Action<Color> action, Button btn)
+        internal static  void ColourDialogueHelper(Colour existingColour, Action<Colour> action, Button btn)
         {
-            using (ColorDialog cd = new ColorDialog { AllowFullOpen = true, AnyColor = true, Color = existingColour, FullOpen = true, })
+            using (ColorDialog cd = new ColorDialog { AllowFullOpen = true, AnyColor = true, Color = Color.FromArgb((int)existingColour.Argb), FullOpen = true, })
             {
                 if (cd.ShowDialog() == DialogResult.OK)
                 {
-                    action(cd.Color);
+                    Colour resultColour = cd.Color.ToColour();
+                    action(resultColour);
                     if (btn != null)
                     {
                         btn.BackColor = cd.Color;
-                        btn.ForeColor = ComputeButtonForeColour(cd.Color);
+                        btn.ForeColor = ComputeButtonForeColour(resultColour).ToColor();
                     }
                 }
             }

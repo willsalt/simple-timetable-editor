@@ -66,7 +66,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
 
             GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
 
-            Assert.AreEqual(testParam.Colour, testOutput.Colour.ToArgb().ToString("X8", CultureInfo.InvariantCulture));
+            Assert.AreEqual(testParam.Colour, testOutput.Colour.Argb.ToString("X8", CultureInfo.InvariantCulture));
         }
 
         [TestMethod]

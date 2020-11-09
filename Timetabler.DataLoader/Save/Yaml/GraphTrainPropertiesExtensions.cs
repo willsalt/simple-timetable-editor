@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Drawing.Drawing2D;
 using System.Globalization;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.SerialData.Yaml;
 
@@ -26,7 +26,7 @@ namespace Timetabler.DataLoader.Save.Yaml
 
             return new GraphTrainPropertiesModel
             {
-                Colour = properties.Colour.ToArgb().ToString("X8", CultureInfo.InvariantCulture),
+                Colour = properties.Colour.Argb.ToString("X8", CultureInfo.InvariantCulture),
                 DashStyleName = Enum.GetName(typeof(DashStyle), properties.DashStyle),
                 Width = properties.Width,
             };

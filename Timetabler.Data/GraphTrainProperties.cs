@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+using Timetabler.CoreData;
 
 namespace Timetabler.Data
 {
@@ -12,7 +11,7 @@ namespace Timetabler.Data
         /// <summary>
         /// The colour of the train's line on the graph.
         /// </summary>
-        public Color Colour { get; set; }
+        public Colour Colour { get; set; }
         
         /// <summary>
         /// The width of the train's line on the graph.
@@ -30,7 +29,7 @@ namespace Timetabler.Data
         public GraphTrainProperties()
         {
             Width = 2f;
-            Colour = Color.Black;
+            Colour = Colour.Black;
             DashStyle = DashStyle.Solid;
         }
 

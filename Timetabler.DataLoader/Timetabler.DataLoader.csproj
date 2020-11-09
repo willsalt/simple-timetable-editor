@@ -49,7 +49,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -64,24 +63,6 @@
   <ItemGroup>
     <Compile Include="Loader.cs" />
     <Compile Include="LoaderWarningMessage.cs" />
-    <Compile Include="Load\Xml\DistanceModelExtensions.cs" />
-    <Compile Include="Load\Xml\DocumentOptionsModelExtensions.cs" />
-    <Compile Include="Load\Xml\ExportOptionsModelExtensions.cs" />
-    <Compile Include="Load\Xml\GraphTrainPropertiesModelExtensions.cs" />
-    <Compile Include="Load\Xml\Legacy\V3\TimetableFileModelExtensions.cs" />
-    <Compile Include="Load\Xml\LocationModelExtensions.cs" />
-    <Compile Include="Load\Xml\NoteModelExtensions.cs" />
-    <Compile Include="Load\Xml\SignalboxHoursModelExtensions.cs" />
-    <Compile Include="Load\Xml\SignalboxHoursSetModelExtensions.cs" />
-    <Compile Include="Load\Xml\SignalboxModelExtensions.cs" />
-    <Compile Include="Load\Xml\TimeOfDayModelExtensions.cs" />
-    <Compile Include="Load\Xml\TimetableDocumentTemplateModelExtensions.cs" />
-    <Compile Include="Load\Xml\TimetableFileModelExtensions.cs" />
-    <Compile Include="Load\Xml\ToWorkModelExtensions.cs" />
-    <Compile Include="Load\Xml\TrainClassModelExtensions.cs" />
-    <Compile Include="Load\Xml\TrainLocationTimeModelExtensions.cs" />
-    <Compile Include="Load\Xml\TrainModelExtensions.cs" />
-    <Compile Include="Load\Xml\TrainTimeModelExtensions.cs" />
     <Compile Include="Load\Yaml\DistanceModelExtensions.cs" />
     <Compile Include="Load\Yaml\DocumentOptionsModelExtensions.cs" />
     <Compile Include="Load\Yaml\ExportOptionsModelExtensions.cs" />

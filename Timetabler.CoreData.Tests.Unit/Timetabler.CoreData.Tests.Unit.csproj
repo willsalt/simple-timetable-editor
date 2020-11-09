@@ -5,17 +5,17 @@
 
     <IsPackable>false</IsPackable>
 
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
 
     <Authors>Will Salt</Authors>
 
     <Product>Simple Timetable Editor</Product>
 
-    <Copyright>Copyright © 2017-2020 Will Salt</Copyright>
+    <Copyright>Copyright © 2017-2021 Will Salt</Copyright>
 
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
 
-    <FileVersion>1.4.0.0</FileVersion>
+    <FileVersion>1.5.0.0</FileVersion>
 
     <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>

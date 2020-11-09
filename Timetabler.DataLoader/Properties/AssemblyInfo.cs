@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Will Salt")]
 [assembly: AssemblyProduct("Simple Timetable Editor")]
-[assembly: AssemblyCopyright("Copyright ©  2016-2020 Will Salt")]
+[assembly: AssemblyCopyright("Copyright ©  2016-2021 Will Salt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-GB")]
@@ -34,4 +34,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.*")]
+[assembly: AssemblyVersion("1.5.*")]

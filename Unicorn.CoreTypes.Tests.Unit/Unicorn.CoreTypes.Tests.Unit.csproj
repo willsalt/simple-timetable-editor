@@ -5,13 +5,13 @@
 
     <IsPackable>false</IsPackable>
 
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
 
     <Authors>Will Salt</Authors>
 
     <Product>Unicorn</Product>
 
-    <Copyright>Copyright © 2020 Will Salt</Copyright>
+    <Copyright>Copyright © 2020-2021 Will Salt</Copyright>
 
     <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>

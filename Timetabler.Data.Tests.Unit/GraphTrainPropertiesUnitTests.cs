@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data.Tests.Utility.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
@@ -27,7 +26,7 @@ namespace Timetabler.Data.Tests.Unit
         {
             GraphTrainProperties testObject = new GraphTrainProperties();
 
-            Assert.AreEqual(Color.Black, testObject.Colour);
+            Assert.AreEqual(Colour.Black, testObject.Colour);
         }
 
         [TestMethod]

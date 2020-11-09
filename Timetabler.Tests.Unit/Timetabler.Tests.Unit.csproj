@@ -57,6 +57,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ColorExtensionsUnitTests.cs" />
+    <Compile Include="Extensions\ColourExtensionsUnitTests.cs" />
+    <Compile Include="Extensions\DashStyleExtensionsUnitTests.cs" />
     <Compile Include="Extensions\TimeOfDayExtensionsUnitTests.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensionsUnitTests.cs" />
     <Compile Include="Extensions\ClockTypeExtensionsUnitTests.cs" />

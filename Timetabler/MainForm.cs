@@ -196,6 +196,11 @@ namespace Timetabler
         private void ExportToPDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log.Trace("Menu: File>Export to PDF...");
+            if (Model.TrainList.Count == 0)
+            {
+                MessageBox.Show(this, Resources.MainForm_Export_NoTrains);
+                return;
+            }
             sfdExport.SetDirectoryAndFilename(Path.ChangeExtension(Model.FileName, FileHelpers.PdfFileExtension));
             DialogResult dialogResult = sfdExport.ShowDialog();
             if (dialogResult != DialogResult.OK)

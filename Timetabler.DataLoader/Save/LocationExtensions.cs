@@ -1,7 +1,7 @@
 ﻿using Timetabler.Data;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Save.Yaml
+namespace Timetabler.DataLoader.Save
 {
     /// <summary>
     /// YAML-related extension methods for the <see cref="Location" /> class.

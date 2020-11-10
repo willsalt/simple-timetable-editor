@@ -1,4 +1,4 @@
-﻿namespace Timetabler.SerialData.Yaml
+﻿namespace Timetabler.SerialData
 {
     /// <summary>
     /// A class describing a signalbox in serialisable form.

@@ -1,4 +1,4 @@
-﻿namespace Timetabler.SerialData.Yaml
+﻿namespace Timetabler.SerialData
 {
     /// <summary>
     /// Class representing a type of train, in serialisable form.

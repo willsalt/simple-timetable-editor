@@ -2,9 +2,8 @@
 using System;
 using System.Reflection;
 using Timetabler.CoreData;
-using Timetabler.SerialData.Yaml;
 
-namespace Timetabler.SerialData.Tests.Unit.Yaml
+namespace Timetabler.SerialData.Tests.Unit
 {
     [TestClass]
     public class ExportOptionsModelUnitTests

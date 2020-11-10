@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Load.Yaml
+namespace Timetabler.DataLoader.Load
 {
     /// <summary>
     /// Extension methods for the <see cref="SignalboxHoursSetModel" /> class.

@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using Timetabler.SerialData.Yaml;
 
-namespace Timetabler.SerialData.Tests.Unit.Yaml
+namespace Timetabler.SerialData.Tests.Unit
 {
     [TestClass]
     public class DocumentOptionsModelUnitTests

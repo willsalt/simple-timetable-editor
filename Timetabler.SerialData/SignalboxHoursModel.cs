@@ -1,4 +1,4 @@
-﻿namespace Timetabler.SerialData.Yaml
+﻿namespace Timetabler.SerialData
 {
     /// <summary>
     /// Class that describes the opening hours of a signalbox for a particular timetable.

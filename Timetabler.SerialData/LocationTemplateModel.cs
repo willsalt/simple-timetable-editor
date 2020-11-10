@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Timetabler.SerialData.Yaml
+namespace Timetabler.SerialData
 {
     /// <summary>
     /// Class describing a template consisting only of locations, in serialisable form.

@@ -3,7 +3,7 @@ using System.Linq;
 using Timetabler.CoreData.Extensions;
 using Timetabler.CoreData.Helpers;
 
-namespace Timetabler.SerialData.Yaml
+namespace Timetabler.SerialData
 {
     /// <summary>
     /// An abstract parent class for model classes with an <c>Id</c> property containing a string which can be used to uniquely identify an instance of the class.

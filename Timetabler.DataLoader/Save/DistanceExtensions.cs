@@ -1,8 +1,8 @@
 ﻿using System;
 using Timetabler.Data;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Save.Yaml
+namespace Timetabler.DataLoader.Save
 {
     /// <summary>
     /// Extension methods for YAML-specific serialisation of the <see cref="Distance" /> class.

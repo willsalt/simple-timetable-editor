@@ -1,4 +1,4 @@
-﻿namespace Timetabler.SerialData.Yaml
+﻿namespace Timetabler.SerialData
 {
     /// <summary>
     /// Class representing a timetable "to work" cell, which can contain either a time of day or free text.

@@ -1,4 +1,4 @@
-﻿namespace Timetabler.SerialData.Yaml
+﻿namespace Timetabler.SerialData
 {
     /// <summary>
     /// Class represeting the data items associating a train with a particular location, including arrival and departure times and routing information.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Timetabler.SerialData.Yaml
+namespace Timetabler.SerialData
 {
     /// <summary>
     /// Class representing a document in serialisable form.

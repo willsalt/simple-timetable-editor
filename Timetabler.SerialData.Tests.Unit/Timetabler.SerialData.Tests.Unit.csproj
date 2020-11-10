@@ -39,4 +39,8 @@
     <ProjectReference Include="..\Timetabler.SerialData\Timetabler.SerialData.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Yaml\" />
+  </ItemGroup>
+
 </Project>

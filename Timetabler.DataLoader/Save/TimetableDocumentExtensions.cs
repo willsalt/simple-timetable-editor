@@ -2,9 +2,8 @@
 using System.Linq;
 using Timetabler.Data;
 using Timetabler.SerialData;
-using Timetabler.SerialData.Yaml;
 
-namespace Timetabler.DataLoader.Save.Yaml
+namespace Timetabler.DataLoader.Save
 {
     /// <summary>
     /// YAML-related extension methods for the <see cref="TimetableDocument" /> class.

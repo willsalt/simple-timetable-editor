@@ -1,6 +1,6 @@
 ﻿using Timetabler.CoreData;
 
-namespace Timetabler.SerialData.Yaml
+namespace Timetabler.SerialData
 {
     /// <summary>
     /// Class representing a location, in serialisable form.

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Timetabler.Data;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Load.Yaml
+namespace Timetabler.DataLoader.Load
 {
     /// <summary>
     /// Extension methods for <see cref="TimetableDocumentTemplateModel" /> class.

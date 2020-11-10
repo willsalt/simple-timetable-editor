@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Drawing.Drawing2D;
 using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.Data;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -88,8 +87,8 @@ namespace Timetabler
                     break;
                 }
             }
-            btnColour.BackColor = _model.Data.GraphProperties.Colour;
-            btnColour.ForeColor = UIHelpers.ComputeButtonForeColour(_model.Data.GraphProperties.Colour);
+            btnColour.BackColor = _model.Data.GraphProperties.Colour.ToColor();
+            btnColour.ForeColor = UIHelpers.ComputeButtonForeColour(_model.Data.GraphProperties.Colour).ToColor();
             ckSeparatorAbove.Checked = _model.Data.IncludeSeparatorAbove;
             ckSeparatorBelow.Checked = _model.Data.IncludeSeparatorBelow;
             tbInlineNote.Text = _model.Data.InlineNote ?? string.Empty;

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using Tests.Utility.Extensions;
+using Timetabler.CoreData;
 
 namespace Timetabler.Data.Tests.Utility.Extensions
 {
@@ -57,19 +56,19 @@ namespace Timetabler.Data.Tests.Utility.Extensions
 
             return new GraphTrainProperties
             {
-                Colour = random.NextColor(),
+                Colour = random.NextColour(),
                 DashStyle = random.NextDashStyle(),
                 Width = (float)(random.NextDouble() * random.Next(1, 4)),
             };
         }
 
-        public static Color NextColor(this Random random)
+        public static Colour NextColour(this Random random)
         {
             if (random is null)
             {
                 throw new ArgumentNullException(nameof(random));
             }
-            return Color.FromArgb(random.Next());
+            return new Colour(random.NextUInt());
         }
 
         public static DashStyle NextDashStyle(this Random random)
@@ -80,7 +79,6 @@ namespace Timetabler.Data.Tests.Utility.Extensions
             }
             DashStyle[] allValues = new DashStyle[]
             {
-                DashStyle.Custom,
                 DashStyle.Dash,
                 DashStyle.DashDot,
                 DashStyle.DashDotDot,

@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Globalization;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.DataLoader.Load.Yaml;
 using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
@@ -66,7 +65,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
 
             GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
 
-            Assert.AreEqual(testParam.Colour, testOutput.Colour.ToArgb().ToString("X8", CultureInfo.InvariantCulture));
+            Assert.AreEqual(testParam.Colour, testOutput.Colour.Argb.ToString("X8", CultureInfo.InvariantCulture));
         }
 
         [TestMethod]
@@ -77,7 +76,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
 
             GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
 
-            Assert.AreEqual(Color.Black, testOutput.Colour);
+            Assert.AreEqual(Colour.Black, testOutput.Colour);
         }
 
         [TestMethod]
@@ -88,7 +87,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
 
             GraphTrainProperties testOutput = testParam.ToGraphTrainProperties();
 
-            Assert.AreEqual(Color.Black, testOutput.Colour);
+            Assert.AreEqual(Colour.Black, testOutput.Colour);
         }
 
         [TestMethod]

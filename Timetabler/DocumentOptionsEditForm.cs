@@ -1,10 +1,11 @@
 ﻿using NLog;
 using System;
 using System.ComponentModel;
-using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
+using Timetabler.CoreData;
 using Timetabler.Data;
+using Timetabler.Extensions;
 using Timetabler.Helpers;
 
 namespace Timetabler
@@ -83,8 +84,8 @@ namespace Timetabler
                     break;
                 }
             }
-            btnColour.BackColor = _model.SpeedLineAppearance.Colour;
-            btnColour.ForeColor = UIHelpers.ComputeButtonForeColour(_model.SpeedLineAppearance.Colour);
+            btnColour.BackColor = _model.SpeedLineAppearance.Colour.ToColor();
+            btnColour.ForeColor = UIHelpers.ComputeButtonForeColour(_model.SpeedLineAppearance.Colour).ToColor();
             _inViewUpdate = false;
         }
 
@@ -137,7 +138,7 @@ namespace Timetabler
             _model.GraphEditStyle = item.Value;
         }
 
-        private void ckDisplaySpeedLines_CheckedChanged(object sender, EventArgs e)
+        private void CkDisplaySpeedLines_CheckedChanged(object sender, EventArgs e)
         {
             if (_inViewUpdate || _model == null)
             {

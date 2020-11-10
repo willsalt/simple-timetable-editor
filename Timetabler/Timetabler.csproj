@@ -106,6 +106,9 @@
     <Compile Include="DocumentOptionsEditForm.Designer.cs">
       <DependentUpon>DocumentOptionsEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\ColourExtensions.cs" />
+    <Compile Include="Extensions\DashStyleExtensions.cs" />
     <Compile Include="Extensions\TrainGraphAxisTickInfoExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Extensions\ClockTypeExtensions.cs" />

@@ -40,7 +40,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +55,10 @@
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj">
       <Project>{746618e4-92ef-451e-acb6-1eef1254137a}</Project>
       <Name>Tests.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj">
+      <Project>{ddc29237-18c5-40a7-bccc-2a51fa8c5f9f}</Project>
+      <Name>Timetabler.CoreData</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
       <Project>{9a7e2940-50b8-4f3a-a535-ab6220e6ce3a}</Project>

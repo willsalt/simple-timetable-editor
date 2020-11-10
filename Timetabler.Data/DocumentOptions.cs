@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Timetabler.CoreData;
 
 namespace Timetabler.Data
 {
@@ -21,7 +22,7 @@ namespace Timetabler.Data
         /// The default appearance of graph speed lines.
         /// </summary>
         public static GraphTrainProperties DefaultSpeedLineAppearence =>
-            new GraphTrainProperties { Colour = Color.LightGray, DashStyle = System.Drawing.Drawing2D.DashStyle.Dot, Width = 1f };
+            new GraphTrainProperties { Colour = Colour.LightGrey, DashStyle = DashStyle.Dot, Width = 1f };
 
         private ClockType _clockType;
 

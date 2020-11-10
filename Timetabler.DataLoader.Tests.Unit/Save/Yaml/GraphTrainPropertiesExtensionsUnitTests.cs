@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Globalization;
+using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
+using Timetabler.CoreData;
 using Timetabler.Data;
 using Timetabler.DataLoader.Save.Yaml;
 using Timetabler.SerialData.Yaml;
@@ -24,12 +24,11 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
                 DashStyle.Dot,
                 DashStyle.DashDot,
                 DashStyle.DashDotDot,
-                DashStyle.Custom,
             };
 
             return new GraphTrainProperties
             {
-                Colour = Color.FromArgb(_rnd.Next()),
+                Colour = new Colour(_rnd.NextUInt()),
                 DashStyle = dashStyles[_rnd.Next(dashStyles.Length)],
                 Width = (float)_rnd.NextDouble() * 5,
             };
@@ -55,7 +54,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
             GraphTrainPropertiesModel testOutput = testParam.ToYamlGraphTrainPropertiesModel();
 
-            Assert.AreEqual(testParam.Colour.ToArgb().ToString("X8", CultureInfo.InvariantCulture), testOutput.Colour);
+            Assert.AreEqual(testParam.Colour.Argb.ToString("X8", CultureInfo.InvariantCulture), testOutput.Colour);
         }
 
         [TestMethod]

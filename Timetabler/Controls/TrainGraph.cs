@@ -204,9 +204,9 @@ namespace Timetabler.Controls
                 {
                     double hOffset = Model.GetSpeedGuidelineHorizontalOffset();
                     double hStart = 0;
-                    using (Pen guidelinePen = new Pen(Model.SpeedLineAppearance.Colour, Model.SpeedLineAppearance.Width))
+                    using (Pen guidelinePen = new Pen(Model.SpeedLineAppearance.Colour.ToColor(), Model.SpeedLineAppearance.Width))
                     {
-                        guidelinePen.DashStyle = Model.SpeedLineAppearance.DashStyle;
+                        guidelinePen.DashStyle = Model.SpeedLineAppearance.DashStyle.ToSystemDashStyle();
                         bool flip = false;
                         while (hStart + hOffset < 1)
                         {
@@ -248,7 +248,7 @@ namespace Timetabler.Controls
             List<Tuple<float, float>> selectedTrainCoordinates = new List<Tuple<float, float>>();
             foreach (TrainDrawingInfo info in trainDrawingInfo)
             {
-                using (Pen trainPen = new Pen(info.Properties.Colour, info.Properties.Width) { DashStyle = info.Properties.DashStyle })
+                using (Pen trainPen = new Pen(info.Properties.Colour.ToColor(), info.Properties.Width) { DashStyle = info.Properties.DashStyle.ToSystemDashStyle() })
                 {
                     foreach (LineCoordinates lineData in info.Lines)
                     {

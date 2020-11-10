@@ -529,6 +529,15 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no trains to export..
+        /// </summary>
+        internal static string MainForm_Export_NoTrains {
+            get {
+                return ResourceManager.GetString("MainForm_Export_NoTrains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred exporting to PDF file {0}.
         ///
         ///Error type: {1}

@@ -273,6 +273,9 @@
   <data name="MainForm_Export_Completed" xml:space="preserve">
     <value>Export completed.</value>
   </data>
+  <data name="MainForm_Export_NoTrains" xml:space="preserve">
+    <value>There are no trains to export.</value>
+  </data>
   <data name="MainForm_FileExport_Failure" xml:space="preserve">
     <value>An error occurred exporting to PDF file {0}.
 

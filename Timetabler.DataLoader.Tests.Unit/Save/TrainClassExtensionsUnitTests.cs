@@ -3,10 +3,10 @@ using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class TrainClassExtensionsUnitTests
@@ -27,41 +27,41 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void TrainClassExtensionsClass_ToYamlTrainClassModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        public void TrainClassExtensionsClass_ToTrainClassModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
         {
             TrainClass testParam = null;
 
-            _ = testParam.ToYamlTrainClassModel();
+            _ = testParam.ToTrainClassModel();
 
             Assert.Fail();
         }
 
         [TestMethod]
-        public void TrainClassExtensionsClass_ToYamlTrainClassModelMethod_ReturnsObjectWithCorrectDescriptionProperty_IfParameterIsNotNull()
+        public void TrainClassExtensionsClass_ToTrainClassModelMethod_ReturnsObjectWithCorrectDescriptionProperty_IfParameterIsNotNull()
         {
             TrainClass testParam = GetTestObject();
 
-            TrainClassModel testOutput = testParam.ToYamlTrainClassModel();
+            TrainClassModel testOutput = testParam.ToTrainClassModel();
 
             Assert.AreEqual(testParam.Description, testOutput.Description);
         }
 
         [TestMethod]
-        public void TrainClassExtensionsClass_ToYamlTrainClassModelMethod_ReturnsObjectWithCorrectIdProperty_IfParameterIsNotNull()
+        public void TrainClassExtensionsClass_ToTrainClassModelMethod_ReturnsObjectWithCorrectIdProperty_IfParameterIsNotNull()
         {
             TrainClass testParam = GetTestObject();
 
-            TrainClassModel testOutput = testParam.ToYamlTrainClassModel();
+            TrainClassModel testOutput = testParam.ToTrainClassModel();
 
             Assert.AreEqual(testParam.Id, testOutput.Id);
         }
 
         [TestMethod]
-        public void TrainClassExtensionsClass_ToYamlTrainClassModelMethod_ReturnsObjectWithCorrectTableCodeProperty_IfParameterIsNotNull()
+        public void TrainClassExtensionsClass_ToTrainClassModelMethod_ReturnsObjectWithCorrectTableCodeProperty_IfParameterIsNotNull()
         {
             TrainClass testParam = GetTestObject();
 
-            TrainClassModel testOutput = testParam.ToYamlTrainClassModel();
+            TrainClassModel testOutput = testParam.ToTrainClassModel();
 
             Assert.AreEqual(testParam.TableCode, testOutput.TableCode);
         }

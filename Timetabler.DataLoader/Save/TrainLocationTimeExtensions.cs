@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="tlt">The object to be converted.</param>
         /// <returns>A <see cref="TrainLocationTimeModel" /> instance containing the same data as the parameter in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
-        public static TrainLocationTimeModel ToYamlTrainLocationTimeModel(this TrainLocationTime tlt)
+        public static TrainLocationTimeModel ToTrainLocationTimeModel(this TrainLocationTime tlt)
         {
             if (tlt is null)
             {
@@ -24,8 +24,8 @@ namespace Timetabler.DataLoader.Save
 
             return new TrainLocationTimeModel
             {
-                Arrival = tlt.ArrivalTime.ToYamlTrainTimeModel(),
-                Departure = tlt.DepartureTime.ToYamlTrainTimeModel(),
+                Arrival = tlt.ArrivalTime.ToTrainTimeModel(),
+                Departure = tlt.DepartureTime.ToTrainTimeModel(),
                 LocationId = tlt.Location.Id,
                 Pass = tlt.Pass,
                 Platform = tlt.Platform,

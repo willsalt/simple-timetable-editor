@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="trainClass">The object to be converted.</param>
         /// <returns>A <see cref="TrainClassModel" /> instance containing the same data as the parameter in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
-        public static TrainClassModel ToYamlTrainClassModel(this TrainClass trainClass)
+        public static TrainClassModel ToTrainClassModel(this TrainClass trainClass)
         {
             if (trainClass is null)
             {

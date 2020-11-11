@@ -16,7 +16,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="doc">The object to convert.</param>
         /// <returns>A <see cref="TimetableFileModel" /> instance containing the same data as the parameter, in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
-        public static TimetableFileModel ToYamlTimetableFileModel(this TimetableDocument doc)
+        public static TimetableFileModel ToTimetableFileModel(this TimetableDocument doc)
         {
             if (doc is null)
             {
@@ -27,8 +27,8 @@ namespace Timetabler.DataLoader.Save
             {
                 Version = Versions.CurrentTimetableDocument,
 
-                FileOptions = doc.Options.ToYamlDocumentOptionsModel(),
-                ExportOptions = doc.ExportOptions.ToYamlExportOptionsModel(),
+                FileOptions = doc.Options.ToDocumentOptionsModel(),
+                ExportOptions = doc.ExportOptions.ToExportOptionsModel(),
 
                 Title = doc.Title,
                 Subtitle = doc.Subtitle,
@@ -40,18 +40,18 @@ namespace Timetabler.DataLoader.Save
             };
 
             fileModel.Maps.Add(BuildNetworkMapModel(doc));
-            fileModel.TrainList.AddRange(doc.TrainList.Select(t => t.ToYamlTrainModel()));
-            fileModel.NoteDefinitions.AddRange(doc.NoteDefinitions.Select(n => n.ToYamlNoteModel()));
-            fileModel.TrainClassList.AddRange(doc.TrainClassList.Select(c => c.ToYamlTrainClassModel()));
-            fileModel.SignalboxHoursSets.AddRange(doc.SignalboxHoursSets.Select(s => s.ToYamlSignalboxHoursSetModel()));
+            fileModel.TrainList.AddRange(doc.TrainList.Select(t => t.ToTrainModel()));
+            fileModel.NoteDefinitions.AddRange(doc.NoteDefinitions.Select(n => n.ToNoteModel()));
+            fileModel.TrainClassList.AddRange(doc.TrainClassList.Select(c => c.ToTrainClassModel()));
+            fileModel.SignalboxHoursSets.AddRange(doc.SignalboxHoursSets.Select(s => s.ToSignalboxHoursSetModel()));
             return fileModel;
         }
 
         private static NetworkMapModel BuildNetworkMapModel(TimetableDocument doc)
         {
             NetworkMapModel model = new NetworkMapModel();
-            model.LocationList.AddRange(doc.LocationList.Select(c => c.ToYamlLocationModel()));
-            model.Signalboxes.AddRange(doc.Signalboxes.Select(b => b.ToYamlSignalboxModel()));
+            model.LocationList.AddRange(doc.LocationList.Select(c => c.ToLocationModel()));
+            model.Signalboxes.AddRange(doc.Signalboxes.Select(b => b.ToSignalboxModel()));
             return model;
         }
     }

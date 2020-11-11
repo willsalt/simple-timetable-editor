@@ -4,10 +4,10 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.Data.Tests.Utility.Extensions;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class DocumentOptionsExtensionsUnitTests
@@ -32,71 +32,71 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
         {
             DocumentOptions testParam = null;
 
-            _ = testParam.ToYamlDocumentOptionsModel();
+            _ = testParam.ToDocumentOptionsModel();
 
             Assert.Fail();
         }
 
         [TestMethod]
-        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectClockTypeNameParameter_IfParameterIsNotNull()
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ReturnsObjectWithCorrectClockTypeNameParameter_IfParameterIsNotNull()
         {
             DocumentOptions testParam = GetTestObject();
 
-            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+            DocumentOptionsModel testOutput = testParam.ToDocumentOptionsModel();
 
             Assert.AreEqual(testParam.ClockType.ToString("g"), testOutput.ClockTypeName);
         }
 
         [TestMethod]
-        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectDisplayTrainLabelsOnGraphsParameter_IfParameterIsNotNull()
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ReturnsObjectWithCorrectDisplayTrainLabelsOnGraphsParameter_IfParameterIsNotNull()
         {
             DocumentOptions testParam = GetTestObject();
 
-            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+            DocumentOptionsModel testOutput = testParam.ToDocumentOptionsModel();
 
             Assert.AreEqual(testParam.DisplayTrainLabelsOnGraphs, testOutput.DisplayTrainLabelsOnGraphs.Value);
         }
 
         [TestMethod]
-        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectGraphEditStyleParameter_IfParameterIsNotNull()
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ReturnsObjectWithCorrectGraphEditStyleParameter_IfParameterIsNotNull()
         {
             DocumentOptions testParam = GetTestObject();
 
-            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+            DocumentOptionsModel testOutput = testParam.ToDocumentOptionsModel();
 
             Assert.AreEqual(testParam.GraphEditStyle.ToString("g"), testOutput.GraphEditStyle);
         }
 
         [TestMethod]
-        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectDisplaySpeedLinesOnGraphsProperty_IfParameterIsNotNull()
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ReturnsObjectWithCorrectDisplaySpeedLinesOnGraphsProperty_IfParameterIsNotNull()
         {
             DocumentOptions testParam = GetTestObject();
 
-            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+            DocumentOptionsModel testOutput = testParam.ToDocumentOptionsModel();
 
             Assert.AreEqual(testParam.DisplaySpeedLinesOnGraphs, testOutput.DisplaySpeedLinesOnGraphs);
         }
 
         [TestMethod]
-        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectSpeedLineSpeedProperty_IfParameterIsNotNull()
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ReturnsObjectWithCorrectSpeedLineSpeedProperty_IfParameterIsNotNull()
         {
             DocumentOptions testParam = GetTestObject();
 
-            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+            DocumentOptionsModel testOutput = testParam.ToDocumentOptionsModel();
 
             Assert.AreEqual(testParam.SpeedLineSpeed, testOutput.SpeedLineSpeed);
         }
 
         [TestMethod]
-        public void DocumentOptionsExtensionsClass_ToYamlDocumentOptionsModelMethod_ReturnsObjectWithCorrectSpeedLineSpacingMinutesProperty_IfParameterIsNotNull()
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ReturnsObjectWithCorrectSpeedLineSpacingMinutesProperty_IfParameterIsNotNull()
         {
             DocumentOptions testParam = GetTestObject();
 
-            DocumentOptionsModel testOutput = testParam.ToYamlDocumentOptionsModel();
+            DocumentOptionsModel testOutput = testParam.ToDocumentOptionsModel();
 
             Assert.AreEqual(testParam.SpeedLineSpacingMinutes, testOutput.SpeedLineSpacingMinutes);
         }

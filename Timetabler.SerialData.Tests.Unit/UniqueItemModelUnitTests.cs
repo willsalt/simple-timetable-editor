@@ -3,13 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
 using Tests.Utility.Providers;
-using Timetabler.SerialData.Tests.Unit.Mocks.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData.Tests.Unit.Mocks;
 
-namespace Timetabler.SerialData.Tests.Unit.Yaml
+namespace Timetabler.SerialData.Tests.Unit
 {
     [TestClass]
     public class UniqueItemModelUnitTests

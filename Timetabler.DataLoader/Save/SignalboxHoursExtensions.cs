@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="hours">The object to be converted.</param>
         /// <returns>A <see cref="SignalboxHoursModel" /> instance containing the same data as the parameter in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if parameter is <c>null</c>.</exception>
-        public static SignalboxHoursModel ToYamlSignalboxHoursModel(this SignalboxHours hours)
+        public static SignalboxHoursModel ToSignalboxHoursModel(this SignalboxHours hours)
         {
             if (hours is null)
             {
@@ -25,8 +25,8 @@ namespace Timetabler.DataLoader.Save
             return new SignalboxHoursModel
             {
                 SignalboxId = hours.Signalbox?.Id,
-                FinishTime = hours.EndTime.ToYamlTimeOfDayModel(),
-                StartTime = hours.StartTime.ToYamlTimeOfDayModel(),
+                FinishTime = hours.EndTime.ToTimeOfDayModel(),
+                StartTime = hours.StartTime.ToTimeOfDayModel(),
                 TokenBalanceWarning = hours.TokenBalanceWarning,
             };
         }

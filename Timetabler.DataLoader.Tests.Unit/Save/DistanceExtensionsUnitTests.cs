@@ -2,11 +2,11 @@
 using System;
 using Tests.Utility.Providers;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
+using Timetabler.DataLoader.Save;
 using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class DistanceExtensionsUnitTests
@@ -21,21 +21,21 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void DistanceExtensionsClass_ToYamlDistanceModelMethod_ReturnsObjectWithCorrectMilesProperty()
+        public void DistanceExtensionsClass_ToDistanceModelMethod_ReturnsObjectWithCorrectMilesProperty()
         {
             Distance testParam = GetTestObject();
 
-            DistanceModel testOutput = testParam.ToYamlDistanceModel();
+            DistanceModel testOutput = testParam.ToDistanceModel();
 
             Assert.AreEqual(testParam.Mileage, testOutput.Miles);
         }
 
         [TestMethod]
-        public void DistanceExtensionsClass_ToYamlDistanceModelMethod_ReturnsObjectWithCorrectChainsProperty()
+        public void DistanceExtensionsClass_ToDistanceModelMethod_ReturnsObjectWithCorrectChainsProperty()
         {
             Distance testParam = GetTestObject();
 
-            DistanceModel testOutput = testParam.ToYamlDistanceModel();
+            DistanceModel testOutput = testParam.ToDistanceModel();
 
             Assert.AreEqual(testParam.Chainage, testOutput.Chains);
         }

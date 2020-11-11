@@ -13,7 +13,7 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="location">The object to be converted.</param>
         /// <returns>A <see cref="LocationModel" /> instance containing the same data in serialisable form, or <c>null</c> if the parameter is <c>null</c>.</returns>
-        public static LocationModel ToYamlLocationModel(this Location location)
+        public static LocationModel ToLocationModel(this Location location)
         {
             if (location is null)
             {
@@ -31,7 +31,7 @@ namespace Timetabler.DataLoader.Save
                 UpRoutingCodesAlwaysDisplayed = location.UpRoutingCodesAlwaysDisplayed,
                 DownArrivalDepartureAlwaysDisplayed = location.DownArrivalDepartureAlwaysDisplayed,
                 DownRoutingCodesAlwaysDisplayed = location.DownRoutingCodesAlwaysDisplayed,
-                Mileage = location.Mileage.ToYamlDistanceModel(),
+                Mileage = location.Mileage.ToDistanceModel(),
                 FontTypeName = location.FontType.ToString("g"),
                 DisplaySeparatorAbove = location.DisplaySeparatorAbove,
                 DisplaySeparatorBelow = location.DisplaySeparatorBelow,

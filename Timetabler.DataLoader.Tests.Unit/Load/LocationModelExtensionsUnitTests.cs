@@ -4,11 +4,11 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data;
-using Timetabler.DataLoader.Load.Yaml;
+using Timetabler.DataLoader.Load;
 using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Load
 {
     [TestClass]
     public class LocationModelExtensionsUnitTests

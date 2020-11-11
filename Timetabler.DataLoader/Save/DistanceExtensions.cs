@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="distance">The object to be converted.</param>
         /// <returns>A <see cref="DistanceModel" /> instance encoding the same distance as the original object.</returns>
         /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
-        public static DistanceModel ToYamlDistanceModel(this Distance distance)
+        public static DistanceModel ToDistanceModel(this Distance distance)
         {
             return new DistanceModel { Miles = distance.Mileage, Chains = distance.Chainage };
         }

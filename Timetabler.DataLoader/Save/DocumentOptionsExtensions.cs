@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="options">The object to convert.</param>
         /// <returns>A <see cref="DocumentOptionsModel" /> instance containing the same data as the parameter in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
-        public static DocumentOptionsModel ToYamlDocumentOptionsModel(this DocumentOptions options)
+        public static DocumentOptionsModel ToDocumentOptionsModel(this DocumentOptions options)
         {
             if (options is null)
             {
@@ -30,7 +30,7 @@ namespace Timetabler.DataLoader.Save
                 DisplaySpeedLinesOnGraphs = options.DisplaySpeedLinesOnGraphs,
                 SpeedLineSpeed = options.SpeedLineSpeed,
                 SpeedLineSpacingMinutes = options.SpeedLineSpacingMinutes,
-                SpeedLineAppearance = options.SpeedLineAppearance?.ToYamlGraphTrainPropertiesModel(),
+                SpeedLineAppearance = options.SpeedLineAppearance?.ToGraphTrainPropertiesModel(),
             };
         }
     }

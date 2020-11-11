@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="options">The instance to convert.</param>
         /// <returns>An <see cref="ExportOptionsModel" /> instance containing the same data in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
-        public static ExportOptionsModel ToYamlExportOptionsModel(this DocumentExportOptions options)
+        public static ExportOptionsModel ToExportOptionsModel(this DocumentExportOptions options)
         {
             if (options is null)
             {

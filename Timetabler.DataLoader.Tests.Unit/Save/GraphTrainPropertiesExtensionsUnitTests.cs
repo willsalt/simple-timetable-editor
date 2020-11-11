@@ -5,10 +5,10 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class GraphTrainPropertiesExtensionsUnitTests
@@ -38,41 +38,41 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void GraphTrainPropertiesExtensionsClass_ToYamlGraphTrainPropertiesModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        public void GraphTrainPropertiesExtensionsClass_ToGraphTrainPropertiesModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
         {
             GraphTrainProperties testParam = null;
 
-            _ = testParam.ToYamlGraphTrainPropertiesModel();
+            _ = testParam.ToGraphTrainPropertiesModel();
 
             Assert.Fail();
         }
 
         [TestMethod]
-        public void GraphTrainPropertiesExtensionsClass_ToYamlGraphTrainPropertiesModelMethod_ReturnsObjectWithCorrectColourProperty_IfParameterIsNotNull()
+        public void GraphTrainPropertiesExtensionsClass_ToGraphTrainPropertiesModelMethod_ReturnsObjectWithCorrectColourProperty_IfParameterIsNotNull()
         {
             GraphTrainProperties testParam = GetTestObject();
 
-            GraphTrainPropertiesModel testOutput = testParam.ToYamlGraphTrainPropertiesModel();
+            GraphTrainPropertiesModel testOutput = testParam.ToGraphTrainPropertiesModel();
 
             Assert.AreEqual(testParam.Colour.Argb.ToString("X8", CultureInfo.InvariantCulture), testOutput.Colour);
         }
 
         [TestMethod]
-        public void GraphTrainPropertiesExtensionsClass_ToYamlGraphTrainPropertiesModelMethod_ReturnsObjectWithCorrectDashStyleNameProperty_IfParameterIsNotNull()
+        public void GraphTrainPropertiesExtensionsClass_ToGraphTrainPropertiesModelMethod_ReturnsObjectWithCorrectDashStyleNameProperty_IfParameterIsNotNull()
         {
             GraphTrainProperties testParam = GetTestObject();
 
-            GraphTrainPropertiesModel testOutput = testParam.ToYamlGraphTrainPropertiesModel();
+            GraphTrainPropertiesModel testOutput = testParam.ToGraphTrainPropertiesModel();
 
             Assert.AreEqual(testParam.DashStyle.ToString("g"), testOutput.DashStyleName);
         }
 
         [TestMethod]
-        public void GraphTrainPropertiesExtensionsClass_ToYamlGraphTrainPropertiesModelMethod_ReturnsObjectWithCorrectWidthProperty_IfParameterIsNotNull()
+        public void GraphTrainPropertiesExtensionsClass_ToGraphTrainPropertiesModelMethod_ReturnsObjectWithCorrectWidthProperty_IfParameterIsNotNull()
         {
             GraphTrainProperties testParam = GetTestObject();
 
-            GraphTrainPropertiesModel testOutput = testParam.ToYamlGraphTrainPropertiesModel();
+            GraphTrainPropertiesModel testOutput = testParam.ToGraphTrainPropertiesModel();
 
             Assert.AreEqual(testParam.Width, testOutput.Width);
         }

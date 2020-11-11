@@ -3,11 +3,11 @@ using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
+using Timetabler.DataLoader.Save;
 using Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class LocationExtensionsUnitTests
@@ -37,151 +37,151 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsNull_IfParameterIsNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsNull_IfParameterIsNull()
         {
             Location testParam = null;
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.IsNull(testOutput);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectIdProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectIdProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.Id, testOutput.Id);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectEditorDisplayNameProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectEditorDisplayNameProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.EditorDisplayName, testOutput.EditorDisplayName);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectTimetableDisplayNameProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectTimetableDisplayNameProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.TimetableDisplayName, testOutput.TimetableDisplayName);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectGraphDisplayNameProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectGraphDisplayNameProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.GraphDisplayName, testOutput.GraphDisplayName);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectLocationCodeProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectLocationCodeProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.Tiploc, testOutput.LocationCode);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectUpArrivalDepartureAlwaysDisplayedProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectUpArrivalDepartureAlwaysDisplayedProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.UpArrivalDepartureAlwaysDisplayed, testOutput.UpArrivalDepartureAlwaysDisplayed.Value);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectUpRoutingCodesAlwaysDisplayedProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectUpRoutingCodesAlwaysDisplayedProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.UpRoutingCodesAlwaysDisplayed, testOutput.UpRoutingCodesAlwaysDisplayed.Value);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectDownArrivalDepartureAlwaysDisplayedProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectDownArrivalDepartureAlwaysDisplayedProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.DownArrivalDepartureAlwaysDisplayed, testOutput.DownArrivalDepartureAlwaysDisplayed.Value);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectDownRoutingCodesAlwaysDisplayedProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectDownRoutingCodesAlwaysDisplayedProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.DownRoutingCodesAlwaysDisplayed, testOutput.DownRoutingCodesAlwaysDisplayed);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectDisplaySeparatorAboveProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectDisplaySeparatorAboveProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.DisplaySeparatorAbove, testOutput.DisplaySeparatorAbove.Value);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectDisplaySeparatorBelowProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectDisplaySeparatorBelowProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.DisplaySeparatorBelow, testOutput.DisplaySeparatorBelow);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithMileagePropertyWithCorrectMilesProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithMileagePropertyWithCorrectMilesProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.Mileage.Mileage, testOutput.Mileage.Miles);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithMileagePropertyWithCorrectChainsProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithMileagePropertyWithCorrectChainsProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.Mileage.Chainage, testOutput.Mileage.Chains);
         }
 
         [TestMethod]
-        public void LocationExtensionsClass_ToYamlLocationModelMethod_ReturnsObjectWithCorrectFontTypeNameProperty_IfParameterIsNotNull()
+        public void LocationExtensionsClass_ToLocationModelMethod_ReturnsObjectWithCorrectFontTypeNameProperty_IfParameterIsNotNull()
         {
             Location testParam = GetTestObject();
 
-            LocationModel testOutput = testParam.ToYamlLocationModel();
+            LocationModel testOutput = testParam.ToLocationModel();
 
             Assert.AreEqual(testParam.FontType.ToString("g"), testOutput.FontTypeName);
         }

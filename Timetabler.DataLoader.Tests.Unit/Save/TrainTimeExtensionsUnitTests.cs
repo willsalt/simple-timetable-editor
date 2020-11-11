@@ -6,10 +6,10 @@ using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
 using Timetabler.Data.Tests.Utility.Extensions;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class TrainTimeExtensionsUnitTests
@@ -33,21 +33,21 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void TrainTimeExtensionsClass_ToYamlTrainTimeModelMethod_ThrowsNullReferenceException_WhenParameterIsNull()
+        public void TrainTimeExtensionsClass_ToTrainTimeModelMethod_ThrowsNullReferenceException_WhenParameterIsNull()
         {
             TrainTime testParam = null;
 
-            _ = testParam.ToYamlTrainTimeModel();
+            _ = testParam.ToTrainTimeModel();
 
             Assert.Fail();
         }
 
         [TestMethod]
-        public void TrainTimeExtensionsClass_ToYamlTrainTimeModelMethod_ReturnsObjectWithAtPropertyWithCorrectTimeProperty_WhenParameterHasTimePropertyThatIsNotNull()
+        public void TrainTimeExtensionsClass_ToTrainTimeModelMethod_ReturnsObjectWithAtPropertyWithCorrectTimeProperty_WhenParameterHasTimePropertyThatIsNotNull()
         {
             TrainTime testParam = GetTestObject();
 
-            TrainTimeModel testOutput = testParam.ToYamlTrainTimeModel();
+            TrainTimeModel testOutput = testParam.ToTrainTimeModel();
 
             string expectedValue = testParam.Time.Hours24.ToString("d2", CultureInfo.InvariantCulture) + ":" +
                 testParam.Time.Minutes.ToString("d2", CultureInfo.InvariantCulture) + ":" +
@@ -56,32 +56,32 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
         }
 
         [TestMethod]
-        public void TrainTimeExtensionsClass_ToYamlTrainTimeModelMethod_ReturnsObjectWithAtPropertyThatIsNull_WhenParameterHasTimePropertyThatIsNull()
+        public void TrainTimeExtensionsClass_ToTrainTimeModelMethod_ReturnsObjectWithAtPropertyThatIsNull_WhenParameterHasTimePropertyThatIsNull()
         {
             TrainTime testParam = GetTestObject();
             testParam.Time = null;
 
-            TrainTimeModel testOutput = testParam.ToYamlTrainTimeModel();
+            TrainTimeModel testOutput = testParam.ToTrainTimeModel();
 
             Assert.IsNull(testOutput.At);
         }
 
         [TestMethod]
-        public void TrainTimeExtensionsClass_ToYamlTrainTimeModelMethod_ReturnsObjectWithFootnoteIdsPropertyOfCorrectLength_WhenParameterIsNotNull()
+        public void TrainTimeExtensionsClass_ToTrainTimeModelMethod_ReturnsObjectWithFootnoteIdsPropertyOfCorrectLength_WhenParameterIsNotNull()
         {
             TrainTime testParam = GetTestObject();
 
-            TrainTimeModel testOutput = testParam.ToYamlTrainTimeModel();
+            TrainTimeModel testOutput = testParam.ToTrainTimeModel();
 
             Assert.AreEqual(testParam.Footnotes.Count, testOutput.FootnoteIds.Count);
         }
 
         [TestMethod]
-        public void TrainTimeExtensionsClass_ToYamlTrainTimeModelMethod_ReturnsObjectWithFootnoteIdsPropertyContainingCorrectValues_WhenParameterIsNotNull()
+        public void TrainTimeExtensionsClass_ToTrainTimeModelMethod_ReturnsObjectWithFootnoteIdsPropertyContainingCorrectValues_WhenParameterIsNotNull()
         {
             TrainTime testParam = GetTestObject();
 
-            TrainTimeModel testOutput = testParam.ToYamlTrainTimeModel();
+            TrainTimeModel testOutput = testParam.ToTrainTimeModel();
 
             for (int i = 0; i < testParam.Footnotes.Count; ++i)
             {

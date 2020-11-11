@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="toWork">The object to be converted.</param>
         /// <returns>A <see cref="ToWorkModel" /> instance containing the same data as the parameter.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
-        public static ToWorkModel ToYamlToWorkModel(this ToWork toWork)
+        public static ToWorkModel ToToWorkModel(this ToWork toWork)
         {
             if (toWork is null)
             {
@@ -25,7 +25,7 @@ namespace Timetabler.DataLoader.Save
             return new ToWorkModel
             {
                 Text = toWork.Text,
-                At = toWork.AtTime?.ToYamlTimeOfDayModel(),
+                At = toWork.AtTime?.ToTimeOfDayModel(),
             };
         }
     }

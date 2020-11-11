@@ -15,7 +15,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="note">The object to be converted.</param>
         /// <returns>A <see cref="NoteModel" /> object containing the same data as the parameter in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
-        public static NoteModel ToYamlNoteModel(this Note note)
+        public static NoteModel ToNoteModel(this Note note)
         {
             if (note is null)
             {

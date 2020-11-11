@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.TestHelpers
 {

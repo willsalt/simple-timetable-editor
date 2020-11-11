@@ -4,10 +4,10 @@ using System.Globalization;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class ToWorkExtensionsUnitTests
@@ -27,42 +27,42 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void ToWorkExtensionsClass_ToYamlToWorkModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        public void ToWorkExtensionsClass_ToToWorkModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
         {
             ToWork testParam = null;
 
-            _ = testParam.ToYamlToWorkModel();
+            _ = testParam.ToToWorkModel();
 
             Assert.Fail();
         }
 
         [TestMethod]
-        public void ToWorkExtensionsClass_ToYamlToWorkModelMethod_ReturnsObjectWithCorrectTextProperty_IfParameterHasTextPropertyThatIsNotNull()
+        public void ToWorkExtensionsClass_ToToWorkModelMethod_ReturnsObjectWithCorrectTextProperty_IfParameterHasTextPropertyThatIsNotNull()
         {
             ToWork testParam = GetTestObject();
 
-            ToWorkModel testOutput = testParam.ToYamlToWorkModel();
+            ToWorkModel testOutput = testParam.ToToWorkModel();
 
             Assert.AreEqual(testParam.Text, testOutput.Text);
         }
 
         [TestMethod]
-        public void ToWorkExtensionsClass_ToYamlToWorkModelMethod_ReturnsObjectWithTextPropertyEqualToNull_IfParameterHasTextPropertyThatIsNotNull()
+        public void ToWorkExtensionsClass_ToToWorkModelMethod_ReturnsObjectWithTextPropertyEqualToNull_IfParameterHasTextPropertyThatIsNotNull()
         {
             ToWork testParam = GetTestObject();
             testParam.Text = null;
 
-            ToWorkModel testOutput = testParam.ToYamlToWorkModel();
+            ToWorkModel testOutput = testParam.ToToWorkModel();
 
             Assert.IsNull(testOutput.Text);
         }
 
         [TestMethod]
-        public void ToWorkExtensionsClass_ToYamlToWorkModelMethod_ReturnsObjectWithAtPropertyWithCorrectTimeProperty_IfParameterHasAtTimePropertyThatIsNotNull()
+        public void ToWorkExtensionsClass_ToToWorkModelMethod_ReturnsObjectWithAtPropertyWithCorrectTimeProperty_IfParameterHasAtTimePropertyThatIsNotNull()
         {
             ToWork testParam = GetTestObject();
 
-            ToWorkModel testOutput = testParam.ToYamlToWorkModel();
+            ToWorkModel testOutput = testParam.ToToWorkModel();
 
             string expectedValue = testParam.AtTime.Hours24.ToString("d2", CultureInfo.InvariantCulture) + ":" +
                 testParam.AtTime.Minutes.ToString("d2", CultureInfo.InvariantCulture) + ":" +
@@ -71,12 +71,12 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
         }
 
         [TestMethod]
-        public void ToWorkExtensionsClass_ToYamlToWorkModelMethod_ReturnsObjectWithAtPropertyEqualToNull_IfParameterHasAtTimePropertyThatIsNotNull()
+        public void ToWorkExtensionsClass_ToToWorkModelMethod_ReturnsObjectWithAtPropertyEqualToNull_IfParameterHasAtTimePropertyThatIsNotNull()
         {
             ToWork testParam = GetTestObject();
             testParam.AtTime = null;
 
-            ToWorkModel testOutput = testParam.ToYamlToWorkModel();
+            ToWorkModel testOutput = testParam.ToToWorkModel();
 
             Assert.IsNull(testOutput.At);
         }

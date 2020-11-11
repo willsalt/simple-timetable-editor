@@ -4,10 +4,10 @@ using System.Globalization;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class TimeOfDayExtensionsUnitTests
@@ -22,21 +22,21 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void TimeOfDayExtensions_ToYamlTimeOfDayModelMethod_ReturnsNull_IfParameterIsNull()
+        public void TimeOfDayExtensions_ToTimeOfDayModelMethod_ReturnsNull_IfParameterIsNull()
         {
             TimeOfDay testParam = null;
 
-            TimeOfDayModel testOutput = testParam.ToYamlTimeOfDayModel();
+            TimeOfDayModel testOutput = testParam.ToTimeOfDayModel();
 
             Assert.IsNull(testOutput);
         }
 
         [TestMethod]
-        public void TimeOfDayExtensions_ToYamlTimeOfDayModelMethod_ReturnsObjectWithCorrectTimeProperty_IfParameterIsNotNull()
+        public void TimeOfDayExtensions_ToTimeOfDayModelMethod_ReturnsObjectWithCorrectTimeProperty_IfParameterIsNotNull()
         {
             TimeOfDay testParam = GetTestObject();
 
-            TimeOfDayModel testOutput = testParam.ToYamlTimeOfDayModel();
+            TimeOfDayModel testOutput = testParam.ToTimeOfDayModel();
 
             string expectedValue = testParam.Hours24.ToString("d2", CultureInfo.InvariantCulture) + ":" +
                 testParam.Minutes.ToString("d2", CultureInfo.InvariantCulture) + ":" +

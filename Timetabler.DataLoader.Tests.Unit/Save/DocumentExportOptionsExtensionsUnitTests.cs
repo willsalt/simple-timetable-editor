@@ -3,10 +3,10 @@ using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class DocumentExportOptionsExtensionsUnitTests
@@ -39,161 +39,161 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
         {
             DocumentExportOptions testParam = null;
 
-            _ = testParam.ToYamlExportOptionsModel();
+            _ = testParam.ToExportOptionsModel();
 
             Assert.Fail();
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectDisplayLocoDiagramRowProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectDisplayLocoDiagramRowProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayLocoDiagramRow, testOutput.DisplayLocoDiagramRow);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectSetToWorkRowInOutputProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectSetToWorkRowInOutputProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayToWorkRow, testOutput.SetToWorkRowInOutput);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectLocoToWorkRowInOutputProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectLocoToWorkRowInOutputProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayLocoToWorkRow, testOutput.LocoToWorkRowInOutput);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectBoxHoursInOutputProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectBoxHoursInOutputProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayBoxHours, testOutput.BoxHoursInOutput);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectCreditsInOutputProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectCreditsInOutputProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayCredits, testOutput.CreditsInOutput);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectLineWidthProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectLineWidthProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.LineWidth, testOutput.LineWidth);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectGraphAxisLineWidthProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectGraphAxisLineWidthProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.GraphAxisLineWidth, testOutput.GraphAxisLineWidth);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectFillerDashLineWidthProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectFillerDashLineWidthProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.FillerDashLineWidth, testOutput.FillerDashLineWidth);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectGraphsInOutputProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectGraphsInOutputProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayGraph, testOutput.GraphsInOutput);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectGlossaryInOutputProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectGlossaryInOutputProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DisplayGlossary, testOutput.GlossaryInOutput);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectTablePageOrientationProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectTablePageOrientationProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.TablePageOrientation, testOutput.TablePageOrientation.Value);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectGraphPageOrientationProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.GraphPageOrientation, testOutput.GraphPageOrientation.Value);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectUpSectionLabelProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectUpSectionLabelProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.UpSectionLabel, testOutput.UpSectionLabel);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectDownSectionLabelProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectDownSectionLabelProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DownSectionLabel, testOutput.DownSectionLabel);
         }
 
         [TestMethod]
-        public void DocumentExportOptionsExtensionsClass_ToYamlExportOptionsModelMethod_ReturnsObjectWithCorrectDistancesInOutputProperty_IfParameterIsNotNull()
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectDistancesInOutputProperty_IfParameterIsNotNull()
         {
             DocumentExportOptions testParam = GetTestObject();
 
-            ExportOptionsModel testOutput = testParam.ToYamlExportOptionsModel();
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DistancesInOutput, testOutput.DistancesInOutput.Value);
         }

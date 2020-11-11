@@ -1,14 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Globalization;
-using Tests.Utility.Extensions;
-using Tests.Utility.Providers;
 using Timetabler.CoreData;
-using Timetabler.DataLoader.Load.Yaml;
+using Timetabler.DataLoader.Load;
 using Timetabler.DataLoader.Tests.Unit.TestHelpers;
-using Timetabler.SerialData.Yaml;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Load.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Load
 {
     [TestClass]
     public class TimeOfDayModelExtensionsUnitTests

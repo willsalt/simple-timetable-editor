@@ -3,10 +3,10 @@ using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
-namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
+namespace Timetabler.DataLoader.Tests.Unit.Save
 {
     [TestClass]
     public class SignalboxExtensionsUnitTests
@@ -28,51 +28,51 @@ namespace Timetabler.DataLoader.Tests.Unit.Save.Yaml
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void SignalboxExtensionsClass_ToYamlSignalboxModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        public void SignalboxExtensionsClass_ToSignalboxModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
         {
             Signalbox testParam = null;
 
-            _ = testParam.ToYamlSignalboxModel();
+            _ = testParam.ToSignalboxModel();
 
             Assert.Fail();
         }
 
         [TestMethod]
-        public void SignalboxExtensionsClass_ToYamlSignalboxModelMethod_ReturnsObjectWithCorrectIdProperty_IfParameterIsNotNull()
+        public void SignalboxExtensionsClass_ToSignalboxModelMethod_ReturnsObjectWithCorrectIdProperty_IfParameterIsNotNull()
         {
             Signalbox testParam = GetTestObject();
 
-            SignalboxModel testOutput = testParam.ToYamlSignalboxModel();
+            SignalboxModel testOutput = testParam.ToSignalboxModel();
 
             Assert.AreEqual(testParam.Id, testOutput.Id);
         }
 
         [TestMethod]
-        public void SignalboxExtensionsClass_ToYamlSignalboxModelMethod_ReturnsObjectWithCorrectCodeProperty_IfParameterIsNotNull()
+        public void SignalboxExtensionsClass_ToSignalboxModelMethod_ReturnsObjectWithCorrectCodeProperty_IfParameterIsNotNull()
         {
             Signalbox testParam = GetTestObject();
 
-            SignalboxModel testOutput = testParam.ToYamlSignalboxModel();
+            SignalboxModel testOutput = testParam.ToSignalboxModel();
 
             Assert.AreEqual(testParam.Code, testOutput.Code);
         }
 
         [TestMethod]
-        public void SignalboxExtensionsClass_ToYamlSignalboxModelMethod_ReturnsObjectWithCorrectEditorDisplayNameProperty_IfParameterIsNotNull()
+        public void SignalboxExtensionsClass_ToSignalboxModelMethod_ReturnsObjectWithCorrectEditorDisplayNameProperty_IfParameterIsNotNull()
         {
             Signalbox testParam = GetTestObject();
 
-            SignalboxModel testOutput = testParam.ToYamlSignalboxModel();
+            SignalboxModel testOutput = testParam.ToSignalboxModel();
 
             Assert.AreEqual(testParam.EditorDisplayName, testOutput.EditorDisplayName);
         }
 
         [TestMethod]
-        public void SignalboxExtensionsClass_ToYamlSignalboxModelMethod_ReturnsObjectWithCorrectTimetableDisplayNameProperty_IfParameterIsNotNull()
+        public void SignalboxExtensionsClass_ToSignalboxModelMethod_ReturnsObjectWithCorrectTimetableDisplayNameProperty_IfParameterIsNotNull()
         {
             Signalbox testParam = GetTestObject();
 
-            SignalboxModel testOutput = testParam.ToYamlSignalboxModel();
+            SignalboxModel testOutput = testParam.ToSignalboxModel();
 
             Assert.AreEqual(testParam.ExportDisplayName, testOutput.TimetableDisplayName);
         }

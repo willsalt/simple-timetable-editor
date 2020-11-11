@@ -2,9 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Timetabler.SerialData.Yaml;
 
-namespace Timetabler.SerialData.Tests.Unit.Yaml
+namespace Timetabler.SerialData.Tests.Unit
 {
     [TestClass]
     public class TrainModelUnitTests

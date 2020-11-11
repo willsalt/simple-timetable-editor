@@ -14,7 +14,7 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="tod">The object to convert.</param>
         /// <returns>A <see cref="TimeOfDayModel" /> instance containing the same data as the parameter, or <c>null</c> if the parameter is <c>null</c>.</returns>
-        public static TimeOfDayModel ToYamlTimeOfDayModel(this TimeOfDay tod)
+        public static TimeOfDayModel ToTimeOfDayModel(this TimeOfDay tod)
         {
             if (tod is null)
             {

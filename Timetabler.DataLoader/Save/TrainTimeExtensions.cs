@@ -16,7 +16,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="tt">The object to convert.</param>
         /// <returns>A <see cref="TrainTimeModel" /> instance containing the same data as the parameter.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
-        public static TrainTimeModel ToYamlTrainTimeModel(this TrainTime tt)
+        public static TrainTimeModel ToTrainTimeModel(this TrainTime tt)
         {
             if (tt is null)
             {
@@ -25,7 +25,7 @@ namespace Timetabler.DataLoader.Save
 
             TrainTimeModel model = new TrainTimeModel
             {
-                At = tt.Time?.ToYamlTimeOfDayModel(),
+                At = tt.Time?.ToTimeOfDayModel(),
             };
 
             model.FootnoteIds.AddRange(tt.Footnotes.Select(n => n.Id));

@@ -17,7 +17,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="properties">The object to be converted.</param>
         /// <returns>A <see cref="GraphTrainPropertiesModel" /> instance containing the same data in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
-        public static GraphTrainPropertiesModel ToYamlGraphTrainPropertiesModel(this GraphTrainProperties properties)
+        public static GraphTrainPropertiesModel ToGraphTrainPropertiesModel(this GraphTrainProperties properties)
         {
             if (properties is null)
             {

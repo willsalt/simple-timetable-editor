@@ -2,6 +2,7 @@
 using System.Globalization;
 using Tests.Utility.Extensions;
 using Timetabler.Data;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
 {
@@ -40,19 +41,19 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
             return random.NextDistance(new Distance(32768, 0));
         }
 
-        public static SerialData.Yaml.DistanceModel NextDistanceModel(this Random random)
+        public static DistanceModel NextDistanceModel(this Random random)
         {
             if (random is null)
             {
                 throw new NullReferenceException();
             }
 
-            return new SerialData.Yaml.DistanceModel { Miles = random.Next(32768), Chains = random.NextDouble() * 80 };
+            return new DistanceModel { Miles = random.Next(32768), Chains = random.NextDouble() * 80 };
         }
 
         private static readonly string[] _validDashStyles = { "Solid", "Dash", "Dot", "DashDot", "DashDotDot", "Custom" };
 
-        public static SerialData.Yaml.GraphTrainPropertiesModel NextGraphTrainPropertiesModel(this Random random)
+        public static GraphTrainPropertiesModel NextGraphTrainPropertiesModel(this Random random)
         {
             if (random is null)
             {
@@ -60,7 +61,7 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
             }
 
             int colour = random.Next();
-            return new SerialData.Yaml.GraphTrainPropertiesModel
+            return new GraphTrainPropertiesModel
             {
                 Colour = colour.ToString("X8", CultureInfo.InvariantCulture),
                 Width = random.NextNullableFloat(5f),

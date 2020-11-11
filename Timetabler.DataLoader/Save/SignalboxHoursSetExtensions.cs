@@ -16,7 +16,7 @@ namespace Timetabler.DataLoader.Save
         /// <param name="set">The object to convert.</param>
         /// <returns>A <see cref="SignalboxHoursSetModel" /> instance containing the same data as the parameter in serialisable form.</returns>
         /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
-        public static SignalboxHoursSetModel ToYamlSignalboxHoursSetModel(this SignalboxHoursSet set)
+        public static SignalboxHoursSetModel ToSignalboxHoursSetModel(this SignalboxHoursSet set)
         {
             if (set is null)
             {
@@ -27,7 +27,7 @@ namespace Timetabler.DataLoader.Save
             {
                 Category = set.Category,
             };
-            shsm.Signalboxes.AddRange(set.Hours.Values.Select(h => h.ToYamlSignalboxHoursModel()));
+            shsm.Signalboxes.AddRange(set.Hours.Values.Select(h => h.ToSignalboxHoursModel()));
             return shsm;
         }
     }

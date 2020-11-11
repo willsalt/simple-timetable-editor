@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Timetabler.Data;
-using Timetabler.DataLoader.Save.Yaml;
-using Timetabler.SerialData.Yaml;
+using Timetabler.DataLoader.Save;
+using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader
 {
@@ -24,7 +24,7 @@ namespace Timetabler.DataLoader
             using (StreamWriter writer = new StreamWriter(destination))
             {
                 writer.WriteLine("%WTT");
-                serializer.Serialize(writer, document.ToYamlTimetableFileModel());
+                serializer.Serialize(writer, document.ToTimetableFileModel());
             } 
         }
 
@@ -48,7 +48,7 @@ namespace Timetabler.DataLoader
         private static NetworkMapModel BuildNetworkMapModel(IEnumerable<Location> locations)
         {
             NetworkMapModel model = new NetworkMapModel();
-            model.LocationList.AddRange(locations.Select(c => c.ToYamlLocationModel()));
+            model.LocationList.AddRange(locations.Select(c => c.ToLocationModel()));
             return model;
         }
 
@@ -63,7 +63,7 @@ namespace Timetabler.DataLoader
             using (StreamWriter writer = new StreamWriter(destination))
             {
                 writer.WriteLine("%WTM");
-                serializer.Serialize(writer, template.ToYamlTimetableDocumentTemplateModel());
+                serializer.Serialize(writer, template.ToTimetableDocumentTemplateModel());
             }
         }
 

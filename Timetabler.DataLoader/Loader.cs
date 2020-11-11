@@ -5,7 +5,7 @@ using System.Linq;
 using Timetabler.CoreData.Exceptions;
 using Timetabler.Data;
 using Timetabler.Data.Collections;
-using Timetabler.DataLoader.Load.Yaml;
+using Timetabler.DataLoader.Load;
 using Timetabler.SerialData;
 
 namespace Timetabler.DataLoader
@@ -69,7 +69,7 @@ namespace Timetabler.DataLoader
         internal static TimetableDocument LoadYamlTimetableDocument(string content)
         {
             Serializer deserialiser = new Serializer();
-            return deserialiser.Deserialize<SerialData.Yaml.TimetableFileModel>(content).ToTimetableDocument();
+            return deserialiser.Deserialize<TimetableFileModel>(content).ToTimetableDocument();
         }
 
         /// <summary>
@@ -86,12 +86,12 @@ namespace Timetabler.DataLoader
         internal static LocationCollection LoadYamlLocationTemplate(string content)
         {
             Serializer deserialiser = new Serializer();
-            SerialData.Yaml.LocationTemplateModel templateModel = deserialiser.Deserialize<SerialData.Yaml.LocationTemplateModel>(content);
+            LocationTemplateModel templateModel = deserialiser.Deserialize<LocationTemplateModel>(content);
             if (templateModel == null || templateModel.Maps == null || templateModel.Maps.Count == 0 || templateModel.Maps[0].LocationList == null)
             {
                 return null;
             }
-            SerialData.Yaml.UniqueItemModel.PopulateMissingIds(templateModel.Maps[0].LocationList);
+            UniqueItemModel.PopulateMissingIds(templateModel.Maps[0].LocationList);
             return new LocationCollection(templateModel.Maps[0].LocationList.Select(l => l.ToLocation()));
         }
 
@@ -109,7 +109,7 @@ namespace Timetabler.DataLoader
         internal static DocumentTemplate LoadYamlDocumentTemplate(string content)
         {
             Serializer deserialiser = new Serializer();
-            SerialData.Yaml.TimetableDocumentTemplateModel templateModel = deserialiser.Deserialize<SerialData.Yaml.TimetableDocumentTemplateModel>(content);
+            TimetableDocumentTemplateModel templateModel = deserialiser.Deserialize<TimetableDocumentTemplateModel>(content);
             return templateModel.ToDocumentTemplate();
         }
     }

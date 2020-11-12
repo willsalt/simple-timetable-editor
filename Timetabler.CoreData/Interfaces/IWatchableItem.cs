@@ -1,4 +1,5 @@
-﻿using Timetabler.CoreData.Events;
+﻿using System;
+using Timetabler.CoreData.Events;
 
 namespace Timetabler.CoreData.Interfaces
 {
@@ -10,6 +11,6 @@ namespace Timetabler.CoreData.Interfaces
         /// <summary>
         /// The event raised when any of the object's watchable properties are modified.
         /// </summary>
-        event ModifiedEventHandler Modified;
+        event EventHandler<ModifiedEventArgs> Modified;
     }
 }

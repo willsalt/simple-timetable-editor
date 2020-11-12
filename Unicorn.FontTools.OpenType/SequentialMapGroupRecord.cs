@@ -5,6 +5,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// A mapping segment record for an OpenType type 8 character mapping.
     /// </summary>
+    [CLSCompliant(false)]
     public struct SequentialMapGroupRecord : IEquatable<SequentialMapGroupRecord>
     {
         /// <summary>

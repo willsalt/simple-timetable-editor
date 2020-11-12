@@ -145,7 +145,7 @@ namespace Timetabler.Data
         /// <summary>
         /// Event raised when this object is modified.
         /// </summary>
-        public event ModifiedEventHandler Modified;
+        public event EventHandler<ModifiedEventArgs> Modified;
 
         /// <summary>
         /// Raises the <see cref="Modified" /> event.

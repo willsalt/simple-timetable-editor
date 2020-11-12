@@ -21,7 +21,7 @@ namespace Timetabler.CoreData.Extensions
         {
             if (source is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(source));
             }
             if (action is null)
             {

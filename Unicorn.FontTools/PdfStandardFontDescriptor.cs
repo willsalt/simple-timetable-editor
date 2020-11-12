@@ -81,19 +81,19 @@ namespace Unicorn.FontTools
         /// <summary>
         /// Font style flags.
         /// </summary>
-        public FontDescriptorFlags Flags
+        public FontProperties Flags
         {
             get
             {
                 bool isSymbolic = _metrics.CharacterSet == "Special" && _metrics.EncodingScheme == "FontSpecific";
-                FontDescriptorFlags output = isSymbolic ? FontDescriptorFlags.Symbolic : FontDescriptorFlags.Nonsymbolic;
+                FontProperties output = isSymbolic ? FontProperties.Symbolic : FontProperties.Nonsymbolic;
                 if (_metrics.Direction0Metrics.Value.IsFixedPitch)
                 {
-                    output |= FontDescriptorFlags.FixedPitch;
+                    output |= FontProperties.FixedPitch;
                 }
                 if (_metrics.Direction0Metrics.Value.ItalicAngle != 0)
                 {
-                    output |= FontDescriptorFlags.Italic;
+                    output |= FontProperties.Italic;
                 }
                 return output;
             }

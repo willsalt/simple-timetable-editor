@@ -5,6 +5,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// An entry in the horizontal metrics ('hmtx') table, giving the advance width and left side bearing of a particular glyph.
     /// </summary>
+    [CLSCompliant(false)]
     public struct HorizontalMetricRecord : IEquatable<HorizontalMetricRecord>
     {
         /// <summary>

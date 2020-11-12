@@ -2,12 +2,15 @@
 
 namespace Unicorn.FontTools.OpenType
 {
+
+#pragma warning disable CA1008 // This rule suggests an enum should have a zero-value called 'None', but we need it to have a different name.
+
     /// <summary>
     /// Flags that describe the font embedding usage permissions that apply to this font's licence.  The first four bits are mutually exclusive of each other,
     /// but may be used in combination with either of the others.
     /// </summary>
     [Flags]
-    public enum EmbeddingPermissionsFlags
+    public enum EmbeddingPermissions
     {
         /// <summary>
         /// Font may be be embedded in documents and installed on remote systems and/or by other users.
@@ -39,4 +42,7 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         BitmapOnly = 512,
     }
+
+#pragma warning restore CA1008 // Enums should have zero value
+
 }

@@ -8,6 +8,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// Read-only collection class for <see cref="HighByteSubheaderRecord" /> values.
     /// </summary>
+    [CLSCompliant(false)]
     public class HighByteSubheaderRecordCollection : IReadOnlyCollection<HighByteSubheaderRecord>
     {
         private readonly HighByteSubheaderRecord[] _data;

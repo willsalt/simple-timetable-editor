@@ -13,12 +13,14 @@ namespace Unicorn.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static Word GetTestObject()
         {
             Mock<IFontDescriptor> mockFont = new Mock<IFontDescriptor>();
             Mock<IGraphicsContext> mockContext = new Mock<IGraphicsContext>();
             mockContext.Setup(m => m.MeasureString(It.IsAny<string>(), It.IsAny<IFontDescriptor>()))
-                .Returns(new UniTextSize(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, 
+                .Returns(new UniTextSize(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000,
                     _rnd.NextDouble() * 1000));
             return new Word("", mockFont.Object, mockContext.Object, _rnd.NextDouble() * 10);
         }
@@ -89,6 +91,7 @@ namespace Unicorn.Tests.Unit
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

@@ -9,21 +9,21 @@ namespace Unicorn.Writer.Tests.Unit
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void FeaturesClass_StreamFeaturesProperty_DefaultValueHasAsciiEncodeBinaryStreamsFlagSet()
+        public void FeaturesClass_SelectedStreamFeaturesProperty_DefaultValueHasAsciiEncodeBinaryStreamsFlagSet()
         {
-            Assert.IsTrue(Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.AsciiEncodeBinaryStreams));
+            Assert.IsTrue(Features.SelectedStreamFeatures.HasFlag(Features.StreamFeatures.AsciiEncodeBinaryStreams));
         }
 
         [TestMethod]
-        public void FeaturesClass_StreamFeaturesProperty_DefaultValueHasCompressBinaryStreamsFlagSet()
+        public void FeaturesClass_SelectedStreamFeaturesProperty_DefaultValueHasCompressBinaryStreamsFlagSet()
         {
-            Assert.IsTrue(Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.CompressBinaryStreams));
+            Assert.IsTrue(Features.SelectedStreamFeatures.HasFlag(Features.StreamFeatures.CompressBinaryStreams));
         }
 
         [TestMethod]
-        public void FeaturesClass_StreamFeaturesProperty_DefaultValueHasCompressPageContentStreamsFlagSet()
+        public void FeaturesClass_SelectedStreamFeaturesProperty_DefaultValueHasCompressPageContentStreamsFlagSet()
         {
-            Assert.IsTrue(Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.CompressPageContentStreams));
+            Assert.IsTrue(Features.SelectedStreamFeatures.HasFlag(Features.StreamFeatures.CompressPageContentStreams));
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

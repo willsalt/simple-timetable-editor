@@ -6,7 +6,7 @@ namespace Unicorn.FontTools.OpenType
     /// Flags indicating font style.
     /// </summary>
     [Flags]
-    public enum MacStyleFlags
+    public enum MacStyleProperties
     {
         /// <summary>
         /// Boldface font.

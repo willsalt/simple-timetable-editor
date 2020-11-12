@@ -69,7 +69,7 @@ namespace Unicorn
         {
             get
             {
-                return Lines.Sum(l => l.ContentHeight) + Margins.Top + Margins.Bottom;
+                return _lines.Sum(l => l.ContentHeight) + Margins.Top + Margins.Bottom;
             }
         }
 
@@ -81,9 +81,9 @@ namespace Unicorn
             get
             {
                 double marginSum = Margins.Left + Margins.Right;
-                if (Lines != null)
+                if (_lines != null)
                 {
-                    return Lines.Max(l => l.MinWidth) + marginSum;
+                    return _lines.Max(l => l.MinWidth) + marginSum;
                 }
                 return marginSum;
             }
@@ -92,7 +92,9 @@ namespace Unicorn
         /// <summary>
         /// The paragraph content.
         /// </summary>
-        public List<Line> Lines { get; } = new List<Line>();
+        public IList<Line> Lines => _lines;
+
+        private readonly List<Line> _lines = new List<Line>();
 
         /// <summary>
         /// Constructor which specified ideal maximum sizes.
@@ -103,7 +105,6 @@ namespace Unicorn
         {
             MaximumWidth = maxWidth;
             MaximumHeight = maxHeight;
-            Lines = new List<Line>();
             Margins = new MarginSet();
         }
 
@@ -146,12 +147,12 @@ namespace Unicorn
         public void AddText(string text, IFontDescriptor font, IGraphicsContext graphicsContext)
         {
             var words = Word.MakeWords(text, font, graphicsContext);
-            Lines.AddRange(Line.MakeLines(words, MaximumWidth - (Margins.Left + Margins.Right)));
-            if (Lines.Any(l => l.OverspillWidth))
+            _lines.AddRange(Line.MakeLines(words, MaximumWidth - (Margins.Left + Margins.Right)));
+            if (_lines.Any(l => l.OverspillWidth))
             {
                 OverspillWidth = true;
             }
-            if (Lines.Sum(l => l.ContentHeight) > MaximumHeight)
+            if (_lines.Sum(l => l.ContentHeight) > MaximumHeight)
             {
                 OverspillHeight = true;
             }
@@ -183,7 +184,7 @@ namespace Unicorn
                         break;
                 }
 
-                foreach (Line line in Lines)
+                foreach (Line line in _lines)
                 {
                     double xPos;
                     switch (HorizontalAlignment)

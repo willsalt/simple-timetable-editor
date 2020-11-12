@@ -11,6 +11,7 @@ namespace Unicorn.FontTools.OpenType
     /// It does not (really) support encoding schemes of more than 8 bits, and can only use the first 256 glyphs in a font.  Any codepoints outside the range
     /// 0-255 map to glyph 0.
     /// </summary>
+    [CLSCompliant(false)]
     public class PlainByteCharacterMapping : CharacterMapping
     {
         private readonly ushort[] _data;

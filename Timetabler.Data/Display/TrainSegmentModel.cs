@@ -179,7 +179,7 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// Not yet implemented.
         /// </summary>
-        public event ModifiedEventHandler Modified;
+        public event EventHandler<ModifiedEventArgs> Modified;
 
         /// <summary>
         /// Raises the <see cref="Modified" /> event.

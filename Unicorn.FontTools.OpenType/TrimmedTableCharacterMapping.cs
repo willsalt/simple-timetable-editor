@@ -10,6 +10,7 @@ namespace Unicorn.FontTools.OpenType
     /// This character mapping is OpenType cmap format 6, which maps a contiguous range of 16-bit codepoints to glyphs and returns 0 for any codepoint outside that
     /// contiguous range.  The <see cref="FirstCodePoint" /> and <see cref="LastCodePoint" /> properties describe the range that is mapped.
     /// </summary>
+    [CLSCompliant(false)]
     public class TrimmedTableCharacterMapping : CharacterMapping
     {
         /// <summary>

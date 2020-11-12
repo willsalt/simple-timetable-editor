@@ -12,6 +12,7 @@ namespace Unicorn.FontTools.OpenType
     /// The 'post' table, containing some PostScript-relevant metrics information, and potentially the PostScript glyph names of each glyph.  If the latter is nt
     /// present, the font is assumed to contain 257 glyphs with standard indexes.
     /// </summary>
+    [CLSCompliant(false)]
     public class PostScriptTable : Table
     {
         /// <summary>

@@ -12,6 +12,8 @@ namespace Timetabler.CoreData.Tests.Unit.Extensions
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static MockUniqueItem[] GetTestData()
         {
             int count = _rnd.Next(25);
@@ -26,8 +28,8 @@ namespace Timetabler.CoreData.Tests.Unit.Extensions
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void IEnumerableExtensionsClass_ForEachMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void IEnumerableExtensionsClass_ForEachMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             MockUniqueItem[] testParam0 = null;
             static void testParam1(MockUniqueItem u, int i) => u.Id += i.ToString(CultureInfo.InvariantCulture);
@@ -69,6 +71,7 @@ namespace Timetabler.CoreData.Tests.Unit.Extensions
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

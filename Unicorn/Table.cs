@@ -198,14 +198,14 @@ namespace Unicorn
         /// <summary>
         /// Draw this table at the given location on the graphics context.
         /// </summary>
-        /// <param name="graphicsContext">The graphics context to use to draw the table.</param>
-        /// <param name="xCoord">The X coordinate of the top left corner of the table.</param>
-        /// <param name="yCoord">The Y coordinate of the top left corner of the table.</param>
-        public void DrawAt(IGraphicsContext graphicsContext, double xCoord, double yCoord)
+        /// <param name="context">The graphics context to use to draw the table.</param>
+        /// <param name="x">The X coordinate of the top left corner of the table.</param>
+        /// <param name="y">The Y coordinate of the top left corner of the table.</param>
+        public void DrawAt(IGraphicsContext context, double x, double y)
         {
-            if (graphicsContext is null)
+            if (context is null)
             {
-                throw new ArgumentNullException(nameof(graphicsContext));
+                throw new ArgumentNullException(nameof(context));
             }
 
             double ruleOffset = RuleWidth / 2;
@@ -215,7 +215,7 @@ namespace Unicorn
                 double xOffset = ruleOffset;
                 foreach (TableCell cell in row)
                 {
-                    cell.DrawContentsAt(graphicsContext, xCoord + xOffset + ruleOffset, yCoord + yOffset + ruleOffset);
+                    cell.DrawContentsAt(context, x + xOffset + ruleOffset, y + yOffset + ruleOffset);
                     xOffset += cell.ComputedWidth + RuleWidth;
                 }
                 if (row.Count > 0)
@@ -226,13 +226,13 @@ namespace Unicorn
             switch (RuleStyle)
             {
                 case TableRuleStyle.LinesMeet:
-                    DrawFullGrid(graphicsContext, xCoord, yCoord);
+                    DrawFullGrid(context, x, y);
                     break;
                 case TableRuleStyle.SolidColumnsBrokenRows:
-                    DrawSolidColumnGrid(graphicsContext, xCoord, yCoord);
+                    DrawSolidColumnGrid(context, x, y);
                     break;
                 case TableRuleStyle.SolidRowsBrokenColumns:
-                    DrawSolidRowGrid(graphicsContext, xCoord, yCoord);
+                    DrawSolidRowGrid(context, x, y);
                     break;
                 case TableRuleStyle.None:
                 default:

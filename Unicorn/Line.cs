@@ -12,7 +12,7 @@ namespace Unicorn
         /// <summary>
         /// The words making up this line.
         /// </summary>
-        public List<Word> Content { get; } = new List<Word>();
+        public IList<Word> Content { get; } = new List<Word>();
 
         /// <summary>
         /// The minimum width of this line.
@@ -105,14 +105,14 @@ namespace Unicorn
         /// <summary>
         /// Draw this line.
         /// </summary>
-        /// <param name="graphicsContext">The context to use for drawing.</param>
+        /// <param name="context">The context to use for drawing.</param>
         /// <param name="x">The X-coordinate of the top left corner of the line.</param>
         /// <param name="y">The Y-coordinate of the top left corner of the line.</param>
-        public void DrawAt(IGraphicsContext graphicsContext, double x, double y)
+        public void DrawAt(IGraphicsContext context, double x, double y)
         {
             foreach (Word word in Content)
             {
-                word.DrawAt(graphicsContext, x, y + ContentAscent - word.ContentAscent);
+                word.DrawAt(context, x, y + ContentAscent - word.ContentAscent);
                 x += word.MinWidth;
             }
         }

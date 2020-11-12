@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// Class representing a mapping from character set code points to font glyph IDs.
     /// </summary>
+    [CLSCompliant(false)]
     public abstract class CharacterMapping
     {
         /// <summary>
@@ -29,7 +31,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="platform">The valeue for the <see cref="Platform" /> property.</param>
         /// <param name="encoding">The valeue for the <see cref="Encoding" /> property.</param>
         /// <param name="lang">The valeue for the <see cref="Language" /> property.</param>
-        public CharacterMapping(PlatformId platform, ushort encoding, ushort lang)
+        protected CharacterMapping(PlatformId platform, ushort encoding, ushort lang)
         {
             Platform = platform;
             Encoding = encoding;

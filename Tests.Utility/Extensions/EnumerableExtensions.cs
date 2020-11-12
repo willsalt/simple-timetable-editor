@@ -11,7 +11,7 @@ namespace Tests.Utility.Extensions
         {
             if (sequence == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(sequence));
             }
 
             int maxIndex = -1;

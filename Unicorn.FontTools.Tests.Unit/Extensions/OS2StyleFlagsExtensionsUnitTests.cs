@@ -19,129 +19,129 @@ namespace Unicorn.FontTools.Tests.Unit.Extensions
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithSymbolicBitSet_IfSecondParameterIsTrue()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
             bool testParam1 = true;
             bool testParam2 = _rnd.NextBoolean();
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Symbolic));
+            Assert.IsTrue(testOutput.HasFlag(CoreTypes.FontProperties.Symbolic));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithNonsymbolicBitNotSet_IfSecondParameterIsTrue()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
             bool testParam1 = true;
             bool testParam2 = _rnd.NextBoolean();
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.Nonsymbolic));
+            Assert.IsFalse(testOutput.HasFlag(CoreTypes.FontProperties.Nonsymbolic));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithNonsymbolicBitSet_IfSecondParameterIsFalse()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
             bool testParam1 = false;
             bool testParam2 = _rnd.NextBoolean();
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Nonsymbolic));
+            Assert.IsTrue(testOutput.HasFlag(CoreTypes.FontProperties.Nonsymbolic));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithSymbolicBitNotSet_IfSecondParameterIsFalse()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
             bool testParam1 = false;
             bool testParam2 = _rnd.NextBoolean();
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.Symbolic));
+            Assert.IsFalse(testOutput.HasFlag(CoreTypes.FontProperties.Symbolic));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithFixedPitchFlagSet_IfThirdParameterIsTrue()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
             bool testParam1 = _rnd.NextBoolean();
             bool testParam2 = true;
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.FixedPitch));
+            Assert.IsTrue(testOutput.HasFlag(CoreTypes.FontProperties.FixedPitch));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithFixedPitchFlagNotSet_IfThirdParameterIsFalse()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
             bool testParam1 = _rnd.NextBoolean();
             bool testParam2 = false;
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.FixedPitch));
+            Assert.IsFalse(testOutput.HasFlag(CoreTypes.FontProperties.FixedPitch));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithItalicFlagSet_IfFirstParameterHasItalicFlagSetAndObliqueFlagNotSet()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
-            testParam0 |= OS2StyleFlags.Italic;
-            testParam0 &= ~OS2StyleFlags.Oblique;
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            testParam0 |= OS2StyleProperties.Italic;
+            testParam0 &= ~OS2StyleProperties.Oblique;
             bool testParam1 = _rnd.NextBoolean();
             bool testParam2 = _rnd.NextBoolean(); ;
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Italic));
+            Assert.IsTrue(testOutput.HasFlag(CoreTypes.FontProperties.Italic));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithItalicFlagSet_IfFirstParameterHasItalicFlagNotSetAndObliqueFlagSet()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
-            testParam0 &= ~OS2StyleFlags.Italic;
-            testParam0 |= OS2StyleFlags.Oblique;
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            testParam0 &= ~OS2StyleProperties.Italic;
+            testParam0 |= OS2StyleProperties.Oblique;
             bool testParam1 = _rnd.NextBoolean();
             bool testParam2 = _rnd.NextBoolean(); ;
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Italic));
+            Assert.IsTrue(testOutput.HasFlag(CoreTypes.FontProperties.Italic));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithItalicFlagSet_IfFirstParameterHasItalicFlagSetAndObliqueFlagSet()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
-            testParam0 |= OS2StyleFlags.Italic;
-            testParam0 |= OS2StyleFlags.Oblique;
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            testParam0 |= OS2StyleProperties.Italic;
+            testParam0 |= OS2StyleProperties.Oblique;
             bool testParam1 = _rnd.NextBoolean();
             bool testParam2 = _rnd.NextBoolean(); ;
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsTrue(testOutput.HasFlag(FontDescriptorFlags.Italic));
+            Assert.IsTrue(testOutput.HasFlag(CoreTypes.FontProperties.Italic));
         }
 
         [TestMethod]
         public void OS2StyleFlagsExtensionsClass_ToFontDescriptorFlagsMethod_ReturnsValueWithItalicFlagNotSet_IfFirstParameterHasItalicFlagNotSetAndObliqueFlagNotSet()
         {
-            OS2StyleFlags testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
-            testParam0 &= ~OS2StyleFlags.Italic;
-            testParam0 &= ~OS2StyleFlags.Oblique;
+            OS2StyleProperties testParam0 = _rnd.NextOpenTypeOS2StyleFlags();
+            testParam0 &= ~OS2StyleProperties.Italic;
+            testParam0 &= ~OS2StyleProperties.Oblique;
             bool testParam1 = _rnd.NextBoolean();
             bool testParam2 = _rnd.NextBoolean(); ;
 
-            FontDescriptorFlags testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
+            CoreTypes.FontProperties testOutput = testParam0.ToFontDescriptorFlags(testParam1, testParam2);
 
-            Assert.IsFalse(testOutput.HasFlag(FontDescriptorFlags.Italic));
+            Assert.IsFalse(testOutput.HasFlag(CoreTypes.FontProperties.Italic));
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

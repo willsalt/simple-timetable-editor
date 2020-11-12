@@ -16,6 +16,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -118,6 +119,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             AssertionHelpers.AssertSameElements(expected, testParam0);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void PdfIntegerClass_EqualsMethodWithPdfIntegerParameter_ReturnsFalseWhenParameterIsNull()
         {
@@ -129,6 +132,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void PdfIntegerClass_EqualsMethodWithPdfIntegerParameter_ReturnsTrueWhenParameterIsSameObject()
@@ -171,6 +176,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void PdfIntegerClass_EqualsMethodWithObjectParameter_ReturnsFalseWhenParameterIsNull()
         {
@@ -182,6 +189,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void PdfIntegerClass_EqualsMethodWithObjectParameter_ReturnsFalseWhenParameterIsOfDifferentType()
@@ -294,6 +303,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void PdfIntegerClass_EqualityOperator_ReturnsTrueIfBothOperandsAreNull()
         {
@@ -328,6 +339,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void PdfIntegerClass_EqualityOperator_ReturnsTrueIfFirstOperandAndSecondOperandAreDifferentInstancesWithSameValue()
@@ -370,6 +383,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void PdfIntegerClass_InequalityOperator_ReturnsFalseIfBothOperandsAreNull()
         {
@@ -404,6 +419,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsTrue(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void PdfIntegerClass_InequalityOperator_ReturnsFalseIfFirstOperandAndSecondOperandAreDifferentInstancesWithSameValue()
@@ -451,6 +468,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.AreSame(testOutput0, testOutput1);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

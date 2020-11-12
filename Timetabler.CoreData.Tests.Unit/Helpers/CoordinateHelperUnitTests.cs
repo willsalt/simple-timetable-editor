@@ -10,6 +10,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -202,6 +203,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
             Assert.IsTrue(Math.Abs(testValue - result) < 0.0000001d);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

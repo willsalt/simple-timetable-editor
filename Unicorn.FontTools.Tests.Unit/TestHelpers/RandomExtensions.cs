@@ -9,11 +9,14 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
 {
     public static class RandomExtensions
     {
+
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static WidthSet NextAfmWidthSet(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return new WidthSet(random.NextNullableDecimal(), random.NextNullableDecimal(), random.NextNullableDecimal());
         }
@@ -22,7 +25,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return new Vector(random.NextDecimal(), random.NextDecimal());
         }
@@ -31,7 +34,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -44,7 +47,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return new BoundingBox(random.NextDecimal(), random.NextDecimal(), random.NextDecimal(), random.NextDecimal());
         }
@@ -53,7 +56,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -66,7 +69,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return NextAfmCharacter(random, random.NextNullableShort(), existingCharacters);
         }
@@ -80,7 +83,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (existingCharacters is null)
             {
@@ -105,7 +108,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (existingCharacters is null)
             {
@@ -133,7 +136,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (doNotUseAsSecondCharacterName is null)
             {
@@ -153,7 +156,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (doNotUseAsSecondCharacterName is null)
             {
@@ -172,7 +175,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             bool? fixedPitch = random.NextNullableBoolean();
             Vector? width = null;
@@ -187,7 +190,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -217,22 +220,22 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
 
         
 
-        private static readonly EmbeddingPermissionsFlags[] _exclusiveEmbeddingPermissionsFlags = new[] 
+        private static readonly EmbeddingPermissions[] _exclusiveEmbeddingPermissionsFlags = new[] 
         { 
-            EmbeddingPermissionsFlags.Installable, 
-            EmbeddingPermissionsFlags.Restricted, 
-            EmbeddingPermissionsFlags.Printing, 
-            EmbeddingPermissionsFlags.Editable, 
+            EmbeddingPermissions.Installable, 
+            EmbeddingPermissions.Restricted, 
+            EmbeddingPermissions.Printing, 
+            EmbeddingPermissions.Editable, 
         };
 
-        public static EmbeddingPermissionsFlags NextOpenTypeEmbeddingPermissionsFlags(this Random random)
+        public static EmbeddingPermissions NextOpenTypeEmbeddingPermissionsFlags(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return _exclusiveEmbeddingPermissionsFlags[random.Next(_exclusiveEmbeddingPermissionsFlags.Length)] | 
-                (random.NextBoolean() ? EmbeddingPermissionsFlags.BitmapOnly : 0) | (random.NextBoolean() ? EmbeddingPermissionsFlags.NoSubsetting : 0);
+                (random.NextBoolean() ? EmbeddingPermissions.BitmapOnly : 0) | (random.NextBoolean() ? EmbeddingPermissions.NoSubsetting : 0);
         }
 
         private static readonly IBMFamily[] _validIBMFamilyValues = new[]
@@ -312,7 +315,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return _validIBMFamilyValues[random.Next(_validIBMFamilyValues.Length)];
         }
@@ -321,13 +324,14 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             byte[] data = new byte[10];
             random.NextBytes(data);
             return new PanoseFamily(data, 0);
         }
 
+        [CLSCompliant(false)]
         public static LowerUnicodeRangeFlags NextOpenTypeLowerUnicodeRangeFlags(this Random random)
         {
             return (LowerUnicodeRangeFlags)random.NextULong();
@@ -338,15 +342,16 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             return (UpperUnicodeRangeFlags)random.NextULong();
         }
 
-        public static OS2StyleFlags NextOpenTypeOS2StyleFlags(this Random random)
+        public static OS2StyleProperties NextOpenTypeOS2StyleFlags(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
-            return (OS2StyleFlags)random.Next(1024);
+            return (OS2StyleProperties)random.Next(1024);
         }
 
+        [CLSCompliant(false)]
         public static SupportedCodePageFlags NextOpenTypeSupportedCodePageFlags(this Random random)
         {
             return (SupportedCodePageFlags)random.NextULong();
@@ -357,8 +362,7 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             return random.NextBoolean() ? CalculationStyle.Windows : CalculationStyle.Macintosh;
         }
 
-        
+#pragma warning restore CA5394 // Do not use insecure randomness
 
-        
     }
 }

@@ -38,6 +38,8 @@ namespace Unicorn.Tests.Unit.TestHelpers
             ContentDescent = Height / 2;
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         internal static List<TableCell> GetCellList()
         {
             int count = _rnd.Next(32);
@@ -54,5 +56,8 @@ namespace Unicorn.Tests.Unit.TestHelpers
             }
             return output;
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

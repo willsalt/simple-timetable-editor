@@ -5,6 +5,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
     /// <summary>
     /// Helper methods for loading OpenType fonts.
     /// </summary>
+    [CLSCompliant(false)]
     public static class ByteArrayExtensions
     {
         /// <summary>
@@ -20,7 +21,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         {
             if (arr is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(arr));
             }
             if (arr.Length < idx + 2)
             {
@@ -41,7 +42,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         {
             if (arr is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(arr));
             }
             if (arr.Length < idx + 2)
             {
@@ -62,7 +63,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         {
             if (arr is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(arr));
             }
             if (arr.Length < idx + 4)
             {
@@ -95,7 +96,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         {
             if (arr is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(arr));
             }
             if (arr.Length < idx + 4)
             {
@@ -117,7 +118,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         {
             if (arr is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(arr));
             }
             if (arr.Length < idx + 8)
             {
@@ -140,7 +141,7 @@ namespace Unicorn.FontTools.OpenType.Extensions
         {
             if (arr is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(arr));
             }
             if (arr.Length < idx + 8)
             {

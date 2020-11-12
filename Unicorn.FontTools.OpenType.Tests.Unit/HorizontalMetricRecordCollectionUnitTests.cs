@@ -11,6 +11,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static HorizontalMetricRecord[] GetTestData()
         {
             int count = _rnd.Next(1, 20);
@@ -80,6 +82,7 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

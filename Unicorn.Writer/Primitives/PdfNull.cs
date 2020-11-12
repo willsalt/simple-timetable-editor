@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
@@ -15,7 +16,7 @@ namespace Unicorn.Writer.Primitives
         /// </summary>
         public static readonly PdfNull Value = new PdfNull();
 
-        private static readonly byte[] bytes = { 0x6e, 0x75, 0x6c, 0x6c, 0x20 }; // "null "
+        private static readonly byte[] _bytes = { 0x6e, 0x75, 0x6c, 0x6c, 0x20 }; // "null "
 
         /// <summary>
         /// The length of this object when encoded as bytes.
@@ -36,24 +37,24 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            stream.Write(bytes, 0, bytes.Length);
-            return bytes.Length;
+            stream.Write(_bytes, 0, _bytes.Length);
+            return _bytes.Length;
         }
 
         /// <summary>
         /// Convert this object to bytes and append them to a list.
         /// </summary>
-        /// <param name="list">The list to append to.</param>
+        /// <param name="bytes">The list to append to.</param>
         /// <returns>The number of bytes appended.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
-        public int WriteTo(List<byte> list)
+        public int WriteTo(IList<byte> bytes)
         {
-            if (list == null)
+            if (bytes == null)
             {
-                throw new ArgumentNullException(nameof(list));
+                throw new ArgumentNullException(nameof(bytes));
             }
-            list.AddRange(bytes);
-            return bytes.Length;
+            bytes.AddRange(_bytes);
+            return _bytes.Length;
         }
 
         /// <summary>
@@ -68,8 +69,8 @@ namespace Unicorn.Writer.Primitives
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            stream.AddBytes(bytes);
-            return bytes.Length;
+            stream.AddBytes(_bytes);
+            return _bytes.Length;
         }
 
         /// <summary>

@@ -2,6 +2,9 @@
 
 namespace Unicorn.FontTools.OpenType
 {
+
+#pragma warning disable CA1711 // Identifiers should not have incorrect suffix
+
     /// <summary>
     /// The OS/2 table contains 16 bytes (split into 4 unsigned 32-bit integers) which are defined as a bitfield describing which Unicode blocks the font supports.
     /// This enum contains the second 8 bytes of those bits.  Note that according to the OpenType standard the first integer is defined as the lower 32 bits, so
@@ -306,4 +309,7 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         Dominos = 0x400_0000_0000_0000L
     }
+
+#pragma warning restore CA1711 // Identifiers should not have incorrect suffix
+
 }

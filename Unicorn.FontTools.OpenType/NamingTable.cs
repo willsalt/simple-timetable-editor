@@ -11,6 +11,7 @@ namespace Unicorn.FontTools.OpenType
     /// The 'name' table, containing descriptive strings.  The strings are encoded in platform-specific formats.  This class does not currently support strings stored
     /// in encodings that are not supported by .NET Core, which effectively means that names encoded for use on Apple computers cannot be loaded.
     /// </summary>
+    [CLSCompliant(false)]
     public class NamingTable : Table
     {
         private static readonly List<EncodingMapRecord> _encodingMap = new List<EncodingMapRecord>();

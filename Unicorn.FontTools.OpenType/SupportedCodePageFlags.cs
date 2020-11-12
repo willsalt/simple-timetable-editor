@@ -3,12 +3,14 @@
 namespace Unicorn.FontTools.OpenType
 {
 
+#pragma warning disable CA1711 // Identifiers should not have incorrect suffix
 #pragma warning disable CA1028 // Enum Storage should be Int32 - suppressed because this enum needs a full 64 bits.
 
     /// <summary>
     /// Code pages supported by a given font.
     /// </summary>
     [Flags]
+    [CLSCompliant(false)]
     public enum SupportedCodePageFlags : ulong
     {
         /// <summary>
@@ -182,6 +184,7 @@ namespace Unicorn.FontTools.OpenType
         US                  = 0x8000_0000_0000_0000UL
     }
 
+#pragma warning restore CA1711 // Identifiers should not have incorrect suffix
 #pragma warning restore CA1028 // Enum Storage should be Int32
 
 }

@@ -32,7 +32,7 @@ namespace Unicorn.FontTools.Tests.Unit
                 _rnd.NextOpenTypeUpperUnicodeRangeFlags(), _rnd.NextTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort());
         }
 
-        private static OS2MetricsTable GetOS2MetricsTable(EmbeddingPermissionsFlags? embeddingPermissions = null)
+        private static OS2MetricsTable GetOS2MetricsTable(EmbeddingPermissions? embeddingPermissions = null)
         {
             embeddingPermissions ??= _rnd.NextOpenTypeEmbeddingPermissionsFlags();
             return new OS2MetricsTable(_rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), embeddingPermissions.Value, _rnd.NextShort(), _rnd.NextShort(), 
@@ -61,6 +61,7 @@ namespace Unicorn.FontTools.Tests.Unit
                 _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextUInt());
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -844,7 +845,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsTrue_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsInstallable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Installable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Installable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -860,7 +861,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsFalse_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsBitMapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -876,7 +877,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsFalse_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestricted()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Restricted);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -892,7 +893,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsFalse_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestrictedAndBitMapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -908,7 +909,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsTrue_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrinting()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -924,7 +925,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsFalse_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrintingAndBitMapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -940,7 +941,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsTrue_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -956,7 +957,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_RequiresEmbeddingProperty_ReturnsFalse_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditableAndBitMapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -972,7 +973,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsFontFile2_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsInstallable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Installable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Installable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -988,7 +989,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsEmptyString_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1004,7 +1005,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsFontFile2_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrinting()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1020,7 +1021,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsEmptyString_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrintingAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1036,7 +1037,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsFontFile2_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1052,7 +1053,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsEmptyString_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditableAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1068,7 +1069,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsEmptyString_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestricted()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Restricted);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1084,7 +1085,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingKeyProperty_ReturnsEmptyString_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestrictedAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Restricted | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1100,7 +1101,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsLengthPropertyOfFirstParameterOfConstructor_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsInstallable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Installable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Installable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1117,7 +1118,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsZero_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1134,7 +1135,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsLengthPropertyOfFirstParameterOfConstructor_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrinting()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1151,7 +1152,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsZero_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrintingAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1168,7 +1169,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsLengthPropertyOfFirstParameterOfConstructor_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1185,7 +1186,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsZero_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditableAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1202,7 +1203,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsZero_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestricted()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Restricted);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1219,7 +1220,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingLengthProperty_ReturnsZero_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestrictedAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Restricted | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             long expectedValue = _rnd.Next();
@@ -1236,7 +1237,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsFirstParameterOfConstructor_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsInstallable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Installable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Installable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1251,7 +1252,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsEmptyArray_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1267,7 +1268,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsFirstParameterOfConstructor_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditable()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1282,7 +1283,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsEmptyArray_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsEditableAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Editable | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Editable | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1298,7 +1299,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsFirstParameterOfConstructor_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrinting()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1313,7 +1314,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsEmptyArray_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsPrintingBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Printing | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Printing | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1329,7 +1330,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsEmptyArray_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestricted()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Restricted);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1345,7 +1346,7 @@ namespace Unicorn.FontTools.Tests.Unit
         [TestMethod]
         public void OpenTypeFontDescriptorClass_EmbeddingDataProperty_ReturnsEmptyArray_IfEmbeddingFlagsPropertyOfOS2MetricsPropertyOfFirstParameterOfConstructorEqualsRestrictedAndBitmapOnly()
         {
-            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissionsFlags.Restricted | EmbeddingPermissionsFlags.BitmapOnly);
+            OS2MetricsTable mockMetricsTable = GetOS2MetricsTable(EmbeddingPermissions.Restricted | EmbeddingPermissions.BitmapOnly);
             Mock<IOpenTypeFont> mockFont = new Mock<IOpenTypeFont>();
             mockFont.Setup(f => f.OS2Metrics).Returns(mockMetricsTable);
             IOpenTypeFont constrParam0 = mockFont.Object;
@@ -1358,6 +1359,7 @@ namespace Unicorn.FontTools.Tests.Unit
             Assert.AreEqual(0, testOutput.Count());
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

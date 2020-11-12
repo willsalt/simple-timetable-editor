@@ -1,8 +1,11 @@
-﻿namespace Unicorn.FontTools.OpenType
+﻿using System;
+
+namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The offset table, or main header table for an OpenType font.
     /// </summary>
+    [CLSCompliant(false)]
     public class OffsetTable
     {
         /// <summary>

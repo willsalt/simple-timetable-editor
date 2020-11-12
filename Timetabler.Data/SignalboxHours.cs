@@ -28,7 +28,7 @@ namespace Timetabler.Data
         /// <summary>
         /// Event raised when this object is modified.
         /// </summary>
-        public event ModifiedEventHandler Modified;
+        public event EventHandler<ModifiedEventArgs> Modified;
 
         /// <summary>
         /// The signalbox that these opening hours apply to.

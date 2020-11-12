@@ -23,7 +23,7 @@ namespace Timetabler.Tests.Unit.Extensions
 
             Colour testOutput = testParam.ToColour();
 
-            Assert.AreEqual((uint)constrParam, testOutput.Argb);
+            Assert.AreEqual(constrParam, testOutput.Argb);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Timetabler.CoreData.Events;
 using Timetabler.CoreData.Interfaces;
 
@@ -27,7 +28,7 @@ namespace Timetabler.Data
         /// <summary>
         /// Event to be raised when this object is modified.  Not yet implemented.
         /// </summary>
-        public event ModifiedEventHandler Modified;
+        public event EventHandler<ModifiedEventArgs> Modified;
 
         /// <summary>
         /// Raises the <see cref="Modified" /> event.

@@ -6,7 +6,7 @@ namespace Unicorn.FontTools.OpenType
     /// Flags used by the <see cref="OS2MetricsTable.FontSelection" /> field to advertise properties of this font, such as italic, bold, etc.
     /// </summary>
     [Flags]
-    public enum OS2StyleFlags
+    public enum OS2StyleProperties
     {
         /// <summary>
         /// Font is italic.

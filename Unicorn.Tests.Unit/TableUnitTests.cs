@@ -25,6 +25,8 @@ namespace Unicorn.Tests.Unit
             internal List<FixedSizeTableCell> Cells { get; } = new List<FixedSizeTableCell>();
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static TableDefinition GetTestObject()
         {
             int columns = _rnd.Next(1, 6);
@@ -163,7 +165,7 @@ namespace Unicorn.Tests.Unit
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("graphicsContext", ex.ParamName);
+                Assert.AreEqual("context", ex.ParamName);
             }
         }
 
@@ -301,6 +303,7 @@ namespace Unicorn.Tests.Unit
                 Times.Exactly(testObjectDetails.ColumnWidths.Count * testObjectDetails.RowHeights.Count + 3));
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

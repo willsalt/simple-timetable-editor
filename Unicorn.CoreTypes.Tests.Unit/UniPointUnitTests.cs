@@ -13,6 +13,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
         private static UniPoint GetTestValue() => _rnd.NextUniPoint();
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -376,6 +377,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.AreEqual(testValue0.Y - testValue1.Y, testOutput.Y);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

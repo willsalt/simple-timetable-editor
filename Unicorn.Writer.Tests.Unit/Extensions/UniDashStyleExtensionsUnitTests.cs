@@ -14,6 +14,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -292,6 +293,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
             Assert.AreEqual(testParam1, (double)testItem1.Value, 0.000000001);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

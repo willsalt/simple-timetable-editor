@@ -31,6 +31,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.AreEqual(0d, testOutput.Height);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void UniSizeStruct_ConstructorWithTwoDoubleParameters_SetsWidthPropertyToEqualFirstParameter()
         {
@@ -52,6 +54,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
             Assert.AreEqual(testParam1, testOutput.Height);
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void UniSizeStruct_ConstructorWithTwoDecimalParameters_SetsWidthPropertyToEqualFirstParameter()
@@ -90,6 +94,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsFalse_IfParameterHasSameWidthAndDifferentHeightPropertiesToValue()
         {
@@ -123,6 +129,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void UniSizeStruct_EqualsMethodWithUniSizeParameter_ReturnsTrue_IfParameterIsSameValue()
         {
@@ -145,6 +153,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsNull()
         {
@@ -155,6 +165,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeValueWithDifferentWidthAndHeightPropertiesToValue()
@@ -171,6 +183,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning disable CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsUniSizeValueWithSameWidthAndDifferentHeightPropertiesToValue()
@@ -206,6 +220,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsTrue_IfParameterIsSameValue()
         {
@@ -228,6 +244,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void UniSizeStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsNotAUniSizeValue()
         {
@@ -238,6 +256,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void UniSizeStruct_GetHashCodeMethod_ReturnsSameValue_IfCalledTwice()
@@ -365,6 +385,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void UniSizeStruct_EqualityOperator_ReturnsFalse_IfOperandsDifferByWidthProperty()
         {
@@ -397,17 +419,21 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
+
+#pragma warning disable CS1718 // Comparison made to same variable
+
         [TestMethod]
         public void UniSizeStruct_InequalityOperator_ReturnsFalse_IfBothOperandsAreSameValue()
         {
             UniSize testParam0 = GetUniSize();
 
-#pragma warning disable CS1718 // Comparison made to same variable
             bool testOutput = testParam0 != testParam0;
-#pragma warning restore CS1718 // Comparison made to same variable
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CS1718 // Comparison made to same variable
 
         [TestMethod]
         public void UniSizeStruct_InequalityOperator_ReturnsFalse_IfBothOperandsHaveSameProperties()
@@ -419,6 +445,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning disable CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void UniSizeStruct_InequalityOperator_ReturnsTrue_IfOperandsDifferByWidthProperty()
@@ -452,6 +480,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

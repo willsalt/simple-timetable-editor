@@ -80,7 +80,7 @@ namespace Timetabler.Data
         /// <summary>
         /// Event to be raised when this object is modified.  Not yet implemented.
         /// </summary>
-        public event ModifiedEventHandler Modified;
+        public event EventHandler<ModifiedEventArgs> Modified;
 
         /// <summary>
         /// Raises the <see cref="Modified" /> event.

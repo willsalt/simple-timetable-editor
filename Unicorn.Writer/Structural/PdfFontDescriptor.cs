@@ -18,7 +18,7 @@ namespace Unicorn.Writer.Structural
         /// <summary>
         /// Font style flags.
         /// </summary>
-        public FontDescriptorFlags Flags { get; private set; }
+        public FontProperties Flags { get; private set; }
 
         /// <summary>
         /// Most inclusive bounding box of all glyphs in the font.

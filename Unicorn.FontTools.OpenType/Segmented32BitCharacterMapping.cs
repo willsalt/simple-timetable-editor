@@ -12,6 +12,7 @@ namespace Unicorn.FontTools.OpenType
     /// it includes an 8k table indicating which 16-bit values are valid as the high 16 bits of a 32-bit codepoint and which are not, so that it can efficiently support 
     /// encodings that contain a stream of mixed 16-bit and 32-bit codepoints.
     /// </summary>
+    [CLSCompliant(false)]
     public class Segmented32BitCharacterMapping : CharacterMapping
     {
         private readonly CharacterMappingFormat _version;

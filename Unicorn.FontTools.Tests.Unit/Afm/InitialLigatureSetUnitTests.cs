@@ -29,6 +29,8 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.IsNull(testOutput.Ligature);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void InitialLigatureSetStruct_ConstructorWithTwoStringParameters_SetsSecondPropertyToValueOfFirstParameter()
         {
@@ -51,6 +53,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.AreEqual(testParam1, testOutput.Ligature);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

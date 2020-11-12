@@ -11,7 +11,7 @@ namespace Unicorn.Writer
         /// Possible feature settings for writing PDF streams.
         /// </summary>
         [Flags]
-        public enum StreamFeatureFlags
+        public enum StreamFeatures
         {
             /// <summary>
             /// ASCII-encode uncompressed binary streams usiing the <c>/ASCII85Decode</c> filter.  This can produce files that do not render correctly on legacy 
@@ -36,7 +36,7 @@ namespace Unicorn.Writer
         /// <summary>
         /// Feature toggles for writing PDF streams.
         /// </summary>
-        public static StreamFeatureFlags StreamFeatures { get; set; } = 
-            StreamFeatureFlags.AsciiEncodeBinaryStreams | StreamFeatureFlags.CompressBinaryStreams | StreamFeatureFlags.CompressPageContentStreams;
+        public static StreamFeatures SelectedStreamFeatures { get; set; } = 
+            StreamFeatures.AsciiEncodeBinaryStreams | StreamFeatures.CompressBinaryStreams | StreamFeatures.CompressPageContentStreams;
     }
 }

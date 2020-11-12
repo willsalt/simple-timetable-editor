@@ -7,11 +7,14 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
 {
     public static class RandomExtensions
     {
+
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static IPdfPrimitiveObject NextPdfPrimitive(this Random rnd)
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             int selector = rnd.Next(8);
             return selector switch
@@ -31,7 +34,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             if (rnd.NextBoolean())
             {
@@ -44,7 +47,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             int count = rnd.Next(max);
             IPdfPrimitiveObject[] elements = new IPdfPrimitiveObject[count];
@@ -59,7 +62,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             int count = rnd.Next(max);
             PdfNumber[] elements = new PdfNumber[count];
@@ -79,7 +82,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new PdfInteger(rnd.Next());
         }
@@ -88,7 +91,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new PdfInteger(rnd.Next(maxValue));
         }
@@ -97,7 +100,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new PdfInteger(rnd.Next(minValue, maxValue));
         }
@@ -106,23 +109,25 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new PdfName(rnd.NextAlphabeticalString(rnd.Next(16) + 1));
         }
 
 #pragma warning disable IDE0060 // Remove unused parameter
+
         public static PdfNull NextPdfNull(this Random rnd)
-#pragma warning restore IDE0060 // Remove unused parameter
         {
             return PdfNull.Value;
         }
+
+#pragma warning restore IDE0060 // Remove unused parameter
 
         public static PdfReal NextPdfReal(this Random rnd)
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
 
             // The offset and multiplier here are arbitrary amounts that are within the range likely to be seen on a PDF - 5,000 points is just over 176cm.
@@ -133,7 +138,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
 
             // See NextPdfReal() for a note on why these multipliers and offsets were chosen.
@@ -153,11 +158,14 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             byte[] data = new byte[len];
             rnd.NextBytes(data);
             return new PdfByteString(data);
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

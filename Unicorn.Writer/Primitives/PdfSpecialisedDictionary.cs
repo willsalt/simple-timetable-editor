@@ -4,6 +4,9 @@ using System.IO;
 
 namespace Unicorn.Writer.Primitives
 {
+
+#pragma warning disable CA1711 // Identifiers should not have incorrect suffix - this is a dictionary in the PDF sense if not in the .NET sense.
+
     /// <summary>
     /// PDF documents contain a number of structures which are "dictionaries" - the PDF parlance for a name-value store - in specific formats, normally with a 
     /// <c>/Type</c> entry to specify what type of structure they are.  This type provides support for objects that are written to the PDF file as this kind of
@@ -44,15 +47,18 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// Convert this dictionary into an array of bytes and append them to a list.
         /// </summary>
-        /// <param name="list">The list to append the data to.</param>
+        /// <param name="bytes">The list to append the data to.</param>
         /// <returns></returns>
-        public override int WriteTo(List<byte> list)
+        public override int WriteTo(IList<byte> bytes)
         {
-            if (list == null)
+            if (bytes == null)
             {
-                throw new ArgumentNullException(nameof(list));
+                throw new ArgumentNullException(nameof(bytes));
             }
-            return Write(WriteToList, MakeDictionary().WriteTo, list);
+            return Write(WriteToList, MakeDictionary().WriteTo, bytes);
         }
     }
+
+#pragma warning restore CA1711 // Identifiers should not have incorrect suffix
+
 }

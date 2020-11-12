@@ -15,13 +15,15 @@ namespace Unicorn.Tests.Unit.Shapes
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static HorizontalArrow GetArrow(HorizontalDirection? dir = null)
         {
             if (!dir.HasValue)
             {
                 dir = _rnd.NextBoolean() ? HorizontalDirection.ToLeft : HorizontalDirection.ToRight;
             }
-            return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, 
+            return new HorizontalArrow(dir.Value, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100, _rnd.NextDouble() * 100,
                 _rnd.NextDouble() * 100);
         }
 
@@ -383,6 +385,7 @@ namespace Unicorn.Tests.Unit.Shapes
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

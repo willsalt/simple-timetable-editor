@@ -6,12 +6,16 @@ using Tests.Utility.Providers;
 
 namespace Timetabler.CoreData.Tests.Unit
 {
+
+#pragma warning disable CA1708 // Identifiers should differ by more than case
+
     [TestClass]
     public class TimeOfDayUnitTests
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void TimeOfDayClass_ParameterlessConstructor_ReturnsTimeOfDayEqualToMidnight()
@@ -691,7 +695,7 @@ namespace Timetabler.CoreData.Tests.Unit
 #pragma warning disable CA1305 // Specify IFormatProvider
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainshhToken()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasehhToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -707,7 +711,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainshToken()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasehToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -723,7 +727,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainshAndhhTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasehAndhhTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -739,7 +743,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainshhAndhhTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasehhAndhhTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -755,7 +759,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsHHToken()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseHHToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -770,7 +774,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsHToken()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseHToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -785,7 +789,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsHAndHHTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseHAndHHTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -800,7 +804,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsHHAndHHTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseHHAndHHTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -950,7 +954,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsfTokenAndSecondsPropertyOfObjectIsGreaterThanOrEqualTo30()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasefTokenAndSecondsPropertyOfObjectIsGreaterThanOrEqualTo30()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -965,7 +969,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsttTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasettTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -980,7 +984,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainstTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasetTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -995,7 +999,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainstAndttTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasetAndttTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1010,7 +1014,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsttAndsttTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasettAndsttTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1025,7 +1029,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsttTokenAndTimeIsInAternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasettTokenAndTimeIsInAternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1040,7 +1044,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainstTokenAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasetTokenAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1055,7 +1059,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainstAndttTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasetAndttTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1070,7 +1074,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsttAndsttTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasettAndsttTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1085,7 +1089,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1100,7 +1104,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1115,7 +1119,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTAndTTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndTTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1130,7 +1134,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTAndsTTTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndsTTTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1145,7 +1149,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTTokenAndTimeIsInAternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTTokenAndTimeIsInAternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1160,7 +1164,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTokenAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTokenAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1175,7 +1179,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTAndTTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndTTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1190,7 +1194,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsTTAndsTTTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndsTTTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1205,7 +1209,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsgToken()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsLowerCasegToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1220,7 +1224,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsGToken()
+        public void TimeOfDayClass_ToStringMethodWithStringParameter_ReturnsExpectedResult_IfParameterContainsUpperCaseGToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1237,7 +1241,7 @@ namespace Timetabler.CoreData.Tests.Unit
 #pragma warning restore CA1305 // Specify IFormatProvider
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainshhToken()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasehhToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1253,7 +1257,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainshToken()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasehToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1269,7 +1273,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainshAndhhTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasehAndhhTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1285,7 +1289,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainshhAndhhTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasehhAndhhTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1301,7 +1305,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsHHToken()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseHHToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1316,7 +1320,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsHToken()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseHToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1331,7 +1335,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsHAndHHTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseHAndHHTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1346,7 +1350,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsHHAndHHTokens()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseHHAndHHTokens()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1511,7 +1515,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsttTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasettTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1526,7 +1530,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainstTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasetTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1541,7 +1545,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainstAndttTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasetAndttTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1556,7 +1560,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsttAndsttTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasettAndsttTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1571,7 +1575,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsttTokenAndTimeIsInAternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasettTokenAndTimeIsInAternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1586,7 +1590,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainstTokenAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasetTokenAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1601,7 +1605,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainstAndttTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasetAndttTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1616,7 +1620,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsttAndsttTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasettAndsttTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1631,7 +1635,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1646,7 +1650,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTokenAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTokenAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1661,7 +1665,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTAndTTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndTTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1676,7 +1680,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTAndsTTTokensAndTimeIsInMorning()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndsTTTokensAndTimeIsInMorning()
         {
             int constrParam0 = _rnd.Next(12);
             int constrParam1 = _rnd.Next(60);
@@ -1691,7 +1695,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTTokenAndTimeIsInAternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTTokenAndTimeIsInAternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1706,7 +1710,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTokenAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTokenAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1721,7 +1725,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTAndTTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndTTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1736,7 +1740,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsTTAndsTTTokensAndTimeIsInAfternoon()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseTTAndsTTTokensAndTimeIsInAfternoon()
         {
             int constrParam0 = _rnd.Next(12, 24);
             int constrParam1 = _rnd.Next(60);
@@ -1751,7 +1755,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsgToken()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsLowerCasegToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1766,7 +1770,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsGToken()
+        public void TimeOfDayClass_ToStringMethodWithStringAndIFormatProviderParameters_ReturnsExpectedResult_IfParameterContainsUpperCaseGToken()
         {
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
@@ -1779,6 +1783,8 @@ namespace Timetabler.CoreData.Tests.Unit
 
             Assert.AreEqual(expectedResult, testOutput);
         }
+
+#pragma warning disable CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void TimeOfDayClass_EqualityOperator_ReturnsTrue_IfBothOperandsAreNull()
@@ -1813,6 +1819,8 @@ namespace Timetabler.CoreData.Tests.Unit
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning restore CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void TimeOfDayClass_EqualityOperator_ReturnsTrue_IfOperandsAreNotNullAndAreEqual()
         {
@@ -1839,6 +1847,8 @@ namespace Timetabler.CoreData.Tests.Unit
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning disable CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void TimeOfDayClass_InequalityOperator_ReturnsFalse_IfBothOperandsAreNull()
@@ -1872,6 +1882,8 @@ namespace Timetabler.CoreData.Tests.Unit
 
             Assert.IsTrue(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void TimeOfDayClass_InequalityOperator_ReturnsFalse_IfOperandsAreNotNullAndAreEqual()
@@ -2949,7 +2961,11 @@ namespace Timetabler.CoreData.Tests.Unit
             Assert.AreEqual(testObject.AbsoluteSeconds, testParam.AbsoluteSeconds);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }
+
+#pragma warning restore CA1708 // Identifiers should differ by more than case
+
 }

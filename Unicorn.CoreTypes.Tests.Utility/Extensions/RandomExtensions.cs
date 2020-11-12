@@ -8,11 +8,13 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         private static readonly UniDashStyle[] _dashStyles = 
             new[] { UniDashStyle.Solid, UniDashStyle.Dash, UniDashStyle.Dot, UniDashStyle.DashDot, UniDashStyle.DashDotDot };
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static UniDashStyle NextUniDashStyle(this Random rnd)
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
 
             return _dashStyles[rnd.Next(_dashStyles.Length)];
@@ -22,7 +24,7 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return (UniFontStyles)rnd.Next(16);
         }
@@ -31,7 +33,7 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new UniSize(rnd.NextDouble() * 1000, rnd.NextDouble() * 1000);
         }
@@ -40,7 +42,7 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new UniTextSize(rnd.NextDouble() * 500, rnd.NextDouble() * 500, rnd.NextDouble() * 500, rnd.NextDouble() * 500, rnd.NextDouble() * 500);
         }
@@ -52,7 +54,7 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return _physicalPageSizes[rnd.Next(_physicalPageSizes.Length)];
         }
@@ -63,7 +65,7 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return _pageOrientations[rnd.Next(_pageOrientations.Length)];
         }
@@ -72,7 +74,7 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new UniPoint(rnd.NextDouble() * 1000, rnd.NextDouble() * 1000);
         }
@@ -81,7 +83,7 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return new UniMatrix(rnd.NextDouble() * 100, rnd.NextDouble() * 100, rnd.NextDouble() * 100, rnd.NextDouble() * 100, rnd.NextDouble() * 100,
                 rnd.NextDouble() * 100);
@@ -94,9 +96,12 @@ namespace Unicorn.CoreTypes.Tests.Utility.Extensions
         {
             if (rnd is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(rnd));
             }
             return _compressionLevels[rnd.Next(_compressionLevels.Length)];
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

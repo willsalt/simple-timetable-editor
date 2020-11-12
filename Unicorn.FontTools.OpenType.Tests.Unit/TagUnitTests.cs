@@ -32,6 +32,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             Assert.Fail();
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void TagStruct_ConstructorWithArrayOfByteParameter_ThrowsArgumentException_IfParameterIsTooShort()
@@ -55,6 +57,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
 
             Assert.Fail();
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void TagStruct_ConstructorWithArrayOfByteParameter_ReturnsValueWithCorrectValueProperty_IfParameterIsCorrectLength()

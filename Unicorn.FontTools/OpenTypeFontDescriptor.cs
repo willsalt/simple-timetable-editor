@@ -6,7 +6,6 @@ using Unicorn.CoreTypes;
 using Unicorn.FontTools.CharacterEncoding;
 using Unicorn.FontTools.Extensions;
 using Unicorn.FontTools.OpenType;
-using Unicorn.FontTools.OpenType.Extensions;
 using Unicorn.FontTools.OpenType.Interfaces;
 
 namespace Unicorn.FontTools
@@ -74,34 +73,34 @@ namespace Unicorn.FontTools
         /// <summary>
         /// Flags describing this font's visual style.
         /// </summary>
-        public FontDescriptorFlags Flags
+        public CoreTypes.FontProperties Flags
         {
             get
             {
-                FontDescriptorFlags output;
+                CoreTypes.FontProperties output;
                 if (CalculationStyle == CalculationStyle.Windows)
                 {
                     bool isSymbolic = _underlyingFont.CharacterMapping.SelectExactMapping(PlatformId.Windows, 0) != null;
                     output = _underlyingFont.OS2Metrics.FontSelection.ToFontDescriptorFlags(isSymbolic, _underlyingFont.PostScriptData.IsFixedPitch);
                     if (_underlyingFont.OS2Metrics.IBMFontFamily >= IBMFamily.OldstyleSerif_None && _underlyingFont.OS2Metrics.IBMFontFamily < IBMFamily.SansSerif_None)
                     {
-                        output |= FontDescriptorFlags.Serif;
+                        output |= CoreTypes.FontProperties.Serif;
                     }
                     if (_underlyingFont.OS2Metrics.IBMFontFamily >= IBMFamily.Scripts_None && _underlyingFont.OS2Metrics.IBMFontFamily < IBMFamily.Symbolic_None)
                     {
-                        output |= FontDescriptorFlags.Script;
+                        output |= CoreTypes.FontProperties.Script;
                     }
                 }
                 else
                 {
-                    output = FontDescriptorFlags.Nonsymbolic;
-                    if (_underlyingFont.Header.StyleFlags.HasFlag(MacStyleFlags.Italic))
+                    output = CoreTypes.FontProperties.Nonsymbolic;
+                    if (_underlyingFont.Header.StyleFlags.HasFlag(MacStyleProperties.Italic))
                     {
-                        output |= FontDescriptorFlags.Italic;
+                        output |= CoreTypes.FontProperties.Italic;
                     }
                     if (_underlyingFont.PostScriptData.IsFixedPitch)
                     {
-                        output |= FontDescriptorFlags.FixedPitch;
+                        output |= CoreTypes.FontProperties.FixedPitch;
                     }
                 }
                 return output;
@@ -327,14 +326,14 @@ namespace Unicorn.FontTools
 
         private bool CheckEmbeddingAllowed()
         {
-            EmbeddingPermissionsFlags fontFlags = _underlyingFont.OS2Metrics.EmbeddingPermissions;
-            if (fontFlags == EmbeddingPermissionsFlags.Installable)
+            EmbeddingPermissions fontFlags = _underlyingFont.OS2Metrics.EmbeddingPermissions;
+            if (fontFlags == EmbeddingPermissions.Installable)
             {
                 return true;
             }
-            return (fontFlags.HasFlag(EmbeddingPermissionsFlags.Editable) ||
-                    fontFlags.HasFlag(EmbeddingPermissionsFlags.Printing)) 
-                && !fontFlags.HasFlag(EmbeddingPermissionsFlags.BitmapOnly);
+            return (fontFlags.HasFlag(EmbeddingPermissions.Editable) ||
+                    fontFlags.HasFlag(EmbeddingPermissions.Printing)) 
+                && !fontFlags.HasFlag(EmbeddingPermissions.BitmapOnly);
         }
     }
 }

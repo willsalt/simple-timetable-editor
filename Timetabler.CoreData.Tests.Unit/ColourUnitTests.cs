@@ -19,9 +19,19 @@ namespace Timetabler.CoreData.Tests.Unit
 #pragma warning disable CA5394 // Do not use insecure randomness
 
         [TestMethod]
-        public void ColourStruct_Constructor_SetsArgbPropertyToValueOfFirstParameter()
+        public void ColourStruct_ConstructorWithUintParameter_SetsArgbPropertyToValueOfFirstParameter()
         {
             uint testParam0 = _rnd.NextUInt();
+
+            Colour testOutput = new Colour(testParam0);
+
+            Assert.AreEqual(testParam0, (uint)testOutput.Argb);
+        }
+
+        [TestMethod]
+        public void ColourStruct_ConstructorWithIntParameter_SetsArgbPropertyToValueOfFirstParameter()
+        {
+            int testParam0 = _rnd.Next();
 
             Colour testOutput = new Colour(testParam0);
 
@@ -69,7 +79,7 @@ namespace Timetabler.CoreData.Tests.Unit
         {
             Colour testValue = Colour.Black;
 
-            uint testOutput = testValue.Argb;
+            uint testOutput = (uint)testValue.Argb;
 
             Assert.AreEqual(0xff000000, testOutput);
         }
@@ -79,7 +89,7 @@ namespace Timetabler.CoreData.Tests.Unit
         {
             Colour testValue = Colour.White;
 
-            uint testOutput = testValue.Argb;
+            uint testOutput = (uint)testValue.Argb;
 
             Assert.AreEqual(0xffffffff, testOutput);
         }
@@ -89,7 +99,7 @@ namespace Timetabler.CoreData.Tests.Unit
         {
             Colour testValue = Colour.LightGrey;
 
-            uint testOutput = testValue.Argb;
+            uint testOutput = (uint)testValue.Argb;
 
             Assert.AreEqual(0xffd3d3d3, testOutput);
         }

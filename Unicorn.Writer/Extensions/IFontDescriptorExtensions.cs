@@ -21,7 +21,7 @@ namespace Unicorn.Writer.Extensions
         {
             if (descriptor is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(descriptor));
             }
             PdfDictionary d = new PdfDictionary { { CommonPdfNames.BaseFont, new PdfName(descriptor.BaseFontName) } };
             if (descriptor is PdfStandardFontDescriptor)

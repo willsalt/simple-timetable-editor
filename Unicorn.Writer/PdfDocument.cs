@@ -90,11 +90,11 @@ namespace Unicorn.Writer
         /// <summary>
         /// Append a new page to the document with default size and margins, specifying its orientation.
         /// </summary>
-        /// <param name="pageOrientation">The orientation of the new page.</param>
+        /// <param name="orientation">The orientation of the new page.</param>
         /// <returns>An <see cref="IPageDescriptor" /> describing the new page.</returns>
-        public IPageDescriptor AppendPage(PageOrientation pageOrientation)
+        public IPageDescriptor AppendPage(PageOrientation orientation)
         {
-            return AppendPage(DefaultPhysicalPageSize, pageOrientation, DefaultHorizontalMarginProportion, DefaultVerticalMarginProportion);
+            return AppendPage(DefaultPhysicalPageSize, orientation, DefaultHorizontalMarginProportion, DefaultVerticalMarginProportion);
         }
 
         /// <summary>
@@ -109,10 +109,10 @@ namespace Unicorn.Writer
         /// <summary>
         /// Write the document to a stream.
         /// </summary>
-        /// <param name="stream">The stream to write to.</param>
-        public void Write(Stream stream)
+        /// <param name="destination">The stream to write to.</param>
+        public void Write(Stream destination)
         {
-            WriteTo(stream);
+            WriteTo(destination);
         }
 
         /// <summary>
@@ -185,11 +185,11 @@ namespace Unicorn.Writer
 
         private static IEnumerable<IPdfFilterEncoder> GetFontEncoders()
         {
-            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.CompressBinaryStreams))
+            if (Features.SelectedStreamFeatures.HasFlag(Features.StreamFeatures.CompressBinaryStreams))
             {
                 return GetStreamCompressionEncoders();
             }
-            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.AsciiEncodeBinaryStreams))
+            if (Features.SelectedStreamFeatures.HasFlag(Features.StreamFeatures.AsciiEncodeBinaryStreams))
             {
                 return new IPdfFilterEncoder[] { Ascii85Encoder.Instance };
             }
@@ -198,7 +198,7 @@ namespace Unicorn.Writer
 
         private static IEnumerable<IPdfFilterEncoder> GetPageEncoders()
         {
-            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.CompressPageContentStreams))
+            if (Features.SelectedStreamFeatures.HasFlag(Features.StreamFeatures.CompressPageContentStreams))
             {
                 return GetStreamCompressionEncoders();
             }
@@ -207,7 +207,7 @@ namespace Unicorn.Writer
 
         private static IEnumerable<IPdfFilterEncoder> GetStreamCompressionEncoders()
         {
-            if (Features.StreamFeatures.HasFlag(Features.StreamFeatureFlags.AsciiEncodeBinaryStreams))
+            if (Features.SelectedStreamFeatures.HasFlag(Features.StreamFeatures.AsciiEncodeBinaryStreams))
             {
                 return new IPdfFilterEncoder[] { FlateEncoder.Instance, Ascii85Encoder.Instance };
             }

@@ -15,6 +15,8 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static string GenerateRandomValidStringInput(string code = null, string char1 = null, string char2 = null, string x = null, string y = null)
         {
             string[] validCodes = new[] { "KP", "KPH", "KPX", "KPY" };
@@ -1125,6 +1127,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.AreEqual(yVector, testOutput.KerningVector.Y);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

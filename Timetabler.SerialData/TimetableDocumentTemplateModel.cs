@@ -15,7 +15,7 @@ namespace Timetabler.SerialData
         /// <summary>
         /// The maps that can be used in timetables.
         /// </summary>
-        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
+        public IList<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         /// <summary>
         /// Default set of document options to apply to documents created from this template.
@@ -30,12 +30,12 @@ namespace Timetabler.SerialData
         /// <summary>
         /// Footnote definitions that can be used in documents created from this template.
         /// </summary>
-        public List<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
+        public ICollection<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
 
         /// <summary>
         /// Train classes that can be used in documents created from this template.
         /// </summary>
-        public List<TrainClassModel> TrainClasses { get; } = new List<TrainClassModel>();
+        public ICollection<TrainClassModel> TrainClasses { get; } = new List<TrainClassModel>();
 
         /// <summary>
         /// Constructor.

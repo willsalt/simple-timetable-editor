@@ -15,7 +15,7 @@ namespace Timetabler.SerialData
         /// <summary>
         /// The list of maps that makes up the template.
         /// </summary>
-        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
+        public IList<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         /// <summary>
         /// Constructor.  Sets the file version number to 3.

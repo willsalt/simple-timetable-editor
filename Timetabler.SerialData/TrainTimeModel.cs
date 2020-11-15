@@ -15,6 +15,6 @@ namespace Timetabler.SerialData
         /// <summary>
         /// The list of footnotes to be displayed along with the time.
         /// </summary>
-        public List<string> FootnoteIds { get; } = new List<string>();
+        public ICollection<string> FootnoteIds { get; } = new List<string>();
     }
 }

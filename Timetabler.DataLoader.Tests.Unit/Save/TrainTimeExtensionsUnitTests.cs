@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
@@ -83,9 +84,10 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
 
             TrainTimeModel testOutput = testParam.ToTrainTimeModel();
 
+            string[] outputIds = testOutput.FootnoteIds.ToArray();
             for (int i = 0; i < testParam.Footnotes.Count; ++i)
             {
-                Assert.AreEqual(testParam.Footnotes[i].Id, testOutput.FootnoteIds[i]);
+                Assert.AreEqual(testParam.Footnotes[i].Id, outputIds[i]);
             }
         }
 

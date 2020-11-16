@@ -13,6 +13,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static PostScriptTableVersion GetTableVersionNumberForOverrideMapping()
         {
             return _rnd.NextBoolean() ? PostScriptTableVersion.Two : PostScriptTableVersion.TwoPointFive;
@@ -740,6 +742,7 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             Assert.IsFalse(testOutput.HasValue);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

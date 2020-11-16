@@ -8,6 +8,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// Collection class for <see cref="NameRecord" /> objects.
     /// </summary>
+    [CLSCompliant(false)]
     public class NameRecordCollection : IReadOnlyCollection<NameRecord>
     {
         private readonly NameRecord[] _names;

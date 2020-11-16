@@ -6,7 +6,7 @@ namespace Unicorn.FontTools.OpenType
     /// Flags set in the font header.
     /// </summary>
     [Flags]
-    public enum FontFlags
+    public enum FontProperties
     {
         /// <summary>
         /// The font baseline's y-coordinate is zero.

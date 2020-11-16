@@ -212,6 +212,8 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void LigatureSetStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsString()
         {
@@ -225,6 +227,8 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void LigatureSetStruct_GetHashCodeMethod_ReturnsSameValue_IfCalledTwiceWithSameValue()

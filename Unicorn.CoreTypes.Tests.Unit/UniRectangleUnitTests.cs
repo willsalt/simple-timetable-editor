@@ -11,6 +11,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static UniRectangle GetTestValue() => new UniRectangle(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextUniSize());
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -548,6 +550,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

@@ -9,6 +9,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// The 'cmap' table, containing a set of mappings from character encoding code points to font glyph IDs.
     /// </summary>
+    [CLSCompliant(false)]
     public class CharacterMappingTable : Table
     {
         /// <summary>

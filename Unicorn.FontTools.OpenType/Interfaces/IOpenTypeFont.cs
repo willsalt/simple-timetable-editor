@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Unicorn.FontTools.OpenType.Interfaces
@@ -6,6 +6,7 @@ namespace Unicorn.FontTools.OpenType.Interfaces
     /// <summary>
     /// Interface representing an OpenType font file and its content.
     /// </summary>
+    [CLSCompliant(false)]
     public interface IOpenTypeFont : IEnumerable<byte>
     {
         /// <summary>

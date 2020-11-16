@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
@@ -21,12 +22,12 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// The indirect object prologue as a list of bytes.
         /// </summary>
-        protected List<byte> CachedPrologue { get; private set; }
+        protected IList<byte> CachedPrologue { get; private set; }
 
         /// <summary>
         /// The indirect object epilogue as a list of bytes.
         /// </summary>
-        protected List<byte> CachedEpilogue { get; private set; }
+        protected IList<byte> CachedEpilogue { get; private set; }
         
         /// <summary>
         /// The ID number of this object.
@@ -122,16 +123,16 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// Convert this object to a series of bytes and append them to an existing list.
         /// </summary>
-        /// <param name="list">The list to append to.</param>
+        /// <param name="bytes">The list to append to.</param>
         /// <returns>The number of bytes appended.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
-        public virtual int WriteTo(List<byte> list)
+        public virtual int WriteTo(IList<byte> bytes)
         {
-            if (list == null)
+            if (bytes == null)
             {
-                throw new ArgumentNullException(nameof(list));
+                throw new ArgumentNullException(nameof(bytes));
             }
-            return Write(WriteToList, _contents.WriteTo, list);
+            return Write(WriteToList, _contents.WriteTo, bytes);
         }
 
         /// <summary>
@@ -202,7 +203,7 @@ namespace Unicorn.Writer.Primitives
         /// </summary>
         /// <param name="list">The list that will be appended to.</param>
         /// <param name="bytes">The bytes to append.</param>
-        protected static void WriteToList(List<byte> list, byte[] bytes)
+        protected static void WriteToList(IList<byte> list, byte[] bytes)
         {
             if (list == null)
             {

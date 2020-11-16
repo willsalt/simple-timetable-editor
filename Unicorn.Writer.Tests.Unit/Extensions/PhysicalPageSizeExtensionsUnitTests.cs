@@ -13,6 +13,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
         private static readonly Random _rnd = RandomProvider.Default;
         private static readonly PdfReal _zero = new PdfReal(0);
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -486,6 +487,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
             Assert.Fail();
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

@@ -9,6 +9,9 @@ namespace Tests.Utility.Extensions
     [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
+
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public const string AlphanumericCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         public const string AlphabeticalCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         public const string HexadecimalCharacters = "abcdef0123456789";
@@ -34,7 +37,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (characters == null)
             {
@@ -66,7 +69,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return random.Next(2) == 0;
         }
@@ -75,7 +78,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             bool?[] values = { true, false, null };
             return values[random.Next(values.Length)];
@@ -85,7 +88,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -113,7 +116,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             long ticks = NextLong(random, DateTime.MaxValue.Ticks);
             return new DateTime().AddTicks(ticks);
@@ -123,7 +126,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return new TimeOfDay(random.Next(86400));
         }
@@ -141,7 +144,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return new TimeOfDay(random.Next(seconds));
         }
@@ -159,7 +162,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             int lim = 86400 - seconds;
             return new TimeOfDay(random.Next(lim) + seconds);
@@ -193,7 +196,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             int lim = maxSeconds - minSeconds;
@@ -204,7 +207,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             ArrivalDepartureOptions[] allValues = new ArrivalDepartureOptions[]
@@ -221,7 +224,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             if (random.Next(5) == 0)
@@ -236,7 +239,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             TrainRoutingOptions[] allValues = new TrainRoutingOptions[]
@@ -257,7 +260,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             if (random.Next(9) == 0)
@@ -272,7 +275,7 @@ namespace Tests.Utility.Extensions
         {
             if (random == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             LocationFontType[] allValues = new LocationFontType[]
@@ -288,7 +291,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (validValues is null)
             {
@@ -309,7 +312,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             string rval;
@@ -324,7 +327,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             Orientation[] allValues = new[] { Orientation.Landscape, Orientation.Portrait };
             return allValues[random.Next(allValues.Length)];
@@ -334,7 +337,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return random.Next(5) == 0 ? (Orientation?)null : NextOrientation(random);
         }
@@ -343,7 +346,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return (decimal)random.NextDouble() * 2000m - 1000m;
         }
@@ -352,7 +355,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -365,7 +368,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return (short)random.Next(short.MaxValue + 1);
         }
@@ -374,7 +377,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -387,7 +390,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -396,20 +399,22 @@ namespace Tests.Utility.Extensions
             return random.Next();
         }
 
+        [CLSCompliant(false)]
         public static ushort NextUShort(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return (ushort)random.Next(ushort.MaxValue + 1);
         }
 
+        [CLSCompliant(false)]
         public static uint NextUInt(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(2) == 0)
             {
@@ -418,11 +423,12 @@ namespace Tests.Utility.Extensions
             return int.MaxValue + (uint)random.Next();
         }
 
+        [CLSCompliant(false)]
         public static uint NextUInt(this Random random, uint max)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (max < int.MaxValue)
             {
@@ -431,11 +437,12 @@ namespace Tests.Utility.Extensions
             return unchecked((uint)random.Next((int)(max >> 1)) << 1) | (uint)random.Next(2);
         }
 
+        [CLSCompliant(false)]
         public static ulong NextULong(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(2) == 0)
             {
@@ -448,7 +455,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(63) < 32)
             {
@@ -461,7 +468,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (max < uint.MaxValue)
             {
@@ -470,11 +477,12 @@ namespace Tests.Utility.Extensions
             return random.NextUInt() | (long)random.Next((int)(max >> 32)) << 32;
         }
 
+        [CLSCompliant(false)]
         public static uint? NextNullableUInt(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(10) == 0)
             {
@@ -492,7 +500,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             return (byte)random.Next(max);
         }
@@ -501,7 +509,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             SectionSelection[] values = new[] { SectionSelection.None, SectionSelection.First, SectionSelection.All };
@@ -512,7 +520,7 @@ namespace Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
             if (random.Next(4) == 0)
             {
@@ -520,5 +528,8 @@ namespace Tests.Utility.Extensions
             }
             return NextSectionSelection(random);
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

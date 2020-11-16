@@ -312,6 +312,9 @@
     <EmbeddedResource Include="TrainLocationTimeEditForm.resx">
       <DependentUpon>TrainLocationTimeEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Licence.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

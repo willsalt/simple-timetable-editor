@@ -21,6 +21,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Yaml\**" />
+    <EmbeddedResource Remove="Yaml\**" />
+    <None Remove="Yaml\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -37,10 +43,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj" />
     <ProjectReference Include="..\Timetabler.SerialData\Timetabler.SerialData.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Yaml\" />
   </ItemGroup>
 
 </Project>

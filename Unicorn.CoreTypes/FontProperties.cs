@@ -6,7 +6,7 @@ namespace Unicorn.CoreTypes
     /// Font descriptor flags, with values taken from the PDF specification.
     /// </summary>
     [Flags]
-    public enum FontDescriptorFlags
+    public enum FontProperties
     {
         /// <summary>
         /// Monospaced font.

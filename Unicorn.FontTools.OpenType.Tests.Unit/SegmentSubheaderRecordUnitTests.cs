@@ -10,6 +10,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static SegmentSubheaderRecord GetTestValue()
             => new SegmentSubheaderRecord(_rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.Next());
 
@@ -466,6 +468,7 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

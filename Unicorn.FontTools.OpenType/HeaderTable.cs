@@ -7,6 +7,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// The font header table.
     /// </summary>
+    [CLSCompliant(false)]
     public class HeaderTable : Table
     {
         /// <summary>
@@ -37,7 +38,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Font flags.
         /// </summary>
-        public FontFlags Flags { get; }
+        public FontProperties Flags { get; }
 
         /// <summary>
         /// Number of font design units per em.
@@ -77,7 +78,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Font style flags.  Apple-style calculations use this field in preference to <see cref="OS2MetricsTable.FontSelection" />.
         /// </summary>
-        public MacStyleFlags StyleFlags { get; }
+        public MacStyleProperties StyleFlags { get; }
 
         /// <summary>
         /// The smallest pixel size at which this font is still considered legible.
@@ -120,8 +121,8 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="dirHint">The <see cref="DirectionHint" /> property value.</param>
         /// <param name="useLongOffsets">The <see cref="UseLongOffsets" /> property value.</param>
         /// <param name="dataFormat">The <see cref="GlyphDataFormat" /> property value.</param>
-        public HeaderTable(ushort majorVersion, ushort minorVersion, decimal rev, uint checksumAdj, uint magic, FontFlags flags, ushort scale, DateTime created,
-            DateTime modified, short xMin, short yMin, short xMax, short yMax, MacStyleFlags styleFlags, ushort smallestReadableSize, FontDirectionHint dirHint,
+        public HeaderTable(ushort majorVersion, ushort minorVersion, decimal rev, uint checksumAdj, uint magic, FontProperties flags, ushort scale, DateTime created,
+            DateTime modified, short xMin, short yMin, short xMax, short yMax, MacStyleProperties styleFlags, ushort smallestReadableSize, FontDirectionHint dirHint,
             bool useLongOffsets, short dataFormat)
             : base("head")
         {
@@ -165,7 +166,7 @@ namespace Unicorn.FontTools.OpenType
                 data.ToFixed(offset + 4),                       // Revision
                 data.ToUInt(offset + 8),                        // ChecksumAdjustment
                 data.ToUInt(offset + 12),                       // Magic
-                (FontFlags)data.ToUShort(offset + 16),          // FontFlags
+                (FontProperties)data.ToUShort(offset + 16),          // FontFlags
                 data.ToUShort(offset + 18),                     // FontUnitScale
                 data.ToDateTime(offset + 20),                   // Created
                 data.ToDateTime(offset + 28),                   // Modified
@@ -173,7 +174,7 @@ namespace Unicorn.FontTools.OpenType
                 data.ToShort(offset + 38),                      // YMin
                 data.ToShort(offset + 40),                      // XMax
                 data.ToShort(offset + 42),                      // YMax
-                (MacStyleFlags)data.ToUShort(offset + 44),      // StyleFlags
+                (MacStyleProperties)data.ToUShort(offset + 44),      // StyleFlags
                 data.ToUShort(offset + 46),                     // SmallestReadablePixelSize
                 (FontDirectionHint)data.ToShort(offset + 48),   // DirectionHint
                 data.ToShort(offset + 50) == 1,                 // UseLongOffsets

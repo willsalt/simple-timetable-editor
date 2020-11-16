@@ -653,6 +653,8 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.AreEqual(testValue3, testOutput.Top);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         [ExpectedException(typeof(AfmFormatException))]
         public void BoundingBoxStruct_FromStringsMethod_ThrowsAfmFormatException_IfFirstParameterIsNotANumber()
@@ -721,6 +723,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.Fail();
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

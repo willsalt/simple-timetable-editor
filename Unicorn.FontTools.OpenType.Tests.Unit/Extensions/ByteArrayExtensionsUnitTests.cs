@@ -12,11 +12,12 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
     {
         private readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToUShortMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToUShortMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -151,8 +152,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToShortMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToShortMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -301,8 +302,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToUIntMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToUIntMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -479,8 +480,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToIntMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToIntMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -673,8 +674,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToFixedMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToFixedMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -845,8 +846,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToULongMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToULongMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -1091,8 +1092,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToLongMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -1357,8 +1358,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToDateTimeMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToDateTimeMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -1569,8 +1570,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToLowerUnicodeRangeFlagsMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToLowerUnicodeRangeFlagsMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -1756,8 +1757,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToUpperUnicodeRangeFlagsMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToUpperUnicodeRangeFlagsMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -1943,8 +1944,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ByteArrayExtensionsClass_ToSupportedCodePageFlagsMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ByteArrayExtensionsClass_ToSupportedCodePageFlagsMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             byte[] testParam0 = null;
             int testParam1 = _rnd.Next();
@@ -2129,6 +2130,7 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit.Extensions
             Assert.AreEqual(expectedValue, testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

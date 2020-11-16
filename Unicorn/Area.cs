@@ -12,7 +12,7 @@ namespace Unicorn
         /// <summary>
         /// The contents of the container.
         /// </summary>
-        public List<IPositionedKnownSizeDrawable> Contents { get; private set; }
+        public IList<IPositionedKnownSizeDrawable> Contents { get; private set; }
 
         /// <summary>
         /// The width of the area, computed from the coordinates and widths of the area's contents.

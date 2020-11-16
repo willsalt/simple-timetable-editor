@@ -7,6 +7,11 @@
     public enum PostScriptTableVersion
     {
         /// <summary>
+        /// No valid version.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// Version 1.
         /// </summary>
         One = 10,

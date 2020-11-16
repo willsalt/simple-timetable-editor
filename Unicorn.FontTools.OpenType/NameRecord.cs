@@ -1,8 +1,11 @@
-﻿namespace Unicorn.FontTools.OpenType
+﻿using System;
+
+namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// An individual entry in the 'name' table.
     /// </summary>
+    [CLSCompliant(false)]
     public class NameRecord
     {
         /// <summary>

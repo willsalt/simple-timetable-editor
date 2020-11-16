@@ -2,10 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unicorn.Writer.Extensions;
 using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
+
+#pragma warning disable CA1711 // This is a dictionary in the PDF sense, even if it is not in the .NET sense.
+
     /// <summary>
     /// The class representing a PDF dictionary.  Unlike most of the classes in the Unicorn.Writer.Primitives namespace, this one is mutable.  The keys to the dictionary are 
     /// <see cref="PdfName" /> instances; the values can be any <see cref="IPdfPrimitiveObject" />.
@@ -194,19 +198,19 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// Convert the current contents of the dictionary to bytes and append them to a list.
         /// </summary>
-        /// <param name="list">The list to append to.</param>
+        /// <param name="bytes">The list to append to.</param>
         /// <returns>The number of bytes appended to the list.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
-        public int WriteTo(List<byte> list)
+        public int WriteTo(IList<byte> bytes)
         {
-            if (list == null)
+            if (bytes == null)
             {
-                throw new ArgumentNullException(nameof(list));
+                throw new ArgumentNullException(nameof(bytes));
             }
-            return Write(WriteToList, list);
+            return Write(WriteToList, bytes);
         }
 
-        internal static int WriteTo(PdfDictionary dict, List<byte> list)
+        internal static int WriteTo(PdfDictionary dict, IList<byte> list)
         {
             return dict.WriteTo(list);
         }
@@ -246,7 +250,7 @@ namespace Unicorn.Writer.Primitives
             str.Write(bytes, 0, bytes.Length);
         }
 
-        private static void WriteToList(List<byte> list, byte[] bytes)
+        private static void WriteToList(IList<byte> list, byte[] bytes)
         {
             list.AddRange(bytes);
         }
@@ -307,4 +311,7 @@ namespace Unicorn.Writer.Primitives
             return _contents.GetEnumerator();
         }
     }
+
+#pragma warning restore CA1711 // Identifiers should not have incorrect suffix
+
 }

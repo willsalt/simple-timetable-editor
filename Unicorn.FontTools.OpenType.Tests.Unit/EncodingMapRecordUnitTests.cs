@@ -14,6 +14,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
 
         private static readonly Encoding[] _someEncodings = new[] { Encoding.ASCII, Encoding.Unicode, Encoding.BigEndianUnicode, Encoding.UTF8 };
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static Encoding GetRandomEncoding()
         {
             return _someEncodings[_rnd.Next(_someEncodings.Length)];
@@ -57,6 +59,7 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             Assert.AreEqual(testParam2, testOutput.Encoding);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

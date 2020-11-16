@@ -11,6 +11,7 @@ namespace Unicorn.FontTools.OpenType
     /// different disk layout.  The supported codepoint ranges are mapped either by specifying an offset from codepoint to glyph ID for the range, or by specifying
     /// an offset into a table that maps code points to base glyph values to which a second offset is then added.
     /// </summary>
+    [CLSCompliant(false)]
     public class SegmentedCharacterMapping : CharacterMapping
     {
         private SegmentSubheaderRecordCollection Segments { get; }

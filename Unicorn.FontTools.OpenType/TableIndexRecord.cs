@@ -6,6 +6,7 @@ namespace Unicorn.FontTools.OpenType
     /// A table index record.  An OpenType file consists of an <see cref="OffsetTable" />, a sequence of <see cref="TableIndexRecord" /> entries whose length 
     /// corresponds to the number of tables given in the offset table, followed by the data tables themselves.
     /// </summary>
+    [CLSCompliant(false)]
     public class TableIndexRecord
     {
         /// <summary>

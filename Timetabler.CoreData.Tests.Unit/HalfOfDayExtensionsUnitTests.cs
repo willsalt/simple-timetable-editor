@@ -11,6 +11,7 @@ namespace Timetabler.CoreData.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -53,6 +54,7 @@ namespace Timetabler.CoreData.Tests.Unit
             Assert.AreEqual(Resources.HalfOfDay_ToNameString_Am, testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

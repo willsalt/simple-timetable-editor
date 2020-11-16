@@ -10,16 +10,16 @@ namespace Timetabler.SerialData
         /// <summary>
         /// The locations making up this map.
         /// </summary>
-        public List<LocationModel> LocationList { get; } = new List<LocationModel>();
+        public ICollection<LocationModel> LocationList { get; } = new List<LocationModel>();
 
         /// <summary>
         /// The block sections that exist on the map.
         /// </summary>
-        public List<BlockSectionModel> BlockSections { get; } = new List<BlockSectionModel>();
+        public ICollection<BlockSectionModel> BlockSections { get; } = new List<BlockSectionModel>();
 
         /// <summary>
         /// The signalboxes on the map.
         /// </summary>
-        public List<SignalboxModel> Signalboxes { get; } = new List<SignalboxModel>();
+        public ICollection<SignalboxModel> Signalboxes { get; } = new List<SignalboxModel>();
     }
 }

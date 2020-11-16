@@ -60,7 +60,7 @@ namespace Timetabler.Data
         /// <summary>
         /// Event raised when this object is modified.
         /// </summary>
-        public event ModifiedEventHandler Modified;
+        public event EventHandler<ModifiedEventArgs> Modified;
 
         /// <summary>
         /// Event raised when an object is added to the Hours collection.

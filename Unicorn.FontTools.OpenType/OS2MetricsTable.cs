@@ -8,6 +8,7 @@ namespace Unicorn.FontTools.OpenType
     /// The "OS/2" table, containing Windows- and OS/2- specific metric information, and also information about design classification, licensing and character 
     /// range support.
     /// </summary>
+    [CLSCompliant(false)]
     public class OS2MetricsTable : Table
     {
         /// <summary>
@@ -33,7 +34,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Font embedding permissions.
         /// </summary>
-        public EmbeddingPermissionsFlags EmbeddingPermissions { get; private set; }
+        public EmbeddingPermissions EmbeddingPermissions { get; private set; }
 
         /// <summary>
         /// If regular characters in this font are used as subscripts, they should be horizontally scaled by this field divided by <see cref="HeaderTable.FontUnitScale" />.
@@ -113,7 +114,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Font style flags.  Windows-style calculations use this field in preference to <see cref="HeaderTable.StyleFlags" />.
         /// </summary>
-        public OS2StyleFlags FontSelection { get; private set; }
+        public OS2StyleProperties FontSelection { get; private set; }
 
         /// <summary>
         /// The lowest Unicode code point supported by this font for platform 3, encoding 0 or 1 (or 0xFFFF if the actual lowest supported code point is higher 
@@ -235,10 +236,10 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="maxContext">The value for the <see cref="MaxContext" /> property.</param>
         /// <param name="lowerOpticalPointSize">The value for the <see cref="LowerOpticalPointSize" /> property.</param>
         /// <param name="upperOpticalPointSize">The value for the <see cref="UpperOpticalPointSize" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissionsFlags permissions, short subscriptXSize, 
+        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize, 
             short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
             short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleFlags fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
+            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
             short lineGap, ushort winAscender, ushort winDescender, SupportedCodePageFlags codePages, short height, short capHeight, ushort defaultChar, 
             ushort breakChar, ushort maxContext, ushort lowerOpticalPointSize, ushort upperOpticalPointSize) 
             : this(5, avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
@@ -287,10 +288,10 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="defaultChar">The value for the <see cref="DefaultChar" /> property.</param>
         /// <param name="breakChar">The value for the <see cref="BreakChar" /> property.</param>
         /// <param name="maxContext">The value for the <see cref="MaxContext" /> property.</param>
-        public OS2MetricsTable(ushort version, short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissionsFlags permissions, short subscriptXSize,
+        public OS2MetricsTable(ushort version, short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
             short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
             short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleFlags fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
+            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
             short lineGap, ushort winAscender, ushort winDescender, SupportedCodePageFlags codePages, short height, short capHeight, ushort defaultChar,
             ushort breakChar, ushort maxContext)
             : this(avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
@@ -336,10 +337,10 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="winAscender">The value for the <see cref="WindowsAscender" /> property.</param>
         /// <param name="winDescender">The value for the <see cref="WindowsDescender" /> property.</param>
         /// <param name="codePages">The value for the <see cref="CodePages" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissionsFlags permissions, short subscriptXSize,
+        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
             short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
             short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleFlags fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
+            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
             short lineGap, ushort winAscender, ushort winDescender, SupportedCodePageFlags codePages)
             : this(avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
                   superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeLower, unicodeUpper,
@@ -379,10 +380,10 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="lineGap">The value for the <see cref="LineGap" /> property.</param>
         /// <param name="winAscender">The value for the <see cref="WindowsAscender" /> property.</param>
         /// <param name="winDescender">The value for the <see cref="WindowsDescender" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissionsFlags permissions, short subscriptXSize,
+        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
             short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
             short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleFlags fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
+            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
             short lineGap, ushort winAscender, ushort winDescender)
             : this(avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
                   superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeLower, unicodeUpper,
@@ -420,10 +421,10 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="fontSelection">The value for the <see cref="FontSelection" /> property.</param>
         /// <param name="minCodePoint">The value for the <see cref="MinCodePoint" /> property.</param>
         /// <param name="maxCodePoint">The value for the <see cref="MaxCodePoint" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissionsFlags permissions, short subscriptXSize,
+        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
             short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
             short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleFlags fontSelection, ushort minCodePoint, ushort maxCodePoint)
+            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint)
             : base("OS/2")
         {
             Version = 0;
@@ -491,7 +492,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 2),
                 arr.ToUShort(offset + 4),
                 arr.ToUShort(offset + 6),
-                (EmbeddingPermissionsFlags)arr.ToUShort(offset + 8),
+                (EmbeddingPermissions)arr.ToUShort(offset + 8),
                 arr.ToShort(offset + 10),
                 arr.ToShort(offset + 12),
                 arr.ToShort(offset + 14),
@@ -507,7 +508,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToLowerUnicodeRangeFlags(offset + 42),
                 arr.ToUpperUnicodeRangeFlags(offset + 50),
                 new Tag(arr, offset + 58),
-                (OS2StyleFlags)arr.ToUShort(offset + 62),
+                (OS2StyleProperties)arr.ToUShort(offset + 62),
                 arr.ToUShort(offset + 64),
                 arr.ToUShort(offset + 66),
                 arr.ToShort(offset + 68),
@@ -532,7 +533,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 2),
                 arr.ToUShort(offset + 4),
                 arr.ToUShort(offset + 6),
-                (EmbeddingPermissionsFlags)arr.ToUShort(offset + 8),
+                (EmbeddingPermissions)arr.ToUShort(offset + 8),
                 arr.ToShort(offset + 10),
                 arr.ToShort(offset + 12),
                 arr.ToShort(offset + 14),
@@ -548,7 +549,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToLowerUnicodeRangeFlags(offset + 42),
                 arr.ToUpperUnicodeRangeFlags(offset + 50),
                 new Tag(arr, offset + 58),
-                (OS2StyleFlags)arr.ToUShort(offset + 62),
+                (OS2StyleProperties)arr.ToUShort(offset + 62),
                 arr.ToUShort(offset + 64),
                 arr.ToUShort(offset + 66),
                 arr.ToShort(offset + 68),
@@ -570,7 +571,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 2),
                 arr.ToUShort(offset + 4),
                 arr.ToUShort(offset + 6),
-                (EmbeddingPermissionsFlags)arr.ToUShort(offset + 8),
+                (EmbeddingPermissions)arr.ToUShort(offset + 8),
                 arr.ToShort(offset + 10),
                 arr.ToShort(offset + 12),
                 arr.ToShort(offset + 14),
@@ -586,7 +587,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToLowerUnicodeRangeFlags(offset + 42),
                 arr.ToUpperUnicodeRangeFlags(offset + 50),
                 new Tag(arr, offset + 58),
-                (OS2StyleFlags)arr.ToUShort(offset + 62),
+                (OS2StyleProperties)arr.ToUShort(offset + 62),
                 arr.ToUShort(offset + 64),
                 arr.ToUShort(offset + 66),
                 arr.ToShort(offset + 68),
@@ -605,7 +606,7 @@ namespace Unicorn.FontTools.OpenType
                     arr.ToShort(offset + 2),
                     arr.ToUShort(offset + 4),
                     arr.ToUShort(offset + 6),
-                    (EmbeddingPermissionsFlags)arr.ToUShort(offset + 8),
+                    (EmbeddingPermissions)arr.ToUShort(offset + 8),
                     arr.ToShort(offset + 10),
                     arr.ToShort(offset + 12),
                     arr.ToShort(offset + 14),
@@ -621,7 +622,7 @@ namespace Unicorn.FontTools.OpenType
                     arr.ToLowerUnicodeRangeFlags(offset + 42),
                     arr.ToUpperUnicodeRangeFlags(offset + 50),
                     new Tag(arr, offset + 58),
-                    (OS2StyleFlags)arr.ToUShort(offset + 62),
+                    (OS2StyleProperties)arr.ToUShort(offset + 62),
                     arr.ToUShort(offset + 64),
                     arr.ToUShort(offset + 66),
                     arr.ToShort(offset + 68),
@@ -634,7 +635,7 @@ namespace Unicorn.FontTools.OpenType
                     arr.ToShort(offset + 2),
                     arr.ToUShort(offset + 4),
                     arr.ToUShort(offset + 6),
-                    (EmbeddingPermissionsFlags)arr.ToUShort(offset + 8),
+                    (EmbeddingPermissions)arr.ToUShort(offset + 8),
                     arr.ToShort(offset + 10),
                     arr.ToShort(offset + 12),
                     arr.ToShort(offset + 14),
@@ -650,7 +651,7 @@ namespace Unicorn.FontTools.OpenType
                     arr.ToLowerUnicodeRangeFlags(offset + 42),
                     arr.ToUpperUnicodeRangeFlags(offset + 50),
                     new Tag(arr, offset + 58),
-                    (OS2StyleFlags)arr.ToUShort(offset + 62),
+                    (OS2StyleProperties)arr.ToUShort(offset + 62),
                     arr.ToUShort(offset + 64),
                     arr.ToUShort(offset + 66));
         }

@@ -215,6 +215,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             Assert.IsFalse(testOutput);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void SequentialMapGroupRecordStruct_EqualsMethodWithObjectParameter_ReturnsFalse_IfParameterIsString()
         {
@@ -225,6 +227,8 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void SequentialMapGroupRecordStruct_GetHashCodeMethod_ReturnsSameValue_IfCalledTwiceOnSameValue()

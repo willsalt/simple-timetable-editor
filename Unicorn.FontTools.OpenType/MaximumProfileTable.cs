@@ -7,6 +7,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// The content of the "maxp" table, which describes the size of the resources used by this font.
     /// </summary>
+    [CLSCompliant(false)]
     public class MaximumProfileTable : Table
     {
         /// <summary>

@@ -12,6 +12,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// OpenType font data and metadata.
     /// </summary>
+    [CLSCompliant(false)]
     public class OpenTypeFont : IDisposable, IOpenTypeFont
     {
         private MemoryMappedFile _mmf;

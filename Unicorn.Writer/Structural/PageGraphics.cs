@@ -131,10 +131,10 @@ namespace Unicorn.Writer.Structural
         /// Rotate the coordinate system around a point.
         /// </summary>
         /// <param name="angle">The angle to rotate by.</param>
-        /// <param name="centre">The centre of rotation.</param>
-        public void RotateAt(double angle, UniPoint centre)
+        /// <param name="around">The centre of rotation.</param>
+        public void RotateAt(double angle, UniPoint around)
         {
-            PdfOperator.ApplyTransformation(UniMatrix.RotationAt(MathsHelpers.DegToRad(-angle), new UniPoint(_xTransformer(centre.X), _yTransformer(centre.Y))))
+            PdfOperator.ApplyTransformation(UniMatrix.RotationAt(MathsHelpers.DegToRad(-angle), new UniPoint(_xTransformer(around.X), _yTransformer(around.Y))))
                 .WriteTo(_page.ContentStream);
         }
 

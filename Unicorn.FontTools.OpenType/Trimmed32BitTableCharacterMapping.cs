@@ -10,6 +10,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// OpenType character mapping type 10.  "This format is not widely used and is not supported by Microsoft" according to the OpenType spec.
     /// </summary>
+    [CLSCompliant(false)]
     public class Trimmed32BitTableCharacterMapping : CharacterMapping
     {
         private readonly uint _startCode;

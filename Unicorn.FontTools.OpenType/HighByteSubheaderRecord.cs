@@ -6,6 +6,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// The "subheader record" portion of a character mapping Type 2 table.
     /// </summary>
+    [CLSCompliant(false)]
     public struct HighByteSubheaderRecord : IEquatable<HighByteSubheaderRecord>
     {
         /// <summary>

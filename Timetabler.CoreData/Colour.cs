@@ -10,31 +10,43 @@ namespace Timetabler.CoreData
         /// <summary>
         /// The full 32-bit ARGB value of this colour.
         /// </summary>
-        public uint Argb { get; private set; }
+        public int Argb => (int)_argb;
+
+        private uint _argb;
+
+        /// <summary>
+        /// Constructor (CLS compliant)
+        /// </summary>
+        /// <param name="argb">The 32-bit ARGB value of this colour.</param>
+        public Colour(int argb)
+        {
+            _argb = (uint)argb;
+        }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="argb">The 32-bit ARGB value of this colour.</param>
+        /// <param name="argb">The 32-bit ARGB value of this colour</param>
+        [CLSCompliant(false)]
         public Colour(uint argb)
         {
-            Argb = argb;
+            _argb = argb;
         }
 
         /// <summary>
         /// The red component of the colour, from 0 to 255.
         /// </summary>
-        public int R => (int)(Argb & 0xff0000) >> 16;
+        public int R => (Argb & 0xff0000) >> 16;
 
         /// <summary>
         /// The green component of the colour, from 0 to 255.
         /// </summary>
-        public int G => (int)(Argb & 0xff00) >> 8;
+        public int G => (Argb & 0xff00) >> 8;
 
         /// <summary>
         /// The blue component of the colour, from 0 to 255.
         /// </summary>
-        public int B => (int)(Argb & 0xff);
+        public int B => (Argb & 0xff);
 
         /// <summary>
         /// The colour black, with ARGB value 0xFF000000.

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unicorn.Writer.Primitives;
 
 namespace Unicorn.Writer.Tests.Unit.TestHelpers
@@ -30,7 +31,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
             }
         }
 
-        public static void AssertSameElements(List<byte> a, List<byte> b)
+        public static void AssertSameElements(IList<byte> a, IList<byte> b)
         {
             if (ReferenceEquals(a, b))
             {
@@ -69,7 +70,7 @@ namespace Unicorn.Writer.Tests.Unit.TestHelpers
             AssertSameElements(arrA, arrB);
         }
 
-        public static void AssertSameElements(List<byte> a, PdfStream b)
+        public static void AssertSameElements(IList<byte> a, PdfStream b)
         {
             if (a is null && b is null)
             {

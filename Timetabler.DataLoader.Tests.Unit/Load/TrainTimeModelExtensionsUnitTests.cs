@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.Data;
@@ -32,7 +33,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             return model;
         }
 
-        private static Dictionary<string, Note> GetNoteDictionaryWithContents(List<string> noteIds, bool andExtra = true)
+        private static Dictionary<string, Note> GetNoteDictionaryWithContents(ICollection<string> noteIds, bool andExtra = true)
         {
             Dictionary<string, Note> output = new Dictionary<string, Note>();
             foreach (string id in noteIds)
@@ -234,9 +235,10 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             TrainTime testOutput = testParam0.ToTrainTime(testParam1);
 
             Assert.AreEqual(testParam0.FootnoteIds.Count, testOutput.Footnotes.Count);
+            string[] sourceIds = testParam0.FootnoteIds.ToArray();
             for (int i = 0; i < testParam0.FootnoteIds.Count; ++i)
             {
-                Assert.AreEqual(testParam0.FootnoteIds[i], testOutput.Footnotes[i].Id);
+                Assert.AreEqual(sourceIds[i], testOutput.Footnotes[i].Id);
             }
         }
 

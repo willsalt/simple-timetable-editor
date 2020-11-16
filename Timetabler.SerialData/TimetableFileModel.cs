@@ -60,26 +60,26 @@ namespace Timetabler.SerialData
         /// <summary>
         /// Network maps contained in this document.
         /// </summary>
-        public List<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
+        public IList<NetworkMapModel> Maps { get; } = new List<NetworkMapModel>();
 
         /// <summary>
         /// Footnotes used by tables in this document.
         /// </summary>
-        public List<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
+        public ICollection<NoteModel> NoteDefinitions { get; } = new List<NoteModel>();
 
         /// <summary>
         /// Train classes used in this document.
         /// </summary>
-        public List<TrainClassModel> TrainClassList { get; } = new List<TrainClassModel>();
+        public ICollection<TrainClassModel> TrainClassList { get; } = new List<TrainClassModel>();
 
         /// <summary>
         /// Trains in this document.
         /// </summary>
-        public List<TrainModel> TrainList { get; } = new List<TrainModel>();
+        public ICollection<TrainModel> TrainList { get; } = new List<TrainModel>();
 
         /// <summary>
         /// Signalbox hours in this document.
         /// </summary>
-        public List<SignalboxHoursSetModel> SignalboxHoursSets { get; } = new List<SignalboxHoursSetModel>();
+        public ICollection<SignalboxHoursSetModel> SignalboxHoursSets { get; } = new List<SignalboxHoursSetModel>();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Timetabler.CoreData.Extensions;
 using Timetabler.Data;
 using Timetabler.DataLoader.Save;
 using Timetabler.SerialData;

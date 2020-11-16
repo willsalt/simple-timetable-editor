@@ -1,5 +1,8 @@
 ﻿namespace Unicorn.FontTools.OpenType
 {
+
+#pragma warning disable CA1027 // Mark enums with FlagsAttribute - false positive in this case.
+
     /// <summary>
     /// The predefined fields that can exist in a 'name' table.
     /// </summary>
@@ -131,4 +134,7 @@
         /// </summary>
         PostScriptFamilyPrefix = 25
     }
+
+#pragma warning restore CA1027 // Mark enums with FlagsAttribute
+
 }

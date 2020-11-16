@@ -10,6 +10,7 @@ namespace Unicorn.FontTools.OpenType
     /// OpenType character mapping format 2.  This character mapping is designed for use with encodings in which some codepoints are encoded as single bytes, others
     /// as two bytes, with certain bytes being valid as the first byte of a 16-bit codepoint, but not as the only byte of an 8-bit codepoint.
     /// </summary>
+    [CLSCompliant(false)]
     public class HighByteSubheaderCharacterMapping : CharacterMapping
     {
         private readonly int[] _highByteIndex;

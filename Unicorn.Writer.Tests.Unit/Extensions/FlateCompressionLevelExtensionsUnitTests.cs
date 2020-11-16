@@ -53,6 +53,8 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
             Assert.AreEqual(9, testOutput);
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         [TestMethod]
         public void FlateCompressionLevelExtensionsClass_ToSharpZipLibIntMethod_ReturnsEight_IfParameterIsNotAValidFlateCompressionLevelValue()
         {
@@ -63,6 +65,7 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
             Assert.AreEqual(8, testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

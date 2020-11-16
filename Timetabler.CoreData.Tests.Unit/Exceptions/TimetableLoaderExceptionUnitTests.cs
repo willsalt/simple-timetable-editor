@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Tests.Utility.Exceptions;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData.Exceptions;
 
@@ -11,6 +12,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         private readonly Random _rnd = new Random();
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void TimetableLoaderExceptionClass_IsAnExceptionClass()
@@ -40,7 +42,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         public void TimetableLoaderExceptionClass_ConstructorWithTwoParameters_SetsMessagePropertyToFirstParameter()
         {
             string testMessage = _rnd.NextString(_rnd.Next(1, 100));
-            Exception inner = new Exception();
+            Exception inner = new TestException();
 
             TimetableLoaderException testException = new TimetableLoaderException(testMessage, inner);
 
@@ -51,7 +53,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         public void TimetableLoaderExceptionClass_ConstructorWithTwoParameters_SetsInnerExceptionPropertyToSecondParameter()
         {
             string testMessage = _rnd.NextString(_rnd.Next(1, 100));
-            Exception inner = new Exception();
+            Exception inner = new TestException();
 
             TimetableLoaderException testException = new TimetableLoaderException(testMessage, inner);
 
@@ -59,6 +61,7 @@ namespace Timetabler.CoreData.Tests.Unit.Exceptions
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
+#pragma warning restore CA5394 // Do not use insecure randomness
 
     }
 }

@@ -12,6 +12,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
         private static readonly Random _rnd = RandomProvider.Default;
         private const int MaxTestStringLength = 1024;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -97,6 +98,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
             Assert.AreEqual(expectedResult, result);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

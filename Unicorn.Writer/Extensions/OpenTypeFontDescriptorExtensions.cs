@@ -19,7 +19,7 @@ namespace Unicorn.Writer.Extensions
         {
             if (font is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(font));
             }
             PdfDictionary d = new PdfDictionary
             {

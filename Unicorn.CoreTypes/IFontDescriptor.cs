@@ -87,7 +87,7 @@ namespace Unicorn.CoreTypes
         /// <summary>
         /// Flags describing this font's visual style.
         /// </summary>
-        FontDescriptorFlags Flags { get; }
+        FontProperties Flags { get; }
 
         /// <summary>
         /// Whether or not this font requires a font descriptor dictionary to be written to the PDF output.  This is true for most fonts other than those that

@@ -14,16 +14,16 @@ namespace Unicorn.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TableCellCollectionEnumeratorClass_Constructor_ThrowsArgumentNullException_IfParameterIsNull()
         {
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(null))
-            {
-                Assert.Fail();
-            }
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(null);
+            
+            Assert.Fail();
         }
 
         [TestMethod]
@@ -32,22 +32,20 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                Assert.IsNull(testObject.Current);
-            }
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            Assert.IsNull(testObject.Current);
         }
 
         [TestMethod]
         public void TableCellCollectionEnumeratorClass_MoveNextMethod_ReturnsFalseOnFirstCall_IfObjectIsConstructedFromEmptyTableColumn()
         {
             TableColumn testParam = new TableColumn();
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                bool testOutput = testObject.MoveNext();
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            bool testOutput = testObject.MoveNext();
 
-                Assert.IsFalse(testOutput);
-            }
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
@@ -56,12 +54,11 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                bool testOutput = testObject.MoveNext();
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            bool testOutput = testObject.MoveNext();
 
-                Assert.IsTrue(testOutput);
-            }
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
@@ -70,12 +67,11 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                _ = testObject.MoveNext();
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            _ = testObject.MoveNext();
 
-                Assert.AreSame(testParam[0], testObject.Current);
-            }
+            Assert.AreSame(testParam[0], testObject.Current);
         }
 
         [TestMethod]
@@ -84,14 +80,12 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            for (int i = 0; i < testParam.Count; ++i)
             {
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    testObject.MoveNext();
+                testObject.MoveNext();
 
-                    Assert.AreSame(testParam[i], testObject.Current);
-                }
+                Assert.AreSame(testParam[i], testObject.Current);
             }
         }
 
@@ -101,14 +95,12 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            for (int i = 0; i < testParam.Count; ++i)
             {
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    bool testOutput = testObject.MoveNext();
+                bool testOutput = testObject.MoveNext();
 
-                    Assert.IsTrue(testOutput);
-                }
+                Assert.IsTrue(testOutput);
             }
         }
 
@@ -118,17 +110,15 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            for (int i = 0; i < testParam.Count; ++i)
             {
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    _ = testObject.MoveNext();
-                }
-
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsFalse(testOutput);
+                _ = testObject.MoveNext();
             }
+
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
@@ -137,36 +127,33 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-
-                testObject.Reset();
-
-                Assert.IsNull(testObject.Current);
+                testObject.MoveNext();
             }
+
+            testObject.Reset();
+
+            Assert.IsNull(testObject.Current);
         }
 
         [TestMethod]
         public void TableCellCollectionEnumeratorClass_ResetMethodThenMoveNextMethod_ReturnsFalseOnFirstCall_IfObjectIsConstructedFromEmptyTableColumn()
         {
             TableColumn testParam = new TableColumn();
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsFalse(testOutput);
+                testObject.MoveNext();
             }
+            
+            testObject.Reset();
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
@@ -175,18 +162,17 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsTrue(testOutput);
+                testObject.MoveNext();
             }
+            
+            testObject.Reset();
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
@@ -195,18 +181,17 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                _ = testObject.MoveNext();
-
-                Assert.AreSame(testParam[0], testObject.Current);
+                testObject.MoveNext();
             }
+            
+            testObject.Reset();
+            _ = testObject.MoveNext();
+
+            Assert.AreSame(testParam[0], testObject.Current);
         }
 
         [TestMethod]
@@ -215,20 +200,18 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    testObject.MoveNext();
+                testObject.MoveNext();
+            }
+            testObject.Reset();
+            for (int i = 0; i < testParam.Count; ++i)
+            {
+                testObject.MoveNext();
 
-                    Assert.AreSame(testParam[i], testObject.Current);
-                }
+                Assert.AreSame(testParam[i], testObject.Current);
             }
         }
 
@@ -238,20 +221,18 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    bool testOutput = testObject.MoveNext();
+                testObject.MoveNext();
+            }
+            testObject.Reset();
+            for (int i = 0; i < testParam.Count; ++i)
+            {
+                bool testOutput = testObject.MoveNext();
 
-                    Assert.IsTrue(testOutput);
-                }
+                Assert.IsTrue(testOutput);
             }
         }
 
@@ -261,23 +242,21 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableColumn testParam = new TableColumn();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    _ = testObject.MoveNext();
-                }
-
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsFalse(testOutput);
+                testObject.MoveNext();
             }
+            testObject.Reset();
+            for (int i = 0; i < testParam.Count; ++i)
+            {
+                _ = testObject.MoveNext();
+            }
+
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
@@ -286,22 +265,20 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                Assert.IsNull(testObject.Current);
-            }
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            Assert.IsNull(testObject.Current);
         }
 
         [TestMethod]
         public void TableCellCollectionEnumeratorClass_MoveNextMethod_ReturnsFalseOnFirstCall_IfObjectIsConstructedFromEmptyTableRow()
         {
             TableRow testParam = new TableRow();
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                bool testOutput = testObject.MoveNext();
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            bool testOutput = testObject.MoveNext();
 
-                Assert.IsFalse(testOutput);
-            }
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
@@ -310,12 +287,11 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                bool testOutput = testObject.MoveNext();
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            bool testOutput = testObject.MoveNext();
 
-                Assert.IsTrue(testOutput);
-            }
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
@@ -324,12 +300,11 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
-            {
-                _ = testObject.MoveNext();
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            _ = testObject.MoveNext();
 
-                Assert.AreSame(testParam[0], testObject.Current);
-            }
+            Assert.AreSame(testParam[0], testObject.Current);
         }
 
         [TestMethod]
@@ -338,14 +313,13 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            for (int i = 0; i < testParam.Count; ++i)
             {
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    testObject.MoveNext();
+                testObject.MoveNext();
 
-                    Assert.AreSame(testParam[i], testObject.Current);
-                }
+                Assert.AreSame(testParam[i], testObject.Current);
             }
         }
 
@@ -355,14 +329,13 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            for (int i = 0; i < testParam.Count; ++i)
             {
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    bool testOutput = testObject.MoveNext();
+                bool testOutput = testObject.MoveNext();
 
-                    Assert.IsTrue(testOutput);
-                }
+                Assert.IsTrue(testOutput);
             }
         }
 
@@ -372,17 +345,16 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            
+            for (int i = 0; i < testParam.Count; ++i)
             {
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    _ = testObject.MoveNext();
-                }
-
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsFalse(testOutput);
+                _ = testObject.MoveNext();
             }
+
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
@@ -391,36 +363,32 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-
-                testObject.Reset();
-
-                Assert.IsNull(testObject.Current);
+                testObject.MoveNext();
             }
+            testObject.Reset();
+
+            Assert.IsNull(testObject.Current);
         }
 
         [TestMethod]
         public void TableCellCollectionEnumeratorClass_ResetMethodThenMoveNextMethod_ReturnsFalseOnFirstCall_IfObjectIsConstructedFromEmptyTableRow()
         {
             TableRow testParam = new TableRow();
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsFalse(testOutput);
+                testObject.MoveNext();
             }
+            
+            testObject.Reset();
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsFalse(testOutput);
         }
 
         [TestMethod]
@@ -429,18 +397,17 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsTrue(testOutput);
+                testObject.MoveNext();
             }
+            
+            testObject.Reset();
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsTrue(testOutput);
         }
 
         [TestMethod]
@@ -449,18 +416,17 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                _ = testObject.MoveNext();
-
-                Assert.AreSame(testParam[0], testObject.Current);
+                testObject.MoveNext();
             }
+            
+            testObject.Reset();
+            _ = testObject.MoveNext();
+
+            Assert.AreSame(testParam[0], testObject.Current);
         }
 
         [TestMethod]
@@ -469,20 +435,19 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    testObject.MoveNext();
+                testObject.MoveNext();
+            }
+            
+            testObject.Reset();
+            for (int i = 0; i < testParam.Count; ++i)
+            {
+                testObject.MoveNext();
 
-                    Assert.AreSame(testParam[i], testObject.Current);
-                }
+                Assert.AreSame(testParam[i], testObject.Current);
             }
         }
 
@@ -492,20 +457,19 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    bool testOutput = testObject.MoveNext();
+                testObject.MoveNext();
+            }
+            
+            testObject.Reset();
+            for (int i = 0; i < testParam.Count; ++i)
+            {
+                bool testOutput = testObject.MoveNext();
 
-                    Assert.IsTrue(testOutput);
-                }
+                Assert.IsTrue(testOutput);
             }
         }
 
@@ -515,25 +479,24 @@ namespace Unicorn.Tests.Unit
             List<TableCell> testContents = FixedSizeTableCell.GetCellList(_rnd.Next(1, 32));
             TableRow testParam = new TableRow();
             testParam.AddRange(testContents);
-            using (TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam))
+            using TableCellCollection.Enumerator testObject = new TableCellCollection.Enumerator(testParam);
+            int mnCount = _rnd.Next(64);
+            for (int i = 0; i < mnCount; ++i)
             {
-                int mnCount = _rnd.Next(64);
-                for (int i = 0; i < mnCount; ++i)
-                {
-                    testObject.MoveNext();
-                }
-                testObject.Reset();
-                for (int i = 0; i < testParam.Count; ++i)
-                {
-                    _ = testObject.MoveNext();
-                }
-
-                bool testOutput = testObject.MoveNext();
-
-                Assert.IsFalse(testOutput);
+                testObject.MoveNext();
             }
+            
+            testObject.Reset();
+            for (int i = 0; i < testParam.Count; ++i)
+            {
+                _ = testObject.MoveNext();
+            }
+            bool testOutput = testObject.MoveNext();
+
+            Assert.IsFalse(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

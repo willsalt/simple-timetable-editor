@@ -3,6 +3,7 @@
 namespace Unicorn.FontTools.OpenType
 {
 
+#pragma warning disable CA1711 // Identifiers should not have incorrect suffix
 #pragma warning disable CA1028 // Enum Storage should be Int32 - we are using all 64 bits here!
 
     /// <summary>
@@ -11,6 +12,7 @@ namespace Unicorn.FontTools.OpenType
     /// although OpenType files are bigendian, this value is not stored as a bigendian unsigned long.  Not all Unicode blocks are covered.
     /// </summary>
     [Flags]
+    [CLSCompliant(false)]
     public enum LowerUnicodeRangeFlags : ulong
     {
         /// <summary>
@@ -334,6 +336,7 @@ namespace Unicorn.FontTools.OpenType
         ArabicPresentationFormsA = 0x8000_0000_0000_0000UL,
     }
 
+#pragma warning restore CA1711 // Identifiers should not have incorrect suffix
 #pragma warning restore CA1028 // Enum Storage should be Int32
 
 }

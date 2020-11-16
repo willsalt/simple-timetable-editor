@@ -7,6 +7,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// The "hhea" table, containing global horizontal metrics for a font.
     /// </summary>
+    [CLSCompliant(false)]
     public class HorizontalHeaderTable : Table
     {
         /// <summary>

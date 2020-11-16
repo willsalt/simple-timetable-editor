@@ -13,6 +13,8 @@ namespace Timetabler.CoreData.Helpers
     {
         private static readonly Random _random = new Random();
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         /// <summary>
         /// Given an enumeration of existing items, return a random string which is not used as the Id property of any existing items in the enumeration.
         /// </summary>
@@ -67,5 +69,8 @@ namespace Timetabler.CoreData.Helpers
                 yield return id;
             }
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

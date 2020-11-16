@@ -11,6 +11,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
         private static readonly Random _rnd = RandomProvider.Default;
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable CA5394 // Do not use insecure randomness
 
         [TestMethod]
         public void MathsHelpersClass_DegToRadMethod_ReturnsCorrectValue()
@@ -34,6 +35,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.AreEqual(expectedValue, testOutput, 0.00000000001);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

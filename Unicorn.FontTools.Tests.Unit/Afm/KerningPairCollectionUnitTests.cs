@@ -14,6 +14,8 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static IList<KerningPair> GetTestData()
         {
             int count = _rnd.Next(1, 20);
@@ -176,6 +178,7 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
             Assert.AreEqual(testParam, testObject[^1]);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

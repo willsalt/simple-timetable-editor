@@ -6,6 +6,9 @@ using Unicorn.Writer.Interfaces;
 
 namespace Unicorn.Writer.Primitives
 {
+
+#pragma warning disable CA1711 // Identifiers should not have incorrect suffix.  This is a "stream" in the PDF sense if not in the .NET sense.
+
     /// <summary>
     /// A class to represent a PDF stream.  These have to be stored as indirect objects, and consist of a dictionary containing stream metadata followed by the 
     /// stream content itself.
@@ -52,7 +55,7 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// A read-only copy of the stream contents.
         /// </summary>
-        public List<byte> Contents => _contents.ToList();
+        public IList<byte> Contents => _contents.ToList();
 
         /// <summary>
         /// The length of this object when converted into a stream of bytes.
@@ -109,16 +112,16 @@ namespace Unicorn.Writer.Primitives
         /// <summary>
         /// Convert this stream to an array of bytes and append them to a <see cref="List{Byte}" />.
         /// </summary>
-        /// <param name="list">The list to append to.</param>
+        /// <param name="bytes">The list to append to.</param>
         /// <returns>The number of bytes appended.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the list parameter is null.</exception>
-        public override int WriteTo(List<byte> list)
+        public override int WriteTo(IList<byte> bytes)
         {
-            if (list == null)
+            if (bytes == null)
             {
-                throw new ArgumentNullException(nameof(list));
+                throw new ArgumentNullException(nameof(bytes));
             }
-            return Write(WriteToList, PdfDictionary.WriteTo, list);
+            return Write(WriteToList, PdfDictionary.WriteTo, bytes);
         }
 
         private int Write<T>(Action<T, byte[]> writer, Func<PdfDictionary, T, int> dictWriter, T dest)
@@ -170,4 +173,7 @@ namespace Unicorn.Writer.Primitives
             return new PdfArray(((IEnumerable<IPdfFilterEncoder>)_filterEncodingChain).Reverse().Select(f => f.FilterName));
         }
     }
+
+#pragma warning restore CA1711 // Identifiers should not have incorrect suffix
+
 }

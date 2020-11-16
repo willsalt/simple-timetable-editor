@@ -176,6 +176,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.AreEqual(firstTestOutput, secondTestOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void PdfNullClass_EqualityOperator_ReturnsTrueIfBothOperandsAreNull()
         {
@@ -186,6 +188,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsTrue(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void PdfNullClass_EqualityOperator_ReturnsFalseIfFirstOperandIsNullAndSecondOperandIsNotNull()
@@ -220,6 +224,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void PdfNullClass_InequalityOperator_ReturnsFalseIfBothOperandsAreNull()
         {
@@ -230,6 +236,8 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void PdfNullClass_InequalityOperator_ReturnsTrueIfFirstOperandIsNullAndSecondOperandIsNotNull()

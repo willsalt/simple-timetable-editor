@@ -5,6 +5,7 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// A mapping segment for the OpenType type 4 character mapping.
     /// </summary>
+    [CLSCompliant(false)]
     public struct SegmentSubheaderRecord : IEquatable<SegmentSubheaderRecord>
     {
         /// <summary>

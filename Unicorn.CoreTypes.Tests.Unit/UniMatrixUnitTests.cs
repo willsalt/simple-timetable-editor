@@ -13,6 +13,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
 
         private static UniMatrix GetTestValue() => _rnd.NextUniMatrix();
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -1036,6 +1037,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.AreEqual(expectedValue, testOutput.R2C1);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

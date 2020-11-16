@@ -16,6 +16,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -216,6 +217,7 @@ namespace Unicorn.Writer.Tests.Unit.Primitives
             Assert.AreEqual(testData.Length * 2 + 3, testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

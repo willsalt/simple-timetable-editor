@@ -14,6 +14,8 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static List<string> GetTestStrings()
         {
             int count = _rnd.Next(25);
@@ -161,6 +163,7 @@ namespace Timetabler.CoreData.Tests.Unit.Helpers
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

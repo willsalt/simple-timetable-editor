@@ -30,12 +30,12 @@ namespace Timetabler.SerialData
         /// <summary>
         /// The data relating to this train at each location it passes or calls at.
         /// </summary>
-        public List<TrainLocationTimeModel> TrainTimes { get; } = new List<TrainLocationTimeModel>();
+        public ICollection<TrainLocationTimeModel> TrainTimes { get; } = new List<TrainLocationTimeModel>();
 
         /// <summary>
         /// The IDs of footnotes to be displayed in the train's column header(s).
         /// </summary>
-        public List<string> FootnoteIds { get; } = new List<string>();
+        public ICollection<string> FootnoteIds { get; } = new List<string>();
 
         /// <summary>
         /// Whether or not to include a separator line above the first calling point of this train.

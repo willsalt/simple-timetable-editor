@@ -16,6 +16,6 @@ namespace Timetabler.SerialData
         /// <summary>
         /// The list of signalbox hours data in this set.
         /// </summary>
-        public List<SignalboxHoursModel> Signalboxes { get; } = new List<SignalboxHoursModel>();
+        public ICollection<SignalboxHoursModel> Signalboxes { get; } = new List<SignalboxHoursModel>();
     }
 }

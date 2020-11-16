@@ -2,6 +2,9 @@
 
 namespace Unicorn.CoreTypes
 {
+
+#pragma warning disable CA1008 // This rule suggests an enum should have a zero-value called 'None', but we need it to have a different name.
+
     /// <summary>
     /// A flags enumeration which describes the style of a font.
     /// </summary>
@@ -33,4 +36,7 @@ namespace Unicorn.CoreTypes
         /// </summary>
         Strikethrough = 8
     }
+
+#pragma warning restore CA1008 // Enums should have zero value
+
 }

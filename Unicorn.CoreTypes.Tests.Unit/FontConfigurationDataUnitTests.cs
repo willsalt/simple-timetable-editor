@@ -11,6 +11,8 @@ namespace Unicorn.CoreTypes.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static FontConfigurationData GetTestValue()
         {
             return new FontConfigurationData(_rnd.NextString(_rnd.Next(20)), _rnd.NextUniFontStyles(), _rnd.NextString(_rnd.Next(128)));
@@ -381,6 +383,7 @@ namespace Unicorn.CoreTypes.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

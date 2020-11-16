@@ -19,7 +19,7 @@ namespace Unicorn.Writer.Interfaces
         /// </summary>
         /// <param name="bytes">The list to append the object's bytes to.</param>
         /// <returns>The number of bytes added to the list.</returns>
-        int WriteTo(List<byte> bytes);
+        int WriteTo(IList<byte> bytes);
 
         /// <summary>
         /// Write the object to a <see cref="PdfStream" />.

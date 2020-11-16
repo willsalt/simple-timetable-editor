@@ -3,7 +3,6 @@ using System;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
-using Timetabler.Data.Tests.Unit.TestHelpers.Extensions;
 
 namespace Timetabler.Data.Tests.Unit
 {
@@ -12,30 +11,31 @@ namespace Timetabler.Data.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static DocumentExportOptions GetDocumentExportOptions()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static DocumentExportOptions GetDocumentExportOptions() => new DocumentExportOptions
         {
-            return new DocumentExportOptions
-            {
-                DisplayLocoDiagramRow = _rnd.NextBoolean(),
-                DisplayToWorkRow = _rnd.NextBoolean(),
-                DisplayLocoToWorkRow = _rnd.NextBoolean(),
-                DisplayBoxHours = _rnd.NextBoolean(),
-                DisplayCredits = _rnd.NextBoolean(),
-                DisplayGraph = _rnd.NextBoolean(),
-                DisplayGlossary = _rnd.NextBoolean(),
-                LineWidth = _rnd.NextDouble() * 10,
-                GraphAxisLineWidth = _rnd.NextDouble() * 10,
-                FillerDashLineWidth = _rnd.NextDouble() * 10,
-                TablePageOrientation = _rnd.NextOrientation(),
-                GraphPageOrientation = _rnd.NextOrientation(),
-                UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
-                DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
-                DistancesInOutput = _rnd.NextSectionSelection(),
-            };
-        }
+            DisplayLocoDiagramRow = _rnd.NextBoolean(),
+            DisplayToWorkRow = _rnd.NextBoolean(),
+            DisplayLocoToWorkRow = _rnd.NextBoolean(),
+            DisplayBoxHours = _rnd.NextBoolean(),
+            DisplayCredits = _rnd.NextBoolean(),
+            DisplayGraph = _rnd.NextBoolean(),
+            DisplayGlossary = _rnd.NextBoolean(),
+            LineWidth = _rnd.NextDouble() * 10,
+            GraphAxisLineWidth = _rnd.NextDouble() * 10,
+            FillerDashLineWidth = _rnd.NextDouble() * 10,
+            TablePageOrientation = _rnd.NextOrientation(),
+            GraphPageOrientation = _rnd.NextOrientation(),
+            UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            DistancesInOutput = _rnd.NextSectionSelection(),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-        
+
         [TestMethod]
         public void DocumentExportOptionsClass_ParameterlessConstructor_SetsLineWidthPropertyToOnePointZero()
         {

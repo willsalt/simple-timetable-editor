@@ -15,6 +15,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         private static readonly Random _random = RandomProvider.Default;
         private const int TestMultipleRuns = 10;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -28,7 +29,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_ConstructorWithIEnumerableParameter_ReturnsCollectionOfCorrectSize()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
 
             TrainSegmentModelCollection collection = new TrainSegmentModelCollection(testData);
 
@@ -38,7 +39,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_ConstructorWithIEnumerableParameter_ReturnsCollectionWithCorrectContents()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
 
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
 
@@ -51,7 +52,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsCollectionofCorrectSize()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -62,7 +63,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -73,7 +74,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWhichAreDifferentObjects()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -87,7 +88,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithCorrectFootnoteProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -101,7 +102,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithCorrectHalfOfDayProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -115,7 +116,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithCorrectHeadcodeProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -131,7 +132,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         {
             for (int rep = 0; rep < TestMultipleRuns; ++rep)
             {
-                List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+                IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
                 TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
                 TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -148,7 +149,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         {
             for (int rep = 0; rep < TestMultipleRuns; ++rep)
             {
-                List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+                IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
                 TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
                 TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -163,7 +164,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithCorrectInlineNoteProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -177,7 +178,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithCorrectLocoDiagramProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -191,7 +192,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingPropertiesOfCorrectSize()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -205,7 +206,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingPropertiesContentsThatAreNotSameObjects()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -222,7 +223,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingPropertiesWithCorrectActualTimeProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -241,7 +242,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingPropertiesWithCorrectDisplayedTextProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -258,7 +259,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingPropertiesWithCorrectEntryTypeProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -275,7 +276,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingPropertiesWithCorrectIsPassingTimeProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -294,7 +295,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingPropertiesWithCorrectLocationIdProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -311,7 +312,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingsIndexPropertiesWithCorrectSize()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -325,7 +326,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithTimingsIndexPropertiesThatCorrectlyIndexTheTimingsProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -342,7 +343,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithToWorkCellPropertiesThatAreDifferentObjects()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -356,7 +357,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithToWorkCellPropertiesWithCorrectActualTimeProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -370,7 +371,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithToWorkCellPropertiesWithCorrectDisplayedTextProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -384,7 +385,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithToWorkCellPropertiesWithCorrectEntryTypeProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -398,7 +399,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithCorrectTrainClassProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -412,7 +413,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyMethod_ReturnsContentsWithCorrectTrainIdProperties()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(0, 64);
             TrainSegmentModelCollection sourceCollection = new TrainSegmentModelCollection(testData);
 
             TrainSegmentModelCollection testCollection = sourceCollection.Copy();
@@ -426,7 +427,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_SetsCorrectObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             int idx = _random.Next(testData.Count);
@@ -439,7 +440,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelRemoveEvent_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             int invocations = 0;
@@ -454,7 +455,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_DoesNotRaiseTrainSegmentModelRemoveEvent_IfSetIsCalledWithSameObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int invocations = 0;
             testCollection.TrainSegmentModelRemove += new TrainSegmentModelEventHandler((o, e) => { invocations++; });
@@ -468,7 +469,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelRemoveEventWithCorrectSender_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelCollection capturedSender = null;
@@ -483,7 +484,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelRemoveEventWithEventArgsWithCorrectModel_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -498,7 +499,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelRemoveEventWithEventArgsWithCorrectIndex_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -513,7 +514,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelAddEvent_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             int invocations = 0;
@@ -528,7 +529,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_DoesNotRaiseTrainSegmentModelAddEvent_IfSetIsCalledWithSameObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int invocations = 0;
             testCollection.TrainSegmentModelAdd += new TrainSegmentModelEventHandler((o, e) => { invocations++; });
@@ -542,7 +543,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelAddEventWithCorrectSender_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelCollection capturedSender = null;
@@ -557,7 +558,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelAddEventWithEventArgsWithCorrectModel_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -572,7 +573,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_RaisesTrainSegmentModelAddEventWithEventArgsWithCorrectIndex_IfSetIsCalledWithDifferentObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -587,7 +588,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexerWithIntParameter_GetMethodReturnsCorrectObject()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
 
@@ -599,7 +600,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CountProperty_HasCorrectValue()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int len;
 
@@ -611,7 +612,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IsReadOnlyProperty_ReturnsFalse()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             bool val;
 
@@ -623,7 +624,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_AddMethod_IncreasesCountPropertyByOne()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
 
@@ -635,19 +636,19 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_AddMethod_SetsFinalMemberOfCollectionToParameter()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
 
             testCollection.Add(testObject);
 
-            Assert.AreSame(testObject, testCollection[testCollection.Count - 1]);
+            Assert.AreSame(testObject, testCollection[^1]);
         }
 
         [TestMethod]
         public void TrainSegmentModelCollectionClass_AddMethod_DoesNotAlterPriorContentsOfCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
 
@@ -662,7 +663,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_AddMethod_RaisesTrainSegmentModelAddEvent()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             int invocations = 0;
@@ -676,7 +677,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_AddMethod_RaisesTrainSegmentModelAddEventWithCorrectSender()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelCollection capturedSender = null;
@@ -690,7 +691,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_AddMethod_RaisesTrainSegmentModelAddEventWithEventArgsWithCorrectModelProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -704,7 +705,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_AddMethod_RaisesTrainSegmentModelAddEventWithEventArgsWithCorrectIndexProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             TrainSegmentModel testObject = TrainSegmentModelHelpers.GetTrainSegmentModel();
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -718,7 +719,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_ClearMethod_SetsCountToZero()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
 
             testCollection.Clear();
@@ -729,7 +730,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_ContainsMethod_ReturnsTrue_IfParameterIsInCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
 
@@ -741,7 +742,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_ContainsMethod_ReturnsFalse_IfParameterIsNotInCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
 
             bool testResult = testCollection.Contains(TrainSegmentModelHelpers.GetTrainSegmentModel());
@@ -752,7 +753,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexOfMethod_ReturnsIndexOfParameter_IfParameterIsInCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
 
@@ -764,7 +765,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_IndexOfMethod_ReturnsNegativeOne_IfParameterIsNotInCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
 
             int testResult = testCollection.IndexOf(TrainSegmentModelHelpers.GetTrainSegmentModel());
@@ -775,7 +776,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_CopyToMethod_CopiesDataCorrectlyIntoDestinationArray()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int startPoint = _random.Next(100);
             int arrayLen = startPoint + testData.Count + _random.Next(100);
@@ -793,7 +794,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainSegmentModelCollectionClass_CopyToMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int startPoint = _random.Next(100);
 
@@ -806,7 +807,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TrainSegmentModelCollectionClass_CopyToMethod_ThrowsArgumentOutOfRangeException_IfSecondParameterIsNegative()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int startPoint = _random.Next(100);
             int arrayLen = startPoint + testData.Count + _random.Next(100);
@@ -821,7 +822,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [ExpectedException(typeof(ArgumentException))]
         public void TrainSegmentModelCollectionClass_CopyToMethod_ThrowsArgumentException_IfArrayIsNotLongEnough()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int startPoint = _random.Next(100);
             int arrayLen = _random.Next(startPoint + testData.Count);
@@ -840,7 +841,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
             {
                 try
                 {
-                    List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+                    IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
                     TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
                     int startPoint = _random.Next(100);
                     int arrayLen = _random.Next(startPoint + testData.Count);
@@ -862,7 +863,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_ReducesCountByOne_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             int originalCount = testCollection.Count;
@@ -875,7 +876,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_ReturnsTrue_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
 
@@ -887,7 +888,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_DoesNotAlterCollectionPriorToParameter_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count - 1) + 1;
             
@@ -902,7 +903,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_MovesAllElementsAfterParameterDownByOne_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(1, testData.Count);
 
@@ -917,7 +918,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_RaisesTrainSegmentModelRemoveEvent_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             int invocations = 0;
@@ -931,7 +932,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_RaisesTrainSegmentModelRemoveEventWithCorrectSender_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             TrainSegmentModelCollection capturedSender = null;
@@ -945,7 +946,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_RaisesTrainSegmentModelRemoveEventWithEventArgsWithCorrectModelProperty_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -959,7 +960,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_RaisesTrainSegmentModelRemoveEventWithEventArgsWithCorrectIndexProperty_IfParameterIsContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -973,7 +974,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_DoesNotChangeCount_IfParameterIsNotContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int originalCount = testCollection.Count;
 
@@ -985,7 +986,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_ReturnsFalse_IfParameterIsNotContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
 
             bool testResult = testCollection.Remove(TrainSegmentModelHelpers.GetTrainSegmentModel());
@@ -996,7 +997,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_DoesNotAlterCollection_IfParameterIsNotContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
 
             _ = testCollection.Remove(TrainSegmentModelHelpers.GetTrainSegmentModel());
@@ -1010,7 +1011,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveMethod_DoesNotRaiseTrainSegmentModelRemoveEvent_IfParameterIsNotContainedWithinCollection()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int invocations = 0;
             testCollection.TrainSegmentModelRemove += new TrainSegmentModelEventHandler((o, e) => { invocations++; });
@@ -1023,7 +1024,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_ReducesCountByOne_IfParameterIsWithinCorrectRange()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             int originalCount = testCollection.Count;
@@ -1036,7 +1037,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_DoesNotAlterCollectionPriorToParameter_IfParameterIsWithinCorrectRange()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count - 1) + 1;
 
@@ -1051,7 +1052,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_MovesAllElementsAfterParameterDownByOne_IfParameterIsWithinCorrectRange()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(2, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(1, testData.Count);
 
@@ -1066,7 +1067,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_RaisesTrainSegmentModelRemoveEvent_IfParameterIsWithinCorrectRange()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             int invocations = 0;
@@ -1080,7 +1081,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_RaisesTrainSegmentModelRemoveEventWithCorrectSender_IfParameterIsWithinCorrectRange()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             TrainSegmentModelCollection capturedSender = null;
@@ -1094,7 +1095,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_RaisesTrainSegmentModelRemoveEventWithEventArgsWithCorrectModelProperty_IfParameterIsWithinCorrectRange()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -1108,7 +1109,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_RaisesTrainSegmentModelRemoveEventWithEventArgsWithCorrectIndexProperty_IfParameterIsWithinCorrectRange()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testData.Count);
             TrainSegmentModelEventArgs capturedEventArgs = null;
@@ -1123,7 +1124,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_ThrowsArgumentOutOfRangeException_IfParameterIsNegative()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = -(_random.Next(int.MaxValue - 1) + 1);
 
@@ -1135,7 +1136,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_DoesNotChangeCollectionContents_IfParameterIsNegative()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = -(_random.Next(int.MaxValue - 1) + 1);
 
@@ -1155,7 +1156,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_DoesNotChangeCount_IfParameterIsNegative()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = -(_random.Next(int.MaxValue - 1) + 1);
             int originalCount = testCollection.Count;
@@ -1174,7 +1175,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_ThrowsArgumentOutOfRangeException_IfParameterIsEqualToCountProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = testCollection.Count;
 
@@ -1186,7 +1187,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_DoesNotChangeCollectionContents_IfParameterIsEqualToCountProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = testCollection.Count;
 
@@ -1206,7 +1207,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_DoesNotChangeCount_IfParameterIsNegativeIsEqualToCountProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = testCollection.Count;
             int originalCount = testCollection.Count;
@@ -1225,7 +1226,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_ThrowsArgumentOutOfRangeException_IfParameterIsGreaterThanOrEqualToCountProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testCollection.Count, int.MaxValue);
 
@@ -1237,7 +1238,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_DoesNotChangeCollectionContents_IfParameterIsGreaterThanOrEqualToCountProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testCollection.Count, int.MaxValue);
 
@@ -1257,7 +1258,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [TestMethod]
         public void TrainSegmentModelCollectionClass_RemoveAtMethod_DoesNotChangeCount_IfParameterIsNegativeIsGreaterThanOrEqualToCountProperty()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
             int idx = _random.Next(testCollection.Count, int.MaxValue);
             int originalCount = testCollection.Count;
@@ -1276,7 +1277,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
         [ExpectedException(typeof(ArgumentNullException))]
         public void TrainSegmentModelCollectionClass_AddSortedMethod_ThrowsArgumentNullException_IfCountIsNonZeroAndSecondParameterIsNull()
         {
-            List<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
+            IList<TrainSegmentModel> testData = TrainSegmentModelHelpers.GetTrainSegmentModelList(1, 64);
             TrainSegmentModelCollection testCollection = new TrainSegmentModelCollection(testData);
 
             testCollection.AddSorted(TrainSegmentModelHelpers.GetTrainSegmentModel(), null);
@@ -1365,6 +1366,7 @@ namespace Timetabler.Data.Tests.Unit.Collections
             Assert.AreEqual(0, capturedEventArgs.Index);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

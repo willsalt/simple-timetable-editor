@@ -89,7 +89,7 @@
       <Name>Timetabler.CoreData</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
-      <Project>{9A7E2940-50B8-4F3A-A535-AB6220E6CE3A}</Project>
+      <Project>{d18ffe79-8c91-45cf-abe8-38a65be9f4f3}</Project>
       <Name>Timetabler.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler\Timetabler.csproj">

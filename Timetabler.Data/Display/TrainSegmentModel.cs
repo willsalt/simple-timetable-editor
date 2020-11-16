@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Timetabler.CoreData;
 using Timetabler.CoreData.Events;
+using Timetabler.CoreData.Extensions;
 using Timetabler.CoreData.Interfaces;
 using Timetabler.Data.Display.Interfaces;
 
@@ -76,12 +77,12 @@ namespace Timetabler.Data.Display
         /// <summary>
         /// List of timings (or other data) that comprise this segment.
         /// </summary>
-        public List<ILocationEntry> Timings { get; private set; }
+        public IList<ILocationEntry> Timings { get; private set; }
 
         /// <summary>
         /// Footnotes which are used by this segment whose definitions should appear on the page with the timetable section.
         /// </summary>
-        public List<FootnoteDisplayModel> PageFootnotes { get; private set; }
+        public IList<FootnoteDisplayModel> PageFootnotes { get; private set; }
 
         /// <summary>
         /// The data contained in the <see cref="Timings"/> property, indexed by location ID.
@@ -112,9 +113,9 @@ namespace Timetabler.Data.Display
         /// Default constructor.
         /// </summary>
         /// <param name="timings">The train timings, if any.</param>
-        public TrainSegmentModel(List<ILocationEntry> timings)
+        public TrainSegmentModel(IEnumerable<ILocationEntry> timings)
         {
-            Timings = timings ?? new List<ILocationEntry>();
+            Timings = timings?.ToList() ?? new List<ILocationEntry>();
             TimingsIndex = Timings.ToDictionary(t => t.LocationKey, t => t);
             PageFootnotes = new List<FootnoteDisplayModel>();
         }
@@ -124,7 +125,7 @@ namespace Timetabler.Data.Display
         /// </summary>
         /// <param name="train">The train to use for populating the header fields.</param>
         /// <param name="timings">The train timings.</param>
-        public TrainSegmentModel(Train train, List<ILocationEntry> timings) : this(timings)
+        public TrainSegmentModel(Train train, IEnumerable<ILocationEntry> timings) : this(timings)
         {
             if (train is null)
             {

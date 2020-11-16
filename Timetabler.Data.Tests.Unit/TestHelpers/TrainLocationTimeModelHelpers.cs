@@ -13,6 +13,8 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
     {
         private static Random _random = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static TrainLocationTimeModel GetTrainLocationTimeModel(IEnumerable<MinimalUniqueItem> existingItems)
         {
             string locId = GeneralHelper.GetNewId(existingItems);
@@ -27,7 +29,7 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             };
         }
 
-        public static List<ILocationEntry> GetTrainLocationTimeModelList(int min, int max)
+        public static IList<ILocationEntry> GetTrainLocationTimeModelList(int min, int max)
         {
             int count = _random.Next(min, max);
             List<ILocationEntry> items = new List<ILocationEntry>(count);
@@ -40,5 +42,8 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             }
             return items;
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

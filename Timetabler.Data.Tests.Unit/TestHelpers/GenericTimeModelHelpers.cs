@@ -1,21 +1,24 @@
 ﻿using System;
 using Tests.Utility.Extensions;
+using Tests.Utility.Providers;
 using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Tests.Unit.TestHelpers
 {
     public static class GenericTimeModelHelpers
     {
-        private static Random _random = new Random();
+        private static readonly Random _random = RandomProvider.Default;
 
-        public static GenericTimeModel GetGenericTimeModel()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        public static GenericTimeModel GetGenericTimeModel() => new GenericTimeModel
         {
-            return new GenericTimeModel
-            {
-                ActualTime = _random.NextTimeOfDay(),
-                DisplayedText = _random.NextString(_random.Next(2, 6)),
-                EntryType = TrainLocationTimeEntryType.Time,
-            };
-        }
+            ActualTime = _random.NextTimeOfDay(),
+            DisplayedText = _random.NextString(_random.Next(2, 6)),
+            EntryType = TrainLocationTimeEntryType.Time,
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

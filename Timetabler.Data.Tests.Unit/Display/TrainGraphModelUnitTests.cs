@@ -13,6 +13,8 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static TrainGraphModel GetTrainGraphModel()
         {
             return new TrainGraphModel(null, null)
@@ -22,6 +24,8 @@ namespace Timetabler.Data.Tests.Unit.Display
                 TooltipFormattingString = _rnd.NextString(_rnd.Next(5)),
             };
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         private static DocumentOptions GetDocumentOptions()
         {

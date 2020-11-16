@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Timetabler.CoreData;
+using Timetabler.CoreData.Extensions;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Display;
 using Timetabler.Data.Events;
@@ -228,16 +229,9 @@ namespace Timetabler.Data
         public TimetableSectionModel UpTrainsDisplay { get; private set; }
 
         /// <summary>
-        /// The type of event handler delegate for the <see cref="TimetableDocumentChanged"/> event.
-        /// </summary>
-        /// <param name="sender">The object raising the event.</param>
-        /// <param name="e">The event arguments (not used).</param>
-        public delegate void TimetableDocumentChangedEventHandler(object sender, EventArgs e);
-
-        /// <summary>
         /// Raised on changes to the document content..
         /// </summary>
-        public event TimetableDocumentChangedEventHandler TimetableDocumentChanged;
+        public event EventHandler<EventArgs> TimetableDocumentChanged;
 
         /// <summary>
         /// Default constructor - sets the version number and creates empty objects for deep properties.

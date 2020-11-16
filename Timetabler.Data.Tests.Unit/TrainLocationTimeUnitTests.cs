@@ -33,6 +33,8 @@ namespace Timetabler.Data.Tests.Unit
             };
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static TrainLocationTime GetTestObject()
         {
             return new TrainLocationTime
@@ -1016,6 +1018,7 @@ namespace Timetabler.Data.Tests.Unit
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

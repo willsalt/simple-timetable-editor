@@ -13,6 +13,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static ArrivalDepartureOptions GetArrivalDepartureOptions()
         {
             return (ArrivalDepartureOptions)(_rnd.Next(3) + 1);
@@ -22,6 +24,8 @@ namespace Timetabler.Data.Tests.Unit.Comparers
         {
             return new VertexInformation(new TrainDrawingInfo { Train = new Train() }, time, GetArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

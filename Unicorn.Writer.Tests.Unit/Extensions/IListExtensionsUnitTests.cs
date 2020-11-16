@@ -135,5 +135,6 @@ namespace Unicorn.Writer.Tests.Unit.Extensions
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
+
     }
 }

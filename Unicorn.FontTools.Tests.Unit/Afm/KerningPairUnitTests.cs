@@ -548,7 +548,11 @@ namespace Unicorn.FontTools.Tests.Unit.Afm
         public void KerningPairStruct_FromStringMethod_ThrowsAfmFormatException_IfCodeIsKPAndSecondCharacterIsNotListedInSecondParameter()
         {
             string charName0 = _rnd.NextString(_rnd.Next(1, 10));
-            string charName1 = _rnd.NextString(_rnd.Next(1, 10));
+            string charName1;
+            do
+            {
+                charName1 = _rnd.NextString(_rnd.Next(1, 10));
+            } while (charName0 == charName1);
             Character char0 = _rnd.NextAfmCharacter(charName0);
             string testParam0 = GenerateRandomValidStringInput("KP", charName0, charName1);
             IDictionary<string, Character> testParam1 = new Dictionary<string, Character> { { charName0, char0 } };

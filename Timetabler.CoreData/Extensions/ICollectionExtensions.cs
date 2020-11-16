@@ -16,9 +16,9 @@ namespace Timetabler.CoreData.Extensions
         /// <param name="newMembers">The collection of elements to be added.</param>
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> newMembers)
         {
-            if (collection is List<T> list)
+            if (collection is List<T> concreteList)
             {
-                list.AddRange(newMembers);
+                concreteList.AddRange(newMembers);
                 return;
             }
             if (collection is null)

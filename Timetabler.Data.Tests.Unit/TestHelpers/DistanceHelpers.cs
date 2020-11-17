@@ -7,14 +7,12 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        public static Distance GetDistance()
-        {
-            return new Distance(_rnd.Next(short.MaxValue), _rnd.Next(80));
-        }
+#pragma warning disable CA5394 // Do not use insecure randomness
 
-        public static Distance GetDistanceGreaterThan(Distance d)
-        {
-            return d + GetDistance();
-        }
+        public static Distance GetDistance() => new Distance(_rnd.Next(short.MaxValue), _rnd.Next(80));
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
+        public static Distance GetDistanceGreaterThan(Distance d) => d + GetDistance();
     }
 }

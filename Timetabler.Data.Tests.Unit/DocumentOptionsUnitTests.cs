@@ -16,19 +16,20 @@ namespace Timetabler.Data.Tests.Unit
             return GetDocumentOptions(_rnd.NextBoolean() ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock);
         }
 
-        private static DocumentOptions GetDocumentOptions(ClockType clockType)
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static DocumentOptions GetDocumentOptions(ClockType clockType) => new DocumentOptions
         {
-            return new DocumentOptions
-            {
-                ClockType = clockType,
-                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean(),
-                GraphEditStyle = _rnd.NextBoolean() ? GraphEditStyle.Free : GraphEditStyle.PreserveSectionTimes,
-                DisplaySpeedLinesOnGraphs = _rnd.NextBoolean(),
-                SpeedLineSpeed = _rnd.Next(100),
-                SpeedLineSpacingMinutes = _rnd.Next(240),
-                SpeedLineAppearance = _rnd.NextGraphTrainProperties(),
-            };
-        }
+            ClockType = clockType,
+            DisplayTrainLabelsOnGraphs = _rnd.NextBoolean(),
+            GraphEditStyle = _rnd.NextBoolean() ? GraphEditStyle.Free : GraphEditStyle.PreserveSectionTimes,
+            DisplaySpeedLinesOnGraphs = _rnd.NextBoolean(),
+            SpeedLineSpeed = _rnd.Next(100),
+            SpeedLineSpacingMinutes = _rnd.Next(240),
+            SpeedLineAppearance = _rnd.NextGraphTrainProperties(),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

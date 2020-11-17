@@ -11,6 +11,8 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static TrainSegmentModel GetTrainSegmentModel()
         {
             TrainSegmentModel tsm = new TrainSegmentModel(TrainLocationTimeModelHelpers.GetTrainLocationTimeModelList(2, _rnd.Next(2, 24)))
@@ -28,7 +30,7 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             return tsm;
         }
 
-        public static List<TrainSegmentModel> GetTrainSegmentModelList(int min, int max)
+        public static IList<TrainSegmentModel> GetTrainSegmentModelList(int min, int max)
         {
             int count = _rnd.Next(min, max);
             List<TrainSegmentModel> output = new List<TrainSegmentModel>(count);
@@ -39,9 +41,12 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             return output;
         }
 
-        public static List<TrainSegmentModel> GetTrainSegmentModelList(int max)
+        public static IList<TrainSegmentModel> GetTrainSegmentModelList(int max)
         {
             return GetTrainSegmentModelList(0, max);
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

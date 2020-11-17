@@ -13,6 +13,8 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static VertexInformation GetVertexInformation(TrainDrawingInfo tdi)
         {
             return new VertexInformation(tdi, _rnd.NextTimeOfDay(), _rnd.NextArrivalDepartureOptions(), _rnd.NextDouble(), _rnd.NextDouble());
@@ -76,6 +78,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

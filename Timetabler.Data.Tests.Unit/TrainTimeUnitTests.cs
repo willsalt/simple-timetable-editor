@@ -13,6 +13,7 @@ namespace Timetabler.Data.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -802,6 +803,8 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreEqual(1, testOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void TrainTimeClass_EqualityOperator_ReturnsTrue_IfBothOperandsAreNull()
         {
@@ -812,6 +815,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.IsTrue(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void TrainTimeClass_EqualityOperator_ReturnsFalse_IfFirstOperandIsNullAndSecondOperandIsNotNull()
@@ -889,6 +894,8 @@ namespace Timetabler.Data.Tests.Unit
             Assert.IsTrue(testOutput);
         }
 
+#pragma warning disable CA1508 // Avoid dead conditional code
+
         [TestMethod]
         public void TrainTimeClass_InequalityOperator_ReturnsFalse_IfBothOperandsAreNull()
         {
@@ -899,6 +906,8 @@ namespace Timetabler.Data.Tests.Unit
 
             Assert.IsFalse(testOutput);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         [TestMethod]
         public void TrainTimeClass_InequalityOperator_ReturnsTrue_IfFirstOperandIsNullAndSecondOperandIsNotNull()
@@ -1129,6 +1138,7 @@ namespace Timetabler.Data.Tests.Unit
             Assert.AreNotEqual(testOutput0, testOutput1);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

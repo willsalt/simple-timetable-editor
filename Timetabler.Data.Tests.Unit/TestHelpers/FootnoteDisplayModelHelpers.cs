@@ -10,10 +10,14 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static FootnoteDisplayModel GetFootnoteDisplayModel()
         {
             return new FootnoteDisplayModel(_rnd.NextHexString(8), _rnd.NextString(_rnd.Next(50)), _rnd.NextString(1), _rnd.NextBoolean());
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         public static void FullEqualityTest(FootnoteDisplayModel a, FootnoteDisplayModel b)
         {

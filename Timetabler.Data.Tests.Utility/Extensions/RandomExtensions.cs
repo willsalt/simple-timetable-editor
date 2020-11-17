@@ -6,21 +6,24 @@ namespace Timetabler.Data.Tests.Utility.Extensions
 {
     public static class RandomExtensions
     {
+
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static ClockType NextClockType(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
-            return (random.Next(2) == 0) ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock; 
+            return (random.Next(2) == 0) ? ClockType.TwelveHourClock : ClockType.TwentyFourHourClock;
         }
 
         public static GraphEditStyle NextGraphEditStyle(this Random random)
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             GraphEditStyle[] styles = new[] { GraphEditStyle.Free, GraphEditStyle.PreserveSectionTimes };
@@ -32,7 +35,7 @@ namespace Timetabler.Data.Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             return new Note
@@ -51,7 +54,7 @@ namespace Timetabler.Data.Tests.Utility.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             return new GraphTrainProperties
@@ -87,5 +90,8 @@ namespace Timetabler.Data.Tests.Utility.Extensions
             };
             return allValues[random.Next(allValues.Length)];
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

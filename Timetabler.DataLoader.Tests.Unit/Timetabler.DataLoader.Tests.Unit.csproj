@@ -96,7 +96,7 @@
       <Name>Timetabler.CoreData</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.Data.Tests.Utility\Timetabler.Data.Tests.Utility.csproj">
-      <Project>{29375882-f201-482a-aab6-ac7fb95f15cf}</Project>
+      <Project>{1cb0e3ba-d308-487f-881d-8e964835ae6d}</Project>
       <Name>Timetabler.Data.Tests.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.DataLoader\Timetabler.DataLoader.csproj">
@@ -104,7 +104,7 @@
       <Name>Timetabler.DataLoader</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.Data\Timetabler.Data.csproj">
-      <Project>{9A7E2940-50B8-4F3A-A535-AB6220E6CE3A}</Project>
+      <Project>{d18ffe79-8c91-45cf-abe8-38a65be9f4f3}</Project>
       <Name>Timetabler.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timetabler.SerialData\Timetabler.SerialData.csproj">

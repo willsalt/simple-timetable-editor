@@ -17,6 +17,8 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static TrainSegmentModel GetTestObject(int? timings, bool? continuesEarlier, bool? continuesLater, HalfOfDay? definitelyMorning, 
             List<ILocationEntry> additionalTimings = null)
         {
@@ -898,6 +900,7 @@ namespace Timetabler.Data.Tests.Unit.Display
             Assert.AreEqual("P.M.", testOutput.HalfOfDay);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

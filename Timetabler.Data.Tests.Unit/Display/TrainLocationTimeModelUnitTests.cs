@@ -13,6 +13,8 @@ namespace Timetabler.Data.Tests.Unit.Display
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static TrainLocationTimeModel GetTestObject()
         {
             TrainLocationTimeModel testObject = new TrainLocationTimeModel
@@ -26,7 +28,9 @@ namespace Timetabler.Data.Tests.Unit.Display
             };
             testObject.DisplayedTextHours = testObject.ActualTime.ToString("h", CultureInfo.CurrentCulture);
             testObject.DisplayedTextMinutes = testObject.ActualTime.ToString("mm", CultureInfo.CurrentCulture);
-            testObject.DisplayedText = testObject.DisplayedTextHours + (testObject.DisplayedTextFootnote.Length == 0 ? testObject.DisplayedTextFootnote : " ") + testObject.DisplayedTextMinutes;
+            testObject.DisplayedText = testObject.DisplayedTextHours + (testObject.DisplayedTextFootnote.Length == 0 ? 
+                testObject.DisplayedTextFootnote : 
+                " ") + testObject.DisplayedTextMinutes;
             return testObject;
         }
 
@@ -40,6 +44,8 @@ namespace Timetabler.Data.Tests.Unit.Display
             }
             return tt;
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         private static TimeDisplayFormattingStrings GetRandomFormattingStrings()
         {

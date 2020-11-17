@@ -7,7 +7,7 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
 {
     internal static class TrainTimeHelpers
     {
-        private static Random _rnd = RandomProvider.Default;
+        private static readonly Random _rnd = RandomProvider.Default;
 
         internal static TrainTime GetTrainTime(int? footnoteCount = null)
         {
@@ -17,6 +17,8 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             };
             return AddFootnotesToTrainTime(tt, footnoteCount);
         }
+
+#pragma warning disable CA5394 // Do not use insecure randomness
 
         private static TrainTime AddFootnotesToTrainTime(TrainTime tt, int? footnoteCount)
         {
@@ -30,6 +32,8 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
             }
             return tt;
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
         internal static TrainTime GetTrainTimeBefore(TimeOfDay time, int? footnoteCount = null)
         {

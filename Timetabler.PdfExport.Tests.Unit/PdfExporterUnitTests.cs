@@ -17,6 +17,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         private static readonly Random _rnd = RandomProvider.Default;
 
         private Mock<IDocumentDescriptorFactory> _mockDescriptorFactory;
+        private Mock<IFontConfigurationProvider> _mockFontConfigurationProvider;
 
         [TestInitialize]
         public void SetUpTest()
@@ -26,15 +27,24 @@ namespace Timetabler.PdfExport.Tests.Unit
             _mockDescriptorFactory = new Mock<IDocumentDescriptorFactory>();
             _mockDescriptorFactory.Setup(m => m.ImplementationName).Returns("Unicorn");
             _mockDescriptorFactory.Setup(m => m.GetFontLoader()).Returns(mockFontLoader.Object);
+            _mockFontConfigurationProvider = new Mock<IFontConfigurationProvider>();
+            _mockFontConfigurationProvider.Setup(m => m.BasePath).Returns("fontfolder");
+            _mockFontConfigurationProvider.Setup(m => m.SansBoldFace).Returns("font");
+            _mockFontConfigurationProvider.Setup(m => m.SansRomanFace).Returns("font");
+            _mockFontConfigurationProvider.Setup(m => m.SerifBoldFace).Returns("font");
+            _mockFontConfigurationProvider.Setup(m => m.SerifBoldItalicFace).Returns("font");
+            _mockFontConfigurationProvider.Setup(m => m.SerifItalicFace).Returns("font");
+            _mockFontConfigurationProvider.Setup(m => m.SerifRomanFace).Returns("font");
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void PdfExporterClass_ExportMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
-            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object, _mockFontConfigurationProvider.Object))
             {
                 TimetableDocument testParam0 = null;
                 Stream testParam1 = new Mock<Stream>().Object;
@@ -47,7 +57,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         [TestMethod]
         public void PdfExporterClass_ExportMethod_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFirstParameterIsNull()
         {
-            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object, _mockFontConfigurationProvider.Object))
             {
                 TimetableDocument testParam0 = null;
                 Stream testParam1 = new Mock<Stream>().Object;
@@ -68,7 +78,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         public void PdfExporterClass_OnStatusUpdateMethod_RaisesStatusUpdateEvent()
         {
             int eventCount = 0;
-            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object, _mockFontConfigurationProvider.Object))
             {
                 testObject.StatusUpdate += (s, e) => { eventCount++; };
 
@@ -83,7 +93,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         public void PdfExporterClass_OnStatusUpdateMethod_RaisesStatusUpdateEventWithCorrectSender()
         {
             object testSender = null;
-            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object, _mockFontConfigurationProvider.Object))
             {
                 testObject.StatusUpdate += (s, e) => { testSender = s; };
 
@@ -99,7 +109,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         {
             double expectedArg = _rnd.NextDouble();
             double capturedArg = -1d;
-            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object, _mockFontConfigurationProvider.Object))
             {
                 testObject.StatusUpdate += (s, e) => { capturedArg = e.Progress; };
 
@@ -115,7 +125,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         {
             string expectedArg = _rnd.NextString(_rnd.Next(100));
             string capturedArg = null;
-            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object, _mockFontConfigurationProvider.Object))
             {
                 testObject.StatusUpdate += (s, e) => { capturedArg = e.Status; };
 
@@ -131,7 +141,7 @@ namespace Timetabler.PdfExport.Tests.Unit
         {
             bool expectedArg = _rnd.NextBoolean();
             bool capturedArg = !expectedArg;
-            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object))
+            using (PdfExporter testObject = new PdfExporter(_mockDescriptorFactory.Object, _mockFontConfigurationProvider.Object))
             {
                 testObject.StatusUpdate += (s, e) => { capturedArg = e.InProgress; };
 
@@ -142,6 +152,7 @@ namespace Timetabler.PdfExport.Tests.Unit
             Assert.AreEqual(expectedArg, capturedArg);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

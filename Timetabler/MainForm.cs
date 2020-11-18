@@ -15,6 +15,7 @@ using Timetabler.Data.Collections;
 using Timetabler.Data.Display;
 using Timetabler.Data.Events;
 using Timetabler.DataLoader;
+using Timetabler.Export;
 using Timetabler.Extensions;
 using Timetabler.Helpers;
 using Timetabler.Models;
@@ -228,7 +229,7 @@ namespace Timetabler
         {
             try
             {
-                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(PdfExportEngine.Unicorn)))
+                using (PdfExporter exporter = new PdfExporter(new DocumentDescriptorFactory(PdfExportEngine.Unicorn), FontConfiguration.Default))
                 using (FileStream fs = new FileStream(fn, FileMode.Create, FileAccess.Write))
                 {
                     exporter.StatusUpdate += (s, evt) =>

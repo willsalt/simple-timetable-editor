@@ -11,11 +11,10 @@ namespace Timetabler.PdfExport.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static TextVerticalLocation GetTVL()
-        {
-            return new TextVerticalLocation(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, 
-                _rnd.NextDouble() * 1000);
-        }
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static TextVerticalLocation GetTVL() => new TextVerticalLocation(_rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000,
+            _rnd.NextDouble() * 1000, _rnd.NextDouble() * 1000);
 
         private static LocationBoxDimensions GetLocationBoxDimensions(int? locationMinCount = null)
         {
@@ -31,6 +30,8 @@ namespace Timetabler.PdfExport.Tests.Unit
             }
             return dimensions;
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

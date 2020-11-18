@@ -18,16 +18,14 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
 
         private static readonly string[] _validDashStyles = { "Solid", "Dash", "Dot", "DashDot", "DashDotDot" };
 
-        private static GraphTrainPropertiesModel GetModel()
-        {
-            return _rnd.NextGraphTrainPropertiesModel();
-        }
+        private static GraphTrainPropertiesModel GetModel() => _rnd.NextGraphTrainPropertiesModel();
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GraphTrainPropertiesModelExtensionsClass_ToGraphTrainPropertiesMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             GraphTrainPropertiesModel testParam = null;
 
@@ -123,6 +121,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Assert.AreEqual(DashStyle.Solid, testOutput.DashStyle);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

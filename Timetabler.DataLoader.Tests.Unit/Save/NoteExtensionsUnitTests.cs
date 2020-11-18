@@ -21,8 +21,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void NoteExtensionsClass_ToNoteModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NoteExtensionsClass_ToNoteModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             Note testParam = null;
 

@@ -8,6 +8,9 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
 {
     public static class RandomExtensions
     {
+
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         public static Distance NextDistance(this Random random, Distance max)
         {
             int mileagePart;
@@ -45,7 +48,7 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             return new DistanceModel { Miles = random.Next(32768), Chains = random.NextDouble() * 80 };
@@ -57,7 +60,7 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
         {
             if (random is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(random));
             }
 
             int colour = random.Next();
@@ -68,5 +71,8 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers.Extensions
                 DashStyleName = random.NextPotentiallyValidString(_validDashStyles),
             };
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

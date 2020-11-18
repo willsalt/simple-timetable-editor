@@ -15,12 +15,12 @@ namespace Timetabler.DataLoader.Load
         /// </summary>
         /// <param name="model">The instance to be converted.</param>
         /// <returns>A <see cref="TimeOfDay" /> object containing equivalent properties.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
         public static TimeOfDay ToTimeOfDay(this TimeOfDayModel model)
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
 
             if (string.IsNullOrWhiteSpace(model.Time))

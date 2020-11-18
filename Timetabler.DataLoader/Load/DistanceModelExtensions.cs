@@ -14,12 +14,12 @@ namespace Timetabler.DataLoader.Load
         /// </summary>
         /// <param name="model">The <see cref="DistanceModel" /> instance to be converted.</param>
         /// <returns>A <see cref="Distance" /> instance.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
         public static Distance ToDistance(this DistanceModel model)
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
 
             return new Distance(model.Miles, model.Chains);

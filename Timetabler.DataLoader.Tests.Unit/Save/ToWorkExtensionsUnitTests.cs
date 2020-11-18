@@ -14,20 +14,21 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static ToWork GetTestObject()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static ToWork GetTestObject() => new ToWork
         {
-            return new ToWork
-            { 
-                Text = _rnd.NextString(_rnd.Next(20)),
-                AtTime = _rnd.NextTimeOfDay(),
-            };
-        }
+            Text = _rnd.NextString(_rnd.Next(20)),
+            AtTime = _rnd.NextTimeOfDay(),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ToWorkExtensionsClass_ToToWorkModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ToWorkExtensionsClass_ToToWorkModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             ToWork testParam = null;
 

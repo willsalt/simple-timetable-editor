@@ -14,12 +14,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="note">The object to be converted.</param>
         /// <returns>A <see cref="NoteModel" /> object containing the same data as the parameter in serialisable form.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static NoteModel ToNoteModel(this Note note)
         {
             if (note is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(note));
             }
 
             return new NoteModel

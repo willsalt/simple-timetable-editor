@@ -13,8 +13,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void TimeOfDayModelExtensionsClass_ToTimeOfDayMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TimeOfDayModelExtensionsClass_ToTimeOfDayMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             TimeOfDayModel testParam = null;
 

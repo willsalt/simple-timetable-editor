@@ -68,10 +68,6 @@ namespace Timetabler.DataLoader
             }
         }
 
-        private static Serializer GetSerializer()
-        {
-            SerializerSettings settings = new SerializerSettings { EmitAlias = false, EmitTags = false };
-            return new Serializer(settings);
-        }
+        private static Serializer GetSerializer() => new Serializer(new SerializerSettings { EmitAlias = false, EmitTags = false });
     }
 }

@@ -16,12 +16,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="train">The object to be converted.</param>
         /// <returns>A <see cref="TrainModel" /> instance containing the same data as the parameter in serialisable form.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static TrainModel ToTrainModel(this Train train)
         {
             if (train is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(train));
             }
 
             TrainModel model = new TrainModel

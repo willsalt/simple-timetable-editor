@@ -14,12 +14,12 @@ namespace Timetabler.DataLoader.Load
         /// </summary>
         /// <param name="model">The object to be converted.</param>
         /// <returns>A <see cref="DocumentOptions" /> insstance whose properties match the parameter.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is null.</exception>
         public static DocumentOptions ToDocumentOptions(this DocumentOptionsModel model)
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
 
             DocumentOptions options = new DocumentOptions

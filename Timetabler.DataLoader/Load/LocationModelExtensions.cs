@@ -19,7 +19,7 @@ namespace Timetabler.DataLoader.Load
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
             if (string.IsNullOrWhiteSpace(model.Id))
             {

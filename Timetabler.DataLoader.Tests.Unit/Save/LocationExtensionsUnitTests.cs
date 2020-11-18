@@ -14,25 +14,26 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static Location GetTestObject()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static Location GetTestObject() => new Location
         {
-            return new Location
-            {
-                DisplaySeparatorAbove = _rnd.NextBoolean(),
-                DisplaySeparatorBelow = _rnd.NextBoolean(),
-                DownArrivalDepartureAlwaysDisplayed = _rnd.NextArrivalDepartureOptions(),
-                DownRoutingCodesAlwaysDisplayed = _rnd.NextTrainRoutingOptions(),
-                EditorDisplayName = _rnd.NextString(_rnd.Next(20)),
-                FontType = _rnd.NextLocationFontType(),
-                GraphDisplayName = _rnd.NextString(_rnd.Next(20)),
-                Id = _rnd.NextHexString(8),
-                Mileage = _rnd.NextDistance(),
-                TimetableDisplayName = _rnd.NextString(_rnd.Next(20)),
-                Tiploc = _rnd.NextString(_rnd.Next(10)),
-                UpArrivalDepartureAlwaysDisplayed = _rnd.NextArrivalDepartureOptions(),
-                UpRoutingCodesAlwaysDisplayed = _rnd.NextTrainRoutingOptions(),
-            };
-        }
+            DisplaySeparatorAbove = _rnd.NextBoolean(),
+            DisplaySeparatorBelow = _rnd.NextBoolean(),
+            DownArrivalDepartureAlwaysDisplayed = _rnd.NextArrivalDepartureOptions(),
+            DownRoutingCodesAlwaysDisplayed = _rnd.NextTrainRoutingOptions(),
+            EditorDisplayName = _rnd.NextString(_rnd.Next(20)),
+            FontType = _rnd.NextLocationFontType(),
+            GraphDisplayName = _rnd.NextString(_rnd.Next(20)),
+            Id = _rnd.NextHexString(8),
+            Mileage = _rnd.NextDistance(),
+            TimetableDisplayName = _rnd.NextString(_rnd.Next(20)),
+            Tiploc = _rnd.NextString(_rnd.Next(10)),
+            UpArrivalDepartureAlwaysDisplayed = _rnd.NextArrivalDepartureOptions(),
+            UpRoutingCodesAlwaysDisplayed = _rnd.NextTrainRoutingOptions(),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

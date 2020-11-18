@@ -14,12 +14,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="tlt">The object to be converted.</param>
         /// <returns>A <see cref="TrainLocationTimeModel" /> instance containing the same data as the parameter in serialisable form.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static TrainLocationTimeModel ToTrainLocationTimeModel(this TrainLocationTime tlt)
         {
             if (tlt is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(tlt));
             }
 
             return new TrainLocationTimeModel

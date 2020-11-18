@@ -16,12 +16,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="doc">The object to convert.</param>
         /// <returns>A <see cref="TimetableFileModel" /> instance containing the same data as the parameter, in serialisable form.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static TimetableFileModel ToTimetableFileModel(this TimetableDocument doc)
         {
             if (doc is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(doc));
             }
 
             TimetableFileModel fileModel = new TimetableFileModel

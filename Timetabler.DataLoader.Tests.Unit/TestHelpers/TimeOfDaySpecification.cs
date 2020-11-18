@@ -40,6 +40,8 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers
             }
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         internal TimeOfDaySpecification(TimeOfDaySpecificationKind kind)
         {
             Kind = kind;
@@ -86,5 +88,8 @@ namespace Timetabler.DataLoader.Tests.Unit.TestHelpers
                     break;
             }
         }
+
+#pragma warning restore CA5394 // Do not use insecure randomness
+
     }
 }

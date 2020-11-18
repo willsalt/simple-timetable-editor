@@ -17,6 +17,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static TrainTime GetTestObject()
         {
             int noteCount = _rnd.Next(4);
@@ -30,11 +32,13 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
             return tt;
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void TrainTimeExtensionsClass_ToTrainTimeModelMethod_ThrowsNullReferenceException_WhenParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainTimeExtensionsClass_ToTrainTimeModelMethod_ThrowsArgumentNullException_WhenParameterIsNull()
         {
             TrainTime testParam = null;
 

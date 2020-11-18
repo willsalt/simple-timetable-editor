@@ -15,6 +15,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static GraphTrainProperties GetTestObject()
         {
             DashStyle[] dashStyles = new[]
@@ -34,11 +36,13 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
             };
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void GraphTrainPropertiesExtensionsClass_ToGraphTrainPropertiesModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GraphTrainPropertiesExtensionsClass_ToGraphTrainPropertiesModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             GraphTrainProperties testParam = null;
 

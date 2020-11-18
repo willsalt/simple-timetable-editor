@@ -16,12 +16,12 @@ namespace Timetabler.DataLoader.Load
         /// <param name="model">The object to be converted.</param>
         /// <param name="notes">A dictionary of known footnotes, used to resolve ID-based references to footnotes in the model.</param>
         /// <returns>A <see cref="TrainTime" /> object containing the same data as the <c>model</c> parameter, with all references resolved.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the <c>model</c> parameter is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>model</c> parameter is null.</exception>
         public static TrainTime ToTrainTime(this TrainTimeModel model, IDictionary<string, Note> notes)
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
 
             TrainTime tt = new TrainTime { Time = model.At?.ToTimeOfDay() };

@@ -14,25 +14,26 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static DocumentOptions GetTestObject()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static DocumentOptions GetTestObject() => new DocumentOptions
         {
-            return new DocumentOptions
-            {
-                ClockType = _rnd.NextClockType(),
-                DisplayTrainLabelsOnGraphs = _rnd.NextBoolean(),
-                GraphEditStyle = _rnd.NextGraphEditStyle(),
-                DisplaySpeedLinesOnGraphs = _rnd.NextBoolean(),
-                SpeedLineSpeed = _rnd.Next(),
-                SpeedLineSpacingMinutes = _rnd.Next(),
-                SpeedLineAppearance = _rnd.NextGraphTrainProperties()
-            };
-        }
+            ClockType = _rnd.NextClockType(),
+            DisplayTrainLabelsOnGraphs = _rnd.NextBoolean(),
+            GraphEditStyle = _rnd.NextGraphEditStyle(),
+            DisplaySpeedLinesOnGraphs = _rnd.NextBoolean(),
+            SpeedLineSpeed = _rnd.Next(),
+            SpeedLineSpacingMinutes = _rnd.Next(),
+            SpeedLineAppearance = _rnd.NextGraphTrainProperties()
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DocumentOptionsExtensionsClass_ToDocumentOptionsModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             DocumentOptions testParam = null;
 

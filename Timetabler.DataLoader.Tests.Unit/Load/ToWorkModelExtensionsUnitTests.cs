@@ -14,24 +14,23 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static ToWorkModel GetModel()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static ToWorkModel GetModel() => new ToWorkModel
         {
-            return new ToWorkModel
+            Text = _rnd.NextString(_rnd.Next(20)),
+            At = new TimeOfDayModel
             {
-                Text = _rnd.NextString(_rnd.Next(20)),
-                At = new TimeOfDayModel
-                {
-                    Time = _rnd.Next(24).ToString(CultureInfo.InvariantCulture) + ":" + _rnd.Next(60).ToString(CultureInfo.InvariantCulture) + ":" +
-                        _rnd.Next(60).ToString(CultureInfo.InvariantCulture),
-                },
-            };
-        }
+                Time = _rnd.Next(24).ToString(CultureInfo.InvariantCulture) + ":" + _rnd.Next(60).ToString(CultureInfo.InvariantCulture) + ":" +
+                    _rnd.Next(60).ToString(CultureInfo.InvariantCulture),
+            },
+        };
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ToWorkModelExtensionsClass_ToToWorkMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ToWorkModelExtensionsClass_ToToWorkMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             ToWorkModel testParam = null;
 
@@ -200,6 +199,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Assert.Fail();
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

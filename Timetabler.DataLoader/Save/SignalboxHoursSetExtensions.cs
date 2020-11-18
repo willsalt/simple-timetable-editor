@@ -16,12 +16,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="set">The object to convert.</param>
         /// <returns>A <see cref="SignalboxHoursSetModel" /> instance containing the same data as the parameter in serialisable form.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static SignalboxHoursSetModel ToSignalboxHoursSetModel(this SignalboxHoursSet set)
         {
             if (set is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(set));
             }
 
             SignalboxHoursSetModel shsm = new SignalboxHoursSetModel

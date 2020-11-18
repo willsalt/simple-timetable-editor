@@ -14,12 +14,12 @@ namespace Timetabler.DataLoader.Load
         /// </summary>
         /// <param name="model">The instance to be converted.</param>
         /// <returns>A <see cref="Note" /> instance that is equivalent to the parameter.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c></exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c></exception>
         public static Note ToNote(this NoteModel model)
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
             if (string.IsNullOrWhiteSpace(model.Id))
             {

@@ -19,7 +19,7 @@ namespace Timetabler.DataLoader.Load
         /// <param name="notes">A dictionary of known footnotes, to be used to resolve references to any footnotes that are relevant.</param>
         /// <param name="options">Options for this document, to be used to control any document-level settings.</param>
         /// <returns>A <see cref="Train" /> instance containing the same data as the <c>model</c> parameter with all ID-based references resolved to objects.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the <c>model</c> parameter is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>model</c> parameter is null.</exception>
         public static Train ToTrain(
             this TrainModel model,
             Dictionary<string, Location> locations,
@@ -29,7 +29,7 @@ namespace Timetabler.DataLoader.Load
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
             if (string.IsNullOrWhiteSpace(model.Id))
             {

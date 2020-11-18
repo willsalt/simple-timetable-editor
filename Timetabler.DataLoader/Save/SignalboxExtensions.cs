@@ -14,12 +14,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="box">The object to be converted.</param>
         /// <returns>A <see cref="SignalboxModel" /> instance containing the same data as the parameter in serialisable form.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static SignalboxModel ToSignalboxModel(this Signalbox box)
         {
             if (box is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(box));
             }
 
             return new SignalboxModel

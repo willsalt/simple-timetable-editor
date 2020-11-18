@@ -13,25 +13,26 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static NoteModel GetModel()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static NoteModel GetModel() => new NoteModel
         {
-            return new NoteModel
-            {
-                Id = _rnd.NextHexString(8),
-                Symbol = _rnd.NextString(_rnd.Next(4)),
-                Definition = _rnd.NextString(_rnd.Next(120)),
-                AppliesToTimings = _rnd.NextNullableBoolean(),
-                AppliesToTrains = _rnd.NextNullableBoolean(),
-                DefinedInGlossary = _rnd.NextNullableBoolean(),
-                DefinedOnPages = _rnd.NextNullableBoolean(),
-            };
-        }
+            Id = _rnd.NextHexString(8),
+            Symbol = _rnd.NextString(_rnd.Next(4)),
+            Definition = _rnd.NextString(_rnd.Next(120)),
+            AppliesToTimings = _rnd.NextNullableBoolean(),
+            AppliesToTrains = _rnd.NextNullableBoolean(),
+            DefinedInGlossary = _rnd.NextNullableBoolean(),
+            DefinedOnPages = _rnd.NextNullableBoolean(),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void NoteModelExtensionsClass_ToNoteMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NoteModelExtensionsClass_ToNoteMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             NoteModel testParam = null;
 

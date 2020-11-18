@@ -16,6 +16,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         private static readonly string[] _validClockTypes = { "TwelveHourClock", "TwentyFourHourClock" };
         private static readonly string[] _validGraphEditStyles = { "Free", "PreserveSectionTimes" };
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static DocumentOptionsModel GetModel()
         {
             DocumentOptionsModel model = new DocumentOptionsModel
@@ -35,8 +37,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DocumentOptionsModelExtensionsClass_ToDocumentOptionsMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             DocumentOptionsModel testParam = null;
 
@@ -253,6 +255,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Assert.IsNotNull(testOutput.SpeedLineAppearance);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

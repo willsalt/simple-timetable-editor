@@ -18,8 +18,8 @@ namespace Timetabler.DataLoader.Load
         /// <param name="signalboxes">A dictionary of known signalboxes, for resolving references.</param>
         /// <param name="existingSets">An enumeration of existing signalbox hours sets, to ensure this routine does not duplicate the ID of an existing set.</param>
         /// <returns>A <see cref="SignalboxHoursSet" /> containing the same data as the <c>model</c> parameter with references resolved.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the <c>model</c> parameter is <c>null</c>.</exception>
-        /// <exception cref="ArgumentNullException">Thrown if the <c>signalboxes</c> or <c>existingSets</c> parameters are <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>model</c> parameter is <c>null</c> or if the <c>signalboxes</c> or <c>existingSets</c> 
+        /// parameters are <c>null</c>.</exception>
         public static SignalboxHoursSet ToSignalboxHoursSet(
             this SignalboxHoursSetModel model, 
             IDictionary<string, Signalbox> signalboxes, 
@@ -27,7 +27,7 @@ namespace Timetabler.DataLoader.Load
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
             if (signalboxes is null)
             {

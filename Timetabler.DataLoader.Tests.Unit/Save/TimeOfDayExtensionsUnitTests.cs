@@ -14,10 +14,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static TimeOfDay GetTestObject()
-        {
-            return _rnd.NextTimeOfDay();
-        }
+        private static TimeOfDay GetTestObject() => _rnd.NextTimeOfDay();
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

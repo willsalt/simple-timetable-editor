@@ -14,34 +14,33 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static ExportOptionsModel GetModel()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static ExportOptionsModel GetModel() => new ExportOptionsModel
         {
-            return new ExportOptionsModel
-            {
-                DisplayLocoDiagramRow = _rnd.NextNullableBoolean(),
-                FontSet = _rnd.NextString(_rnd.Next(50)),
-                GraphsInOutput = _rnd.NextNullableBoolean(),
-                SetToWorkRowInOutput = _rnd.NextNullableBoolean(),
-                LocoToWorkRowInOutput = _rnd.NextNullableBoolean(),
-                BoxHoursInOutput = _rnd.NextNullableBoolean(),
-                CreditsInOutput = _rnd.NextNullableBoolean(),
-                GlossaryInOutput = _rnd.NextNullableBoolean(),
-                LineWidth = _rnd.NextNullableDouble(3d),
-                GraphAxisLineWidth = _rnd.NextNullableDouble(3d),
-                FillerDashLineWidth = _rnd.NextNullableDouble(3d),
-                TablePageOrientation = _rnd.NextNullableOrientation(),
-                GraphPageOrientation = _rnd.NextNullableOrientation(),
-                UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
-                DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
-                DistancesInOutput = _rnd.NextNullableSectionSelection(),
-            };
-        }
+            DisplayLocoDiagramRow = _rnd.NextNullableBoolean(),
+            FontSet = _rnd.NextString(_rnd.Next(50)),
+            GraphsInOutput = _rnd.NextNullableBoolean(),
+            SetToWorkRowInOutput = _rnd.NextNullableBoolean(),
+            LocoToWorkRowInOutput = _rnd.NextNullableBoolean(),
+            BoxHoursInOutput = _rnd.NextNullableBoolean(),
+            CreditsInOutput = _rnd.NextNullableBoolean(),
+            GlossaryInOutput = _rnd.NextNullableBoolean(),
+            LineWidth = _rnd.NextNullableDouble(3d),
+            GraphAxisLineWidth = _rnd.NextNullableDouble(3d),
+            FillerDashLineWidth = _rnd.NextNullableDouble(3d),
+            TablePageOrientation = _rnd.NextNullableOrientation(),
+            GraphPageOrientation = _rnd.NextNullableOrientation(),
+            UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            DistancesInOutput = _rnd.NextNullableSectionSelection(),
+        };
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             ExportOptionsModel testParam = null;
 
@@ -492,6 +491,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             Assert.AreEqual(testParam.DistancesInOutput.Value, testOutput.DistancesInOutput);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

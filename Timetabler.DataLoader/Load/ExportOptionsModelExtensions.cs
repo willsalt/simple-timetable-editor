@@ -15,12 +15,12 @@ namespace Timetabler.DataLoader.Load
         /// </summary>
         /// <param name="model">The object to be converted.</param>
         /// <returns>A <see cref="DocumentExportOptions" /> instance representing the original data.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static DocumentExportOptions ToDocumentExportOptions(this ExportOptionsModel model)
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
 
             DocumentExportOptions deo = new DocumentExportOptions

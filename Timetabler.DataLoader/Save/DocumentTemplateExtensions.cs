@@ -16,12 +16,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="template">The object to be converted.</param>
         /// <returns>A <see cref="TimetableDocumentTemplateModel" /> instance containing the same data as the original object in serialisable form.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is null.</exception>
         public static TimetableDocumentTemplateModel ToTimetableDocumentTemplateModel(this DocumentTemplate template)
         {
             if (template is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(template));
             }
 
             TimetableDocumentTemplateModel tdtm = new TimetableDocumentTemplateModel

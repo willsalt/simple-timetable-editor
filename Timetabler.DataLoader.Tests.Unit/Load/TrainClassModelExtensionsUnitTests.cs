@@ -13,21 +13,22 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static TrainClassModel GetModel()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static TrainClassModel GetModel() => new TrainClassModel
         {
-            return new TrainClassModel
-            {
-                Id = _rnd.NextHexString(8),
-                Description = _rnd.NextString(_rnd.Next(50)),
-                TableCode = _rnd.NextString(_rnd.Next(5)),
-            };
-        }
+            Id = _rnd.NextHexString(8),
+            Description = _rnd.NextString(_rnd.Next(50)),
+            TableCode = _rnd.NextString(_rnd.Next(5)),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void TrainClassModelExtensionsClass_ToTrainClassMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainClassModelExtensionsClass_ToTrainClassMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             TrainClassModel testParam = null;
 

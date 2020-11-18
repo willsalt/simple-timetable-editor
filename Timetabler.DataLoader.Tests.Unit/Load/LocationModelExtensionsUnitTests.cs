@@ -17,31 +17,32 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
 
         private static readonly string[] _validFontTypes = { "Normal", "Condensed" };
 
-        private static LocationModel GetModel()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static LocationModel GetModel() => new LocationModel
         {
-            return new LocationModel
-            {
-                Id = _rnd.NextHexString(8),
-                EditorDisplayName = _rnd.NextString(_rnd.Next(20)),
-                TimetableDisplayName = _rnd.NextString(_rnd.Next(20)),
-                GraphDisplayName = _rnd.NextString(_rnd.Next(20)),
-                LocationCode = _rnd.NextString(8),
-                UpArrivalDepartureAlwaysDisplayed = _rnd.NextNullableArrivalDepartureOptions(),
-                DownArrivalDepartureAlwaysDisplayed = _rnd.NextNullableArrivalDepartureOptions(),
-                UpRoutingCodesAlwaysDisplayed = _rnd.NextNullableTrainRoutingOptions(),
-                DownRoutingCodesAlwaysDisplayed = _rnd.NextNullableTrainRoutingOptions(),
-                Mileage = _rnd.NextDistanceModel(),
-                DisplaySeparatorAbove = _rnd.NextNullableBoolean(),
-                DisplaySeparatorBelow = _rnd.NextNullableBoolean(),
-                FontTypeName = _rnd.NextPotentiallyValidString(_validFontTypes),
-            };
-        }
+            Id = _rnd.NextHexString(8),
+            EditorDisplayName = _rnd.NextString(_rnd.Next(20)),
+            TimetableDisplayName = _rnd.NextString(_rnd.Next(20)),
+            GraphDisplayName = _rnd.NextString(_rnd.Next(20)),
+            LocationCode = _rnd.NextString(8),
+            UpArrivalDepartureAlwaysDisplayed = _rnd.NextNullableArrivalDepartureOptions(),
+            DownArrivalDepartureAlwaysDisplayed = _rnd.NextNullableArrivalDepartureOptions(),
+            UpRoutingCodesAlwaysDisplayed = _rnd.NextNullableTrainRoutingOptions(),
+            DownRoutingCodesAlwaysDisplayed = _rnd.NextNullableTrainRoutingOptions(),
+            Mileage = _rnd.NextDistanceModel(),
+            DisplaySeparatorAbove = _rnd.NextNullableBoolean(),
+            DisplaySeparatorBelow = _rnd.NextNullableBoolean(),
+            FontTypeName = _rnd.NextPotentiallyValidString(_validFontTypes),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void LocationModelExtensionsClass_ToLocationMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LocationModelExtensionsClass_ToLocationMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             LocationModel testParam = null;
 

@@ -26,6 +26,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             };
         }
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static IDictionary<string, Signalbox> GetSignalboxCollectionWithoutItem(string item)
         {
             int count = _rnd.Next(1, 20);
@@ -51,11 +53,13 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             return output;
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SignalboxHoursModelExtensionsClass_ToSignalboxHoursMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SignalboxHoursModelExtensionsClass_ToSignalboxHoursMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             SignalboxHoursModel testParam0 = null;
             IDictionary<string, Signalbox> testParam1 = new Dictionary<string, Signalbox>();
@@ -111,8 +115,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SignalboxHoursModelExtensionsClass_ToSignalboxHoursMethod_ThrowsNullReferenceException_IfParameterHasStartTimePropertyThatIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SignalboxHoursModelExtensionsClass_ToSignalboxHoursMethod_ThrowsArgumentNullException_IfParameterHasStartTimePropertyThatIsNull()
         {
             SignalboxHoursModel testParam0 = GetTestObject();
             testParam0.StartTime = null;
@@ -236,8 +240,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SignalboxHoursModelExtensionsClass_ToSignalboxHoursMethod_ThrowsNullReferenceException_IfParameterHasFinishTimePropertyThatIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SignalboxHoursModelExtensionsClass_ToSignalboxHoursMethod_ThrowsArgumentNullException_IfParameterHasFinishTimePropertyThatIsNull()
         {
             SignalboxHoursModel testParam0 = GetTestObject();
             testParam0.FinishTime = null;

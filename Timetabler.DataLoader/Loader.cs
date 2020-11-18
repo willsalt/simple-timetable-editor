@@ -26,16 +26,14 @@ namespace Timetabler.DataLoader
         /// <param name="stream">The stream to load the class data from.</param>
         /// <param name="displayWarning">Method to use to display warning messages to the user if necessary.</param>
         /// <returns>The list of locations in the template.</returns>
-        public static TimetableDocument LoadTimetableDocument(Stream stream, Action<LoaderWarningMessage> displayWarning)
-        {
-            return LoadByFileType(stream, LoadYamlTimetableDocument, displayWarning);
-        }
+        public static TimetableDocument LoadTimetableDocument(Stream stream, Action<LoaderWarningMessage> displayWarning) => 
+            LoadByFileType(stream, LoadYamlTimetableDocument, displayWarning);
 
         private static T LoadByFileType<T>(Stream stream, Func<string, T> loader, Action<LoaderWarningMessage> displayWarning)
         {
             if (stream is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(stream));
             }
             if (displayWarning is null)
             {
@@ -78,10 +76,8 @@ namespace Timetabler.DataLoader
         /// <param name="str">The stream containing the template to be loaded.</param>
         /// <param name="displayWarning">Method to use to display warning messages to the user if necessary.</param>
         /// <returns>The list of locations in the template.</returns>
-        public static LocationCollection LoadLocationTemplate(Stream str, Action<LoaderWarningMessage> displayWarning)
-        {
-            return LoadByFileType(str, LoadYamlLocationTemplate, displayWarning);
-        }
+        public static LocationCollection LoadLocationTemplate(Stream str, Action<LoaderWarningMessage> displayWarning) => 
+            LoadByFileType(str, LoadYamlLocationTemplate, displayWarning);
 
         internal static LocationCollection LoadYamlLocationTemplate(string content)
         {
@@ -101,10 +97,8 @@ namespace Timetabler.DataLoader
         /// <param name="str">The <see cref="Stream"/> to load data from.</param>
         /// <param name="displayWarning">A method to call to display warning messages to the user if necessary.</param>
         /// <returns>A <see cref="DocumentTemplate"/> object.</returns>
-        public static DocumentTemplate LoadDocumentTemplate(Stream str, Action<LoaderWarningMessage> displayWarning)
-        {
-            return LoadByFileType(str, LoadYamlDocumentTemplate, displayWarning);
-        }
+        public static DocumentTemplate LoadDocumentTemplate(Stream str, Action<LoaderWarningMessage> displayWarning) => 
+            LoadByFileType(str, LoadYamlDocumentTemplate, displayWarning);
 
         internal static DocumentTemplate LoadYamlDocumentTemplate(string content)
         {

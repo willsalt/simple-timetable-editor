@@ -18,8 +18,7 @@ namespace Timetabler.DataLoader.Load
         /// <param name="notes">A dictionary of known footnotes, to use to resolve any footnote references in the model.</param>
         /// <param name="options">Document options to use to determine how to format strings.</param>
         /// <returns>A <see cref="TrainLocationTime" /> object containing the same data as the <c>model</c> parameter, with ID references resolved.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the <c>model</c> parameter is <c>null</c>.</exception>
-        /// <exception cref="ArgumentNullException">Thrown if the <c>options</c> parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the <c>model</c> parameter is <c>null</c> or if the <c>options</c> parameter is <c>null</c>.</exception>
         public static TrainLocationTime ToTrainLocationTime(
             this TrainLocationTimeModel model,
             Dictionary<string, Location> locations,
@@ -28,7 +27,7 @@ namespace Timetabler.DataLoader.Load
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
             if (options is null)
             {

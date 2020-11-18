@@ -16,12 +16,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="tt">The object to convert.</param>
         /// <returns>A <see cref="TrainTimeModel" /> instance containing the same data as the parameter.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is null.</exception>
         public static TrainTimeModel ToTrainTimeModel(this TrainTime tt)
         {
             if (tt is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(tt));
             }
 
             TrainTimeModel model = new TrainTimeModel

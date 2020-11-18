@@ -16,13 +16,12 @@ namespace Timetabler.DataLoader.Load
         /// <param name="model">The object to be converted.</param>
         /// <param name="signalboxes">A dictionary of known signalboxes, to convert the signalbox ID into a reference.</param>
         /// <returns>A <see cref="SignalboxHours" /> instance.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c>.</exception>
-        /// <exception cref="ArgumentNullException">Thrown if the <c>signalboxes</c> parameter is <c>null</c>.</exception>
+        /// <exception cref="NullReferenceException">Thrown if the <c>this</c> parameter is <c>null</c> or if the <c>signalboxes</c> parameter is <c>null</c>.</exception>
         public static SignalboxHours ToSignalboxHours(this SignalboxHoursModel model, IDictionary<string, Signalbox> signalboxes)
         {
             if (model is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(model));
             }
             if (signalboxes is null)
             {

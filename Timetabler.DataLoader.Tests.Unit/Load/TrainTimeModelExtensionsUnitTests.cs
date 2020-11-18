@@ -16,6 +16,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static TrainTimeModel GetTestObject()
         {
             TimeOfDaySpecification timeSpec = new TimeOfDaySpecification(TimeOfDaySpecification.TimeOfDaySpecificationKind.HoursMinutesSeconds);
@@ -72,11 +74,13 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             return output;
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
+
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void TrainTimeModelExtensionsClass_ToTrainTimeMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TrainTimeModelExtensionsClass_ToTrainTimeMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             TrainTimeModel testParam0 = null;
             Dictionary<string, Note> testParam1 = new Dictionary<string, Note>();

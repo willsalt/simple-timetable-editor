@@ -16,6 +16,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
+
         private static SignalboxHoursSetModel GetTestObject()
         {
             int count = _rnd.Next(1, 10);
@@ -96,8 +98,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SignalboxHoursSetModelExtensionsClass_ToSignalboxHoursSetMethod_ThrowsNullReferenceException_IfFirstParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SignalboxHoursSetModelExtensionsClass_ToSignalboxHoursSetMethod_ThrowsArgumentNullException_IfFirstParameterIsNull()
         {
             SignalboxHoursSetModel testParam0 = null;
             IDictionary<string, Signalbox> testParam1 = new Dictionary<string, Signalbox>();
@@ -201,8 +203,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SignalboxHoursSetModelExtensionsClass_ToSignalboxHoursSetMethod_ThrowsNullReferenceException_IfFirstParameterHasSignalboxesPropertyContainingElementsWithStartTimePropertyThatIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SignalboxHoursSetModelExtensionsClass_ToSignalboxHoursSetMethod_ThrowsArgumentNullException_IfFirstParameterHasSignalboxesPropertyContainingElementsWithStartTimePropertyThatIsNull()
         {
             SignalboxHoursSetModel testParam0 = GetTestObject();
             IDictionary<string, Signalbox> testParam1 = GetSignalboxCollectionWithItems(testParam0.Signalboxes.Select(s => s.SignalboxId));
@@ -383,8 +385,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SignalboxHoursSetModelExtensionsClass_ToSignalboxHoursSetMethod_ThrowsNullReferenceException_IfFirstParameterHasSignalboxesPropertyContainingElementsWithFinishTimePropertyThatIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SignalboxHoursSetModelExtensionsClass_ToSignalboxHoursSetMethod_ThrowsArgumentNullException_IfFirstParameterHasSignalboxesPropertyContainingElementsWithFinishTimePropertyThatIsNull()
         {
             SignalboxHoursSetModel testParam0 = GetTestObject();
             IDictionary<string, Signalbox> testParam1 = GetSignalboxCollectionWithItems(testParam0.Signalboxes.Select(s => s.SignalboxId));
@@ -584,6 +586,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             }
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

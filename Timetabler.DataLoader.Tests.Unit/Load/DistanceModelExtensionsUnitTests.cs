@@ -16,8 +16,8 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DistanceModelExtensionsClass_ToDistanceMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DistanceModelExtensionsClass_ToDistanceMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             DistanceModel testParam = null;
 

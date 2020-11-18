@@ -13,33 +13,34 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static DocumentExportOptions GetTestObject()
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static DocumentExportOptions GetTestObject() => new DocumentExportOptions
         {
-            return new DocumentExportOptions
-            {
-                DisplayBoxHours = _rnd.NextBoolean(),
-                DisplayCredits = _rnd.NextBoolean(),
-                DisplayGlossary = _rnd.NextBoolean(),
-                DisplayGraph = _rnd.NextBoolean(),
-                DisplayLocoDiagramRow = _rnd.NextBoolean(),
-                DisplayLocoToWorkRow = _rnd.NextBoolean(),
-                DisplayToWorkRow = _rnd.NextBoolean(),
-                FillerDashLineWidth = _rnd.NextDouble() * 5,
-                LineWidth = _rnd.NextDouble() * 5,
-                GraphAxisLineWidth = _rnd.NextDouble() * 5,
-                TablePageOrientation = _rnd.NextOrientation(),
-                GraphPageOrientation = _rnd.NextOrientation(),
-                UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
-                DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
-                DistancesInOutput = _rnd.NextSectionSelection(),
-            };
-        }
+            DisplayBoxHours = _rnd.NextBoolean(),
+            DisplayCredits = _rnd.NextBoolean(),
+            DisplayGlossary = _rnd.NextBoolean(),
+            DisplayGraph = _rnd.NextBoolean(),
+            DisplayLocoDiagramRow = _rnd.NextBoolean(),
+            DisplayLocoToWorkRow = _rnd.NextBoolean(),
+            DisplayToWorkRow = _rnd.NextBoolean(),
+            FillerDashLineWidth = _rnd.NextDouble() * 5,
+            LineWidth = _rnd.NextDouble() * 5,
+            GraphAxisLineWidth = _rnd.NextDouble() * 5,
+            TablePageOrientation = _rnd.NextOrientation(),
+            GraphPageOrientation = _rnd.NextOrientation(),
+            UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            DistancesInOutput = _rnd.NextSectionSelection(),
+        };
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ThrowsNullReferenceException_IfParameterIsNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ThrowsArgumentNullException_IfParameterIsNull()
         {
             DocumentExportOptions testParam = null;
 

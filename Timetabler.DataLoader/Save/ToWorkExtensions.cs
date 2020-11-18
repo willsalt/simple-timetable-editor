@@ -14,12 +14,12 @@ namespace Timetabler.DataLoader.Save
         /// </summary>
         /// <param name="toWork">The object to be converted.</param>
         /// <returns>A <see cref="ToWorkModel" /> instance containing the same data as the parameter.</returns>
-        /// <exception cref="NullReferenceException">Thrown if the parameter is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is <c>null</c>.</exception>
         public static ToWorkModel ToToWorkModel(this ToWork toWork)
         {
             if (toWork is null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(toWork));
             }
 
             return new ToWorkModel

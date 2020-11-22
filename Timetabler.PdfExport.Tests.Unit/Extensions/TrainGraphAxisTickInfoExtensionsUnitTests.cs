@@ -15,10 +15,11 @@ namespace Timetabler.PdfExport.Tests.Unit.Extensions
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static TrainGraphAxisTickInfo GetTickInfo()
-        {
-            return new TrainGraphAxisTickInfo(_rnd.NextString(_rnd.Next(1, 10)), _rnd.NextDouble() * 1000);
-        }
+#pragma warning disable CA5394 // Do not use insecure randomness
+
+        private static TrainGraphAxisTickInfo GetTickInfo() => new TrainGraphAxisTickInfo(_rnd.NextString(_rnd.Next(1, 10)), _rnd.NextDouble() * 1000);
+
+#pragma warning restore CA5394 // Do not use insecure randomness
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

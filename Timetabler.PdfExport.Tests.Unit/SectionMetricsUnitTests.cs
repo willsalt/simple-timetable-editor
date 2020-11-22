@@ -10,6 +10,7 @@ namespace Timetabler.PdfExport.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
@@ -196,6 +197,7 @@ namespace Timetabler.PdfExport.Tests.Unit
             Assert.AreEqual(expectedValue, testOutput, 0.0000000001);
         }
 
+#pragma warning restore CA5394 // Do not use insecure randomness
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

@@ -14,7 +14,6 @@ using Timetabler.Data.Display.Interfaces;
 using Timetabler.PdfExport.Extensions;
 using Unicorn;
 using Unicorn.CoreTypes;
-using Unicorn.FontTools;
 using Unicorn.Shapes;
 using Timetabler.PdfExport.Interfaces;
 using System.Globalization;
@@ -27,16 +26,9 @@ namespace Timetabler.PdfExport
     public class PdfExporter : IExporter, IDisposable
     {
         /// <summary>
-        /// Delegate type for event handlers for status update events.
-        /// </summary>
-        /// <param name="sender">The object raising the event.</param>
-        /// <param name="e">The event arguments.</param>
-        public delegate void StatusUpdateEventHandler(object sender, StatusUpdateEventArgs e);
-
-        /// <summary>
         /// Event raised when the exporter status changes.
         /// </summary>
-        public event StatusUpdateEventHandler StatusUpdate;
+        public event EventHandler<StatusUpdateEventArgs> StatusUpdate;
 
         private readonly IDocumentDescriptorFactory _engineSelector;
 
@@ -91,22 +83,26 @@ namespace Timetabler.PdfExport
         /// Constructor.
         /// </summary>
         /// <param name="ddf">The factory used to instantiate Unicorn driver-level objects, so that the implementation can be selected.</param>
-        public PdfExporter(IDocumentDescriptorFactory ddf)
+        public PdfExporter(IDocumentDescriptorFactory ddf, IFontConfigurationProvider fontConfig)
         {
             if (ddf is null)
             {
                 throw new ArgumentNullException(nameof(ddf));
             }
+            if (fontConfig is null)
+            {
+                throw new ArgumentNullException(nameof(fontConfig));
+            }
 
             _engineSelector = ddf;
             _fontLoader = ddf.GetFontLoader();
 
-            _titleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 16);
-            _subtitleFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 14);
-            _plainBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifRomanFace), 7.5);
-            _italicBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifItalicFace), 7.5);
-            _boldBodyFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SerifBoldFace), 7.5);
-            _alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(Properties.Settings.Default.FontFolder, Properties.Settings.Default.SansBoldFace), 7.5);
+            _titleFont = _fontLoader.LoadFont(Path.Combine(fontConfig.BasePath, fontConfig.SerifBoldFace), 16);
+            _subtitleFont = _fontLoader.LoadFont(Path.Combine(fontConfig.BasePath, fontConfig.SerifBoldFace), 14);
+            _plainBodyFont = _fontLoader.LoadFont(Path.Combine(fontConfig.BasePath, fontConfig.SerifRomanFace), 7.5);
+            _italicBodyFont = _fontLoader.LoadFont(Path.Combine(fontConfig.BasePath, fontConfig.SerifItalicFace), 7.5);
+            _boldBodyFont = _fontLoader.LoadFont(Path.Combine(fontConfig.BasePath, fontConfig.SerifBoldFace), 7.5);
+            _alternativeLocationFont = _fontLoader.LoadFont(Path.Combine(fontConfig.BasePath, fontConfig.SansBoldFace), 7.5);
             _tableCellStandardMargins = new MarginSet(2, 3, 1, 3);
 
             Log.Info("Loaded fonts.");
@@ -240,7 +236,7 @@ namespace Timetabler.PdfExport
             OnStatusUpdate(true, 0.9, Resources.PdfExporter_Export_AdditionalMessage);
 
             UniSize boxHoursSize = default;
-            if ((document.ExportOptions?.DisplayBoxHours ?? true) && document.SignalboxHoursSets.Count > 0)
+            if ((document.ExportOptions.DisplayBoxHours) && document.SignalboxHoursSets.Count > 0)
             {
                 Table hoursTable = new Table { RuleGapSize = lineGapSize, RuleStyle = TableRuleStyle.SolidColumnsBrokenRows, RuleWidth = MainLineWidth };
                 List<TableCell> cells = new List<TableCell>
@@ -805,10 +801,12 @@ namespace Timetabler.PdfExport
             return segmentWidth + MainLineWidth;
         }
 
-        private void DrawContinuationArrow(ILocationEntry nearestTimingPoint, List<TextVerticalLocation> offsetList, Dictionary<string, TextVerticalLocation> offsetDict, List<string> keyList,
-            HorizontalArrow arrow, double xc, double yc)
+#pragma warning disable CA1508 // Avoid dead conditional code - seems to be a false positive detection
+
+        private void DrawContinuationArrow(ILocationEntry nearestTimingPoint, List<TextVerticalLocation> offsetList, Dictionary<string, TextVerticalLocation> offsetDict, 
+            List<string> keyList, HorizontalArrow arrow, double xc, double yc)
         {
-            int dir = arrow.Direction == HorizontalDirection.ToLeft ? -1 : 1;
+            int dir = (arrow.Direction == HorizontalDirection.ToLeft) ? -1 : 1;
             int tpIndex = offsetList.IndexOf(offsetDict[nearestTimingPoint.LocationKey]);
             if ((dir == -1 && tpIndex == 0) || (dir == 1 && tpIndex == offsetList.Count - 1))
             {
@@ -818,6 +816,8 @@ namespace Timetabler.PdfExport
             arrow.DrawAt(_currentPage.PageGraphics, xc + _arrowHOffset, yc + offsetList[tpIndex].TextBodyMidLine);
             keyList.Add(offsetDict.First(o => o.Value == offsetList[tpIndex]).Key);
         }
+
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         private UniRange FindLargestEmptyBlock(TrainSegmentModel segment, LocationBoxDimensions locationDims)
         {

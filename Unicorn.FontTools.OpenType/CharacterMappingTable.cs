@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The 'cmap' table, containing a set of mappings from character encoding code points to font glyph IDs.
     /// </summary>
-    [CLSCompliant(false)]
     public class CharacterMappingTable : Table
     {
         /// <summary>
@@ -32,7 +32,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="platform">The platform to find the mapping for.</param>
         /// <param name="encoding">The encoding to find the mapping for.</param>
         /// <returns>The <see cref="CharacterMapping" /> instance for the given platform and encoding, or <c>null</c> if no such mapping is defined.</returns>
-        public CharacterMapping SelectExactMapping(PlatformId platform, ushort encoding)
+        public CharacterMapping SelectExactMapping(PlatformId platform, int encoding)
         {
             return Mappings.FirstOrDefault(m => m.Platform == platform && m.Encoding == encoding);
         }
@@ -44,7 +44,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="encoding">The encoding to choose a mapping for.</param>
         /// <returns>The <see cref="CharacterMapping" /> instance for the given platform and encoding if available; the closest mapping if not, or <c>null</c>
         /// if no suitable mapping could be found.</returns>
-        public CharacterMapping SelectBestMapping(PlatformId platform, ushort encoding)
+        public CharacterMapping SelectBestMapping(PlatformId platform, int encoding)
         {
             if (platform == PlatformId.Windows)
             {
@@ -90,7 +90,7 @@ namespace Unicorn.FontTools.OpenType
 
         private static int SubtableRecordOffset(int baseOffset, int count) => baseOffset + 4 + 8 * count;
 
-        private static Func<PlatformId, ushort, byte[], int, CharacterMapping> GetSubtableBuilderMethod(CharacterMappingFormat version)
+        private static Func<PlatformId, int, byte[], int, CharacterMapping> GetSubtableBuilderMethod(CharacterMappingFormat version)
         {
             switch (version)
             {
@@ -120,8 +120,9 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="offset">The index of the start of the table within the data array.</param>
         /// <param name="len">The length of the table data within the array.</param>
         /// <returns></returns>
-        public static CharacterMappingTable FromBytes(byte[] arr, int offset, uint len)
+        public static CharacterMappingTable FromBytes(byte[] arr, int offset, long len)
         {
+            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
             if (len < 4)
             {
                 throw new ArgumentException(Resources.CharacterMappingTable_FromBytes_InsufficientLength, nameof(len));
@@ -134,7 +135,7 @@ namespace Unicorn.FontTools.OpenType
                 ushort encoding = arr.ToUShort(SubtableRecordOffset(offset, i) + 2);
                 int mappingOffset = arr.ToInt(SubtableRecordOffset(offset, i) + 4);
                 CharacterMappingFormat subtableVersion = (CharacterMappingFormat) arr.ToUShort(offset + mappingOffset);
-                Func<PlatformId, ushort, byte[], int, CharacterMapping> builder = GetSubtableBuilderMethod(subtableVersion);
+                Func<PlatformId, int, byte[], int, CharacterMapping> builder = GetSubtableBuilderMethod(subtableVersion);
                 if (builder != null)
                 {
                     subtables.Add(builder(platform, encoding, arr, offset + mappingOffset));

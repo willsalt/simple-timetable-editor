@@ -9,6 +9,5 @@ namespace Unicorn.FontTools.OpenType
     /// <param name="offset">The index at which the data to load starts.</param>
     /// <param name="len">The length of the data to load.</param>
     /// <returns>A <see cref="Table" />-derived instance containing data loaded from the array.</returns>
-    [CLSCompliant(false)]
-    public delegate Table TableLoadingMethod(byte[] arr, int offset, uint len);
+    public delegate Table TableLoadingMethod(byte[] arr, int offset, long len);
 }

@@ -331,17 +331,6 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             return new PanoseFamily(data, 0);
         }
 
-        [CLSCompliant(false)]
-        public static LowerUnicodeRangeFlags NextOpenTypeLowerUnicodeRangeFlags(this Random random)
-        {
-            return (LowerUnicodeRangeFlags)random.NextULong();
-        }
-
-        public static UpperUnicodeRangeFlags NextOpenTypeUpperUnicodeRangeFlags(this Random random)
-        {
-            return (UpperUnicodeRangeFlags)random.NextULong();
-        }
-
         public static OS2StyleProperties NextOpenTypeOS2StyleFlags(this Random random)
         {
             if (random is null)
@@ -351,15 +340,31 @@ namespace Unicorn.FontTools.Tests.Unit.TestHelpers
             return (OS2StyleProperties)random.Next(1024);
         }
 
-        [CLSCompliant(false)]
-        public static SupportedCodePageFlags NextOpenTypeSupportedCodePageFlags(this Random random)
-        {
-            return (SupportedCodePageFlags)random.NextULong();
-        }
-
         public static CalculationStyle NextOpenTypeCalculationStyle(this Random random)
         {
             return random.NextBoolean() ? CalculationStyle.Windows : CalculationStyle.Macintosh;
+        }
+
+        public static UnicodeRanges NextOpenTypeUnicodeRanges(this Random random)
+        {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+            byte[] data = new byte[16];
+            random.NextBytes(data);
+            return UnicodeRanges.FromBytes(data, 0);
+        }
+
+        public static SupportedCodePages NextOpenTypeSupportedCodePages(this Random random)
+        {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+            byte[] data = new byte[8];
+            random.NextBytes(data);
+            return SupportedCodePages.FromBytes(data, 0);
         }
 
 #pragma warning restore CA5394 // Do not use insecure randomness

@@ -8,7 +8,6 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// Read-only collection class for <see cref="CharacterMapping" /> instances.
     /// </summary>
-    [CLSCompliant(false)]
     public class CharacterMappingCollection : IReadOnlyCollection<CharacterMapping>
     {
         private readonly CharacterMapping[] _arr;

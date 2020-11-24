@@ -12,7 +12,6 @@ namespace Unicorn.FontTools.OpenType
     /// it includes an 8k table indicating which 16-bit values are valid as the high 16 bits of a 32-bit codepoint and which are not, so that it can efficiently support 
     /// encodings that contain a stream of mixed 16-bit and 32-bit codepoints.
     /// </summary>
-    [CLSCompliant(false)]
     public class Segmented32BitCharacterMapping : CharacterMapping
     {
         private readonly CharacterMappingFormat _version;
@@ -23,11 +22,11 @@ namespace Unicorn.FontTools.OpenType
         /// Constructor.
         /// </summary>
         /// <param name="platform">Platform that this mapping applies to.</param>
-        /// <param name="encoding">Encoding that this mapping is for.</param>
-        /// <param name="lang">Language that this mapping is for.</param>
+        /// <param name="encoding">Encoding that this mapping is for. Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="lang">Language that this mapping is for. Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="version">Table mapping version (either 8 or 12)</param>
         /// <param name="data">Mapping data.</param>
-        public Segmented32BitCharacterMapping(PlatformId platform, ushort encoding, ushort lang, CharacterMappingFormat version, 
+        public Segmented32BitCharacterMapping(PlatformId platform, int encoding, int lang, CharacterMappingFormat version, 
             IEnumerable<SequentialMapGroupRecord> data) 
             : base(platform, encoding, lang)
         {
@@ -46,11 +45,11 @@ namespace Unicorn.FontTools.OpenType
         /// Construct a <see cref="Segmented32BitCharacterMapping" /> instance from an array of bytes.
         /// </summary>
         /// <param name="platform">The platform that this mapping is for.</param>
-        /// <param name="encoding">The encoding that this mapping applies to.</param>
+        /// <param name="encoding">The encoding that this mapping applies to. Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="arr">The source data to construct the mapping from.</param>
         /// <param name="offset">The location in the source data at which the data for this mapping starts.</param>
         /// <returns></returns>
-        public static Segmented32BitCharacterMapping FromBytes(PlatformId platform, ushort encoding, byte[] arr, int offset)
+        public static Segmented32BitCharacterMapping FromBytes(PlatformId platform, int encoding, byte[] arr, int offset)
         {
             CharacterMappingFormat version = (CharacterMappingFormat)arr.ToUShort(offset);
             ushort lang = arr.ToUShort(offset + 4);
@@ -89,27 +88,21 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(byte codePoint)
-        {
-            return MapCodePoint((uint)codePoint);
-        }
+        public override int MapCodePoint(byte codePoint) => MapCodePoint((long)codePoint);
 
         /// <summary>
         /// Convert a code point to a glyph ID.
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(ushort codePoint)
-        {
-            return MapCodePoint((uint)codePoint);
-        }
+        public override int MapCodePoint(int codePoint) => MapCodePoint((long)codePoint);
 
         /// <summary>
         /// Convert a code point to a glyph ID.
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(uint codePoint)
+        public override int MapCodePoint(long codePoint)
         {
             SequentialMapGroupRecord group = _data.FirstOrDefault(g => g.StartCode <= codePoint && g.EndCode >= codePoint);
             if (group == default)

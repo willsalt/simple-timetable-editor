@@ -11,7 +11,6 @@ namespace Unicorn.FontTools.OpenType
     /// It does not (really) support encoding schemes of more than 8 bits, and can only use the first 256 glyphs in a font.  Any codepoints outside the range
     /// 0-255 map to glyph 0.
     /// </summary>
-    [CLSCompliant(false)]
     public class PlainByteCharacterMapping : CharacterMapping
     {
         private readonly ushort[] _data;
@@ -20,13 +19,13 @@ namespace Unicorn.FontTools.OpenType
         /// Constructor.
         /// </summary>
         /// <param name="platform">Platform that this mapping applies to.</param>
-        /// <param name="encoding">Encoding of this mapping.</param>
-        /// <param name="language">Language that this mapping applies to (on some platforms).</param>
+        /// <param name="encoding">Encoding of this mapping. Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="language">Language that this mapping applies to (on some platforms). Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="data">Encoding data.</param>
         /// <exception cref="ArgumentException">Thrown if the <c>data</c> parameter is not exactly 256 elements long.</exception>
-        public PlainByteCharacterMapping(PlatformId platform, ushort encoding, ushort language, IEnumerable<ushort> data) : base(platform, encoding, language)
+        public PlainByteCharacterMapping(PlatformId platform, int encoding, int language, IEnumerable<byte> data) : base(platform, encoding, language)
         {
-            _data = data.ToArray();
+            _data = data.Cast<ushort>().ToArray();
             if (_data.Length < 256)
             {
                 throw new ArgumentException(Resources.PlainByteCharacterMapping_FromBytes_ArrayTooSmall, nameof(data));
@@ -38,27 +37,14 @@ namespace Unicorn.FontTools.OpenType
         }
 
         /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="platform">Platform that this mapping applies to.</param>
-        /// <param name="encoding">Encoding of this mapping.</param>
-        /// <param name="language">Language that this mapping applies to (on some platforms).</param>
-        /// <param name="data">Encoding data.</param>
-        /// <exception cref="ArgumentException">Thrown if the <c>data</c> parameter is not exactly 256 elements long.</exception>
-        public PlainByteCharacterMapping(PlatformId platform, ushort encoding, ushort language, IEnumerable<byte> data) 
-            : this(platform, encoding, language, data.Cast<ushort>())
-        {
-        }
-
-        /// <summary>
         /// Construct a <see cref="PlainByteCharacterMapping" /> instance by loading it from an array of bytes.
         /// </summary>
         /// <param name="platform">Platform that this mapping applies to.</param>
-        /// <param name="encoding">Encoding of this mapping.</param>
+        /// <param name="encoding">Encoding of this mapping. Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="data"></param>
         /// <param name="offset"></param>
         /// <returns></returns>
-        public static CharacterMapping FromBytes(PlatformId platform, ushort encoding, byte[] data, int offset)
+        public static CharacterMapping FromBytes(PlatformId platform, int encoding, byte[] data, int offset)
         {
             ushort lang = data.ToUShort(offset + 4);
 
@@ -70,27 +56,21 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(byte codePoint)
-        {
-            return _data[codePoint];
-        }
+        public override int MapCodePoint(byte codePoint) => _data[codePoint];
 
         /// <summary>
         /// Convert a code point to a glyph ID.
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(ushort codePoint)
-        {
-            return MapCodePoint((uint)codePoint);
-        }
+        public override int MapCodePoint(int codePoint) => MapCodePoint((long)codePoint);
 
         /// <summary>
         /// Convert a code point to a glyph ID.
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(uint codePoint)
+        public override int MapCodePoint(long codePoint)
         {
             if (codePoint <= byte.MaxValue)
             {

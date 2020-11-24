@@ -9,7 +9,6 @@ namespace Unicorn.FontTools.OpenType
     /// The content of the "hmtx" table.  On disk the content of this table can be abbreviated if a sequence of glyphs at the end of the table share the same
     /// AdvanceWidth property; in this representation, full records are provided for every glyph.
     /// </summary>
-    [CLSCompliant(false)]
     public class HorizontalMetricsTable : Table
     {
         /// <summary>

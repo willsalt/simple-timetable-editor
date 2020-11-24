@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
@@ -12,7 +13,6 @@ namespace Unicorn.FontTools.OpenType
     /// The 'post' table, containing some PostScript-relevant metrics information, and potentially the PostScript glyph names of each glyph.  If the latter is nt
     /// present, the font is assumed to contain 257 glyphs with standard indexes.
     /// </summary>
-    [CLSCompliant(false)]
     public class PostScriptTable : Table
     {
         /// <summary>
@@ -43,22 +43,22 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Minimum virtual memory required if this font is downloaded as a TrueType font, if known.
         /// </summary>
-        public uint MinMemoryType42 { get; private set; }
+        public long MinMemoryType42 { get; private set; }
 
         /// <summary>
         /// Maximum virtual memory required if this font is downloaded as a TrueType font, if known.
         /// </summary>
-        public uint MaxMemoryType42 { get; private set; }
+        public long MaxMemoryType42 { get; private set; }
 
         /// <summary>
         /// Minimum virtual memory required if this font is downloaded as a Type 1 font, if known.
         /// </summary>
-        public uint MinMemoryType1 { get; private set; }
+        public long MinMemoryType1 { get; private set; }
 
         /// <summary>
         /// Maximum virtual memory required if this font is downloaded as a Type 1 font, if known.
         /// </summary>
-        public uint MaxMemoryType1 { get; private set; }
+        public long MaxMemoryType1 { get; private set; }
 
         private static readonly string[] _standardGlyphsByIndex = new[]
         {
@@ -485,9 +485,14 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="minMem1">Value for the <see cref="MinMemoryType1" /> property.</param>
         /// <param name="maxMem1">Value for the <see cref="MaxMemoryType1" /> property.</param>
         public PostScriptTable(PostScriptTableVersion version, decimal italicAngle, short underlinePos, short underlineThickness, bool isFixedPitch,
-            uint minMem42, uint maxMem42, uint minMem1, uint maxMem1)
+            long minMem42, long maxMem42, long minMem1, long maxMem1)
             : base("post")
         {
+            FieldValidation.ValidateUIntParameter(minMem42, nameof(minMem42));
+            FieldValidation.ValidateUIntParameter(maxMem42, nameof(maxMem42));
+            FieldValidation.ValidateUIntParameter(minMem1, nameof(minMem1));
+            FieldValidation.ValidateUIntParameter(maxMem1, nameof(maxMem1));
+
             Version = version;
             ItalicAngle = italicAngle;
             UnderlinePosition = underlinePos;
@@ -513,7 +518,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="maxMem1"></param>
         /// <param name="glyphNames"></param>
         public PostScriptTable(PostScriptTableVersion version, decimal italicAngle, short underlinePos, short underlineThickness, bool isFixedPitch,
-            uint minMem42, uint maxMem42, uint minMem1, uint maxMem1, IEnumerable<KeyValuePair<string, int>> glyphNames)
+            long minMem42, long maxMem42, long minMem1, long maxMem1, IEnumerable<KeyValuePair<string, int>> glyphNames)
             : this(version, italicAngle, underlinePos, underlineThickness, isFixedPitch, minMem42, maxMem42, minMem1, maxMem1)
         {
             if (glyphNames is null)
@@ -597,12 +602,13 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="offset">The array index at which the PostScript table data starts.</param>
         /// <param name="len">The length of the data making up the table.</param>
         /// <returns></returns>
-        public static PostScriptTable FromBytes(byte[] arr, int offset, uint len)
+        public static PostScriptTable FromBytes(byte[] arr, int offset, long len)
         {
             if (arr is null)
             {
                 throw new ArgumentNullException(nameof(arr));
             }
+            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
             int rawVersion = arr.ToInt(offset);
             decimal italicAngle = arr.ToFixed(offset + 4);
             short underlinePos = arr.ToShort(offset + 8);

@@ -8,7 +8,6 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// Read-only collection class for <see cref="HorizontalMetricRecord" /> values, used by the <see cref="HorizontalMetricsTable" /> type.
     /// </summary>
-    [CLSCompliant(false)]
     public class HorizontalMetricRecordCollection : IReadOnlyList<HorizontalMetricRecord>
     {
         private readonly HorizontalMetricRecord[] _arr;

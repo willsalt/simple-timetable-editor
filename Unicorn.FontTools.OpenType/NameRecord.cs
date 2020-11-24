@@ -1,11 +1,11 @@
 ﻿using System;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// An individual entry in the 'name' table.
     /// </summary>
-    [CLSCompliant(false)]
     public class NameRecord
     {
         /// <summary>
@@ -14,15 +14,15 @@ namespace Unicorn.FontTools.OpenType
         public PlatformId PlatformId { get; private set; }
 
         /// <summary>
-        /// The byte encoding for this name (values are platform-specific).
+        /// The byte encoding for this name (values are platform-specific).  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort EncodingId { get; private set; }
+        public int EncodingId { get; private set; }
 
         /// <summary>
         /// The language ID for this name.  Values less than 0x8000 are platform-specific.  Values greater than 0x8000 indicate that this name is from a Version 1
-        /// name table and the language is defined using a language tag record in the table.
+        /// name table and the language is defined using a language tag record in the table.  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort LanguageId { get; private set; }
+        public int LanguageId { get; private set; }
 
         /// <summary>
         /// The kind of name stored in this record.  Values greater than 0xff are font-specific.
@@ -44,13 +44,18 @@ namespace Unicorn.FontTools.OpenType
         /// Constructor.
         /// </summary>
         /// <param name="platform">The value for the <see cref="PlatformId" /> property.</param>
-        /// <param name="encoding">The value for the <see cref="EncodingId" /> property.</param>
-        /// <param name="lang">The value for the <see cref="LanguageId" /> property.</param>
+        /// <param name="encoding">The value for the <see cref="EncodingId" /> property. Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="lang">The value for the <see cref="LanguageId" /> property. Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="nameId">The value for the <see cref="NameId" /> property.</param>
         /// <param name="content">The value for the <see cref="Content" /> property.</param>
         /// <param name="fillerContent">The value for the <see cref="FillerContent" /> property.</param>
-        public NameRecord(PlatformId platform, ushort encoding, ushort lang, NameField nameId, string content, bool fillerContent)
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if either the <c>encoding</c> or <c>lang</c> parameters are less than 0 or greater than 
+        ///   65,535.</exception>
+        public NameRecord(PlatformId platform, int encoding, int lang, NameField nameId, string content, bool fillerContent)
         {
+            FieldValidation.ValidateUShortParameter(encoding, nameof(encoding));
+            FieldValidation.ValidateUShortParameter(lang, nameof(lang));
+
             PlatformId = platform;
             EncodingId = encoding;
             LanguageId = lang;

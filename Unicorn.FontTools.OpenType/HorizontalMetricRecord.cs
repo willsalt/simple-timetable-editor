@@ -1,17 +1,17 @@
 ﻿using System;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// An entry in the horizontal metrics ('hmtx') table, giving the advance width and left side bearing of a particular glyph.
     /// </summary>
-    [CLSCompliant(false)]
     public struct HorizontalMetricRecord : IEquatable<HorizontalMetricRecord>
     {
         /// <summary>
-        /// The advance width of a glyph.
+        /// The advance width of a glyph.  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort AdvanceWidth { get; private set; }
+        public int AdvanceWidth { get; private set; }
 
         /// <summary>
         /// The left side bearing of a glyph.
@@ -23,8 +23,10 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="advWidth">The value for the <see cref="AdvanceWidth" /> property.</param>
         /// <param name="lsb">The value for the <see cref="LeftSideBearing" /> property.</param>
-        public HorizontalMetricRecord(ushort advWidth, short lsb)
+        public HorizontalMetricRecord(int advWidth, short lsb)
         {
+            FieldValidation.ValidateUShortParameter(advWidth, nameof(advWidth));
+
             AdvanceWidth = advWidth;
             LeftSideBearing = lsb;
         }

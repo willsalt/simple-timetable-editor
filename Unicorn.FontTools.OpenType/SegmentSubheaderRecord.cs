@@ -1,22 +1,22 @@
 ﻿using System;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// A mapping segment for the OpenType type 4 character mapping.
     /// </summary>
-    [CLSCompliant(false)]
     public struct SegmentSubheaderRecord : IEquatable<SegmentSubheaderRecord>
     {
         /// <summary>
-        /// First codepoint the segment applies to.
+        /// First codepoint the segment applies to.  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort StartCode { get; }
+        public int StartCode { get; }
 
         /// <summary>
-        /// Last codepoint the segment applies to.
+        /// Last codepoint the segment applies to.  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort EndCode { get; }
+        public int EndCode { get; }
 
         /// <summary>
         /// Delta offset that is added to either the codepoint or the mapped result from the glyph mapping array, to get the final glyph ID.
@@ -35,8 +35,11 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="end">Value for the <see cref="EndCode" /> property.</param>
         /// <param name="delta">Value for the <see cref="IdDelta" /> property.</param>
         /// <param name="offset">Value for the <see cref="StartOffset" /> property.</param>
-        public SegmentSubheaderRecord(ushort start, ushort end, short delta, int offset)
+        public SegmentSubheaderRecord(int start, int end, short delta, int offset)
         {
+            FieldValidation.ValidateUShortParameter(start, nameof(start));
+            FieldValidation.ValidateUShortParameter(end, nameof(end));
+
             StartCode = start;
             EndCode = end;
             IdDelta = delta;

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
@@ -11,7 +12,6 @@ namespace Unicorn.FontTools.OpenType
     /// The 'name' table, containing descriptive strings.  The strings are encoded in platform-specific formats.  This class does not currently support strings stored
     /// in encodings that are not supported by .NET Core, which effectively means that names encoded for use on Apple computers cannot be loaded.
     /// </summary>
-    [CLSCompliant(false)]
     public class NamingTable : Table
     {
         private static readonly List<EncodingMapRecord> _encodingMap = new List<EncodingMapRecord>();
@@ -21,7 +21,7 @@ namespace Unicorn.FontTools.OpenType
         /// This code does not currently support loading the language names for Version 1, and requires the user to know the language identification codes for each
         /// platform. 
         /// </summary>
-        public ushort Version { get; private set; }
+        public int Version { get; private set; }
 
         /// <summary>
         /// The collection of strings in this table.
@@ -33,8 +33,10 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="version">The table version format.</param>
         /// <param name="data">The content of the table.</param>
-        public NamingTable(ushort version, IEnumerable<NameRecord> data) : base("name")
+        public NamingTable(int version, IEnumerable<NameRecord> data) : base("name")
         {
+            FieldValidation.ValidateUShortParameter(version, nameof(version));
+
             Version = version;
             Names = new NameRecordCollection(data);
         }
@@ -67,8 +69,9 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="offset">The starting position of the table in the array.</param>
         /// <param name="tableLen">The length of the data making up the table, in bytes.</param>
         /// <returns></returns>
-        public static NamingTable FromBytes(byte[] arr, int offset, uint tableLen)
+        public static NamingTable FromBytes(byte[] arr, int offset, long tableLen)
         {
+            FieldValidation.ValidateNonNegativeLongParameter(tableLen, nameof(tableLen));
             if (tableLen < 6)
             {
                 throw new ArgumentException(Resources.NamingTable_FromBytes_InsufficientDataError);

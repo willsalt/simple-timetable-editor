@@ -18,29 +18,24 @@ namespace Unicorn.FontTools.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static HorizontalHeaderTable GetHheaTable()
-        {
-            return new HorizontalHeaderTable(_rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort(),
-                _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort());
-        }
+        private static HorizontalHeaderTable GetHheaTable() => new HorizontalHeaderTable(_rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.NextShort(), 
+            _rnd.NextShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), 
+            _rnd.NextShort(), _rnd.NextUShort());
 
-        private static OS2MetricsTable GetOS2MetricsTableVersion0()
-        {
-            return new OS2MetricsTable(_rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextOpenTypeEmbeddingPermissionsFlags(), _rnd.NextShort(),
-                _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(),
-                _rnd.NextShort(), _rnd.NextOpenTypeIBMFamily(), _rnd.NextOpenTypePanoseFamily(), _rnd.NextOpenTypeLowerUnicodeRangeFlags(),
-                _rnd.NextOpenTypeUpperUnicodeRangeFlags(), _rnd.NextTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort());
-        }
+        private static OS2MetricsTable GetOS2MetricsTableVersion0() => new OS2MetricsTable(_rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), 
+            _rnd.NextOpenTypeEmbeddingPermissionsFlags(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), 
+            _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextOpenTypeIBMFamily(), _rnd.NextOpenTypePanoseFamily(), 
+            _rnd.NextOpenTypeUnicodeRanges(), _rnd.NextTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort());
 
         private static OS2MetricsTable GetOS2MetricsTable(EmbeddingPermissions? embeddingPermissions = null)
         {
             embeddingPermissions ??= _rnd.NextOpenTypeEmbeddingPermissionsFlags();
             return new OS2MetricsTable(_rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), embeddingPermissions.Value, _rnd.NextShort(), _rnd.NextShort(), 
                 _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), 
-                _rnd.NextOpenTypeIBMFamily(), _rnd.NextOpenTypePanoseFamily(), _rnd.NextOpenTypeLowerUnicodeRangeFlags(), _rnd.NextOpenTypeUpperUnicodeRangeFlags(), 
-                _rnd.NextTag(), _rnd.NextOpenTypeOS2StyleFlags(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), 
-                _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextOpenTypeSupportedCodePageFlags(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort(), 
-                _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort());
+                _rnd.NextOpenTypeIBMFamily(), _rnd.NextOpenTypePanoseFamily(), _rnd.NextOpenTypeUnicodeRanges(), _rnd.NextTag(), _rnd.NextOpenTypeOS2StyleFlags(), 
+                _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), 
+                _rnd.NextOpenTypeSupportedCodePages(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort(), _rnd.NextUShort(), 
+                _rnd.NextUShort());
         }
 
         private static HeaderTable GetHeaderTable(short? xMin, short? xMax, short? yMin, short? yMax)
@@ -55,11 +50,8 @@ namespace Unicorn.FontTools.Tests.Unit
                 _rnd.NextUShort(), _rnd.NextFontDirectionHint(), _rnd.NextBoolean(), _rnd.NextShort());
         }
 
-        private static PostScriptTable GetPostScriptTable()
-        {
-            return new PostScriptTable(PostScriptTableVersion.One, _rnd.NextDecimal(), _rnd.NextShort(), _rnd.NextShort(), _rnd.NextBoolean(), _rnd.NextUInt(),
-                _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextUInt());
-        }
+        private static PostScriptTable GetPostScriptTable() => new PostScriptTable(PostScriptTableVersion.One, _rnd.NextDecimal(), _rnd.NextShort(), _rnd.NextShort(), 
+            _rnd.NextBoolean(), _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextUInt(), _rnd.NextUInt());
 
 #pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -567,7 +559,7 @@ namespace Unicorn.FontTools.Tests.Unit
 
             _ = testObject.GetNormalSpaceWidth(testParam0);
 
-            mockFont.Verify(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<uint>()), Times.Once());
+            mockFont.Verify(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<long>()), Times.Once());
         }
 
         [TestMethod]
@@ -585,7 +577,7 @@ namespace Unicorn.FontTools.Tests.Unit
 
             _ = testObject.GetNormalSpaceWidth(testParam0);
 
-            mockFont.Verify(f => f.AdvanceWidth(PlatformId.Windows, It.IsAny<uint>()), Times.Once());
+            mockFont.Verify(f => f.AdvanceWidth(PlatformId.Windows, It.IsAny<long>()), Times.Once());
         }
 
         [TestMethod]
@@ -615,7 +607,7 @@ namespace Unicorn.FontTools.Tests.Unit
             int mockCharacterWidth = _rnd.Next();
             mockFont.Setup(f => f.DesignUnitsPerEm).Returns(mockDesignUnits);
             mockFont.Setup(f => f.OS2Metrics).Returns(mockOs2MetricsTable);
-            mockFont.Setup(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<uint>())).Returns(mockCharacterWidth);
+            mockFont.Setup(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<long>())).Returns(mockCharacterWidth);
             IOpenTypeFont constrParam0 = mockFont.Object;
             double constrParam1 = _rnd.NextDouble() * 48;
             OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };
@@ -642,7 +634,7 @@ namespace Unicorn.FontTools.Tests.Unit
 
             _ = testObject.GetNormalSpaceWidth(testParam0);
 
-            mockFont.Verify(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<uint>()), Times.Once());
+            mockFont.Verify(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<long>()), Times.Once());
         }
 
         [TestMethod]
@@ -660,7 +652,7 @@ namespace Unicorn.FontTools.Tests.Unit
 
             _ = testObject.GetNormalSpaceWidth(testParam0);
 
-            mockFont.Verify(f => f.AdvanceWidth(PlatformId.Windows, It.IsAny<uint>()), Times.Once());
+            mockFont.Verify(f => f.AdvanceWidth(PlatformId.Windows, It.IsAny<long>()), Times.Once());
         }
 
         [TestMethod]
@@ -690,7 +682,7 @@ namespace Unicorn.FontTools.Tests.Unit
             int mockCharacterWidth = _rnd.Next();
             mockFont.Setup(f => f.DesignUnitsPerEm).Returns(mockDesignUnits);
             mockFont.Setup(f => f.OS2Metrics).Returns(mockOs2MetricsTable);
-            mockFont.Setup(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<uint>())).Returns(mockCharacterWidth);
+            mockFont.Setup(f => f.AdvanceWidth(It.IsAny<PlatformId>(), It.IsAny<long>())).Returns(mockCharacterWidth);
             IOpenTypeFont constrParam0 = mockFont.Object;
             double constrParam1 = _rnd.NextDouble() * 48;
             OpenTypeFontDescriptor testObject = new OpenTypeFontDescriptor(constrParam0, constrParam1) { CalculationStyle = _rnd.NextOpenTypeCalculationStyle() };

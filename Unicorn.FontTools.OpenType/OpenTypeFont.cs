@@ -6,13 +6,13 @@ using System.IO.MemoryMappedFiles;
 using System.Linq;
 using Unicorn.FontTools.OpenType.Extensions;
 using Unicorn.FontTools.OpenType.Interfaces;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// OpenType font data and metadata.
     /// </summary>
-    [CLSCompliant(false)]
     public class OpenTypeFont : IDisposable, IOpenTypeFont
     {
         private MemoryMappedFile _mmf;
@@ -234,7 +234,7 @@ namespace Unicorn.FontTools.OpenType
             }
         }
 
-        private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset, uint len)
+        private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset, long len)
             => HorizontalMetricsTable.FromBytes(arr, offset, MaximumProfile.GlyphCount, HorizontalHeader.HmtxHMetricCount);
 
         /// <summary>
@@ -282,26 +282,28 @@ namespace Unicorn.FontTools.OpenType
         /// Return the advance width (in font design units) of the given codepoint on the given platform, using the best encoding for that platform.
         /// </summary>
         /// <param name="platform">The platform to measure for.</param>
-        /// <param name="codePoint">The code point to be measured.</param>
+        /// <param name="codePoint">The code point to be measured. Must be within the range of a <see cref="uint" />.</param>
         /// <returns>The advance width value for the bset glyph found to represent the given code point on the specified platform.</returns>
-        public int AdvanceWidth(PlatformId platform, uint codePoint)
+        public int AdvanceWidth(PlatformId platform, long codePoint)
         {
-            ushort glyph = GetGlyphId(platform, codePoint);
+            FieldValidation.ValidateUIntParameter(codePoint, nameof(codePoint));
+            int glyph = GetGlyphId(platform, codePoint);
             return HorizontalMetrics.Metrics[glyph].AdvanceWidth;
         }
 
         /// <summary>
         /// Determine whether or not this font defines a glyph (other than the special <c>.notdef</c> glyph) for the given platform and codepoint.
         /// </summary>
-        /// <param name="platform">The platform </param>
-        /// <param name="codePoint"></param>
+        /// <param name="platform">The platform to check for.</param>
+        /// <param name="codePoint">The code point to check.  Must be within the range of a <see cref="uint" />.</param>
         /// <returns></returns>
-        public bool HasGlyphDefined(PlatformId platform, uint codePoint)
+        public bool HasGlyphDefined(PlatformId platform, long codePoint)
         {
+            FieldValidation.ValidateUIntParameter(codePoint, nameof(codePoint));
             return GetGlyphId(platform, codePoint) != 0;
         }
 
-        private ushort GetGlyphId(PlatformId platform, uint codePoint)
+        private int GetGlyphId(PlatformId platform, long codePoint)
         {
             CharacterMapping mapping = CharacterMapping.SelectBestMapping(platform);
             return mapping.MapCodePoint(codePoint);

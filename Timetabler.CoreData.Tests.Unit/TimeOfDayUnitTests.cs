@@ -684,7 +684,7 @@ namespace Timetabler.CoreData.Tests.Unit
             int constrParam0 = _rnd.Next(24);
             int constrParam1 = _rnd.Next(60);
             int constrParam2 = _rnd.Next(60);
-            string expectedResult = $"{constrParam0:d2}:{constrParam1:d2}" + (constrParam2 > 30 ? "½" : "");
+            string expectedResult = $"{constrParam0:d2}:{constrParam1:d2}" + (constrParam2 >= 30 ? "½" : "");
             TimeOfDay testObject = new TimeOfDay(constrParam0, constrParam1, constrParam2);
 
             string testOutput = testObject.ToString();

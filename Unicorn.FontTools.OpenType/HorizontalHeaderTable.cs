@@ -1,24 +1,24 @@
 ﻿using System;
 using System.IO;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The "hhea" table, containing global horizontal metrics for a font.
     /// </summary>
-    [CLSCompliant(false)]
     public class HorizontalHeaderTable : Table
     {
         /// <summary>
         /// Major version number (normally 1).
         /// </summary>
-        public ushort MajorVersion { get; private set; }
+        public int MajorVersion { get; private set; }
 
         /// <summary>
         /// Minor version number (normally 0).
         /// </summary>
-        public ushort MinorVersion { get; private set; }
+        public int MinorVersion { get; private set; }
 
         /// <summary>
         /// Font ascender.  Normally only used to do Apple Mac-style calculations (Windows-style calculations use the OS/2 table).
@@ -38,7 +38,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Maximum advance width, of the individual glyph values listed in the hmtx table.
         /// </summary>
-        public ushort MaxAdvanceWidth { get; private set; }
+        public int MaxAdvanceWidth { get; private set; }
 
         /// <summary>
         /// Minimum left side bearing, of the individual glyph values listed in the hmtx table.
@@ -78,7 +78,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Number of HMetric entries in the hmtx table.
         /// </summary>
-        public ushort HmtxHMetricCount { get; private set; }
+        public int HmtxHMetricCount { get; private set; }
 
         internal HorizontalHeaderTable(ushort major, ushort minor, short ascender, short descender, short lineGap, ushort maxAdvWidth, short minLsb, short minRsb,
             short xMaxExt, short caretRise, short caretRun, short caretOffset, short metricFormat, ushort hmtxCount)
@@ -109,8 +109,9 @@ namespace Unicorn.FontTools.OpenType
         /// <returns>A <see cref="HorizontalHeaderTable" /> object</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array does not contain enough data (if the array length is not at least 36 greater than the 
         /// offset parameter.</exception>
-        public static HorizontalHeaderTable FromBytes(byte[] arr, int offset, uint len)
+        public static HorizontalHeaderTable FromBytes(byte[] arr, int offset, int len)
         {
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             if (len < 36)
             {
                 throw new InvalidOperationException(Resources.HorizontalHeaderTable_FromBytes_InsufficientDataError);

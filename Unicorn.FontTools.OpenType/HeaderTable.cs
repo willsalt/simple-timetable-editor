@@ -1,24 +1,24 @@
 ﻿using System;
 using System.IO;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The font header table.
     /// </summary>
-    [CLSCompliant(false)]
     public class HeaderTable : Table
     {
         /// <summary>
         /// Major version number (normally 1).
         /// </summary>
-        public ushort MajorVersion { get; }
+        public int MajorVersion { get; }
 
         /// <summary>
         /// Minor version number (normally 0).
         /// </summary>
-        public ushort MinorVersion { get; }
+        public int MinorVersion { get; }
 
         /// <summary>
         /// Revision number.
@@ -28,12 +28,12 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Checksub adjustment value.
         /// </summary>
-        public uint ChecksumAdjustment { get; }
+        public long ChecksumAdjustment { get; }
 
         /// <summary>
         /// Magic number (normally 0x5f0f3c5f)
         /// </summary>
-        public uint Magic { get; }
+        public long Magic { get; }
 
         /// <summary>
         /// Font flags.
@@ -43,7 +43,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Number of font design units per em.
         /// </summary>
-        public ushort FontUnitScale { get; }
+        public int FontUnitScale { get; }
 
         /// <summary>
         /// Date font created.
@@ -83,7 +83,7 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// The smallest pixel size at which this font is still considered legible.
         /// </summary>
-        public ushort SmallestReadablePixelSize { get; }
+        public int SmallestReadablePixelSize { get; }
 
         /// <summary>
         /// Typical character direction.  Deprecated; normally set to <see cref="FontDirectionHint.NeutralOrLeftToRight"/>.
@@ -121,11 +121,18 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="dirHint">The <see cref="DirectionHint" /> property value.</param>
         /// <param name="useLongOffsets">The <see cref="UseLongOffsets" /> property value.</param>
         /// <param name="dataFormat">The <see cref="GlyphDataFormat" /> property value.</param>
-        public HeaderTable(ushort majorVersion, ushort minorVersion, decimal rev, uint checksumAdj, uint magic, FontProperties flags, ushort scale, DateTime created,
-            DateTime modified, short xMin, short yMin, short xMax, short yMax, MacStyleProperties styleFlags, ushort smallestReadableSize, FontDirectionHint dirHint,
+        public HeaderTable(int majorVersion, int minorVersion, decimal rev, long checksumAdj, long magic, FontProperties flags, int scale, DateTime created,
+            DateTime modified, short xMin, short yMin, short xMax, short yMax, MacStyleProperties styleFlags, int smallestReadableSize, FontDirectionHint dirHint,
             bool useLongOffsets, short dataFormat)
             : base("head")
         {
+            FieldValidation.ValidateUShortParameter(majorVersion, nameof(majorVersion));
+            FieldValidation.ValidateUShortParameter(minorVersion, nameof(minorVersion));
+            FieldValidation.ValidateUShortParameter(scale, nameof(scale));
+            FieldValidation.ValidateUShortParameter(smallestReadableSize, nameof(smallestReadableSize));
+            FieldValidation.ValidateUIntParameter(checksumAdj, nameof(checksumAdj));
+            FieldValidation.ValidateUIntParameter(magic, nameof(magic));
+
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;
             Revision = rev;
@@ -154,8 +161,9 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="len">Table length.</param>
         /// <returns>A <see cref="HeaderTable" /> instance.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array is insufficiently long to carry out the conversion.</exception>
-        public static HeaderTable FromBytes(byte[] data, int offset, uint len)
+        public static HeaderTable FromBytes(byte[] data, int offset, int len)
         {
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             if (len < 54)
             {
                 throw new InvalidOperationException(Resources.HeaderTable_FromBytes_InsufficientDataError);

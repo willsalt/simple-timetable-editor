@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Tests.Utility.Extensions;
 
 namespace Unicorn.FontTools.OpenType.Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
         private static readonly PlatformId[] _platformIds = new[] { PlatformId.Unicode, PlatformId.Macintosh, PlatformId.Windows, PlatformId.Custom };
@@ -47,7 +49,6 @@ namespace Unicorn.FontTools.OpenType.Tests.Utility.Extensions
             return (FontDirectionHint)random.Next(-2, 3);
         }
 
-        [CLSCompliant(false)]
         public static HighByteSubheaderRecord NextHighByteSubheaderRecord(this Random random)
         {
             if (random is null)
@@ -57,7 +58,6 @@ namespace Unicorn.FontTools.OpenType.Tests.Utility.Extensions
             return new HighByteSubheaderRecord(random.NextByte(), random.NextByte(), random.NextShort(), random.NextUShort());
         }
 
-        [CLSCompliant(false)]
         public static HorizontalMetricRecord NextHorizontalMetricRecord(this Random random)
         {
             if (random is null)
@@ -105,7 +105,6 @@ namespace Unicorn.FontTools.OpenType.Tests.Utility.Extensions
             return _nameFields[random.Next(_nameFields.Length)];
         }
 
-        [CLSCompliant(false)]
         public static NameRecord NextNameRecord(this Random random)
         {
             if (random is null)
@@ -145,7 +144,6 @@ namespace Unicorn.FontTools.OpenType.Tests.Utility.Extensions
             return _validPostScriptTableVersions[random.Next(_validPostScriptTableVersions.Length)];
         }
 
-        [CLSCompliant(false)]
         public static SegmentSubheaderRecord NextSegmentSubheaderRecord(this Random random)
         {
             if (random is null)

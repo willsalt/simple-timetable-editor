@@ -1,27 +1,28 @@
 ﻿using System;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// A mapping segment record for an OpenType type 8 character mapping.
     /// </summary>
-    [CLSCompliant(false)]
     public struct SequentialMapGroupRecord : IEquatable<SequentialMapGroupRecord>
     {
         /// <summary>
-        /// The lowest codepoint mapped by this segment.
+        /// The lowest codepoint mapped by this segment.  Within the range of a <see cref="uint" />.
         /// </summary>
-        public uint StartCode { get; }
+        public long StartCode { get; }
 
         /// <summary>
-        /// The highest codepoint mapped by this segment.
+        /// The highest codepoint mapped by this segment.  Within the range of a <see cref="uint" />.
         /// </summary>
-        public uint EndCode { get; }
+        public long EndCode { get; }
 
         /// <summary>
-        /// The glyph ID corresponding to the lowest codepoint mapped by this segment (other codepoints are mapped sequentially onwards).
+        /// The glyph ID corresponding to the lowest codepoint mapped by this segment (other codepoints are mapped sequentially onwards).  Within the range of a
+        /// <see cref="ushort" />.
         /// </summary>
-        public ushort StartGlyphId { get; }
+        public int StartGlyphId { get; }
 
         /// <summary>
         /// Constructor.
@@ -29,8 +30,12 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="start">Value for the <see cref="StartCode" /> property.</param>
         /// <param name="end">Value for the <see cref="EndCode" /> property.</param>
         /// <param name="glyph">Value for the <see cref="StartGlyphId" /> property.</param>
-        public SequentialMapGroupRecord(uint start, uint end, ushort glyph)
+        public SequentialMapGroupRecord(long start, long end, int glyph)
         {
+            FieldValidation.ValidateUIntParameter(start, nameof(start));
+            FieldValidation.ValidateUIntParameter(end, nameof(end));
+            FieldValidation.ValidateUShortParameter(glyph, nameof(glyph));
+
             StartCode = start;
             EndCode = end;
             StartGlyphId = glyph;

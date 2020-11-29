@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
@@ -11,12 +12,33 @@ namespace Unicorn.FontTools.OpenType
     /// different disk layout.  The supported codepoint ranges are mapped either by specifying an offset from codepoint to glyph ID for the range, or by specifying
     /// an offset into a table that maps code points to base glyph values to which a second offset is then added.
     /// </summary>
-    [CLSCompliant(false)]
     public class SegmentedCharacterMapping : CharacterMapping
     {
         private SegmentSubheaderRecordCollection Segments { get; }
 
-        private readonly ushort[] _glyphData; 
+        private readonly ushort[] _glyphData;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="platform">The platform that this mapping is for.</param>
+        /// <param name="encoding">The encoding that this mapping is for. Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="lang">The language that this mapping is for (if applicable). Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="segments">The codepoint range segments that make up this mapping.</param>
+        /// <param name="glyphData">The glyph mapping data table.</param>
+        public SegmentedCharacterMapping(PlatformId platform, int encoding, int lang, IEnumerable<SegmentSubheaderRecord> segments, IEnumerable<int> glyphData)
+            : base(platform, encoding, lang)
+        {
+            Segments = new SegmentSubheaderRecordCollection(segments);
+            if (glyphData is null)
+            {
+                _glyphData = Array.Empty<ushort>();
+            }
+            else
+            {
+                _glyphData = FieldValidation.ValidateAndCastIEnumerableOfUShortParameter(glyphData, nameof(glyphData));
+            }
+        }
 
         /// <summary>
         /// Constructor.
@@ -26,7 +48,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="lang">The language that this mapping is for (if applicable).</param>
         /// <param name="segments">The codepoint range segments that make up this mapping.</param>
         /// <param name="glyphData">The glyph mapping data table.</param>
-        public SegmentedCharacterMapping(PlatformId platform, ushort encoding, ushort lang, IEnumerable<SegmentSubheaderRecord> segments, IEnumerable<ushort> glyphData) 
+        private SegmentedCharacterMapping(PlatformId platform, int encoding, int lang, IEnumerable<SegmentSubheaderRecord> segments, IEnumerable<ushort> glyphData) 
             : base(platform, encoding, lang)
         {
             Segments = new SegmentSubheaderRecordCollection(segments);
@@ -44,11 +66,11 @@ namespace Unicorn.FontTools.OpenType
         /// Construct a <see cref="SegmentedCharacterMapping" /> instance from an array of bytes.
         /// </summary>
         /// <param name="platform">The platform that this mapping applies to.</param>
-        /// <param name="encoding">The encoding this mapping is for.</param>
+        /// <param name="encoding">The encoding this mapping is for. Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="arr">Source data for the mapping.</param>
         /// <param name="offset">The location in the source data at which the mapping data starts.</param>
         /// <returns></returns>
-        public static SegmentedCharacterMapping FromBytes(PlatformId platform, ushort encoding, byte[] arr, int offset)
+        public static SegmentedCharacterMapping FromBytes(PlatformId platform, int encoding, byte[] arr, int offset)
         {
             ushort len = arr.ToUShort(offset + 2);
             ushort lang = arr.ToUShort(offset + 4);
@@ -103,18 +125,17 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(byte codePoint)
-        {
-            return MapCodePoint((ushort)codePoint);
-        }
+        public override int MapCodePoint(byte codePoint) => MapCodePoint((int)codePoint);
 
         /// <summary>
         /// Convert a code point to a glyph ID.
         /// </summary>
-        /// <param name="codePoint">The code point to convert.</param>
+        /// <param name="codePoint">The code point to convert. Must be within the range of a <see cref="ushort" />.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(ushort codePoint)
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the <c>codePoint</c> parameter is outside the range of a <see cref="ushort" />.</exception>
+        public override int MapCodePoint(int codePoint)
         {
+            FieldValidation.ValidateUShortParameter(codePoint, nameof(codePoint));
             SegmentSubheaderRecord segment = Segments.FirstOrDefault(s => s.EndCode >= codePoint && s.StartCode <= codePoint);
             if (segment == default)
             {
@@ -123,7 +144,7 @@ namespace Unicorn.FontTools.OpenType
             ushort glyphVal;
             if (segment.StartOffset == -1)
             {
-                glyphVal = codePoint;
+                glyphVal = (ushort)codePoint;
             }
             else
             {
@@ -141,7 +162,7 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(uint codePoint)
+        public override int MapCodePoint(long codePoint)
         {
             if (codePoint > ushort.MaxValue)
             {

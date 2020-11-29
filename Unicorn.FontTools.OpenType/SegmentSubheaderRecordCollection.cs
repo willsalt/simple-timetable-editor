@@ -8,7 +8,6 @@ namespace Unicorn.FontTools.OpenType
     /// <summary>
     /// Read-only collection class for the <see cref="SegmentSubheaderRecord" /> type.
     /// </summary>
-    [CLSCompliant(false)]
     public class SegmentSubheaderRecordCollection : IReadOnlyCollection<SegmentSubheaderRecord>
     {
         private readonly SegmentSubheaderRecord[] _data;

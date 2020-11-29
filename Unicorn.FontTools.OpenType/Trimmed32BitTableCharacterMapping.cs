@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// OpenType character mapping type 10.  "This format is not widely used and is not supported by Microsoft" according to the OpenType spec.
     /// </summary>
-    [CLSCompliant(false)]
     public class Trimmed32BitTableCharacterMapping : CharacterMapping
     {
         private readonly uint _startCode;
@@ -21,11 +20,36 @@ namespace Unicorn.FontTools.OpenType
         /// Constructor.
         /// </summary>
         /// <param name="platform">Platform that this mapping is for.</param>
-        /// <param name="encoding">Encoding that this mapping applies to.</param>
-        /// <param name="lang">Language that this mapping applies to (if appropriate).</param>
+        /// <param name="encoding">Encoding that this mapping applies to. Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="lang">Language that this mapping applies to (if appropriate). Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="start">Lowest codepoint mapped by this mapping. Must be within the range of a <see cref="uint" />.</param>
+        /// <param name="data">Table of glyphs that this mapping maps to.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if either of the <c>encoding</c> or <c>lang</c> parameters are outside the range of a 
+        ///   <see cref="ushort" />, or if the <c>start</c> parameter is outside the range of a <see cref="uint" />.</exception>
+        public Trimmed32BitTableCharacterMapping(PlatformId platform, int encoding, int lang, long start, IEnumerable<int> data)
+            : base(platform, encoding, lang)
+        {
+            FieldValidation.ValidateUIntParameter(start, nameof(start));
+            _startCode = (uint)start;
+            if (data is null)
+            {
+                _data = Array.Empty<ushort>();
+            }
+            else
+            {
+                _data = FieldValidation.ValidateAndCastIEnumerableOfUShortParameter(data, nameof(data));
+            }
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="platform">Platform that this mapping is for.</param>
+        /// <param name="encoding">Encoding that this mapping applies to. Must be within the range of a <see cref="ushort" />.</param>
+        /// <param name="lang">Language that this mapping applies to (if appropriate). Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="start">Lowest codepoint mapped by this mapping.</param>
         /// <param name="data">Table of glyphs that this mapping maps to.</param>
-        public Trimmed32BitTableCharacterMapping(PlatformId platform, ushort encoding, ushort lang, uint start, IEnumerable<ushort> data) 
+        private Trimmed32BitTableCharacterMapping(PlatformId platform, int encoding, int lang, uint start, IEnumerable<ushort> data) 
             : base(platform, encoding, lang)
         {
             _startCode = start;
@@ -43,11 +67,11 @@ namespace Unicorn.FontTools.OpenType
         /// Construct a <see cref="Trimmed32BitTableCharacterMapping" /> instance from an array of bytes.
         /// </summary>
         /// <param name="platform">The platform that this mapping is for.</param>
-        /// <param name="encoding">The encoding this mapping applies to.</param>
+        /// <param name="encoding">The encoding this mapping applies to. Must be within the range of a <see cref="ushort" />.</param>
         /// <param name="arr">Source data for the mapping.</param>
         /// <param name="offset">The location in the source data at which data for this mapping starts.</param>
         /// <returns></returns>
-        public static Trimmed32BitTableCharacterMapping FromBytes(PlatformId platform, ushort encoding, byte[] arr, int offset)
+        public static Trimmed32BitTableCharacterMapping FromBytes(PlatformId platform, int encoding, byte[] arr, int offset)
         {
             ushort lang = (ushort)arr.ToUInt(offset + 8);
             uint startCode = arr.ToUInt(offset + 12);
@@ -80,27 +104,21 @@ namespace Unicorn.FontTools.OpenType
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(byte codePoint)
-        {
-            return MapCodePoint((uint)codePoint);
-        }
+        public override int MapCodePoint(byte codePoint) => MapCodePoint((long)codePoint);
 
         /// <summary>
         /// Convert a code point to a glyph ID.
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(ushort codePoint)
-        {
-            return MapCodePoint((uint)codePoint);
-        }
+        public override int MapCodePoint(int codePoint) =>  MapCodePoint((long)codePoint);
 
         /// <summary>
         /// Convert a code point to a glyph ID.
         /// </summary>
         /// <param name="codePoint">The code point to convert.</param>
         /// <returns>A glyph ID, or zero if the code point is not encoded.</returns>
-        public override ushort MapCodePoint(uint codePoint)
+        public override int MapCodePoint(long codePoint)
         {
             if (codePoint < _startCode)
             {

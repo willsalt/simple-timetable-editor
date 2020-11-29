@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The content of the "maxp" table, which describes the size of the resources used by this font.
     /// </summary>
-    [CLSCompliant(false)]
     public class MaximumProfileTable : Table
     {
         /// <summary>
@@ -20,79 +20,80 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// The number of glyphs in the font.
         /// </summary>
-        public ushort GlyphCount { get; private set; }
+        public int GlyphCount { get; private set; }
 
         /// <summary>
         /// The maximum number of points in any non-composite glyph.
         /// </summary>
-        public ushort? MaxPoints { get; private set; }
+        public int? MaxPoints { get; private set; }
 
         /// <summary>
         /// The maximum number of contours in any non-composite glyph.
         /// </summary>
-        public ushort? MaxContours { get; private set; }
+        public int? MaxContours { get; private set; }
 
         /// <summary>
         /// The maximum number of points in any composite glyph (if there are any).
         /// </summary>
-        public ushort? MaxCompositePoints { get; private set; }
+        public int? MaxCompositePoints { get; private set; }
 
         /// <summary>
         /// The maximum number of contours in any composite glyph (if there are any).
         /// </summary>
-        public ushort? MaxCompositeContours { get; private set; }
+        public int? MaxCompositeContours { get; private set; }
 
         /// <summary>
         /// The maximum number of zones used - 2 if this font uses the Twilight Zone, 1 otherwise.
         /// </summary>
-        public ushort? MaxZones { get; private set; }
+        public int? MaxZones { get; private set; }
 
         /// <summary>
         /// The maximum number of points in the Twilight Zone of any glyph.  If this is non-zero then <see cref="MaxZones" /> must be 2.
         /// </summary>
-        public ushort? MaxTwilightZonePoints { get; private set; }
+        public int? MaxTwilightZonePoints { get; private set; }
 
         /// <summary>
         /// The maximum number of storage area locations used.
         /// </summary>
-        public ushort? MaxStorage { get; private set; }
+        public int? MaxStorage { get; private set; }
 
         /// <summary>
         /// The number of function definitions (should be 1 greater than the largest function definition number).
         /// </summary>
-        public ushort? MaxFunctionDefs { get; private set; }
+        public int? MaxFunctionDefs { get; private set; }
 
         /// <summary>
         /// The number of instruction definitions.
         /// </summary>
-        public ushort? MaxInstructionDefs { get; private set; }
+        public int? MaxInstructionDefs { get; private set; }
 
         /// <summary>
         /// The maximum stack depth reached by any set of instructions (font program, CVT program or glyph instructions).
         /// </summary>
-        public ushort? MaxStackElements { get; private set; }
+        public int? MaxStackElements { get; private set; }
 
         /// <summary>
         /// The maximum byte count of the glyph instructions for an individual glyph.
         /// </summary>
-        public ushort? MaxSizeOfInstructions { get; private set; }
+        public int? MaxSizeOfInstructions { get; private set; }
 
         /// <summary>
         /// The maximum number of top-level components of any composite glyph.
         /// </summary>
-        public ushort? MaxComponentElements { get; private set; }
+        public int? MaxComponentElements { get; private set; }
 
         /// <summary>
         /// The maximum composite glyph recursion depth (1 if all composite glyphs consist entirely of simple components)/
         /// </summary>
-        public ushort? MaxComponentDepth { get; private set; }
+        public int? MaxComponentDepth { get; private set; }
 
         /// <summary>
         /// Constructor for CFF fonts.
         /// </summary>
         /// <param name="glyphCount">The value of the <see cref="GlyphCount" /> property.</param>
-        public MaximumProfileTable(ushort glyphCount) : base("maxp")
+        public MaximumProfileTable(int glyphCount) : base("maxp")
         {
+            FieldValidation.ValidateUShortParameter(glyphCount, nameof(glyphCount));
             Kind = FontKind.Cff;
             GlyphCount = glyphCount;
         }
@@ -114,11 +115,24 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="maxInstructionSize">The value of the <see cref="MaxSizeOfInstructions" /> property.</param>
         /// <param name="maxElements">The value of the <see cref="MaxComponentElements" /> property.</param>
         /// <param name="maxDepth">The value of the <see cref="MaxComponentDepth" /> property.</param>
-        public MaximumProfileTable(ushort glyphCount, ushort maxPoints, ushort maxContours, ushort maxCompoPoints, ushort maxCompoContours, ushort maxZones,
-            ushort maxTwilightPoints, ushort maxStorage, ushort maxFuncDefs, ushort maxInstructionDefs, ushort maxStack, ushort maxInstructionSize, 
-            ushort maxElements, ushort maxDepth)
+        public MaximumProfileTable(int glyphCount, int maxPoints, int maxContours, int maxCompoPoints, int maxCompoContours, int maxZones, int maxTwilightPoints, 
+            int maxStorage, int maxFuncDefs, int maxInstructionDefs, int maxStack, int maxInstructionSize, int maxElements, int maxDepth)
             : this(glyphCount)
         {
+            FieldValidation.ValidateUShortParameter(maxPoints, nameof(maxPoints));
+            FieldValidation.ValidateUShortParameter(maxContours, nameof(maxContours));
+            FieldValidation.ValidateUShortParameter(maxCompoPoints, nameof(maxCompoPoints));
+            FieldValidation.ValidateUShortParameter(maxCompoContours, nameof(maxCompoContours));
+            FieldValidation.ValidateUShortParameter(maxZones, nameof(maxZones));
+            FieldValidation.ValidateUShortParameter(maxTwilightPoints, nameof(maxTwilightPoints));
+            FieldValidation.ValidateUShortParameter(maxStorage, nameof(maxStorage));
+            FieldValidation.ValidateUShortParameter(maxFuncDefs, nameof(maxFuncDefs));
+            FieldValidation.ValidateUShortParameter(maxInstructionDefs, nameof(maxInstructionDefs));
+            FieldValidation.ValidateUShortParameter(maxStack, nameof(maxStack));
+            FieldValidation.ValidateUShortParameter(maxInstructionSize, nameof(maxInstructionSize));
+            FieldValidation.ValidateUShortParameter(maxElements, nameof(maxElements));
+            FieldValidation.ValidateUShortParameter(maxDepth, nameof(maxDepth));
+
             Kind = FontKind.TrueType;
             MaxPoints = maxPoints;
             MaxContours = maxContours;
@@ -143,8 +157,19 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="len">Table data length.</param>
         /// <returns>A <see cref="MaximumProfileTable" /> loaded from the array provided.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array contains insufficient data or has an unrecognised version number.</exception>
-        public static MaximumProfileTable FromBytes(byte[] arr, int offset, uint len)
+        public static MaximumProfileTable FromBytes(byte[] arr, int offset, int len)
         {
+            if (arr is null)
+            {
+                throw new ArgumentNullException(nameof(arr));
+            }
+            FieldValidation.ValidateNonNegativeIntegerParameter(offset, nameof(offset));
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
+            if (len < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(len));
+            }
+
             int version = arr.ToInt(offset);
             if (version == 0x5000)
             {

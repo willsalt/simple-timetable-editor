@@ -79,6 +79,51 @@ namespace Unicorn.FontTools.OpenType {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field elements must all be within the range of an unsigned 16-bit integer..
+        /// </summary>
+        internal static string FieldValidation_ValidateArrayOfUShortParameter_Error {
+            get {
+                return ResourceManager.GetString("FieldValidation_ValidateArrayOfUShortParameter_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must not be less than zero..
+        /// </summary>
+        internal static string FieldValidation_ValidateNonNegativeIntParameter_Error {
+            get {
+                return ResourceManager.GetString("FieldValidation_ValidateNonNegativeIntParameter_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must not be less than zero..
+        /// </summary>
+        internal static string FieldValidation_ValidateNonNegativeLongParameter_Error {
+            get {
+                return ResourceManager.GetString("FieldValidation_ValidateNonNegativeLongParameter_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field must be within the range of an unsigned 32-bit integer..
+        /// </summary>
+        internal static string FieldValidation_ValidateUIntParameter_Error {
+            get {
+                return ResourceManager.GetString("FieldValidation_ValidateUIntParameter_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field must be within the range of an unsigned 16-bit integer..
+        /// </summary>
+        internal static string FieldValidation_ValidateUShortParameter_Error {
+            get {
+                return ResourceManager.GetString("FieldValidation_ValidateUShortParameter_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insufficient data to load &apos;head&apos; table..
         /// </summary>
         internal static string HeaderTable_FromBytes_InsufficientDataError {

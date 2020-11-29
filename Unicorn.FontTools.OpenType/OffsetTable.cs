@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The offset table, or main header table for an OpenType font.
     /// </summary>
-    [CLSCompliant(false)]
     public class OffsetTable
     {
         /// <summary>
@@ -14,24 +13,25 @@ namespace Unicorn.FontTools.OpenType
         public FontKind FontKind { get; private set; }
 
         /// <summary>
-        /// The number of tables that the font consists of.
+        /// The number of tables that the font consists of.  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort TableCount { get; private set; }
+        public int TableCount { get; private set; }
 
         /// <summary>
-        /// The SearchRange field (derived from the number of tables).
+        /// The SearchRange field (derived from the number of tables).  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort SearchRange { get; private set; }
+        public int SearchRange { get; private set; }
 
         /// <summary>
-        /// The EntrySelector field: the minimum number of bits needed to store the number of tables.
+        /// The EntrySelector field: the minimum number of bits needed to store the number of tables.  Within the range of a <see cref="ushort" /> according to 
+        /// the OpenType spec, and must be 16 or less in reality.
         /// </summary>
-        public ushort EntrySelector { get; private set; }
+        public int EntrySelector { get; private set; }
 
         /// <summary>
-        /// The RangeShift field (derived from the number of tables).
+        /// The RangeShift field (derived from the number of tables).  Within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort RangeShift { get; private set; }
+        public int RangeShift { get; private set; }
 
         /// <summary>
         /// Constructor.
@@ -41,8 +41,13 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="searchRange">Value of the <see cref="SearchRange"/> property.</param>
         /// <param name="entrySelector">Value of the <see cref="EntrySelector" /> property.</param>
         /// <param name="rangeShift">Value of the <see cref="RangeShift" /> property.</param>
-        public OffsetTable(FontKind kind, ushort count, ushort searchRange, ushort entrySelector, ushort rangeShift)
+        public OffsetTable(FontKind kind, int count, int searchRange, int entrySelector, int rangeShift)
         {
+            FieldValidation.ValidateUShortParameter(count, nameof(count));
+            FieldValidation.ValidateUShortParameter(searchRange, nameof(searchRange));
+            FieldValidation.ValidateUShortParameter(entrySelector, nameof(entrySelector));
+            FieldValidation.ValidateUShortParameter(rangeShift, nameof(rangeShift));
+
             FontKind = kind;
             TableCount = count;
             SearchRange = searchRange;

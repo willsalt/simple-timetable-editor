@@ -1,12 +1,12 @@
 ﻿using System;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
     /// <summary>
     /// The "subheader record" portion of a character mapping Type 2 table.
     /// </summary>
-    [CLSCompliant(false)]
     public struct HighByteSubheaderRecord : IEquatable<HighByteSubheaderRecord>
     {
         /// <summary>
@@ -26,9 +26,10 @@ namespace Unicorn.FontTools.OpenType
 
         /// <summary>
         /// Starting index in the lookup table, where the first entry for the block of codepoints described by this header is located.  Note that this value is
-        /// different from the on-disk storage of an OpenType file, in which this value gives the offset from its own address to the target address.
+        /// different from the on-disk storage of an OpenType file, in which this value gives the offset from its own address to the target address.  This value will
+        /// be within the range of a <see cref="ushort" />.
         /// </summary>
-        public ushort StartIndex { get; }
+        public int StartIndex { get; }
 
         /// <summary>
         /// Constructor.
@@ -36,9 +37,12 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="first">Value for the <see cref="FirstByte" /> property.</param>
         /// <param name="last">Value for the <see cref="LastByte" /> property.</param>
         /// <param name="delta">Value for the <see cref="IdDelta" /> property.</param>
-        /// <param name="start">Value for the <see cref="StartIndex" /> property.</param>
-        public HighByteSubheaderRecord(byte first, byte last, short delta, ushort start)
+        /// <param name="start">Value for the <see cref="StartIndex" /> property. Must be within the range of a <see cref="ushort" />.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the <c>start</c> parameter is less than 0 or greater than 65,535.</exception>
+        public HighByteSubheaderRecord(byte first, byte last, short delta, int start)
         {
+            FieldValidation.ValidateUShortParameter(start, nameof(start));
+
             FirstByte = first;
             LastByte = last;
             IdDelta = delta;

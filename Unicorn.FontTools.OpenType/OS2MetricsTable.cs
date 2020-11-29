@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Unicorn.FontTools.OpenType.Extensions;
+using Unicorn.FontTools.OpenType.Utility;
 
 namespace Unicorn.FontTools.OpenType
 {
@@ -8,13 +9,12 @@ namespace Unicorn.FontTools.OpenType
     /// The "OS/2" table, containing Windows- and OS/2- specific metric information, and also information about design classification, licensing and character 
     /// range support.
     /// </summary>
-    [CLSCompliant(false)]
     public class OS2MetricsTable : Table
     {
         /// <summary>
         /// Table version number.  If this field is 5, this implies all nullable fields will have values.
         /// </summary>
-        public ushort Version { get; private set; }
+        public int Version { get; private set; }
 
         /// <summary>
         /// Average character width across all characters in the font.
@@ -24,12 +24,12 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Weight classification value.
         /// </summary>
-        public ushort WeightClass { get; private set; }
+        public int WeightClass { get; private set; }
 
         /// <summary>
         /// Character width classification value.
         /// </summary>
-        public ushort WidthClass { get; private set; }
+        public int WidthClass { get; private set; }
 
         /// <summary>
         /// Font embedding permissions.
@@ -97,14 +97,9 @@ namespace Unicorn.FontTools.OpenType
         public PanoseFamily PanoseFontFamily { get; private set; }
 
         /// <summary>
-        /// Which Unicode code blocks this font supports (part 1).
+        /// A set of flags listing the Unicode codepoint blocks supported by this font.
         /// </summary>
-        public LowerUnicodeRangeFlags UnicodeRanges0 { get; private set; }
-
-        /// <summary>
-        /// Which Unicode code blocks this font supports (part 2).
-        /// </summary>
-        public UpperUnicodeRangeFlags UnicodeRanges1 { get; private set; }
+        public UnicodeRanges UnicodeRanges { get; private set; }
 
         /// <summary>
         /// Font vendor tag.  See https://docs.microsoft.com/en-gb/typography/vendors/ for details of registered font vendors and their tags.
@@ -120,13 +115,13 @@ namespace Unicorn.FontTools.OpenType
         /// The lowest Unicode code point supported by this font for platform 3, encoding 0 or 1 (or 0xFFFF if the actual lowest supported code point is higher 
         /// than 0xFFFF).
         /// </summary>
-        public ushort MinCodePoint { get; private set; }
+        public int MinCodePoint { get; private set; }
 
         /// <summary>
         /// The highest Unicode code point supported by this font for platform 3, encoding 0 or 1 (or 0xFFFF if the actual highest supported code point is higher than
         /// 0xFFFF.
         /// </summary>
-        public ushort MaxCodePoint { get; private set; }
+        public int MaxCodePoint { get; private set; }
 
         /// <summary>
         /// The typographical ascent of the font.  Windows-style calculations should use this field in preference to <see cref="HorizontalHeaderTable.Ascender" />.
@@ -149,17 +144,17 @@ namespace Unicorn.FontTools.OpenType
         /// <summary>
         /// Used on Windows platforms to determine the upper boundary of the glyph clipping region.  Not populated if this table uses the Apple variant of Version 0.
         /// </summary>
-        public ushort? WindowsAscender { get; private set; }
+        public int? WindowsAscender { get; private set; }
 
         /// <summary>
         /// Used on Windows platforms to determine the lower boundary of the glyph clipping region.  Not populated if this table uses the Apple variant of Version 0.
         /// </summary>
-        public ushort? WindowsDescender { get; private set; }
+        public int? WindowsDescender { get; private set; }
 
         /// <summary>
         /// Code pages supported by this font.  Not populated if this table is Version 0.
         /// </summary>
-        public SupportedCodePageFlags? CodePages { get; private set; }
+        public SupportedCodePages CodePages { get; private set; }
 
         /// <summary>
         /// X-height of this font.  Not populated if this table is Version 0 or 1.
@@ -175,28 +170,28 @@ namespace Unicorn.FontTools.OpenType
         /// The code point of a character to be displayed in place of unsupported characters.  If this field is 0, glyph ID 0 should be used.  Not populated if this
         /// table is Version 0 or 1.
         /// </summary>
-        public ushort? DefaultChar { get; private set; }
+        public int? DefaultChar { get; private set; }
 
         /// <summary>
         /// The code point of a character that can be used as a word-breaking character, such as 0x20.  Not populated if this table is Version 0 or 1.
         /// </summary>
-        public ushort? BreakChar { get; private set; }
+        public int? BreakChar { get; private set; }
 
         /// <summary>
         /// The maximum length target glyph context for this font; in other words, the maximum amount of character look-ahead needed to determine the metrics and
         /// positioning of a specific glyph.
         /// </summary>
-        public ushort? MaxContext { get; private set; }
+        public int? MaxContext { get; private set; }
 
         /// <summary>
         /// The lowest optical size for which this font was designed to be used, measured in 1/20ths of a point.  Not populated in versions prior to Version 5.
         /// </summary>
-        public ushort? LowerOpticalPointSize { get; private set; }
+        public int? LowerOpticalPointSize { get; private set; }
 
         /// <summary>
         /// The highest optical size for which this font was designed to be used, measured in 1/20ths of a point.  Not populated in versions prior to Version 5.
         /// </summary>
-        public ushort? UpperOpticalPointSize { get; private set; }
+        public int? UpperOpticalPointSize { get; private set; }
 
         /// <summary>
         /// Constructor for Version 5 format tables.
@@ -217,8 +212,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="strikeoutPosition">The value for the <see cref="StrikeoutPosition" /> property.</param>
         /// <param name="ibmFamily">The value for the <see cref="IBMFontFamily" /> property.</param>
         /// <param name="panoseFamily">The value for the <see cref="PanoseFontFamily" /> property.</param>
-        /// <param name="unicodeLower">The value for the <see cref="UnicodeRanges0" /> property.</param>
-        /// <param name="unicodeUpper">The value for the <see cref="UnicodeRanges1" /> property.</param>
+        /// <param name="unicodeRanges">The value for the <see cref="UnicodeRanges" /> property.</param>
         /// <param name="vendorId">The value for the <see cref="VendorId" /> property.</param>
         /// <param name="fontSelection">The value for the <see cref="FontSelection" /> property.</param>
         /// <param name="minCodePoint">The value for the <see cref="MinCodePoint" /> property.</param>
@@ -236,17 +230,20 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="maxContext">The value for the <see cref="MaxContext" /> property.</param>
         /// <param name="lowerOpticalPointSize">The value for the <see cref="LowerOpticalPointSize" /> property.</param>
         /// <param name="upperOpticalPointSize">The value for the <see cref="UpperOpticalPointSize" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize, 
-            short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
-            short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
-            short lineGap, ushort winAscender, ushort winDescender, SupportedCodePageFlags codePages, short height, short capHeight, ushort defaultChar, 
-            ushort breakChar, ushort maxContext, ushort lowerOpticalPointSize, ushort upperOpticalPointSize) 
+        public OS2MetricsTable(short avgCharWidth, int weightClass, int widthClass, EmbeddingPermissions permissions, short subscriptXSize, short subscriptYSize, 
+            short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset, short superscriptYOffset, 
+            short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, UnicodeRanges unicodeRanges, Tag vendorId, 
+            OS2StyleProperties fontSelection, int minCodePoint, int maxCodePoint, short ascender, short descender, short lineGap, int winAscender, int winDescender, 
+            SupportedCodePages codePages, short height, short capHeight, int defaultChar, int breakChar, int maxContext, int lowerOpticalPointSize, 
+            int upperOpticalPointSize) 
             : this(5, avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
-                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeLower, unicodeUpper,
-                  vendorId, fontSelection, minCodePoint, maxCodePoint, ascender, descender, lineGap, winAscender, winDescender, codePages, height, capHeight,
-                  defaultChar, breakChar, maxContext)
+                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeRanges, vendorId, 
+                  fontSelection, minCodePoint, maxCodePoint, ascender, descender, lineGap, winAscender, winDescender, codePages, height, capHeight, defaultChar, 
+                  breakChar, maxContext)
         {
+            FieldValidation.ValidateUShortParameter(lowerOpticalPointSize, nameof(lowerOpticalPointSize));
+            FieldValidation.ValidateUShortParameter(upperOpticalPointSize, nameof(upperOpticalPointSize));
+
             LowerOpticalPointSize = lowerOpticalPointSize;
             UpperOpticalPointSize = upperOpticalPointSize;
         }
@@ -271,8 +268,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="strikeoutPosition">The value for the <see cref="StrikeoutPosition" /> property.</param>
         /// <param name="ibmFamily">The value for the <see cref="IBMFontFamily" /> property.</param>
         /// <param name="panoseFamily">The value for the <see cref="PanoseFontFamily" /> property.</param>
-        /// <param name="unicodeLower">The value for the <see cref="UnicodeRanges0" /> property.</param>
-        /// <param name="unicodeUpper">The value for the <see cref="UnicodeRanges1" /> property.</param>
+        /// <param name="unicodeRanges">The value for the <see cref="UnicodeRanges" /> property.</param>
         /// <param name="vendorId">The value for the <see cref="VendorId" /> property.</param>
         /// <param name="fontSelection">The value for the <see cref="FontSelection" /> property.</param>
         /// <param name="minCodePoint">The value for the <see cref="MinCodePoint" /> property.</param>
@@ -288,16 +284,20 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="defaultChar">The value for the <see cref="DefaultChar" /> property.</param>
         /// <param name="breakChar">The value for the <see cref="BreakChar" /> property.</param>
         /// <param name="maxContext">The value for the <see cref="MaxContext" /> property.</param>
-        public OS2MetricsTable(ushort version, short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
+        public OS2MetricsTable(int version, short avgCharWidth, int weightClass, int widthClass, EmbeddingPermissions permissions, short subscriptXSize,
             short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
-            short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
-            short lineGap, ushort winAscender, ushort winDescender, SupportedCodePageFlags codePages, short height, short capHeight, ushort defaultChar,
-            ushort breakChar, ushort maxContext)
+            short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, UnicodeRanges unicodeRanges, 
+            Tag vendorId, OS2StyleProperties fontSelection, int minCodePoint, int maxCodePoint, short ascender, short descender, short lineGap, int winAscender, 
+            int winDescender, SupportedCodePages codePages, short height, short capHeight, int defaultChar, int breakChar, int maxContext)
             : this(avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
-                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeLower, unicodeUpper,
-                  vendorId, fontSelection, minCodePoint, maxCodePoint, ascender, descender, lineGap, winAscender, winDescender, codePages)
+                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeRanges, vendorId, 
+                  fontSelection, minCodePoint, maxCodePoint, ascender, descender, lineGap, winAscender, winDescender, codePages)
         {
+            FieldValidation.ValidateUShortParameter(version, nameof(version));
+            FieldValidation.ValidateUShortParameter(defaultChar, nameof(defaultChar));
+            FieldValidation.ValidateUShortParameter(breakChar, nameof(breakChar));
+            FieldValidation.ValidateUShortParameter(maxContext, nameof(maxContext));
+
             Version = version;
             XHeight = height;
             CapHeight = capHeight;
@@ -325,8 +325,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="strikeoutPosition">The value for the <see cref="StrikeoutPosition" /> property.</param>
         /// <param name="ibmFamily">The value for the <see cref="IBMFontFamily" /> property.</param>
         /// <param name="panoseFamily">The value for the <see cref="PanoseFontFamily" /> property.</param>
-        /// <param name="unicodeLower">The value for the <see cref="UnicodeRanges0" /> property.</param>
-        /// <param name="unicodeUpper">The value for the <see cref="UnicodeRanges1" /> property.</param>
+        /// <param name="unicodeRanges">The value for the <see cref="UnicodeRanges" /> property.</param>
         /// <param name="vendorId">The value for the <see cref="VendorId" /> property.</param>
         /// <param name="fontSelection">The value for the <see cref="FontSelection" /> property.</param>
         /// <param name="minCodePoint">The value for the <see cref="MinCodePoint" /> property.</param>
@@ -337,14 +336,14 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="winAscender">The value for the <see cref="WindowsAscender" /> property.</param>
         /// <param name="winDescender">The value for the <see cref="WindowsDescender" /> property.</param>
         /// <param name="codePages">The value for the <see cref="CodePages" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
-            short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
-            short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
-            short lineGap, ushort winAscender, ushort winDescender, SupportedCodePageFlags codePages)
+        public OS2MetricsTable(short avgCharWidth, int weightClass, int widthClass, EmbeddingPermissions permissions, short subscriptXSize, short subscriptYSize, 
+            short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset, short superscriptYOffset, 
+            short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, UnicodeRanges unicodeRanges, Tag vendorId, 
+            OS2StyleProperties fontSelection, int minCodePoint, int maxCodePoint, short ascender, short descender,
+            short lineGap, int winAscender, int winDescender, SupportedCodePages codePages)
             : this(avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
-                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeLower, unicodeUpper,
-                  vendorId, fontSelection, minCodePoint, maxCodePoint, ascender, descender, lineGap, winAscender, winDescender)
+                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeRanges, vendorId, 
+                  fontSelection, minCodePoint, maxCodePoint, ascender, descender, lineGap, winAscender, winDescender)
         {
             Version = 1;
             CodePages = codePages;
@@ -369,8 +368,7 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="strikeoutPosition">The value for the <see cref="StrikeoutPosition" /> property.</param>
         /// <param name="ibmFamily">The value for the <see cref="IBMFontFamily" /> property.</param>
         /// <param name="panoseFamily">The value for the <see cref="PanoseFontFamily" /> property.</param>
-        /// <param name="unicodeLower">The value for the <see cref="UnicodeRanges0" /> property.</param>
-        /// <param name="unicodeUpper">The value for the <see cref="UnicodeRanges1" /> property.</param>
+        /// <param name="unicodeRanges">The value for the <see cref="UnicodeRanges" /> property.</param>
         /// <param name="vendorId">The value for the <see cref="VendorId" /> property.</param>
         /// <param name="fontSelection">The value for the <see cref="FontSelection" /> property.</param>
         /// <param name="minCodePoint">The value for the <see cref="MinCodePoint" /> property.</param>
@@ -380,15 +378,18 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="lineGap">The value for the <see cref="LineGap" /> property.</param>
         /// <param name="winAscender">The value for the <see cref="WindowsAscender" /> property.</param>
         /// <param name="winDescender">The value for the <see cref="WindowsDescender" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
-            short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
-            short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint, short ascender, short descender,
-            short lineGap, ushort winAscender, ushort winDescender)
+        public OS2MetricsTable(short avgCharWidth, int weightClass, int widthClass, EmbeddingPermissions permissions, short subscriptXSize, short subscriptYSize, 
+            short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset, short superscriptYOffset, 
+            short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, UnicodeRanges unicodeRanges, Tag vendorId, 
+            OS2StyleProperties fontSelection, int minCodePoint, int maxCodePoint, short ascender, short descender,
+            short lineGap, int winAscender, int winDescender)
             : this(avgCharWidth, weightClass, widthClass, permissions, subscriptXSize, subscriptYSize, subscriptXOffset, subscriptYOffset, superscriptXSize,
-                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeLower, unicodeUpper,
-                  vendorId, fontSelection, minCodePoint, maxCodePoint)
+                  superscriptYSize, superscriptXOffset, superscriptYOffset, strikeoutSize, strikeoutPosition, ibmFamily, panoseFamily, unicodeRanges, vendorId, 
+                  fontSelection, minCodePoint, maxCodePoint)
         {
+            FieldValidation.ValidateUShortParameter(winAscender, nameof(winAscender));
+            FieldValidation.ValidateUShortParameter(winDescender, nameof(winDescender));
+
             Ascender = ascender;
             Descender = descender;
             LineGap = lineGap;
@@ -415,18 +416,22 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="strikeoutPosition">The value for the <see cref="StrikeoutPosition" /> property.</param>
         /// <param name="ibmFamily">The value for the <see cref="IBMFontFamily" /> property.</param>
         /// <param name="panoseFamily">The value for the <see cref="PanoseFontFamily" /> property.</param>
-        /// <param name="unicodeLower">The value for the <see cref="UnicodeRanges0" /> property.</param>
-        /// <param name="unicodeUpper">The value for the <see cref="UnicodeRanges1" /> property.</param>
+        /// <param name="unicodeRanges">The value for the <see cref="UnicodeRanges" /> property.</param>
         /// <param name="vendorId">The value for the <see cref="VendorId" /> property.</param>
         /// <param name="fontSelection">The value for the <see cref="FontSelection" /> property.</param>
         /// <param name="minCodePoint">The value for the <see cref="MinCodePoint" /> property.</param>
         /// <param name="maxCodePoint">The value for the <see cref="MaxCodePoint" /> property.</param>
-        public OS2MetricsTable(short avgCharWidth, ushort weightClass, ushort widthClass, EmbeddingPermissions permissions, short subscriptXSize,
-            short subscriptYSize, short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset,
-            short superscriptYOffset, short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, LowerUnicodeRangeFlags unicodeLower,
-            UpperUnicodeRangeFlags unicodeUpper, Tag vendorId, OS2StyleProperties fontSelection, ushort minCodePoint, ushort maxCodePoint)
+        public OS2MetricsTable(short avgCharWidth, int weightClass, int widthClass, EmbeddingPermissions permissions, short subscriptXSize, short subscriptYSize, 
+            short subscriptXOffset, short subscriptYOffset, short superscriptXSize, short superscriptYSize, short superscriptXOffset, short superscriptYOffset, 
+            short strikeoutSize, short strikeoutPosition, IBMFamily ibmFamily, PanoseFamily panoseFamily, UnicodeRanges unicodeRanges, Tag vendorId, 
+            OS2StyleProperties fontSelection, int minCodePoint, int maxCodePoint)
             : base("OS/2")
         {
+            FieldValidation.ValidateUShortParameter(weightClass, nameof(weightClass));
+            FieldValidation.ValidateUShortParameter(widthClass, nameof(widthClass));
+            FieldValidation.ValidateUShortParameter(minCodePoint, nameof(minCodePoint));
+            FieldValidation.ValidateUShortParameter(maxCodePoint, nameof(maxCodePoint));
+
             Version = 0;
             AverageCharWidth = avgCharWidth;
             WeightClass = weightClass;
@@ -444,8 +449,7 @@ namespace Unicorn.FontTools.OpenType
             StrikeoutPosition = strikeoutPosition;
             IBMFontFamily = ibmFamily;
             PanoseFontFamily = panoseFamily;
-            UnicodeRanges0 = unicodeLower;
-            UnicodeRanges1 = unicodeUpper;
+            UnicodeRanges = unicodeRanges;
             VendorId = vendorId;
             FontSelection = fontSelection;
             MinCodePoint = minCodePoint;
@@ -462,12 +466,13 @@ namespace Unicorn.FontTools.OpenType
         /// <exception cref="ArgumentNullException">Thrown if the <c>arr</c> parameter is <c>null</c>.</exception>
         /// <exception cref="IndexOutOfRangeException">Thrown if the <c>offset</c> parameter is negative.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the length of the <c>arr</c> parameter is less than the sum of the other two parameters.</exception>
-        public static OS2MetricsTable FromBytes(byte[] arr, int offset, uint len)
+        public static OS2MetricsTable FromBytes(byte[] arr, int offset, int len)
         {
             if (arr is null)
             {
                 throw new ArgumentNullException(nameof(arr));
             }
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             ushort version = arr.ToUShort(offset);
             switch (version)
             {
@@ -486,9 +491,7 @@ namespace Unicorn.FontTools.OpenType
             }
         }
 
-        private static OS2MetricsTable FromBytesV5(byte[] arr, int offset)
-        {
-            return new OS2MetricsTable(
+        private static OS2MetricsTable FromBytesV5(byte[] arr, int offset) => new OS2MetricsTable(
                 arr.ToShort(offset + 2),
                 arr.ToUShort(offset + 4),
                 arr.ToUShort(offset + 6),
@@ -505,8 +508,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 28),
                 (IBMFamily)arr.ToShort(offset + 30),
                 new PanoseFamily(arr, offset + 32),
-                arr.ToLowerUnicodeRangeFlags(offset + 42),
-                arr.ToUpperUnicodeRangeFlags(offset + 50),
+                UnicodeRanges.FromBytes(arr, offset + 42),
                 new Tag(arr, offset + 58),
                 (OS2StyleProperties)arr.ToUShort(offset + 62),
                 arr.ToUShort(offset + 64),
@@ -516,7 +518,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 72),
                 arr.ToUShort(offset + 74),
                 arr.ToUShort(offset + 76),
-                arr.ToSupportedCodePageFlags(78),
+                SupportedCodePages.FromBytes(arr, offset + 78),
                 arr.ToShort(offset + 86),
                 arr.ToShort(offset + 88),
                 arr.ToUShort(offset + 90),
@@ -524,11 +526,8 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToUShort(offset + 94),
                 arr.ToUShort(offset + 96),
                 arr.ToUShort(offset + 98));
-        }
 
-        private static OS2MetricsTable FromBytesV4(byte[] arr, int offset, ushort version)
-        {
-            return new OS2MetricsTable(
+        private static OS2MetricsTable FromBytesV4(byte[] arr, int offset, ushort version) => new OS2MetricsTable(
                 version,
                 arr.ToShort(offset + 2),
                 arr.ToUShort(offset + 4),
@@ -546,8 +545,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 28),
                 (IBMFamily)arr.ToShort(offset + 30),
                 new PanoseFamily(arr, offset + 32),
-                arr.ToLowerUnicodeRangeFlags(offset + 42),
-                arr.ToUpperUnicodeRangeFlags(offset + 50),
+                UnicodeRanges.FromBytes(arr, offset + 42),
                 new Tag(arr, offset + 58),
                 (OS2StyleProperties)arr.ToUShort(offset + 62),
                 arr.ToUShort(offset + 64),
@@ -557,17 +555,14 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 72),
                 arr.ToUShort(offset + 74),
                 arr.ToUShort(offset + 76),
-                arr.ToSupportedCodePageFlags(78),
+                SupportedCodePages.FromBytes(arr, offset + 78),
                 arr.ToShort(offset + 86),
                 arr.ToShort(offset + 88),
                 arr.ToUShort(offset + 90),
                 arr.ToUShort(offset + 92),
                 arr.ToUShort(offset + 94));
-        }
 
-        private static OS2MetricsTable FromBytesV1(byte[] arr, int offset)
-        {
-            return new OS2MetricsTable(
+        private static OS2MetricsTable FromBytesV1(byte[] arr, int offset) => new OS2MetricsTable(
                 arr.ToShort(offset + 2),
                 arr.ToUShort(offset + 4),
                 arr.ToUShort(offset + 6),
@@ -584,8 +579,7 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 28),
                 (IBMFamily)arr.ToShort(offset + 30),
                 new PanoseFamily(arr, offset + 32),
-                arr.ToLowerUnicodeRangeFlags(offset + 42),
-                arr.ToUpperUnicodeRangeFlags(offset + 50),
+                UnicodeRanges.FromBytes(arr, offset + 42),
                 new Tag(arr, offset + 58),
                 (OS2StyleProperties)arr.ToUShort(offset + 62),
                 arr.ToUShort(offset + 64),
@@ -595,10 +589,9 @@ namespace Unicorn.FontTools.OpenType
                 arr.ToShort(offset + 72),
                 arr.ToUShort(offset + 74),
                 arr.ToUShort(offset + 76),
-                arr.ToSupportedCodePageFlags(78));
-        }
+                SupportedCodePages.FromBytes(arr, offset + 78));
 
-        private static OS2MetricsTable FromBytesV0(byte[] arr, int offset, uint len)
+        private static OS2MetricsTable FromBytesV0(byte[] arr, int offset, long len)
         {
             if (len >= 78)
             {
@@ -619,8 +612,7 @@ namespace Unicorn.FontTools.OpenType
                     arr.ToShort(offset + 28),
                     (IBMFamily)arr.ToShort(offset + 30),
                     new PanoseFamily(arr, offset + 32),
-                    arr.ToLowerUnicodeRangeFlags(offset + 42),
-                    arr.ToUpperUnicodeRangeFlags(offset + 50),
+                    UnicodeRanges.FromBytes(arr, offset + 42),
                     new Tag(arr, offset + 58),
                     (OS2StyleProperties)arr.ToUShort(offset + 62),
                     arr.ToUShort(offset + 64),
@@ -632,28 +624,27 @@ namespace Unicorn.FontTools.OpenType
                     arr.ToUShort(offset + 76));
             }
             return new OS2MetricsTable(
-                    arr.ToShort(offset + 2),
-                    arr.ToUShort(offset + 4),
-                    arr.ToUShort(offset + 6),
-                    (EmbeddingPermissions)arr.ToUShort(offset + 8),
-                    arr.ToShort(offset + 10),
-                    arr.ToShort(offset + 12),
-                    arr.ToShort(offset + 14),
-                    arr.ToShort(offset + 16),
-                    arr.ToShort(offset + 18),
-                    arr.ToShort(offset + 20),
-                    arr.ToShort(offset + 22),
-                    arr.ToShort(offset + 24),
-                    arr.ToShort(offset + 26),
-                    arr.ToShort(offset + 28),
-                    (IBMFamily)arr.ToShort(offset + 30),
-                    new PanoseFamily(arr, offset + 32),
-                    arr.ToLowerUnicodeRangeFlags(offset + 42),
-                    arr.ToUpperUnicodeRangeFlags(offset + 50),
-                    new Tag(arr, offset + 58),
-                    (OS2StyleProperties)arr.ToUShort(offset + 62),
-                    arr.ToUShort(offset + 64),
-                    arr.ToUShort(offset + 66));
+                arr.ToShort(offset + 2),
+                arr.ToUShort(offset + 4),
+                arr.ToUShort(offset + 6),
+                (EmbeddingPermissions)arr.ToUShort(offset + 8),
+                arr.ToShort(offset + 10),
+                arr.ToShort(offset + 12),
+                arr.ToShort(offset + 14),
+                arr.ToShort(offset + 16),
+                arr.ToShort(offset + 18),
+                arr.ToShort(offset + 20),
+                arr.ToShort(offset + 22),
+                arr.ToShort(offset + 24),
+                arr.ToShort(offset + 26),
+                arr.ToShort(offset + 28),
+                (IBMFamily)arr.ToShort(offset + 30),
+                new PanoseFamily(arr, offset + 32),
+                UnicodeRanges.FromBytes(arr, offset + 42),
+                new Tag(arr, offset + 58),
+                (OS2StyleProperties)arr.ToUShort(offset + 62),
+                arr.ToUShort(offset + 64),
+                arr.ToUShort(offset + 66));
         }
 
         /// <summary>
@@ -686,8 +677,7 @@ namespace Unicorn.FontTools.OpenType
             writer.WriteLine($"StrikeoutPosition     | {StrikeoutPosition}");
             writer.WriteLine($"IBMFontFamily         | {IBMFontFamily}");
             writer.WriteLine($"PanoseFontFamily      | {PanoseFontFamily}");
-            writer.WriteLine($"UnicodeRanges0        | {UnicodeRanges0}");
-            writer.WriteLine($"UnicodeRanges1        | {UnicodeRanges1}");
+            writer.WriteLine($"UnicodeRanges         | {UnicodeRanges}");
             writer.WriteLine($"VendorId              | {VendorId}");
             writer.WriteLine($"FontSelection         | {FontSelection}");
             writer.WriteLine($"MinCodePoint          | {MinCodePoint}");

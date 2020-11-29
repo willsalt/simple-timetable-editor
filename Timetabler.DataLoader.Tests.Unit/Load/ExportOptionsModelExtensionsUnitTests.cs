@@ -33,6 +33,9 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             GraphPageOrientation = _rnd.NextNullableOrientation(),
             UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
             DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            MorningLabel = _rnd.NextString(_rnd.Next(6)),
+            MiddayLabel = _rnd.NextString(_rnd.Next(6)),
+            AfternoonLabel = _rnd.NextString(_rnd.Next(6)),
             DistancesInOutput = _rnd.NextNullableSectionSelection(),
         };
 
@@ -467,6 +470,72 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
 
             Assert.AreEqual(testParam.DownSectionLabel, testOutput.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithMorningLabelPropertyEqualToThatCreatedByParameterlessConstructorOfType_IfMorningLabelPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.MorningLabel = null;
+            string expectedValue = new DocumentExportOptions().MorningLabel;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(expectedValue, testOutput.MorningLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithCorrectMorningLabelProperty_IfMorningLabelPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.MorningLabel, testOutput.MorningLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithMiddayLabelPropertyEqualToThatCreatedByParameterlessConstructorOfType_IfMiddayLabelPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.MiddayLabel = null;
+            string expectedValue = new DocumentExportOptions().MiddayLabel;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(expectedValue, testOutput.MiddayLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithCorrectMiddayLabelProperty_IfMiddayLabelPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.MiddayLabel, testOutput.MiddayLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithAfternoonLabelPropertyEqualToThatCreatedByParameterlessConstructorOfType_IfAfternoonLabelPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.AfternoonLabel = null;
+            string expectedValue = new DocumentExportOptions().AfternoonLabel;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(expectedValue, testOutput.AfternoonLabel);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithCorrectAfternoonLabelProperty_IfAfternoonLabelPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(testParam.AfternoonLabel, testOutput.AfternoonLabel);
         }
 
         [TestMethod]

@@ -163,6 +163,36 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_HasPublicMorningLabelPropertyOfTypeString()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("MorningLabel");
+            Assert.AreEqual(typeof(string), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_HasPublicMiddayLabelPropertyOfTypeString()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("MiddayLabel");
+            Assert.AreEqual(typeof(string), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_HasPublicAfternoonLabelPropertyOfTypeString()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("AfternoonLabel");
+            Assert.AreEqual(typeof(string), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicDistancesInOutputPropertyOfTypeNullableSectionSelection()
         {
             Type classType = typeof(ExportOptionsModel);

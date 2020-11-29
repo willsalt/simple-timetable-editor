@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData;
 
 namespace Timetabler.Data.Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
 

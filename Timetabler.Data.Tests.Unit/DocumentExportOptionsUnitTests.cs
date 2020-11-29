@@ -29,6 +29,9 @@ namespace Timetabler.Data.Tests.Unit
             GraphPageOrientation = _rnd.NextOrientation(),
             UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
             DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            MorningLabel = _rnd.NextString(_rnd.Next(5)),
+            MiddayLabel = _rnd.NextString(_rnd.Next(6)),
+            AfternoonLabel = _rnd.NextString(_rnd.Next(5)),
             DistancesInOutput = _rnd.NextSectionSelection(),
         };
 
@@ -92,6 +95,33 @@ namespace Timetabler.Data.Tests.Unit
             string expectedValue = Resources.DocumentExportOptions_DefaultDownSectionLabel;
 
             Assert.AreEqual(expectedValue, testObject.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsMorningLabelPropertyToValueFromResourcesFile()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+            string expectedValue = Resources.DocumentExportOptions_DefaultMorningLabel;
+
+            Assert.AreEqual(expectedValue, testObject.MorningLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsMiddayLabelPropertyToValueFromResourcesFile()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+            string expectedValue = Resources.DocumentExportOptions_DefaultMiddayLabel;
+
+            Assert.AreEqual(expectedValue, testObject.MiddayLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsAfternoonLabelPropertyToValueFromResourcesFile()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+            string expectedValue = Resources.DocumentExportOptions_DefaultAfternoonLabel;
+
+            Assert.AreEqual(expectedValue, testObject.AfternoonLabel);
         }
 
         [TestMethod]
@@ -250,6 +280,36 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testOutput = testObject.Copy();
 
             Assert.AreEqual(testObject.DownSectionLabel, testOutput.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectMorningLabelProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.MorningLabel, testOutput.MorningLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectMiddayLabelProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.MiddayLabel, testOutput.MiddayLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectAfternoonLabelProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.AfternoonLabel, testOutput.AfternoonLabel);
         }
 
         [TestMethod]

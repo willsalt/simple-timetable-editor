@@ -65,6 +65,9 @@ namespace Timetabler
             nudGraphAxisLineWidth.Value = (decimal)Model.GraphAxisLineWidth;
             tbUpSectionLabel.Text = Model.UpSectionLabel;
             tbDownSectionLabel.Text = Model.DownSectionLabel;
+            tbMorningLabel.Text = Model.MorningLabel;
+            tbMiddayLabel.Text = Model.MiddayLabel;
+            tbAfternoonLabel.Text = Model.AfternoonLabel;
             foreach (var item in cbTableOrientation.Items)
             {
                 if (item is HumanReadableEnum<CoreData.Orientation> orientItem && orientItem.Value == Model.TablePageOrientation)
@@ -253,6 +256,33 @@ namespace Timetabler
                 return;
             }
             Model.DownSectionLabel = tbDownSectionLabel.Text;
+        }
+
+        private void TbMorningLabel_TextChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Model.MorningLabel = tbMorningLabel.Text;
+        }
+
+        private void TbAfternoonLabel_TextChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Model.AfternoonLabel = tbAfternoonLabel.Text;
+        }
+
+        private void TbMiddayLabel_TextChanged(object sender, EventArgs e)
+        {
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Model.MiddayLabel = tbMiddayLabel.Text;
         }
     }
 }

@@ -40,6 +40,13 @@
             this.ckDisplayGlossary = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tbMiddayLabel = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tbAfternoonLabel = new System.Windows.Forms.TextBox();
+            this.tbMorningLabel = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbTableOrientation = new System.Windows.Forms.ComboBox();
             this.cbGraphOrientation = new System.Windows.Forms.ComboBox();
@@ -62,6 +69,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -145,11 +153,57 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
+            // 
+            // groupBox4
+            // 
+            resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.Controls.Add(this.tbMiddayLabel);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.tbAfternoonLabel);
+            this.groupBox4.Controls.Add(this.tbMorningLabel);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.TabStop = false;
+            // 
+            // tbMiddayLabel
+            // 
+            resources.ApplyResources(this.tbMiddayLabel, "tbMiddayLabel");
+            this.tbMiddayLabel.Name = "tbMiddayLabel";
+            this.tbMiddayLabel.TextChanged += new System.EventHandler(this.TbMiddayLabel_TextChanged);
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            // 
+            // tbAfternoonLabel
+            // 
+            resources.ApplyResources(this.tbAfternoonLabel, "tbAfternoonLabel");
+            this.tbAfternoonLabel.Name = "tbAfternoonLabel";
+            this.tbAfternoonLabel.TextChanged += new System.EventHandler(this.TbAfternoonLabel_TextChanged);
+            // 
+            // tbMorningLabel
+            // 
+            resources.ApplyResources(this.tbMorningLabel, "tbMorningLabel");
+            this.tbMorningLabel.Name = "tbMorningLabel";
+            this.tbMorningLabel.TextChanged += new System.EventHandler(this.TbMorningLabel_TextChanged);
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
             // 
             // groupBox3
             // 
@@ -301,6 +355,8 @@
             this.Name = "DocumentExportOptionsEditForm";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -349,5 +405,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbDistanceInfoInOutput;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox tbAfternoonLabel;
+        private System.Windows.Forms.TextBox tbMorningLabel;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbMiddayLabel;
+        private System.Windows.Forms.Label label11;
     }
 }

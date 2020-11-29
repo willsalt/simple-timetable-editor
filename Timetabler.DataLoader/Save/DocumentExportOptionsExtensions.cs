@@ -38,6 +38,9 @@ namespace Timetabler.DataLoader.Save
                 GraphPageOrientation = options.GraphPageOrientation,
                 UpSectionLabel = options.UpSectionLabel,
                 DownSectionLabel = options.DownSectionLabel,
+                MorningLabel = options.MorningLabel,
+                MiddayLabel = options.MiddayLabel,
+                AfternoonLabel = options.AfternoonLabel,
                 DistancesInOutput = options.DistancesInOutput,
             };
         }

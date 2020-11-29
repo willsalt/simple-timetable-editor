@@ -69,9 +69,9 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="offset">The starting position of the table in the array.</param>
         /// <param name="tableLen">The length of the data making up the table, in bytes.</param>
         /// <returns></returns>
-        public static NamingTable FromBytes(byte[] arr, int offset, long tableLen)
+        public static NamingTable FromBytes(byte[] arr, int offset, int tableLen)
         {
-            FieldValidation.ValidateNonNegativeLongParameter(tableLen, nameof(tableLen));
+            FieldValidation.ValidateNonNegativeIntegerParameter(tableLen, nameof(tableLen));
             if (tableLen < 6)
             {
                 throw new ArgumentException(Resources.NamingTable_FromBytes_InsufficientDataError);

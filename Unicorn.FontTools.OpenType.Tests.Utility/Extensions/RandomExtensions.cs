@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Tests.Utility.Extensions;
 
 namespace Unicorn.FontTools.OpenType.Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
         private static readonly PlatformId[] _platformIds = new[] { PlatformId.Unicode, PlatformId.Macintosh, PlatformId.Windows, PlatformId.Custom };

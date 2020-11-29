@@ -119,7 +119,6 @@ namespace Unicorn.FontTools.OpenType
             int maxStorage, int maxFuncDefs, int maxInstructionDefs, int maxStack, int maxInstructionSize, int maxElements, int maxDepth)
             : this(glyphCount)
         {
-            FieldValidation.ValidateUShortParameter(glyphCount, nameof(glyphCount));
             FieldValidation.ValidateUShortParameter(maxPoints, nameof(maxPoints));
             FieldValidation.ValidateUShortParameter(maxContours, nameof(maxContours));
             FieldValidation.ValidateUShortParameter(maxCompoPoints, nameof(maxCompoPoints));
@@ -158,9 +157,19 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="len">Table data length.</param>
         /// <returns>A <see cref="MaximumProfileTable" /> loaded from the array provided.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array contains insufficient data or has an unrecognised version number.</exception>
-        public static MaximumProfileTable FromBytes(byte[] arr, int offset, long len)
+        public static MaximumProfileTable FromBytes(byte[] arr, int offset, int len)
         {
-            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
+            if (arr is null)
+            {
+                throw new ArgumentNullException(nameof(arr));
+            }
+            FieldValidation.ValidateNonNegativeIntegerParameter(offset, nameof(offset));
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
+            if (len < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(len));
+            }
+
             int version = arr.ToInt(offset);
             if (version == 0x5000)
             {

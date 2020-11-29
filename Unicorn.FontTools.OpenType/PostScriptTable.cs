@@ -602,13 +602,13 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="offset">The array index at which the PostScript table data starts.</param>
         /// <param name="len">The length of the data making up the table.</param>
         /// <returns></returns>
-        public static PostScriptTable FromBytes(byte[] arr, int offset, long len)
+        public static PostScriptTable FromBytes(byte[] arr, int offset, int len)
         {
             if (arr is null)
             {
                 throw new ArgumentNullException(nameof(arr));
             }
-            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             int rawVersion = arr.ToInt(offset);
             decimal italicAngle = arr.ToFixed(offset + 4);
             short underlinePos = arr.ToShort(offset + 8);

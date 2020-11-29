@@ -109,9 +109,9 @@ namespace Unicorn.FontTools.OpenType
         /// <returns>A <see cref="HorizontalHeaderTable" /> object</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array does not contain enough data (if the array length is not at least 36 greater than the 
         /// offset parameter.</exception>
-        public static HorizontalHeaderTable FromBytes(byte[] arr, int offset, long len)
+        public static HorizontalHeaderTable FromBytes(byte[] arr, int offset, int len)
         {
-            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             if (len < 36)
             {
                 throw new InvalidOperationException(Resources.HorizontalHeaderTable_FromBytes_InsufficientDataError);

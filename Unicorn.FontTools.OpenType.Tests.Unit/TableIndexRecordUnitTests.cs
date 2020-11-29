@@ -11,7 +11,7 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        private static Table MockLoader(byte[] data, int offset, long len) => null;
+        private static Table MockLoader(byte[] data, int offset, int len) => null;
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 

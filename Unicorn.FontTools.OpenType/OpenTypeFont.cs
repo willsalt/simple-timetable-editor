@@ -234,7 +234,7 @@ namespace Unicorn.FontTools.OpenType
             }
         }
 
-        private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset, long len)
+        private HorizontalMetricsTable LoadHmtxTable(byte[] arr, int offset, int len)
             => HorizontalMetricsTable.FromBytes(arr, offset, MaximumProfile.GlyphCount, HorizontalHeader.HmtxHMetricCount);
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Unicorn.FontTools.OpenType
 
             byte[] rawTable = new byte[indexRecord.Length];
             _accessor.ReadArray(indexRecord.Offset.Value, rawTable, 0, (int)indexRecord.Length);
-            return indexRecord.LoadingMethod(rawTable, 0, indexRecord.Length);
+            return indexRecord.LoadingMethod(rawTable, 0, (int)indexRecord.Length);
         }
 
         /// <summary>

@@ -120,9 +120,9 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="offset">The index of the start of the table within the data array.</param>
         /// <param name="len">The length of the table data within the array.</param>
         /// <returns></returns>
-        public static CharacterMappingTable FromBytes(byte[] arr, int offset, long len)
+        public static CharacterMappingTable FromBytes(byte[] arr, int offset, int len)
         {
-            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             if (len < 4)
             {
                 throw new ArgumentException(Resources.CharacterMappingTable_FromBytes_InsufficientLength, nameof(len));

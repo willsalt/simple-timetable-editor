@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
@@ -74,6 +75,21 @@ namespace Unicorn.FontTools.OpenType.Tests.Unit
             int idx = 0;
 
             IEnumerator<CharacterMapping> testEnumerator = testObject.GetEnumerator();
+
+            while (testEnumerator.MoveNext())
+            {
+                Assert.AreSame(testData[idx++], testEnumerator.Current);
+            }
+        }
+
+        [TestMethod]
+        public void CharacterMappingCollectionClass_IEnumeratorGetEnumeratorMethod_ReturnsEnumeratorWhichEnumeratesObjectInCorrectOrder()
+        {
+            CharacterMapping[] testData = GetTestData();
+            CharacterMappingCollection testObject = new CharacterMappingCollection(testData);
+            int idx = 0;
+
+            IEnumerator testEnumerator = ((IEnumerable)testObject).GetEnumerator();
 
             while (testEnumerator.MoveNext())
             {

@@ -466,13 +466,13 @@ namespace Unicorn.FontTools.OpenType
         /// <exception cref="ArgumentNullException">Thrown if the <c>arr</c> parameter is <c>null</c>.</exception>
         /// <exception cref="IndexOutOfRangeException">Thrown if the <c>offset</c> parameter is negative.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the length of the <c>arr</c> parameter is less than the sum of the other two parameters.</exception>
-        public static OS2MetricsTable FromBytes(byte[] arr, int offset, long len)
+        public static OS2MetricsTable FromBytes(byte[] arr, int offset, int len)
         {
             if (arr is null)
             {
                 throw new ArgumentNullException(nameof(arr));
             }
-            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             ushort version = arr.ToUShort(offset);
             switch (version)
             {

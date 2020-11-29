@@ -90,6 +90,15 @@ namespace Unicorn.FontTools.OpenType {
         /// <summary>
         ///   Looks up a localized string similar to Value must not be less than zero..
         /// </summary>
+        internal static string FieldValidation_ValidateNonNegativeIntParameter_Error {
+            get {
+                return ResourceManager.GetString("FieldValidation_ValidateNonNegativeIntParameter_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must not be less than zero..
+        /// </summary>
         internal static string FieldValidation_ValidateNonNegativeLongParameter_Error {
             get {
                 return ResourceManager.GetString("FieldValidation_ValidateNonNegativeLongParameter_Error", resourceCulture);

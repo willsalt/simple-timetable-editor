@@ -126,6 +126,9 @@
   <data name="FieldValidation_ValidateArrayOfUShortParameter_Error" xml:space="preserve">
     <value>Field elements must all be within the range of an unsigned 16-bit integer.</value>
   </data>
+  <data name="FieldValidation_ValidateNonNegativeIntParameter_Error" xml:space="preserve">
+    <value>Value must not be less than zero.</value>
+  </data>
   <data name="FieldValidation_ValidateNonNegativeLongParameter_Error" xml:space="preserve">
     <value>Value must not be less than zero.</value>
   </data>

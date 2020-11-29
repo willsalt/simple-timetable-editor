@@ -91,11 +91,27 @@ namespace Unicorn.FontTools.OpenType.Utility
         /// <param name="name">The name of the argument being validated, for use if an exception must be thrown.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the <c>value</c> argument is less than 0.  The <see cref="ArgumentException.ParamName" /> 
         ///   property will equal the <c>name</c> parameter value, rather than <c>value</c>.</exception>
-        public static void ValidateNonNegativeLongParameter(long value, string name)
+        public static void ValidateNonNegativeIntegerParameter(long value, string name)
         {
             if (value < 0)
             {
                 throw new ArgumentOutOfRangeException(name, Resources.FieldValidation_ValidateNonNegativeLongParameter_Error);
+            }
+        }
+
+        /// <summary>
+        /// Validate that a <see cref="int" /> value is zero or greater.  This routine is intended to be called to validate method
+        /// arguments, so throws <see cref="ArgumentOutOfRangeException" /> if the validation fails.
+        /// </summary>
+        /// <param name="value">The value to be validated.</param>
+        /// <param name="name">The name of the argument being validated, for use if an exception must be thrown.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the <c>value</c> argument is less than 0.  The <see cref="ArgumentException.ParamName" /> 
+        ///   property will equal the <c>name</c> parameter value, rather than <c>value</c>.</exception>
+        public static void ValidateNonNegativeIntegerParameter(int value, string name)
+        {
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException(name, Resources.FieldValidation_ValidateNonNegativeIntParameter_Error);
             }
         }
     }

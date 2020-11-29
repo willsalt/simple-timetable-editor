@@ -161,9 +161,9 @@ namespace Unicorn.FontTools.OpenType
         /// <param name="len">Table length.</param>
         /// <returns>A <see cref="HeaderTable" /> instance.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the array is insufficiently long to carry out the conversion.</exception>
-        public static HeaderTable FromBytes(byte[] data, int offset, long len)
+        public static HeaderTable FromBytes(byte[] data, int offset, int len)
         {
-            FieldValidation.ValidateNonNegativeLongParameter(len, nameof(len));
+            FieldValidation.ValidateNonNegativeIntegerParameter(len, nameof(len));
             if (len < 54)
             {
                 throw new InvalidOperationException(Resources.HeaderTable_FromBytes_InsufficientDataError);

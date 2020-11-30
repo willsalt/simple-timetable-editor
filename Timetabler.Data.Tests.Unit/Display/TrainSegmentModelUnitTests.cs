@@ -128,7 +128,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.AM);
 
-            string testOutput = testObject.HalfOfDay;
+            string testOutput = testObject.HalfOfDay.ToNameString();
 
             Assert.AreEqual("a.m.", testOutput);
         }
@@ -138,7 +138,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.PM);
 
-            string testOutput = testObject.HalfOfDay;
+            string testOutput = testObject.HalfOfDay.ToNameString();
 
             Assert.AreEqual("P.M.", testOutput);
         }
@@ -148,7 +148,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.Noon);
 
-            string testOutput = testObject.HalfOfDay;
+            string testOutput = testObject.HalfOfDay.ToNameString();
 
             Assert.AreEqual("noon", testOutput);
         }

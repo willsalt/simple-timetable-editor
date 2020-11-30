@@ -7,6 +7,7 @@ using NLog;
 using Timetabler.CoreData;
 using Timetabler.CoreData.Helpers;
 using Timetabler.Data;
+using Timetabler.Data.Extensions;
 using Timetabler.Data.Interfaces;
 using Timetabler.Data.Collections;
 using Timetabler.Data.Display;
@@ -762,8 +763,9 @@ namespace Timetabler.PdfExport
             // Write am/pm indicator
             LineDrawingWrapper(LogMessageResources.LogMessage_DrawingSeparator, xCoord + lineGapSize, currentYCoord - LineOffset, 
                 (xCoord + segmentWidth) - lineGapSize, currentYCoord - LineOffset, MainLineWidth);
-            currentDims = _currentPage.PageGraphics.MeasureString(segment.HalfOfDay, _plainBodyFont);
-            WritingWrapper(segment.HalfOfDay, _plainBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + currentDims.HeightAboveBaseline);
+            string indicator = segment.HalfOfDay.ToCustomName(options);
+            currentDims = _currentPage.PageGraphics.MeasureString(indicator, _plainBodyFont);
+            WritingWrapper(indicator, _plainBodyFont, xCoord + (segmentWidth - currentDims.Width) / 2, currentYCoord + currentDims.HeightAboveBaseline);
             currentYCoord += currentDims.LineHeight + MainLineWidth;
 
             // Draw separator line between header and timing points.
@@ -1164,7 +1166,7 @@ namespace Timetabler.PdfExport
                 {
                     maxWidth = width;
                 }
-                width = _currentPage.PageGraphics.MeasureString(segment.HalfOfDay, _plainBodyFont).Width;
+                width = _currentPage.PageGraphics.MeasureString(segment.HalfOfDay.ToCustomName(options), _plainBodyFont).Width;
                 if (width > maxWidth)
                 {
                     maxWidth = width;

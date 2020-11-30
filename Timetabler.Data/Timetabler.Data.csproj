@@ -35,7 +35,6 @@
     <Folder Include="Comparers\" />
     <Folder Include="Display\Interfaces\" />
     <Folder Include="Events\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
 

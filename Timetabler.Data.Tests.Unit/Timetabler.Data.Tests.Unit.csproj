@@ -25,7 +25,6 @@
     <Folder Include="Collections\" />
     <Folder Include="Comparers\" />
     <Folder Include="Display\" />
-    <Folder Include="Extensions\" />
     <Folder Include="TestHelpers\Extensions\" />
   </ItemGroup>
 

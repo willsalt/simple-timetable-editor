@@ -15,7 +15,7 @@ namespace Timetabler.CoreData.Tests.Unit
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
         [TestMethod]
-        public void HalfOfDayExtensionsClass_ToNameStringMethod_ReturnsExpectedResult_IfValueOfFirstParameterIsAm()
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsAm()
         {
             HalfOfDay testParam0 = HalfOfDay.AM;
 
@@ -25,7 +25,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void HalfOfDayExtensionsClass_ToNameStringMethod_ReturnsExpectedResult_IfValueOfFirstParameterIsPm()
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsPm()
         {
             HalfOfDay testParam0 = HalfOfDay.PM;
 
@@ -35,7 +35,7 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void HalfOfDayExtensionsClass_ToNameStringMethod_ReturnsExpectedResult_IfValueOfFirstParameterIsNoon()
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsNoon()
         {
             HalfOfDay testParam0 = HalfOfDay.Noon;
 
@@ -45,9 +45,59 @@ namespace Timetabler.CoreData.Tests.Unit
         }
 
         [TestMethod]
-        public void HalfOfDayExtensionsClass_ToNameStringMethod_ReturnsExpectedResult_IfValueOfFirstParameterIsNotAValidEnumValue()
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsNotAValidEnumValue()
         {
             HalfOfDay testParam0 = (HalfOfDay)_rnd.Next(10, int.MaxValue);
+
+            string testOutput = testParam0.ToNameString();
+
+            Assert.AreEqual(Resources.HalfOfDay_ToNameString_Am, testOutput);
+        }
+
+        [TestMethod]
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithNullableOfHalfOfDayParameter_ReturnsEmptyString_IfParameterIsNull()
+        {
+            HalfOfDay? testParam0 = null;
+
+            string testOutput = testParam0.ToNameString();
+
+            Assert.AreEqual("", testOutput);
+        }
+
+        [TestMethod]
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithNullableOfHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsAm()
+        {
+            HalfOfDay? testParam0 = HalfOfDay.AM;
+
+            string testOutput = testParam0.ToNameString();
+
+            Assert.AreEqual(Resources.HalfOfDay_ToNameString_Am, testOutput);
+        }
+
+        [TestMethod]
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithNullableOfHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsPm()
+        {
+            HalfOfDay? testParam0 = HalfOfDay.PM;
+
+            string testOutput = testParam0.ToNameString();
+
+            Assert.AreEqual(Resources.HalfOfDay_ToNameString_Pm, testOutput);
+        }
+
+        [TestMethod]
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithNullableOfHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsNoon()
+        {
+            HalfOfDay? testParam0 = HalfOfDay.Noon;
+
+            string testOutput = testParam0.ToNameString();
+
+            Assert.AreEqual(Resources.HalfOfDay_ToNameString_Noon, testOutput);
+        }
+
+        [TestMethod]
+        public void HalfOfDayExtensionsClass_ToNameStringMethodWithNullableOfHalfOfDayParameter_ReturnsExpectedResult_IfValueOfFirstParameterIsNotAValidEnumValue()
+        {
+            HalfOfDay? testParam0 = (HalfOfDay)_rnd.Next(10, int.MaxValue);
 
             string testOutput = testParam0.ToNameString();
 

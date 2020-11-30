@@ -128,9 +128,9 @@ namespace Timetabler.Data.Tests.Unit.Display
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.AM);
 
-            string testOutput = testObject.HalfOfDay.ToNameString();
+            HalfOfDay? testOutput = testObject.HalfOfDay;
 
-            Assert.AreEqual("a.m.", testOutput);
+            Assert.AreEqual(HalfOfDay.AM, testOutput);
         }
 
         [TestMethod]
@@ -138,9 +138,9 @@ namespace Timetabler.Data.Tests.Unit.Display
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.PM);
 
-            string testOutput = testObject.HalfOfDay.ToNameString();
+            HalfOfDay? testOutput = testObject.HalfOfDay;
 
-            Assert.AreEqual("P.M.", testOutput);
+            Assert.AreEqual(HalfOfDay.PM, testOutput);
         }
 
         [TestMethod]
@@ -148,9 +148,9 @@ namespace Timetabler.Data.Tests.Unit.Display
         {
             TrainSegmentModel testObject = GetTestObject(null, null, null, HalfOfDay.Noon);
 
-            string testOutput = testObject.HalfOfDay.ToNameString();
+            HalfOfDay? testOutput = testObject.HalfOfDay;
 
-            Assert.AreEqual("noon", testOutput);
+            Assert.AreEqual(HalfOfDay.Noon, testOutput);
         }
 
         [TestMethod]
@@ -897,7 +897,7 @@ namespace Timetabler.Data.Tests.Unit.Display
 
             TrainSegmentModel testOutput = testObject.SplitAtIndex(2, 1);
 
-            Assert.AreEqual("P.M.", testOutput.HalfOfDay);
+            Assert.AreEqual(HalfOfDay.PM, testOutput.HalfOfDay);
         }
 
 #pragma warning restore CA5394 // Do not use insecure randomness

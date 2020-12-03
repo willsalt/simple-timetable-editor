@@ -9,6 +9,7 @@ using Timetabler.CoreData;
 using Timetabler.Data.Display;
 using Timetabler.Data.Display.Interfaces;
 using Timetabler.Data.Tests.Unit.TestHelpers;
+using Timetabler.Data.Tests.Utility.Helpers;
 
 namespace Timetabler.Data.Tests.Unit.Display
 {
@@ -41,6 +42,24 @@ namespace Timetabler.Data.Tests.Unit.Display
             {
                 tsm.PageFootnotes.Add(FootnoteDisplayModelHelpers.GetFootnoteDisplayModel());
             }
+            foreach (ILocationEntry timing in GetTimingPointList(timings, definitelyMorning))
+            {
+                tsm.Timings.Add(timing);
+            }
+            if (additionalTimings != null)
+            {
+                foreach (ILocationEntry timing in additionalTimings)
+                {
+                    tsm.Timings.Add(timing);
+                }
+            }
+
+            return tsm;
+        }
+
+        private static IList<ILocationEntry> GetTimingPointList(int? timings, HalfOfDay? definitelyMorning)
+        {
+            List<ILocationEntry> output = new List<ILocationEntry>();
             int timingsCount;
             if (timings.HasValue)
             {
@@ -72,18 +91,10 @@ namespace Timetabler.Data.Tests.Unit.Display
             }
             for (int i = 0; i < timingsCount; ++i)
             {
-                tsm.Timings.Add(new TrainLocationTimeModel { LocationKey = i.ToString(CultureInfo.CurrentCulture), ActualTime = baseTime });
+                output.Add(new TrainLocationTimeModel { LocationKey = i.ToString(CultureInfo.CurrentCulture), ActualTime = baseTime });
                 baseTime = _rnd.NextTimeOfDayBetween(baseTime, 86400 - (timingsCount - i));
             }
-            if (additionalTimings != null)
-            {
-                foreach (ILocationEntry timing in additionalTimings)
-                {
-                    tsm.Timings.Add(timing);
-                }
-            }
-
-            return tsm;
+            return output;
         }
 
         private static Note[] GetTestNotes(IList<string> noteIds)
@@ -110,7 +121,7 @@ namespace Timetabler.Data.Tests.Unit.Display
         }
 
         [TestMethod]
-        public void TrainSegmentModelClass_ConstructorWithTrainAndListOfILocationEntryParameters_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFirstParameterIsNull()
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_ThrowsArgumentNullExceptionWithCorrectParamNameProperty_IfFirstParameterIsNull()
         {
             try
             {
@@ -121,6 +132,155 @@ namespace Timetabler.Data.Tests.Unit.Display
             {
                 Assert.AreEqual("train", ex.ParamName);
             }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_DoesNotThrowException_IfFirstParameterIsNotNullAndSecondParameterIsNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain();
+            IEnumerable<ILocationEntry> testParam1 = null;
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.IsNotNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsTrainIdPropertyToCorrectValue_IfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain();
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0.Id, testOutput.TrainId);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsHeadcodePropertyToCorrectValue_IfFirstParameterIsNotNullAndHeadcodePropertyOfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain();
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0.Headcode, testOutput.Headcode);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsHeadcodePropertyToEmptyString_IfFirstParameterIsNotNullAndHeadcodePropertyOfFirstParameterIsNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, false);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual("", testOutput.Headcode);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsLocoDiagramPropertyToCorrectValue_IfFirstParameterIsNotNullAndLocoDiagramPropertyOfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain();
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0.LocoDiagram, testOutput.LocoDiagram);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsLocoDiagramPropertyToEmptyString_IfFirstParameterIsNotNullAndLocoDiagramPropertyOfFirstParameterIsNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, true, false);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual("", testOutput.LocoDiagram);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsTrainClassPropertyToCorrectValue_IfFirstParameterIsNotNullAndTrainClassPropertyOfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain();
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0.TrainClass.TableCode, testOutput.TrainClass);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsTrainClassPropertyToEmptyString_IfFirstParameterIsNotNullAndTrainClassPropertyOfFirstParameterIsNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, true, true, false);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual("", testOutput.TrainClass);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsFootnotesPropertyToCorrectValue_IfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, true, true, true, true);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+            string expectedResult = string.Join(",", testParam0.Footnotes.Select(f => f.Symbol));
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(expectedResult, testOutput.Footnotes);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsPageFootnotesPropertyToCorrectValue_IfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, true, true, true, true);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+            List<FootnoteDisplayModel> expectedData = testParam0.Footnotes.Where(f => f.DefinedOnPages).Select(f => f.ToFootnoteDisplayModel()).ToList();
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(expectedData.Count, testOutput.PageFootnotes.Count);
+            for (int i = 0; i < expectedData.Count; ++i)
+            {
+                Assert.IsTrue(expectedData[i] == testOutput.PageFootnotes[i]);
+            }
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsIncludeSeparatorAbovePropertyToCorrectValue_IfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, true, true, false);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0.IncludeSeparatorAbove, testOutput.IncludeSeparatorAbove);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsIncludeSeparatorBelowPropertyToCorrectValue_IfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, true, true, false);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0.IncludeSeparatorBelow, testOutput.IncludeSeparatorBelow);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_ConstructorWithTrainAndIEnumerableOfILocationEntryParameters_SetsInlineNotePropertyToCorrectValue_IfFirstParameterIsNotNull()
+        {
+            Train testParam0 = TrainHelpers.GetTrain(null, null, null, true, true, false);
+            IList<ILocationEntry> testParam1 = GetTimingPointList(null, null);
+
+            TrainSegmentModel testOutput = new TrainSegmentModel(testParam0, testParam1);
+
+            Assert.AreEqual(testParam0.InlineNote, testOutput.InlineNote);
         }
 
         [TestMethod]
@@ -151,6 +311,32 @@ namespace Timetabler.Data.Tests.Unit.Display
             HalfOfDay? testOutput = testObject.HalfOfDay;
 
             Assert.AreEqual(HalfOfDay.Noon, testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_HalfOfDayProperty_EqualsNull_IfSegmentHasNoTimings()
+        {
+            TrainSegmentModel testObject = GetTestObject(0, null, null, null);
+
+            HalfOfDay? testOutput = testObject.HalfOfDay;
+
+            Assert.IsNull(testOutput);
+        }
+
+        [TestMethod]
+        public void TrainSegmentModelClass_HalfOfDayProperty_EqualsNull_IfAllTimingsInSegmentHaveActualTimePropertyEqualToNull()
+        {
+            List<ILocationEntry> timings = new List<ILocationEntry>();
+            int timingCount = _rnd.Next(1, 20);
+            for (int i = 0; i < timingCount; ++i)
+            {
+                timings.Add(new TrainLocationTimeModel { ActualTime = null });
+            }
+            TrainSegmentModel testObject = GetTestObject(0, null, null, null, timings);
+
+            HalfOfDay? testOutput = testObject.HalfOfDay;
+
+            Assert.IsNull(testOutput);
         }
 
         [TestMethod]

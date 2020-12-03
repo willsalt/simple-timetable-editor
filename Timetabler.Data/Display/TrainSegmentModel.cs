@@ -46,7 +46,7 @@ namespace Timetabler.Data.Display
         {
             get
             {
-                if (Timings == null || Timings.Count == 0)
+                if (Timings.Count == 0)
                 {
                     return null;
                 }

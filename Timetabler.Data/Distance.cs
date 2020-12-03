@@ -32,19 +32,7 @@ namespace Timetabler.Data
         /// <summary>
         /// The mileage figure, as a floating point number of miles.
         /// </summary>
-        public double AbsoluteDistance
-        {
-            get
-            {
-                return Chainage / 80.0 + Mileage;
-            }
-
-            set
-            {
-                Mileage = (int)value;
-                Chainage = (value - Mileage) * 80.0;
-            }
-        }
+        public double AbsoluteDistance => Chainage / 80.0 + Mileage;
 
         /// <summary>
         /// Constructor.
@@ -63,10 +51,7 @@ namespace Timetabler.Data
         /// <param name="d1">A distance figure.</param>
         /// <param name="d2">A distance figure.</param>
         /// <returns>A boolean value.</returns>
-        public static bool operator <(Distance d1, Distance d2)
-        {
-            return d1.Mileage < d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage < d2.Chainage);
-        }
+        public static bool operator <(Distance d1, Distance d2) => d1.Mileage < d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage < d2.Chainage);
 
         /// <summary>
         /// Return true if d1 is less than or equal to d2, false otherwise.
@@ -74,10 +59,7 @@ namespace Timetabler.Data
         /// <param name="d1">A distance figure.</param>
         /// <param name="d2">A distance figure.</param>
         /// <returns>A boolean value.</returns>
-        public static bool operator <=(Distance d1, Distance d2)
-        {
-            return d1.Mileage < d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage <= d2.Chainage);
-        }
+        public static bool operator <=(Distance d1, Distance d2) => d1.Mileage < d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage <= d2.Chainage);
 
         /// <summary>
         /// Return true if d1 is greater than d2, false otherwise.
@@ -85,10 +67,7 @@ namespace Timetabler.Data
         /// <param name="d1">A distance instance.</param>
         /// <param name="d2">A distance instance.</param>
         /// <returns>A boolean value.</returns>
-        public static bool operator >(Distance d1, Distance d2)
-        {
-            return d1.Mileage > d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage > d2.Chainage);
-        }
+        public static bool operator >(Distance d1, Distance d2) => d1.Mileage > d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage > d2.Chainage);
 
         /// <summary>
         /// Return true if d1 is greater than or equal to d2, false otherwise.
@@ -96,10 +75,7 @@ namespace Timetabler.Data
         /// <param name="d1">A distance instance.</param>
         /// <param name="d2">A distance instance.</param>
         /// <returns>A boolean value.</returns>
-        public static bool operator >=(Distance d1, Distance d2)
-        {
-            return d1.Mileage > d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage >= d2.Chainage);
-        }
+        public static bool operator >=(Distance d1, Distance d2) => d1.Mileage > d2.Mileage || (d1.Mileage == d2.Mileage && d1.Chainage >= d2.Chainage);
 
         /// <summary>
         /// Returns true if d1 and d2 represent an equal mileage, false otherwise.   Note that chainage wraparound is not considered, so 2m 20ch is not considered 
@@ -108,10 +84,7 @@ namespace Timetabler.Data
         /// <param name="d1">A distance instance.</param>
         /// <param name="d2">A distance instance.</param>
         /// <returns>A boolean value.</returns>
-        public static bool operator ==(Distance d1, Distance d2)
-        {
-            return d1.Mileage == d2.Mileage && d1.Chainage == d2.Chainage;
-        }
+        public static bool operator ==(Distance d1, Distance d2) => d1.Mileage == d2.Mileage && d1.Chainage == d2.Chainage;
 
         /// <summary>
         /// Returns false if d1 and d2 represent an equal mileage, true otherwise.  Note that chainage wraparound is not considered, so 2m 20ch is not considered 
@@ -120,10 +93,7 @@ namespace Timetabler.Data
         /// <param name="d1">A distance instance.</param>
         /// <param name="d2">A distance instance.</param>
         /// <returns>A boolean value.</returns>
-        public static bool operator !=(Distance d1, Distance d2)
-        {
-            return d1.Mileage != d2.Mileage || d2.Chainage != d1.Chainage;
-        }
+        public static bool operator !=(Distance d1, Distance d2) => d1.Mileage != d2.Mileage || d2.Chainage != d1.Chainage;
 
         /// <summary>
         /// Adds two <see cref="Distance" />s and returns a <see cref="Distance" /> equal to their sum.
@@ -131,10 +101,7 @@ namespace Timetabler.Data
         /// <param name="d1">A <see cref="Distance" /> value.</param>
         /// <param name="d2">A <see cref="Distance" /> value.</param>
         /// <returns>A <see cref="Distance" /> value equal to the sum of the two parameters.</returns>
-        public static Distance operator +(Distance d1, Distance d2)
-        {
-            return new Distance(d1.Mileage + d2.Mileage, d1.Chainage + d2.Chainage);
-        }
+        public static Distance operator +(Distance d1, Distance d2) => new Distance(d1.Mileage + d2.Mileage, d1.Chainage + d2.Chainage);
 
         /// <summary>
         /// Adds two <see cref="Distance" />s and returns a <see cref="Distance" /> equal to their sum.
@@ -142,10 +109,7 @@ namespace Timetabler.Data
         /// <param name="d1">A <see cref="Distance" /> value.</param>
         /// <param name="d2">A <see cref="Distance" /> value.</param>
         /// <returns>A <see cref="Distance" /> value equal to the sum of the two parameters.</returns>
-        public static Distance Add(Distance d1, Distance d2)
-        {
-            return d1 + d2;
-        }
+        public static Distance Add(Distance d1, Distance d2) => d1 + d2;
 
         /// <summary>
         /// Compute the absolute difference between two <see cref="Distance" /> instances.
@@ -208,12 +172,11 @@ namespace Timetabler.Data
         /// <returns>An integer indicating comparative values.</returns>
         public int CompareTo(object obj)
         {
-            if (obj == null || !(obj is Distance d))
+            if (obj != null && obj is Distance d)
             {
-                throw new ArgumentException(Resources.Error_WrongDataType, nameof(obj));
+                return CompareTo(d);
             }
-
-            return CompareTo(d);
+            throw new ArgumentException(Resources.Error_WrongDataType, nameof(obj));
         }
 
         /// <summary>
@@ -221,10 +184,7 @@ namespace Timetabler.Data
         /// </summary>
         /// <param name="other">The value to compare against.</param>
         /// <returns>Boolean value indicating equality.</returns>
-        public bool Equals(Distance other)
-        {
-            return this == other;
-        }
+        public bool Equals(Distance other) => this == other;
 
         /// <summary>
         /// Equality comparison with another object.  If the object is not a <see cref="Distance"/> value, it is cast to <see cref="double"/> and compared against the 
@@ -245,10 +205,7 @@ namespace Timetabler.Data
         /// Returns a hash code identifying this value.
         /// </summary>
         /// <returns>An integer hash code.</returns>
-        public override int GetHashCode()
-        {
-            return ((int)Chainage) ^ (Mileage << 7);
-        }
+        public override int GetHashCode() => ((int)Chainage) ^ (Mileage << 7);
 
         /// <summary>
         /// Returns a string representation of this value, formatted using a given format string and provided culture-specific information.
@@ -291,18 +248,12 @@ namespace Timetabler.Data
         /// <exception cref="FormatException">Thrown if a format string other than the single characters D, F or G (or their lowercase equivalent) is 
         /// provided.</exception>
         /// <returns>This value formatted as a string.</returns>
-        public string ToString(string format)
-        {
-            return ToString(format, CultureInfo.CurrentCulture);
-        }
+        public string ToString(string format) => ToString(format, CultureInfo.CurrentCulture);
 
         /// <summary>
         /// Returns a string representation of this value, in the format "Xm Ych".
         /// </summary>
         /// <returns>The value of this object formatted as a string.</returns>
-        public override string ToString()
-        {
-            return ToString("G", CultureInfo.CurrentCulture);
-        }
+        public override string ToString() => ToString("G", CultureInfo.CurrentCulture);
     }
 }

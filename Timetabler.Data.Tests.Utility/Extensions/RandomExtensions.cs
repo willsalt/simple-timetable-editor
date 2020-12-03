@@ -93,6 +93,22 @@ namespace Timetabler.Data.Tests.Utility.Extensions
             return allValues[random.Next(allValues.Length)];
         }
 
+        public static Distance NextDistance(this Random random)
+        {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+            int miles = random.Next(200);
+            double chains = random.NextDouble() * 80;
+            return new Distance(miles, chains);
+        }
+
+        public static Distance NextDistance(this Random random, Distance min)
+        {
+            return min + NextDistance(random);
+        }
+
 #pragma warning restore CA5394 // Do not use insecure randomness
 
     }

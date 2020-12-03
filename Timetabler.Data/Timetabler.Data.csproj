@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Collections\" />
-    <Folder Include="Comparers\" />
     <Folder Include="Display\Interfaces\" />
     <Folder Include="Events\" />
     <Folder Include="Interfaces\" />

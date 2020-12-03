@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData;
 
-namespace Timetabler.Data.Tests.Unit.TestHelpers
+namespace Timetabler.Data.Tests.Utility.Helpers
 {
-    internal static class TrainTimeHelpers
+    [ExcludeFromCodeCoverage]
+    public static class TrainTimeHelpers
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
-        internal static TrainTime GetTrainTime(int? footnoteCount = null)
+        public static TrainTime GetTrainTime(int? footnoteCount = null)
         {
             TrainTime tt = new TrainTime
             {
@@ -35,25 +37,29 @@ namespace Timetabler.Data.Tests.Unit.TestHelpers
 
 #pragma warning restore CA5394 // Do not use insecure randomness
 
-        internal static TrainTime GetTrainTimeBefore(TimeOfDay time, int? footnoteCount = null)
+        public static TrainTime GetTrainTimeBefore(TimeOfDay time, int? footnoteCount = null)
         {
             TrainTime tt = new TrainTime { Time = _rnd.NextTimeOfDayBefore(time) };
             return AddFootnotesToTrainTime(tt, footnoteCount);
         }
 
-        internal static TrainTime GetTrainTimeAfter(TimeOfDay time, int? footnoteCount = null)
+        public static TrainTime GetTrainTimeAfter(TimeOfDay time, int? footnoteCount = null)
         {
             TrainTime tt = new TrainTime { Time = _rnd.NextTimeOfDayAfter(time) };
             return AddFootnotesToTrainTime(tt, footnoteCount);
         }
 
-        internal static TrainTime GetTrainTimeAt(TimeOfDay time, int? footnoteCount = null)
+        public static TrainTime GetTrainTimeAt(TimeOfDay time, int? footnoteCount = null)
         {
+            if (time is null)
+            {
+                throw new ArgumentNullException(nameof(time));
+            }
             TrainTime tt = new TrainTime { Time = time.Copy() };
             return AddFootnotesToTrainTime(tt, footnoteCount);
         }
 
-        internal static TrainTime GetTrainTimeNotAt(TimeOfDay time, int? footnoteCount = null)
+        public static TrainTime GetTrainTimeNotAt(TimeOfDay time, int? footnoteCount = null)
         {
             TrainTime tt = new TrainTime { Time = _rnd.NextBoolean() ? _rnd.NextTimeOfDayAfter(time) : _rnd.NextTimeOfDayBefore(time) };
             return AddFootnotesToTrainTime(tt, footnoteCount);

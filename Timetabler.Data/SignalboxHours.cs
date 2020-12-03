@@ -15,7 +15,7 @@ namespace Timetabler.Data
         private TimeOfDay _startTime;
         private TimeOfDay _endTime;
         private bool _tokenBalanceWarning;
-        private object _tokenBalanceLock;
+        private readonly object _tokenBalanceLock;
 
         /// <summary>
         /// Default constructor.

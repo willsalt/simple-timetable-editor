@@ -83,6 +83,21 @@ namespace Timetabler.SerialData
         public string DownSectionLabel { get; set; }
 
         /// <summary>
+        /// The label used at the top of segments that start in the morning.
+        /// </summary>
+        public string MorningLabel { get; set; }
+
+        /// <summary>
+        /// The label used at the top of segments that start at noon.
+        /// </summary>
+        public string MiddayLabel { get; set; }
+
+        /// <summary>
+        /// The label used at the top of segments that start in the afternoon/evening.
+        /// </summary>
+        public string AfternoonLabel { get; set; }
+
+        /// <summary>
         /// Whether or not to show a table of distances in the output.
         /// </summary>
         public SectionSelection? DistancesInOutput { get; set; }

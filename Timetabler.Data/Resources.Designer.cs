@@ -97,11 +97,38 @@ namespace Timetabler.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to P.M..
+        /// </summary>
+        internal static string DocumentExportOptions_DefaultAfternoonLabel {
+            get {
+                return ResourceManager.GetString("DocumentExportOptions_DefaultAfternoonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DOWN.
         /// </summary>
         internal static string DocumentExportOptions_DefaultDownSectionLabel {
             get {
                 return ResourceManager.GetString("DocumentExportOptions_DefaultDownSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to noon.
+        /// </summary>
+        internal static string DocumentExportOptions_DefaultMiddayLabel {
+            get {
+                return ResourceManager.GetString("DocumentExportOptions_DefaultMiddayLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a.m..
+        /// </summary>
+        internal static string DocumentExportOptions_DefaultMorningLabel {
+            get {
+                return ResourceManager.GetString("DocumentExportOptions_DefaultMorningLabel", resourceCulture);
             }
         }
         

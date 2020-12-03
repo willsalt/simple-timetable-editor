@@ -78,6 +78,21 @@ namespace Timetabler.Data
         public string DownSectionLabel { get; set; }
 
         /// <summary>
+        /// The label used at the top of segments that start in the morning (e.g. "a.m.").
+        /// </summary>
+        public string MorningLabel { get; set; }
+
+        /// <summary>
+        /// The label used at the top of segments that start at midday (e.g. "noon").
+        /// </summary>
+        public string MiddayLabel { get; set; }
+
+        /// <summary>
+        /// The label used at the top of segments that start in the afternoon or evening (e.g. "P.M.").
+        /// </summary>
+        public string AfternoonLabel { get; set; }
+
+        /// <summary>
         /// Whether to show a table of location distances in the output.
         /// </summary>
         public SectionSelection DistancesInOutput { get; set; }
@@ -96,6 +111,9 @@ namespace Timetabler.Data
             GraphPageOrientation = Orientation.Landscape;
             UpSectionLabel = Resources.DocumentExportOptions_DefaultUpSectionLabel;
             DownSectionLabel = Resources.DocumentExportOptions_DefaultDownSectionLabel;
+            MorningLabel = Resources.DocumentExportOptions_DefaultMorningLabel;
+            MiddayLabel = Resources.DocumentExportOptions_DefaultMiddayLabel;
+            AfternoonLabel = Resources.DocumentExportOptions_DefaultAfternoonLabel;
         }
 
         /// <summary>
@@ -121,6 +139,9 @@ namespace Timetabler.Data
                 UpSectionLabel = UpSectionLabel,
                 DownSectionLabel = DownSectionLabel,
                 DistancesInOutput = DistancesInOutput,
+                MorningLabel = MorningLabel,
+                MiddayLabel = MiddayLabel,
+                AfternoonLabel = AfternoonLabel,
             };
         }
     }

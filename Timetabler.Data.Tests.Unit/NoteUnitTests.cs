@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Timetabler.Data.Display;
-using Timetabler.Data.Tests.Unit.TestHelpers;
+using Timetabler.Data.Tests.Utility.Helpers;
 
 namespace Timetabler.Data.Tests.Unit
 {

@@ -40,22 +40,22 @@ namespace Timetabler.Data.Display
         public string TrainClass { get; set; }
 
         /// <summary>
-        /// The text to appear in the am/pm row (if displayed).
+        /// The value to appear in the am/pm row.
         /// </summary>
-        public string HalfOfDay
+        public HalfOfDay? HalfOfDay
         {
             get
             {
-                if (Timings == null || Timings.Count == 0)
+                if (Timings.Count == 0)
                 {
-                    return "";
+                    return null;
                 }
                 TrainLocationTimeModel firstTimingPoint = Timings.Select(e => e as TrainLocationTimeModel).FirstOrDefault(e => e?.ActualTime != null);
                 if (firstTimingPoint == null)
                 {
-                    return "";
+                    return null;
                 }
-                return firstTimingPoint.ActualTime.HalfOfDay.ToNameString();
+                return firstTimingPoint.ActualTime.HalfOfDay;
             }
         }
 

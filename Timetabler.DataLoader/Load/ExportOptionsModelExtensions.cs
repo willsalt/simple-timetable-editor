@@ -47,6 +47,18 @@ namespace Timetabler.DataLoader.Load
             {
                 deo.DownSectionLabel = model.DownSectionLabel;
             }
+            if (!(model.MorningLabel is null))
+            {
+                deo.MorningLabel = model.MorningLabel;
+            }
+            if (!(model.MiddayLabel is null))
+            {
+                deo.MiddayLabel = model.MiddayLabel;
+            }
+            if (!(model.AfternoonLabel is null))
+            {
+                deo.AfternoonLabel = model.AfternoonLabel;
+            }
 
             return deo;
         }

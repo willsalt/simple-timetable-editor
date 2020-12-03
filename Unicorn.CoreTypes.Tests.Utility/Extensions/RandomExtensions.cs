@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Unicorn.CoreTypes.Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
         private static readonly UniDashStyle[] _dashStyles = 

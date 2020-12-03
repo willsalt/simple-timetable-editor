@@ -31,6 +31,9 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
             GraphPageOrientation = _rnd.NextOrientation(),
             UpSectionLabel = _rnd.NextString(_rnd.Next(10)),
             DownSectionLabel = _rnd.NextString(_rnd.Next(10)),
+            MorningLabel = _rnd.NextString(_rnd.Next(6)),
+            MiddayLabel = _rnd.NextString(_rnd.Next(6)),
+            AfternoonLabel = _rnd.NextString(_rnd.Next(6)),
             DistancesInOutput = _rnd.NextSectionSelection(),
         };
 
@@ -187,6 +190,36 @@ namespace Timetabler.DataLoader.Tests.Unit.Save
             ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
 
             Assert.AreEqual(testParam.DownSectionLabel, testOutput.DownSectionLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectMorningLabelProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
+
+            Assert.AreEqual(testParam.MorningLabel, testOutput.MorningLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectMiddayLabelProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
+
+            Assert.AreEqual(testParam.MiddayLabel, testOutput.MiddayLabel);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsExtensionsClass_ToExportOptionsModelMethod_ReturnsObjectWithCorrectAfternoonLabelProperty_IfParameterIsNotNull()
+        {
+            DocumentExportOptions testParam = GetTestObject();
+
+            ExportOptionsModel testOutput = testParam.ToExportOptionsModel();
+
+            Assert.AreEqual(testParam.AfternoonLabel, testOutput.AfternoonLabel);
         }
 
         [TestMethod]

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
 namespace Tests.Utility.Mocks
 {
+    [ExcludeFromCodeCoverage]
     public class MockTextWriter : TextWriter
     {
         private List<string> _writtenText = new List<string>();

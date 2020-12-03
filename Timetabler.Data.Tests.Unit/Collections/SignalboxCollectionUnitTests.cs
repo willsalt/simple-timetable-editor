@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Tests.Utility.Providers;
 using Timetabler.Data.Collections;
-using Timetabler.Data.Tests.Unit.TestHelpers;
+using Timetabler.Data.Tests.Utility.Helpers;
 
 namespace Timetabler.Data.Tests.Unit.Collections
 {

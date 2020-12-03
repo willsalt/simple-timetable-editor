@@ -63,9 +63,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.DataLoader", "Ti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.DataLoader.Tests.Unit", "Timetabler.DataLoader.Tests.Unit\Timetabler.DataLoader.Tests.Unit.csproj", "{931197C6-A225-4FB9-B2F7-2D8C5ADA19ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetabler.PdfExport", "Timetabler.PdfExport\Timetabler.PdfExport.csproj", "{83ED6D68-5C96-45ED-A490-6ECE7D68FC1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.PdfExport", "Timetabler.PdfExport\Timetabler.PdfExport.csproj", "{83ED6D68-5C96-45ED-A490-6ECE7D68FC1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetabler.PdfExport.Tests.Unit", "Timetabler.PdfExport.Tests.Unit\Timetabler.PdfExport.Tests.Unit.csproj", "{8B2FBE57-2FFD-4AB4-A535-915E5557AD8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.PdfExport.Tests.Unit", "Timetabler.PdfExport.Tests.Unit\Timetabler.PdfExport.Tests.Unit.csproj", "{8B2FBE57-2FFD-4AB4-A535-915E5557AD8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78AC2DAC-F3EA-487F-9880-FE00935C8B68}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

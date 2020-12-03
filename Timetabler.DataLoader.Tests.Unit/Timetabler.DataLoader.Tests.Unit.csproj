@@ -35,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Load\" />
-    <Folder Include="Save\" />
     <Folder Include="TestHelpers\Extensions\" />
   </ItemGroup>
 

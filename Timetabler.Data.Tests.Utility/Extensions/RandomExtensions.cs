@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData;
 
 namespace Timetabler.Data.Tests.Utility.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class RandomExtensions
     {
 
@@ -89,6 +91,22 @@ namespace Timetabler.Data.Tests.Utility.Extensions
                 DashStyle.Solid,
             };
             return allValues[random.Next(allValues.Length)];
+        }
+
+        public static Distance NextDistance(this Random random)
+        {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+            int miles = random.Next(200);
+            double chains = random.NextDouble() * 80;
+            return new Distance(miles, chains);
+        }
+
+        public static Distance NextDistance(this Random random, Distance min)
+        {
+            return min + NextDistance(random);
         }
 
 #pragma warning restore CA5394 // Do not use insecure randomness

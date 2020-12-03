@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Tests.Utility.Extensions;
 using Tests.Utility.Providers;
 using Timetabler.CoreData.Helpers;
 
-namespace Timetabler.Data.Tests.Unit.TestHelpers
+namespace Timetabler.Data.Tests.Utility.Helpers
 {
+    [ExcludeFromCodeCoverage]
     public static class SignalboxHelpers
     {
         private static readonly Random _rnd = RandomProvider.Default;

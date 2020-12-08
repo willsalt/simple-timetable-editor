@@ -173,16 +173,19 @@ namespace Timetabler.PdfExport
             Log.Trace(CultureInfo.CurrentCulture, LogMessageResources.LogMessage_PageMargins, _currentPage.TopMarginPosition, _currentPage.BottomMarginPosition,
                 _currentPage.LeftMarginPosition, _currentPage.RightMarginPosition);
 
-            SectionMetrics sectionMetricsWithTitle = MeasureSectionMetrics(document.DownTrainsDisplay, document.ExportOptions);
+
+            TimetableExportSection currentSection = TimetableExportSection.FromDocument(document, document.ExportOptions.FirstDirectionExported);
+
+            SectionMetrics sectionMetricsWithTitle = MeasureSectionMetrics(currentSection.SectionData, document.ExportOptions);
             SectionMetrics sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(document.ExportOptions.DistancesInOutput == SectionSelection.All);
             SectionMetrics sectionMetrics = sectionMetricsWithTitle;
 
             int columnsPerPage;
-            for (int i = 0; i < document.DownTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
+            for (int i = 0; i < currentSection.SectionData.TrainSegments.Count; i += columnsPerPage)
             {
-                OnStatusUpdate(true, 0.1 + 0.4 * ((double)i / document.DownTrainsDisplay.TrainSegments.Count), Resources.PdfExporter_Export_DownTrainsMessage);
-                columnsPerPage = ComputeColumnsForSection(document.DownTrainsDisplay, i, sectionMetrics);
-                Area footnotesForSection = LayOutFootnotesForSection(document.DownTrainsDisplay, i, columnsPerPage);
+                OnStatusUpdate(true, 0.1 + 0.4 * ((double)i / currentSection.SectionData.TrainSegments.Count), Resources.PdfExporter_Export_DownTrainsMessage);
+                columnsPerPage = ComputeColumnsForSection(currentSection.SectionData, i, sectionMetrics);
+                Area footnotesForSection = LayOutFootnotesForSection(currentSection.SectionData, i, columnsPerPage);
                 if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                 {
                     StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
@@ -190,9 +193,9 @@ namespace Timetabler.PdfExport
                     sectionMetrics = sectionMetricsWithTitle;
                 }
                 _currentPage.CurrentVerticalCursor +=
-                    DrawSection(document.DownTrainsDisplay, false, document.ExportOptions, i, columnsPerPage, sectionMetrics,
-                        document.ExportOptions.DownSectionLabel, firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection,
-                        _currentPage.LeftMarginPosition, _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
+                    DrawSection(currentSection.SectionData, false, document.ExportOptions, i, columnsPerPage, sectionMetrics, currentSection.Label, firstOnPage, 
+                        document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition, 
+                        _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
                 _currentPage.CurrentVerticalCursor += interSectionGapSize;
 
                 if (firstOnPage)
@@ -202,15 +205,17 @@ namespace Timetabler.PdfExport
                 }
             }
 
-            sectionMetricsWithTitle = MeasureSectionMetrics(document.UpTrainsDisplay, document.ExportOptions);
+            currentSection = TimetableExportSection.FromDocument(document, document.ExportOptions.FirstDirectionExported.Opposite());
+
+            sectionMetricsWithTitle = MeasureSectionMetrics(currentSection.SectionData, document.ExportOptions);
             sectionMetricsWithNoTitle = sectionMetricsWithTitle.CopyWithNoTitle(true);
             sectionMetrics = firstOnPage ? sectionMetricsWithTitle : sectionMetricsWithNoTitle;
 
-            for (int i = 0; i < document.UpTrainsDisplay.TrainSegments.Count; i += columnsPerPage)
+            for (int i = 0; i < currentSection.SectionData.TrainSegments.Count; i += columnsPerPage)
             {
-                OnStatusUpdate(true, 0.5 + 0.4 * ((double)i / document.UpTrainsDisplay.TrainSegments.Count), Resources.PdfExporter_Export_UpTrainsMessage);
-                columnsPerPage = ComputeColumnsForSection(document.UpTrainsDisplay, i, sectionMetrics);
-                Area footnotesForSection = LayOutFootnotesForSection(document.UpTrainsDisplay, i, columnsPerPage);
+                OnStatusUpdate(true, 0.5 + 0.4 * ((double)i / currentSection.SectionData.TrainSegments.Count), Resources.PdfExporter_Export_UpTrainsMessage);
+                columnsPerPage = ComputeColumnsForSection(currentSection.SectionData, i, sectionMetrics);
+                Area footnotesForSection = LayOutFootnotesForSection(currentSection.SectionData, i, columnsPerPage);
                 if (_currentPage.CurrentVerticalCursor + sectionMetrics.TotalHeight + footnotesForSection.Height > _currentPage.BottomMarginPosition)
                 {
                     StartPage(doc, document.ExportOptions.TablePageOrientation.ToPageOrientation());
@@ -218,8 +223,8 @@ namespace Timetabler.PdfExport
                     sectionMetrics = sectionMetricsWithTitle;
                 }
                 _currentPage.CurrentVerticalCursor +=
-                    DrawSection(document.UpTrainsDisplay, true, document.ExportOptions, i, columnsPerPage, sectionMetrics, document.ExportOptions.UpSectionLabel,
-                        firstOnPage, document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition,
+                    DrawSection(currentSection.SectionData, true, document.ExportOptions, i, columnsPerPage, sectionMetrics, currentSection.Label, firstOnPage, 
+                        document.Title, document.Subtitle, document.DateDescription, footnotesForSection, _currentPage.LeftMarginPosition,
                         _currentPage.CurrentVerticalCursor, _currentPage.RightMarginPosition);
                 _currentPage.CurrentVerticalCursor += interSectionGapSize;
 

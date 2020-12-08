@@ -68,9 +68,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timetabler.PdfExport.Tests.Unit", "Timetabler.PdfExport.Tests.Unit\Timetabler.PdfExport.Tests.Unit.csproj", "{8B2FBE57-2FFD-4AB4-A535-915E5557AD8A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78AC2DAC-F3EA-487F-9880-FE00935C8B68}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

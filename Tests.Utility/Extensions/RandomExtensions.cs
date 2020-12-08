@@ -529,6 +529,28 @@ namespace Tests.Utility.Extensions
             return NextSectionSelection(random);
         }
 
+        public static Direction NextDirection(this Random random)
+        {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+            return random.NextBoolean() ? Direction.Down : Direction.Up;
+        }
+
+        public static Direction? NextNullableDirection(this Random random)
+        {
+            if (random is null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+            if (random.Next(3) == 0)
+            {
+                return null;
+            }
+            return NextDirection(random);
+        }
+
 #pragma warning restore CA5394 // Do not use insecure randomness
 
     }

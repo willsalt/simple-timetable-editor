@@ -37,6 +37,7 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             MiddayLabel = _rnd.NextString(_rnd.Next(6)),
             AfternoonLabel = _rnd.NextString(_rnd.Next(6)),
             DistancesInOutput = _rnd.NextNullableSectionSelection(),
+            FirstDirectionExported = _rnd.NextNullableDirection(),
         };
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -558,6 +559,29 @@ namespace Timetabler.DataLoader.Tests.Unit.Load
             DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
 
             Assert.AreEqual(testParam.DistancesInOutput.Value, testOutput.DistancesInOutput);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithFirstDirectionExportedPropertyEqualToDown_IfFirstDirectionExportedPropertyOfParameterIsNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            testParam.FirstDirectionExported = null;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(Direction.Down, testOutput.FirstDirectionExported);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelExtensionsClass_ToDocumentExportOptionsModelMethod_ReturnsObjectWithFirstDirectionExportedPropertyEqualToFirstDirectionExportedPropertyOfParameter_IfFirstDirectionExportedPropertyOfParameterIsNotNull()
+        {
+            ExportOptionsModel testParam = GetModel();
+            Direction expectedResult = _rnd.NextDirection();
+            testParam.FirstDirectionExported = expectedResult;
+
+            DocumentExportOptions testOutput = testParam.ToDocumentExportOptions();
+
+            Assert.AreEqual(expectedResult, testOutput.FirstDirectionExported);
         }
 
 #pragma warning restore CA5394 // Do not use insecure randomness

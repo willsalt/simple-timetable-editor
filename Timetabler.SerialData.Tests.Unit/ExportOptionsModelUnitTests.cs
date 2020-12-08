@@ -43,6 +43,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsFontSetPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.FontSet);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicGraphsInOutputPropertyOfTypeNullableBool()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -50,6 +58,14 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(bool?), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsGraphsInOutputPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.GraphsInOutput);
         }
 
         [TestMethod]
@@ -63,6 +79,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsSetToWorkRowInOutputPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.SetToWorkRowInOutput);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicLocoToWorkRowInOutputPropertyOfTypeNullableBool()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -73,6 +97,15 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsLocoToWorkRowInOutputPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.LocoToWorkRowInOutput);
+        }
+
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicDisplayLocoDiagramRowPropertyOfTypeNullableBool()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -80,6 +113,14 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(bool?), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsDisplayLocoDiagramRowPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.DisplayLocoDiagramRow);
         }
 
         [TestMethod]
@@ -93,6 +134,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsBoxHoursInOutputPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.BoxHoursInOutput);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicCreditsInOutputPropertyOfTypeNullableBool()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -100,6 +149,14 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(bool?), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsCreditsInOutputPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.CreditsInOutput);
         }
 
         [TestMethod]
@@ -113,6 +170,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsGlossaryInOutputPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.GlossaryInOutput);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicLineWidthPropertyOfTypeNullableDouble()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -120,6 +185,14 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(double?), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsLineWidthPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.LineWidth);
         }
 
         [TestMethod]
@@ -133,6 +206,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsGraphAxisLineWidthPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.GraphAxisLineWidth);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicFillerDashLineWidthPropertyOfTypeNullableDouble()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -140,6 +221,14 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(double?), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsFillerDashLineWidthPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.FillerDashLineWidth);
         }
 
         [TestMethod]
@@ -153,6 +242,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsUpSectionLabelPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.UpSectionLabel);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicDownSectionLabelPropertyOfTypeString()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -160,6 +257,14 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(string), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsDownSectionLabelPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.DownSectionLabel);
         }
 
         [TestMethod]
@@ -173,6 +278,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsMorningLabelPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.MorningLabel);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicMiddayLabelPropertyOfTypeString()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -180,6 +293,14 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(string), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsMiddayLabelPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.MiddayLabel);
         }
 
         [TestMethod]
@@ -193,6 +314,14 @@ namespace Timetabler.SerialData.Tests.Unit
         }
 
         [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsAfternoonLabelPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.AfternoonLabel);
+        }
+
+        [TestMethod]
         public void ExportOptionsModelClass_HasPublicDistancesInOutputPropertyOfTypeNullableSectionSelection()
         {
             Type classType = typeof(ExportOptionsModel);
@@ -200,6 +329,32 @@ namespace Timetabler.SerialData.Tests.Unit
             Assert.AreEqual(typeof(SectionSelection?), property.PropertyType);
             Assert.IsTrue(property.GetMethod.IsPublic);
             Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsDistancesInOutputPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.DistancesInOutput);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_HasPublicFirstDirectionExportedPropertyOfTypeNullableDirection()
+        {
+            Type classType = typeof(ExportOptionsModel);
+            PropertyInfo property = classType.GetProperty("FirstDirectionExported");
+            Assert.AreEqual(typeof(Direction?), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
+        }
+
+        [TestMethod]
+        public void ExportOptionsModelClass_Constructor_SetsFirstDirectionExportedPropertyToNull()
+        {
+            ExportOptionsModel testOutput = new ExportOptionsModel();
+
+            Assert.IsNull(testOutput.FirstDirectionExported);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

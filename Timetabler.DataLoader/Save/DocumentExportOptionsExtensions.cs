@@ -42,6 +42,7 @@ namespace Timetabler.DataLoader.Save
                 MiddayLabel = options.MiddayLabel,
                 AfternoonLabel = options.AfternoonLabel,
                 DistancesInOutput = options.DistancesInOutput,
+                FirstDirectionExported = options.FirstDirectionExported,
             };
         }
     }

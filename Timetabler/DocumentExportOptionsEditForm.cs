@@ -44,6 +44,7 @@ namespace Timetabler
             cbTableOrientation.Items.AddRange(orientations);
             cbGraphOrientation.Items.AddRange(orientations);
             cbDistanceInfoInOutput.Items.AddRange(HumanReadableEnumFactory.GetSectionSelection());
+            cbFirstExportDirection.Items.AddRange(HumanReadableEnumFactory.GetDirection());
         }
 
         private void UpdateViewFromModel()
@@ -89,6 +90,14 @@ namespace Timetabler
                 if (item is HumanReadableEnum<SectionSelection> sectionItem && sectionItem.Value == Model.DistancesInOutput)
                 {
                     cbDistanceInfoInOutput.SelectedItem = sectionItem;
+                    break;
+                }
+            }
+            foreach (var item in cbFirstExportDirection.Items)
+            {
+                if (item is HumanReadableEnum<Direction> directionitem && directionitem.Value == Model.FirstDirectionExported)
+                {
+                    cbFirstExportDirection.SelectedItem = directionitem;
                     break;
                 }
             }
@@ -227,7 +236,7 @@ namespace Timetabler
 
         private void CbDistanceInfoInOutput_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!(cbDistanceInfoInOutput.SelectedItem is HumanReadableEnum<CoreData.SectionSelection> item))
+            if (!(cbDistanceInfoInOutput.SelectedItem is HumanReadableEnum<SectionSelection> item))
             {
                 Log.Trace("cbDistanceInfoInOutput: null item selected.");
                 return;
@@ -238,6 +247,21 @@ namespace Timetabler
             }
             Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbDistanceInOutput_Value, item.Name);
             Model.DistancesInOutput = item.Value;
+        }
+
+        private void CbFirstExportDirection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(cbFirstExportDirection.SelectedItem is HumanReadableEnum<Direction> item))
+            {
+                Log.Trace("cbFirstExportDirection: null item selected.");
+                return;
+            }
+            if (_inViewUpdate || Model is null)
+            {
+                return;
+            }
+            Log.Trace(CultureInfo.CurrentCulture, Resources.LogMessage_CbFirstExportDirection_Value, item.Name);
+            Model.FirstDirectionExported = item.Value;
         }
 
         private void TbUpSectionLabel_TextChanged(object sender, EventArgs e)
@@ -284,5 +308,7 @@ namespace Timetabler
             }
             Model.MiddayLabel = tbMiddayLabel.Text;
         }
+
+        
     }
 }

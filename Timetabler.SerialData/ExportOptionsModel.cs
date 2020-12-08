@@ -101,5 +101,11 @@ namespace Timetabler.SerialData
         /// Whether or not to show a table of distances in the output.
         /// </summary>
         public SectionSelection? DistancesInOutput { get; set; }
+
+        /// <summary>
+        /// The order in which to export timetables.  Trains in the direction given here will be exported first, then trains in the other direction.
+        /// The default is Down first.
+        /// </summary>
+        public Direction? FirstDirectionExported { get; set; }
     }
 }

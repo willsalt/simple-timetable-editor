@@ -156,6 +156,12 @@
   <data name="HumanReadableEnum_DashStyle_Solid" xml:space="preserve">
     <value>Solid</value>
   </data>
+  <data name="HumanReadableEnum_Direction_Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="HumanReadableEnum_Direction_Up" xml:space="preserve">
+    <value>Up</value>
+  </data>
   <data name="HumanReadableEnum_GraphEditStyle_Free" xml:space="preserve">
     <value>Free edit</value>
   </data>
@@ -209,6 +215,9 @@
   </data>
   <data name="LogMessage_CbDistanceInOutput_Value" xml:space="preserve">
     <value>cbDistanceInOutput is {0}</value>
+  </data>
+  <data name="LogMessage_CbFirstExportDirection_Value" xml:space="preserve">
+    <value>cbFirstExportDirection is {0}.</value>
   </data>
   <data name="LogMessage_CbGraphEditStyleValue" xml:space="preserve">
     <value>cbGraphEditStyle: value is {0}</value>

@@ -33,6 +33,7 @@ namespace Timetabler.Data.Tests.Unit
             MiddayLabel = _rnd.NextString(_rnd.Next(6)),
             AfternoonLabel = _rnd.NextString(_rnd.Next(5)),
             DistancesInOutput = _rnd.NextSectionSelection(),
+            FirstDirectionExported = _rnd.NextDirection(),
         };
 
 #pragma warning restore CA5394 // Do not use insecure randomness
@@ -130,6 +131,14 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testObject = new DocumentExportOptions();
 
             Assert.AreEqual(SectionSelection.None, testObject.DistancesInOutput);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_ParameterlessConstructor_SetsFirstDirectionExportedPropertyToDown()
+        {
+            DocumentExportOptions testObject = new DocumentExportOptions();
+
+            Assert.AreEqual(Direction.Down, testObject.FirstDirectionExported);
         }
 
         [TestMethod]
@@ -320,6 +329,16 @@ namespace Timetabler.Data.Tests.Unit
             DocumentExportOptions testOutput = testObject.Copy();
 
             Assert.AreEqual(testObject.DistancesInOutput, testOutput.DistancesInOutput);
+        }
+
+        [TestMethod]
+        public void DocumentExportOptionsClass_CopyMethod_ReturnsObjectWithCorrectFirstDirectionExportedProperty()
+        {
+            DocumentExportOptions testObject = GetDocumentExportOptions();
+
+            DocumentExportOptions testOutput = testObject.Copy();
+
+            Assert.AreEqual(testObject.FirstDirectionExported, testOutput.FirstDirectionExported);
         }
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores

@@ -67,6 +67,10 @@
             this.nudLineWidth = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cbFirstExportDirection = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -77,6 +81,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // ckDisplayLocoDiagram
@@ -303,12 +309,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.nudGraphAxisLineWidth);
-            this.tabPage2.Controls.Add(this.nudFillerDashLineWidth);
-            this.tabPage2.Controls.Add(this.nudLineWidth);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.groupBox6);
+            this.tabPage2.Controls.Add(this.groupBox5);
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             // 
@@ -345,6 +347,39 @@
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
+            // groupBox5
+            // 
+            resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.nudGraphAxisLineWidth);
+            this.groupBox5.Controls.Add(this.nudLineWidth);
+            this.groupBox5.Controls.Add(this.nudFillerDashLineWidth);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.TabStop = false;
+            // 
+            // groupBox6
+            // 
+            resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Controls.Add(this.cbFirstExportDirection);
+            this.groupBox6.Controls.Add(this.label12);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.TabStop = false;
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            // 
+            // cbFirstExportDirection
+            // 
+            this.cbFirstExportDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFirstExportDirection.FormattingEnabled = true;
+            resources.ApplyResources(this.cbFirstExportDirection, "cbFirstExportDirection");
+            this.cbFirstExportDirection.Name = "cbFirstExportDirection";
+            this.cbFirstExportDirection.SelectedIndexChanged += new System.EventHandler(this.CbFirstExportDirection_SelectedIndexChanged);
+            // 
             // DocumentExportOptionsEditForm
             // 
             resources.ApplyResources(this, "$this");
@@ -364,10 +399,13 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudGraphAxisLineWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFillerDashLineWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineWidth)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -412,5 +450,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbMiddayLabel;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.ComboBox cbFirstExportDirection;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.GroupBox groupBox5;
     }
 }

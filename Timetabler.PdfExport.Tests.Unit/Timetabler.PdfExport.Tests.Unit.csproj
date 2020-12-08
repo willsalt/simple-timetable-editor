@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Tests.Utility\Tests.Utility.csproj" />
     <ProjectReference Include="..\Timetabler.CoreData\Timetabler.CoreData.csproj" />
     <ProjectReference Include="..\Timetabler.PdfExport\Timetabler.PdfExport.csproj" />

@@ -178,6 +178,24 @@ namespace Timetabler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        internal static string HumanReadableEnum_Direction_Down {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_Direction_Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        internal static string HumanReadableEnum_Direction_Up {
+            get {
+                return ResourceManager.GetString("HumanReadableEnum_Direction_Up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Free edit.
         /// </summary>
         internal static string HumanReadableEnum_GraphEditStyle_Free {
@@ -336,6 +354,15 @@ namespace Timetabler {
         internal static string LogMessage_CbDistanceInOutput_Value {
             get {
                 return ResourceManager.GetString("LogMessage_CbDistanceInOutput_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cbFirstExportDirection is {0}..
+        /// </summary>
+        internal static string LogMessage_CbFirstExportDirection_Value {
+            get {
+                return ResourceManager.GetString("LogMessage_CbFirstExportDirection_Value", resourceCulture);
             }
         }
         

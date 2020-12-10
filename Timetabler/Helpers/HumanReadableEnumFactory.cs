@@ -130,5 +130,18 @@ namespace Timetabler.Helpers
                 new HumanReadableEnum<SectionSelection> { Name = Resources.HumanReadableEnum_SectionSelection_All, Value = SectionSelection.All },
             };
         }
+
+        /// <summary>
+        /// Generate an array of <see cref="HumanReadableEnum{TEnum}" /> instances representing the values of the <see cref="Direction" /> enumeration.
+        /// </summary>
+        /// <returns></returns>
+        public static HumanReadableEnum<Direction>[] GetDirection()
+        {
+            return new[]
+            {
+                new HumanReadableEnum<Direction> { Name = Resources.HumanReadableEnum_Direction_Down, Value = Direction.Down },
+                new HumanReadableEnum<Direction> { Name = Resources.HumanReadableEnum_Direction_Up, Value = Direction.Up },
+            };
+        }
     }
 }

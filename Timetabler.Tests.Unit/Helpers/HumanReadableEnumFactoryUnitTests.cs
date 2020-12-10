@@ -266,6 +266,32 @@ namespace Timetabler.Tests.Unit.Helpers
             Assert.AreEqual(Resources.HumanReadableEnum_SectionSelection_All, item.Name);
         }
 
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetDirectionMethod_ReturnsArrayOfLengthTwo()
+        {
+            HumanReadableEnum<Direction>[] testOutput = HumanReadableEnumFactory.GetDirection();
+
+            Assert.AreEqual(2, testOutput.Length);
+        }
+
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetDirectionMethod_ReturnsArrayContainingDownValueWithCorrectNameProperty()
+        {
+            HumanReadableEnum<Direction>[] testOutput = HumanReadableEnumFactory.GetDirection();
+
+            HumanReadableEnum<Direction> item = testOutput.Single(e => e.Value == Direction.Down);
+            Assert.AreEqual(Resources.HumanReadableEnum_Direction_Down, item.Name);
+        }
+
+        [TestMethod]
+        public void HumanReadableEnumFactoryClass_GetDirectionMethod_ReturnsArrayContainingUpValueWithCorrectNameProperty()
+        {
+            HumanReadableEnum<Direction>[] testOutput = HumanReadableEnumFactory.GetDirection();
+
+            HumanReadableEnum<Direction> item = testOutput.Single(e => e.Value == Direction.Up);
+            Assert.AreEqual(Resources.HumanReadableEnum_Direction_Up, item.Name);
+        }
+
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
     }

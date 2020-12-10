@@ -98,6 +98,11 @@ namespace Timetabler.Data
         public SectionSelection DistancesInOutput { get; set; }
 
         /// <summary>
+        /// Which direction of travel comes first in the output.
+        /// </summary>
+        public Direction FirstDirectionExported { get; set; }
+
+        /// <summary>
         /// Default constructor - sets the default values of the <see cref="LineWidth" />, <see cref="GraphAxisLineWidth" /> and 
         /// <see cref="FillerDashLineWidth" /> properties, and loads the default values of the <see cref="UpSectionLabel" /> and <see cref="DownSectionLabel" />
         /// properties from the resources file.
@@ -114,6 +119,7 @@ namespace Timetabler.Data
             MorningLabel = Resources.DocumentExportOptions_DefaultMorningLabel;
             MiddayLabel = Resources.DocumentExportOptions_DefaultMiddayLabel;
             AfternoonLabel = Resources.DocumentExportOptions_DefaultAfternoonLabel;
+            FirstDirectionExported = Direction.Down;
         }
 
         /// <summary>
@@ -142,6 +148,7 @@ namespace Timetabler.Data
                 MorningLabel = MorningLabel,
                 MiddayLabel = MiddayLabel,
                 AfternoonLabel = AfternoonLabel,
+                FirstDirectionExported = FirstDirectionExported,
             };
         }
     }

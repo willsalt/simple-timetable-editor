@@ -38,6 +38,7 @@ namespace Timetabler.DataLoader.Load
                 TablePageOrientation = model.TablePageOrientation ?? Orientation.Landscape,
                 GraphPageOrientation = model.GraphPageOrientation ?? Orientation.Landscape,
                 DistancesInOutput = model.DistancesInOutput ?? SectionSelection.None,
+                FirstDirectionExported = model.FirstDirectionExported ?? Direction.Down,
             };
             if (!(model.UpSectionLabel is null))
             {

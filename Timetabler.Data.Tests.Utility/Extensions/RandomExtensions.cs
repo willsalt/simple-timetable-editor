@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Tests.Utility.Extensions;
 using Timetabler.CoreData;
+using Timetabler.Data.Display;
 
 namespace Timetabler.Data.Tests.Utility.Extensions
 {
@@ -107,6 +108,16 @@ namespace Timetabler.Data.Tests.Utility.Extensions
         public static Distance NextDistance(this Random random, Distance min)
         {
             return min + NextDistance(random);
+        }
+
+        public static TrainLocationTimeEntryType NextTrainLocationTimeEntryType(this Random rnd)
+        {
+            if (rnd is null)
+            {
+                throw new ArgumentNullException(nameof(rnd));
+            }
+            TrainLocationTimeEntryType[] values = new[] { TrainLocationTimeEntryType.RoutingCode, TrainLocationTimeEntryType.Time };
+            return values[rnd.Next(values.Length)];
         }
 
 #pragma warning restore CA5394 // Do not use insecure randomness
